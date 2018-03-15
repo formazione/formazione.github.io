@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>4bs</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<style>
+ul {font-size: 2em;}
+i {font-size : 2em;}
+p { font-size: 2em; }
+td {font-size: 1.5em;}
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th, td {
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even){background-color: #f2f2f2}
+
+</style>
+
+</head>
+<body>
+<h1>Classe 4bs livello di partecipazione</h1>
+<script src="https://www.gstatic.com/firebasejs/4.10.1/firebase.js"></script>
+<script>
+  var config = {
+    apiKey: "AIzaSyDp-mWaWEI07pIdRUhi6vA-salEMRWz4hw",
+    authDomain: "quiz-e5e5a.firebaseapp.com",
+    databaseURL: "https://quiz-e5e5a.firebaseio.com/",
+    projectId: "quiz-e5e5a",
+    storageBucket: "quiz-e5e5a.appspot.com",
+    messagingSenderId: "901845403492"
+  };
+  firebase.initializeApp(config);
+  var database = firebase.database()
+</script>
+<div class="w3-main" style="margin-left:50px">
+<table class="table-bordered"><td><button type="button" class="btn btn-warning btn-lg" onclick="dbRef1.set(--n1)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRef1.set(++n1)"> + </button>Amatruda Massimo<td><i id="h1alunno1"></i></p><script>
+    var h1alunno1 = document.getElementById("h1alunno1");
+  var dbRef1 = firebase.database().ref().child("4bs").child("Amatruda Massimo");
+  dbRef1.on("value", snap => h1alunno1.innerText = snap.val());
+  dbRef1.on("value", snap => n1 = snap.val())</script><tr><td><button type="button" class="btn btn-warning btn-lg" onclick="dbRef2.set(--n2)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRef2.set(++n2)"> + </button>Bortone Tommaso<td><i id="h1alunno2"></i></p><script>
+    var h1alunno2 = document.getElementById("h1alunno2");
+  var dbRef2 = firebase.database().ref().child("4bs").child("Bortone Tommaso");
+  dbRef2.on("value", snap => h1alunno2.innerText = snap.val());
+  dbRef2.on("value", snap => n2 = snap.val())</script><tr><td><button type="button" class="btn btn-warning btn-lg" onclick="dbRef3.set(--n3)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRef3.set(++n3)"> + </button>Cantalupo Giuseppe<td><i id="h1alunno3"></i></p><script>
+    var h1alunno3 = document.getElementById("h1alunno3");
+  var dbRef3 = firebase.database().ref().child("4bs").child("Cantalupo Giuseppe");
+  dbRef3.on("value", snap => h1alunno3.innerText = snap.val());
+  dbRef3.on("value", snap => n3 = snap.val())</script><tr><td><button type="button" class="btn btn-warning btn-lg" onclick="dbRef4.set(--n4)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRef4.set(++n4)"> + </button>Caputo Nicola<td><i id="h1alunno4"></i></p><script>
+    var h1alunno4 = document.getElementById("h1alunno4");
+  var dbRef4 = firebase.database().ref().child("4bs").child("Caputo Nicola");
+  dbRef4.on("value", snap => h1alunno4.innerText = snap.val());
+  dbRef4.on("value", snap => n4 = snap.val())</script><tr><td><button type="button" class="btn btn-warning btn-lg" onclick="dbRef5.set(--n5)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRef5.set(++n5)"> + </button>Carbone giuseppe<td><i id="h1alunno5"></i></p><script>
+    var h1alunno5 = document.getElementById("h1alunno5");
+  var dbRef5 = firebase.database().ref().child("4bs").child("Carbone giuseppe");
+  dbRef5.on("value", snap => h1alunno5.innerText = snap.val());
+  dbRef5.on("value", snap => n5 = snap.val())</script><tr><td><button type="button" class="btn btn-warning btn-lg" onclick="dbRef6.set(--n6)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRef6.set(++n6)"> + </button>Cutrì Roberto<td><i id="h1alunno6"></i></p><script>
+    var h1alunno6 = document.getElementById("h1alunno6");
+  var dbRef6 = firebase.database().ref().child("4bs").child("Cutrì Roberto");
+  dbRef6.on("value", snap => h1alunno6.innerText = snap.val());
+  dbRef6.on("value", snap => n6 = snap.val())</script><tr><td><button type="button" class="btn btn-warning btn-lg" onclick="dbRef7.set(--n7)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRef7.set(++n7)"> + </button>Del gaudio Giuseppe<td><i id="h1alunno7"></i></p><script>
+    var h1alunno7 = document.getElementById("h1alunno7");
+  var dbRef7 = firebase.database().ref().child("4bs").child("Del gaudio Giuseppe");
+  dbRef7.on("value", snap => h1alunno7.innerText = snap.val());
+  dbRef7.on("value", snap => n7 = snap.val())</script><tr><td><button type="button" class="btn btn-warning btn-lg" onclick="dbRef8.set(--n8)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRef8.set(++n8)"> + </button>Di Santi Angela<td><i id="h1alunno8"></i></p><script>
+    var h1alunno8 = document.getElementById("h1alunno8");
+  var dbRef8 = firebase.database().ref().child("4bs").child("Di Santi Angela");
+  dbRef8.on("value", snap => h1alunno8.innerText = snap.val());
+  dbRef8.on("value", snap => n8 = snap.val())</script><tr><td><button type="button" class="btn btn-warning btn-lg" onclick="dbRef9.set(--n9)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRef9.set(++n9)"> + </button>Krzesinska Paulina<td><i id="h1alunno9"></i></p><script>
+    var h1alunno9 = document.getElementById("h1alunno9");
+  var dbRef9 = firebase.database().ref().child("4bs").child("Krzesinska Paulina");
+  dbRef9.on("value", snap => h1alunno9.innerText = snap.val());
+  dbRef9.on("value", snap => n9 = snap.val())</script><tr><td><button type="button" class="btn btn-warning btn-lg" onclick="dbRef10.set(--n10)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRef10.set(++n10)"> + </button>Lettieri Stefania<td><i id="h1alunno10"></i></p><script>
+    var h1alunno10 = document.getElementById("h1alunno10");
+  var dbRef10 = firebase.database().ref().child("4bs").child("Lettieri Stefania");
+  dbRef10.on("value", snap => h1alunno10.innerText = snap.val());
+  dbRef10.on("value", snap => n10 = snap.val())</script><tr><td><button type="button" class="btn btn-warning btn-lg" onclick="dbRef11.set(--n11)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRef11.set(++n11)"> + </button>Maiese Giuseppe<td><i id="h1alunno11"></i></p><script>
+    var h1alunno11 = document.getElementById("h1alunno11");
+  var dbRef11 = firebase.database().ref().child("4bs").child("Maiese Giuseppe");
+  dbRef11.on("value", snap => h1alunno11.innerText = snap.val());
+  dbRef11.on("value", snap => n11 = snap.val())</script><tr><td><button type="button" class="btn btn-warning btn-lg" onclick="dbRef12.set(--n12)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRef12.set(++n12)"> + </button>Maiuri Claudia<td><i id="h1alunno12"></i></p><script>
+    var h1alunno12 = document.getElementById("h1alunno12");
+  var dbRef12 = firebase.database().ref().child("4bs").child("Maiuri Claudia");
+  dbRef12.on("value", snap => h1alunno12.innerText = snap.val());
+  dbRef12.on("value", snap => n12 = snap.val())</script><tr><td><button type="button" class="btn btn-warning btn-lg" onclick="dbRef13.set(--n13)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRef13.set(++n13)"> + </button>Merola Giuseppina Pia<td><i id="h1alunno13"></i></p><script>
+    var h1alunno13 = document.getElementById("h1alunno13");
+  var dbRef13 = firebase.database().ref().child("4bs").child("Merola Giuseppina Pia");
+  dbRef13.on("value", snap => h1alunno13.innerText = snap.val());
+  dbRef13.on("value", snap => n13 = snap.val())</script><tr><td><button type="button" class="btn btn-warning btn-lg" onclick="dbRef14.set(--n14)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRef14.set(++n14)"> + </button>Moscatiello Anna Rita<td><i id="h1alunno14"></i></p><script>
+    var h1alunno14 = document.getElementById("h1alunno14");
+  var dbRef14 = firebase.database().ref().child("4bs").child("Moscatiello Anna Rita");
+  dbRef14.on("value", snap => h1alunno14.innerText = snap.val());
+  dbRef14.on("value", snap => n14 = snap.val())</script><tr><td><button type="button" class="btn btn-warning btn-lg" onclick="dbRef15.set(--n15)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRef15.set(++n15)"> + </button>Ridolfi Erika<td><i id="h1alunno15"></i></p><script>
+    var h1alunno15 = document.getElementById("h1alunno15");
+  var dbRef15 = firebase.database().ref().child("4bs").child("Ridolfi Erika");
+  dbRef15.on("value", snap => h1alunno15.innerText = snap.val());
+  dbRef15.on("value", snap => n15 = snap.val())</script><tr><td><button type="button" class="btn btn-warning btn-lg" onclick="dbRef16.set(--n16)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRef16.set(++n16)"> + </button>Ruocco Michele<td><i id="h1alunno16"></i></p><script>
+    var h1alunno16 = document.getElementById("h1alunno16");
+  var dbRef16 = firebase.database().ref().child("4bs").child("Ruocco Michele");
+  dbRef16.on("value", snap => h1alunno16.innerText = snap.val());
+  dbRef16.on("value", snap => n16 = snap.val())</script><tr><td><button type="button" class="btn btn-warning btn-lg" onclick="dbRef17.set(--n17)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRef17.set(++n17)"> + </button>Schiavo Angela<td><i id="h1alunno17"></i></p><script>
+    var h1alunno17 = document.getElementById("h1alunno17");
+  var dbRef17 = firebase.database().ref().child("4bs").child("Schiavo Angela");
+  dbRef17.on("value", snap => h1alunno17.innerText = snap.val());
+  dbRef17.on("value", snap => n17 = snap.val())</script><tr><td><button type="button" class="btn btn-warning btn-lg" onclick="dbRef18.set(--n18)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRef18.set(++n18)"> + </button>Spera Aurelia<td><i id="h1alunno18"></i></p><script>
+    var h1alunno18 = document.getElementById("h1alunno18");
+  var dbRef18 = firebase.database().ref().child("4bs").child("Spera Aurelia");
+  dbRef18.on("value", snap => h1alunno18.innerText = snap.val());
+  dbRef18.on("value", snap => n18 = snap.val())</script><tr><td><button type="button" class="btn btn-warning btn-lg" onclick="dbRef19.set(--n19)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRef19.set(++n19)"> + </button>Tancredi Marika<td><i id="h1alunno19"></i></p><script>
+    var h1alunno19 = document.getElementById("h1alunno19");
+  var dbRef19 = firebase.database().ref().child("4bs").child("Tancredi Marika");
+  dbRef19.on("value", snap => h1alunno19.innerText = snap.val());
+  dbRef19.on("value", snap => n19 = snap.val())</script><tr><td><button type="button" class="btn btn-warning btn-lg" onclick="dbRef20.set(--n20)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRef20.set(++n20)"> + </button>Vaccaro Domenico<td><i id="h1alunno20"></i></p><script>
+    var h1alunno20 = document.getElementById("h1alunno20");
+  var dbRef20 = firebase.database().ref().child("4bs").child("Vaccaro Domenico");
+  dbRef20.on("value", snap => h1alunno20.innerText = snap.val());
+  dbRef20.on("value", snap => n20 = snap.val())</script><tr><td><button type="button" class="btn btn-warning btn-lg" onclick="dbRef21.set(--n21)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRef21.set(++n21)"> + </button>Vassalluzzo Benedetta<td><i id="h1alunno21"></i></p><script>
+    var h1alunno21 = document.getElementById("h1alunno21");
+  var dbRef21 = firebase.database().ref().child("4bs").child("Vassalluzzo Benedetta");
+  dbRef21.on("value", snap => h1alunno21.innerText = snap.val());
+  dbRef21.on("value", snap => n21 = snap.val())</script><tr>
+</table>
+</div>
+</body>
+</html>
