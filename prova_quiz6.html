@@ -1,0 +1,47 @@
+<div style="background-color:lightblue"><h1>Le immobilizzazioni vanno nello ___ patrimoniale
+ <u><span id='a0'>______</span></u> </h1><br>
+<form id="d0">
+<input type="radio" name="choice" value=''> 
+<input type="radio" name="choice" value=''> 
+<input type="radio" name="choice" value=''> 
+<input type="radio" name="choice" value=''> 
+<br>
+<input type="submit" value="submit" onclick="validate(choice.value, '', 'd0','a0')">
+</form>
+</div><h1>libro
+ <u><span id='a0'>______</span></u> </h1><br>
+<form id="d0">
+<input type="radio" name="choice" value=''> 
+<input type="radio" name="choice" value=''> 
+<input type="radio" name="choice" value=''> 
+<input type="radio" name="choice" value=''> 
+<br>
+<input type="submit" value="submit" onclick="validate(choice.value, '', 'd0','a0')">
+</form>
+</div><h1>conto
+ <u><span id='a0'>______</span></u> </h1><br>
+<form id="d0">
+<input type="radio" name="choice" value=''> 
+<input type="radio" name="choice" value=''> 
+<input type="radio" name="choice" value=''> 
+<input type="radio" name="choice" value=''> 
+<br>
+<input type="submit" value="submit" onclick="validate(choice.value, '', 'd0','a0')">
+</form>
+</div><script>
+var validate = function(valore, rightanswer, form, span) {
+
+var formname = document.getElementById(form)
+var spanname = document.getElementById(span)
+
+    spanname.innerHTML = rightanswer;
+
+if (valore == rightanswer) {
+    formname.innerHTML ="<div style='background-color:lightgreen'><h1>Bravo! La risposta era: " + rightanswer + "</h1></div>";
+}
+else {
+
+    formname.innerHTML ="<div style='background-color:pink'><h1>Sbagliato! La risposta era: " + rightanswer + "</h1></div>";
+}
+};
+</script>
