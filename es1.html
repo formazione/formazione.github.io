@@ -4,25 +4,25 @@
 
 sol = [
 1.0,
+0.33,
+1.0,
 5.0,
 1.0,
-0.4,
-3.0,
-0.6,
+0.75,
+1.0,
 1.25,
-1.33,
-2.0,
 0.33,
-1.67,
+5.0,
+0.4,
 1.0,
-1.0,
-0.33,
-2.0,
+5.0,
+0.4,
 1.5,
-1.33,
+0.4,
+4.0,
+4.0,
 2.0,
-1.0,
-3.0,
+1.67,
 ]
 
 var nomi = {
@@ -49,10 +49,15 @@ var nomi = {
 }
 
 function check(name){
-	if (name.value==nomi[name.id]) 
+	if (name.value == nomi[name.id]) 
 	{ 
 		name.value = name.value + " [ok]";
+		name.style.background = 'yellow';
+	}
+	else {
+		name.value = "";
+		name.style.background = 'pink';
 	}
 };
 </script>
-Andreioli_M: Prezzo +40% Domanda -40%, elasticità =?Andreioli_M<input type=text id='Andreioli_M' onchange=check(Andreioli_M)><br>Barbato_L: Prezzo +10% Domanda -50%, elasticità =?Barbato_L<input type=text id='Barbato_L' onchange=check(Barbato_L)><br>Cirillo_R: Prezzo +10% Domanda -10%, elasticità =?Cirillo_R<input type=text id='Cirillo_R' onchange=check(Cirillo_R)><br>Croce_S: Prezzo +50% Domanda -20%, elasticità =?Croce_S<input type=text id='Croce_S' onchange=check(Croce_S)><br>D_Ambrosio_G: Prezzo +10% Domanda -30%, elasticità =?D_Ambrosio_G<input type=text id='D_Ambrosio_G' onchange=check(D_Ambrosio_G)><br>Del_Piero_L: Prezzo +50% Domanda -30%, elasticità =?Del_Piero_L<input type=text id='Del_Piero_L' onchange=check(Del_Piero_L)><br>Di_Lorenzo_E: Prezzo +40% Domanda -50%, elasticità =?Di_Lorenzo_E<input type=text id='Di_Lorenzo_E' onchange=check(Di_Lorenzo_E)><br>Di_Sevo_G: Prezzo +30% Domanda -40%, elasticità =?Di_Sevo_G<input type=text id='Di_Sevo_G' onchange=check(Di_Sevo_G)><br>Giudice_F: Prezzo +10% Domanda -20%, elasticità =?Giudice_F<input type=text id='Giudice_F' onchange=check(Giudice_F)><br>Manzo_B: Prezzo +30% Domanda -10%, elasticità =?Manzo_B<input type=text id='Manzo_B' onchange=check(Manzo_B)><br>Montemurro_S: Prezzo +30% Domanda -50%, elasticità =?Montemurro_S<input type=text id='Montemurro_S' onchange=check(Montemurro_S)><br>Nese_L: Prezzo +40% Domanda -40%, elasticità =?Nese_L<input type=text id='Nese_L' onchange=check(Nese_L)><br>Orlando_G: Prezzo +10% Domanda -10%, elasticità =?Orlando_G<input type=text id='Orlando_G' onchange=check(Orlando_G)><br>Ribeca_L: Prezzo +30% Domanda -10%, elasticità =?Ribeca_L<input type=text id='Ribeca_L' onchange=check(Ribeca_L)><br>Spera_E: Prezzo +20% Domanda -40%, elasticità =?Spera_E<input type=text id='Spera_E' onchange=check(Spera_E)><br>Valerio_A: Prezzo +20% Domanda -30%, elasticità =?Valerio_A<input type=text id='Valerio_A' onchange=check(Valerio_A)><br>Valerio_F: Prezzo +30% Domanda -40%, elasticità =?Valerio_F<input type=text id='Valerio_F' onchange=check(Valerio_F)><br>Verrelli_M: Prezzo +20% Domanda -40%, elasticità =?Verrelli_M<input type=text id='Verrelli_M' onchange=check(Verrelli_M)><br>Villano_B: Prezzo +40% Domanda -40%, elasticità =?Villano_B<input type=text id='Villano_B' onchange=check(Villano_B)><br>Viterale_F: Prezzo +10% Domanda -30%, elasticità =?Viterale_F<input type=text id='Viterale_F' onchange=check(Viterale_F)><br>
+Andreioli_M: Prezzo +40% Domanda -40%, elasticità =?Andreioli_M<input type=text id='Andreioli_M' onchange=check(Andreioli_M)><br>Barbato_L: Prezzo +30% Domanda -10%, elasticità =?Barbato_L<input type=text id='Barbato_L' onchange=check(Barbato_L)><br>Cirillo_R: Prezzo +50% Domanda -50%, elasticità =?Cirillo_R<input type=text id='Cirillo_R' onchange=check(Cirillo_R)><br>Croce_S: Prezzo +10% Domanda -50%, elasticità =?Croce_S<input type=text id='Croce_S' onchange=check(Croce_S)><br>D_Ambrosio_G: Prezzo +30% Domanda -30%, elasticità =?D_Ambrosio_G<input type=text id='D_Ambrosio_G' onchange=check(D_Ambrosio_G)><br>Del_Piero_L: Prezzo +40% Domanda -30%, elasticità =?Del_Piero_L<input type=text id='Del_Piero_L' onchange=check(Del_Piero_L)><br>Di_Lorenzo_E: Prezzo +40% Domanda -40%, elasticità =?Di_Lorenzo_E<input type=text id='Di_Lorenzo_E' onchange=check(Di_Lorenzo_E)><br>Di_Sevo_G: Prezzo +40% Domanda -50%, elasticità =?Di_Sevo_G<input type=text id='Di_Sevo_G' onchange=check(Di_Sevo_G)><br>Giudice_F: Prezzo +30% Domanda -10%, elasticità =?Giudice_F<input type=text id='Giudice_F' onchange=check(Giudice_F)><br>Manzo_B: Prezzo +10% Domanda -50%, elasticità =?Manzo_B<input type=text id='Manzo_B' onchange=check(Manzo_B)><br>Montemurro_S: Prezzo +50% Domanda -20%, elasticità =?Montemurro_S<input type=text id='Montemurro_S' onchange=check(Montemurro_S)><br>Nese_L: Prezzo +50% Domanda -50%, elasticità =?Nese_L<input type=text id='Nese_L' onchange=check(Nese_L)><br>Orlando_G: Prezzo +10% Domanda -50%, elasticità =?Orlando_G<input type=text id='Orlando_G' onchange=check(Orlando_G)><br>Ribeca_L: Prezzo +50% Domanda -20%, elasticità =?Ribeca_L<input type=text id='Ribeca_L' onchange=check(Ribeca_L)><br>Spera_E: Prezzo +20% Domanda -30%, elasticità =?Spera_E<input type=text id='Spera_E' onchange=check(Spera_E)><br>Valerio_A: Prezzo +50% Domanda -20%, elasticità =?Valerio_A<input type=text id='Valerio_A' onchange=check(Valerio_A)><br>Valerio_F: Prezzo +10% Domanda -40%, elasticità =?Valerio_F<input type=text id='Valerio_F' onchange=check(Valerio_F)><br>Verrelli_M: Prezzo +10% Domanda -40%, elasticità =?Verrelli_M<input type=text id='Verrelli_M' onchange=check(Verrelli_M)><br>Villano_B: Prezzo +10% Domanda -20%, elasticità =?Villano_B<input type=text id='Villano_B' onchange=check(Villano_B)><br>Viterale_F: Prezzo +30% Domanda -50%, elasticità =?Viterale_F<input type=text id='Viterale_F' onchange=check(Viterale_F)><br>
