@@ -1,0 +1,118 @@
+<canvas id="gc3" width="400" height="400"></canvas>
+<br>
+Score2<div id="Score2"></div>
+Record2<div id="Record2"></div>
+<script>
+window.onload=function () {
+    var vel = 15;
+    canv3=document.getElementById("gc3");
+    ctx3=canv3.getContext("2d");
+    document.addEventListener("keydown",keyPush);
+    setInterval(game,1000/vel);
+}
+
+let px = 10;
+let py =10;
+let gs = 20;
+let tc = 20;
+let ax = ay = 15;
+let xv = yv = 0;
+let trail=[];
+let tail = 5;
+let sc = 0;
+let rec= 0;
+var vel = 5;
+let img = new Image()
+img.src = "apple256.png"
+var fps = 15;
+var maxAppleAgeSeconds = 5;
+var appleAge = 0;
+var maxAppleAgeFrames = fps * maxAppleAgeSeconds;
+
+
+function game() {
+    px += xv; // at start is 0
+    py += yv; // at start is 0
+    if(px<0) {
+        px= tc-1;
+    }
+    if(px>tc-1) {
+        px= 0;
+    }
+    if(py<0) {
+        py= tc-1;
+    }
+    if(py>tc-1) {
+        py= 0;
+    }
+    // The screen
+    ctx3.fillStyle="black";
+    ctx3.fillRect(0,0,canv3.width,canv3.height);
+
+    //The worm
+    ctx3.fillStyle="lime";
+    for(var i=0;i<trail.length;i++) {
+        ctx3.fillRect(trail[i].x*gs,trail[i].y*gs,gs-2,gs-2);
+        if(trail[i].x==px && trail[i].y==py) {
+           tail = 5;
+           px=py=10;
+           gs=tc=20;
+           ax=ay=15;
+           xv=yv=0;
+           trail=[];
+           vel = 15;
+
+            if (sc > rec) {
+                rec = sc;
+                Record2.innerText = rec;
+                }
+            sc = 0;
+
+        }
+    }
+    trail.push({x:px,y:py});
+    while(trail.length>tail) {
+    trail.shift();
+    }
+
+  appleAge++;
+
+  if (ax == px && ay == py) {
+            tail+=3;
+            sc++
+            Score2.innerText = sc;
+    ax = Math.floor(Math.random() * tc);
+    ay = Math.floor(Math.random() * tc);
+    appleAge = 0;
+  } else if (appleAge > maxAppleAgeFrames) {
+    ax = Math.floor(Math.random() * tc);
+    ay = Math.floor(Math.random() * tc);
+    appleAge = 0;
+    sc--;
+    Score2.innerText = sc;
+        } 
+   
+    ctx3.drawImage(img, ax*gs,ay*gs-3, 23, 23);
+
+}
+function keyPush(evt) {
+    switch(evt.keyCode) {
+        case 37:
+            xv=-1;
+            yv=0;
+            break;
+        case 38:
+            xv=0;
+            yv=-1;
+            break;
+        case 39:
+            xv=1;
+            yv=0;
+            break;
+        case 40:
+            xv=0;
+            yv=1;
+            break;
+    }    
+}
+</script>﻿
