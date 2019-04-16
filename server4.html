@@ -1,0 +1,324 @@
+<html>
+  <title>4bServer</title>
+<style> body{ color: white; background: black; font-size:2em; } input { color:white; background-color: black; font-size: 2em; } textarea { width:100%; color:white; background-color: darkgreen; font-size: 1em; } h3 {  background: darkgreen; }  button { font-size: 0.8em; background: coral; } button.onclick { background: yellow;  } </style> 
+ 
+  <script>
+
+  function speak(x) {
+  synth = speechSynthesis
+  utt = new SpeechSynthesisUtterance(x);
+  synth.speak(utt);
+}
+
+
+  </script>
+<body>
+  <!-- i pulsanti per scegliere gli esercizi -->
+<div id="buttons"></div>  
+ 
+    
+
+  <br>
+  Nome della chiave del db che conterrà l'esercizio/value (contentEs)
+  <input type="text" id=nome value="Traccia">
+  <br><br>
+Testo da inviare:<br>
+  <div id="divFigura">
+    
+  </div>
+<textarea type="text" id="contentEs" cols="100%" rows="10"></textarea>
+<script>
+contentEs.focus();
+contentEs.onchange = function(){addData(nome.value, contentEs.value)};
+</script>
+
+<div id="lavagna" style="background:black;"></div>
+    <br>
+  <button onclick="ref.set('')">
+    Cancella Testo, immagine e Risposte inviate
+  </button>
+  <p style="color:coral">
+    Vincitore:
+    <input type="text" id=vincitore >
+    <br>
+    Punteggio:
+    <input type="text" id=score>
+  </p>
+<script>
+    score.onchange = function(){addPoint(vincitore.value, score.value)};
+</script>
+    </script>
+  </p>
+  <center>
+  <div id="punteggi"></div>
+  </center>
+  
+  <script>
+
+
+    
+    ////////////////////////////////
+
+function immagine(indirizzo){
+ return "<img src='" + indirizzo + "' />"; 
+}
+ 
+let contenuto = {
+    "contratto" : "L'art. 1321 del c.c. definisce il contratto come l'accordo di due o più parti per costituire, regolare o estinguere tra loro un rapporto giuridico patrimoniale. Diverso, quindi, è il matrimonio, perché non ha un contenuto patrimoniale, ma prevalentemente personale.",
+  "immagine": "<img src='https://quifinanza.files.wordpress.com/2018/03/contratto-nullo-annullabile.jpg' />",
+  "Elementi essenziali del contratto":
+"Gli elementi esseziali del contratto sono l'accordo, l'oggetto, la causa e la forma.",
+  "accordo":
+"è la volontà manifestata dalle parti di stipulare un contratto. Si forma quando a una proposta segue un'accettazione conforme alla proposta. Le parti possono manifestare la loro volontà in modo esplicito (verbale o scritto) o con un comportamento concludente (una persona che porta i prodotti alla cassa ha l'intenzione di acquistarli.",
+  "oggetto": "È il bene materiale o immateriale che viene trasferito o la prestazione che le parti devono eseguire.",
+  "causa": "La causa di un contratto è la sua funzione economico sociale, la ragione concreta che giustifica lo spostamento di valore e di beni tra i soggetti. deve essere lecita, non contraria a norme imperative e al buon costume.",
+  "forma" : "Modo con cui le parti manifestano all'esterno la volontà di concludere il contratto. Può consistere in una dichiarazione può verbale o scritta o in un comportamento concludente.",
+  "classificazione dei contratti":
+  "I contratti possono essere tipici o atipici, a titolo oneroso o gratuito, istantanei o di durata, reali o consensuali.",
+  
+    }
+
+let speakButton = "<br><center><button  id='butSpeak' onclick=speak(lavagna.innerText)>Clicca</button><button onclick=synth.cancel()>Stop</button></center>";
+
+function butToSendContent(){   
+    let trc=[];
+    for (content in contenuto){
+        let cnt = {
+        "titolo" : content,
+        "testo" : contenuto[content] + speakButton,
+        "feedback" : "...",
+        "immagine" : "http://www.lawyersgunsmoneyblog.com/wp-content/uploads/2015/11/monopolyman.jpg",
+        };
+        trc.push(cnt);
+    }
+  console.log("Ecco trc = " + trc);
+    for (t of trc){
+      t["testo"] = t["testo"].replace(/'/g,"`");
+     butTraccia(t["titolo"],t["testo"],t["feedback"],t["immagine"]);
+    }
+} // end of function butToSendContent()
+ 
+    
+    
+  // pulsanti Presentazione
+function butTraccia(titolo,t,sol,fig){
+  buttons.innerHTML += `<button onclick="setRisposta('`+t+`');">`+titolo+`</button>
+<button onclick="figura('`+fig+`');"><img src='`+fig+`' width='90' /></button>
+<button onclick="setRisposta('`+sol+`');">Feedback</button><br>
+`   
+  
+}
+
+// clicca pulsante con esercizi letti dal client in child("Traccia")
+function setRisposta(x){
+      contentEs
+        .value=x;
+      ref
+        .child(nome.value)
+        .set(contentEs.value);
+    }
+    
+// mostra figura con secondo pulsante (child("quartaimg"))
+function figura(x){
+      ref
+        .child("quartaimg").set(x);
+      divFigura
+        .innerHTML = "<img src='" +
+        x + "' width='50%'/>";
+    }
+
+
+  
+</script>
+
+
+<script src="https://www.gstatic.com/firebasejs/5.9.2/firebase.js"></script>
+<script>
+  // Initialize Firebase - I dati per mostrare i contenuti della pagina e i punteggi
+  var config = {
+    apiKey: "AIzaSyCExeWUN7K_MZHHV9EqZaNtZkVHQq1fCGw",
+    authDomain: "testing-92d80.firebaseapp.com",
+    databaseURL: "https://testing-92d80.firebaseio.com",
+    projectId: "testing-92d80",
+    storageBucket: "testing-92d80.appspot.com",
+    messagingSenderId: "902726693778"
+  };
+  firebase.initializeApp(config);
+
+
+  let database = firebase.database()
+  let ref = database.ref("quarta");
+  let ref2 = database.ref("quarta_punti");
+  //let ref3 = database.ref("quarta_pss");
+  
+  ref.on("value", gotData, errData)
+  ref2.on("value", gotData2, errData)
+  let counter = 0;
+
+function addData(alunno, ris){             /* Add data */
+      ref.child(alunno).set(ris);
+      contentEs.value = "";
+      contentEs.focus();
+}
+  
+function addPoint(alunno, point){      /* Add data */
+      let x= 0;
+      ref2.child(alunno).on("value", q => x = q.val())
+      ref2.child(alunno).set(x + point);
+      score.value = "";
+      vincitore.value += "";
+}
+
+function initializeClass(){         // create records the first time or put them to zero
+ classe4 = ["Correale", "D'apolito", "Galietta", "Giordano", "Guariglia", "Pepe", "Mauro", "Mainente", "Malzone", "Mazziotti", "Puglia", "Landi", "Lembo", "Saturno", "Scelza", "Tardio"];
+  
+    for (alunno of classe4){
+     ref2.child(alunno).set(0);
+  }
+}
+  
+function createPss(){   // crea classe o azzera i punti
+ classe4 = [["Correale","dsjfh"],
+            ["D'apolito","hdfgj"], 
+            ["Galietta", "slfdg"],
+            ["Giordano", "gafi"],
+            ["Guariglia", "iedls"],
+            ["Pepe", "pops8"],
+            ["Mauro", "ndsfjs"],
+            ["Mainente", "jgdkf4"],
+            ["Malzone", "hhj5lf"],
+            ["Mazziotti", "jdfkg8"],
+            ["Puglia", "gjdfkgl"],
+            ["Landi", "u5654o"],
+            ["Lembo", "564j7l"],
+            ["Saturno", "jt5u6j"],
+            ["Scelza", "jdfklr2"],
+            ["Tardio","gyru5"]
+            ];
+  let ref3 = database.ref("quarta_pss");
+  for (alunno of classe4){
+    console.log(alunno);
+     ref3.child(alunno[0]).set(alunno[1]);
+  }
+}
+  
+  
+  
+function gotData(data){
+    lavagna.innerHTML = "";
+    x = data.val();
+    for (n in x){
+      lavagna.innerHTML += n + ": " + x[n] + "<br>"
+    }
+  }
+  
+  
+  function style(em,fg,bg){
+    return "<b style='font-size:"+ em + "em;color="+fg+";background:"+bg+";'>";
+  }
+  
+  // Classifica ---  immagini   ---
+  
+  let cup = "<img src='https://cdn2.iconfinder.com/data/icons/thesquid-ink-40-free-flat-icon-pack/64/cup-512.png' width='30' />";
+  let party ="<img src='http://icons.iconarchive.com/icons/google/noto-emoji-activities/1024/52707-party-popper-icon.png' width='30' >";
+  
+function gotData2(data){
+    punteggi.innerHTML = "";
+    x = data.val();
+  /*
+    let arr = Object.values(x); let min = Math.min(...arr); let max = Math.max(...arr); */
+    let keysSorted = Object.keys(x).sort(function(a,b){return x[b]-x[a]})
+    punteggi.innerHTML += "<u style='color:coral'>Graduatoria:</u><br><button onclick='initializeClass()'>Azzera punteggi</button><br>"
+    punteggi.innerHTML += "<center>";
+    let newx = [];
+    for (n in keysSorted){
+     newx.push([keysSorted[n],x[keysSorted[n]]]); 
+    }
+    console.log(newx);
+    for (n in keysSorted){
+  // PULSANTE AGGIUNGI PUNTEGGIO
+      punteggi.innerHTML += "<br>";
+      let num = parseInt(n)+1;
+   //  Formattazione dei primi classificati
+      
+    if (n == 0){          //                     #1
+      punteggi.innerHTML += "<b style='font-size:2em;color:red'>" + 
+          num +
+          ". <u>" + 
+          "<button onclick=addPoint('" +keysSorted[n] +"',1)>"+ keysSorted[n] + "</button>" +
+          "</u></b> ";
+
+    }
+      
+    else if (n == 1){
+      punteggi.innerHTML += "<b style='font-size:2em;color:coral'>" +
+        num + ". " +
+         "<button onclick=addPoint('" +keysSorted[n] +"',1)>"+ keysSorted[n] + "</button>" +
+        "</b> ";
+      
+      if (x[keysSorted[n]] > 100) punteggi.innerHTML += cup;
+      
+    }
+      
+  else if (n == 2){
+      punteggi.innerHTML += "<b style='font-size:1.5em;color:gold'>" +
+        num + ". " +
+         "<button onclick=addPoint('" +keysSorted[n] +"',1)>"+ keysSorted[n] + "</button>" +
+        "</b> ";
+      
+    if (x[keysSorted[n]] > 100) punteggi.innerHTML += cup;
+     
+    }
+      
+    else {
+      punteggi.innerHTML += "<b style='font-size:1.0em;color:white'>" +
+        num +
+        ". " +
+         "<button onclick=addPoint('" +keysSorted[n] +"',1)>"+ keysSorted[n] + "</button>" +
+        "</b> ";
+      // se il punteggio è maggiore di cento visulizza la coppa
+      if (x[keysSorted[n]] > 100) punteggi.innerHTML += cup;
+      
+    }
+      punteggi.innerHTML += " <b style='font-size:1.0em;background:coral'>" +
+        x[keysSorted[n]] + "</b>";
+      
+  
+    }
+}
+  
+function errData(err){
+    console.log("Error");
+    console.log(err);
+}
+    
+
+butToSendContent();
+
+
+
+
+</script>
+ Tipi di client per svolgere gli esercizi: copia un indirizzo di un client particolare per un certo tipo di esercizio qui sotto. Può esserci anche un link già inserito per facilitare il compito. Basterà cliccare sul link per inserirlo tra i record.
+<!--          Elenco dei client         -->
+<h3> Indirizzamento client </h3>
+<p><a href="javascript:sendToLocation('https://quarta.glitch.me/firebase/client_standard.html')">Standard</a></p>
+<p><a href="javascript:sendToLocation('https://quarta.glitch.me/firebase/client_full_costing.html')">Full costing 1</a></p>
+<p><a href="javascript:sendToLocation('https://quarta.glitch.me/firebase/client_full_costing2.html')">Full costing 2</a></p>
+<p><a href="javascript:sendToLocation('https://quarta.glitch.me/firebase/foodcost.html')">Food cost</a></p>
+<!-- possibilità di inserire il client manualmente -->
+<input type="text" id="linkToEs">
+clicca per mandare l'indirizzo al db in quarta/location
+<button onclick=sendToLocation(linkToEs.value)>Reindirizza</button>
+<script>
+let ref3 = database.ref("quarta_client");
+function sendToLocation(x){
+    linkToEs.value = x;
+    // inserisce l'indirizzo del client
+    ref3.set(x);
+}
+</script>
+<!-- fine locazione client --> 
+
+</body>
+</html>
