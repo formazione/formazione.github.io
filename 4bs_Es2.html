@@ -1,0 +1,43 @@
+
+    <script src="https://www.gstatic.com/firebasejs/4.10.1/firebase.js"></script>
+    <script>
+      var config = {
+        apiKey: "AIzaSyDp-mWaWEI07pIdRUhi6vA-salEMRWz4hw",
+        authDomain: "quiz-e5e5a.firebaseapp.com",
+        databaseURL: "https://quiz-e5e5a.firebaseio.com/",
+        projectId: "quiz-e5e5a",
+        storageBucket: "quiz-e5e5a.appspot.com",
+        messagingSenderId: "901845403492"
+      };
+      firebase.initializeApp(config);
+      var database = firebase.database()
+
+
+      // Devi solo cambiare "4bs_Es_Bilancio" con il nome dell'esercizio
+
+
+      var dbref1 = database.ref().child('4bs_Es2');
+      function add_data(d,c){
+        dbref1.child(d).set(c)
+      }
+
+    </script>
+
+    <p>
+  01/02: ottenuto in locazione un fabbricato al canone semestrale anticipato di 720 euro;
+</p>
+01/04: stipulato un contratto di leasing per un automezzo; è previsto il pagamento di 8 canoni bimestrali anticipati di 2.400 euro;
+<p>
+01/06: stipulato un contratto di locazione per un fabbricato ; si prevede il pagamento posticipato del canone semestrale di 6000 euro;
+</p>
+01/10: concesso ad un dipendente un prestito di 10.220 euro con interessi al tasso del 5% da riscuotere semestralmente in via posticipata;
+<p>
+15/12: ottenuto da un fornitore il rinnovo per 60 giorni di un debito scaduto di 5.475 euro, alla scadenza si dovranno versare anche gli interessi al tasso del 4%.
+    </p>
+
+
+    Scrivi il tuo nome, ad es. Correale
+    <input id="data" type=text />
+    Soluzione: <input id="contenuto" type="text" />
+    <button onclick=add_data(data.value,contenuto.value)>Invia</button>
+    

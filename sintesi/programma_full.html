@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <title>Programma 5bs</title> 
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+ 
+</head>
+<style>
+  body {
+  background : black;
+    color: white;
+    margin-right: 10%;
+    margin-left: 10%;
+    font-size: 1.5em;
+    
+  }
+  
+  #page {
+   font-size: 1.5em; 
+  }
+</style>
+  
+<body>
+  <!--------------------menu bar index 26/2/19-------------------------------->
+<div id="menuDiv"></div>
+<script src="https://quinta.glitch.me/index_menu.js"></script>
+<!---------------------------------------------------->
+<script src="https://quinta.glitch.me/firebase/contenuto.js"></script>
+  <br>
+  <br>
+  <br>
+  <div id="page"></div>
+  <script>
+  
+  console.log(contenuto);
+    
+  for (x in contenuto)
+  {
+    page.innerHTML += "<h3>" + x + "</h3>" +
+      contenuto[x].split("#")[0] + "<br>";
+    
+  }
+  </script>
+</body>
+</html>

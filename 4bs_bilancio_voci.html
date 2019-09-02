@@ -1,0 +1,80 @@
+<html>
+  <head>
+<style>
+  @import "button.css";
+  @import "dark.css";
+body { font-size: 2em; margin-left: 10%; margin-right: 10%; }   textarea, input { width:100%; background-color: gold; border: none; padding: 15px 32px; text-align: left; text-decoration: none; display: inline-block; font-size: 2em; margin: 4px 2px; cursor: pointer;  }  .mytext { background-color: lightblue;}  a:link { opacity: 0.8; underline: 0; }  a:hover { opacity: 0.5; }  a:link, a:visited { background-color: #f44336; color: white; padding: 5px 5px; text-align: center; text-decoration: none; display: inline-block; }       </style>
+<script src="https://www.gstatic.com/firebasejs/4.10.1/firebase.js"></script>
+<script src="gohome.js"></script>
+  </head>
+<body>
+  
+
+<script>
+function configureQuiz(){
+  var config = { apiKey: "AIzaSyDp-mWaWEI07pIdRUhi6vA-salEMRWz4hw", authDomain: "quiz-e5e5a.firebaseapp.com", databaseURL: "https://quiz-e5e5a.firebaseio.com/", projectId: "quiz-e5e5a", storageBucket: "quiz-e5e5a.appspot.com", messagingSenderId: "901845403492" };
+  firebase.initializeApp(config);
+}
+  
+function add_data(alunno,risp,dom){
+  // function that adds the new value c to the child e of child d
+  var database = firebase.database()
+  var dbref1 = database.ref().child(id_database);
+  dbref1.child(alunno).child(dom).set(risp)
+}
+
+function printnome(num){
+  // This creates an input text box with a data+num id for each student -->
+  document.write("Nome:<br><input id='data" + num + "' class='mytext' type=text value='' /><br>")
+}
+
+function textareaAndButton(numalunno,num){
+  //document.write("<input id='data" + num + "' type=text value='' />")
+  document.write("Risposta " + num + ": <textarea id='contenuto"+ num + "' type='text' rows='3' /></textarea>");
+  domanda = "domanda" + num;
+  document.write("<br><button onclick=add_data(data"+ numalunno + ".value,contenuto" + num +".value,'"+domanda+"')>Invia</button><br>")
+}
+
+function qmk(domnum){
+  document.write("<b>" + domnum + "</b><br>")
+  textareaAndButton("1",countnum);
+  document.write("<br><br>")
+  countnum++
+}
+
+function quizData(){
+  document.write("<h3>Esercizio " + id_database + "</h3>")
+  //document.write("<img src='https://www.pidl.org/site-assets/images/line.png/@@images/image.png' width='100%' />");
+  printnome("1");
+  // puoi mettere quante domande vuoi
+  dm = [
+            // domande
+            "Quale articolo disciplina lo Stato patrimoniale?",
+            "Che tipo di forma ha previsto il legislatore?"
+    ];
+  
+          // ciclo che itera le domande in una funzione che le visualizza e prepara per memorizzazione
+  for (n in dm){
+    qmk(dm[n]);
+  }
+
+
+}
+   
+  function start(){
+  // variables
+  configureQuiz();
+  quizData();
+}
+
+// ================ START ===============
+
+let countnum = 1;
+let id_database = 'voci_di_bilancio';
+
+start();
+  
+  </script>
+    
+  </body>
+</html>

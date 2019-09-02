@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <title>5 B Sala e vendita</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <!-----------------------------BOOTSTRAP------------------------>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  <!--------------------------------------------------------------->
+  
+  <style>
+  @import "https://terza.glitch.me/classi_mobile.css" (min-width: 350px);
+  @import "https://terza.glitch.me/classi_tablet.css" (min-width: 600px);
+  @import "https://terza.glitch.me/classi.css" (min-width: 1000px);
+  @import "button.css"
+  html,body{margin-left:5%;
+    margin-right:5%;}
+  </style>
+</head>
+<body>
+
+
+<div id="menuDiv"></div> <!-- copia queste due righe in ogni pagina -->
+<script src="index_menu.js"></script>
+<script>
+                    //   I due link iniziali con immagini
+let dati = {
+  "Test sulla pianificazione":
+  ["Test a risposta multipla sulla pianificazione","https://quinta.glitch.me/test_darm/vision.html",
+   "https://cdn.business2community.com/wp-content/uploads/2016/11/Public-Relations-Planner-900x735.png"],
+  
+  "Test sul marketing":
+  ["Test Marketing",
+   "https://quinta.glitch.me/test/marketing24.html",
+   "https://storage.googleapis.com/c2mtl-media-bucket/2016/11/resize4.jpg"],
+  
+  "Ebook":
+  ["MARKETING Teoria",                                  // EBOOK SUL MARKETING PER TEORIA
+   //"https://formazione.github.io/bib/i/?book=Marketing.epub",
+   "https://quinta.glitch.me/ebook_marketing.html",
+   "https://pbs.twimg.com/media/D0Vj7h5W0AAe1Dg?format=jpg&name=medium"],
+  
+
+};
+
+  for (d in dati){
+    if (dati[d][2] == 'undefined') dati[d][2] = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQugmhEW8rjcmFbpTOq8oSXNdKCioZcGK-zXTSiCQWIedO7fk6O";
+    if (dati[d][3] == 'undefined') dati[d][3] = "100";
+    addLink(d,dati[d][1],dati[d][2],dati[d][3]);
+  }
+// ================================ [   fine link iniziali con immagini ] ==================
+
+  
+  </script>
+  <blockquote style="font-size:2em;">Benvenuti nella home page del sito dedicato al materiale didattico per la classe 5b sala e vendita. Qui troverete materiale di ausilio allo studio come appunti, esercizi interattivi ecc.</blockquote>
+<h4 style="font-size:2em; color:coral">
+  Esercizi in evidenza
+  </h4>
+<div id="divEs1"></div>
+  <script>
+  
+
+    
+function creaLink(nome, link, divToAppendTo, descrizione){
+  let p = document.createElement("p");
+  p.classList.add("big");
+  p.setAttribute("style","font-size:2em");
+  let pText = document.createTextNode(descrizione);
+  p.appendChild(pText);
+  let a = document.createElement("a");
+  a.href = link;
+  a.setAttribute("style","font-size:2em");
+  let aText = document.createTextNode(nome);
+  a.appendChild(aText);
+  let divAppend = document.getElementById(divToAppendTo);
+  divAppend.setAttribute("style","margin-left:10%;margin-right:10%");
+  divAppend.appendChild(p);
+  let br = document.createElement('br');
+  divAppend.appendChild(a);
+
+}
+    
+    
+  // questo array es1 va in divEs1 come links
+  let es1 = [
+    ["Quiz sulla ristorazione","https://quinta.glitch.me/quiz1_ristorazione.html",
+    "Test con parole omesse da inserire tra una serie di parole inserite alla fine del testo. Il tema è quello del contratto di ristorazione."],
+    ["22 domande sul marketing","https://quinta.glitch.me/5bs_es1.html", "Domande a risposta aperta sul Marketing. Per leggere le risposte degli altri partecipanti, digitare aiuto nell'ultima casella di input."],
+    ["Esercizio sul marketing plan","https://quinta.glitch.me/lettura_marketing_plan.html", "Il marketing plan, attraverso una serie di esercizi, per scoprire punti di forza e debolezza, opportunità e rischi che l'impresa si trova a fronteggiare"],
+    ["Test a risposta multipla sulla pianificazione","https://quinta.glitch.me/test_darm/vision.html","Un test a risposte multiple sulla pianificazione in 15 domande."]
+  ]
+  
+  for (nl in es1){
+   
+   creaLink(es1[nl][0],es1[nl][1],"divEs1",es1[nl][2]); 
+  }
+  
+</script>
+<br><br>
+  </body>
+</html>
+

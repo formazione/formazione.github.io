@@ -7,29 +7,71 @@
     bottom:0;
     left:0;
     right:0;
-    margin:0;
+    margin:0 auto;
     spacing:0;
 }
 
 body {
   background-color:black;
+    overflow-y:hidden;
 }
 
 #gc3 {
   position: relative;
-  width:100%;
+  width:50vw;
+  height:100vh;
+  }
+.mobileShow {display: none;} 
+
+  /* Smartphone Portrait and Landscape */ 
+  @media only screen 
+    and (min-device-width : 320px) 
+    and (max-device-width : 480px){ 
+      .mobileShow {display: inline;}
   }
 </style>
 <body>
-      
+  
+  <!--           soundtrack     -->
+  
+  <audio id="soundtrack">
+  <source src="https://opengameart.org/sites/default/files/audio_preview/level3.mp3.ogg">
+  </audio>
+  
+  <!--               audio: eating    -->
+  
+  <audio id="myAudio">
+  <source src="https://opengameart.org/sites/default/files/audio_preview/pacman%20wakka.wav.ogg" type="audio/ogg">
+  <source src="horse.mp3" type="audio/mpeg">
+  Your browser does not support the audio element.
+  </audio>
 
+  
+  <script>
+var x = document.getElementById("myAudio");
+  x.volume = 1;
+var soundtrack = document.getElementById("soundtrack");
+  soundtrack.volume = 0.4;
+  
+function playSoundtrack(){
+   soundtrack.play(); 
+  }
+  
+function playAudio() { 
+  x.play(); 
+} 
+
+function pauseAudio() { 
+  x.pause(); 
+} 
+</script>
   <center>
   
     <canvas id="gc3" width="400" height="400"></canvas>
   
       <!-- pulsanti -->
     <center>
-    <div id="gameArea">
+    <div class="mobileShow">
         <table> <!-- alto -->
         <td colspan="2" align="center">
         <canvas id="up" width="300" height="200" style="background:lime" onclick="moveup()" ontouchstart="moveup()"  ontouchmove="moveup()"></canvas></td>
@@ -58,7 +100,7 @@ window.onload=function () {
     document.addEventListener("keydown",keyPush);
     setInterval(game,1000/vel);
 }
-
+playSoundtrack();
 let px = 10; // posizione iniziale player
 let py = 10;
 let gs = 30; // dimensione di una cella? o numero di celle?
@@ -81,8 +123,8 @@ let yv = 0;
 let trail=[]; // array con le parti di snake
 let tail = 5; // dimensioni iniziali della coda
 let sc = 0; // punteggio
-let rec= 0; // record
-ref1.child("snake").child("record6").on("value", snap => rec = snap.val());   // 95 and 227 are with these stuffs
+let rec= 0;
+ref1.child("snake").child("record").on("value", snap => rec = snap.val());   // 95 and 227 are with these stuffs
 var vel = 5;
 
 // Imamgini dei due frutti e dell'ostacolo (che ora è un rettangolo)
@@ -92,7 +134,8 @@ let img2 = new Image()
 
 // Le immagini dei frutti
 imgs = [
-      // pear
+    
+  // pear
         "https://cdn.glitch.com/9778987b-2a7d-4797-bd0a-a7219e55295a%2Fpear.png?1546407679651",
   // apple      
   "https://cdn.glitch.com/9778987b-2a7d-4797-bd0a-a7219e55295a%2Fapple256.png?1546333034026",
@@ -100,9 +143,17 @@ imgs = [
         "https://cdn0.iconfinder.com/data/icons/bugs-insects-yellow/61/39_-Moth-_bug_insect_nature-128.png",
   //bee yellow
   "https://cdn2.iconfinder.com/data/icons/spring-30/30/Honey_Bee-128.png",
-  // coccinella
-  "http://icons.iconarchive.com/icons/umut-pulat/tulliana-2/128/bug-icon.png"
+
+  //butterfly
+  "https://www.monarchtitle.com/wp-content/uploads/2016/10/cropped-site-icon.png",
+  // my ant
+  "https://cdn.glitch.com/9778987b-2a7d-4797-bd0a-a7219e55295a%2Fant.png?1546792017562",
+  "https://cdn.glitch.com/9778987b-2a7d-4797-bd0a-a7219e55295a%2Fant2.png?1546792290141",
+  "https://cdn.glitch.com/9778987b-2a7d-4797-bd0a-a7219e55295a%2Fscarabeo.png?1546792731755",
+ 
        ];
+    
+  
 // le immagini dei nemici, per ora non sono usate
 enemy = ["https://s24255.pcdn.co/wp-content/uploads/2014/02/unblock-blocked-websites.png",
         "https://www.cloisters.com/images/easyblog_images/116/220px-No_Smoking.svg.png"];
@@ -135,13 +186,14 @@ function randomEnemy(){
   img2.src = randomFruit();
   //img3.src = randomEnemy();
 
+    // text used for boom
 function write(testo, x, y){
     ctx3.font = "32px Comic Sans MS";
     ctx3.fillStyle = "blue";
     ctx3.textAlign = "left";
     ctx3.fillText(testo , x, y); 
 }
-
+    // circle used for effect boom
 function circle(x,y){
   ctx3.fillStyle = 'red';
   ctx3.globalAlpha = 0.1;
@@ -150,8 +202,9 @@ function circle(x,y){
   ctx3.fill();
   ctx3.globalAlpha = 1;
 }
-    
+                        //   effett when you hit an enemy (uses circle and write)
 function boom(x,y){
+  playAudio();
   circle(x*gs,y*gs);
   //ctx3.fillRect(x*gs-10,y*gs-10, 40, 40);
   //ctx3.fillRect(x*gs-20,y*gs-20, 60, 60);
@@ -160,10 +213,6 @@ function boom(x,y){
 }
     
 function flash(num){
-  // When a fruit is eaten: change color of the snake, change position of fruit and obstacles
-  for (n=0;n<1000;n++){
-    
-  }
     rand = changecolor();
     ctx3.fillStyle = rand;
     if (num==1){
@@ -178,7 +227,7 @@ function flash(num){
       movefruit2();
     }
     tail+=3;
-    sc += 5;
+    sc += 50;
     appleAge = 0;
     moveenemy()
   }
@@ -203,7 +252,7 @@ function score(){
   }
   
 function lose(){
-                 tail = 5;
+              tail = 5;
               px=py=10;
               gs=tc=20;
               ax=ay=15;
@@ -212,10 +261,11 @@ function lose(){
               trail=[];
               if (sc > rec) {
                 rec = sc;
-                // writes the record in the database
-                ref1.child("snake").child("record6").set(rec)
+              // how this works? ----------------------------------------- 227 vs 113
+                ref1.child("snake").child("record").set(rec)
+              // -----------------------------------------------------------
               }
-              sc = 0; 
+                sc = 0;
   }
   
 function movefruit1(){
@@ -315,7 +365,7 @@ function game() {
       ay = Math.floor(Math.random() * tc);
       ax2 = Math.floor(Math.random() * tc);
       ay2 = Math.floor(Math.random() * tc);
-      sc--;
+      sc -= 10;
       tail+=3;
       appleAge = 0;
         } 
@@ -324,36 +374,12 @@ function game() {
   ctx3.drawImage(img2, ax2*gs,ay2*gs-3, 20, 20);
 }
     
-    
+   /*                the movement code              */ 
 var z = 0; // avoid doing left-right or top-down
-function moveleft(){
-  if (z!=3){
-            xv=-1;
-            yv=0;
-            z=2;
-  }
-}
-  function moveright(){
-    if (z!=2){
-            xv=1;
-            yv=0;
-            z=3;
-    }
-  }
-function moveup(){
-  if (z!=4){
-            xv=0;
-            yv=-1;
-            z=1;
-  }
-}
-  function movedown(){
-    if (z!=1){
-            xv=0;
-            yv=1;
-            z=4;
-    }
-}
+function moveleft(){ if (z!=3){xv=-1;yv=0;z=2;}}
+function moveright(){if (z!=2){ xv=1; yv=0; z=3; } }
+function moveup(){ if (z!=4){ xv=0; yv=-1; z=1; } }
+function movedown(){ if (z!=1){ xv=0; yv=1; z=4; } }
     
 function keyPush(evt) {
   if (evt.keyCode==37) moveleft();
@@ -361,7 +387,7 @@ function keyPush(evt) {
   else if (evt.keyCode==39) moveright();
   else if (evt.keyCode==40) movedown();
     } 
-  
+  /*      end of movement  code    */
 
 </script>
 <!-- the glitch button that can make you remix this -->

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>5BS LIVE</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+</head>
+<style>
+  body{
+    color:white;
+    background-color: black;
+    font-size: 2em;
+  }
+  input {
+    align:middle;
+    text-align:center;
+    width:100%;
+    color:white;
+    background-color: darkblue;
+    font-size: 2em;
+  }
+    textarea {
+    width:100%;
+    color:white;
+    background-color: darkgreen;
+    font-size: 2em;
+  }
+  </style>
+<body>
+ <br><br>
+    <img src="https://thumbs.dreamstime.com/t/rainbow-banner-8001796.jpg" width="100%" height="10%" style="opacity:0.5"/>
+
+    <center>Esercizi LIVE</center>
+
+<script src="https://www.gstatic.com/firebasejs/5.9.2/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyCExeWUN7K_MZHHV9EqZaNtZkVHQq1fCGw",
+    authDomain: "testing-92d80.firebaseapp.com",
+    databaseURL: "https://testing-92d80.firebaseio.com",
+    projectId: "testing-92d80",
+    storageBucket: "testing-92d80.appspot.com",
+    messagingSenderId: "902726693778"
+  };
+  firebase.initializeApp(config);
+
+
+  let database = firebase.database();
+  let ref = database.ref("present1");
+  let ref2 = database.ref("prs1")
+  ref2.on("value", gotData2)
+  ref.child("Traccia").on("value", snap => prosegui.innerHTML = "Traccia: " + snap.val());
+  ref.child(">>>").on("value", snap => prosegui.innerHTML += "<br> " + snap.val());
+
+function addData(alunno, ris){
+    // ad ogni chiamata crea un nuovo record
+
+      ref.child(alunno).set(ris);
+      risposta.value = "";
+      risposta.focus();
+      ref.child("Traccia").on("value", snap => prosegui.innerHTML = "Traccia: " + snap.val())
+      ref.child(alunno).on("value", snap => prosegui.innerHTML += "<br>Tua risposta: " + snap.val())
+
+}
+let cup = "<img src='https://cdn2.iconfinder.com/data/icons/thesquid-ink-40-free-flat-icon-pack/64/cup-512.png' width='30' />";
+  function gotData2(data){
+    punteggi.innerHTML = "";
+    x = data.val();
+    console.log(x)
+    for (n in x){
+if (typeof(x[n]) === 'number'){
+    if (x[n]!=0){
+      punteggi.innerHTML += "<b style='color:coral;background:yellow;'>  " + n + ": " + x[n] + " <b style='color:coral'>  </b> "
+      }
+  else {punteggi.innerHTML += " [ " + n + ": " + x[n] + " ] "}
+    }
+if (typeof(x[n]) === 'string'){
+    if (x[n]!="0"){
+      punteggi.innerHTML +=  cup + "<b style='color:coral;background:coral'>  " + n + ": " + x[n] + "  </b>" + cup;
+      }
+  else {punteggi.innerHTML += " [ " + n + ": " + x[n] + " ] "}
+    }    
+  
+  }
+}
+
+</script>
+  <body>
+      <!--------------------menu bar index 26/2/19-------------------------------->
+<div id="menuDiv"></div>
+<script src="https://quinta.glitch.me/index_menu.js"></script>
+<!---------------------------------------------------->
+    <br><br><br>
+    <center>
+    <img src="http://abc-digitale.it//wp-content/uploads/2016/09/test.png" width=50 />Inserisci dati<br>
+    </center>
+<div style="background:coral" id="prosegui"></div>
+<img src="https://www.kwsme.com/wp-content/uploads/2016/06/login-user-icon.png" width="30"/>
+<br>      <center>
+    Inserisci il nome
+    <i style='font-size:0.5em;'>
+    <br>(senza non puoi inviare la risposta)
+    </i>
+    </center>
+  <input type="text" id=nome>
+<br>
+<img src="https://www.freeiconspng.com/uploads/question-answer-icon-6.png" width="30" />
+    Risposta <br><i style='font-size:0.5em;'>(dopo aver risposto premi invio per confermare: il punteggio verrà attribuito dal docente dopo il controllo della risposta a lui visibile)</i>
+  <br>
+    
+    <!-- Scrivi la traccia qui -->
+  <textarea type="text" id="risposta" cols="100%" rows="5"></textarea>
+
+<script>
+nome.focus();
+risposta.onchange = function(){addData(nome.value, risposta.value)};
+</script>
+   
+    
+    <!-- vedi punteggi totali -->
+    
+    <div id="punteggi"></div>
+    <a href="https://quinta.glitch.me/firebase/punteggi.html">
+      <script>document.write(cup);</script>
+      <span style='background:darkred'>
+      Punteggi totali</a>
+      </span>
+    
+    
+    
+</body>
+</html>

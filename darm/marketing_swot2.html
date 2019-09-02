@@ -1,0 +1,1084 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta name="viewport" content="initial-scale=1.0">
+    <title>Quiz</title>
+    <!-- jquery for maximum compatibility -->
+	<link type="text/css" rel="stylesheet" href="https://stackpath.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css">
+    <!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>-->
+	<script src="https://code.jquery.com/jquery-1.11.1.min.js" integrity="sha256-VAvG3sHdS5LqTT+5A/aeq/bZGa/Uj04xKxY8KM/w9EE=" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script>
+
+    var quiztitle = "Pianificazione e programmazione";
+
+    /**
+    * Set the information about your questions here. The correct answer string needs to match
+    * the correct choice exactly, as it does string matching. (case sensitive)
+    *
+    */
+
+/**
+*Let's create the randomization of the questions!
+*/
+function speak(x) {
+  speechSynthesis.speak(new SpeechSynthesisUtterance(x));
+}
+function shuffle(array) {
+  var currentIndex = array.length, temporaryValue, randomIndex;
+
+  // While there remain elements to shuffle...
+  while (0 !== currentIndex) {
+
+    // Pick a remaining element...
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
+
+    // And swap it with the current element.
+    temporaryValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
+  }
+
+  return array;
+}
+	    
+if (!("scramble" in Array.prototype)) {
+  Object.defineProperty(Array.prototype, "scramble", {
+    enumerable: false,
+    value: function() {
+      var o, i, ln = this.length;
+      while (ln--) {
+        i = Math.random() * (ln + 1) | 0;
+        o = this[ln];
+        this[ln] = this[i];
+        this[i] = o;
+      }
+      return this;
+    }
+  });
+}		
+	    
+let quiz = [
+
+
+      {
+            "question"      :   'Il marketing mix fa parte del:',
+            "image"         :   'https://www.purelybranded.com/wp-content/uploads/2012/10/The-Four-Ps-of-Marketing.gif',
+            "choices"       :   [
+									    'marketing operativo',
+									    'marketing strategico',
+									    'posizionamento',
+									    'targeting'
+                                ],
+            "correct"       :   'marketing operativo',
+            "explanation"   :   '',
+        },      {
+            "question"      :   'Il canale di distribuzione breve, quanti intermediari prevedere?',
+            "image"         :   'https://i0.wp.com/cdn.cleverism.com/wp-content/uploads/2014/08/4Ps-marketing-mix-product_.png?fit=451%2C433&ssl=1',
+            "choices"       :   [
+									    'prevede un solo intermediario',
+									    'non prevede intermediari',
+									    'va direttamente dal produttore al consumatore',
+									    'ha più intermediari'
+                                ],
+            "correct"       :   'prevede un solo intermediario',
+            "explanation"   :   '',
+        },      {
+            "question"      :   'Se le materie prime sono il 30% del prezzo, nel metodo del fattore, il fattore è',
+            "image"         :   '',
+            "choices"       :   [
+									    '100/30',
+									    '30/100',
+									    '30 x 100',
+									    '100 x 30'
+                                ],
+            "correct"       :   '100/30',
+            "explanation"   :   '',
+        },      {
+            "question"      :   'I costi indiretti sono:',
+            "image"         :   'https://blog.alfadocs.com/hubfs/Imported_Blog_Media/Marketing-Mix-per-dentisti.jpg',
+            "choices"       :   [
+									    'sono i costi di amministrazione, ad esempio',
+									    'i costi per le materie prime, ad esempio',
+									    'i costi direttamente attribuibili al prodotto',
+									    'costi certi'
+                                ],
+            "correct"       :   'sono i costi di amministrazione, ad esempio',
+            "explanation"   :   '',
+        },      {
+            "question"      :   'Se i costi diretti ammontano a 5 € e sono pari al 25% del prezzo, a quanto fissiamo il prezzo?',
+            "image"         :   '',
+            "choices"       :   [
+									    '20 €',
+									    '25 €',
+									    '10 €',
+									    '15 €'
+                                ],
+            "correct"       :   '20 €',
+            "explanation"   :   '100 : 25 = prezzo : 5',
+        },      {
+            "question"      :   'Il prodotto è costituito da elementi',
+            "image"         :   '',
+            "choices"       :   [
+									    'materiali e immateriali',
+									    'solo materiali',
+									    'solo immateriali',
+									    'non so'
+                                ],
+            "correct"       :   'materiali e immateriali',
+            "explanation"   :   '',
+        },      {
+            "question"      :   'la gamma comprende',
+            "image"         :   '',
+            "choices"       :   [
+									    'tutti i prodotti della società',
+									    'solo i prodotti di un certo tipo',
+									    'i prodotti che hanno uno stesso utilizzo',
+									    'i prodotti dei concorrenti'
+                                ],
+            "correct"       :   'tutti i prodotti della società',
+            "explanation"   :   '',
+        },      {
+            "question"      :   'Le fasi del ciclo di vita del prodotto',
+            "image"         :   '',
+            "choices"       :   [
+									    'lancio, sviluppo, maturità, declino',
+									    'declino, lancio, sviluppo, maturità',
+									    'maturità, lancio, sviluppo, declino',
+									    'sviluppo, lancio, maturità, rilancio'
+                                ],
+            "correct"       :   'lancio, sviluppo, maturità, declino',
+            "explanation"   :   '',
+        },      {
+            "question"      :   'Nella fase di lancio ci sono i',
+            "image"         :   '',
+            "choices"       :   [
+									    'clienti innovatori',
+									    'adottanti iniziali',
+									    'adottanti successivi',
+									    'ritardatari'
+                                ],
+            "correct"       :   'clienti innovatori',
+            "explanation"   :   '',
+        },      {
+            "question"      :   'Nella fase di sviluppo ci sono i',
+            "image"         :   '',
+            "choices"       :   [
+									    'adottanti iniziali',
+									    'clienti innovatori',
+									    'adottanti successivi',
+									    'ritardatari'
+                                ],
+            "correct"       :   'adottanti iniziali',
+            "explanation"   :   '',
+        },      {
+            "question"      :   'Nella fase di maturità i clienti sono chiamati:',
+            "image"         :   '',
+            "choices"       :   [
+									    'adottanti successivi',
+									    'clienti innovatori',
+									    'adottanti iniziali',
+									    'ritardatari'
+                                ],
+            "correct"       :   'adottanti successivi',
+            "explanation"   :   '',
+        },      {
+            "question"      :   'Nella fase di declino ci sono i',
+            "image"         :   '',
+            "choices"       :   [
+									    'ritardatari',
+									    'clienti innovatori',
+									    'adottanti iniziali',
+									    'adottanti successivi'
+                                ],
+            "correct"       :   'ritardatari',
+            "explanation"   :   '',
+        },      {
+            "question"      :   'Chi punta soprattutto sulla pubblicità è orientato',
+            "image"         :   '',
+            "choices"       :   [
+									    'alle vendite',
+									    'al prodotto',
+									    'al mercato',
+                                ],
+            "correct"       :   'alle vendite',
+            "explanation"   :   '',
+        },      {
+            "question"      :   'Puntano soprattutto a <b>ridurre i costi</b> le imprese orientate:',
+            "image"         :   '',
+            "choices"       :   [
+									    'al prodotto',
+									    'alle vendite',
+									    'al mercato',
+                                ],
+            "correct"       :   'al prodotto',
+            "explanation"   :   '',
+        },      {
+            "question"      :   'Le imprese puntano prevalentemente sulla soddisfazione del cliente nell`orientamento',
+            "image"         :   '',
+            "choices"       :   [
+									    'al mercato',
+									    'alle vendite',
+									    'al prodotto',
+                                ],
+            "correct"       :   'al mercato',
+            "explanation"   :   '',
+        },      {
+            "question"      :   'I prezzi di penetrazione, rispetto a quelli della concorrenza, sono',
+            "image"         :   '',
+            "choices"       :   [
+									    'più bassi',
+									    'più alti',
+									    'uguali',
+									    'dipendono dalla stagione'
+                                ],
+            "correct"       :   'più bassi',
+            "explanation"   :   '',
+        },      {
+            "question"      :   'i prezzi allineati, rispetto a quelli della concorrenza, sono',
+            "image"         :   '',
+            "choices"       :   [
+									    'uguali',
+									    'più bassi',
+									    'più alti',
+									    'dipendono dalla stagione'
+                                ],
+            "correct"       :   'uguali',
+            "explanation"   :   '',
+        },      {
+            "question"      :   'i prezzi di scrematura, rispetto a quelli della concorrenza, sono',
+            "image"         :   '',
+            "choices"       :   [
+									    'più alti',
+									    'uguali',
+									    'più bassi',
+									    'dipendono dalla stagione'
+                                ],
+            "correct"       :   'più alti',
+            "explanation"   :   '',
+        },      {
+            "question"      :   'La Apple pratica prezzi',
+            "image"         :   '',
+            "choices"       :   [
+									    'di scrematura',
+									    'di penetrazione',
+									    'uguali alla concorrenza',
+									    'prezzi stagionali'
+                                ],
+            "correct"       :   'di scrematura',
+            "explanation"   :   '',
+        },      {
+            "question"      :   'Imprese orientate al prodotto',
+            "image"         :   '',
+            "choices"       :   [
+									    'cercano di mantenere i costi bassi',
+									    'analizzano prima il mercato',
+									    'puntano tutto sulla comunicazione',
+									    'mirano alla soddisfazione del cliente'
+                                ],
+            "correct"       :   'cercano di mantenere i costi bassi',
+            "explanation"   :   '',
+        },      {
+            "question"      :   'Imprese orientate alle vendite',
+            "image"         :   '',
+            "choices"       :   [
+									    'puntano tutto sulla comunicazione',
+									    'cercano di mantenere i costi bassi',
+									    'analizzano prima il mercato',
+									    'mirano alla soddisfazione del cliente'
+                                ],
+            "correct"       :   'puntano tutto sulla comunicazione',
+            "explanation"   :   '',
+        },      {
+            "question"      :   'Imprese orientate al mercato',
+            "image"         :   '',
+            "choices"       :   [
+									    'mirano alla soddisfazione del cliente',
+									    'cercano di mantenere i costi bassi',
+									    'non fanno assistenza',
+									    'puntano tutto sulla comunicazione'
+                                ],
+            "correct"       :   'mirano alla soddisfazione del cliente',
+            "explanation"   :   '',
+        },      {
+            "question"      :   'Nell`analisi interna si analizza/no',
+            "image"         :   '',
+            "choices"       :   [
+									    'punti di forza e debolezza',
+									    'opportunità e delle minacce',
+									    'concorrenza',
+									    'domanda'
+                                ],
+            "correct"       :   'punti di forza e debolezza',
+            "explanation"   :   '',
+        },      {
+            "question"      :   'Weaknesses significa',
+            "image"         :   '',
+            "choices"       :   [
+									    'punti di debolezza',
+									    'punti di forza',
+									    'opportunità',
+									    'minacce'
+                                ],
+            "correct"       :   'punti di debolezza',
+            "explanation"   :   '',
+        },      {
+            "question"      :   'Opportunities significa',
+            "image"         :   '',
+            "choices"       :   [
+									    'opportunità',
+									    'punti di debolezza',
+									    'punti di forza',
+									    'minacce'
+                                ],
+            "correct"       :   'opportunità',
+            "explanation"   :   '',
+        },      {
+            "question"      :   'Strengths significa',
+            "image"         :   '',
+            "choices"       :   [
+									    'punti di forza',
+									    'punti di debolezza',
+									    'opportunità',
+									    'minacce'
+                                ],
+            "correct"       :   'punti di forza',
+            "explanation"   :   '',
+        },      {
+            "question"      :   'threats significa',
+            "image"         :   '',
+            "choices"       :   [
+									    'minacce',
+									    'punti di debolezza',
+									    'punti di forza',
+									    'opportunità'
+                                ],
+            "correct"       :   'minacce',
+            "explanation"   :   '',
+        },      {
+            "question"      :   'punti di debolezza in inglese:',
+            "image"         :   '',
+            "choices"       :   [
+									    'Weaknesses',
+									    'Opportunities',
+									    'Strengths',
+									    'threats'
+                                ],
+            "correct"       :   'Weaknesses',
+            "explanation"   :   '',
+        },      {
+            "question"      :   'punti di forza in inglese:',
+            "image"         :   '',
+            "choices"       :   [
+									    'Strengths',
+									    'Weaknesses',
+									    'Opportunities',
+									    'threats'
+                                ],
+            "correct"       :   'Strengths',
+            "explanation"   :   '',
+        },      {
+            "question"      :   'opportunità in inglese:',
+            "image"         :   '',
+            "choices"       :   [
+									    'Opportunities',
+									    'Weaknesses',
+									    'Strengths',
+									    'threats'
+                                ],
+            "correct"       :   'Opportunities',
+            "explanation"   :   '',
+        },      {
+            "question"      :   'minacce in inglese:',
+            "image"         :   '',
+            "choices"       :   [
+									    'threats',
+									    'Weaknesses',
+									    'Opportunities',
+									    'Strengths'
+                                ],
+            "correct"       :   'threats',
+            "explanation"   :   '',
+        },      {
+            "question"      :   'Le strategie di consolidamento riguardano',
+            "image"         :   '',
+            "choices"       :   [
+									    'fasi in cui si attendono periodi più favorevoli',
+									    'periodi di congiuntura economica favorevole',
+									    'l`eliminazione prodotti in perdita',
+									    
+                                ],
+            "correct"       :   'periodi di congiuntura economica favorevole',
+            "explanation"   :   '',
+        },      {
+            "question"      :   'Le strategie di ridimensionamento',
+            "image"         :   '',
+            "choices"       :   [
+									    'comportano l`eliminazione prodotti in perdita',
+									    'riguardano periodi di congiuntura economica favorevole',
+									    'si seguono in fasi in cui si attendono periodi più favorevoli',
+									    
+                                ],
+            "correct"       :   'comportano l`eliminazione prodotti in perdita',
+            "explanation"   :   '',
+        },      {
+            "question"      :   'Una strategia di espansione si attua',
+            "image"         :   '',
+            "choices"       :   [
+									    'in periodi di congiuntura economica favorevole',
+									    'consolidando la propria posizione sul mercato',
+									    'eliminando prodotti in perdita',
+                      'ritirandosi dal mercato',
+									    
+                                ],
+            "correct"       :   'in periodi di congiuntura economica favorevole',
+            "explanation"   :   '',
+        },      {
+            "question"      :   'Nelle fasi di congiuntura economica favorevole la strategia da adottare è di',
+            "image"         :   '',
+            "choices"       :   [
+									    'espansione',
+									    'consolidamento',
+									    'ridimensionamento',
+									    
+                                ],
+            "correct"       :   'espansione',
+            "explanation"   :   '',
+        },      {
+            "question"      :   'Nelle fasi di attesa di periodi più favorevoli, la strategia scelta è di',
+            "image"         :   '',
+            "choices"       :   [
+									    'consolidamento',
+									    'espansione',
+									    'ridimensionamento',
+									    
+                                ],
+            "correct"       :   'consolidamento',
+            "explanation"   :   '',
+        },      {
+            "question"      :   'Nelle fasi di congiuntura economica sfavorevole la strategia è di',
+            "image"         :   '',
+            "choices"       :   [
+									    'ridimensionamento',
+									    'espansione',
+									    'consolidamento',
+									    
+                                ],
+            "correct"       :   'ridimensionamento',
+            "explanation"   :   '',
+        },
+  {
+            "question"      :   'Nell`analisi esterna si esaminano',
+            "image"         :   '',
+            "choices"       :   [
+									    'forza e debolezza',
+									    'opportunità e minacce'
+                                ],
+            "correct"       :   'forza e debolezza',
+            "explanation"   :   '',
+        },      {
+            "question"      :   'Ambiente esterno: cosa comprende?',
+            "image"         :   '',
+            "choices"       :   [
+									    'ambiente specifico e generale',
+									    'ambiente specifico e interno',
+                                ],
+            "correct"       :   'ambiente specifico e generale',
+            "explanation"   :   '',
+        },      {
+            "question"      :   'La strategia riguarda:',
+            "image"         :   '',
+            "choices"       :   [
+									    'il lungo periodo',
+									    'il breve periodo',
+									    
+									    
+                                ],
+            "correct"       :   'il lungo periodo',
+            "explanation"   :   '',
+        },      {
+            "question"      :   'La programmazione riguarda:',
+            "image"         :   '',
+            "choices"       :   [
+									    'il breve periodo',
+									    'il lungo periodo',
+									    
+									    
+                                ],
+            "correct"       :   'il breve periodo',
+            "explanation"   :   '',
+        },      {
+            "question"      :   'I costi diretti',
+            "image"         :   '',
+            "choices"       :   [
+									    'Sono attribuibili in modo certo al piatto',
+									    'Si attribuiscono al piatto con un riparto',
+									    'sono, ad esempio, i costi di amministrazione'
+                                ],
+            "correct"       :   'Sono attribuibili in modo certo al piatto',
+            "explanation"   :   '',
+        },      {
+            "question"      :   'Il marketing mix comprende',
+            "image"         :   '',
+            "choices"       :   [
+									    'le quattro p',
+									    'le strategie di scelta',
+									    'le strategie di analisi',
+									    'il posizionamento'
+                                ],
+            "correct"       :   'le quattro p',
+            "explanation"   :   '',
+        },      {
+            "question"      :   'I prezzi di scrematura sono',
+            "image"         :   '',
+            "choices"       :   [
+									    'prezzi alti per target esigenti',
+									    'prezzi bassi',
+									    'prezzi allineati'
+                                ],
+            "correct"       :   'prezzi alti per target esigenti',
+            "explanation"   :   '',
+        },      {
+            "question"      :   'I prezzi di penetrazione sono',
+            "image"         :   '',
+            "choices"       :   [
+									    'prezzi più bassi dei concorrenti',
+									    'prezzi più alti e prodotti di qualità',
+									    
+									    
+                                ],
+            "correct"       :   'prezzi più bassi dei concorrenti',
+            "explanation"   :   '',
+        },      {
+            "question"      :   'Vision',
+            "image"         :   '',
+            "choices"       :   [
+									    'scenario futuro cui a cui tente la società',
+									    'scopo che la società vuole realizzare',
+									    'apertura mentale',
+									    'tecnica di meditazione'
+                                ],
+            "correct"       :   'scenario futuro cui a cui tente la società',
+            "explanation"   :   '',
+        },      {
+            "question"      :   'D: la mission è',
+            "image"         :   '',
+            "choices"       :   [
+									    'lo scopo della società nel lungo termine',
+									    'lo scenario futuro cui la società tende',
+									    'un tipo di religione',
+                                ],
+            "correct"       :   'lo scopo della società nel lungo termine',
+            "explanation"   :   '',
+        },      {
+            "question"      :   'Sono Strenghts:',
+            "image"         :   '',
+            "choices"       :   [
+									    'localizzazione favorevole',
+									    'congiuntura economica favorevole',
+									    'rischio di ingresso di nuovi concorrenti',
+									    'servizi scadenti'
+                                ],
+            "correct"       :   'localizzazione favorevole',
+            "explanation"   :   '',
+        },      {
+            "question"      :   'Sono Weaknesses:',
+            "image"         :   '',
+            "choices"       :   [
+									    'servizi scadenti',
+									    'localizzazione favorevole',
+									    'congiuntura economica favorevole',
+									    'rischio di ingresso di nuovi concorrenti'
+                                ],
+            "correct"       :   'servizi scadenti',
+            "explanation"   :   '',
+        },      {
+            "question"      :   'Sono Opportunities:',
+            "image"         :   '',
+            "choices"       :   [
+									    'congiuntura economica favorevole',
+									    'localizzazione favorevole',
+									    'rischio di ingresso di nuovi concorrenti',
+									    'servizi scadenti'
+                                ],
+            "correct"       :   'congiuntura economica favorevole',
+            "explanation"   :   '',
+        },      {
+            "question"      :   'Sono Threats:',
+            "image"         :   '',
+            "choices"       :   [
+									    'rischio di ingresso di nuovi concorrenti',
+									    'localizzazione favorevole',
+									    'congiuntura economica favorevole',
+									    'servizi scadenti'
+                                ],
+            "correct"       :   'rischio di ingresso di nuovi concorrenti',
+            "explanation"   :   '',
+        },      {
+            "question"      :   'Qual è il significato di vantaggio competitivo?',
+            "image"         :   '',
+            "choices"       :   [
+									    'La capacità di offrire prezzi più bassi o caratteristiche diverse',
+									    'Avere molti concorrenti',
+									    'Essere in una fase congiunturale favorevole',
+									    'Avere clienti poco fedeli'
+                                ],
+            "correct"       :   'La capacità di offrire prezzi più bassi o caratteristiche diverse',
+            "explanation"   :   '',
+        },      {
+            "question"      :   'Si verifica il raggiungimento degli obiettivi con',
+            "image"         :   '',
+            "choices"       :   [
+									    'controllo di gestione',
+									    'analisi SWOT',
+									    'analisi di mercato',
+									    'segmentazione'
+                                ],
+            "correct"       :   'controllo di gestione',
+            "explanation"   :   '',
+        },      {
+            "question"      :   'Una impresa è efficiente se',
+            "image"         :   '',
+            "choices"       :   [
+									    'consegue gli obiettivi con minori costi',
+									    'raggiunge gli obiettivi prefissati',
+                                ],
+            "correct"       :   'consegue gli obiettivi con minori costi',
+            "explanation"   :   '',
+        },      {
+            "question"      :   'Una impresa è efficace quando',
+            "image"         :   '',
+            "choices"       :   [
+									    'raggiunge gli obiettivi prefissati',
+									    'raggiunge gli obiettivi con minori costi possibili',
+                                ],
+            "correct"       :   'raggiunge gli obiettivi prefissati',
+            "explanation"   :   '',
+        },      {
+            "question"      :   'Una scelta strategica:',
+            "image"         :   '',
+            "choices"       :   [
+									    'comporta elevati finanziamenti',
+									    'riguarda la normale gestione',
+									    'può essere effettuata dai dirigenti di livello più basso',
+									    'riguarda un periodo amssimo di 3 mesi'
+                                ],
+            "correct"       :   'comporta elevati finanziamenti',
+            "explanation"   :   '',
+        },      {
+            "question"      :   'La mission definisce',
+            "image"         :   '',
+            "choices"       :   [
+									    'lo scopo da realizzare nel medio lungo periodo',
+									    'le risorse da impiegare per i suoi scopi',
+									    'ambiente esterno alla società',
+                                ],
+            "correct"       :   'lo scopo da realizzare nel medio lungo periodo',
+            "explanation"   :   '',
+        },    {
+            "question"      :   'Il vantaggio competitivo',
+            "image"         :   '',
+            "choices"       :   [
+									    'si attua con innovazione o riduzione dei costi',
+									    'una volta ottenuto, viene mantenuto per sempre',
+									    'è sinonimo di segmentazione',
+                                ],
+            "correct"       :   'si attua con innovazione o riduzione dei costi',
+            "explanation"   :   '',
+        },      {
+            "question"      :   'Il controllo di gestione',
+            "image"         :   '',
+            "choices"       :   [
+									    'verifica lo scostamento tra dati preventivi e consuntivi',
+									    'definisce gli obiettivi',
+									    'avviene prima della programmazione',
+                                ],
+            "correct"       :   'verifica lo scostamento tra dati preventivi e consuntivi',
+            "explanation"   :   '',
+        },
+
+];
+
+//use this for IE syntax error at => : ECMA script 6 not supported in IE 11 :(
+//quiz.forEach(function(q){ return q.choices.scramble()});
+
+//use this for ECMA script 6
+quiz.forEach(q => q.choices.scramble()); // Mescola l'ordine delle risposte
+//console.log(quiz[0].choices);
+		
+quiz = shuffle(quiz); // mescola l'ordine delle domande
+	    
+    /******* No need to edit below this line *********/
+    var currentquestion = 0, score = 0, submt=true, picked;
+
+    jQuery(document).ready(function($){
+
+        /**
+         * HTML Encoding function for alt tags and attributes to prevent messy
+         * data appearing inside tag attributes.
+         */
+        function htmlEncode(value){
+          return $(document.createElement('div')).text(value).html();
+        }
+
+        /**
+         * This will add the individual choices for each question to the ul#choice-block
+         *
+         * @param {choices} array The choices from each question
+         */
+		function addChoices(choices){
+			if(typeof choices !== "undefined" && $.type(choices) == "array"){
+				$('#choice-block').empty();
+				for(var i=0;i<choices.length; i++){
+          // added .css({'font-size':'36px'}) il 2 marzo 2019
+				$(document.createElement('li')).addClass('choice choice-box btn').attr('data-index', i).text(choices[i]).appendTo('#choice-block').css({'font-size':'28px'});		//  Aggiunge risposte
+        }
+			}
+		}
+        
+        /**
+         * Resets all of the fields to prepare for VAI ALLA PROSSIMA DOMANDA
+         */
+function nextQuestion(){
+      speak(quiz[currentquestion]['question']);
+			submt = true;
+			$('#explanation').empty(); // svuota spiegazione
+			$('#question').text(quiz[currentquestion]['question']); // domanda attuale
+      // domanda n. di ... totale domande
+			$('#pager').text('Domanda' + Number(currentquestion + 1) + ' di ' + quiz.length);
+      // Immagine... ?
+			if(quiz[currentquestion].hasOwnProperty('image') && quiz[currentquestion]['image'] != ""){
+				if($('#question-image').length == 0){
+					$(document.createElement('img')).addClass('question-image').attr('id', 'question-image').attr('src', quiz[currentquestion]['image']).attr('alt', htmlEncode(quiz[currentquestion]['question'])).insertAfter('#question');
+				} else {
+					$('#question-image').attr('src', quiz[currentquestion]['image']).attr('alt', htmlEncode(quiz[currentquestion]['question']));
+				}
+			} else {
+				$('#question-image').remove();
+			}
+      // aggiunge le risposte multiple
+			addChoices(quiz[currentquestion]['choices']);
+      // va al setup dei bottoni
+			setupButtons();
+      //
+			
+      // ===================== [ speak ] =====================
+      
+      
+			jQuery(document).ready(function($){
+				$("#question").html(function(){
+					var text= $(this).text().trim().split(" ");
+					var first = text.shift();
+					return (text.length > 0 ? "<span class='number'>"+ first +"</span> " : first) + text.join(" ");
+				});
+				
+				$('p.pager').each(function(){
+					var text = $(this).text().split(' ');
+					if(text.length < 2)
+						return;
+					
+					text[1] = '<span class="qnumber">'+text[1]+'</span>';
+					$(this).html(
+						text.join(' ')
+					);
+				});
+				
+			});
+			
+        }
+
+        /**
+         * After a selection is submitted, checks if its the right answer
+         *
+         * @param {choice} number The li zero-based index of the choice picked
+         */
+function processQuestion(choice){
+          // ===========   Risposta ESATTA!  ==============================
+    if(quiz[currentquestion]['choices'][choice] == quiz[currentquestion]['correct']){
+				$('.choice')
+          .eq(choice)
+          .addClass('btn-success')
+          .css({'font-size':'36px', 'font-weight':'bold', 'border-color':'#51a351', 'color':'#fff'});
+				$('#explanation')
+          .html('<span class="correct">ESATTO!</span> ' + htmlEncode(quiz[currentquestion]['explanation']));
+              speak("esatto!");
+      
+				      score++;
+			} // ===================== risposta sbagliata ==============
+      
+  else {
+                $('.choice').eq(choice).addClass('btn-danger').css({'font-weight':'bold', 'border-color':'#f93939', 'color':'#fff'});
+                $('#explanation').html('<span class="incorrect">INESATTO!</span> ' + htmlEncode(quiz[currentquestion]['explanation']));
+        speak("Non è corretto! La risposta era " + quiz[currentquestion]['correct']);
+            }
+            currentquestion++;
+  
+
+			if(currentquestion == quiz.length){ // SONO FINITE LE DOMANDE... MOSTRA I RISULTATI
+				$('#submitbutton').html('GET QUIZ RESULTS').removeClass('btn-success').addClass('btn-info').css({'border-color':'#3a87ad', 'color':'#fff'}).on('click', function(){
+					$(this).text('GET QUIZ RESULTS').on('click');
+					endQuiz();
+				})
+				
+			}
+      
+      else if (currentquestion < quiz.length){ 
+      // SE CI SONO ANCORA DOMANDE, RIMETTE IL PULSANTE CONTROLLA LA RISPOSTA
+				$('#submitbutton').html('VAI ALLA PROSSIMA DOMANDA &raquo;')
+          .removeClass('btn-success')
+          .addClass('btn-warning')
+          .css({'font-weight':'bold', 'border-color':'#faa732', 'color':'#fff'})
+          .on('click', function(){
+          
+        $(this).text(' CONTROLLA LA RISPOSTA ')
+          .removeClass('btn-warning')
+          .addClass('btn-success')
+          .css({'font-weight':'bold', 'border-color':'#51a351', 'color':'#fff'})
+          .on('click',);
+				  nextQuestion(); // VA ALLA PROSSIMA DOMANDA
+          
+
+				})
+  			
+			} else {
+				//	$('#submitbutton').html('VAI ALLA PROSSIMA DOMANDA &raquo;').on('click', function(){
+				//		$(this).text('- CONTROLLA LA RISPOSTA -').css({'color':'inherit'}).on('click');
+				//	})
+			}
+
+          
+			
+		}
+
+        /**
+         * Sets up the event listeners for each button.
+         */
+		function setupButtons(){
+      
+			$('.choice').on('click', function(){
+				picked = $(this).attr('data-index');
+				$('.choice').removeAttr('style').off('mouseout mouseover');
+				$(this).css({'font-weight':'900', 'border-color':'#51a351', 'color':'#51a351', 'background' : 'gold'});
+				if(submt){
+					submt=false;
+					$('#submitbutton').css({'color':'#fff','cursor':'pointer'}).on('click', function(){
+						$('.choice').off('click');
+						$(this).off('click');
+						processQuestion(picked);
+            //
+					});
+				}
+			})
+		}
+        
+        /**
+         * Quiz ends, display a message.
+         */
+		function endQuiz(){
+			$('#explanation').empty();
+			$('#question').empty();
+			$('#choice-block').empty();
+			$('#submitbutton').remove();
+			$('.rsform-block-submit').addClass('show');
+			$('#question').text("You got " + score + " out of " + quiz.length + " correct.");
+			$(document.createElement('h4')).addClass('score').text(Math.round(score/quiz.length * 100) + '%').insertAfter('#question');			
+		}
+
+        /**
+         * Runs the first time and creates all of the elements for the quiz
+         */
+		function init(){
+      speak(quiz[currentquestion]['question'])
+			//add title
+      /*
+			if(typeof quiztitle !== "undefined" && $.type(quiztitle) === "string"){
+				$(document.createElement('h2')).text(quiztitle).appendTo('#frame');
+			} else {
+				$(document.createElement('h2')).text("Quiz").appendTo('#frame');
+			}
+      I removed the title to leave more space */
+			
+			//add pager and questions
+			if(typeof quiz !== "undefined" && $.type(quiz) === "array"){
+				//add pager
+        
+				$(document.createElement('p')).addClass('pager').attr('id','pager').text('Domanda 1 di ' + quiz.length).appendTo('#frame');
+				//add first question
+				$(document.createElement('h3')).addClass('question').attr('id', 'question').text(quiz[0]['question']).appendTo('#frame');
+				//add image if present
+				if(quiz[0].hasOwnProperty('image') && quiz[0]['image'] != ""){
+					$(document.createElement('img')).addClass('question-image').attr('width','100px').attr('id', 'question-image').attr('src', quiz[0]['image']).attr('alt', htmlEncode(quiz[0]['question'])).appendTo('#frame');
+				}
+				
+				$(document.createElement('p')).addClass('explanation').attr('id','explanation').html('').appendTo('#question');
+				
+				//questions holder
+				$(document.createElement('ul')).attr('id', 'choice-block').appendTo('#frame');
+				
+				//add choices
+				addChoices(quiz[0]['choices']);
+				
+				//add submit button
+				$(document.createElement('div')).addClass('btn-success choice-box').attr('id', 'submitbutton').text('- CONTROLLA LA RISPOSTA -').css({'font-weight':'bold', 'color':'#fff','padding':'30px 0', 'border-radius':'10px'}).appendTo('#frame');
+				
+				setupButtons();
+			}
+		}
+	
+		init();
+	
+	});
+		
+	jQuery(document).ready(function($){			
+		$("#question").html(function(){
+		var text= $(this).text().trim().split(" ");
+		var first = text.shift();
+			return (text.length > 0 ? "<span class='number'>"+ first +"</span> " : first) + text.join(" ");
+		});
+		
+		$('p.pager').each(function(){
+			var text = $(this).text().split(' ');
+			if(text.length < 2)
+				return;
+			
+			text[1] = '<span class="qnumber">'+text[1]+'</span>';
+			$(this).html(
+				text.join(' ')
+			);
+		});
+
+	});	
+
+		function copyText() {
+			var output = document.getElementById("frame").innerHTML;
+			document.getElementById("placecontent").value = output;
+		}
+	    
+    </script>
+    <style type="text/css" media="all">
+      
+      .btn:hover, .btn:active {
+        color: blue;
+        font-weight: 800;
+      background-image: url("http://www.myiconfinder.com/uploads/iconsets/65192ff2984e9928d32fd577bc743ea5.png");
+        background-size: 100%;
+  
+      }
+
+      /*        BODY                 */
+body {
+    margin: 0;
+    font-family: "Consolas",Helvetica,Arial,sans-serif;
+    font-size: 24px;
+    line-height: 20px;
+    color: #ffffff;
+    background-color: #21517ee8;
+}
+    h3.question {
+    font-family: "Consolas",Helvetica,Arial,sans-serif;
+    font-weight: normal;
+    margin: 20px 0;
+    padding: 0;
+    font-style: italic;
+    display: block;
+    color: whitesmoke;
+    
+}  
+      
+		input 	
+      
+      { height:30px !important; }
+      
+		input[type=checkbox]
+      
+      { height:30px !important; margin-top:-3px !important; 
+        margin-right:5px !important; box-shadow:none; background-color:#ffffff;
+        position:relative !important; }
+      
+		textarea												
+      { width: 90%; margin: 0 auto; display: block; }
+      
+		input[type=radio]								
+      { height:30px !important; margin-top:-3px !important; margin-right:5px !important; box-shadow:none; background-color:#ffffff; position:relative !important; }
+      
+		.form-group input, .form-group select 					{ height:30px; padding: 0px 12px; }
+		.form-horizontal .form-group							{ margin:10px; }
+		.formContainer .formControlLabel 						{ width:auto !important; min-width:150px; margin:0; padding:0; }
+		.formControls											{ width:100%; padding:0; margin: 10px 0 20px auto; }
+		.radio 													{ padding-top:0 !important; padding-left:8px !important; }
+		.radio-inline											{ margin-right:10px; padding-top:0 !important; display:inline; }
+		.bold													{ font-weight:bold; }
+		.italic 												{ font-style:italic; }
+		.clear					 								{ width:100%; margin:0 !important; }
+		.rsform-block-submit 									{ display:none; }
+		.show 													{ display: block !important; }
+		#submit													{ margin:0 auto; display:block; }
+
+		/* QUIZ STYLES */
+      li.choice-block {font-size: 28px};
+		ol,ul 													{ list-style:none; font-size: 48}
+		strong 													{ font-weight:700; }
+		#frame 													{ width:auto; max-width: 800px; background:transparent; margin:3px auto; padding:10px;     color: #f94a4a !important; }
+		div#frame h2 ul li											{ color: white; width:auto; border-bottom:1px solid #bdbdbd; padding:0 0 5px 0; font-size:32px; }
+		h3.question 											{ font-weight:normal; margin:20px 0; padding:0; font-style:italic; display:block; }
+		p.pager 												{ margin:5px 0 5px; color:#999; text-align:right; }
+		.qnumber 												{ font-size:25px; font-weight:bold; font-style:italic; vertical-align:bottom; }
+		.number 												{ font-family: "Consolas",Helvetica,Arial,sans-serif;font-size:24px; font-weight:bold; font-style:normal; vertical-align:inherit; padding-right:10px; }
+		.score 													{ width:100%; display:inline-block; margin:30px 0; font-size:100px; text-align:center; }
+		img.question-image 										{ width:25%; height:auto; display:block; max-width:150px; margin:10px auto; border:1px solid #ccc; }
+		#choice-block 											{ display:block; list-style:none; margin:0; padding:0; cursor: pointer; }
+	/*	#submitbutton 											{ cursor:pointer; -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px; } */
+	/*	#submitbutton:hover 									{ background:#7b8da6; } */
+		#explanation 											{ width:auto; min-height:0px; margin:0 auto; padding:0px 0; text-align:center;}
+		#explanation span 										{ font-weight:bold; padding-right:8px; }
+		.choice-box 											{ width:100%;  display:block;  text-align:center;  margin:5px auto !important; padding:10px 0 !important; border:1px solid #bdbdbd; }
+      .choice-box.btn {font-size: 28px;}
+		.correct 												{ color:#51a351; font-size: 32px; display: block; margin-bottom: 5px; border-bottom: 1px #51a351 solid; padding-bottom: 5px; }
+		.incorrect 												{ color:#f93939; font-size: 32px; display: block; margin-bottom: 5px; border-bottom: 1px #f93939 solid; padding-bottom: 5px; }
+    
+#body{
+width:100vw;
+height:100vh;
+}
+ 
+    </style>
+
+</head>
+<!-------------------------------- [ AUDIO ] ----------------------------->
+<audio id="soundtrack">  <source src="https://cdn.glitch.com/1e8a1dde-7ab4-43db-8ec8-1ccb6d3cad7f%2Fanswer_20sec.ogg?1551595183210"></audio>
+<script>
+var soundtrack = document.getElementById("soundtrack");
+soundtrack.volume = 0.3;
+window.onreload = soundtrack.play()
+</script>
+<!-------------------------------- [ AUDIO ] ----------------------------->
+  
+</script>
+<body>
+   <!--  glitch button for remix --------------------------------->
+<script src="https://button.glitch.me/button.js"></script>
+<div class="glitchButton" style="position:fixed;top:50px;right:20px;z-index:1;"></div>
+  <div id='audio' style="position:fixed;top:100px;right:20px;z-index:1;"><a href="javascript:soundtrack.volume-=0.1;">-</a></div>
+    <div id='audio' style="position:fixed;top:100px;right:70px;z-index:1;"><a href="javascript:soundtrack.volume+=0.1;">+</a></div>
+  <!-- home button -->
+  <div id="menuDiv">
+<script src="https://quarta.glitch.me/dropdownclassi.js"></script>
+</div>
+
+
+  
+
+<div class="form-group rsform-block rsform-block-framecontent"><div id="frame" role="content"></div>
+
+</div>
+<script>
+  
+  
+  </script>
+			
+
+</body>
+</html>

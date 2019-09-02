@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <title>5 B Sala e vendita</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <!-----------------------------BOOTSTRAP------------------------>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  <!--------------------------------------------------------------->
+  
+  <style>
+  @import "https://terza.glitch.me/classi_mobile.css" (min-width: 350px);
+  @import "https://terza.glitch.me/classi_tablet.css" (min-width: 600px);
+  @import "https://terza.glitch.me/classi.css" (min-width: 1000px);
+  html,body{background:white;margin:0;}
+  </style>
+</head>
+<body>
+
+
+<div id="menuDiv"></div>
+<script src="index_menu.js"></script>
+  
+ 
+<script>
+
+
+let dati = {
+
+  
+  "Test sul marketing":
+  ["Test Marketing",
+   "https://quinta.glitch.me/test/marketing24.html",
+   ""],
+  
+  "Esercizio sul marketing plan":
+  ["Esercizio: Marketing plan",
+   "lettura_marketing_plan.html", // MARKETING PLAN ESEMPIO
+   "https://images.pexels.com/photos/265076/pexels-photo-265076.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"],
+
+};
+                        // ===============================================  \\
+
+  for (d in dati){
+    if (dati[d][2] == 'undefined') dati[d][2] = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQugmhEW8rjcmFbpTOq8oSXNdKCioZcGK-zXTSiCQWIedO7fk6O";
+    if (dati[d][3] == 'undefined') dati[d][3] = "100";
+    addLink(d,dati[d][1],dati[d][2],dati[d][3]);
+  }
+
+  </script>
+  </div>  
+</body>
+</html>
+

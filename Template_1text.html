@@ -1,0 +1,111 @@
+<style>
+@import "temp1.css"
+</style>
+
+
+
+
+<script src="https://www.gstatic.com/firebasejs/4.10.1/firebase.js"></script>
+<script>
+      
+    //         -    C O N F I G U R A T I O N     -
+
+      var config = {
+        apiKey: "AIzaSyDp-mWaWEI07pIdRUhi6vA-salEMRWz4hw",
+        authDomain: "quiz-e5e5a.firebaseapp.com",
+        databaseURL: "https://quiz-e5e5a.firebaseio.com/",
+        projectId: "quiz-e5e5a",
+        storageBucket: "quiz-e5e5a.appspot.com",
+        messagingSenderId: "901845403492"
+      };
+
+      //  -   I  N I T I A L I Z A T I O N     -
+
+      firebase.initializeApp(config);
+      var database = firebase.database()
+
+
+      //  DOVE VANNO LE RISPOSTE:
+
+      var dbref1 = database.ref().child('4bs_Es_oneOnswer');
+
+      //  FUNZIONE CHIAMATA AL CLICK DEL PULSANTE
+
+      function add_data(d,c){
+        dbref1.child(d).set(c)
+      }
+
+
+    classe = [
+    "Seleziona",
+      "Correale",
+      "Dapolito",
+      "Galietta",
+      "Giordano",
+      "Guariglia",
+      "Landi",
+      "Lembo",
+      "Mainente",
+      "Malzone",
+      "Mauro",
+      "Mazziotti",
+      "Pepe",
+      "Puglia",
+      "Saturno",
+      "Scelza",
+      "Tardio"
+    ];
+
+compito = {
+  "Correale" : "Domanda: Quanto fa 1 + 1?\n",
+  "Dapolito" : "Quanto fa 2 + 2?\n"
+}
+
+    // funzione per creare le opzioni per la scelta del nome dello studente
+function selectStudent(){
+
+document.write("Seleziona il tuo nome: <select onchange=domanda_top.innerText=compito[data.options[data.selectedIndex].value];contenuto.value=compito[data.options[data.selectedIndex].value] id='data'>");
+for(i=0; i<classe.length; i++) {
+   document.write("<option  value=" + classe[i] + ">" + classe[i] + "</option>");
+}
+
+document.write("</select><br>");
+  }
+
+selectStudent();
+</script>
+
+    Domanda:<div id="domanda_top"></div><br>Rispondi qui:<br>
+    <textarea id="contenuto" cols="80" rows="10"/> </textarea><br>
+    <button onclick=add_data(data.value,contenuto.value)>Premi per inviare la risposta</button>
+    
+
+<script>
+      var al = []
+      document.write("<hr>")
+    for (a in classe){
+      document.write("<b>" + classe[a] + " ha scritto:</b>");
+        document.write("<div id='al" + a + "' cols='50' rows='6' value=" + classe[a] + "></div><br>");
+    }
+
+    ref = database.ref().child('4bs_Es_oneOnswer');
+    var name = "";
+    var values = []
+    al = [al0,al1,al2,al3,al4,al5,al6,al7,al8,al9,al10,al11,al12,al13,al14,al15]
+    ref.child(classe[0]).on("value", snap => al[0].innerText = snap.val());
+    ref.child(classe[1]).on("value", snap => al[1].innerText = snap.val());
+    ref.child(classe[2]).on("value", snap => al[2].innerText = snap.val());
+    ref.child(classe[3]).on("value", snap => al[3].innerText = snap.val());
+    ref.child(classe[4]).on("value", snap => al[4].innerText = snap.val());
+    ref.child(classe[5]).on("value", snap => al[5].innerText = snap.val());
+    ref.child(classe[6]).on("value", snap => al[6].innerText = snap.val());
+    ref.child(classe[7]).on("value", snap => al[7].innerText = snap.val());
+    ref.child(classe[8]).on("value", snap => al[8].innerText = snap.val());
+    ref.child(classe[9]).on("value", snap => al[9].innerText = snap.val());
+    ref.child(classe[10]).on("value", snap => al[10].innerText = snap.val());
+    ref.child(classe[11]).on("value", snap => al[11].innerText = snap.val());
+    ref.child(classe[12]).on("value", snap => al[12].innerText = snap.val());
+    ref.child(classe[13]).on("value", snap => al[13].innerText = snap.val());
+    ref.child(classe[14]).on("value", snap => al[14].innerText = snap.val());
+    ref.child(classe[15]).on("value", snap => al[15].innerText = snap.val());
+</script>

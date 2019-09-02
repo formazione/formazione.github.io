@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <script src="script.js"></script>
+<body>
+  <h3>
+     CALCOLA QUANTI SONO GLI EURO
+  </h3>
+<script>
+gobackhome();
+function euro(){
+	var euro1 = "<svg height='95' width='95'> <circle cx='50' cy='50' r='40' stroke='gray' stroke-width='3' fill='gold' /> <text x='10' y='20' style='fill:gray;'> <tspan style='font-size:64;color:gray' x='30' y='70'>1</tspan> <tspan style='font-size:38;color:gray' x='60' y='65'>€</tspan> </text> Sorry, your browser does not support inline SVG. </svg>"
+	return euro1
+}
+  
+euro3 = euro() + euro() +euro() + "<br>";
+euro4 = euro() + euro() +euro() + euro();
+document.write(euro3);
+document.write(euro4);
+  
+  function changecolor(){
+   var color = ["yellow","blue","red","orange"];
+   var rnd = color[Math.floor(Math.random() * color.length)];
+   return rnd;
+  }
+  
+</script>
+  <canvas id="add" width="200" height="200" style="background:yellow" onclick="this.style.background=changecolor()" ontouchstart="this.style.background=changecolor()">
+  </canvas>
+</body>
+</html>
+  

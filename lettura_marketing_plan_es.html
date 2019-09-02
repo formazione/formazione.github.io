@@ -1,0 +1,115 @@
+<html>
+ <title>marketing_plan</title>
+<style>
+  @import "button.css";
+  @import "dark.css";
+  
+    body { font-size: 2em; margin-left: 10%; margin-right: 10%; }   textarea, input { width:100%; background-color: gold; border: none; padding: 15px 32px; text-align: left; text-decoration: none; display: inline-block; font-size: 1em; margin: 4px 2px; cursor: pointer;  } .mytext { background-color: lightblue;}    a:link { opacity: 0.8; underline: 0; }  a:hover { opacity: 0.5; } a:link, a:visited { background-color: #f44336; color: white; padding: 5px 5px; text-align: center; text-decoration: none; display: inline-block; }
+  </style>
+<body>
+<!-- pulsante per tornare alla pagina principale -->
+<script src="gohome.js"></script>
+<div id="page"></div> <!-- div con i contenuti -->
+<div id="page2"></div> <!-- soluzione -->
+<!-- firebase config -->
+<script src="https://www.gstatic.com/firebasejs/4.10.1/firebase.js"></script>
+<script>
+var config = {
+  apiKey: "AIzaSyDp-mWaWEI07pIdRUhi6vA-salEMRWz4hw",
+  authDomain: "quiz-e5e5a.firebaseapp.com",
+  databaseURL: "https://quiz-e5e5a.firebaseio.com/",
+  projectId: "quiz-e5e5a",
+  storageBucket: "quiz-e5e5a.appspot.com",
+  messagingSenderId: "901845403492"
+};
+firebase.initializeApp(config);
+var database = firebase.database()
+var dbref1 = database.ref().child(document.title);
+// ===============================================
+          
+function add_data(d,c,e){
+  dbref1.child(d).child(e).set(c)
+}
+
+function printnome(num){
+  // This creates an input text box with a data+num id for each student -->
+  page.innerHTML += "Inserisci il tuo nome:<br><input id='data" + num + "' class='mytext' type=text value='' /><br>";
+}
+
+function printtextandbutton(numalunno,num){
+  //page.innerHTML += "<input id='data" + num + "' type=text value='' />";
+  page.innerHTML += "Risposta " + num + ": <textarea id='contenuto"+ num + "' type='text' rows='3' /></textarea>";
+  domanda = "domanda" + num;
+  page.innerHTML += "<br><button onclick=add_data(data"+ numalunno + ".value,contenuto" + num +".value,'"+domanda+"')>Invia</button><br>";
+}
+
+function questionwrite(domanda_fatta){
+   page.innerHTML += "<b>" + domanda_fatta + "</b><br>";
+}
+
+function qmk(domanda_fatta){
+  questionwrite(domanda_fatta);
+  printtextandbutton("1",countnum);
+  questionwrite("<br>");
+  countnum++
+  //dbref1.on("value", snap => x = snap.value())
+}
+      
+page.innerHTML += "<h3>Esercizio " + document.title + "</h3>";
+      page.innerHTML += "<img src='https://tdm-pull-wol7ynwfkovcdc2im8l.netdna-ssl.com/wp-content/uploads/2011/11/Content-Marketing-Header.jpg' width='100%' />";
+printnome("1");
+      
+let countnum = 0;
+  qmk("Analisi dei prodotti dell'impresa");
+  qmk("Analisi del mercato e della concorrenza");
+  qmk("Analisi della domanda");
+  qmk("Scelte strategiche");
+
+  
+function createDiv(){
+  let ref = firebase.database().ref().child(document.title);
+  ref.on('value', function(snapshot) {
+    let count = 0;
+    snapshot.forEach(function(childSnapshot) {
+      let divX = document.createElement("div");
+      divX.setAttribute('id', 'al' + count);
+      document.body.appendChild(divX),
+      count++;})
+    }
+)};
+  </script>
+  </body>
+  
+  <script>
+function retrieveData(){
+  
+  page2.innerHTML = "";
+  let ref = firebase.database().ref().child(document.title);
+  
+  ref.on('value', function(snapshot) {
+      let count1 = 0;
+      let snap = snapshot.val();
+      for (i in snap){
+       console.log("\n" + i);
+        // nome dell'alunno =====================
+        page2.innerHTML += "<hr>" + i + "<br>";
+        // =====================================
+        for (n in snap[i]){
+             console.log(n, snap[i][n])
+              // domanda 1 "risposta" ===========================
+              page2.innerHTML += n + " = " + snap[i][n] + "<br>";
+              // ================================================
+     
+      }
+  }
+  });
+}
+
+// password
+page.innerHTML += "<input type=text onchange='if (this.value==\"aiuto\") retrieveData();' id='pss'>";
+    
+    
+    
+</script>
+    
+</html>

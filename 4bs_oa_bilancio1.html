@@ -1,0 +1,88 @@
+<style>
+@import "temp1.css"
+  
+</style>
+<!-- cambia il numero della domanda qui sotto
+poi le riposte alle domande
+-->
+<title>
+Bilancio 1
+</title>
+
+
+<script src="https://www.gstatic.com/firebasejs/4.10.1/firebase.js"></script>
+<script src="4bsbilanciomenu.js"></script>
+<script>
+// ==================================================== dati personalizzati
+
+intro("I Ratei sono quote di entrate e di uscite che misurano ricavi e costi che sono già maturati, ma che la cui manifestazione finanziaria non si è ancora verificata.<br>I risconti sono quote di costi o ricavi la cui manifestazione finanziaria è già avvenuta, ma che non sono ancora maturati.");
+  
+  
+let domanda = [];
+  
+domanda.push('Calcola il rateo dal giorno 1/12 per interessi passivi annuali posticipati su un debito di 12000 euro al tasso del 6% Risposta = ');
+domanda.push('Calcola il rateo dal giorno 1/7 per interessi passivi annuali posticipati su un debito di 12000 euro al tasso del 7% Risposta = ');
+domanda.push('Calcola il rateo dal giorno 1/10 per interessi passivi annuali posticipati su un debito di 12000 euro al tasso del 3% Risposta = ');
+domanda.push('Calcola il rateo dal giorno 1/8 per interessi passivi annuali posticipati su un debito di 12000 euro al tasso del 4% Risposta = ');
+domanda.push('Calcola il rateo dal giorno 1/12 per interessi passivi annuali posticipati su un debito di 12000 euro al tasso del 8% Risposta = ');
+domanda.push('Calcola il rateo dal giorno 1/9 per interessi passivi annuali posticipati su un debito di 12000 euro al tasso del 5% Risposta = ');
+domanda.push('Calcola il rateo dal giorno 1/8 per interessi passivi annuali posticipati su un debito di 12000 euro al tasso del 3% Risposta = ');
+domanda.push('Calcola il rateo dal giorno 1/10 per interessi passivi annuali posticipati su un debito di 12000 euro al tasso del 8% Risposta = ');
+domanda.push('Calcola il rateo dal giorno 1/11 per interessi passivi annuali posticipati su un debito di 12000 euro al tasso del 4% Risposta = ');
+domanda.push('Calcola il rateo dal giorno 1/11 per interessi passivi annuali posticipati su un debito di 12000 euro al tasso del 6% Risposta = ');
+domanda.push('Calcola il rateo dal giorno 1/12 per interessi passivi annuali posticipati su un debito di 12000 euro al tasso del 8% Risposta = ');
+domanda.push('Calcola il rateo dal giorno 1/9 per interessi passivi annuali posticipati su un debito di 12000 euro al tasso del 6% Risposta = ');
+domanda.push('Calcola il rateo dal giorno 1/10 per interessi passivi annuali posticipati su un debito di 12000 euro al tasso del 7% Risposta = ');
+domanda.push('Calcola il rateo dal giorno 1/7 per interessi passivi annuali posticipati su un debito di 12000 euro al tasso del 5% Risposta = ');
+domanda.push('Calcola il rateo dal giorno 1/9 per interessi passivi annuali posticipati su un debito di 12000 euro al tasso del 6% Risposta = ');
+domanda.push('Calcola il rateo dal giorno 1/10 per interessi passivi annuali posticipati su un debito di 12000 euro al tasso del 5% Risposta = ');
+let risposte=`
+Correale  Sol: 60.0
+Dapolito  Sol: 420.0
+Galietta  Sol: 90.0
+Giordano  Sol: 200.0
+Guariglia  Sol: 80.0
+Landi  Sol: 200.0
+Lembo  Sol: 150.0
+Mainente  Sol: 240.0
+Malzone  Sol: 80.0
+Mauro  Sol: 120.0
+Mazziotti  Sol: 80.0
+Pepe  Sol: 240.0
+Puglia  Sol: 210.0
+Saturno  Sol: 300.0
+Scelza  Sol: 240.0
+Tardio  Sol: 150.0
+`
+
+let cnt = 0;
+compito = {
+     "Correale": domanda[cnt++],
+      "Dapolito": domanda[cnt++],
+      "Galietta": domanda[cnt++],
+      "Giordano": domanda[cnt++],
+      "Guariglia": domanda[cnt++],
+      "Landi": domanda[cnt++],
+      "Lembo": domanda[cnt++],
+      "Mainente": domanda[cnt++],
+      "Malzone": domanda[cnt++],
+      "Mauro": domanda[cnt++],
+      "Mazziotti": domanda[cnt++],
+      "Pepe": domanda[cnt++],
+      "Puglia": domanda[cnt++],
+      "Saturno": domanda[cnt++],
+      "Scelza": domanda[cnt++],
+      "Tardio": domanda[cnt++]
+};
+// ========================================================================== fine dati
+
+  console.log(risposte);
+  
+  
+
+  
+  
+  
+  
+
+</script>

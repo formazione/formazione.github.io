@@ -1,0 +1,9 @@
+DARM
+
+darm2.py
+
+    c'è l'audio
+    puoi mettere l'apostrofo sia nella domanda che nelle risposte
+    ci sono immagini casuali
+    cerca i file con le domande in dati/
+    crea il file html completo e lo apre => copia il codice 

@@ -1,0 +1,193 @@
+<html>
+  <title>5bServer</title>
+<style> body{ color: white; background: black; font-size:2em; } input { color:white; background-color: black; font-size: 2em; } textarea { width:100%; color:white; background-color: darkgreen; font-size: 1em; } h3 {  background: darkgreen; }  button { font-size: 0.8em; background: coral; } button.onclick { background: yellow;  }
+</style>
+  
+<body>
+<div id="buttons"></div>
+<button onclick="initializeClass()">Azzera punteggi</button>
+
+
+<script src="https://www.gstatic.com/firebasejs/5.9.2/firebase.js"></script>
+<script>
+  
+let trc = `Definizione
+È il documento che consente di valutare un progetto in base alle previsioni
+Serve a verificare la convenienza
+https://www.fuer-gruender.de/blog/wp-content/uploads/2015/08/Businessplan_kurz.png
+`
+  
+  
+  
+    // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyCExeWUN7K_MZHHV9EqZaNtZkVHQq1fCGw",
+    authDomain: "testing-92d80.firebaseapp.com",
+    databaseURL: "https://testing-92d80.firebaseio.com",
+    projectId: "testing-92d80",
+    storageBucket: "testing-92d80.appspot.com",
+    messagingSenderId: "902726693778"
+  };
+  firebase.initializeApp(config);
+    let database = firebase.database()
+  let ref = database.ref("quinta");
+  let ref2 = database.ref("quinta_punti");
+  ref.on("value", gotData, errData)
+  ref2.on("value", gotData2, errData)
+
+
+function addData(alunno, ris){                                /* Add data */
+    // ad ogni chiamata crea un nuovo record
+      ref.child(alunno).set(ris);
+      risposta.value = "";
+      risposta.focus();
+}
+  
+  // ========================= FIREBASE ==============================
+  
+    let cup = "<img src='https://cdn2.iconfinder.com/data/icons/thesquid-ink-40-free-flat-icon-pack/64/cup-512.png' width='30' />";
+  let party ="<img src='http://icons.iconarchive.com/icons/google/noto-emoji-activities/1024/52707-party-popper-icon.png' width='30' >";
+  
+  
+function clickEs(x){
+      risposta.value=x;
+      ref.child(nome.value).set(risposta.value);
+    }
+    
+function figura(x){
+      ref.child("quintaimg").set(x);
+      divFigura.innerHTML = "<img src='" + x + "' width='50%'/>";
+    }
+
+  
+  // pulsanti Presentazione
+function butTraccia(titolo,t,sol,fig){
+  buttons.innerHTML += `<button onclick="clickEs('`+t+`');">Mostra: `+titolo+`</button>
+<button onclick="figura('`+fig+`');"><img src='`+fig+`' width='60' />Mostra fig.</button>
+<button onclick="clickEs('`+sol+`');">Mostra Sol.</button><br>
+`   
+}
+
+// Esercizi tramite pulsanti: traccia e soluzione
+
+
+
+for (t of trc.split("\n\n")){
+  x = t.split("\n")
+ butTraccia(x[0],x[1],x[2],x[3]);
+}
+  
+
+
+  
+function addPoint(alunno, point){                                /* Add data */
+    // ad ogni chiamata crea un nuovo record
+      ref2.child(alunno).set(point);
+      score.value = "";
+      vincitore.value = "";
+}
+
+function initializeClass(){
+ // create records the first time
+  classe4 = ["Amatruda", "Bortone", "Cantalupo", "Carbone", "Cutrì", "Del gaudio", "Di Santi", "Lettieri", "Lista", "Krzesinska", "Maiese", "Maiuri", "Merola", "Moscatiello", "Ridolfi", "Ruocco", "Schiavo", "Spera", "Tancredi", "Vaccaro", "Vassalluzzo"]; for (alunno of classe4){
+     ref2.child(alunno).set(0);
+  }
+} 
+  
+function gotData(data){
+    prosegui.innerHTML = "";
+    x = data.val();
+    for (n in x){
+      prosegui.innerHTML += n + ": " + x[n] + "<br>"
+    }
+  }
+  
+  
+  // Classifica
+  
+
+  
+function gotData2(data){
+    punteggi.innerHTML = "";
+    x = data.val();
+    // order by score
+    let arr = Object.values(x);
+    let min = Math.min(...arr);
+    let max = Math.max(...arr);
+    let keysSorted = Object.keys(x).sort(function(a,b){return x[b]-x[a]})
+    punteggi.innerHTML += "<u style='color:coral'>Graduatoria:</u><br>"
+    punteggi.innerHTML += "<center>";
+    let newx = [];
+    for (n in keysSorted){
+    //let xx = [keysSorted[n],x[keysSorted[n]]];
+     newx.push([keysSorted[n],x[keysSorted[n]]]); 
+    }
+    console.log(newx);
+    for (n in keysSorted){
+      let num = parseInt(n)+1;
+      // nome del primo classificato
+   
+    if (n == 0){
+   punteggi.innerHTML += "<b style='font-size:2.5em;color:red'>" + num + ". <u>" + keysSorted[n] + "</u></b> ";
+      punteggi.innerHTML += party + cup + "<b style='font-size:2.5em;background:coral'>" + x[keysSorted[n]] + "</b><br>"; ;
+    }
+    else if (n == 1){
+      punteggi.innerHTML += "<b style='font-size:2em;color:coral'>" + num + ". " + keysSorted[n] + "</b> ";
+      if (x[keysSorted[n]] > 100) punteggi.innerHTML += cup;
+      punteggi.innerHTML += "<b style='font-size:2em;background:coral'>" + x[keysSorted[n]] + "</b><br>"; ;
+    }
+  else if (n == 2){
+      punteggi.innerHTML += "<b style='font-size:1.5em;color:gold'>" + num + ". " + keysSorted[n] + "</b> ";
+      if (x[keysSorted[n]] > 100) punteggi.innerHTML += cup;
+      punteggi.innerHTML += "<b style='font-size:1.5em;background:coral'>" + x[keysSorted[n]] + "</b><br>"; ;
+    }
+    else {
+      punteggi.innerHTML += "<b style='font-size:1.0em;color:white'>" + num + ". " + keysSorted[n] + "</b> ";
+      if (x[keysSorted[n]] > 100) punteggi.innerHTML += cup;
+      punteggi.innerHTML += "<b style='font-size:1.0em;background:coral'>" + x[keysSorted[n]] + "</b><br>"; ;
+    }
+  
+    }
+}
+function errData(err){
+    console.log("Error");
+    console.log(err);
+  }
+    
+
+
+</script>
+  <div id="domanda"></div><br>
+  <input type="text" id=nome value="Traccia">
+Testo da inviare:<br>
+  <div id="divFigura">
+    
+  </div>
+<textarea type="text" id="risposta" cols="100%" rows="10"></textarea>
+<script>
+risposta.focus();
+risposta.onchange = function(){addData(nome.value, risposta.value)};
+</script>
+
+<div id="prosegui" style="background:coral;"></div>
+    <br>
+  <button onclick="ref.set('')">
+    Cancella
+  </button>
+  <p style="color:coral">
+    Vincitore:
+    <input type="text" id=vincitore >
+    <br>
+    Punteggio:
+    <input type="text" id=score>
+  </p>
+<script>
+    score.onchange = function(){addPoint(vincitore.value, score.value)};
+</script>
+    </script>
+  </p>
+  <center>
+  <div id="punteggi"></div>
+  </center>
+</body>
+</html>

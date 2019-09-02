@@ -1,0 +1,81 @@
+
+    <style>
+    @import "temp1.css"
+      
+    </style>
+    <!-- cambia il numero della domanda qui sotto
+    poi le riposte alle domande
+    -->
+    <title>
+    Bilancio 5
+    </title>
+
+
+    <script src="https://www.gstatic.com/firebasejs/4.10.1/firebase.js"></script>
+    <script src="4bsbilanciomenu.js"></script>
+    <script>
+
+    // ==================================================== dati personalizzati
+    
+let domanda = []
+domanda.push('La società Ginori srl ha pagato anticipatamente un premio di assicurazione annuale di 3600 € l`1/5. Si tratta di un rateo o di un risconto?. A quanto ammonta? Risposta = ');
+domanda.push('La società Ginori srl ha pagato anticipatamente fitto annuale di 2400 € l`1/8. Si tratta di un rateo o di un risconto?. A quanto ammonta? Risposta = ');
+domanda.push('La società Ginori srl ha pagato anticipatamente interessi annui di 3600 € l`1/11. Si tratta di un rateo o di un risconto?. A quanto ammonta? Risposta = ');
+domanda.push('La società Ginori srl ha pagato anticipatamente un premio di assicurazione annuale di 2400 € l`1/12. Si tratta di un rateo o di un risconto?. A quanto ammonta? Risposta = ');
+domanda.push('La società Ginori srl ha pagato anticipatamente un premio di assicurazione annuale di 3600 € l`1/5. Si tratta di un rateo o di un risconto?. A quanto ammonta? Risposta = ');
+domanda.push('La società Ginori srl ha pagato anticipatamente un premio di assicurazione annuale di 2400 € l`1/10. Si tratta di un rateo o di un risconto?. A quanto ammonta? Risposta = ');
+domanda.push('La società Ginori srl ha pagato anticipatamente interessi annui di 4800 € l`1/5. Si tratta di un rateo o di un risconto?. A quanto ammonta? Risposta = ');
+domanda.push('La società Ginori srl ha pagato anticipatamente interessi annui di 4800 € l`1/7. Si tratta di un rateo o di un risconto?. A quanto ammonta? Risposta = ');
+domanda.push('La società Ginori srl ha pagato anticipatamente interessi annui di 4800 € l`1/6. Si tratta di un rateo o di un risconto?. A quanto ammonta? Risposta = ');
+domanda.push('La società Ginori srl ha pagato anticipatamente un premio di assicurazione annuale di 2400 € l`1/10. Si tratta di un rateo o di un risconto?. A quanto ammonta? Risposta = ');
+domanda.push('La società Ginori srl ha pagato anticipatamente fitto annuale di 4800 € l`1/11. Si tratta di un rateo o di un risconto?. A quanto ammonta? Risposta = ');
+domanda.push('La società Ginori srl ha pagato anticipatamente interessi annui di 3600 € l`1/10. Si tratta di un rateo o di un risconto?. A quanto ammonta? Risposta = ');
+domanda.push('La società Ginori srl ha pagato anticipatamente un premio di assicurazione annuale di 3600 € l`1/6. Si tratta di un rateo o di un risconto?. A quanto ammonta? Risposta = ');
+domanda.push('La società Ginori srl ha pagato anticipatamente fitto annuale di 2400 € l`1/5. Si tratta di un rateo o di un risconto?. A quanto ammonta? Risposta = ');
+domanda.push('La società Ginori srl ha pagato anticipatamente interessi annui di 3600 € l`1/7. Si tratta di un rateo o di un risconto?. A quanto ammonta? Risposta = ');
+domanda.push('La società Ginori srl ha pagato anticipatamente un premio di assicurazione annuale di 3600 € l`1/5. Si tratta di un rateo o di un risconto?. A quanto ammonta? Risposta = ');
+
+let risposte=`
+Correale  Sol: è un risconto attivo di 1200
+Dapolito  Sol: è un risconto attivo di 1400
+Galietta  Sol: è un risconto attivo di 3000
+Giordano  Sol: è un risconto attivo di 2200
+Guariglia  Sol: è un risconto attivo di 1200
+Landi  Sol: è un risconto attivo di 1800
+Lembo  Sol: è un risconto attivo di 1600
+Mainente  Sol: è un risconto attivo di 2400
+Malzone  Sol: è un risconto attivo di 2000
+Mauro  Sol: è un risconto attivo di 1800
+Mazziotti  Sol: è un risconto attivo di 4000
+Pepe  Sol: è un risconto attivo di 2700
+Puglia  Sol: è un risconto attivo di 1500
+Saturno  Sol: è un risconto attivo di 800
+Scelza  Sol: è un risconto attivo di 1800
+Tardio  Sol: è un risconto attivo di 1200
+`
+
+
+    cnt = 0
+    compito = {
+         "Correale": domanda[cnt++],
+          "Dapolito": domanda[cnt++],
+          "Galietta": domanda[cnt++],
+          "Giordano": domanda[cnt++],
+          "Guariglia": domanda[cnt++],
+          "Landi": domanda[cnt++],
+          "Lembo": domanda[cnt++],
+          "Mainente": domanda[cnt++],
+          "Malzone": domanda[cnt++],
+          "Mauro": domanda[cnt++],
+          "Mazziotti": domanda[cnt++],
+          "Pepe": domanda[cnt++],
+          "Puglia": domanda[cnt++],
+          "Saturno": domanda[cnt++],
+          "Scelza": domanda[cnt++],
+          "Tardio": domanda[cnt++]
+    }
+    // ========================================================================== fine dati
+
+      console.log(risposte);
+      </script>
+    

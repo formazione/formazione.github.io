@@ -1,0 +1,81 @@
+
+    <style>
+    @import "temp1.css"
+      
+    </style>
+    <!-- cambia il numero della domanda qui sotto
+    poi le riposte alle domande
+    -->
+    <title>
+    Bilancio 7
+    </title>
+
+
+    <script src="https://www.gstatic.com/firebasejs/4.10.1/firebase.js"></script>
+    <script src="4bsbilanciomenu.js"></script>
+    <script>
+
+    // ==================================================== dati personalizzati
+    
+let domanda = []
+domanda.push('Una società ha i seguenti valori da inserire nel conto economico: materie prime c/acquisti per 1000 €, costi del personale per 6000 €, ricavi di vendita per 7000 €, interessi passivi per 60000 €, imposte per 9000 €, ammortamenti per 6000 € e interessi attivi per 9000 €. Calcola l`utile o la perdita. Risposta = ');
+domanda.push('Una società ha i seguenti valori da inserire nel conto economico: materie prime c/acquisti per 7000 €, costi del personale per 6000 €, ricavi di vendita per 7000 €, interessi passivi per 70000 €, imposte per 2000 €, ammortamenti per 7000 € e interessi attivi per 3000 €. Calcola l`utile o la perdita. Risposta = ');
+domanda.push('Una società ha i seguenti valori da inserire nel conto economico: materie prime c/acquisti per 7000 €, costi del personale per 3000 €, ricavi di vendita per 1000 €, interessi passivi per 70000 €, imposte per 8000 €, ammortamenti per 2000 € e interessi attivi per 9000 €. Calcola l`utile o la perdita. Risposta = ');
+domanda.push('Una società ha i seguenti valori da inserire nel conto economico: materie prime c/acquisti per 9000 €, costi del personale per 1000 €, ricavi di vendita per 2000 €, interessi passivi per 30000 €, imposte per 7000 €, ammortamenti per 1000 € e interessi attivi per 5000 €. Calcola l`utile o la perdita. Risposta = ');
+domanda.push('Una società ha i seguenti valori da inserire nel conto economico: materie prime c/acquisti per 9000 €, costi del personale per 1000 €, ricavi di vendita per 2000 €, interessi passivi per 30000 €, imposte per 3000 €, ammortamenti per 8000 € e interessi attivi per 9000 €. Calcola l`utile o la perdita. Risposta = ');
+domanda.push('Una società ha i seguenti valori da inserire nel conto economico: materie prime c/acquisti per 4000 €, costi del personale per 6000 €, ricavi di vendita per 5000 €, interessi passivi per 30000 €, imposte per 8000 €, ammortamenti per 1000 € e interessi attivi per 8000 €. Calcola l`utile o la perdita. Risposta = ');
+domanda.push('Una società ha i seguenti valori da inserire nel conto economico: materie prime c/acquisti per 8000 €, costi del personale per 3000 €, ricavi di vendita per 2000 €, interessi passivi per 70000 €, imposte per 8000 €, ammortamenti per 1000 € e interessi attivi per 4000 €. Calcola l`utile o la perdita. Risposta = ');
+domanda.push('Una società ha i seguenti valori da inserire nel conto economico: materie prime c/acquisti per 4000 €, costi del personale per 6000 €, ricavi di vendita per 5000 €, interessi passivi per 70000 €, imposte per 8000 €, ammortamenti per 5000 € e interessi attivi per 5000 €. Calcola l`utile o la perdita. Risposta = ');
+domanda.push('Una società ha i seguenti valori da inserire nel conto economico: materie prime c/acquisti per 8000 €, costi del personale per 8000 €, ricavi di vendita per 5000 €, interessi passivi per 40000 €, imposte per 8000 €, ammortamenti per 5000 € e interessi attivi per 8000 €. Calcola l`utile o la perdita. Risposta = ');
+domanda.push('Una società ha i seguenti valori da inserire nel conto economico: materie prime c/acquisti per 8000 €, costi del personale per 6000 €, ricavi di vendita per 8000 €, interessi passivi per 70000 €, imposte per 1000 €, ammortamenti per 6000 € e interessi attivi per 7000 €. Calcola l`utile o la perdita. Risposta = ');
+domanda.push('Una società ha i seguenti valori da inserire nel conto economico: materie prime c/acquisti per 8000 €, costi del personale per 5000 €, ricavi di vendita per 3000 €, interessi passivi per 50000 €, imposte per 6000 €, ammortamenti per 4000 € e interessi attivi per 9000 €. Calcola l`utile o la perdita. Risposta = ');
+domanda.push('Una società ha i seguenti valori da inserire nel conto economico: materie prime c/acquisti per 1000 €, costi del personale per 5000 €, ricavi di vendita per 3000 €, interessi passivi per 50000 €, imposte per 5000 €, ammortamenti per 2000 € e interessi attivi per 1000 €. Calcola l`utile o la perdita. Risposta = ');
+domanda.push('Una società ha i seguenti valori da inserire nel conto economico: materie prime c/acquisti per 3000 €, costi del personale per 4000 €, ricavi di vendita per 7000 €, interessi passivi per 60000 €, imposte per 8000 €, ammortamenti per 1000 € e interessi attivi per 2000 €. Calcola l`utile o la perdita. Risposta = ');
+domanda.push('Una società ha i seguenti valori da inserire nel conto economico: materie prime c/acquisti per 8000 €, costi del personale per 8000 €, ricavi di vendita per 4000 €, interessi passivi per 40000 €, imposte per 7000 €, ammortamenti per 3000 € e interessi attivi per 8000 €. Calcola l`utile o la perdita. Risposta = ');
+domanda.push('Una società ha i seguenti valori da inserire nel conto economico: materie prime c/acquisti per 9000 €, costi del personale per 5000 €, ricavi di vendita per 1000 €, interessi passivi per 30000 €, imposte per 3000 €, ammortamenti per 5000 € e interessi attivi per 9000 €. Calcola l`utile o la perdita. Risposta = ');
+domanda.push('Una società ha i seguenti valori da inserire nel conto economico: materie prime c/acquisti per 5000 €, costi del personale per 7000 €, ricavi di vendita per 4000 €, interessi passivi per 40000 €, imposte per 6000 €, ammortamenti per 2000 € e interessi attivi per 4000 €. Calcola l`utile o la perdita. Risposta = ');
+
+let risposte=`
+Correale  R: Risultato 22200
+Dapolito  R: Risultato 38500
+Galietta  R: Risultato 40100
+Giordano  R: Risultato 5400
+Guariglia  R: Risultato -1600
+Landi  R: Risultato -1600
+Lembo  R: Risultato 44800
+Mainente  R: Risultato 37900
+Malzone  R: Risultato -1500
+Mauro  R: Risultato 34900
+Mazziotti  R: Risultato 15800
+Pepe  R: Risultato 33100
+Puglia  R: Risultato 35500
+Saturno  R: Risultato 2200
+Scelza  R: Risultato -1400
+Tardio  R: Risultato 12300
+`
+
+// compito["Correale"] = "domanda per correale";
+let cnt = 0;
+let compito = {
+         "Correale": domanda[cnt++],
+          "Dapolito": domanda[cnt++],
+          "Galietta": domanda[cnt++],
+          "Giordano": domanda[cnt++],
+          "Guariglia": domanda[cnt++],
+          "Landi": domanda[cnt++],
+          "Lembo": domanda[cnt++],
+          "Mainente": domanda[cnt++],
+          "Malzone": domanda[cnt++],
+          "Mauro": domanda[cnt++],
+          "Mazziotti": domanda[cnt++],
+          "Pepe": domanda[cnt++],
+          "Puglia": domanda[cnt++],
+          "Saturno": domanda[cnt++],
+          "Scelza": domanda[cnt++],
+          "Tardio": domanda[cnt++]
+    };
+    // ========================================================================== fine dati
+
+      console.log(risposte);
+      </script>
+    

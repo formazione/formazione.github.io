@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>3BS</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+</head>
+<style>
+  body{ color:white; background-color: black; font-size: 2em; } 
+  </style>
+
+
+<script src="https://www.gstatic.com/firebasejs/5.9.2/firebase.js"></script>
+<script>
+  
+    function speak(x) {
+  synth = speechSynthesis
+  utt = new SpeechSynthesisUtterance(x);
+  synth.speak(utt);
+}
+  
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyCExeWUN7K_MZHHV9EqZaNtZkVHQq1fCGw",
+    authDomain: "testing-92d80.firebaseapp.com",
+    databaseURL: "https://testing-92d80.firebaseio.com",
+    projectId: "testing-92d80",
+    storageBucket: "testing-92d80.appspot.com",
+    messagingSenderId: "902726693778"
+  };
+  firebase.initializeApp(config);
+
+
+  let database = firebase.database();
+
+// questa pagina rimanda al client memorizzato in quarta_client
+// nel file server puoi cambiare la pagina del client
+// cambia solo l'estetica, perché i dati sono presi sempre da:
+  // quarta per il testo e le risposte degli alunni
+  // quarta_punti per i punteggi assegnati agli alunni
+let ref = database.ref("quinta_client");
+ref.on("value", snap => window.location = snap.val());
+  
+  </script>    
+  
+</body>
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <title>Costituzione commentata da Benigni</title> 
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+ 
+</head>
+<style>
+  
+</style>
+  
+<body>
+  <!--------------------menu bar index 26/2/19-------------------------------->
+<div id="menuDiv"></div>
+<script src="https://quinta.glitch.me/index_menu.js"></script>
+<!---------------------------------------------------->
+  
+  <br><br><br>
+  <h2>
+    La costituzione commentata da Benigni
+  </h2>
+  
+   <div id="contaniner">
+     
+    <div id="lista_dei_video" class="col-sm-4"> <!------------- moduli -------->
+    
+    </div>  <!-------------------------------------------------------->
+    
+    <div id="vid_show" class="col-sm-8">      <!--------------------- esercizi -->
+    <br>Art.1
+      <iframe width="727" height="409" src="https://www.youtube.com/embed/jhpskIXaeEE" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      <br>Art.2
+      <iframe width="727" height="409" src="https://www.youtube.com/embed/kfdXM62nQiA" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      <br>Art.3
+      <iframe width="727" height="409" src="https://www.youtube.com/embed/nA8zttPsLlk?list=PLOwpi5FxUVRG8Plm_kh0cNqqmw_ZBmQFC" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      <br>Art.4
+      <iframe width="727" height="409" src="https://www.youtube.com/embed/9FnNcrXzuDA?list=PLOwpi5FxUVRG8Plm_kh0cNqqmw_ZBmQFC" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      <br>Art.5
+      <iframe width="727" height="409" src="https://www.youtube.com/embed/ZuGDndqmkdQ?list=PLOwpi5FxUVRG8Plm_kh0cNqqmw_ZBmQFC" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      <br>Art.6
+      <iframe width="727" height="409" src="https://www.youtube.com/embed/6xK1C05fX-Y?list=PLOwpi5FxUVRG8Plm_kh0cNqqmw_ZBmQFC" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      <br>Art.7-8
+      <iframe width="727" height="409" src="https://www.youtube.com/embed/1lrjtnbDZAY?list=PLOwpi5FxUVRG8Plm_kh0cNqqmw_ZBmQFC" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      <br>Art.9
+      <iframe width="727" height="409" src="https://www.youtube.com/embed/TsjN_9zpLiA?list=PLOwpi5FxUVRG8Plm_kh0cNqqmw_ZBmQFC" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      <br>Art.10
+      <iframe width="727" height="409" src="https://www.youtube.com/embed/MrHjdcOQNU0?list=PLOwpi5FxUVRG8Plm_kh0cNqqmw_ZBmQFC" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      <br>Art.11
+      <iframe width="727" height="409" src="https://www.youtube.com/embed/6dK4Le3v_3U?list=PLOwpi5FxUVRG8Plm_kh0cNqqmw_ZBmQFC" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      <br>Art.12
+      <iframe width="727" height="409" src="https://www.youtube.com/embed/Fljx5l0LPmM?list=PLOwpi5FxUVRG8Plm_kh0cNqqmw_ZBmQFC" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      
+      <h2>
+        Altri commenti
+      </h2>
+      <iframe width="727" height="409" src="https://www.youtube.com/embed/IoRbcH1txbg" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>  <!-- ---------------------------------------------------------------->
+  
+  </div>   
+  
+  <script>
+  
+  let video = {
+    "Articolo 1":
+    ["https://youtu.be/jhpskIXaeEE",
+    "L'Italia è una Repubblica ...."],
+    
+    "Articolo 2":
+    ["https://youtu.be/kfdXM62nQiA",
+     "La Repubblica riconosce ...."],
+    
+    
+  }
+  
+  for (v in video){
+   
+    lista_dei_video.innerHTML += "<a href='" + video[v][0] + "'>" + v + "</a><p>" + video[v][1] + "</p>";
+    
+  }
+  
+  </script>
+  
+  
+</body>
+</html>

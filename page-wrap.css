@@ -1,0 +1,14 @@
+m		* { margin: 0; padding: 0; }
+		
+		html { 
+			background-color: black;
+			//background: url(images/bg.jpg) no-repeat center center fixed; 
+			-webkit-background-size: cover;
+			-moz-background-size: cover;
+			-o-background-size: cover;
+			background-size: cover;
+			font-size: 1.4em;
+		}
+		
+		#page-wrap { width: 400px; margin: 50px auto; padding: 20px; -moz-box-shadow: 0 0 20px black; -webkit-box-shadow: 0 0 20px black; box-shadow: 0 0 20px black; }
+		p { font: 1.4em; Georgia, Serif; margin: 0 0 30px 0; text-indent: 20px; text-align: justify;line-height: 1.6;}

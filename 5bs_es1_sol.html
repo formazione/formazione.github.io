@@ -1,0 +1,48 @@
+<title>5bs_es1</title>
+<div id="page2">
+  
+</div>
+<script src="https://www.gstatic.com/firebasejs/4.10.1/firebase.js"></script>
+<script>
+
+  var config = {
+    apiKey: "AIzaSyDp-mWaWEI07pIdRUhi6vA-salEMRWz4hw",
+    authDomain: "quiz-e5e5a.firebaseapp.com",
+    databaseURL: "https://quiz-e5e5a.firebaseio.com/",
+    projectId: "quiz-e5e5a",
+    storageBucket: "quiz-e5e5a.appspot.com",
+    messagingSenderId: "901845403492"
+  };
+  firebase.initializeApp(config);
+
+  
+function retrieveData(){
+  
+  page2.innerHTML = "";
+  let ref = firebase.database().ref().child("5bs_es1");
+  
+  ref.on('value', function(snapshot) {
+      let count1 = 0;
+      let snap = snapshot.val();
+      for (i in snap){
+       console.log("\n" + i);
+        // nome dell'alunno =====================
+        page2.innerHTML += "<hr>" + i + "<br>";
+        // =====================================
+        for (n in snap[i]){
+             console.log(n, snap[i][n])
+              // domanda 1 "risposta" ===========================
+              page2.innerHTML += n + " = " + snap[i][n] + "<br>";
+              // ================================================
+     
+      }
+  }
+  });
+}
+
+
+page2.innerHTML += "<input type=text onchange='if (this.value==\"aiuto\") retrieveData();' id='pss'>";
+    
+    
+    
+</script>

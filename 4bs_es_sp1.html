@@ -1,0 +1,152 @@
+<title>4bs Pre-Compito</title>
+<script src="gohome.js"></script>
+<style>
+@import "temp1.css";
+</style>
+<script>
+function speak(cosadire){
+  const message = new SpeechSynthesisUtterance(cosadire); 
+  window.speechSynthesis.speak(message);
+}
+</script>
+
+<script>
+
+// =================================== show: visualizza l'argomento sullo scherm
+
+function button(testoparlato, titolo){
+ document.write("<button onclick=\"speak('" + testoparlato + "');\">" + titolo + "</button><br>");
+}
+  
+  
+rows = [];
+function show(x){
+  document.write(x);
+  // contanins all the rows of the page
+  rows.push(x);
+  }
+// =================================== Mostra Soluzione: mostra la soluzione esercizio
+  // da legare al button onclick e if text1.value='aiuto'
+function mostraSoluzione(){
+  show("<a href='4bs_es_sp1.html'>[Solo Traccia]</a><br>");
+  show(traccia);
+ show("<img src='https://cdn.glitch.com/90e05fb6-037b-416a-b22f-95c8044b6060%2Fce2004.PNG?1547877655576' />");
+  show("<img src='https://cdn.glitch.com/90e05fb6-037b-416a-b22f-95c8044b6060%2Fsp2004.PNG?1547877655749' />");
+}
+traccia = `<img src="https://cdn.glitch.com/90e05fb6-037b-416a-b22f-95c8044b6060%2Ftraccia1.PNG?1547877655843" />`
+</script>
+
+<!--               traccia del compito     -->
+
+
+<!-- Pulsante per mostrare la soluzione password -->
+<br>
+<script>
+//                     // -  LA    TRACCIA   -  //
+speak("Buon lavoro");
+  let x = `
+ESERCIZIO 1 - Stato Patrimoniale e Conto economico
+
+1)La Zelig S.p.A. viene costituita il 1° gennaio 2004 con il versamento da parte degli azionisti di #capitale per >>>1000 euro.
+<iframe width="531" height="398" src="https://www.youtube.com/embed/rXebInoIWyA" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+Nel corso del periodo 1° gennaio 2004 – 31 dicembre 2004 si svolgono le seguenti operazioni:
+2) Acquistate #materie #prime per >>>250. Pagamento differito.
+<iframe width="547" height="410" src="https://www.youtube.com/embed/Rcr3Wb4Bflo" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+3) Acquisto di #impianti per >>>800 euro; pagamento a termine.
+<iframe width="519" height="389" src="https://www.youtube.com/embed/M3I8ycOkLPQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+4) Pagamento per cassa di #stipendi per >>>300 euro.
+<iframe width="519" height="389" src="https://www.youtube.com/embed/VfQLdcmJDLg" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+5) Vendite di #prodotti per >>>600 euro con incasso a pronti.
+<iframe width="519" height="389" src="https://www.youtube.com/embed/qsJccIyQ_NY" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+6) Pagato in contanti #premio assicurativo per >>>100 euro.
+7) Pagamento #debiti a fornitori per >>>500 euro.
+
+Alla fine del periodo – 31 dicembre 2004 – si rilevano le seguenti operazioni di assestamento:
+8) Le rimanenze #finali di materie ammontano a >>>50 euro.
+9) Gli #impianti acquistati nel periodo verranno utilizzati per un arco temporale di 4 anni.
+Si presentino il #conto #economico 2004 e lo #stato #patrimoniale al 31 dicembre 2004. 
+`;
+
+
+let textforaudio = `
+ESERCIZIO 1 - Stato Patrimoniale e Conto economico
+
+1 La Zelig S.p.A. viene costituita il 1° gennaio 2004 con il versamento da parte degli azionisti di capitale per 1000 euro.
+
+Nel corso del periodo 1° gennaio 2004 – 31 dicembre 2004 si svolgono le seguenti operazioni:
+2 Acquistate materie prime per 250. Pagamento differito.
+
+3 Acquisto di impianti per 800; pagamento a termine.
+
+4 Pagamento per cassa di stipendi per 300 euro.
+
+5 Vendite di prodotti per 600 euro con incasso a pronti.
+
+6 Pagato in contanti premio assicurativo per 100 euro.
+7 Pagamento debiti a fornitori per 500 euro.
+
+Alla fine del periodo – 31 dicembre 2004 – si rilevano le seguenti operazioni di assestamento:
+8 Le rimanenze finali di materie ammontano a 50 euro.
+9 Gli impianti acquistati nel periodo verranno utilizzati per un arco temporale di 4 anni.
+Si presentino il conto economico 2004 e lo stato patrimoniale al 31 dicembre 2004. 
+`
+
+textforaudio = textforaudio.split("\n");
+
+// =================== colorazione parole =================
+function colorwords(color1,color2){
+  // cerca le parole che iniziono con # e >>>
+  // # = colore gold
+  let words = x.match(/#\w*/g)
+  // >>> = colore coral
+  let words2 = x.match(/>>>[\w]*/g)
+  // dà il colore alle parole di cui sopra
+  for (n in words){
+      x = x.replace(words[n], "<b style='color:"+color1+"'>" + words[n] + "</b>");
+      x = x.replace("#","");
+  }
+  for (n in words2){
+      x = x.replace(words2[n], "<b style='color:"+color2+"'>" + words2[n] + "</b>");
+      x = x.replace(">>>","");
+    }
+}
+// ======================== fine colorazione =============  
+
+colorwords("gold","coral"); // colora le parole di giallo oro o corallo
+
+function colorthis(){
+  // colora parole specifiche
+  let fr = ["1.000","250","800","300","600","100","500"];
+  for (n in fr){
+    x = x.replace(fr[n], "<b style='color:yellow'>" + fr[n] + "</b>");
+  }
+}
+    
+x = x.split("\n");
+  
+  // =============================   SOLO TRACCIA ================
+for (line in x){
+  if (x[line][0] != "<") {
+   document.write(x[line] + "<br>");
+};
+};
+  // Pulsante per leggere l'intera traccia
+  button(textforaudio, "Leggi la traccia");
+  // ============================   TRACCIA CON VIDEO E AUDIO ====
+for (line in x){
+ document.write(x[line] + "<br>");
+  if (textforaudio[line] != ""){
+    document.write("<button onclick=\"speak('" + textforaudio[line] + "');\">Leggi</button><br>");
+  }
+};
+
+  // ========================    SOLUZIONE ==============
+document.write(`
+  <input id="pass" type="text">
+  <br>
+  <!-- Pulsante per mostrare la soluzione -->
+  <button onclick="if (pass.value=='aiuto'){mostraSoluzione()}">
+    Mostra la soluzione
+  </button>`);
+  
+</script>

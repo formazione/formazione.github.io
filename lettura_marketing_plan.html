@@ -1,0 +1,285 @@
+<title>Marketing Plan</title>
+<style>
+/*@import "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css";*/
+@import "ebook.css" (min-width: 780px);
+@import "ebook_m.css" (max-width: 1000px);
+@import "button_little.css";
+textarea {
+  background: lightblue;
+  border: 1px solid blue;
+  font-weight: bold;
+  font-size: 1em;
+  width= 100%;
+}
+</style>
+
+<body>
+<div id="ebook"></div>
+<script src="speak.js"></script>
+  <script src="gohome.js"></script>
+<script>
+immagini = [];
+function img(address){
+  // code to add an image to a value of dictionary object
+  let code = "<br><br><center><img src='" + address +"' width='100%' /></center>";
+  immagini.push(address);
+  return code;
+}
+  
+let cntDivHiddenList = 0;
+function hiddenList(rows){
+  let html = "";
+  html += "<br><br><center><button onclick=\"txt" + cntDivHiddenList + ".style.display='block';\"> > Risposta</button></center>";
+  html += "<div id='txt" + cntDivHiddenList + "' rows=3 cols=50 style=\"display:none;overflow:hidden;\">";
+  html += "<ul>";
+  for (r in rows){
+   html += "<li>" + rows[r] + "</li>";
+  }
+  html += "</ul></div>";
+  cntDivHiddenList++;
+  return html;
+}
+  
+/*
+String.prototype.replaceAll = function(search, replacement) {
+    var target = this;
+    return target.replace(new RegExp(search, 'g'), replacement);
+};
+*/
+  
+String.prototype.replaceAll = function(search, replacement) {
+    var target = this;
+    return target.split(search).join(replacement);
+};
+  
+// ========================== il dizionario ===================
+let paragrafi = {
+  //cover
+  "Esercitazione sul Marketing plan di un'impresa di ristorazione": img("https://cdnimg.webstaurantstore.com/images/articles/118/dining-room-layout-header.jpg"),
+
+  // start
+  "1. Analisi dei prodotti" :
+  "Il ristorante Marconi srl si trova al centro di una località di mare, Con una disponibilità di <<posti>> pari a <<70>>, propone una <<cucina tipica>> del luogo, con piatti di terra e di mare tradizionali. Ci sono <<5 dipendenti>>, escluso il titolare ed è abbastanza conosciuto, con una <<clientela affezionata>> e selezionata formata da <<famiglie>> della zona e dai <<turisti>> nel periodo estivo." + img("http://flagman-bg.com/wp-content/uploads/2016/02/panorama1.jpg"),
+  
+  "2. Analisi del mercato" :
+  "C'è una tendenza in <<aumento delle presenze>> di turisti e di escursionisti che visitano la località nel <<fine settimana>> per gite o semplici passeggiate. Nella zona ci sono <<6 concorrenti>> con posti a sedere da 30 a 60 con una cucina simile." + img("http://russellnz.co.nz/wp-content/uploads/Walking-weekend-Whangamumu-Track-credit-Stephen-Western-Photography-sm.jpg"),
+  
+  "3. Analisi della domanda" :
+  "Attraverso il contatto diretto della clientela ha fatto rilevare un'<<evoluzione>> delle <<preferenze gastronomiche>> verso modelli di consumo legati al <<territorio>>. I clienti chiedono piatti e vini locali e si informano sull'origine delle materie prime e dei metodi di lavorazione. Spesso il <<motivo del viaggio>> è principalmente l'interesse per la conoscenza del <<territorio>> e l'<<enogastronomia locale>>." + img("http://www.pedemontanavicentina.com/wp-content/uploads/2017/01/prodotti-tipici.jpg"),
+  
+  "4. Decisioni strategiche" :
+  "Ritenendo non sfruttate a pieno le potenzialità del locale, ci si prefigge di aumentare i ricavi di vendita del 30% in tre anni. Questo obiettivo si può conseguire puntando alla clientela di alta stagione e sulle nuove endenze enogastronomiche.",
+  
+  ">>> Analisi interna" :
+  "L'analisi interna ha evidenziato",
+  
+  ">>> 1) Quali sono i Punti di forza?" : hiddenList(["Locale in zona centrale",
+                                                    "Clientela affezionata",
+                                                    "Personale esperto"]),
+  
+  ">>> 2) Quali sono i Punti di debolezza?" : hiddenList(["Offerta poco varia e innovativa",
+                                                        "Arredamento da rinnovare"]),
+  
+ ">>> 3) Quali sono le opportunità?" : hiddenList(["Aumenti dei flussi di turisti ed escursionisti",
+                                                 "Interventi a sostegno da parte di enti di promozione turistica"]),
+
+   ">>> 4) Quali sono le minacce?" : hiddenList(["concorrenti interessati allo stesso target", 
+                                              "crisi economica e riduzione delle spese"]),
+  
+ "Scelte di Marketing mix" :
+ "Le scelte su prodotto, prezzo, distribuzione e comunicazione sono le seguenti:",
+  
+  ">>> 1) Cosa decidereste per la distribuzione (place)?" : hiddenList(["Rinnovo del locale","Arredamento legato agli usi locali","Uso di costumi tradizionali"]),
+   
+  ">>> 2) Quali scelte operative per il prodotto ed il prezzo?":
+  hiddenList(["Nuovi piatti basati sulla tradizione rivisitati in chiave moderna",
+              "Menu degustrazione rivolto ai turisti",
+              "Prezzo fisso al menu degustazione",
+              "Menu à la carte su livelli di prezzo precedenti",
+              "Incremento del livello medio dei prezzi dal terzo anno"]),
+  ">>> 3) Quali decisioni per la comunicazione?" :
+  hiddenList(["Apertura di una pagina Facebook per mantenere i contatti con la clientela informandola sulle nuove iniziative"]),
+  
+  ">>> 4) Come effettuare il controllo degli obiettivi raggiunti?" :
+  hiddenList(["Ogni anno sarà effettuato il controllo confrontando i ati per i ricavi con gli incrementi programmati seguenti:","Al termine del primo anno: 5% di aumento dei ricavi","Al termine del secondo anno: 10% di aumento dei ricavi","Al termine del terzo anno: 15% di aumento dei ricavi"]),
+  
+  "Esercitazione n.2 sul marketing plan" :
+  "Il <<Gallo italiano>> è una <<rosticceria>> situata nel <<centro>> storico di una città di provincia, attualmente gestita dalla <<seconda generazione>> di una famiglia di ristoratori. Il locale, che dispone di <<20 posti>> a sedere più altri 10 posti su sgabelli, offre una <<cucina tradizionale>> fatta di <<fritti, di arrosti, pizze>> e una <<limitata>> varietà di primi e secondi piatti che possono essere consumati sul posto o venduti con la formula <<take-away>>. Nelle vicinanze ci sono <<4 pizzerie>> al taglio di tipo tradizionale, che disponsono di locali <<di dimensioni minori>>. Il comune ha recentemente completato i lavori di <<riqualificazione del centro storico>> (messa in opera di una nuova pavimentazione e sostituzione delle panchine e dei lampioni); la <<piazza>> che si trova nelle vicinanze della rosticceria è diventata un <<luogo di incontro>> per manifestazioni musicali e culturali. Inoltre è stato riaperto il <<teatro>> comunale, che si trova nella stessa strada del locale. Gli interventi dell'amministrazione hanno portato a un <<aumento dei visitatori>> che si recano in centro per partecupare alle manifestazioni o per fare una passeggiata. I titolari della rosticceria hanno constatato che, soprattutto in <<serata>>, si è verificato un <<aumento>> della clientela, che tuttavia si dimostra insoddisfatta della limitata offerta gastronomica dei locali della zona.",
+  
+  ">>> Decisioni" :
+  "Decidono di puntare sulla qualità curando maggiormente i prodotti e i piatti da offrire ai clienti. Viene ampliata l'offerta di primi piatti (con l'aggiunta di lasagne, zuppe, gnocchi fatti in casa e polenta), di secondi di carne (arrosti e spezzatini), di verdure e di pesce (una volta a settimana). I titolari si prefiggono l'obiettivo di aumentare i ricavi di vendita dei primi e dei secondi piatti del 40% in tre anni e i ricavi derivanti dalla vendita di fritti e pizze del 10% in 3 anni.",
+  /*
+  "Completa il seguente schema" : "",
+  
+  "Inserisci il tuo nome" :
+  "<input type=text>",
+  
+  ">>> Analisi dei prodotti / servizi offerti dall'impresa" :
+  "<textarea rows=7 cols=50></textarea>",
+  
+  ">>> Analisi del mercato e della concorrenza" :
+  "<textarea rows=7 cols=50></textarea>",
+  
+  ">>> Analisi della domanda" :
+  "<textarea rows=7 cols=50></textarea>",
+  
+  ">>> Scelte strategiche" :
+  "<textarea rows=7 cols=50></textarea>",
+  */
+  ">>> Versione dell'esercizio in formato pdf" : "<a href='https://cdn.glitch.com/6f5b6850-3bb1-4610-8137-6eaec273f126%2FEs1_es2_marketing_plan.pdf?1549915637646'><img src='https://cdn3.iconfinder.com/data/icons/line-icons-set/128/1-02-512.png' width=100 /></a>",
+  /*
+"Comunicazione aziendale" : 
+  "L'impresa deve comunicare in modo efficace quello che è importante per i soggetti interni ed esterni all'impresa.",
+  
+"La comunicazione interna" : 
+  "Si rivolge ai soggetti interni e serve all'impresa a prendere le decisioni strategiche. Riguarda principalmente gli organi di vertice, ma deve coinvolgere anche i quadri direttivi e gli impiegati, perché le azioni di tutti quelli che lavorano nell'impresa sia coerenti con la sua mission e vision.",
+  
+"La comunicazione esterna":
+  "Si rivolge ai fornitori, ai clienti, alle banche, allo Stato, attraverso il Bilancio (comunicazione economico - finanziaria), oppure si rivolge all'intera collettività tramite la comunicazione socio ambientale, per comunicare il suo impatto sull'occupazione e sull'ambiente.",
+  
+"Comunicazione di Marketing":
+  "Infine c'è la comunicazione di marketing che si cerca di creare un nuovo mercato o consolidare, espandere quello esistente attraverso l'uso di vari media.",
+  
+  "Bilancio socio ambientale" : 
+  "Se il <b>bilancio</b> si rivolge a fornitori, clienti, banche ecc., il bilancio socio ambientale si rivolge all'intera comunità. L'attività delle imprese, infatti, si ripercuote sull'intero tessuto sociale ed ambientale, per cui è sempre più necessario poter comunicare con dei dati comprensibili a tutti questo impatto. Si parla di livelli di occupazione, di aumento del reddito della popolazione locale, di creazione di nuove infrastrutture, ma anche di inquinamento, aumento del degrado urbano, conseguenze sulla qualità della vita in generale. Le imprese, quindi, non devono solo produrre beni richiesti dai clienti a prezzi accessibili, ma devono anche avere un impatto positivo sulla società e sull'ambiente. Nel bilancio socio ambientale vengono illustrati questi aspetti. Il documento illustra le ricadute sul territorio ed esprime il valore aggiunto prodotto a favore della collettività.",
+  
+  "Conto" :
+  "Il conto è un insieme di scritture riferite ad un determinato oggetto, a cui lo stesso conto viene intestato, ordinate in modo da evidenziarne la quantità iniziale e le variazioni successive",
+
+  "La terminologia:" : "Vediamo quali sono i termini che si usano in contabilità per riferirsi alle operazioni di registrazione dei conti",
+   ">>> Intestare" :   "Intestare un conto significa attribuire una denominazione ed un codice al conto.",
+   ">>> Accendere" :   "Accendere o aprire un conto significa effettuare la prima registrazione nel conto",
+   ">>> Tenere" :      "Tenere un conto: significa rilevare in modo continuativo il conto.",
+   ">>> Addebitare" :  "Addebitare un conto significa rilevare una quantità a destra in dare.",
+   ">>> Accreditare" : "Accreditare un conto significa rilevare una quantità a sinistra in avere.",
+   ">>> Spegnere" :    "spegnere un conto significa calcolare il saldo e far bilanciare dare e avere.",
+             
+  "Natura dei conti" : "I conti possono essere finanziari o economici, a seconda della natura dei valori che accolgono." + img("https://cdn.glitch.com/1d73e570-ac9d-4ea5-b454-7f5b7360fb96%2Fimage.png?1549862267627"),
+             
+             "I conti finanziari":
+             "Se si tratta di beni che sono già espressi in denaro e che servono solo come strumento di pagamento, come il denaro in cassa, le disponibilità in banca, gli assegni e le cambiali, i crediti e i debiti, il loro valore è finanziario o originario. Infatti non c'è bisogno di calcolare il valore, essendo già espresso sul titolo (vedi le banconote o gli asssegni).",
+             "Sezioni" : "I conti finanziari hanno due sezioni, dare e avere. In dare si rilevano le entrate di denaro o i crediti, in avre le uscite o i debiti.",
+             
+             "I conti economici":
+             "Sono quei conti che riguardano beni o servizi che devono essere valutati per poterne stabilire il valore e servono per produrre, non sono strumenti di pagamento. Si tratta delle merci in magazzino, degli automezzi, le attrezzature, le spese per utenze elettriche e telefoniche, consulenze ecc." + img("https://cdn.glitch.com/1d73e570-ac9d-4ea5-b454-7f5b7360fb96%2Fimage.png?1549862862303"),
+  "Sezioni" :
+             "In dare dei conti economici si rilevano i costi (valore merci acquistate), in avere i ricavi (valore delle merci vendute)."
+            ,
+  "Scritture elementari" : "Sono le scritture che servono a completare le altre scritture. Non sono collegate tra loro e non seguono delle regole particolari. La scrittura elementare più utilizzata è la prima nota.", 
+  "Scritture complesse": "Sono scritture collegate tra loro per derminare il patrimonio, le risorse finanziarie e il risultato economico dell'impresa. Si tengono secondo la regola della Partita doppia, per cui ad ogni operazione si rilevano in due o più conti i valori economici o finanziari relativi ai beni oggetto dell'operazione in modo che i valori in dare ed avere pareggino. Dopp n operazioni, quindi, la somma delle sezioni dare e avere, quindi, pareggiano sempre.",
+  "Partita doppia" : "Metodo per cui ad ogni operazione si rilevano in due o più conti i valori economici o finanziari relativi ai beni oggetto dell'operazione in modo che i valori in dare ed avere pareggino.",
+  
+  
+"Bilancio" : "Documento attraverso il quale si illustra la situazione dell'azienda dal punto di vista patrimoniale, finanziario ed economico. Si divide nello Stato patrimoniale (art. 2424 c.c.), il Conto economico (art.2425 c.c.) e Nota integrativa (art.2427 c.c.).",
+
+ "Stato patrimoniale" : 
+  "Lo Stato patrimoniale evidenzia il patrimonio (attivo e passivo) dell'impresa alla fine dell'esercizio. Deriva dalla Situazione patrimoniale. In pratica i conti dell'azienda vengono sommati o sottratti, in uno schema previsto dall'art. 2424 del codice civile.",
+  
+  "Domande:":
+  "Qual è l'articolo che prevede lo schema dello Stato Patrimoniale? R: L'art. 2424 c.c.",
+  
+"Conto economico" : "Il Conto economico evidenzia ricavi e costi, cioè i componenti positivi e negativi del reddito. La loro differenza (ricavi - costi) determina l'utile o la perdita. Il Codice civile prevede lo schema del Conto economico all'art. 2425 che ne fissa la forma, la struttura e il contenuto. Ha forma scalare, presenta una sola sezione e il risultato dell'esercizio (utile o perdita) viene ottenuto per effetto di detrazioni e somme successive.",
+  
+  // immagine dello schema del conto economico
+"Slide art. 2425" : img('https://cdn.glitch.com/1d73e570-ac9d-4ea5-b454-7f5b7360fb96%2Fimage.png?1549529272966'),
+  
+"C.E. - schema" : img('https://cdn.glitch.com/1d73e570-ac9d-4ea5-b454-7f5b7360fb96%2Fimage.png?1549529452917'),
+
+ "Ratei" : 
+      "Sono quote di entrate o uscite che misurano ricavi o costi, maturati alla fine dell'esercizio, ma non ancora rilevati, perchè la loro manifestazione finanziaria avverrà dopo la fine dell'esercizio.",
+
+"Esercizio sui ratei" : 
+  "Calcola il rateo attivo per interessi da ricevere su un mutuo attivo di 10 mila euro, con tasso del 6% annuale., Gli interessi si incassano ogni sei mesi alla fine del periodo dal 1° giugno al 30 novembre (1° periodo), e dal 1° dicembre a 31 maggio di ogni anno., Ogni anno, quindi si pagano 600 euro. Ogni 6 mesi 300. Il rateo attivo corrisponde ad un solo mese (di dicembre), --------------------1dic-------31dic, ---------------------|_________|, Basterà dividere per 6, per trovare quanto dovremmo incassare di interessi per quel mese., 300:6 = x : 1 => x = 300:6 = 50 euro. Sono 50 euro di ratei attivi e di interessi attivi., Avremo Ratei attivi in dare per 50 euro (credito), Avremo Interessi attivi in avere per 50 euro (ricavo)" ,
+          
+          */
+   
+
+  
+          }
+  
+  // --------------------------- Print all above ------------------- //
+    
+    // Funzione che mostra tutte le voci attraverso
+                      // Index
+function the_index(){
+  for (k in paragrafi) {
+    //ka = k.split(" ").join("");
+    if (k.includes(">>>")){
+      let kl = k.replace(">>>","");
+      kl = kl.replace(kl, "<span style='margin:10;color:lightgreen;'><i> - " + kl + "</i></span>");
+    ebook.innerHTML += "<a href='#" + k + "'><i style='font-size:0.5em'>" + kl + "</i></a><br>";}
+    else ebook.innerHTML += "<a href='#" + k + "'><i style='font-size:0.5em'>" + k + "</i></a><br>";
+  }
+}
+                    // ebook
+function the_ebook(){
+  for (k in paragrafi) {
+    //ka = k.split(" ").join("");
+    if (k.includes(">>>")){
+      let kl = k.replace(">>>","");
+      kl = kl.replace(kl, "<span style='margin:10;color:lightgreen;'> - " + kl + "</span>");
+      let new_replace = paragrafi[k].replaceAll("<<","<b style='color:coral'>");
+      new_replace = new_replace.replaceAll(">>","</b>");
+      ebook.innerHTML += "<a href='#top'><b id='" + k +"'>" + kl + "</b></a><br><span style='margin:10;'>" + new_replace + "</span><br><br>";
+        }
+    else {
+      let new_replace = paragrafi[k].replaceAll("<<","<b  style='color:coral'>");
+      new_replace = new_replace.replaceAll(">>","</b>");
+      ebook.innerHTML += "<a href='#top'><b id='" + k +"'>" + k + "</b></a><br>" + new_replace + "<br><br>";
+    }
+    //ebook.innerHTML = "<button onclick=\"speak('" + paragrafi[k] + "');\">Leggi</button>";
+  }
+}
+    
+
+    
+function start(){
+  ebook.innerHTML += "<h4 id='top'>" + document.title + "</h4>";
+  the_index();
+  ebook.innerHTML += "<hr>";
+  the_ebook();
+}
+    
+start();
+</script>
+  
+<div id="page"></div> <!-- div con i contenuti -->
+<div id="page2"></div> <!-- soluzione -->
+<!-- firebase config -->
+<style>
+         
+         
+  textarea, input {
+  width:100%;
+  background-color: lightyellow;
+  border: none;
+  padding: 15px 32px;
+  text-align: left;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 2em;
+  margin: 4px 2px;
+  cursor: pointer;
+    border-radius: 2px;
+  
+}
+      .mytext {
+      background-color: lightblue;}
+         
+
+
+     
+</style>
+  <script src="https://www.gstatic.com/firebasejs/4.10.1/firebase.js"></script>
+<script src="common_plus_questions.js"></script>
+  
+  <script>
+    
+  qmk("Analisi dei prodotti dell'impresa");
+  qmk("Analisi del mercato e della concorrenza");
+  qmk("Analisi della domanda");
+  qmk("Scelte strategiche");
+    
+page.innerHTML += "<input type=text onchange='if (this.value==\"aiuto\") retrieveData();' id='pss'>";
+</script>
+</body>

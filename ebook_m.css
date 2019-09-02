@@ -1,0 +1,13 @@
+body {
+  padding-left: 2%;
+  padding-right: 2%;
+  background: black;
+  color: white;
+  font-size: 1.4em;
+}
+
+a {
+ text-decoration: none;
+ color: cyan;
+  
+}

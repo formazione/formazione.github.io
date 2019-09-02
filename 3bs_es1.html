@@ -1,0 +1,124 @@
+<script src="gohome.js"></script><!-- icona vai a capo -->
+<script src="questionButton.js"></script> <!-- pulsante con domanda e risposta parlante -->
+<script>
+  questionButton(1, "Vuoi andare al prossimo esercizio? <a href='3bs_es2.html'>Clicca qui</a>", "Es. 2");
+</script>
+<style>
+    body {
+    font-size: 2em;
+    }
+  button {
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin: 4px 2px;
+    cursor: pointer;
+    background-color: #008CBA;
+    font-size: 2em;
+  }
+
+  textarea, input {
+  width:100%;
+  background-color: gold;
+  border: none;
+  padding: 15px 32px;
+  text-align: left;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 2em;
+  margin: 4px 2px;
+  cursor: pointer;
+    width:100%;
+}
+.mytext {
+  background-color: lightblue;
+}
+</style>
+
+<script src="https://www.gstatic.com/firebasejs/4.10.1/firebase.js"></script>
+<script>
+var config = {
+  apiKey: "AIzaSyDp-mWaWEI07pIdRUhi6vA-salEMRWz4hw",
+  authDomain: "quiz-e5e5a.firebaseapp.com",
+  databaseURL: "https://quiz-e5e5a.firebaseio.com/",
+  projectId: "quiz-e5e5a",
+  storageBucket: "quiz-e5e5a.appspot.com",
+  messagingSenderId: "901845403492"
+};
+firebase.initializeApp(config);
+var database = firebase.database()
+
+
+// ========================== ID esercizio sul database ========
+// cambia questo id
+id_database = "3bs_es1";
+var dbref1 = database.ref().child(id_database);
+// ===============================================
+      
+      
+      
+      
+function add_data(d,c,e){
+  dbref1.child(d).child(e).set(c)
+}
+
+function printnome(num){
+  
+  document.write("Inserisci il tuo nome:<br><input id='data" + num + "' class='mytext' type=text value='' /><br>")
+}
+
+function printtextandbutton(numalunno,num){
+  //document.write("<input id='data" + num + "' type=text value='' />")
+  document.write("Risposta " + num + ": <textarea id='contenuto"+ num + "' type='text' rows='4' /></textarea>");
+  domanda = "domanda" + num;
+  document.write("<button onclick=add_data(data"+ numalunno + ".value,contenuto" + num +".value,'"+domanda+"')>Invia</button><br>")
+}
+
+function questionwrite(frase){
+   document.write("<b>" + frase + "</b><br>")
+}
+
+document.write("<h3>Esercizio " + id_database + "</h3>")
+printnome("1");
+      
+let domanda1 = "Quali sono gli elementi dell'azienda?";
+let domanda2 = "Fai degli esempi di beni a lungo ciclo di utilizzo";
+let domanda3 = "Qual è il fine dell'azienda?";
+let domanda4 = "È un elemento materiale, fisicamente tangibile, che può essere utilizzato per il soddisfacimento dei bisogni";
+let domanda5 = "Calcola l'elasticità della domanda di un bene che al prezzo di 100 euro vende 1500 unità, mentre al prezzo di 130 euro vende 790 unità.";
+// ======================================================
+// let domanda6 = "";
+// let domanda7 = "";
+// let domanda8 = "";
+// let domanda9 = "";
+// let domanda10 = "";
+
+// 1 
+questionwrite(domanda1); printtextandbutton("1","1"); questionwrite("<br>");
+// 2 
+questionwrite(domanda2); printtextandbutton("1","2"); questionwrite("<br>");
+// 3 
+questionwrite(domanda3); printtextandbutton("1","3"); questionwrite("<br>");
+// 4 
+questionwrite(domanda4); printtextandbutton("1","4"); questionwrite("<br>");
+// 5 
+questionwrite(domanda5); printtextandbutton("1","5"); questionwrite("<br>");
+      
+      
+      // ========================== domande aggiuntive ==============================================
+
+// 6 questionwrite(domanda6); printtextandbutton("1","6"); questionwrite("<br>");
+
+// 7 questionwrite(domanda7); printtextandbutton("1","7"); questionwrite("<br>");
+
+// 8 questionwrite(domanda8); printtextandbutton("1","8"); questionwrite("<br>");
+
+// 9 questionwrite(domanda9); printtextandbutton("1","9"); questionwrite("<br>");
+
+// 10 questionwrite(domanda10); printtextandbutton("1","10"); questionwrite("<br>");
+      
+</script>
+    

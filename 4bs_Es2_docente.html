@@ -1,0 +1,93 @@
+
+    <script src="https://www.gstatic.com/firebasejs/4.10.1/firebase.js"></script>
+    <script>
+      var config = {
+        apiKey: "AIzaSyDp-mWaWEI07pIdRUhi6vA-salEMRWz4hw",
+        authDomain: "quiz-e5e5a.firebaseapp.com",
+        databaseURL: "https://quiz-e5e5a.firebaseio.com/",
+        projectId: "quiz-e5e5a",
+        storageBucket: "quiz-e5e5a.appspot.com",
+        messagingSenderId: "901845403492"
+      };
+      firebase.initializeApp(config);
+      var database = firebase.database()
+
+      // Devi solo cambiare il nome del child... qui sotto con il nome del nuovo esercizio
+
+      var dbref1 = database.ref().child('4bs_Es2');
+      //dbref1.child("29122018").set("Oggi sto un po' meglio");
+      // aggiunge dati
+      function add_data(d,c){
+        dbref1.child(d).set(c)
+      }
+
+    </script>
+
+    <p>
+  01/02: ottenuto in locazione un fabbricato al canone semestrale anticipato di 720 euro;
+</p>
+01/04: stipulato un contratto di leasing per un automezzo; è previsto il pagamento di 8 canoni bimestrali anticipati di 2.400 euro;
+<p>
+01/06: stipulato un contratto di locazione per un fabbricato ; si prevede il pagamento posticipato del canone semestrale di 6000 euro;
+</p>
+01/10: concesso ad un dipendente un prestito di 10.220 euro con interessi al tasso del 5% da riscuotere semestralmente in via posticipata;
+<p>
+15/12: ottenuto da un fornitore il rinnovo per 60 giorni di un debito scaduto di 5.475 euro, alla scadenza si dovranno versare anche gli interessi al tasso del 4%.
+    </p>
+
+
+    Scrivi il tuo nome, ad es. Mario Rossi
+    <input id="data" type=text />
+    Soluzione: <input id="contenuto" type="text" />
+    <button onclick=add_data(data.value,contenuto.value)>Invia</button>
+    <div id="div1"></div>
+
+    <script>
+    refdiv1 = document.getElementById("div1");
+    //ref1.on("value", snap => refdiv1.innerText += ref1.getKey() + " = " + snap.val());
+    classe = [
+      "Correale",
+      "D'apolito",
+      "Galietta",
+      "Giordano",
+      "Guariglia",
+      "Landi",
+      "Lembo",
+      "Mainente",
+      "Malzone",
+      "Mauro",
+      "Mazziotti",
+      "Pepe",
+      "Puglia",
+      "Saturno",
+      "Scelza",
+      "Tardio"
+    ];
+    var al = []
+    for (a in classe){
+      document.write("<input type=text value=" + classe[a] + ">");
+        document.write("<input id='al" + a + "' type=text value=" + classe[a] + "><br>");
+    }
+
+    ref = database.ref().child('4bs_Es2');
+    var name = "";
+    var values = []
+    al = [al0,al1,al2,al3,al4,al5,al6,al7,al8,al9,al10,al11,al12,al13,al14,al15]
+    ref.child(classe[0]).on("value", snap => al[0].value = snap.val());
+    ref.child(classe[1]).on("value", snap => al[1].value = snap.val());
+    ref.child(classe[2]).on("value", snap => al[2].value = snap.val());
+    ref.child(classe[3]).on("value", snap => al[3].value = snap.val());
+    ref.child(classe[4]).on("value", snap => al[4].value = snap.val());
+    ref.child(classe[5]).on("value", snap => al[5].value = snap.val());
+    ref.child(classe[6]).on("value", snap => al[6].value = snap.val());
+    ref.child(classe[7]).on("value", snap => al[7].value = snap.val());
+    ref.child(classe[8]).on("value", snap => al[8].value = snap.val());
+    ref.child(classe[9]).on("value", snap => al[9].value = snap.val());
+    ref.child(classe[10]).on("value", snap => al[10].value = snap.val());
+    ref.child(classe[11]).on("value", snap => al[11].value = snap.val());
+    ref.child(classe[12]).on("value", snap => al[12].value = snap.val());
+    ref.child(classe[13]).on("value", snap => al[13].value = snap.val());
+    ref.child(classe[14]).on("value", snap => al[14].value = snap.val());
+    ref.child(classe[15]).on("value", snap => al[15].value = snap.val());
+
+    </script>

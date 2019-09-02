@@ -1,0 +1,95 @@
+
+    <style>
+    @import "temp1.css"
+    </style>
+    <title>
+    Azienda domanda 6
+    </title>
+    <script src="https://www.gstatic.com/firebasejs/4.10.1/firebase.js"></script>
+    <script src="3bs_azienda_menu.js"></script>
+    <script>
+
+// === Iscrizione prima delle domande
+domanda_top.innerHTML += "<blockquote>";
+domanda_top.innerHTML += "Completa il test sottostante.";
+// IMMAGINE - metti il link all'immagine qui sotto
+let imgaddress = "https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Question_Mark.svg/2000px-Question_Mark.svg.png"; 
+domanda_top.innerHTML += "</blockquote><center><img src='" + imgaddress +"' width=25% /></center>";
+let domanda = [];
+
+function rnd(x){
+  // x è un array che viene mischiato e restituito
+    x.sort(function() {
+      return .5 - Math.random();
+    });
+  return x;};
+
+function random(x){
+  // returns a random number from 1 to 10 if x=1
+ return Math.floor(Math.random()*10+1)*x; 
+}
+      
+let risposte = []; 
+
+// questo ciclo crea una domanda per ogni alunno
+// se non c'è nulla di casuale, saranno tutte uguali
+      
+for (let n=1; n<20; n++){
+  let alunno = classe[n] + ":"
+  // questo testo va nella text area che poi va
+  // memorizzato nel database di firebase
+  let testo = `
+
+Spiega il concetto di responsabilità illimitata.
+In quale tipo di società si applica?
+_______________________
+
+Quando si applica?
+_______________________
+
+Tutti i soci delle S.a.s. sono soggetti a responsabilità illimitata?
+______________________________________________________
+
+`;
+  
+  
+  
+  
+  // Le risposte esatte ======== C O R R E T T O R E ==============
+  let correttore = `
+Spiega il concetto di responsabilità illimitata.
+In quale tipo di società si applica?
+_______________________ alle società di persone
+
+Quando si applica?
+_______________________ nel caso in cui il patrimonio della società è insufficiente a pagare i debiti in modo non temporaneo
+
+Tutti i soci delle S.a.s. sono soggetti a responsabilità illimitata?
+______________________________________________________ gli accomandatari che hanno anche l'amministrazione della società
+
+`;
+
+  // AGGIUNGE LA DOMANDA (LA STESSA IN QUESTO ESERCIZIO) PER OGNI ALUNNO
+  // ALTRIMENTI DOVRESTI FARE UN PUSH PER OGNI ALUNNO
+  // domanda.push("Domanda per il primo alunno:....");
+  // domanda.push("Domanda per il secondo....");
+  // al di fuori di un ciclo
+  // Se vuoi farlo in un ciclo devi randomizzare le risposte
+  // Puoi anche usare un cliclo per console.log dei risultati, copia incollarli
+  // per evitare che cambino al refresh
+  domanda.push(alunno + testo);
+  risposte.push(correttore);
+                   }
+// CREAZIONE DI UN OGGETTO CHE AD OGNI ALUNNO ASSOCIA UNA DOMANDA (DALL'ARRAY domanda)
+  let cnt = 0
+  let compito = {};
+      for (n in classe){
+       compito[classe[n]] = domanda[cnt++]; 
+      };
+
+    // ========================================================================== fine dati
+for (i in domanda) console.log(domanda[i]);
+for (i in domanda) console.log(domanda[i] + risposte[i]);
+//console.log(risposte);
+</script>
+    

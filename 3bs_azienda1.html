@@ -1,0 +1,55 @@
+
+    <style>
+    @import "temp1.css"
+      
+    </style>
+    <!-- cambia il numero della domanda qui sotto
+    poi le riposte alle domande
+    -->
+    <title>
+    Azienda domanda 1
+    </title>
+
+
+    <script src="https://www.gstatic.com/firebasejs/4.10.1/firebase.js"></script>
+    <script src="3bs_azienda_menu.js"></script>
+    <script>
+
+    // ==================================================== dati personalizzati
+domanda_top.innerHTML += "<blockquote>Gli interessi si calcolano moltiplicando il Capitale per il tasso di interesse e gli anni diviso 100, i mesi diviso 1200, i giorni diviso 1200.</blockquote><center><img src='https://i2.wp.com/news.biancolavoro.it/wp-content/uploads/2017/06/interessi-moratori.jpg?fit=770%2C525&ssl=1' width=50% /></center>";
+let domanda = []
+
+function es1(mese, tasso, debito){
+  return "Calcola gli interessi per " + mese + " mesi al tasso del " + tasso + " % su un debito di " + debito + " Risposta: ";
+}
+
+function random(x){
+ return Math.floor(Math.random()*10+1)*x; 
+}
+      
+  let risposte = [];    
+for (let n=0; n<classe["length"]; n++){
+  // DATI CASUALI
+  m = random(1);
+  t = random(1);
+  d = random(1000);
+  // SOLUZIONE
+  r = Math.floor(m * t * d/1200);
+  // TUTTE LE RISPOSTE
+  risposte.push(r);
+  // TUTTE LE DOMANDE (CON LA RISPOSTA)
+  domanda.push(classe[n] + ": " + es1(m, t, d) + r + "\nCome si risolve?\n");
+                   }
+// AGGIUNGE LE DOMANDE NELL'OGGETTO COMPITO
+  let cnt = 0
+  let compito = {};
+      for (n in classe){
+       compito[classe[n]] = domanda[n];
+      };
+  
+    // ========================================================================== fine dati
+for (i in domanda) console.log(domanda[i]);
+for (i in domanda) console.log(domanda[i] + risposte[i]);
+//console.log(risposte);
+</script>
+    

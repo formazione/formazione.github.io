@@ -1,0 +1,185 @@
+<html>
+ <title>5bs_es1</title>
+<style>
+  @import "button.css";
+  @import "dark.css";
+  
+    body {
+    font-size: 2em;
+      margin-left: 10%;
+      margin-right: 10%;
+    }
+         
+         
+  textarea, input {
+  width:100%;
+  background-color: gold;
+  border: none;
+  padding: 15px 32px;
+  text-align: left;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 2em;
+  margin: 4px 2px;
+  cursor: pointer;
+  
+}
+      .mytext {
+      background-color: lightblue;}
+         
+
+
+a:link {
+  opacity: 0.8;
+  underline: 0;
+  }
+  
+a:hover {
+  opacity: 0.5;
+  }
+a:link, a:visited {
+  background-color: #f44336;
+  color: white;
+  padding: 5px 5px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+}      
+</style>
+<body>
+  
+  
+  <!-- pulsante per tornare alla pagina principale -->
+  <script src="gohome.js"></script>
+  <div id="page"></div>
+  <div id="page2"></div>
+<!-- firebase config -->
+<script src="https://www.gstatic.com/firebasejs/4.10.1/firebase.js"></script>
+<script>
+var config = {
+  apiKey: "AIzaSyDp-mWaWEI07pIdRUhi6vA-salEMRWz4hw",
+  authDomain: "quiz-e5e5a.firebaseapp.com",
+  databaseURL: "https://quiz-e5e5a.firebaseio.com/",
+  projectId: "quiz-e5e5a",
+  storageBucket: "quiz-e5e5a.appspot.com",
+  messagingSenderId: "901845403492"
+};
+firebase.initializeApp(config);
+var database = firebase.database()
+var dbref1 = database.ref().child(document.title);
+
+          
+function add_data(d,c,e){
+  // ADD DATA TO DATABASE WHEN CLICK ON INVIA BUTTON in printtextandbutton function  
+  dbref1.child(d).child(e).set(c)
+}
+
+function printnome(num){
+  // This creates an input text box with a data+num id for each student -->
+  page.innerHTML += "Inserisci il tuo nome:<br><input id='data" + num + "' class='mytext' type=text value='' /><br>";
+}
+
+function printtextandbutton(numalunno,num){
+  //page.innerHTML += "<input id='data" + num + "' type=text value='' />";
+  page.innerHTML += "Risposta " + num + ": <textarea id='contenuto"+ num + "' type='text' rows='3' /></textarea>";
+  domanda = "domanda" + num;
+  page.innerHTML += "<br><button onclick=add_data(data"+ numalunno + ".value,contenuto" + num +".value,'"+domanda+"')>Invia</button><br>";
+}
+
+function questionwrite(num, domanda_fatta){
+   page.innerHTML += num + " " + domanda_fatta + "<br>";
+}
+
+function mkquest(q, domanda_fatta){
+  questionwrite(q, domanda_fatta);
+  printtextandbutton("${q}",q);
+  questionwrite("<br>");
+  
+  //dbref1.on("value", snap => x = snap.value())
+}
+      
+page.innerHTML += "<h3>Esercizio " + document.title + "</h3>";
+      page.innerHTML += "<img src='https://tdm-pull-wol7ynwfkovcdc2im8l.netdna-ssl.com/wp-content/uploads/2011/11/Content-Marketing-Header.jpg' width='100%' />";
+printnome("1");
+      
+let countnum = 1;
+let my_quest = ["Come si definisce il marketing?",
+"Cosa si intende per orientamento al prodotto dell'impresa?",
+"Cosa si intende per orientamento alle vendite?",
+"Cosa si intende per orientamento al mercato?",
+"Che differenza c'è tra il marketing strategico e quello operativo?",
+"Se le materie prime sono pari a 4 euro e la percentuale delle stesse rispetto al prezzo è del 33%, determina il fattore.",
+"Quali sono le fasi del ciclo di vita del prodotto?",
+"Quali sono le strategie da utilizzare nella fase di lancio?",
+"Quali sono le strategie da utilizzare nella fase di sviluppo?",
+"Quali strategie adottare nella fase di maturità?",
+"Quali decisioni si possono prendere nella fase di declino?",
+"Quali sono le fasi dell'analisi del marketing strategico?",
+"Quali sono le fasi della scelta del marketing strategico?",
+"Cos'è la quota di mercato?",
+"Come si calcola il market share?",
+"Come si calcola il fair share?",
+"In base a quali fattori si differenzia il prezzo?",
+"Cosa sono i prezzi allineati?",
+"Cosa sono i prezzi di prenetrazione?",
+"Cosa sono i prezzi di scrematura?",
+"Come si calcola il prezzo con il full costing?",
+"Come si calcola il prezzo con il direct costing?",
+"Quali sono i canali di distribuzione?"];
+// indice delle domande
+for (q in my_quest) questionwrite(q, my_quest[q]);
+  page.innerHTML += "<br>";
+// domande con input text
+  for (let q in my_quest) {
+   
+    mkquest((q),my_quest[q]);
+  }
+
+  
+function createDiv(){
+  let ref = firebase.database().ref().child(document.title);
+  ref.on('value', function(snapshot) {
+    let count = 0;
+    snapshot.forEach(function(childSnapshot) {
+      let divX = document.createElement("div");
+      divX.setAttribute('id', 'al' + count);
+      document.body.appendChild(divX),
+      count++;})
+    }
+)};
+  </script>
+  
+  <script>
+function retrieveData(){
+  
+  page2.innerHTML = "";
+  let ref = firebase.database().ref().child(document.title);
+  
+  ref.on('value', function(snapshot) {
+      let count1 = 0;
+      let snap = snapshot.val();
+      for (i in snap){
+       console.log("\n" + i);
+        // nome dell'alunno =====================
+        page2.innerHTML += "<hr>" + i + "<br>";
+        // =====================================
+        for (n in snap[i]){
+             console.log(n, snap[i][n])
+              // domanda 1 "risposta" ===========================
+              page2.innerHTML += n + " = " + snap[i][n] + "<br>";
+              // ================================================
+     
+      }
+  }
+  });
+}
+
+// password
+page.innerHTML += "<input type=text onchange='if (this.value==\"aiuto\") retrieveData();' id='pss'>";
+    
+    
+    
+</script>
+    
+  </body>
+</html>

@@ -1,24 +1,15 @@
 <script src="https://www.gstatic.com/firebasejs/4.10.1/firebase.js"></script>
 <script src="quiz-e5e5aconfig.js"></script>
 <style>
-  html, body, {
-    position:fixed;
-    top:0;
-    bottom:0;
-    left:0;
-    right:0;
-    margin:0;
-    spacing:0;
-}
 
+  html, body {margin: 0; height: 100%; overflow: none;}
+  
+  
+  
 body {
   background-color:black;
 }
 
-#gc3 {
-  position: relative;
-  width:100%;
-  }
 </style>
 <body>
       
@@ -35,18 +26,17 @@ body {
         <canvas id="up" width="300" height="200" style="background:lime" onclick="moveup()" ontouchstart="moveup()"  ontouchmove="moveup()"></canvas></td>
           
           <tr><td>
-         <canvas id="left" width="250" height="200" style="background:yellow" onclick="moveleft()" ontouchstart="moveleft()  ontouchmove="moveleft()""></canvas>
+         <canvas id="left" width="250" height="200" style="background:yellow" onclick="moveleft()" ontouchstart="moveleft()" ontouchmove="moveleft()"></canvas>
           </td><td>
           <canvas id="right" width="250" height="200" style="background:red" onclick="moveright()" ontouchstart="moveright()"  ontouchmove="moveright()">
-          </canvas><tr>
+            </canvas></td><tr>
             
             <!-- basso -->
             <td colspan="2" align="center">
         <canvas id="down" width="300" height="200" style="background:blue" onclick="movedown()" ontouchstart="movedown()"  ontouchmove="movedown()"></canvas></center>
-          </canvas></td>
+          </td>
     </table>
-    </center>
-  </center>
+
   
 </div>
   
@@ -215,7 +205,8 @@ function lose(){
                 // writes the record in the database
                 ref1.child("snake").child("record6").set(rec)
               }
-              sc = 0; 
+              sc = 0;
+              z = 0;
   }
   
 function movefruit1(){

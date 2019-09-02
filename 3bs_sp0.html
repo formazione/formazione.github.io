@@ -1,0 +1,85 @@
+
+    <style>
+    @import "temp1.css"
+    </style>
+    <title>0bs sp 0</title>
+    <script src="https://www.gstatic.com/firebasejs/4.10.1/firebase.js"></script>
+    <script src="3bs_sp_menu.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script>
+
+// === INTRODUZIONE ALL'ESERCIZIO
+  
+      // immagine del patrimonio netto da usare nell'intro()
+   img1 = "<center><img src='http://www.businessplanvincente.com/wp-content/uploads/2009/04/macroaree.bmp' width='80%' />;</center>";
+      
+      // intro
+  intro("Esercizio sulla situazione patrimoniale. La situazione patrimoniale raccoglie i conti relativi alle immobilizzazioni, all'attivo circolante, ai debiti e al patrimonio netto." + img1);
+      
+      
+      // immagine iniziale della pagina (a parte eventuali dell'intro)
+let imgaddress = "https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Question_Mark.svg/2000px-Question_Mark.svg.png"; 
+domanda_top.innerHTML += "</blockquote><center><img src='" + imgaddress +"' width=25% /></center>";
+let domanda = [];
+
+function rnd(x){
+  // x è un array che viene mischiato e restituito
+    x.sort(function() {
+      return .5 - Math.random();
+    });
+  return x;};
+
+function random(x){
+  // returns a random number from 1 to 10 if x=1
+ return Math.floor(Math.random()*10+1)*x; 
+}
+      
+let risposte = []; 
+
+// questo ciclo crea una domanda per ogni alunno
+// se non c'è nulla di casuale, saranno tutte uguali
+      
+for (let n=0; n<20; n++){
+  let alunno = classe[n] + ":"
+  // questo testo va nella text area che poi va
+  // memorizzato nel database di firebase
+
+  
+  
+  //                          TESTO
+  //                           DELL'
+  //                             ESERCIZIO    >>>
+  
+  
+  let testo = `IN BASE AI DATI DELLA FIGURA PRECEDENTE,
+CALCOLA IL PATRIMONIO NETTO SAPENDO CHE:
+- I DEBITI A BREVE TERMINE SONO PARI A 60.000 €
+- I DEBITI A LUNGO TERMINE SONO PARI A 100.000 €
+
+
+`;
+  
+  
+  
+  
+  // Le risposte esatte ======== C O R R E T T O R E ==============
+  let correttore = `
+sp = ...
+`;
+  
+  domanda.push(alunno + testo);
+  risposte.push(correttore);
+                   }
+// CREAZIONE DI UN OGGETTO CHE AD OGNI ALUNNO ASSOCIA UNA DOMANDA (DALL'ARRAY domanda)
+  let cnt = 0
+  let compito = {};
+      for (n in classe){
+       compito[classe[n]] = domanda[cnt++]; 
+      };
+
+    // ========================================================================== fine dati
+for (i in domanda) console.log(domanda[i]);
+for (i in domanda) console.log(domanda[i] + risposte[i]);
+//console.log(risposte);
+</script>
+    

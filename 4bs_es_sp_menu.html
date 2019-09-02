@@ -1,0 +1,43 @@
+<!Doctype html>
+<html>
+<style>
+@import "temp1.css";
+  
+.btn-group button {
+  background-color: #4CAF50; /* Green background */
+  border: 1px solid green; /* Green border */
+  color: white; /* White text */
+  padding: 24px 24px; /* Some padding */
+  cursor: pointer; /* Pointer/hand icon */
+
+}
+
+/* Clear floats (clearfix hack) */
+.btn-group:after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.btn-group button:not(:last-child) {
+  border-right: 3px; /* Prevent double borders */
+}
+
+/* Add a background color on hover */
+.btn-group button:hover {
+  background-color: #3e8e41;
+}
+</style>
+<body>
+
+<h1>Esercizi sulla situazione patrimoniale</h1>
+
+<div class="btn-group">
+<center>
+<button onclick=location.href="4bs_es_sp1.html">Esercizio 1</button>
+  <button onclick=location.href="4bs_es_sp2.html">Esercizio 2</button>
+</center>
+</div>
+
+</body>
+</html>

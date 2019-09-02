@@ -1,0 +1,35 @@
+
+<h3>Elenco sintesi di quinta </h3>
+<style>a{font-size:2em;}</style>
+<div id="show">
+  <!-- mostra i link ai testi -->
+</div>
+<script>
+
+// inserisci qui i file di testo che verranno iterati da iterateFiles
+let lista_testi = [
+  "costituzione",
+  "sicurezza",
+  "igiene",
+  "contratti",
+  "ISO 9000",
+  "marchi"
+    ];
+    
+// decora gli items di lista_testi
+function decoraItems(item_testi){
+  // da iterateFiles è chiamata per decorare gli item di testi
+    show.innerHTML += "<a href='https://quinta.glitch.me/testi/" + item_testi + ".txt'>" + item_testi + "</a><br>";
+}
+
+// loop dei lista_testi
+function iterateListaTesti(){
+  for (item of lista_testi){
+   decoraItems(item); // formatta gli items in testi come links 
+  };
+}
+  
+  
+// lancia la funzione che mostra i testi
+iterateListaTesti();
+</script>

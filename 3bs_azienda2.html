@@ -1,0 +1,82 @@
+
+    <style>
+    @import "temp1.css"
+      
+    </style>
+    <!-- cambia il numero della domanda qui sotto
+    poi le riposte alle domande
+    -->
+    <title>
+    Azienda domanda 2
+    </title>
+
+
+.
+    <script src="https://www.gstatic.com/firebasejs/4.10.1/firebase.js"></script>
+    <script src="3bs_azienda_menu.js"></script>
+    <script>
+
+    // ==================================================== dati personalizzati
+domanda_top.innerHTML += "<blockquote>";
+domanda_top.innerHTML += "Test a risposte multiple.";
+
+      // IMMAGINE
+domanda_top.innerHTML += "</blockquote><center><img src='https://www.memosystem.it/wp-content/uploads/2015/01/superare-i-test-a-risposta-multipla-1.jpg' width=50% /></center>";
+let domanda = []
+
+function es1(mese, tasso, debito){
+  return "Calcola gli interessi per " + mese + " mesi al tasso del " + tasso + " % su un debito di " + debito + " Risposta: ";
+}
+
+function random(x){
+ return Math.floor(Math.random()*10+1)*x; 
+}
+      
+  let risposte = [];    
+for (let n=1; n<20; n++){
+  let alunno = classe[n] + ":"
+  let testo = `
+1. Come si chiama il capitale che il titolare conferisce i un'azienda?"
+[  ] Capitale di terzi
+[  ] Capitale proprio
+
+2. L'impresa familiare è:
+[  ] gestita dal titolare
+[  ] gestita dai familiari collaboratori
+
+3. Le decisioni più importanti nell'impresa familiare sono prese da:
+[  ] il titolare
+[  ] i familiari collaboratori
+[  ] i familiari collaboratori e il titolare insieme
+`
+  domanda.push(alunno + testo);
+                   }
+
+    cnt = 0
+    compito = {
+ 'Andreioli':domanda[cnt++],
+'Barbato':domanda[cnt++],
+'Cirillo':domanda[cnt++],
+'Croce':domanda[cnt++],
+'DelPiero':domanda[cnt++],
+'DiLorenzo':domanda[cnt++],
+'DiSevo':domanda[cnt++],
+'Giudice':domanda[cnt++],
+'Manzo':domanda[cnt++],
+'Montemurro':domanda[cnt++],
+'NeseLuigi':domanda[cnt++],
+'Orlando':domanda[cnt++],
+'RibecaLucia':domanda[cnt++],
+'Spera':domanda[cnt++],
+'ValerioAntonio':domanda[cnt++],
+'ValerioFrancesco':domanda[cnt++],
+'Verrelli':domanda[cnt++],
+'Villano':domanda[cnt++],
+'ViteraleFrancesca':domanda[cnt++],
+    }
+    // ========================================================================== fine dati
+for (i in domanda) console.log(domanda[i]);
+for (i in domanda) console.log(domanda[i] + risposte[i]);
+//console.log(risposte);
+</script>
+    

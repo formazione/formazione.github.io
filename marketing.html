@@ -1,0 +1,107 @@
+  <title>Marketing</title> 
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+ 
+<style>
+@import "temp1.css"
+</style>
+<body>
+  
+  <!--------------------menu bar index 26/2/19-------------------------------->
+<div id="menuDiv"></div>
+<script src="https://quinta.glitch.me/index_menu.js"></script>
+<!---------------------------------------------------->
+<!--                        TITOLO      -->
+
+<h3>
+  FLASH CARDS SUL MARKETING?
+</h3>
+Prova a rispondere, poi clicca sulla domanda per verificare la tua risposta.
+
+
+
+<!-- FINE TITOLO E INTRODUZIONE -->
+
+
+<!--     INIZIO CODICE JAVASCRIPT   -->
+
+<script>
+  
+function speak_backup_function(cosadire){
+  const message = new SpeechSynthesisUtterance(cosadire);   
+  window.speechSynthesis.speak(message);
+  }
+
+function speak(cosadire){
+  // creating SpeechSynthesisUtterance
+  console.log("creating SpeechSynthesisUtterance");
+  const message = new SpeechSynthesisUtterance(cosadire);
+  // The Utterance goes to the syntethysed voice of the pc
+  window.speechSynthesis.speak(message);
+  // Check what is goin on with the message
+  console.log("Speaking: " + message);
+}
+
+function createButton(context, func) {
+    var button = document.createElement("input");
+    button.type = "button";
+    button.value = "im a button";
+    button.onclick = func(button.value);
+    context.appendChild(button);
+}
+
+  
+function textNButton(num, testoparlato, titolo){
+  // mostra il testo seguito da un pulsante per legggerlo
+  let risposta = testoparlato.split("?")[1];
+  let domanda = testoparlato.split("?")[0] + "?";
+
+  // 1. Create the button ============================= BUTTON
+  var button = document.createElement("button");
+  button.innerHTML = domanda; // the value of the button
+  // 2. Append somewhere
+  var body = document.getElementsByTagName("body")[0];
+  body.appendChild(button);
+
+  // 3. Add event handler
+  button.addEventListener ("click", function() {
+    speak(risposta);
+    button.innerHTML = domanda + "<br><span style='font-size:16px; color:gold'>" + risposta + "</span>";
+  });
+}
+  
+
+function textReader(lista){
+  // visualizza il testo di ogni item della lista seguito da un pulsante per leggerlo
+  for (l in lista){
+    // speechNum is to give a different id to the div of the text
+    // so that I can highlight it when the text is read
+       textNButton(l, lista[l], "Leggi");
+  }
+}
+    // Testo che verrà mostrato e letto da leggiTesto(testo);
+  // NON USARE L'APOSTROFO, AL MASSIMO USA ALT+096, MA LA PRONUNCIA NON SARA' BUONA
+let myText = [
+  "Qual è la strategia delle imprese orientate al prodotto? Agiscono in un mercato in cui la domanda supera l'offerta e fissano un prezzo ritenuto adeguato dai consumatori, puntando a ridurre i costi per aumentare i guadagni.", 
+  
+  "Qual è la strategia delle imprese orientate alle vendite? La forte concorrenza spinge le imprese a puntare sulla pubblicità su vari media ripetuta in modo intenso nel periodo di lancio e poi periodicamente.",
+  
+  "Qual è la strategia delle imprese orientate al mercato? Questo tipo di imprese sono coscienti del fatto che prima di produrre un bene o offrire un servizio bisogna conoscere bene il cliente e quello che offrono i concorrenti, attraverso analisi di mercato. Dopo vengono prese le decisioni con la analisi SWOT."
+  ];
+
+let domande = [];
+  for (d in myText){
+    // prendo parte che precede ? di ogni definizione
+    domande.push(myText[d].split("?")[0])
+  }
+
+textReader(myText);
+
+  
+</script>
+</body>

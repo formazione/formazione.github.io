@@ -1,0 +1,66 @@
+
+
+<html>
+<head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="Tribute to Consuelo de Saint Exupery">
+        <meta name="author" content="Paola MB">
+        <title>Tribute to Consuelo de Saint-Exupéry</title>
+        <!-- Bootstrap CSS V4 -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+
+           <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+        <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Cardo:700|Lora:400" rel="stylesheet" type="text/css">
+        <!-- Font Awesome -->
+         <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+        <!-- Scroll Reveal Effects -->
+        <script src="https://unpkg.com/scrollreveal/dist/scrollreveal.min.js"></script>
+
+<style>
+tr:nth-child(even){background-color: #f2f2f2}
+tr:hover {background-color:     #40E0D0;}
+th, td {
+    padding: 15px;
+}
+</style>
+
+</head>
+<body>
+<div class="container">
+    <div id="app">
+            <h3>Esercizi sul controllo budgetario</h3><p>
+Una catena di ristoranti produce
+<br>
+Maxi Royal Burger (200 grammi di carne bovina, formaggio a fette, insalata e altre verdure fresche)
+<br>
+Venduto al prezzo di 6 euro, che insieme ad una bibita  a scelta, costituisce un piatto unico molto richiesto.
+<div class='table-responsive'>
+<table class='table'>
+<td>vendite effettive: <td>{{ ve }}</tr>
+<td>vendite programmate:<td> {{ vp }}</tr>
+<td>scostamento: <td>{{ ve }} - {{ vp }} = {{ ve - vp }}
+</table>
+</div>
+Scrivi qui il valore dello scostamento tra vendite effettive e programmate:
+<input type=text onchange="if(this.value=={{ ve - vp }}){alert('ok');}" />
+    </p>
+    </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.26/vue.min.js"></script>
+<script>
+new Vue({
+  el: '#app',
+  data: {
+    ve: 44890,
+    vp: 42580,
+  }
+})
+</script>
+</body>
+</html>
+            

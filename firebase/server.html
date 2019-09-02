@@ -1,0 +1,334 @@
+<html>
+  <title>5bServer</title>
+<style> 
+  body{ color: white; background: black; font-size:2em; } 
+  input { color:white; background-color: black; font-size: 2em; } 
+  textarea { width:100%; color:white; background-color: darkgreen; font-size: 1em; } 
+  h3 {  background: darkgreen; }  
+  button { font-size: 1em; background: coral; } 
+  button.onclick { background: yellow;}
+  #lavagna { font-size: 2em;}
+  </style> 
+  
+<script src="https://www.gstatic.com/firebasejs/5.9.2/firebase.js"></script>
+<!-- DATI DELLA CONFIGURAZIONE FIREBASE -->
+  <script src="https://quinta.glitch.me/firebase/config.env"></script>
+<!-- CONTENUTO DA MOSTRARE AL CLIENT -->
+<script src="contenuto.js"></script>
+<script src="costituzione.js"></script>
+<script>
+  contenuto = {...contenuto, ...costituzione}
+  </script>
+<body>
+<!-- i pulsanti per scegliere gli esercizi -->
+<!----------- MENU (copy and paste in all pages) ---------->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>  
+<div id="menuDiv"></div>
+<script src="https://quinta.glitch.me/index_menu.js"></script>
+<!------------------- end --------------------------------->
+ <br><br><br> 
+  <div id="buttons"></div><br>
+
+<!--
+  Questa casella di testo va a mettere nel valore di Traccia
+      il testo che verrà letto dal client
+quinta
+  |____"Traccia" : "Il budget .... "
+
+-->
+<input type="text" id=nome value="Traccia"><br><br>
+  
+<!-- qui si vede la figura che puoi inviare al cliente in
+  quinta
+  |____"quintaimg" : "Il budget .... "
+-->
+
+<div id="divFigura"></div>
+
+<!--
+          Questo contenuto è il valore di Traccia
+          che viene utilizzato dal client per 
+          leggerlo in lavagna
+-->
+  
+Testo da inviare:<br>
+<textarea type="text" id="contentEs" cols="100%" rows="10"></textarea>
+<!-- qui si vede come lo vede il client senza html -->
+<div id="lavagna" style="background:black;"></div>
+  
+<!-- PULSANTI PER FAR LEGGERE ALLA VOCE SINTETIZZATA IL TESTO -->
+  
+<br><center><button  id=butSpeak onclick=speak(lavagna.innerText)>Clicca</button>
+<button onclick=synth.cancel()>Stop</button></center><br>
+  
+<!-- PULSANTE PER CANCELLARE I DATI CHE IL CLIENT LEGGE -->
+<button onclick="ref.set('')">Cancella Testo, immagine e Risposte inviate</button>
+  
+  <!-- CASELLE PER ASSEGNARE I PUNTI 'A MANO' -->
+  <p style="color:coral">Vincitore:
+  <input type="text" id=vincitore >
+  <br>
+  Punteggio:
+  <input type="text" id=score>
+  </p>
+
+
+<!-- QUI VENGONO VISUALIZZATI I PUNTEGGI -->
+
+  <center>
+  <div id="punteggi"></div>
+  </center>
+  
+
+
+
+
+
+
+  <script>
+let database = firebase.database()
+let ref = database.ref("quinta");
+let ref2 = database.ref("quinta_punti");
+let ref4 = database.ref("quinta_client");
+//let ref3 = database.ref("quinta_pss");
+// Recupero dati in 'quinta' per il testo e 'quinta_punti' per i punti  
+ref.on("value", gotData, errData)
+ref2.on("value", gotData2, errData)
+let counter = 0;
+contentEs.focus();
+contentEs.onchange = function(){addData(nome.value, contentEs.value)};  
+score.onchange = function(){addPoint(vincitore.value, score.value)};
+    
+    
+    
+    // --------------------------------- SPEAK ------------------------
+    /*
+                                      ____  _____     Speak!
+                                    /____\/______\  __/
+                                    \___________/ 
+          ---------->    
+                                                                            */
+    
+    
+function speak(x) {
+  synth = speechSynthesis
+  utt = new SpeechSynthesisUtterance(x);
+  synth.speak(utt);
+}
+
+
+function butToSendContent(arr_content){
+  // takes contenuto and send it to trc, then to butTraccia
+  // creating the buttons to push the slides on the client side
+    let trc=[];
+    for (content in arr_content){
+        let cnt = {
+        "titolo" : content,
+        "testo" : arr_content[content].split("#")[0],
+        "immagine" : arr_content[content].split("#")[1],
+        "feedback" : arr_content[content].split("#")[2],
+        "client" : arr_content[content].split("#")[3],
+        };
+        trc.push(cnt);
+    }
+  console.log("Ecco trc = " + trc);
+    for (t of trc){
+      t["testo"] = t["testo"].replace(/'/g,"’");
+     butTraccia(t["titolo"],t["testo"],t["feedback"],t["immagine"],t["client"]);
+    }
+} // end of function butToSendContent()
+ 
+    
+    
+  // pulsanti Presentazione
+function butTraccia(titolo,t,sol,fig, addr){
+  let nome_client = addr.split("/")[addr.split("/").length-1];
+  nome_client = nome_client.split(".")[0];
+  // creates a buttons to send content to slide (contenuto -> butToSendContent -> butTraccia)
+  buttons.innerHTML += `<button onclick="setRisposta('`+t+`','`+titolo+`');">`+titolo+
+    `</button><button onclick="figura('`+fig+`');"><img src='`+
+    fig+`' width='90' /></button><button onclick="setRisposta('`+
+    sol+`');">Feedback</button><button onclick="javascript:sendToLocation('` + addr + `')">`+nome_client+`</button><br>
+`   
+  
+}
+
+// clicca pulsante con esercizi letti dal client in child("Traccia")
+function setRisposta(x,titolo){
+  // used by butTraccia
+      contentEs
+        .value=x;
+      ref
+        .child(nome.value)
+        .set(contentEs.value);
+      ref.child("titolo").set(titolo);
+    }
+    
+// mostra figura con secondo pulsante (child("quintaimg"))
+function figura(x){
+  // used by butTraccia
+      ref.child("quintaimg").set(x);
+      divFigura.innerHTML = "<img src='" +
+        x + "' width='50%'/>";
+}
+
+
+
+function addData(alunno, ris){             /* Add data */
+      ref.child(alunno).set(ris);
+      contentEs.value = "";
+      contentEs.focus();
+}
+  
+function addPoint(alunno, point){      /* Add data */
+      let x= 0;
+      ref2.child(alunno).on("value", q => x = q.val())
+      ref2.child(alunno).set(x + point);
+      score.value = "";
+      vincitore.value += "";
+}
+
+
+  
+function gotData(data){
+  // called by ref
+    lavagna.innerHTML = "";
+    x = data.val();
+    for (n in x){
+      lavagna.innerHTML += n + ": " + x[n] + "<br>"
+    }
+  }
+  
+  
+  
+  // Classifica ---  immagini   ---
+  
+  let cup = "<img src='https://cdn2.iconfinder.com/data/icons/thesquid-ink-40-free-flat-icon-pack/64/cup-512.png' width='30' />";
+  let party ="<img src='http://icons.iconarchive.com/icons/google/noto-emoji-activities/1024/52707-party-popper-icon.png' width='30' >";
+  
+function gotData2(data){
+    punteggi.innerHTML = "";
+    x = data.val();
+  /*
+    let arr = Object.values(x); let min = Math.min(...arr); let max = Math.max(...arr); */
+    let keysSorted = Object.keys(x).sort(function(a,b){return x[b]-x[a]})
+    punteggi.innerHTML += "<u style='color:coral'>Graduatoria:</u><br><button onclick='initializeClass()'>Azzera punteggi</button><br>"
+    punteggi.innerHTML += "<center>";
+    let newx = [];
+    for (n in keysSorted){
+     newx.push([keysSorted[n],x[keysSorted[n]]]); 
+    }
+    console.log(newx);
+    for (n in keysSorted){
+  // PULSANTE AGGIUNGI PUNTEGGIO
+      punteggi.innerHTML += "<br>";
+      let num = parseInt(n)+1;
+   //  Formattazione dei primi classificati
+      
+    if (n == 0){          //                     #1
+      punteggi.innerHTML += "<b style='font-size:2em;color:red'>" + 
+          num +
+          ". <u>" + 
+          "<button onclick=addPoint('" +keysSorted[n] +"',1)>"+ keysSorted[n] + "</button>" +
+          "</u></b> ";
+
+    }
+      
+    else if (n == 1){
+      punteggi.innerHTML += "<b style='font-size:2em;color:coral'>" +
+        num + ". " +
+         "<button onclick=addPoint('" +keysSorted[n] +"',1)>"+ keysSorted[n] + "</button>" +
+        "</b> ";
+      
+      if (x[keysSorted[n]] > 100) punteggi.innerHTML += cup;
+      
+    }
+      
+  else if (n == 2){
+      punteggi.innerHTML += "<b style='font-size:1.5em;color:gold'>" +
+        num + ". " +
+         "<button onclick=addPoint('" +keysSorted[n] +"',1)>"+ keysSorted[n] + "</button>" +
+        "</b> ";
+      
+    if (x[keysSorted[n]] > 100) punteggi.innerHTML += cup;
+     
+    }
+      
+    else {
+      punteggi.innerHTML += "<b style='font-size:1.0em;color:white'>" +
+        num +
+        ". " +
+         "<button onclick=addPoint('" +keysSorted[n] +"',1)>"+ keysSorted[n] + "</button>" +
+        "</b> ";
+      // se il punteggio è maggiore di cento visulizza la coppa
+      if (x[keysSorted[n]] > 100) punteggi.innerHTML += cup;
+      
+    }
+      punteggi.innerHTML += " <b style='font-size:1.0em;background:coral'>" +
+        x[keysSorted[n]] + "</b>";
+      
+  
+    }
+}
+  
+function errData(err){
+    console.log("Error");
+    console.log(err);
+}
+    
+
+butToSendContent(contenuto);
+
+
+
+</script>
+<!--          Elenco dei client         -->
+<h3> Indirizzamento client </h3>
+SCEGLI LA MASCHERA DEL CLIENT (CON DIVERSE CASELLE DI INPUT PER IMMETTERE I DATI)
+  <!-- Qui vanno i pulsanti per reindirizzare alla maschera adatta all'esercizio -->
+<div id="client_pages"></div>
+<input type="text" id="linkToEs" size="60">
+clicca per mandare l'indirizzo al db in quinta/location
+<button onclick=sendToLocation(linkToEs.value)>Reindirizza</button>
+<script>
+  
+function br(){
+ return document.createElement("br"); 
+}
+  
+  
+function createLink(addr,name){
+  let client_pages = document.getElementById("client_pages");
+  let lnk = document.createElement("a");
+  let lnkText = document.createTextNode(name);
+  lnk.append(lnkText);
+  lnk.href = "javascript:sendToLocation('" + addr + "')";
+  let br1 = br(); 
+  client_pages.append(br1);
+  client_pages.append(lnk);
+  console.log("CREATE LINK");
+}
+  
+clientType = [
+  ["https://quinta.glitch.me/firebase/client_standard.html",
+             "Client_standard"],
+  ["https://quinta.glitch.me/firebase/client_full_costing.html","Full costing client"],
+  ["https://quinta.glitch.me/firebase/client_full_costing2.html","Full costing 2"],
+  ["https://quinta.glitch.me/firebase/foodcost.html","food cost"]
+  ]
+
+clientType.forEach(a => createLink(a[0],a[1]));
+  
+let ref3 = database.ref("quinta_client");
+function sendToLocation(x){
+    linkToEs.value = x;
+    // inserisce l'indirizzo del client
+    ref4.set(x);
+}
+</script>
+<!-- fine locazione client --> 
+
+</body>
+</html>

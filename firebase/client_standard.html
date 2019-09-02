@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>5BS_Standard</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+</head>
+<style>
+  body{ color:white; background-color: black; font-size: 2em; }
+  
+  input { align:middle; text-align:center; width:100%; color:white; background-color: darkblue; font-size: 2em; }
+  
+  textarea { width:100%; color:white; background-color: darkgreen; font-size: 2em; }
+
+  
+  
+  div.presentation, h2 {
+    padding: 10px;
+    background: black;
+    font-size: 2em;
+    margin-left: 10%;
+    margin-right: 10%;
+  }
+  
+@media all and (min-width:0px) and (max-width: 768px) {
+  /* put your css styles in here */
+    div.presentation, h2 {
+    padding: 10px;
+    background: black;
+    font-size: 1em;
+    margin-left: 10%;
+    margin-right: 10%;
+  }
+  
+}
+  
+  @media all and (min-width:769px) and (max-width: 1000px) {
+  /* put your css styles in here */
+    div.presentation, h2 {
+    padding: 10px;
+    background: black;
+    font-size: 1.5em;
+    margin-left: 10%;
+    margin-right: 10%;
+  }
+  
+}
+  
+</style>
+
+<script src="https://www.gstatic.com/firebasejs/5.9.2/firebase.js"></script>
+<script src="https://quinta.glitch.me/firebase/config.env"></script>
+<script>
+      function speak(x) {
+  synth = speechSynthesis
+  utt = new SpeechSynthesisUtterance(x);
+  synth.speak(utt);
+}
+  
+
+
+
+  let database = firebase.database();
+  let ref = database.ref("quinta");
+  let ref2 = database.ref("quinta_punti")
+  ref2.on("value", gotData2)
+  ref.child("Traccia").on("value", snap => lavagna.innerHTML = snap.val());
+  ref.child("titolo").on("value", snap => titolo.innerHTML = "<h2>" + snap.val() + "</h2>");
+  ref.child("quintaimg").on("value", snap => fig.innerHTML = "<center><img src='" + snap.val() + "' width='50%' /></center>");
+
+function addData(alunno, ris){
+    // ad ogni chiamata crea un nuovo record
+
+      ref.child(alunno).set(ris);
+      risposta.value = "";
+      risposta.focus();
+      ref.child("Traccia").on("value", snap => lavagna.innerHTML = snap.val())
+      ref.child(alunno).on("value", snap => lavagna_risposta.innerHTML += "<br>Tua risposta: " + snap.val())
+
+}
+let cup = "<img src='https://cdn2.iconfinder.com/data/icons/thesquid-ink-40-free-flat-icon-pack/64/cup-512.png' width='30' />";
+let party ="<img src='http://icons.iconarchive.com/icons/google/noto-emoji-activities/1024/52707-party-popper-icon.png' width='30' >";
+  
+function gotData2(data){
+    punteggi.innerHTML = "";
+    x = data.val();
+    // order by score
+    let arr = Object.values(x);
+    let min = Math.min(...arr);
+    let max = Math.max(...arr);
+    let keysSorted = Object.keys(x).sort(function(a,b){return x[b]-x[a]})
+    punteggi.innerHTML += "<u style='color:coral'>Graduatoria:</u><br>"
+    punteggi.innerHTML += "<center>";
+    let newx = [];
+    for (n in keysSorted){
+    //let xx = [keysSorted[n],x[keysSorted[n]]];
+     newx.push([keysSorted[n],x[keysSorted[n]]]); 
+    }
+    console.log(newx);
+    for (n in keysSorted){
+      let num = parseInt(n)+1;
+      // nome del primo classificato
+   
+    if (n == 0){
+   punteggi.innerHTML += "<b style='font-size:2.5em;color:red'>" + num + ". <u>" + keysSorted[n] + "</u></b> ";
+      punteggi.innerHTML += party + cup + "<b style='font-size:2.5em;background:coral'>" + x[keysSorted[n]] + "</b><br>"; ;
+    }
+    else if (n == 1){
+      punteggi.innerHTML += "<b style='font-size:2em;color:coral'>" + num + ". " + keysSorted[n] + "</b> ";
+      if (x[keysSorted[n]] > 100) punteggi.innerHTML += cup;
+      punteggi.innerHTML += "<b style='font-size:2em;background:coral'>" + x[keysSorted[n]] + "</b><br>"; ;
+    }
+  else if (n == 2){
+      punteggi.innerHTML += "<b style='font-size:1.5em;color:gold'>" + num + ". " + keysSorted[n] + "</b> ";
+      if (x[keysSorted[n]] > 100) punteggi.innerHTML += cup;
+      punteggi.innerHTML += "<b style='font-size:1.5em;background:coral'>" + x[keysSorted[n]] + "</b><br>"; ;
+    }
+    else {
+      punteggi.innerHTML += "<b style='font-size:1.0em;color:white'>" + num + ". " + keysSorted[n] + "</b> ";
+      if (x[keysSorted[n]] > 100) punteggi.innerHTML += cup;
+      punteggi.innerHTML += "<b style='font-size:1.0em;background:coral'>" + x[keysSorted[n]] + "</b><br>"; ;
+    }
+  
+    }
+}
+  punteggi.innerHTML += "<center>";
+
+</script>
+  <body>
+<!--------------------menu bar index 26/2/19-------------------------------->
+<div id="menuDiv"></div>
+<script src="https://quinta.glitch.me/index_menu.js"></script>
+<!---------------------------------------------------->
+ <br><br>
+<center><div class="presentation" id="titolo">
+  <!-- qui compare il titolo da quinta/titolo di firebase -->
+  </div></center>
+<div class="presentation" id="lavagna"></div> <!-- Traccia  -->
+    <div id="lavagna_risposta">
+    </div>
+    "<br><center><button  id=butSpeak onclick=speak(lavagna.innerText)>Clicca</button><button onclick=synth.cancel()>Stop</button></center>"
+<div id="fig"></div>                               <!-- figura   -->
+      
+
+<img src="https://www.kwsme.com/wp-content/uploads/2016/06/login-user-icon.png" width="30"/>
+
+Inserisci il nome<i style='font-size:0.5em;'>(senza non puoi inviare la risposta)</i>
+  
+<input type="text" id=nome><br><img src="https://www.freeiconspng.com/uploads/question-answer-icon-6.png" width="30" />
+Risposta <i style='font-size:0.5em;'>(dopo aver risposto premi invio per confermare: il punteggio verrà attribuito dal docente dopo il controllo della risposta a lui visibile)</i><br>
+    
+<!-- Scrivi la risposta qui -->
+<textarea type="text" id="risposta" cols="100%" rows="5"></textarea>
+
+<script>
+nome.focus();
+risposta.onchange = function(){addData(nome.value, risposta.value)};
+</script>
+   
+    
+    <!-- vedi punteggi totali -->
+    
+    <center>
+    <div id="punteggi"></div>
+    <a href="https://quinta.glitch.me/firebase/punteggi.html">
+      <script>document.write(cup);</script>
+      <span style='background:darkred'>
+      Graduatoria dei livelli di partecipazione in classe - 3bs</a>
+      </span>
+    </center>
+    
+    
+    
+</body>
+</html>

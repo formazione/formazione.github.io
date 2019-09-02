@@ -1,54 +1,31 @@
-<script src="https://www.gstatic.com/firebasejs/4.10.1/firebase.js"></script>
-<script src="quiz-e5e5aconfig.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
 <style>
-  html, body, {
-    position:fixed;
-    top:0;
-    bottom:0;
-    left:0;
-    right:0;
-    margin:0;
-    spacing:0;
+html {
+    height: 100%;
 }
-
 body {
   background-color:black;
 }
-
-#gc3 {
-  position: relative;
-  width:100%;
-  }
 </style>
 <body>
-      
-
+  <script src="snakeversions.js"></script>
+  <center><canvas id="gc3" width="400" height="400"></canvas></center>
+                  <!--  pulsanti    -->
   <center>
-  
-    <canvas id="gc3" width="400" height="400"></canvas>
-  
-      <!-- pulsanti -->
-    <center>
-    <div id="gameArea">
-        <table> <!-- alto -->
-        <td colspan="2" align="center">
-        <canvas id="up" width="300" height="200" style="background:lime" onclick="moveup()" ontouchstart="moveup()"  ontouchmove="moveup()"></canvas></td>
-          
-          <tr><td>
-         <canvas id="left" width="250" height="200" style="background:yellow" onclick="moveleft()" ontouchstart="moveleft()  ontouchmove="moveleft()""></canvas>
-          </td><td>
-          <canvas id="right" width="250" height="200" style="background:red" onclick="moveright()" ontouchstart="moveright()"  ontouchmove="moveright()">
-          </canvas><tr>
-            
-            <!-- basso -->
-            <td colspan="2" align="center">
-        <canvas id="down" width="300" height="200" style="background:blue" onclick="movedown()" ontouchstart="movedown()"  ontouchmove="movedown()"></canvas></center>
-          </canvas></td>
-    </table>
-    </center>
+  <table>
+    <td colspan="2" align="center">
+  <canvas id="up" width="300" height="100" style="background:lime" onclick="moveup()" ontouchstart="moveup()"  ontouchmove="moveup()"></canvas>
+    </td><tr><td>
+   <canvas id="left" width="250" height="100" style="background:yellow" onclick="moveleft()" ontouchstart="moveleft()  ontouchmove="moveleft()""></canvas>
+    </td><td>
+    <canvas id="right" width="250" height="100" style="background:red" onclick="moveright()" ontouchstart="moveright()"  ontouchmove="moveright()">
+    </canvas><tr>
+      <td colspan="2" align="center">
+  <canvas id="down" width="300" height="100" style="background:blue" onclick="movedown()" ontouchstart="movedown()"  ontouchmove="movedown()"></canvas></center>
+    </canvas></td>
+  </table>
   </center>
   
-</div>
   
   <script>
 window.onload=function () {
@@ -61,7 +38,7 @@ window.onload=function () {
 
 let px = 10; // posizione iniziale player
 let py = 10;
-let gs = 30; // dimensione di una cella? o numero di celle?
+let gs = 20; // dimensione di una cella? o numero di celle?
 let tc = 20;
 
 let ax = 25; // coordinate iniziali frutto 1
@@ -82,7 +59,6 @@ let trail=[]; // array con le parti di snake
 let tail = 5; // dimensioni iniziali della coda
 let sc = 0; // punteggio
 let rec= 0; // record
-ref1.child("snake").child("record6").on("value", snap => rec = snap.val());   // 95 and 227 are with these stuffs
 var vel = 5;
 
 // Imamgini dei due frutti e dell'ostacolo (che ora è un rettangolo)
@@ -91,17 +67,14 @@ let img2 = new Image()
 //let img3 = new Image()
 
 // Le immagini dei frutti
-imgs = [
-      // pear
-        "https://cdn.glitch.com/9778987b-2a7d-4797-bd0a-a7219e55295a%2Fpear.png?1546407679651",
-  // apple      
-  "https://cdn.glitch.com/9778987b-2a7d-4797-bd0a-a7219e55295a%2Fapple256.png?1546333034026",
-       // bug yellow
-        "https://cdn0.iconfinder.com/data/icons/bugs-insects-yellow/61/39_-Moth-_bug_insect_nature-128.png",
-  //bee yellow
-  "https://cdn2.iconfinder.com/data/icons/spring-30/30/Honey_Bee-128.png",
-  // coccinella
-  "http://icons.iconarchive.com/icons/umut-pulat/tulliana-2/128/bug-icon.png"
+imgs = ["https://cdn.glitch.com/9778987b-2a7d-4797-bd0a-a7219e55295a%2Fpear.png?1546407679651",
+        "https://cdn.glitch.com/9778987b-2a7d-4797-bd0a-a7219e55295a%2Fapple256.png?1546333034026",
+       "https://cdn.glitch.com/9778987b-2a7d-4797-bd0a-a7219e55295a%2Fcherry.png?1546408197602",
+       "https://cdn4.iconfinder.com/data/icons/Freshy/PNG/256/Guava.png",
+        "https://cdn.glitch.com/9778987b-2a7d-4797-bd0a-a7219e55295a%2Fimage.png?1546408286911",
+        "http://www.classicgaming.cc/classics/pac-man/images/icons/pixel-pac-man-128x128.png",
+        "http://files.softicons.com/download/game-icons/classic-games-icons-by-thvg/ico/Pacman%201.ico",
+        "https://freeiconshop.com/wp-content/uploads/edd/key-outline-filled.png"
        ];
 // le immagini dei nemici, per ora non sono usate
 enemy = ["https://s24255.pcdn.co/wp-content/uploads/2014/02/unblock-blocked-websites.png",
@@ -144,7 +117,7 @@ function write(testo, x, y){
 
 function circle(x,y){
   ctx3.fillStyle = 'red';
-  ctx3.globalAlpha = 0.1;
+  ctx3.globalAlpha = 0.5;
   ctx3.beginPath();
   ctx3.ellipse(x, y, 50, 50, Math.PI, 0, Math.PI * 3.5);
   ctx3.fill();
@@ -210,11 +183,7 @@ function lose(){
               ax2=ay2=5;
               xv=yv=0;
               trail=[];
-              if (sc > rec) {
-                rec = sc;
-                // writes the record in the database
-                ref1.child("snake").child("record6").set(rec)
-              }
+              if (sc > rec) rec = sc;      
               sc = 0; 
   }
   
@@ -365,8 +334,6 @@ function keyPush(evt) {
 
 </script>
 <!-- the glitch button that can make you remix this -->
-<!--
 <div class="glitchButton" style="position:fixed;top:20px;right:20px;"></div>
 <script src="https://button.glitch.me/button.js"></script>
--->
 </body>

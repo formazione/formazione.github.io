@@ -1,0 +1,7 @@
+le count_speak = 0;
+
+quando è 0 parla
+evita che dica due volte la domanda
+
+metti count_speak = 0
+dopo esatto e no

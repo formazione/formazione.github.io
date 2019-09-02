@@ -1,0 +1,47 @@
+<title>Marketing</title>
+<script src="gohome.js"></script>
+<style>
+@import "temp1.css"
+</style>
+<script>
+ 
+function speak(cosadire){
+  // creating SpeechSynthesisUtterance
+  console.log("creating SpeechSynthesisUtterance");
+  const message = new SpeechSynthesisUtterance(cosadire);
+  // The Utterance goes to the syntethysed voice of the pc
+  window.speechSynthesis.speak(message);
+  // Check what is goin on with the message
+  console.log("Speaking: " + message);
+}
+
+function textNButton(testoparlato, titolo){
+  // mostra il testo seguito da un pulsante per legggerlo
+  let html = "";
+  //testoparlato = testoparlato.replace("`","\'");
+  html += "<br>" + testoparlato; // testo che appare
+  html += "<button onclick=\"speak(\'" + testoparlato + "\');\">";
+  html += titolo + "</button><br>";
+  document.write(html);
+}
+
+function textReader(lista){
+  // visualizza il testo di ogni item della lista seguito da un pulsante per leggerlo
+  for (l in lista){
+       textNButton(lista[l], "Leggi");
+  }
+}
+    // Testo che verrà mostrato e letto da leggiTesto(testo);
+let myText = [
+  "Orientamento al prodotto: Le imprese pensano che il prodotto si venda semplicemente mantenendo un prezzo basso con una qualità standard, perché la domanda è superiore alla offerta.", 
+  
+  "Orientamento alle vendite La forte concorrenza spinge le imprese a puntare sulla pubblicità su vari media ripetuta in modo intenso nel periodo di lancio e poi periodicamente.",
+  
+  "Orientamento al mercato Questo tipo di imprese sono coscienti del fatto che prima di produrre un bene o offrire un servizio bisogna conoscere bene il cliente e quello che offrono i concorrenti, attraverso analisi di mercato. Dopo vengono prese le decisioni con la analisi SWOT."
+  ];
+
+
+textReader(myText);
+
+  
+</script>

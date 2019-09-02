@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>4BS</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+</head>
+<style>
+  body{ color:white; background-color: black; font-size: 2em; } 
+  input { align:middle; text-align:left; width:50%; color:white; background-color: darkblue; font-size: 2em; } 
+  textarea { width:100%; color:white; background-color: darkgreen; font-size: 2em;
+ .button { color: black;!important font: inherit; margin: 0; } 
+ .button1 { background-color: white;  color: black;  border: 2px solid #4CAF50; }
+ .button1:hover { background-color: #4CAF50; color: white; }
+   
+</style>
+
+
+<script src="https://www.gstatic.com/firebasejs/5.9.2/firebase.js"></script>
+<script src="config.env"></script>
+  <script>
+
+
+  let database = firebase.database();
+  let ref = database.ref("quinta");
+  let ref2 = database.ref("quinta_punti")
+  ref2.on("value", gotData2)
+  ref.child("Traccia").on("value", snap => lavagna.innerHTML = "Traccia: " + snap.val());
+  ref.child("quintaimg").on("value", snap => fig.innerHTML = "<center><img src='" + snap.val() + "' width='50%' /></center>");
+
+function addData(alunno, ris){
+    // ad ogni chiamata crea un nuovo record
+      ref.child(alunno).set(ris);
+      risposta.value = "";
+      risposta.focus();
+  // quando un alunno risponde si aggiunge la risposta a lavagna
+     // ref.child("Traccia").on("value", snap => lavagna.innerHTML = snap.val())
+      ref.child(alunno).on("value", snap => lavagna.innerHTML += "<br>Risposta di " + alunno + ": " + snap.val())
+}
+let cup = "<img src='https://cdn2.iconfinder.com/data/icons/thesquid-ink-40-free-flat-icon-pack/64/cup-512.png' width='30' />";
+let party ="<img src='http://icons.iconarchive.com/icons/google/noto-emoji-activities/1024/52707-party-popper-icon.png' width='30' >";
+  
+function gotData2(data){
+    punteggi.innerHTML = "";
+    x = data.val();
+    // order by score
+    let arr = Object.values(x);
+    let min = Math.min(...arr);
+    let max = Math.max(...arr);
+    let keysSorted = Object.keys(x).sort(function(a,b){return x[b]-x[a]})
+    punteggi.innerHTML += "<b style='color:coral'>Punteggi per l'esercizio corrente da cumulare nella <a href='https://quinta.glitch.me/firebase/es_ris.html'>graduatoria complessiva</a></b><br>"
+    punteggi.innerHTML += "<center>";
+    let newx = [];
+    for (n in keysSorted){
+    //let xx = [keysSorted[n],x[keysSorted[n]]];
+     newx.push([keysSorted[n],x[keysSorted[n]]]); 
+    }
+    console.log(newx);
+    for (n in keysSorted){
+      let num = parseInt(n)+1;
+      // nome del primo classificato
+   
+    if (n == 0){
+   punteggi.innerHTML += "<b style='font-size:2.5em;color:red'>" + num + ". <u>" + keysSorted[n] + "</u></b> ";
+      punteggi.innerHTML += party + cup + "<b style='font-size:2.5em;background:darkblue'>" + x[keysSorted[n]] + "</b><br>"; ;
+    }
+    else if (n == 1){
+      punteggi.innerHTML += "<b style='font-size:2em;color:coral'>" + num + ". " + keysSorted[n] + "</b> ";
+      if (x[keysSorted[n]] > 100) punteggi.innerHTML += cup;
+      punteggi.innerHTML += "<b style='font-size:2em;background:coral'>" + x[keysSorted[n]] + "</b><br>"; ;
+    }
+  else if (n == 2){
+      punteggi.innerHTML += "<b style='font-size:1.5em;color:gold'>" + num + ". " + keysSorted[n] + "</b> ";
+      if (x[keysSorted[n]] > 100) punteggi.innerHTML += cup;
+      punteggi.innerHTML += "<b style='font-size:1.5em;background:coral'>" + x[keysSorted[n]] + "</b><br>"; ;
+    }
+    else {
+      punteggi.innerHTML += "<b style='font-size:1.0em;color:white'>" + num + ". " + keysSorted[n] + "</b> ";
+      if (x[keysSorted[n]] > 100) punteggi.innerHTML += cup;
+      punteggi.innerHTML += "<b style='font-size:1.0em;background:coral'>" + x[keysSorted[n]] + "</b><br>"; ;
+    }
+  
+    }
+}
+  punteggi.innerHTML += "<center>";
+
+</script>
+  <body>
+<!--------------------menu bar index 26/2/19-------------------------------->
+<div id="menuDiv"></div>
+<script src="https://quinta.glitch.me/index_menu.js"></script>
+<!---------------------------------------------------->
+ <br><br>
+    
+     <button class="button" onclick="newClient()">
+  Clicca qui se non vedi le domande sul contratto
+  </button>
+   <center><div class="presentation" id="titolo"> 
+<center></center>
+<div style="background:#132650" id="lavagna"></div> <!-- Traccia  -->
+<div id="fig"></div>                               <!-- figura   -->
+      
+
+<img src="https://www.kwsme.com/wp-content/uploads/2016/06/login-user-icon.png" width="30"/>
+
+Inserisci il nome<i style='font-size:0.5em;'>(senza non puoi inviare la risposta)</i>
+  
+<input style="background:coral" type="text" id=nome><br><img src="https://www.freeiconspng.com/uploads/question-answer-icon-6.png" width="30" />
+Risposta <i style='font-size:0.5em;'>(dopo aver risposto premi invio per confermare: il punteggio verrà attribuito dal docente dopo il controllo della risposta a lui visibile)</i><br>
+    
+<!-- Scrivi la risposta qui -->
+<script>  
+function verifica(thisvalue,soluzione){
+    if (thisvalue.value == soluzione)
+      {
+      risposta.value+= thisvalue.id + thisvalue.value + " ";
+      thisvalue.value = "OK";
+      document.getElementById(thisvalue.id).readOnly = true;
+      document.getElementById(thisvalue.id).style.background = "green";
+      }
+    else //thisvalue.value = "NO";
+      {
+      risposta.value+= thisvalue.id + thisvalue.value + " ";
+      document.getElementById(thisvalue.id).readOnly = true;
+      document.getElementById(thisvalue.id).style.background = "red";
+      }
+}
+  
+function input(label,onchange){
+    let html = label + "<br>";
+    html += "<input id='" + label +"' class='new' onchange=" + onchange + "><br>";
+    document.write(html);
+  }
+  
+let input_q = [["Quale articolo del c.c. definisce il contratto?","verifica(this,'1321')"],
+["Quanti sono gli elementi del contratto? ","verifica(this,'4')"],
+["Il matrimonio è un contratto?","verifica(this,'no')"],
+["Il contratto nasce per costituire, regolare o ..... un rapporto giuridico patrimoniale","verifica(this,'estinguere')"],
+["La forma può essere verbale o ...","verifica(this,'scritta')"],
+["Nella compravendita di immobili la forma deve essere","verifica(this,'scritta')"],
+];
+               
+for (n of input_q){
+   input(n[0],n[1]); 
+}
+    </script>
+    
+<div id="divPulsantiAggiuntivi">
+<!-- qui vanno tutti i pulsanti adattati all'esercizio --> 
+</div>
+
+    
+    
+    
+<textarea type="text" id="risposta" cols="100%" rows="5"></textarea>
+    
+    
+<center>
+    <button class="button button1" onclick="addData(nome.value, risposta.value)">
+  Invia risposta
+    </button>
+  </center>
+ 
+<script>
+nome.focus();
+risposta.onchange = function(){
+  addData(nome.value, risposta.value);
+  };
+</script>
+   
+    
+    <!-- vedi punteggi totali -->
+    
+    <center>
+    <div id="punteggi"></div>
+    <a href="https://quinta.glitch.me/firebase/punteggi.html">
+      <script>document.write(cup);</script>
+      
+      <span style='background:darkred'>Partecipazione in classe - 4bs</a></span><br>
+    <a href="https://quinta.glitch.me/firebase/es_ris.html">Esercizi risolti</a>
+    </center>
+    
+    
+    
+</body>
+</html>

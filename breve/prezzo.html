@@ -1,0 +1,236 @@
+<html>
+<title>Calcola il prezzo</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+<!--------------------menu bar index 26/2/19-------------------------------->
+
+<div id="menuDiv"></div>
+<script src="https://quinta.glitch.me/index_menu.js"></script>
+<!---------------------------------------------------->
+<style>
+@import "temp1.css";
+  
+    input[type=text], select {
+  /*width: 100%;*/
+  background: #000;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+   h3 {
+   color:coral  
+  }
+    body {
+      margin-left: 10%;
+      margin-right: 10%;
+     color:white;
+      background:black;
+      font-size: 2em;
+    }
+    .jumbotron {
+     background: darkgray;
+    }
+  .my2 {
+    height: 200px;
+    border: 1px solid black;
+    }
+ 
+</style>
+<script>
+// cartella py_test_maker_for js
+  // qui c'è il file per fare dei test
+  
+  
+        // use input("part1,"answer","part2*"); // * is to glue two answers, not mandatory
+  
+        // =============== più risposte esatte =========================
+        // use guessWhat("part1,"answer answer","part2*"); // per più risposte esatte possibili
+  
+        // if you digit 'aiuto' in the input box you will see the first 3 letter in the input box itself
+        // usa # davanti a una frase per creare alternative
+  
+  // +++++++++++++++++++++++++++++++++++ code end ++++++++++++++++++++++++++++++++++ //
+function check(casella, giusta, num){
+    giusta = giusta.toLowerCase();
+    casella.value = casella.value.toLowerCase();
+        if (casella.value == 'aiuto'){
+        if (casella.value.length >= 3){
+        casella.value = giusta[0]+giusta[1]+ giusta[2]
+        }
+    }
+    else{
+    if (casella.value.includes(giusta)){
+        casella.style.background = 'darkgreen';
+        return casella.value.includes(giusta);
+    }
+    else{
+        casella.style.background = 'red';
+    }
+}
+}
+    
+  // +++++++++++++++++++++++++++++++++++ code end ++++++++++++++++++++++++++++++++++ //
+function checkWhat(casella, giusta, num){
+    giusta = giusta.toLowerCase();
+    casella.value = casella.value.toLowerCase();
+    if (casella.value == 'aiuto'){
+        if (casella.value.length >= 3){
+        casella.value = giusta[0]+giusta[1]+ giusta[2]
+        }
+    }
+    else {
+    for (r of giusta.split(" ")){
+    if (casella.value.includes(r)){
+        casella.style.background = 'darkgreen';
+        return casella.value.includes(giusta);
+    }
+        else{
+        casella.style.background = 'red';
+    }
+    }
+}
+}
+    
+  // +++++++++++++++++++++++++++++++++++ code end ++++++++++++++++++++++++++++++++++ //
+function print_it(parola){
+    if (soluzioni.innerHTML.includes(parola)){
+    }
+    else {
+        soluzioni.innerHTML += " - " + parola;
+    }
+}
+var sol = [];
+var countdom = 0;
+   
+  // +++++++++++++++++++++++++++++++++++ code end ++++++++++++++++++++++++++++++++++ //
+function input(dom_s, giusta, dom_e){
+        var inizio = "";
+        var fine = "";
+        sol[countdom] = giusta;
+        var repls = giusta[0];
+        if (giusta.includes("*")){
+            giusta = giusta.replace("*", "");
+            repls = "";
+        };
+        num = countdom + 1
+        countdom++
+        var dom_h2 = inizio + dom_s;
+        if (giusta != " "){
+        var part1 = dom_h2 + "<input style='font-size:30;display:inline;' type=text class='t1' placeholder='" + repls + "....' onchange=\"if (check(this,'";
+        part1 += giusta + "')){print_it(this.value)};\" /><td> " + dom_e + fine;
+    }
+    else {
+        var part1 = dom_h2 + dom_e + fine;
+    }
+        document.write(part1);
+    }
+ 
+  // +++++++++++++++++++++++++++++++++++ code end ++++++++++++++++++++++++++++++++++ //
+  function guessWhat(dom_s, giusta, dom_e){
+        dom_s = dom_s.replace("#"," ");
+        var inizio = "";
+        var fine = "";
+        sol[countdom] = giusta;
+        num = countdom + 1
+        countdom++
+        var dom_h2 = inizio + dom_s;
+        var part1 = dom_h2 + "<input style='font-size:30;display:inline;' type=text class='t1' placeholder='" + giusta[0] + "....' onchange=\"if (checkWhat(this,'";
+        part1 += giusta + "')){print_it(this.value)};\" /><td>" + dom_e + fine
+        document.write(part1);
+    }
+
+    
+  // +++++++++++++++++++++++++++++++++++ code end ++++++++++++++++++++++++++++++++++ //
+function addsol(){
+    document.write("<div id='soluzioni'>Suggerimenti: </div>");
+    sol.sort();
+    for (s of sol){
+        soluzioni.innerHTML += " [" + s[0] + s[1] + s[2] + "] ";
+    }
+}
+  
+  // this is to not be hidden by the menu
+  document.write("<br><br><br>");
+   
+  // +++++++++++++++++++++++++++++++++++ code end ++++++++++++++++++++++++++++++++++ // 
+  function title(x){
+     document.write("<h3 style='color:coral'>" + x + "</h3>"); 
+  }
+  
+  // +++++++++++++++++++++++++++++++++++ code end ++++++++++++++++++++++++++++++++++ //
+  function par(x){
+   document.write("<p>" + x + "</p>");
+  }
+   
+  // +++++++++++++++++++++++++++++++++++ code end ++++++++++++++++++++++++++++++++++ // 
+  function video(address){
+    par("<iframe src='" + address + "' allowfullscreen/></iframe>");
+  }
+  
+  
+  // +++++++++++++++++++++++++++++++++++ code end ++++++++++++++++++++++++++++++++++ //
+  
+  function ul(lista){
+    document.write("<ul>");
+   lista = lista.split("\n");
+    for (l in lista){
+      if (lista[l] != "") {
+     document.write("<li>" + lista[l] + "</li>");
+                }
+    }
+    document.write("</ul>");
+  }
+  
+  // +++++++++++++++++++++++++++++++++++ code end ++++++++++++++++++++++++++++++++++ //
+  function youtube(code){
+    // this is to adjust the string to see the video in the right way
+   par("<iframe width=\"727\" height=\"409\" src=\"" + code + "\" frameborder=\"0\" allow=\"accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>"); 
+  }
+
+  // +++++++++++++++++++++++++++++++++++ code end ++++++++++++++++++++++++++++++++++ // 
+    // +++++++++++++++++++++++++++++++++++ code end ++++++++++++++++++++++++++++++++++ //
+    
+    
+    
+  
+  // TITOLO: il budget, primo paragrafo con video da doodly
+  //====================================================================== 1
+  title("Il budget");
+  par("Il budget è uno strumento contabile preventivo che permette di confrontare i dati preventivati con i risultati consutivi effettivamente conseguiti.");
+  video("https://cdn.glitch.com/6f5b6850-3bb1-4610-8137-6eaec273f126%2FBudget.mp4?1552206282637");
+  youtube("https://www.youtube.com/embed/U1NrvDGZdV8");
+  // ===================================================================== 1
+  
+  
+  title("Budget economico analitico");
+  par("Il primo passo per compilare il budget consiste nel redigere il Budget economico analitico, composto da una sequenza di budget settoriali");
+  
+ul(`
+        Budget delle vendite
+        Budget della produzione
+        Budget delle materie prime
+        Budget degli acquisti
+        Budget della manodopera diretta
+        Budget delle rimanenze di materie prime e prodotti
+        Budget dei costi generali
+        Budget degli oneri finanziari
+        Budget dei proventi diversi
+        Budget degli oneri diversi
+`);
+     
+
+  
+  
+  
+</script>
+<body>
+  
+  
+</body>
+</html>

@@ -1,0 +1,71 @@
+
+    <style>
+    @import "temp1.css"
+    </style>
+    <title>
+    Bilancio 8
+      
+    </title>
+    <script src="https://www.gstatic.com/firebasejs/4.10.1/firebase.js"></script>
+<!-- controlla che questo collegamento sia corretto (controlla anche il titolo) -->
+<!-- script src="https://code.jquery.com/jquery-3.3.1.js"></script> -->
+<script src="4bsbilanciomenu.js"></script>
+    <script>
+
+// === Iscrizione prima delle domande
+
+      
+intro(`La situazione economica raccoglie tutti i conti accesi ai costi e ricavi di esercizio in un dato momento. Alla fine dell'anno viene utilizzato per redigere il Conto economico, che raccoglie i costi e i ricavi di esercizio secondo lo schema dell'art. 2425 del codice civile, obbligatorio per le società di capitali.;<br>
+<a href="https://docs.google.com/spreadsheets/d/1uRUar5nwO5j1Ld1uIwzAeug9S5GGzbbhJjazs5w20Os/edit?usp=sharing" />Schema di situazione economica</a>`);
+      
+// IMMAGINE - metti il link all'immagine qui sotto
+let imgaddress = "https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Question_Mark.svg/2000px-Question_Mark.svg.png"; 
+before_domanda.innerHTML += "</blockquote><center><img src='" + imgaddress +"' width=25% /></center>";
+let domanda = [];
+      
+function rnd(x){
+  // x è un array che viene mischiato e restituito
+    x.sort(function() {
+      return .5 - Math.random();
+    });
+  return x;};
+
+function random(x){
+  // returns a random number from 1 to 10 if x=1
+ return Math.floor(Math.random()*10+1)*x; 
+}
+      
+let risposte = []; 
+
+      // CICLO CHE CREA LE DOMANDE PER TUTTI GLI ALUNNI
+for (let n=0; n<20; n++){
+  let alunno = classe[n] + ":"
+  
+  //                   TESTO DELL'ESERCIZIO
+  let testo = `
+Il titolare di un'azienda conferisce 10.000 € sul c/c dell'azienda  
+`;// ===================== FINE TESTO
+  
+  // CORRETTORE
+  let correttore = `
+d
+`; // =================== FINE CORRETTORE
+
+  // AGGIUNGO LA DOMANDA ALLA LISTA DELLE DOMANDE E LE RISPOSTE...
+  domanda.push(alunno + testo);
+  risposte.push(correttore);
+  }
+      
+// CREAZIONE DI UN OGGETTO CHE AD OGNI ALUNNO ASSOCIA UNA DOMANDA (DALL'ARRAY domanda)
+  let cnt = 0
+  let compito = {};
+      for (n in classe){
+       compito[classe[n]] = domanda[n];
+      };
+
+    // Stampa le domande e poi le domande con le risposte
+for (i in domanda) console.log(domanda[i]);
+for (i in domanda) console.log(domanda[i] + risposte[i]);
+//console.log(risposte);
+</script>
+    

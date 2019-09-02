@@ -1,0 +1,81 @@
+
+    <style>
+    @import "temp1.css"
+      
+    </style>
+    <!-- cambia il numero della domanda qui sotto
+    poi le riposte alle domande
+    -->
+    <title>
+    Bilancio 6
+    </title>
+
+
+    <script src="https://www.gstatic.com/firebasejs/4.10.1/firebase.js"></script>
+    <script src="4bsbilanciomenu.js"></script>
+    <script>
+
+    // ==================================================== dati personalizzati
+    
+let domanda = []
+domanda.push('Cos`è il TFR?\n; una impresa che ha un TFR pregresso di 300000 €, ha maturato a fine anno una quota annua di 40000  €. Un dipendente viene collocato a riposo e percepisce una liquidazone di 25000 €. Calcola l`importo del Debito per TFR da iscrivere in bilancio. Risposta = ');
+domanda.push('Cos`è il TFR?\n; una impresa che ha un TFR pregresso di 200000 €, ha maturato a fine anno una quota annua di 40000  €. Un dipendente viene collocato a riposo e percepisce una liquidazone di 35000 €. Calcola l`importo del Debito per TFR da iscrivere in bilancio. Risposta = ');
+domanda.push('Cos`è il TFR?\n; una impresa che ha un TFR pregresso di 300000 €, ha maturato a fine anno una quota annua di 60000  €. Un dipendente viene collocato a riposo e percepisce una liquidazone di 25000 €. Calcola l`importo del Debito per TFR da iscrivere in bilancio. Risposta = ');
+domanda.push('Cos`è il TFR?\n; una impresa che ha un TFR pregresso di 500000 €, ha maturato a fine anno una quota annua di 40000  €. Un dipendente viene collocato a riposo e percepisce una liquidazone di 25000 €. Calcola l`importo del Debito per TFR da iscrivere in bilancio. Risposta = ');
+domanda.push('Cos`è il TFR?\n; una impresa che ha un TFR pregresso di 500000 €, ha maturato a fine anno una quota annua di 50000  €. Un dipendente viene collocato a riposo e percepisce una liquidazone di 35000 €. Calcola l`importo del Debito per TFR da iscrivere in bilancio. Risposta = ');
+domanda.push('Cos`è il TFR?\n; una impresa che ha un TFR pregresso di 300000 €, ha maturato a fine anno una quota annua di 60000  €. Un dipendente viene collocato a riposo e percepisce una liquidazone di 25000 €. Calcola l`importo del Debito per TFR da iscrivere in bilancio. Risposta = ');
+domanda.push('Cos`è il TFR?\n; una impresa che ha un TFR pregresso di 500000 €, ha maturato a fine anno una quota annua di 60000  €. Un dipendente viene collocato a riposo e percepisce una liquidazone di 45000 €. Calcola l`importo del Debito per TFR da iscrivere in bilancio. Risposta = ');
+domanda.push('Cos`è il TFR?\n; una impresa che ha un TFR pregresso di 200000 €, ha maturato a fine anno una quota annua di 60000  €. Un dipendente viene collocato a riposo e percepisce una liquidazone di 35000 €. Calcola l`importo del Debito per TFR da iscrivere in bilancio. Risposta = ');
+domanda.push('Cos`è il TFR?\n; una impresa che ha un TFR pregresso di 200000 €, ha maturato a fine anno una quota annua di 50000  €. Un dipendente viene collocato a riposo e percepisce una liquidazone di 35000 €. Calcola l`importo del Debito per TFR da iscrivere in bilancio. Risposta = ');
+domanda.push('Cos`è il TFR?\n; una impresa che ha un TFR pregresso di 200000 €, ha maturato a fine anno una quota annua di 60000  €. Un dipendente viene collocato a riposo e percepisce una liquidazone di 35000 €. Calcola l`importo del Debito per TFR da iscrivere in bilancio. Risposta = ');
+domanda.push('Cos`è il TFR?\n; una impresa che ha un TFR pregresso di 200000 €, ha maturato a fine anno una quota annua di 50000  €. Un dipendente viene collocato a riposo e percepisce una liquidazone di 45000 €. Calcola l`importo del Debito per TFR da iscrivere in bilancio. Risposta = ');
+domanda.push('Cos`è il TFR?\n; una impresa che ha un TFR pregresso di 300000 €, ha maturato a fine anno una quota annua di 60000  €. Un dipendente viene collocato a riposo e percepisce una liquidazone di 45000 €. Calcola l`importo del Debito per TFR da iscrivere in bilancio. Risposta = ');
+domanda.push('Cos`è il TFR?\n; una impresa che ha un TFR pregresso di 500000 €, ha maturato a fine anno una quota annua di 40000  €. Un dipendente viene collocato a riposo e percepisce una liquidazone di 45000 €. Calcola l`importo del Debito per TFR da iscrivere in bilancio. Risposta = ');
+domanda.push('Cos`è il TFR?\n; una impresa che ha un TFR pregresso di 300000 €, ha maturato a fine anno una quota annua di 40000  €. Un dipendente viene collocato a riposo e percepisce una liquidazone di 35000 €. Calcola l`importo del Debito per TFR da iscrivere in bilancio. Risposta = ');
+domanda.push('Cos`è il TFR?\n; una impresa che ha un TFR pregresso di 300000 €, ha maturato a fine anno una quota annua di 40000  €. Un dipendente viene collocato a riposo e percepisce una liquidazone di 35000 €. Calcola l`importo del Debito per TFR da iscrivere in bilancio. Risposta = ');
+domanda.push('Cos`è il TFR?\n; una impresa che ha un TFR pregresso di 300000 €, ha maturato a fine anno una quota annua di 50000  €. Un dipendente viene collocato a riposo e percepisce una liquidazone di 45000 €. Calcola l`importo del Debito per TFR da iscrivere in bilancio. Risposta = ');
+
+let risposte=`
+Correale  R: è una indennità che il lavoratore percepisce al termine al termine del rapporto di lavoro o che può destinare a forme di previdenza complementare. È proporzionale agli anni di servizio prestati. Il debito x tfr è = 315000
+Dapolito  R: è una indennità che il lavoratore percepisce al termine al termine del rapporto di lavoro o che può destinare a forme di previdenza complementare. È proporzionale agli anni di servizio prestati. Il debito x tfr è = 205000
+Galietta  R: è una indennità che il lavoratore percepisce al termine al termine del rapporto di lavoro o che può destinare a forme di previdenza complementare. È proporzionale agli anni di servizio prestati. Il debito x tfr è = 335000
+Giordano  R: è una indennità che il lavoratore percepisce al termine al termine del rapporto di lavoro o che può destinare a forme di previdenza complementare. È proporzionale agli anni di servizio prestati. Il debito x tfr è = 515000
+Guariglia  R: è una indennità che il lavoratore percepisce al termine al termine del rapporto di lavoro o che può destinare a forme di previdenza complementare. È proporzionale agli anni di servizio prestati. Il debito x tfr è = 515000
+Landi  R: è una indennità che il lavoratore percepisce al termine al termine del rapporto di lavoro o che può destinare a forme di previdenza complementare. È proporzionale agli anni di servizio prestati. Il debito x tfr è = 335000
+Lembo  R: è una indennità che il lavoratore percepisce al termine al termine del rapporto di lavoro o che può destinare a forme di previdenza complementare. È proporzionale agli anni di servizio prestati. Il debito x tfr è = 515000
+Mainente  R: è una indennità che il lavoratore percepisce al termine al termine del rapporto di lavoro o che può destinare a forme di previdenza complementare. È proporzionale agli anni di servizio prestati. Il debito x tfr è = 225000
+Malzone  R: è una indennità che il lavoratore percepisce al termine al termine del rapporto di lavoro o che può destinare a forme di previdenza complementare. È proporzionale agli anni di servizio prestati. Il debito x tfr è = 215000
+Mauro  R: è una indennità che il lavoratore percepisce al termine al termine del rapporto di lavoro o che può destinare a forme di previdenza complementare. È proporzionale agli anni di servizio prestati. Il debito x tfr è = 225000
+Mazziotti  R: è una indennità che il lavoratore percepisce al termine al termine del rapporto di lavoro o che può destinare a forme di previdenza complementare. È proporzionale agli anni di servizio prestati. Il debito x tfr è = 205000
+Pepe  R: è una indennità che il lavoratore percepisce al termine al termine del rapporto di lavoro o che può destinare a forme di previdenza complementare. È proporzionale agli anni di servizio prestati. Il debito x tfr è = 315000
+Puglia  R: è una indennità che il lavoratore percepisce al termine al termine del rapporto di lavoro o che può destinare a forme di previdenza complementare. È proporzionale agli anni di servizio prestati. Il debito x tfr è = 495000
+Saturno  R: è una indennità che il lavoratore percepisce al termine al termine del rapporto di lavoro o che può destinare a forme di previdenza complementare. È proporzionale agli anni di servizio prestati. Il debito x tfr è = 305000
+Scelza  R: è una indennità che il lavoratore percepisce al termine al termine del rapporto di lavoro o che può destinare a forme di previdenza complementare. È proporzionale agli anni di servizio prestati. Il debito x tfr è = 305000
+Tardio  R: è una indennità che il lavoratore percepisce al termine al termine del rapporto di lavoro o che può destinare a forme di previdenza complementare. È proporzionale agli anni di servizio prestati. Il debito x tfr è = 305000
+`
+
+
+    cnt = 0
+    compito = {
+         "Correale": domanda[cnt++],
+          "Dapolito": domanda[cnt++],
+          "Galietta": domanda[cnt++],
+          "Giordano": domanda[cnt++],
+          "Guariglia": domanda[cnt++],
+          "Landi": domanda[cnt++],
+          "Lembo": domanda[cnt++],
+          "Mainente": domanda[cnt++],
+          "Malzone": domanda[cnt++],
+          "Mauro": domanda[cnt++],
+          "Mazziotti": domanda[cnt++],
+          "Pepe": domanda[cnt++],
+          "Puglia": domanda[cnt++],
+          "Saturno": domanda[cnt++],
+          "Scelza": domanda[cnt++],
+          "Tardio": domanda[cnt++]
+    }
+    // ========================================================================== fine dati
+
+      console.log(risposte);
+      </script>
+    

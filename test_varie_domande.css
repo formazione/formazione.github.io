@@ -1,0 +1,46 @@
+@import "button.css";
+@import "dark.css";
+
+body {
+  font-size: 2em;
+  padding-right: 10%;
+  padding-left: 10%;
+}
+         
+         
+textarea, input {
+  width:100%;
+  background-color: gold;
+  border: none;
+  padding: 15px 32px;
+  align: center;
+  text-align: left;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 2em;
+  margin: 4px 2px;
+  cursor: pointer;
+
+}
+  
+.mytext {
+  background-color: lightblue;
+}
+        
+
+a:link {
+  underline: 0;
+}
+  
+a:hover {
+  opacity: 0.5;
+}
+  
+a:link, a:visited {
+  background-color: #f44336;
+  color: white;
+  padding: 5px 5px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+}

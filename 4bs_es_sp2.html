@@ -1,0 +1,153 @@
+<title>4bs Pre-Compito</title>
+<script src="gohome.js"></script>
+<style>
+@import "temp1.css";
+</style>
+<script>
+function speak(x) {
+  speechSynthesis.speak(new SpeechSynthesisUtterance(x));
+}
+</script>
+
+<script>
+
+// =================================== show: visualizza l'argomento sullo scherm
+
+function button(testoparlato, titolo){
+ document.write("<button onclick=\"speak('" + testoparlato + "');\">" + titolo + "</button><br>");
+}
+  
+  
+rows = [];
+function show(x){
+  document.write(x);
+  // contanins all the rows of the page
+  rows.push(x);
+  }
+// =================================== Mostra Soluzione: mostra la soluzione esercizio
+  // da legare al button onclick e if text1.value='aiuto'
+function mostraSoluzione(){
+  show("<a href='4bs_es_sp1.html'>[Solo Traccia]</a><br>");
+  show(traccia);
+ show("<img src='https://cdn.glitch.com/90e05fb6-037b-416a-b22f-95c8044b6060%2Fce2004.PNG?1547877655576' />");
+  show("<img src='https://cdn.glitch.com/90e05fb6-037b-416a-b22f-95c8044b6060%2Fsp2004.PNG?1547877655749' />");
+}
+traccia = `<img src="https://cdn.glitch.com/90e05fb6-037b-416a-b22f-95c8044b6060%2Ftraccia1.PNG?1547877655843" />`
+</script>
+
+<!--               traccia del compito     -->
+
+
+<!-- Pulsante per mostrare la soluzione password -->
+<br>
+<script>// 22.55 temperature 22.01.19
+//                     // -  LA    TRACCIA   -  //
+speak("Buon lavoro");
+  let x = `
+ESERCIZIO 2 - Stato Patrimoniale e Conto economico
+
+1)Il titolare della Retailer s.r.l. conferisce un #capitale pari a >>>10000 euro sul conto corrente bancario.
+<table> <td colspan=2><center>Banca x c/c<br><tr> <td><input type=text onsubmit=if(this.value=1000)this.style.background=yellow><td><input type=text> </table>
+2) Vengono acquistate #merci per >>>2500 € più IVA al 22%. Pagamento differito.
+
+3) Acquistati #impianti per >>>1800 € + IVA; pagamento a termine.
+
+4) Ottenuto un mutuo passivo per >>>20000 € il primo luglio.
+
+5) Vendite di #prodotti per >>>10600 € più IVA al 22%, con incasso a pronti.
+
+6) Pagato in contanti #premio assicurativo per >>>1200 euro per un anno a partire dal primo giugno.
+
+7) Pagamento #debiti a fornitori per >>>900 euro.
+
+Alla fine del periodo – 31 dicembre 2004 – si rilevano le seguenti operazioni di assestamento:
+8) Le rimanenze #finali di merci ammontano a >>>500 euro.
+9) Gli #impianti acquistati nel periodo verranno utilizzati per un arco temporale di #4 anni. Calcolare l'ammortamento.
+10) Rilevare il rateo passivo per #interessi semestrali di >>>240 euro da pagare il primo febbraio dell'anno seguente.
+Si presentino il #conto #economico 2004 e lo #stato #patrimoniale.
+`;
+
+
+let textforaudio = `
+ESERCIZIO 2 - Stato Patrimoniale e Conto economico
+
+1)Il titolare della Retailer s.r.l. conferisce un #capitale pari a >>>10000 euro sul conto corrente bancario.
+
+2) Vengono acquistate #merci per >>>2500 € più IVA al 22%. Pagamento differito.
+
+3) Acquistati #impianti per >>>1800 € + IVA; pagamento a termine.
+
+4) Ottenuto un mutuo passivo per >>>20000 € il primo luglio.
+
+5) Vendite di #prodotti per >>>10600 € più IVA al 22%, con incasso a pronti.
+
+6) Pagato in contanti #premio assicurativo per >>>1200 euro per un anno a partire dal primo giugno.
+
+7) Pagamento #debiti a fornitori per >>>900 euro.
+
+Alla fine del periodo – 31 dicembre 2004 – si rilevano le seguenti operazioni di assestamento:
+8) Le rimanenze #finali di merci ammontano a >>>500 euro.
+9) Gli #impianti acquistati nel periodo verranno utilizzati per un arco temporale di #4 anni. Calcolare l'ammortamento.
+10) Rilevare il rateo passivo per #interessi semestrali di >>>240 euro da pagare il primo febbraio dell'anno seguente.
+Si presentino il #conto #economico 2004 e lo #stato #patrimoniale.
+`;
+
+textforaudio = textforaudio.split("\n");
+
+// =================== colorazione parole =================
+function colorwords(color1,color2){
+  // cerca le parole che iniziono con # e >>>
+  // # = colore gold
+  let words = x.match(/#\w*/g)
+  // >>> = colore coral
+  let words2 = x.match(/>>>[\w]*/g)
+  // dà il colore alle parole di cui sopra
+  for (n in words){
+      x = x.replace(words[n], "<b style='color:"+color1+"'>" + words[n] + "</b>");
+      x = x.replace("#","");
+  }
+  for (n in words2){
+      x = x.replace(words2[n], "<b style='color:"+color2+"'>" + words2[n] + "</b>");
+      x = x.replace(">>>","");
+    }
+}
+// ======================== fine colorazione =============  
+
+colorwords("gold","coral"); // colora le parole di giallo oro o corallo
+
+function colorthis(){
+  // colora parole specifiche
+  let fr = ["1.000","250","800","300","600","100","500"];
+  for (n in fr){
+    x = x.replace(fr[n], "<b style='color:yellow'>" + fr[n] + "</b>");
+  }
+}
+    
+x = x.split("\n");
+  
+  // =============================   SOLO TRACCIA ================
+for (line in x){
+  if (x[line][0] != "<") {
+   document.write(x[line] + "<br>");
+};
+};
+  // Pulsante per leggere l'intera traccia
+  button(textforaudio, "Leggi la traccia");
+  // ============================   TRACCIA CON VIDEO E AUDIO ====
+for (line in x){
+ document.write(x[line] + "<br>");
+  if (textforaudio[line] != ""){
+    document.write("<button onclick=\"speak('" + textforaudio[line] + "');\">Leggi</button><br>");
+  }
+};
+
+  // ========================    SOLUZIONE ==============
+document.write(`
+  <input id="pass" type="text">
+  <br>
+  <!-- Pulsante per mostrare la soluzione -->
+  <button onclick="if (pass.value=='aiuto'){mostraSoluzione()}">
+    Mostra la soluzione
+  </button>`);
+  
+</script>

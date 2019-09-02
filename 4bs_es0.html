@@ -1,0 +1,120 @@
+
+
+      <style>
+    body {
+    font-size: 2em;
+    }
+  button {
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin: 4px 2px;
+    cursor: pointer;
+    background-color: #008CBA;
+    font-size: 2em;
+  }
+
+  textarea, input {
+  width:100%;
+  background-color: gold;
+  border: none;
+  padding: 15px 32px;
+  text-align: left;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 2em;
+  margin: 4px 2px;
+  cursor: pointer;
+    width:100%;
+}
+      .mytext {
+      background-color: lightblue;}
+</style>
+    <script src="https://www.gstatic.com/firebasejs/4.10.1/firebase.js"></script>
+    <script>
+      var config = {
+        apiKey: "AIzaSyDp-mWaWEI07pIdRUhi6vA-salEMRWz4hw",
+        authDomain: "quiz-e5e5a.firebaseapp.com",
+        databaseURL: "https://quiz-e5e5a.firebaseio.com/",
+        projectId: "quiz-e5e5a",
+        storageBucket: "quiz-e5e5a.appspot.com",
+        messagingSenderId: "901845403492"
+      };
+      firebase.initializeApp(config);
+      var database = firebase.database()
+
+
+      // Devi solo cambiare "4bs_Es_Bilancio" con il nome dell'esercizio
+
+
+      var dbref1 = database.ref().child('4bs_Es4');
+      function add_data(d,c,e){
+        dbref1.child(d).child(e).set(c)
+      }
+
+      function printnome(num){
+        document.write("<input id='data" + num + "' type=text value='inserisci nome' /><br>")
+      }
+
+      function printtextandbutton(numalunno,num){
+        //document.write("<input id='data" + num + "' type=text value='Galietta' />")
+        document.write("Soluzione " + num + ": <input id='contenuto"+ num + "' type='text' />");
+        domanda = "domanda" + num;
+        document.write("<button onclick=add_data(data"+ numalunno + ".value,contenuto" + num +".value,'"+domanda+"')>Invia</button><br>")
+      }
+
+
+
+
+    </script>
+<script src="gohome.js"></script>
+<h4>
+  Esercizio sui Ratei e i risconti
+</h4>
+
+Inserisci il tuo nome nella casella sottostante
+<script>printnome("1");</script>
+Scrivi la soluzione nella caselle gialle e premi invia per ogni risposta.
+<h2> Esercizio 1</h2>
+<img src="http://www.esercizisvolti.net/wp-content/uploads/2016/05/risconto.png" />
+  <p>01/02: ottenuto in locazione un fabbricato al canone semestrale anticipato di 720 euro;</p>
+<script> printtextandbutton("1","1"); </script>
+
+<h2> Esercizio 2</h2>
+<p>01/04: stipulato un contratto di leasing per un automezzo; è previsto il pagamento di 8 canoni bimestrali anticipati di 2.400 euro;</p>
+<script> printtextandbutton("1","2"); </script> 
+
+<h2> Esercizio 3</h2>
+<p>01/06: stipulato un contratto di locazione per un fabbricato ; si prevede il pagamento posticipato del canone semestrale di 6000 euro;</p>
+<script> printtextandbutton("1","3"); </script>
+
+<h2> Esercizio 4</h2>
+<p>
+01/10: concesso ad un dipendente un prestito di 10.220 euro con interessi al tasso del 5% da riscuotere semestralmente in via posticipata;
+</p>
+<script> printtextandbutton("1","4"); </script>
+
+<h2> Esercizio 5</h2>
+<p>
+15/12: ottenuto da un fornitore il rinnovo per 60 giorni di un debito scaduto di 5.475 euro, alla scadenza si dovranno versare anche gli interessi al tasso del 4%.
+    </p>
+<script> printtextandbutton("1","5"); </script>
+
+
+
+
+
+
+
+        
+        
+        
+        
+        
+   
+   <!-- Soluzione: <input id="contenuto" type="text" />-->
+   <!-- <button onclick=add_data(data.value,contenuto.value)>Invia</button> -->
+    

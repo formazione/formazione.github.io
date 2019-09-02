@@ -1,0 +1,255 @@
+<script src="https://www.gstatic.com/firebasejs/4.10.1/firebase.js"></script>
+<script src="quiz-e5e5aconfig.js"></script>
+<body ontouchstart="sc++" ontouchmove="sc+=2"><script src="snakeversions.js"></script>
+  <!-- this comes from v.0 (snake.html) + code from v.9 (snake9.html) for audio and movement
+  the audio is limited to eating
+  the movement code avoids losing going in the opposite direction
+  added pickRndItem function to pick a random item from a list (used for the colors)
+  added some colors to the snake
+  changes at 7.14 7.1.19
+  <!--  audio brought here by v. 9.0 -->
+  
+  <audio id="myAudio"><source src="https://opengameart.org/sites/default/files/audio_preview/pacman%20wakka.wav.ogg" type="audio/ogg"></audio>
+<script>var x = document.getElementById("myAudio");
+  function playAudio() {x.play();}</script>
+  
+  <!--  end audio -->
+
+                              <!-- GAME CANVAS -->
+  
+  <center>
+                  <canvas id="gc3" width="400" height="400"></canvas>
+  </center>
+
+  
+  <script>
+window.onload=function () {
+    var vel = 15;
+    canv3 = document.getElementById("gc3");
+    ctx3 = canv3.getContext("2d");
+    document.addEventListener("keydown",keyPush);
+    setInterval(game,1000/vel);
+}
+
+let px = 10; // posizione iniziale player
+let py = 10;
+let gs = 20; // dimensione di una cella? o numero di celle?
+let tc = 20;
+let ax = 25; // coordinate iniziali della mela
+let ay = 15;
+let xv = 0;
+let yv = 0;
+let trail=[]; // array con le parti di snake
+let tail = 5; // dimensioni iniziali della coda
+let sc = 0; // punteggio
+let rec= 0; // record
+ref1.child("snake1").child("record").on("value", snap => rec = snap.val());
+let partite = 0;
+ref1.child("snake1").child("partite").on("value", snap => partite = snap.val());
+let fastscore = 20; // score when you hit the apple fast
+// 46 131
+/*    HOT TO ADD THE SCORE SO THAT IT REMAINS IN FIREBASE
+1. put the script src firebase.js and quiz-e5e5aconfig.js on top
+2. After line 48 (rec=0) put ref1.child("snake1").child("record").on("value", snap => rec = snap.val());
+3. After line 131 put:
+              if (sc > rec) {
+                  rec = sc;
+                  ref1.child("snake1").child("record").set(rec);
+              }
+*/
+var vel = 5;
+let img = new Image()
+img.src = "https://cdn.glitch.com/9778987b-2a7d-4797-bd0a-a7219e55295a%2Fapple256.png?1546333034026"
+var fps = 15;
+var maxAppleAgeSeconds = 5;
+var appleAge = 0;
+var maxAppleAgeFrames = fps * maxAppleAgeSeconds;
+var rand = changecolor();
+  
+  function pickRndItem(lista){
+    var randomcolor = lista[Math.floor(Math.random() * lista.length)]; 
+    return randomcolor;
+  }
+  
+  function changecolor(){
+    colorlist = ["lime","orange","cyan","pink","yellow","green","gray","lightblue","gold","azure","whitesmoke"];
+    return pickRndItem(colorlist);
+  }
+  
+  function screen(){
+    // fills the screen of black
+    ctx3.fillStyle="darkgreen";
+    ctx3.fillRect(0,0,canv3.width,18);
+    ctx3.fillStyle="darkblue";
+    ctx3.fillRect(0,18,canv3.width,canv3.height);
+  }
+  
+  function score(){
+    // draws the text score
+    ctx3.font = "16px Comic Sans MS";
+    ctx3.fillStyle = "orange";
+    ctx3.textAlign = "left";
+    ctx3.fillText("Highest:" + rec + " Partite " + partite +" - Score: " + sc + " Age:" + appleAge, 0, 12);
+    if (appleAge<fastscore){
+      ctx3.fillText(">>>",ax*gs,ay*gs);
+      //ctx.alpha(0.5);
+    }
+  }
+
+function circle(i, color){
+    ctx3.beginPath();
+    ctx3.arc(trail[i].x*gs+8,trail[i].y*gs+8, 10, 0, 2 * Math.PI, false);
+    ctx3.fillStyle = color;
+    ctx3.fill();
+    ctx3.lineWidth = 0;
+    ctx3.strokeStyle = '#003300';
+    ctx3.stroke(); 
+    }
+    
+function addpartite(){
+  // add to count partite
+      partite ++;
+      ref1.child("snake1").child("partite").set(partite);
+}
+
+    function write(testo, x, y){
+    ctx3.font = "32px Comic Sans MS";
+    ctx3.fillStyle = "blue";
+    ctx3.textAlign = "left";
+    ctx3.fillText(testo , x, y); 
+}
+    
+function game() {
+    px += xv; // at start is 0
+    py += yv; // at start is 0
+    if(px<0) {
+        px= tc-1;
+    }
+    if(px>tc-1) {
+        px= 0;
+    }
+    if(py<0) {
+        py= tc-1;
+    }
+    if(py>tc-1) {
+        py= 0;
+    }
+    // The screen
+    screen()
+    score()
+
+   
+   
+
+    //The worm
+    ctx3.fillStyle= rand;
+    // crea tanti quadrati quanta la lunghezza di trail
+    for(var i=0;i<trail.length;i++) {
+        //ctx3.fillRect(trail[i].x*gs,trail[i].y*gs,gs-1,gs-1);
+      circle(i, rand);
+      // collision ?
+      if (z!=0){
+        if(trail[i].x==px && trail[i].y==py) {
+              addpartite();
+              tail = 5;
+              px=py=10;
+              gs=tc=20;
+              ax=ay=15;
+              xv=yv=0;
+              trail=[];
+              if (sc > rec) {
+                  rec = sc;
+                  ref1.child("snake1").child("record").set(rec);
+              }
+              
+              sc = 0;
+              z=0;
+        }
+        }
+    }
+    trail.push({x:px, y:py});
+    while(trail.length>tail) {
+    trail.shift();
+    }
+
+  appleAge++;
+  let rnd = Math.random()*100;
+  let rndchance = Math.random();
+  
+  
+    if (rnd < 30){
+      ax += Math.floor(Math.random()*2);
+    }
+    else if (rnd > 30 && rnd < 33 ){
+      ax += Math.floor(Math.random()*-2);
+    }
+      else if (rnd > 33 && rnd <36 ){
+      ay += Math.floor(Math.random()*+2);
+    }
+        else if (rnd > 36 && rnd <39){
+      ay += Math.floor(Math.random()*-2);
+    }
+  
+  if (ax > 19) ax = 19;
+  if (ay > 19) ay = 19;
+  if (ax < 1) ax = 1;
+  if (ax < 1) ay = 1;
+  
+  //                                         HIT THE SCORE!
+  if (ax == px && ay == py) {
+      playAudio();
+      rand = changecolor();
+      tail+=3;
+    // 100 score if you are fast
+    if (appleAge<fastscore){
+      sc+=100;
+      write("100 punti", 100, 100);
+    }
+      sc += 5+tail;
+    // effect -------------------------- to be modified    
+    for (n=0; n<100; n++){  
+    ctx3.drawImage(img, ax*gs+n,ay*gs-3+n, 23+n, 23+n);
+    }
+    
+    // nuove coordinate della mela
+      ax = Math.floor(Math.random() * tc);
+      ay = Math.floor(Math.random() * tc);
+      appleAge = 0;
+  }
+  
+  
+  
+  
+  // Se il tempo della mela passa si sposta a caso
+  else if (appleAge > maxAppleAgeFrames) {
+      ax = Math.floor(Math.random() * tc);
+      ay = Math.floor(Math.random() * tc);
+      sc--;
+      tail+=3;
+      appleAge = 0;
+      
+    
+        } 
+  // dopo mostra la mela
+  ctx3.drawImage(img, ax*gs,ay*gs-3, 23, 23);
+
+}
+
+
+
+   /*                the movement code  (brought here by version 9.0)            */ 
+var z = 0; // avoid doing left-right or top-down
+function moveleft(){ if (z!=3){xv=-1;yv=0;z=2;}}
+function moveright(){if (z!=2){ xv=1; yv=0; z=3; } }
+function moveup(){ if (z!=4){ xv=0; yv=-1; z=1; } }
+function movedown(){ if (z!=1){ xv=0; yv=1; z=4; } }
+    
+function keyPush(evt) {
+  if (evt.keyCode==37) moveleft();
+  else if (evt.keyCode==38) moveup();
+  else if (evt.keyCode==39) moveright();
+  else if (evt.keyCode==40) movedown();
+    } 
+  /*      end of movement  code    */
+</script>﻿
+</body>

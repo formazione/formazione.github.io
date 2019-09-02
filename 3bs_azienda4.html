@@ -1,0 +1,97 @@
+
+    <style>
+    @import "temp1.css"
+      
+    </style>
+    <!-- cambia il numero della domanda qui sotto
+    poi le riposte alle domande
+    -->
+    <title>
+    Azienda domanda 4
+    </title>
+    <script src="https://www.gstatic.com/firebasejs/4.10.1/firebase.js"></script>
+    <script src="3bs_azienda_menu.js"></script>
+    <script>
+
+    // ==================================================== dati personalizzati
+domanda_top.innerHTML += "<blockquote>";
+      
+      // I S T R U Z I O N I
+domanda_top.innerHTML += "Completa il test inserendo le parole omesse.";
+
+      // IMMAGINE
+let imgaddress = "http://scd.es.rfi.fr/sites/espanol.filesrfi/imagecache/rfi_large_600_338/sites/images.rfi.fr/files/aef_image/economia_circular_1202.jpg"; 
+domanda_top.innerHTML += "</blockquote><center><img src='" + imgaddress +"' width=25% /></center>";
+let domanda = []
+
+function rnd(x){
+    x.sort(function() {
+  return .5 - Math.random();
+});
+    return x;};
+
+function random(x){
+ return Math.floor(Math.random()*10+1)*x; 
+}
+      
+  let risposte = [];    
+for (let n=1; n<20; n++){
+  let alunno = classe[n] + ":"
+  
+  let testo = `
+1. L'imprenditore è definito dall'art. _____
+2. L'azienda è definita dall'art. ____
+3. Le società di persone sono: ____ e _____
+4. Le società di capitali sono: ____, _____ e ____
+5. Sono illimitatamente responsabili i soci delle società di:
+ [   ] persone
+ [   [ capitali
+6. Cosa vuol dire responsabilità solidale nelle società di persone?
+[   ] che si può chidere di pagare i debiti a ogni socio per la sua parte
+[   ] che si può chiedere di pagare ad un solo socio tutti i debiti
+`;
+  let correttore = `
+1. L'imprenditore è definito dall'art. 2082
+2. L'azienda è definita dall'art. 2555
+3. Le società di persone sono: snc e sas
+4. Le società di capitali sono: spa, srl e sapa
+5. Sono illimitatamente responsabili i soci delle società di:
+ [  x ] persone
+ [   [ capitali
+6. Cosa vuol dire responsabilità solidale nelle società di persone?
+[   ] che si può chiedere di pagare i debiti a ogni socio per la sua parte
+[  x ] che si può chiedere di pagare ad un solo socio tutti i debiti
+`;
+  
+  domanda.push(alunno + testo);
+  risposte.push(correttore);
+                   }
+
+    cnt = 0
+    compito = {
+ 'Andreioli':domanda[cnt++],
+'Barbato':domanda[cnt++],
+'Cirillo':domanda[cnt++],
+'Croce':domanda[cnt++],
+'DelPiero':domanda[cnt++],
+'DiLorenzo':domanda[cnt++],
+'DiSevo':domanda[cnt++],
+'Giudice':domanda[cnt++],
+'Manzo':domanda[cnt++],
+'Montemurro':domanda[cnt++],
+'NeseLuigi':domanda[cnt++],
+'Orlando':domanda[cnt++],
+'RibecaLucia':domanda[cnt++],
+'Spera':domanda[cnt++],
+'ValerioAntonio':domanda[cnt++],
+'ValerioFrancesco':domanda[cnt++],
+'Verrelli':domanda[cnt++],
+'Villano':domanda[cnt++],
+'ViteraleFrancesca':domanda[cnt++],
+    }
+    // ========================================================================== fine dati
+for (i in domanda) console.log(domanda[i]);
+for (i in domanda) console.log(domanda[i] + risposte[i]);
+//console.log(risposte);
+</script>
+    

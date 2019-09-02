@@ -1,0 +1,458 @@
+<html>
+<title>Esercizio indici 1</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+<!--------------------menu bar index 26/2/19-------------------------------->
+
+<div id="menuDiv"></div>
+<script src="https://quinta.glitch.me/index_menu.js"></script>
+<!---------------------------------------------------->
+<style>
+    input[type=text], select {
+  /*width: 100%;*/
+      font-size: 26;
+      min-size: 5;
+  background: #000;
+  padding: 12px 12px;
+  margin: 6px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+   h3 {
+   color:coral  
+  }
+    body {
+      margin-left: 10%;
+      margin-right: 10%;
+     color:white;
+      background:black;
+      font-size: 2em;
+    }
+    .jumbotron {
+     background: darkgray;
+    }
+  .my2 {
+    height: 200px;
+    border: 1px solid black;
+    }
+ 
+</style>
+<script>
+/* cartella py_test_maker_for js
+  
+  LIBRETTO DELLE ISTRUZIONI PER CHI USA IL CODICE
+  
+  Esempi di uso delle funzioni che creano il test
+  
+  
+  1- INPUT 
+  inserimento di una parola sola, con suggerimento prima lettera
+    Suggerimento: per separare le domande, alla fine metti <br>
+  >>> input("Parte iniziale, poi c'è la parola omessa ", "parola omessa", "fine della frase o <br>");
+  
+  2. *
+  una *parola, ma senza suggerimento iniziale, perché c'+ l'asterisco davanti
+  >>> input("Parte iniziale, poi c'è la parola omessa ", "*parola omessa", "fine della frase o <br>");
+  
+  3. un solo carattere o sì no vero falso
+  Quando la risposta contiene un solo numero o carattere, sì, no, vero, falso, automaticamente non c'è il suggerimento iniziale, altrimenti la risposta è
+  
+  3. GUESSWHAT
+  inserimento più parole alternative
+  >>> guessWhat("Parte iniziale", "parola1 alternativa1 alternativa2", "fine frase");
+  
+  
+  
+  // +++++++++++++++++++++++++++++++++++ code end ++++++++++++++++++++++++++++++++++ */
+let db_submit = [];
+let counter = 0;
+var sol = [];
+var countdom = 0;
+let db_giuste = [];
+  
+  
+  
+  function check(casella, giusta, num){
+    db_submit[counter] = casella.value;
+    giusta = giusta.toLowerCase();
+    casella.value = casella.value.toLowerCase();
+        if (casella.value == 'aiuto'){
+        if (casella.value.length >= 3){
+        casella.value = giusta[0]+giusta[1]+ giusta[2]
+        }
+    }
+    else{
+    if (casella.value == giusta){
+        casella.style.background = 'darkgreen';
+        counter++
+    }
+    else casella.style.background = 'red';
+  }
+}
+    
+  // +++++++++++++++++++++++++++++++++++ code end ++++++++++++++++++++++++++++++++++ //
+let check_ricavi = false;
+function checkWhat(casella, giusta, num){
+    giusta = giusta.toLowerCase();
+    casella.value = casella.value.toLowerCase();
+    if (casella.value == 'aiuto'){
+        if (casella.value.length >= 3){
+        casella.value = giusta[0]+giusta[1]+ giusta[2]
+        }
+    }
+    else {
+    for (r of giusta.split(" ")){
+      // SE E' GIUSTA DIVENTA VERDE
+    if (casella.value == r){
+        casella.style.background = '#144621';
+      return casella.value.includes(giusta);
+    }
+        else casella.style.background = 'red';
+    }
+}
+}
+    
+  // +++++++++++++++++++++++++++++++++++ code end ++++++++++++++++++++++++++++++++++ //
+function print_it(parola){
+    if (soluzioni.innerHTML.includes(parola)){
+    }
+    else {
+        soluzioni.innerHTML += " - " + parola;
+    }
+}
+
+   
+// +++++++++++++++++++++++++++++++++++ code end ++++++++++++++++++++++++++++++++++ //
+  // +++++++++++++++++++++++++++++++++++ code end ++++++++++++++++++++++++++++++++++ //
+  // +++++++++++++++++++++++++++++++++++ code end ++++++++++++++++++++++++++++++++++ //
+  
+  
+function input(dom_s, giusta, dom_e){
+  db_giuste.push(giusta);
+  var inizio = "", fine = "";
+  sol[countdom] = giusta;
+  var repls = giusta[0];
+  // non far vedere la lettera iniziale nei seguenti casi: in automatico aggiunge *
+  if (giusta.length == 1) giusta = "*" + giusta;
+  if (giusta.includes("*") || giusta.toLowerCase() in ["sì","si","no","vero","falso"]){
+      giusta = giusta.replace("*", "");
+      repls = "";
+  };
+  num = countdom + 1
+  countdom++
+  var dom_h2 = inizio + dom_s;
+  if (giusta != " "){
+  var part1 = dom_h2 + "<input style='display:inline;background:pink;color:white' size='"+ giusta.length*2+ "' type=text class='t1' placeholder='" + repls + "....' onchange=\"if (check(this,'";
+  part1 += giusta + "')){print_it(this.value)};\" /> " + dom_e + fine;
+  }
+  else {
+      var part1 = dom_h2 + dom_e + fine;
+  }
+      document.write(part1);
+  return part1;
+}
+ 
+  // +++++++++++++++++++++++++++++++++++ code end ++++++++++++++++++++++++++++++++++ //
+
+function guessWhat(dom_s, giusta, dom_e){
+  db_giuste.push(giusta);
+  dom_s = dom_s.replace("#"," ");
+  var inizio = "";
+  var fine = "";
+  sol[countdom] = giusta;
+  num = countdom + 1
+  countdom++
+  var dom_h2 = inizio + dom_s;
+  var part1 = dom_h2 + "<input style='font-size:30;display:inline;background:#590010;' size='" + giusta.length / 2 + "' type=text class='t1' placeholder='" + giusta[0] + "....' onchange=\"if (checkWhat(this,'";
+  part1 += giusta + "')){print_it(this.value)};\" />" + dom_e + fine
+  document.write(part1);
+}
+
+
+  
+  // this is to not be hidden by the menu
+  document.write("<br><br><br>");
+   
+  // +++++++++++++++++++++++++++++++++++ code end ++++++++++++++++++++++++++++++++++ // 
+  function title(x){
+     document.write("<h3 style='color:coral'>" + x + "</h3>"); 
+  }
+  
+  // +++++++++++++++++++++++++++++++++++ code end ++++++++++++++++++++++++++++++++++ //
+  function par(x){
+   document.write("<p>" + x + "</p>");
+  }
+   
+  // +++++++++++++++++++++++++++++++++++ code end ++++++++++++++++++++++++++++++++++ // 
+  function video(address){
+    par("<iframe src='" + address + "' allowfullscreen/></iframe>");
+  }
+  
+  
+  // +++++++++++++++++++++++++++++++++++ code end ++++++++++++++++++++++++++++++++++ //
+  
+  function ul(lista){
+    document.write("<ul>");
+   lista = lista.split("\n");
+    for (l in lista){
+      if (lista[l] != "") {
+     document.write("<li>" + lista[l] + "</li>");
+                }
+    }
+    document.write("</ul>");
+  }
+  
+  // +++++++++++++++++++++++++++++++++++ code end ++++++++++++++++++++++++++++++++++ //
+  function youtube(code){
+    // this is to adjust the string to see the video in the right way
+   par("<iframe width=\"727\" height=\"409\" src=\"" + code + "\" frameborder=\"0\" allow=\"accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>"); 
+  }
+
+  // +++++++++++++++++++++++++++++++++++ code end ++++++++++++++++++++++++++++++++++ // 
+    // +++++++++++++++++++++++++++++++++++ code end ++++++++++++++++++++++++++++++++++ //
+    
+    
+    
+  
+  // TITOLO: il budget, primo paragrafo con video da doodly
+  //====================================================================== 1
+  title("Il budget");
+  par("Il budget è uno strumento contabile preventivo che permette di confrontare i dati preventivati con i risultati consutivi effettivamente conseguiti.");
+  youtube("https://www.youtube.com/embed/BsScpmgsLAo");
+  youtube("https://www.youtube.com/embed/U1NrvDGZdV8");
+  // ===================================================================== 1
+  
+  
+  title("Budget economico analitico");
+  par("Il primo passo per compilare il budget consiste nel redigere il Budget economico analitico, composto da una sequenza di budget settoriali");
+  
+ul(`
+        Budget delle vendite
+        Budget della produzione
+        Budget delle materie prime
+        Budget degli acquisti
+        Budget della manodopera diretta
+        Budget delle rimanenze di materie prime e prodotti
+        Budget dei costi generali
+        Budget degli oneri finanziari
+        Budget dei proventi diversi
+        Budget degli oneri diversi
+`);
+     
+
+  
+paragrafo = `
+Il budget
+È un documento con il quale si traducono in forma monetaria le previsioni per l'anno successivo dei programmi aziendali.
+
+Centri di responsabilità
+Comporta la definizione di centri di responsabilità, con a capo un manager, cui vengono affidate delle risorse e degli obiettivi di cui è responsabile.
+
+Differenza con il bilancio
+A differenza del bilancio, che è un documento consuntivo, cioè con dati del passato, il budget è un documento preventivo, che presenta dati stimati in base alle previsioni derivanti dalle analisi del mercato e dai progetti futuri dell'impresa.
+Dopo aver stabilito gli obietti di lungo periodo con le strategie, si passa quindi ai programmi di breve periodo. Il budget effettua una previsione dei dati della situazione patrimoniale, economica e finanziaria del prossimo esercizio.
+
+I budget possono essere di tipo:
+- incrementativo, in cui si parte dai dati del precedente anno per fare previsioni sulle variazioni in aumento o in diminuzione del periodo successivo;
+- scorrevole, budget diviso in periodi infrannuali, un cui al termine di ogni periodo, si aggiunge un periodo futuro;
+- flessibile, budget che prevede una situazione economica espansiva, identica e recessiva rispetto alla precedente;
+- a base zero, che non tiene conto dell'anno precedente e ogni attività viene riesaminata per stabilire di nuovo le risorse da assegnare.
+
+Fasi del budget
+Ogni area funzionale dell'impresa presenta delle proposte di budget, tenendo presenti le strategie aziendeli. Dopo una fase di confronto dei budget, vengono sottoposti alla direzione generale per poi essere redatti e approvati. Cruciale è il controllo dei risultati che comportano azioni correttive in caso di mancato raggiungimento degli obiettivi e la responsabilità per il loro mancato raggiungimento.
+
+Costi standard
+Il budget si redige in base a costi standard che possono essere correnti (quelli attuali), ottenibili (con efficienza maggiore di quella attuale) o ideali (livello massimo, difficile da raggiungere). I costi standard ottenibili sono preferibili, perché stimolano a migliorare, ma non sono troppo difficili da raggiungere come quelli ideali.
+
+Budget parziali
+Il budget deriva da tre budget parziali:
+- il budget degli investimenti
+- il budget economico
+- il budget finanziario
+
+Budget degli investimenti
+In questo budget si prevedono gli acquisti di beni durevoli e le dismissioni di quelli da sostituire.
+I beni durevoli perdono valore per usura o obsolescenza (introduzione sul mercato di nuovi modelli più efficienti).
+
+<img src="http://www.pngmart.com/files/3/Finish-Line-PNG-HD.png" width="100%" />
+
+Esercizio
+Calcoliamo il budget delle vendite di un ristorante in cui Il numero massimo di coperti al giorno è 100 per il pranzo e 100 per la cena.
+I giorni di apertura sono 26 per mese.
+
+Vendita menu
+La vendita media di menu è del 40% in	bassa stagione (di 6 mesi), del 60% in media stagione (di 3 mesi) e del 90% in alta stagione.								
+Il prezzo medio dei menu è di 50 €.
+
+I banchetti
+Il ristorante organizza anche dei bachetti. In bassa stagione, statisticamente, ne organizza 1 al mese, in bassa stagione 2 al mese e in alta stagione 3 al mese.								
+Ogni banchetto ha in media 220 persone presenti e il prezzo a persona è di 120 €.								
+Il costo delle materie prime per menu è di 15 €, per i banchetti è di 30 €.								
+															
+<img id="image1" style="filter: blur(3px); -webkit-filter: blur(3px);" src="https://cdn.glitch.com/6f5b6850-3bb1-4610-8137-6eaec273f126%2Fimage.png?1552368939801" />
+(Immagine sfocata della soluzione; se completerai l'esercizio la vedrai a fuoco.)
+`.split("\n");
+
+
+  
+function pubblicaTesto(){
+  console.log(paragrafo);
+  for (p in paragrafo){
+    if (paragrafo[p].includes(".") || paragrafo[p].includes(";")) par(paragrafo[p]);
+    else title(paragrafo[p]);
+  }
+}
+
+  
+  function par(x){
+   return document.write("<p>" + x + "</p>"); 
+  }
+  
+  function img(address){
+    
+   document.write("<img src='" + address + "' />"); 
+  }
+/////////////////////////////////////////////////////////// viene mostrato il testo di sopra
+pubblicaTesto();
+
+function stagione(titolo, mesi, perc, gwTOT,R){
+    title(titolo);
+    document.write("<div style='background:coral;background-size:100%;'>");
+    par(`Calcoliamo il budget delle vendite di un ristorante in cui Il numero massimo di coperti al giorno è 100 per il pranzo e 100 per la cena.
+I giorni di apertura sono 26 per mese. I mesi di questa stagione sono ` + mesi +`. La percentuale di vendite in bassa stagione è del ` + perc.split(" ")[0] + ` rispetto alla capacità massima di consentita. Il prezzo di un menu è di 50 euro.`);
+
+  
+  table(1);
+  tableRow(["Max Coperti","Giorni","Mesi"]);
+  inputRow(["200","26",mesi]);
+  tableRow(["prezzo coperto","perc.coperti"]);
+  gwRow(["50",perc]);
+  table(0);
+  
+
+    guessWhat("MENU VENDUTI = ",gwTOT,"  ");
+    guessWhat(" RICAVI = ",R,"<br>");
+    document.write("</div>");
+}
+  
+  
+  
+function tableRow(list){
+  // create a list of td for how many items are in the list
+  for (l of list){
+    document.write("<td>" + l + "</td>");
+  }
+  document.write("<tr>");
+}
+  
+function inputRow(list){
+  // create a list of td for how many items are in the list
+  for (l of list){
+    document.write("<td>");
+    input("",l," ");
+    document.write("</td>");
+  }
+  document.write("<tr>");
+}
+      
+function gwRow(list){
+  // create a list of td for how many items are in the list
+  for (l of list){
+    document.write("<td>");
+    guessWhat("",l," ");
+    document.write("</td>");
+  }
+  document.write("<tr>");
+}
+      
+      
+  function table(x){
+    if (x==1){
+  document.write("<table style='background:#3775a5' border=0>")
+  }
+    else document.write("</table>")
+  }
+  
+  function br(){
+   document.write("<br>"); 
+  }
+function banchetti(titolo,B,M,R){
+    title(titolo);
+    document.write("<div style='background:darkblue;background-size:100%;'>");
+    par(`Per calcolare i budget dei ricavi per i banchetti sappiate che in bassa stagione se ne realizza 1 al mese (per 6 mesi), il media stagione 2 al mese (per 3 mesi) e in alta stagione 3 al mese (per tre mesi). Sappiate anche che gli ospiti sono 220 in media per banchetto e che il prezzo è di 120 euro a testa.`);
+    title("RICAVI = <span style='color:cyan'>B</span>anchetti al mese x <span style='color:cyan'>M</span>esi x % <span style='color:cyan'>O</span>spiti x <span style='color:cyan'>P</span>rezzo");
+  
+  table(1);
+  tableRow(["Banchetti","mesi"]);
+  inputRow([B,M]);
+  tableRow(["Ospiti","Prezzo"]);
+  inputRow(["220","120"]);
+  table(0);
+  br();
+  table(1);tableRow(["Ricavi dei banchetti"]);gwRow([R]);table(0);
+    document.write("</div>");
+  }
+  
+
+  
+function redGuess(titolo, intro, a,giuste,c,color="darkred"){
+  document.write("<div style='background:" + color +"'>");
+  title(titolo);
+  par(intro);
+  guessWhat(a,giuste,c);
+  if (giuste.includes("2.348.400") || giuste.includes("2348000")){
+      check_ricavi = true;
+    document.write("<div id=\"dred\">  </div>");
+  }
+  document.write("</div>");
+}
+
+function button(){
+    but = document.createElement("button");
+  }
+  
+  
+      //     ...      Menu   ...
+  
+title("BUDGET DELLE VENDITE: MENU");
+img("https://lindador.com/wp-content/uploads/2017/03/Menu-Main-Restaurant.png");
+// Le domande per i menu
+stagione("Bassa Stagione", "6","40% 40","12480 12.480","624000 624.000");  
+stagione("Media Stagione", "3","60% 60","9360 9.360","468000 468.000");  
+stagione("Alta Stagione","3","90% 90","14040 14.040","702000 702.000");  
+redGuess("Ricavi totali dei menu", "TOTALE RICAVI MENU","","1794000 1.794.000","<br>");
+  
+          //        ...   Banchetti   ...
+  
+title("BUDGET DELLE VENDITE: BANCHETTI");
+img("https://img.pgol.it/img/Z6/97/57/88/0/13986190.jpg");
+// domande per i banchetti
+banchetti("Banchetti: Bassa Stagione","1","6","158400 158.400");
+banchetti("Banchetti: Media Stagione","2","3","158400 158.400");
+banchetti("Banchetti: Alta Stagione", "3","3","237600 237.600");
+  par("Somma i ricavi di tutte le stagioni");
+redGuess("Ricavi totali banchetti", "Somma i ricavi complessivi dei banchetti.","TOTALE RICAVI BANCHETTI = ","554400 554.400","<br>");
+
+title("TOTALE RICAVI DEL RISTORANTE");
+redGuess("Ricavi totali", "Somma i ricavi dei coperti e dei banchetti.","TOTALE RICAVI = ", "2.348.400 2348400","<br>","darkgreen");
+
+  /*
+par(`<img id="image2" style="filter: blur(3px); -webkit-filter: blur(3px);" src="https://cdn.glitch.com/6f5b6850-3bb1-4610-8137-6eaec273f126%2Fimage.png?1552368939801" />`);
+  par(`<button onclick="document.getElementById('image2').setAttribute('style','filter: blur(0px); -webkit-filter: blur(0px);');document.getElementById('image1').setAttribute('style','filter: blur(0px); -webkit-filter: blur(0px);')">Vedi la soluzione</button><br>`)
+            // Materie prime
+  */
+    
+  </script>
+  
+<body>
+  Risposte date: <div id="soluzioni">
+    
+  </div>
+  
+</body>
+</html>

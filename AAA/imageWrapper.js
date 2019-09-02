@@ -1,0 +1,1 @@
+function img(im){ return "<br><img src=" + im + " width=50% /><br>";}

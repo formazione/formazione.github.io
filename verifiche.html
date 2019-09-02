@@ -1,0 +1,37 @@
+    <style>
+    @import "temp1.css"
+    </style>
+<script src="gohome.js"></script>
+
+<script>
+
+// =================================== show: visualizza l'argomento sullo scherm
+
+rows = [];
+function show(x){
+  document.write(x);
+  // contanins all the rows of the page
+  rows.push(x);
+  }
+// =================================== Mostra Soluzione: mostra la soluzione esercizio
+  // da legare al button onclick e if text1.value='aiuto'
+function mostraSoluzione(){
+  show("<a href='verifiche.html'>[Solo Traccia]</a><br>");
+  show(traccia);
+ show("<img src='https://cdn.glitch.com/90e05fb6-037b-416a-b22f-95c8044b6060%2Fce2004.PNG?1547877655576' />");
+  show("<img src='https://cdn.glitch.com/90e05fb6-037b-416a-b22f-95c8044b6060%2Fsp2004.PNG?1547877655749' />");
+}
+traccia = `<img src="https://cdn.glitch.com/90e05fb6-037b-416a-b22f-95c8044b6060%2Ftraccia1.PNG?1547877655843" />`
+</script>
+
+<!--               traccia del compito     -->
+
+
+<!-- Pulsante per mostrare la soluzione password -->
+<br>
+<input id="pass" type="text">
+<br>
+<!-- Pulsante per mostrare la soluzione -->
+<button onclick="if (pass.value=='aiuto'){mostraSoluzione()}">
+  Mostra la soluzione
+</button>

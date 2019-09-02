@@ -1,0 +1,58 @@
+<style> @import "temp1.css"  </style>
+<script src="https://www.gstatic.com/firebasejs/4.10.1/firebase.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="scripts/javascript-loader.js" type="text/javascript" charset="utf-8" ></script>    
+    <script>document.title = "Azienda Domanda 3"; </script>
+<script src="3bs_azienda_menu.js"></script>
+<script>
+domanda_top.innerHTML += "<blockquote>";
+domanda_top.innerHTML += "Completa il test inserendo le parole omesse.";
+let imgaddress = img[0];
+domanda_top.innerHTML += "</blockquote><center><img src='" + imgaddress +"' width=25% /></center>";
+
+let domanda = []
+
+function random(x){
+ return Math.floor(Math.random()*10+1)*x; 
+}
+      
+  let risposte = [];    
+for (let n=1; n<20; n++){
+  let alunno = classe[n] + ":"
+  
+  let testo = `
+
+Con il contratto di società due o più proprietari conferiscono [ _ _ _ _ ] e servizi per esercitare in comune un' [ _ _ _ _ _ _ _ _ ] economica allo scopo di dividerne gli [ _ _ _ _ _ ] o le eventuali [ _ _ _ _ _ _ _ ].
+`
+  domanda.push(alunno + testo);
+  risposte.push("Con il contrato di società due o più proprietari conferiscono [ beni ] e servizi per esercitare in comune un' [ attività ] economica allo scopo di dividerne gli [ utili] o le eventuali [ perdite ].");
+                   }
+
+    cnt = 0
+    compito = {
+ 'Andreioli':domanda[cnt++],
+'Barbato':domanda[cnt++],
+'Cirillo':domanda[cnt++],
+'Croce':domanda[cnt++],
+'DelPiero':domanda[cnt++],
+'DiLorenzo':domanda[cnt++],
+'DiSevo':domanda[cnt++],
+'Giudice':domanda[cnt++],
+'Manzo':domanda[cnt++],
+'Montemurro':domanda[cnt++],
+'NeseLuigi':domanda[cnt++],
+'Orlando':domanda[cnt++],
+'RibecaLucia':domanda[cnt++],
+'Spera':domanda[cnt++],
+'ValerioAntonio':domanda[cnt++],
+'ValerioFrancesco':domanda[cnt++],
+'Verrelli':domanda[cnt++],
+'Villano':domanda[cnt++],
+'ViteraleFrancesca':domanda[cnt++],
+    }
+    // ========================================================================== fine dati
+for (i in domanda) console.log(domanda[i]);
+for (i in domanda) console.log(domanda[i] + risposte[i]);
+//console.log(risposte);
+</script>
+    

@@ -1,0 +1,160 @@
+
+    <style>
+    @import "temp1.css"
+      
+    </style>
+    <!-- cambia il numero della domanda qui sotto
+    poi le riposte alle domande
+    -->
+    <title>
+    Azienda domanda 5
+    </title>
+    <script src="https://www.gstatic.com/firebasejs/4.10.1/firebase.js"></script>
+    <script src="3bs_azienda_menu.js"></script>
+    <script>
+
+    // ==================================================== dati personalizzati
+domanda_top.innerHTML += "<blockquote>";
+      
+      // I S T R U Z I O N I
+domanda_top.innerHTML += "Completa il test sottostante.";
+
+      // IMMAGINE
+let imgaddress = "http://www.unida.org.ar/wp-content/uploads/2018/08/portada-economia-social.png"; 
+domanda_top.innerHTML += "</blockquote><center><img src='" + imgaddress +"' width=25% /></center>";
+let domanda = []
+
+function rnd(x){
+    x.sort(function() {
+  return .5 - Math.random();
+});
+    return x;};
+
+function random(x){
+ return Math.floor(Math.random()*10+1)*x; 
+}
+      
+  let risposte = [];    
+for (let n=1; n<20; n++){
+  let alunno = classe[n] + ":"
+  
+  let testo = `
+1. In quale tipo di società si emettono azioni (2 risp.)?
+[   ] srl
+[   ] snc
+[   ] spa
+[   ] sapa
+
+2. Come si chiamano i soci che hanno responsabilità illimitata nelle sas?
+Si chiamano: ....
+
+
+3. Come si chiamano gli altri soci della sas?
+Si chiamano ...
+
+
+4. Si possono formare società con un unico socio?
+[  ] sì    [  ] no
+
+5. A lui fanno capo i diritti e gli obblighi che derivano dall'attività d'impresa:
+[  ] soggetto giuridico
+[  ] soggetto economico
+
+6. Governa l'impresa assumendo le decisioni strategiche:
+[  ] soggetto giuridico
+[  ] soggetto economico
+
+7. Nell'impresa individuale  soggetto giuridico ed economico
+[  ] sono diversi
+[  ] coincidono
+
+8. Nelle società di persone soggetto giuridico ed economico:
+[  ] sono diversi
+[  ] coincidono
+
+9. Nelle società di capitali soggetto giuridico ed economico:
+[  ] sono diversi
+[  ] coincidono
+
+10. Cos'è la gestione?
+È l'insieme delle __________ che l'impresa compie in modo ___________ allo scopo di creare nuovo valore ___________, cioè di fare in modo che i ricavi superino i _____
+`;
+  
+  
+  let correttore = `
+1. In quale tipo di società si emettono azioni (2 risp.)?
+[   ] srl
+[   ] snc
+[ x ] spa
+[ x ] sapa
+
+2. Come si chiamano i soci che hanno responsabilità illimitata nelle sas?
+Si chiamano: accomandatari
+
+
+3. Come si chiamano gli altri soci della sas?
+Si chiamano accomandanti
+
+
+4. Si possono formare società con un unico socio?
+[ x ] sì    [  ] no
+
+5. A lui fanno capo i diritti e gli obblighi che derivano dall'attività d'impresa:
+[ x ] soggetto giuridico
+[  ] soggetto economico
+
+6. Governa l'impresa assumendo le decisioni strategiche:
+[ x ] soggetto giuridico
+[  ] soggetto economico
+
+7. Nell'impresa individuale  soggetto giuridico ed economico
+[  ] sono diversi
+[ x ] coincidono
+
+8. Nelle società di persone soggetto giuridico ed economico:
+[  ] sono diversi
+[ x ] coincidono
+
+9. Nelle società di capitali soggetto giuridico ed economico:
+[ x ] sono diversi
+[  ] coincidono
+
+10. Cos'è la gestione?
+È l'insieme delle [operazioni] che l'impresa compie in modo [coordinato] allo scopo di creare nuovo valore [economico],
+cioè di fare in modo che i ricavi superino i costi
+`;
+
+  
+  domanda.push(alunno + testo);
+  risposte.push(correttore);
+                   }
+// quando si sceglie il nome, viene pubblicato il contenuto, diverso per
+      // ogni alunno
+  let cnt = 0
+  let  compito = {
+ 'Andreioli':domanda[cnt++],
+'Barbato':domanda[cnt++],
+'Cirillo':domanda[cnt++],
+'Croce':domanda[cnt++],
+'DelPiero':domanda[cnt++],
+'DiLorenzo':domanda[cnt++],
+'DiSevo':domanda[cnt++],
+'Giudice':domanda[cnt++],
+'Manzo':domanda[cnt++],
+'Montemurro':domanda[cnt++],
+'NeseLuigi':domanda[cnt++],
+'Orlando':domanda[cnt++],
+'RibecaLucia':domanda[cnt++],
+'Spera':domanda[cnt++],
+'ValerioAntonio':domanda[cnt++],
+'ValerioFrancesco':domanda[cnt++],
+'Verrelli':domanda[cnt++],
+'Villano':domanda[cnt++],
+'ViteraleFrancesca':domanda[cnt++],
+    }
+    // ========================================================================== fine dati
+for (i in domanda) console.log(domanda[i]);
+for (i in domanda) console.log(domanda[i] + risposte[i]);
+//console.log(risposte);
+</script>
+    

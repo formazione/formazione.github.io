@@ -1,0 +1,175 @@
+<html>
+ <title>5bs_es1</title>
+<style>
+  @import "button.css";
+  @import "dark.css";
+  
+    body {
+    font-size: 2em;
+      margin-left: 10%;
+      margin-right: 10%;
+    }
+         
+         
+  textarea, input {
+  width:100%;
+  background-color: gold;
+  border: none;
+  padding: 15px 32px;
+  text-align: left;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 2em;
+  margin: 4px 2px;
+  cursor: pointer;
+  
+}
+      .mytext {
+      background-color: lightblue;}
+         
+
+
+a:link {
+  opacity: 0.8;
+  underline: 0;
+  }
+  
+a:hover {
+  opacity: 0.5;
+  }
+a:link, a:visited {
+  background-color: #f44336;
+  color: white;
+  padding: 5px 5px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+}      
+</style>
+<body>
+  
+  
+  <!-- pulsante per tornare alla pagina principale -->
+  <script src="gohome.js"></script>
+  
+<!-- firebase config -->
+<script src="https://www.gstatic.com/firebasejs/4.10.1/firebase.js"></script>
+<script>
+var config = {
+  apiKey: "AIzaSyDp-mWaWEI07pIdRUhi6vA-salEMRWz4hw",
+  authDomain: "quiz-e5e5a.firebaseapp.com",
+  databaseURL: "https://quiz-e5e5a.firebaseio.com/",
+  projectId: "quiz-e5e5a",
+  storageBucket: "quiz-e5e5a.appspot.com",
+  messagingSenderId: "901845403492"
+};
+firebase.initializeApp(config);
+var database = firebase.database()
+
+// the record for this application================ Change it!
+id_database = '5bs_es1';
+var dbref1 = database.ref().child(id_database);
+// ===============================================
+          
+function add_data(d,c,e){
+  dbref1.child(d).child(e).set(c)
+}
+
+function printnome(num){
+  // This creates an input text box with a data+num id for each student -->
+  document.write("Inserisci il tuo nome:<br><input id='data" + num + "' class='mytext' type=text value='' /><br>")
+}
+
+function printtextandbutton(numalunno,num){
+  //document.write("<input id='data" + num + "' type=text value='' />")
+  document.write("Risposta " + num + ": <textarea id='contenuto"+ num + "' type='text' rows='3' /></textarea>");
+  domanda = "domanda" + num;
+  document.write("<br><button onclick=add_data(data"+ numalunno + ".value,contenuto" + num +".value,'"+domanda+"')>Invia</button><br>")
+}
+
+function questionwrite(domanda_fatta){
+   document.write("<b>" + domanda_fatta + "</b><br>")
+}
+
+function qmk(domanda_fatta){
+  questionwrite(domanda_fatta);
+  printtextandbutton("1",countnum);
+  questionwrite("<br>");
+  countnum++
+  //dbref1.on("value", snap => x = snap.value())
+}
+      
+document.write("<h3>Esercizio " + id_database + "</h3>")
+      document.write("<img src='https://tdm-pull-wol7ynwfkovcdc2im8l.netdna-ssl.com/wp-content/uploads/2011/11/Content-Marketing-Header.jpg' width='100%' />");
+printnome("1");
+      
+let countnum = 1;
+qmk("Come si definisce il marketing?");
+qmk("Cosa si intende per orientamento al prodotto dell'impresa?");
+qmk("Cosa si intende per orientamento alle vendite?");
+qmk("Cosa si intende per orientamento al mercato?");
+qmk("Che differenza c'è tra il marketing strategico e quello operativo?");
+qmk("Se le materie prime sono pari a 4 euro e la percentuale delle stesse rispetto al prezzo è del 33%, determina il fattore.");
+qmk("Quali sono le fasi del ciclo di vita del prodotto?");
+qmk("Quali sono le strategie da utilizzare nella fase di lancio?");
+qmk("Quali sono le strategie da utilizzare nella fase di sviluppo?");
+qmk("Quali strategie adottare nella fase di maturità?");
+qmk("Quali decisioni si possono prendere nella fase di declino?");    
+qmk("Quali sono le fasi dell'analisi del marketing strategico?");
+qmk("Quali sono le fasi della scelta del marketing strategico?");
+qmk("Cos'è la quota di mercato?");
+qmk("Come si calcola il market share?");
+qmk("Come si calcola il fair share?");
+qmk("In base a quali fattori si differenzia il prezzo?");
+qmk("Cosa sono i prezzi allineati?");
+qmk("Cosa sono i prezzi di prenetrazione?");
+qmk("Cosa sono i prezzi di scrematura?");
+qmk("Come si calcola il prezzo con il full costing?");
+qmk("Come si calcola il prezzo con il direct costing?");
+qmk("Quali sono i canali di distribuzione?");
+
+  
+function createDiv(){
+  let ref = firebase.database().ref().child(document.title);
+  ref.on('value', function(snapshot) {
+    let count = 0;
+    snapshot.forEach(function(childSnapshot) {
+      let divX = document.createElement("div");
+      divX.setAttribute('id', 'al' + count);
+      document.body.appendChild(divX),
+      count++;})
+    }
+)};
+  </script>
+  </body>
+  
+  <script>
+function retrieveData(){
+  let ref = firebase.database().ref().child(document.title);
+  
+  ref.on('value', function(snapshot) {
+      let count1 = 0;
+      let snap = snapshot.val();
+      for (i in snap){
+       console.log(i); // nome dell'alunno
+        document.write(i + "<br>")
+        for (n in snap[i]){
+             console.log(n, snap[i][n]) // domanda 1 "risposta"
+              document.write(n + " = " + snap[i][n] + "<br>");
+     
+      }
+  }
+  });
+}
+
+    
+
+
+retrieveData();
+
+    
+    
+    
+</script>
+    
+</html>

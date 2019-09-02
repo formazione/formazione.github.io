@@ -1,0 +1,167 @@
+<body ontouchstart="sc++" ontouchmove="sc+=2"><script src="snakeversions.js"></script>
+<canvas id="gc3" width="400" height="400"></canvas>
+<script>
+window.onload=function () {
+    var vel = 15;
+    canv3 = document.getElementById("gc3");
+    ctx3 = canv3.getContext("2d");
+    document.addEventListener("keydown",keyPush);
+    setInterval(game,1000/vel);
+}
+
+let px = 10; // posizione iniziale player
+let py = 10;
+let gs = 20; // dimensione di una cella? o numero di celle?
+let tc = 20;
+let ax = 25; // coordinate iniziali della mela
+let ay = 15;
+let xv = 0;
+let yv = 0;
+let trail=[]; // array con le parti di snake
+let tail = 5; // dimensioni iniziali della coda
+let sc = 0; // punteggio
+let rec= 0; // record
+var vel = 5;
+let img = new Image()
+img.src = "https://cdn.glitch.com/9778987b-2a7d-4797-bd0a-a7219e55295a%2Fapple256.png?1546333034026"
+var fps = 15;
+var maxAppleAgeSeconds = 5;
+var appleAge = 0;
+var maxAppleAgeFrames = fps * maxAppleAgeSeconds;
+var rand = changecolor();
+  function changecolor(){
+    colorlist = ["lime","orange","cyan","pink","yellow"];
+    var rand = colorlist[Math.floor(Math.random() * colorlist.length)]; 
+    return rand;
+  }
+  
+  function screen(){
+    // fills the screen of black
+    ctx3.fillStyle="darkgreen";
+    ctx3.fillRect(0,0,canv3.width,18);
+    ctx3.fillStyle="darkblue";
+    ctx3.fillRect(0,18,canv3.width,canv3.height);
+  }
+  
+  function score(){
+    // draws the text score
+    ctx3.font = "16px Comic Sans MS";
+    ctx3.fillStyle = "orange";
+    ctx3.textAlign = "left";
+    ctx3.fillText("Highest:" + rec + " - Score: " + sc , 0,12); 
+  }
+
+function game() {
+    px += xv; // at start is 0
+    py += yv; // at start is 0
+    if(px<0) {
+        px= tc-1;
+    }
+    if(px>tc-1) {
+        px= 0;
+    }
+    if(py<0) {
+        py= tc-1;
+    }
+    if(py>tc-1) {
+        py= 0;
+    }
+    // The screen
+    screen()
+    score()
+
+   
+   
+
+    //The worm
+    ctx3.fillStyle= rand;
+    // crea tanti quadrati quanta la lunghezza di trail
+    for(var i=0;i<trail.length;i++) {
+        ctx3.fillRect(trail[i].x*gs,trail[i].y*gs,gs,gs);
+      // collision ?
+        if(trail[i].x==px && trail[i].y==py) {
+              tail = 5;
+              px=py=10;
+              gs=tc=20;
+              ax=ay=15;
+              xv=yv=0;
+              trail=[];
+              if (sc > rec) rec = sc;      
+              sc = 0;
+        }
+    }
+    trail.push({x:px, y:py});
+    while(trail.length>tail) {
+    trail.shift();
+    }
+
+  appleAge++;
+  let rnd = Math.random()*100;
+  let rndchance = Math.random();
+  
+  
+    if (rnd < 30){
+      ax += Math.floor(Math.random()*2);
+    }
+    else if (rnd > 30 && rnd < 33 ){
+      ax += Math.floor(Math.random()*-2);
+    }
+      else if (rnd > 33 && rnd <36 ){
+      ay += Math.floor(Math.random()*+2);
+    }
+        else if (rnd > 36 && rnd <39){
+      ay += Math.floor(Math.random()*-2);
+    }
+  
+  if (ax > 19) ax = 19;
+  if (ay > 19) ay = 19;
+  if (ax < 1) ax = 1;
+  if (ax < 1) ay = 1;
+  
+  // catch the apple
+  if (ax == px && ay == py) {
+      rand = changecolor()
+      tail+=3;
+      sc += 5;
+      // nuove coordinate della mela
+      ax = Math.floor(Math.random() * tc);
+      ay = Math.floor(Math.random() * tc);
+      appleAge = 0;
+  } 
+  // Se il tempo della mela passa si sposta a caso
+  else if (appleAge > maxAppleAgeFrames) {
+      ax = Math.floor(Math.random() * tc);
+      ay = Math.floor(Math.random() * tc);
+      sc--;
+      tail+=3;
+      appleAge = 0;
+        } 
+  // dopo mostra la mela
+  ctx3.drawImage(img, ax*gs,ay*gs-3, 23, 23);
+
+}
+
+
+
+function keyPush(evt) {
+    switch(evt.keyCode) {
+        case 37:
+            xv=-1;
+            yv=0;
+            break;
+        case 38:
+            xv=0;
+            yv=-1;
+            break;
+        case 39:
+            xv=1;
+            yv=0;
+            break;
+        case 40:
+            xv=0;
+            yv=1;
+            break;
+    }    
+}
+</script>﻿
+</body>

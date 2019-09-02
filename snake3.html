@@ -1,0 +1,288 @@
+<style>
+html {
+    height: 100%;
+}
+body {
+  background-color:black;
+}
+</style>
+<body ontouchstart="sc++" ontouchmove="sc+=2"><script src="snakeversions.js"></script>
+  <center><canvas id="gc3" width="400" height="400"></canvas></center>
+<script>
+window.onload=function () {
+    var vel = 15;
+    canv3 = document.getElementById("gc3");
+    ctx3 = canv3.getContext("2d");
+    document.addEventListener("keydown",keyPush);
+    setInterval(game,1000/vel);
+}
+
+let px = 10; // posizione iniziale player
+let py = 10;
+let gs = 20; // dimensione di una cella? o numero di celle?
+let tc = 20;
+
+let ax = 25; // coordinate iniziali frutto 1
+let ay = 15;
+
+let ax2 = 5; // coordinate iniziali frutto 2
+let ay2 = 5;
+
+let ax3 = 1; // coordinate iniziali ostacolo
+let ay3 = 1;
+let ax4 = 2; // coordinate iniziali ostacolo n.2
+let ay4 = 2;
+
+let xv = 0;
+let yv = 0;
+
+let trail=[]; // array con le parti di snake
+let tail = 5; // dimensioni iniziali della coda
+let sc = 0; // punteggio
+let rec= 0; // record
+var vel = 5;
+
+// Imamgini dei due frutti e dell'ostacolo (che ora è un rettangolo)
+let img = new Image()
+let img2 = new Image()
+//let img3 = new Image()
+
+// Le immagini dei frutti
+imgs = ["https://cdn.glitch.com/9778987b-2a7d-4797-bd0a-a7219e55295a%2Fpear.png?1546407679651",
+        "https://cdn.glitch.com/9778987b-2a7d-4797-bd0a-a7219e55295a%2Fapple256.png?1546333034026",
+       "https://cdn.glitch.com/9778987b-2a7d-4797-bd0a-a7219e55295a%2Fcherry.png?1546408197602",
+       "https://cdn4.iconfinder.com/data/icons/Freshy/PNG/256/Guava.png",
+        "https://cdn.glitch.com/9778987b-2a7d-4797-bd0a-a7219e55295a%2Fimage.png?1546408286911",
+        "http://www.classicgaming.cc/classics/pac-man/images/icons/pixel-pac-man-128x128.png",
+        "http://files.softicons.com/download/game-icons/classic-games-icons-by-thvg/ico/Pacman%201.ico",
+        "https://freeiconshop.com/wp-content/uploads/edd/key-outline-filled.png"
+       ];
+// le immagini dei nemici, per ora non sono usate
+enemy = ["https://s24255.pcdn.co/wp-content/uploads/2014/02/unblock-blocked-websites.png",
+        "https://www.cloisters.com/images/easyblog_images/116/220px-No_Smoking.svg.png"];
+
+
+var fps = 15;
+var maxAppleAgeSeconds = 5;
+var appleAge = 0;
+var maxAppleAgeFrames = fps * maxAppleAgeSeconds;
+var rand = changecolor();
+  
+function changecolor(){
+    colorlist = ["lime","orange","cyan","pink","yellow"];
+    var rand = colorlist[Math.floor(Math.random() * colorlist.length)]; 
+    return rand;
+  }
+  
+function randomFruit(){
+    var rndfrt = imgs[Math.floor(Math.random() * imgs.length)];
+    return rndfrt;
+  }
+  
+function randomEnemy(){
+    var rndfrt = enemy[Math.floor(Math.random() * enemy.length)];
+    return rndfrt;
+  }
+  
+  // get a random fruit
+  img.src = randomFruit();
+  img2.src = randomFruit();
+  //img3.src = randomEnemy();
+  
+function flash(num){
+  // When a fruit is eaten: change color of the snake, change position of fruit and obstacles
+  for (n=0;n<1000;n++){
+    
+  }
+    rand = changecolor();
+    ctx3.fillStyle="pink";
+    if (num==2) {
+      ctx3.fillRect(ax2*gs-10,ay2*gs-10, 40, 40);
+      ctx3.fillRect(ax2*gs-20,ay2*gs-20, 60, 60);
+      ctx3.fillRect(ax2*gs-10,ay2*gs-10, 40, 40);
+      img2.src = randomFruit();
+      movefruit2();
+    }
+    if (num==1){
+      ctx3.fillRect(ax*gs-10,ay*gs-10, 40, 40);
+      ctx3.fillRect(ax*gs-20,ay*gs-20, 60, 60);
+      ctx3.fillRect(ax*gs-10,ay*gs-10, 40, 40);
+      img.src = randomFruit();
+      movefruit1();
+    }
+    tail+=3;
+    sc += 5;
+    appleAge = 0;
+    moveenemy()
+  }
+  
+function screen(){
+    // fills the screen of black
+    ctx3.fillStyle="white";
+    ctx3.fillRect(0,0,canv3.width,20);
+    ctx3.fillStyle="darkblue";
+    ctx3.fillRect(0,20,canv3.width+20,canv3.height+20);
+    ctx3.fillStyle="lime";
+    ctx3.fillRect(10,400,canv3.width,canv3.height+50);
+  }
+  
+function score(){
+    // draws the text score
+    ctx3.font = "16px Comic Sans MS";
+    ctx3.fillStyle = "blue";
+    ctx3.textAlign = "left";
+    ctx3.fillText("Highest:" + rec + " - Score: " + sc , 0,15); 
+  }
+  
+function lose(){
+                 tail = 5;
+              px=py=10;
+              gs=tc=20;
+              ax=ay=15;
+              ax2=ay2=5;
+              xv=yv=0;
+              trail=[];
+              if (sc > rec) rec = sc;      
+              sc = 0; 
+  }
+  
+function movefruit1(){
+      ax = Math.floor(Math.random() * tc);
+      ay = Math.floor(Math.random() * tc);
+  }
+  
+function movefruit2(){
+      ax2 = Math.floor(Math.random() * tc);
+      ay2 = Math.floor(Math.random() * tc); 
+  }
+  
+function moveenemy(){
+      ax3 = Math.floor(Math.random() * tc);
+      ay3 = Math.floor(Math.random() * tc);
+      ax4 = Math.floor(Math.random() * tc);
+      ay4 = Math.floor(Math.random() * tc);
+  }
+  
+  
+function game() {
+    screen() // PAINT THE SCREEN
+    score() // DRAW THE SCORE
+    px += xv; // at start is 0
+    py += yv; // at start is 0
+    // LOSE WHEN GOING OUT OF SCREEN
+    if (px<-1 || px>tc || py<0 || py>tc)  lose(); 
+    //The snake has a random color
+    ctx3.fillStyle= rand;
+    // crea tanti quadrati quanta la lunghezza di trail
+    for(var i=0;i<trail.length;i++) {
+        ctx3.fillRect(trail[i].x*gs,trail[i].y*gs,gs-2,gs-2);
+      // collision ?
+        if(trail[i].x==px && trail[i].y==py) {
+              lose()
+        }
+    }
+    trail.push({x:px, y:py});
+    while(trail.length>tail) {
+    trail.shift();
+    }
+
+  appleAge++;
+  let rnd = Math.random()*100;
+  let rndchance = Math.random();
+  
+  
+    if (rnd < 30){
+      ax += Math.floor(Math.random()*1);
+    }
+    else if (rnd > 30 && rnd < 33 ){
+      ax += Math.floor(Math.random()*-1);
+    }
+      else if (rnd > 33 && rnd <36 ){
+      ay += Math.floor(Math.random()*+1);
+    }
+        else if (rnd > 36 && rnd <39){
+      ay += Math.floor(Math.random()*-1);
+    }
+  
+      if (rnd < 30){
+      ax2 += Math.floor(Math.random()*1);
+    }
+    else if (rnd > 30 && rnd < 33 ){
+      ax2 += Math.floor(Math.random()*-1);
+    }
+      else if (rnd > 33 && rnd <36 ){
+      ay2 += Math.floor(Math.random()*+1);
+    }
+        else if (rnd > 36 && rnd <39){
+      ay2 += Math.floor(Math.random()*-1);
+    }
+  
+
+  
+  if (ax > 19) ax = 19;
+  if (ay > 19) ay = 19;
+  if (ax < 1) ax = 0;
+  if (ax < 1) ay = 0;
+    if (ax2 > 19) ax2 = 19;
+  if (ay2 > 19) ay2 = 19;
+  if (ax2 < 1) ax2 = 0;
+  if (ax2 < 1) ay2 = 0;
+  
+  // catch the apple
+  if (ax == px && ay == py) {
+    flash(1);
+  }
+    if (ax2 == px && ay2 == py) {
+    flash(2);
+  }
+      if (ax3 == px && ay3 == py) {
+    lose();
+  }
+        if (ax4 == px && ay4 == py) {
+    lose();
+  }
+  
+  // Se il tempo della mela passa si sposta a caso
+  else if (appleAge > maxAppleAgeFrames) {
+      ax = Math.floor(Math.random() * tc);
+      ay = Math.floor(Math.random() * tc);
+      ax2 = Math.floor(Math.random() * tc);
+      ay2 = Math.floor(Math.random() * tc);
+      sc--;
+      tail+=3;
+      appleAge = 0;
+        } 
+  // dopo mostra la mela e gli ostacoli
+  ctx3.drawImage(img, ax*gs,ay*gs-3, 23, 23);
+  ctx3.drawImage(img2, ax2*gs,ay2*gs-3, 23, 23);
+  ctx3.fillStyle = "black";
+
+}
+
+
+
+function keyPush(evt) {
+    switch(evt.keyCode) {
+        case 37:
+            xv=-1;
+            yv=0;
+            break;
+        case 38:
+            xv=0;
+            yv=-1;
+            break;
+        case 39:
+            xv=1;
+            yv=0;
+            break;
+        case 40:
+            xv=0;
+            yv=1;
+            break;
+    }    
+}
+</script>
+<!-- the glitch button that can make you remix this -->
+<div class="glitchButton" style="position:fixed;top:20px;right:20px;"></div>
+<script src="https://button.glitch.me/button.js"></script>
+</body>

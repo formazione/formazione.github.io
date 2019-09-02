@@ -1,0 +1,82 @@
+<html>
+ 
+<style>
+
+  
+</style>
+
+  
+  <!-- pulsante per tornare alla pagina principale -->
+  <script src="gohome.js"></script>
+  
+    <script src="https://www.gstatic.com/firebasejs/4.10.1/firebase.js"></script>
+  
+  <script>
+var config = {
+  apiKey: "AIzaSyDp-mWaWEI07pIdRUhi6vA-salEMRWz4hw",
+  authDomain: "quiz-e5e5a.firebaseapp.com",
+  databaseURL: "https://quiz-e5e5a.firebaseio.com/",
+  projectId: "quiz-e5e5a",
+  storageBucket: "quiz-e5e5a.appspot.com",
+  messagingSenderId: "901845403492"
+};
+firebase.initializeApp(config);
+var database = firebase.database()
+
+
+// ========================== ID esercizio sul database ========
+// first node of the db
+id_database = '3bs_es2';
+var dbref1 = database.ref().child(id_database);
+// ===============================================
+      
+      
+      
+      
+function add_data(d,c,e){
+  dbref1.child(d).child(e).set(c)
+}
+
+function printnome(num){
+  
+  document.write("Inserisci il tuo nome:<br><input id='data" + num + "' class='mytext' type=text value='' /><br>")
+}
+
+function printtextandbutton(numalunno,num){
+  //document.write("<input id='data" + num + "' type=text value='' />")
+  document.write("Risposta " + num + ": <textarea id='contenuto"+ num + "' type='text' rows='3' /></textarea>");
+  domanda = "domanda" + num;
+  document.write("<br><button onclick=add_data(data"+ numalunno + ".value,contenuto" + num +".value,'"+domanda+"')>Invia</button><br>")
+}
+
+function questionwrite(frase){
+   document.write("<b>" + frase + "</b><br>")
+}
+
+function qmk(domnum){
+  questionwrite(domnum);
+  printtextandbutton("1",countnum);
+  questionwrite("<br>");
+  countnum++
+}
+      
+document.write("<h3>Esercizio " + id_database + "</h3>")
+      document.write("<img src='http://fintechtime.com/wp-content/uploads/2018/02/1_Shenyin_Wanguo-1.jpg' width='200' /><br>");
+printnome("1");
+      
+let countnum = 1;
+qmk("Quale articolo definisce l'azienda?");
+qmk("Quale articolo definisce l'imprenditore?");
+    qmk("Come si definisce l'imprenditore?");
+    qmk("Cos'è la forma giuridica dell'azienda?");
+    qmk("Come si articolano i dipendenti in base alle loro capacità di assumere decisioni?");
+    qmk("Come si chiama il conferimento dei titolari in azienda?");
+    qmk("Come si chiamano le risorse date in prestito all'azienda da finanziatori esterni?");
+    qmk("Quali sono le società di persone?");
+    qmk("Quali sono le società di capitali?");
+    qmk("Cosa significa responsabilità illimitata delle società di persone?");
+
+    
+</script>
+    
+</html>
