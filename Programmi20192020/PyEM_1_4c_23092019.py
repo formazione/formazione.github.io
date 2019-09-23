@@ -40,6 +40,10 @@ class Ebook:
         self.button_page = tk.Button(self.frame2, text="Save page", command = self.save_page)
         self.button_page.pack()
 
+        # commit to git
+        self.button_commit = tk.Button(self.frame2, text="Commit", command = self.commit)
+        self.button_commit.pack()
+
         self.button_plus = tk.Button(self.frame2, text="+", command =lambda: self.new_window(Win1))
         self.button_plus.pack()
 
@@ -71,6 +75,14 @@ class Ebook:
     def new_window(self, _class):
         self.new = tk.Toplevel(self.root)
         _class(self.new)
+
+    def commit(self):
+        os.system("git add .")
+        print("git add .")
+        os.system("git commit -m 'new_stuffs")
+        os.system("git push")
+        print("commit done")
+
     
     def rename(self, filename):
         print(f"Renaming {self.filename}")
@@ -117,11 +129,9 @@ class Ebook:
         html = ""
         with open("ebook.html", "w", encoding="utf-8") as htmlfile:
             for file in self.files: # this is the name of each file
-                fname = file.split("\\")[1][:-4]
-                html += f"<h3>{fname}</h3>"
                 with open(file, "r", encoding="utf-8") as singlefile:
                     # ================= SYMBOL => HTML ==============
-                    html = self.html_convert(singlefile.read())
+                    html += self.html_convert(singlefile.read())
             htmlfile.write(html)
         self.label_file_name["text"] += "...Opening Ebook"
         os.startfile("ebook.html")
@@ -142,6 +152,7 @@ class Ebook:
         print(f"<li><a href='https://formazione.github.io/text/{current}.html />")
         os.startfile(f"{current}.html")
         os.system("start ../index.html")
+
 
 
     def html_convert(self, text_to_render):
