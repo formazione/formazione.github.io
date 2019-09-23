@@ -77,11 +77,7 @@ class Ebook:
         _class(self.new)
 
     def commit(self):
-        os.system("git add .")
-        print("git add .")
-        os.system("git commit -m 'new_stuffs")
-        os.system("git push")
-        print("commit done")
+        os.startfile("commit.bat")
 
     
     def rename(self, filename):
@@ -121,9 +117,10 @@ class Ebook:
         self.reload_list_files_delete()
 
     def save(self):
-        with open(self.filename, "w", encoding="utf-8") as file:
-            file.write(self.text.get("1.0", tk.END))
-        self.label_file_name["text"] += "...saved"
+        if self.text.get("1.0", tk.END) != "":
+            with open(self.filename, "w", encoding="utf-8") as file:
+                file.write(self.text.get("1.0", tk.END))
+            self.label_file_name["text"] += "...saved"
 
     def save_ebook(self):
         html = ""
