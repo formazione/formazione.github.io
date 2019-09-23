@@ -1,0 +1,10 @@
+^Scorporo dell'IVA
+
+Abbiamo 3 scontrini:
+1) 35,88 € ...... IVA 4% inclusa
+2) 88,00 € ...... IVA 10% inclusa
+3) 262,30  ...... IVA 22% inclusa
+Calcola l'IVA dei 3 scontrini.
+
+
+

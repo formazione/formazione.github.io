@@ -137,20 +137,27 @@ class Ebook:
         os.startfile("ebook.html")
 
     def save_page(self):
+        """Save a single page v. 1.4 23/09/2019 at 05:40"""
         html = ""
-        with open("page.html", "w", encoding="utf-8") as htmlfile:
-            with open(self.lstb.get(tk.ACTIVE), "r", encoding="utf-8") as readfile:
-                htmlfile.write(readfile.read())
+        current = self.lstb.get(tk.ACTIVE)[:-4] # The file selected without .txt
+        with open(f"{current}.html", "w", encoding="utf-8") as htmlfile:
+            # opend the active (selected) item in the listbox
+            with open(f"{current}.txt", "r", encoding="utf-8") as readfile:
+                read = readfile.read() # get the text of the active file
+                read = self.html_convert(read) # convert this text in html with *^=>
+                htmlfile.write(read) # create the new file with the rendered text
         self.label_file_name["text"] += "...page rendered"
-        os.startfile("page.html")
+        print(read)
+        os.startfile(f"{current}.html")
 
 
-    def html_convert(file):
-        fname = file.split("\\")[1][:-4]
-        html += f"<h3>{fname}</h3>"
-        with open(file, "r", encoding="utf-8") as singlefile:
-            # ================= SYMBOL => HTML ==============
-            for line in singlefile:
+    def html_convert(self, text_to_render):
+        """Convert to my Markup language"""
+        html = ""
+        text_to_render = text_to_render.split("\n")
+        print(text_to_render)
+        for line in text_to_render:
+            if line != "":
                 if line[0] == "*":
                     line = line.replace("*","")
                     html += f"<h2>{line}</h2>"
@@ -165,6 +172,7 @@ class Ebook:
                     html += f"<span style='color:red'>{line}</span>"
                 else:
                     html += f"<p>{line}</p>"
+        return html
 
     def show_text_in_editor(self):
         """Shows text of selected file in the editor"""

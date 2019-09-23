@@ -1,0 +1,44 @@
+^Il riparto proporzionale
+
+Il riparto proporzionale è un calcolo che si esegue per dividere una somma di denaro (o altra quantità) in proporzione a dei parametri riferiti ai soggetti (o oggetti) ai quali attribuire la somma.
+Si potrebbe trattare, ad esempio, di un premio da attribuire ai dipendenti in base alle ore di lavoro, ai km percorsi per motivi di lavoro ecc.
+Per calcolare il riparto, calcoliamo prima il coefficiente di riparto.
+
+^Il coefficiente di riparto
+Per calcolare il coefficiente di riparto dividiamo la valore da ripartire per la somma dei valori dei parametri di riferimento. Se ad esempio un premio va ripartito in base alle ore di lavoro, si divide il valore del premio per la somma delle ore di lavoro dei dipendenti tra i quali la somma va divisa.
+
+Es. Dividi 190 euro tra 3 dipendenti in base alle ore di ciascuno. A = 30 ore, B = 10 ore, C = 55 ore.
+Coefficiente di riparto = _____ : ______ =  ____ euro 
+A ogni dipendente vanno dati  _____ euro per ogni ora di lavoro.
+
+Quota di riparto
+Dipendente A = ____ x _____ = _______  quota di A
+Dipendente B = ____ x _____ = _______  quota di B
+Dipendente C = ____ x _____ = _______  quota di C
+
+Esempi di calcoli di riparto proporzionale diretto
+Esercizi sui riparti proporzionali 1
+ESERCIZIO N. 1
+Ripartire un premio di 1520 tra 3 dipendenti in proporzione al numero di contratti conclusi: Sandra 70 contratti, Mara 90, Paolo 30 contratti.
+Coeff. = _________  Sandra _______ Mara ______ Paolo _______
+
+ESERCIZIO N. 2
+Tre dipendenti ricevono un premio di 1645 euro in base alle loro ore di lavoro. Mara ha lavorato per 70 ore, Paolo ha lavorato per 75
+ore, Sara ha lavorato per 90 ore.
+Coeff. = _________  Mara _______ Paolo ______ Sara _______
+
+ESERCIZIO N. 3
+Tre dipendenti ricevono un premio di 1485 euro in base ai contratti conclusi. Margherita ha concluso 80 contratti, Sara ha concluso
+50 contratti, Marco ha concluso 35 contratti.
+Coeff. = _________  Marghe. _______ Sara ______ Marco _______
+
+ESERCIZIO N. 4
+Tre dipendenti ricevono un premio di 1575 euro in base ai km percorsi per lavoro. Paolo ha viaggiato per 70 km, Marco ha viaggiato
+per 35 km, Alessio ha viaggiato per 70 km.
+Coeff. = _________  Paolo _______ Marco ______ Alessio _______
+
+ESERCIZIO N. 5
+Tre dipendenti ricevono un premio di 1665 euro in base ai contratti conclusi. Paolo ha concluso 35 contratti, Marco ha concluso 70
+contratti, Sandra ha concluso 80 contratti.
+Coeff. = _________  Paolo _______ MArco ______ Sandra _______
+
