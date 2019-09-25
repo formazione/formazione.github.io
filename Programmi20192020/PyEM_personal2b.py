@@ -77,7 +77,7 @@ class Ebook:
         _class(self.new)
 
     def commit(self):
-        os.startfile("..\\commit.bat")
+        os.startfile("commit.bat")
 
     
     def rename(self, filename):
@@ -114,7 +114,7 @@ class Ebook:
     def delete_file(self):
         for num in self.lstb.curselection():
             os.remove(self.files[num])
-            os.remove("text/{}.html".format(self.files[num][:-4]))
+            
         self.reload_list_files_delete()
 
     def save(self):

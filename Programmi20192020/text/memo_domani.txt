@@ -1,0 +1,12 @@
+4ce = Riparto, Scorporo => Finanziamenti
+5ce = Ratei => Risconti => CE
+5bs => il tasso di cambio
+
+4ce
+Preparare un test su riparti, scorporo, cambiali e assegni
+
+5ce
+Preparare prova su Stato patrimoniale, Conto economico ed indici
+
+5bs
+Preparare prova su turismo responsabile (povertà) e turismo sostenibile (ambiente).

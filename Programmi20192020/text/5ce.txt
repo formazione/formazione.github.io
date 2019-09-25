@@ -1,0 +1,43 @@
+*Modulo 1: Il Bilancio
+Dal 16/9/2019 al ....
+^1. Stato patrimoniale
+
+22/9/2019
+Attivo e passivo, patrimonio netto
+
+23/9/2019
+Le passività
+- Debiti per TFR
+- Fondo rischi e oneri
+- Debiti a breve termine e a lungo t.
+- Ratei e risconti
+
+24/9/2019
+Esercizi Ratei
+
+25/9/2019
+Conto economico
+^2. Conto economico
+Forma scalare, art. 2424, esercizio Conto economico
+
+Ratei e Risconti
+Esercizio sui fitti passivi
+Esercizio sugli interessi passivi
+
+=> Next: Conto economico
+Il conto economico ha questo schema:
+
+A) Valore della produzione
+B) Costi della produzione
+Differenza A-B
+C) Proventi e oneri finanziari
+E) Proventi e oneri straordinari
+Risultato prima delle imposte
+Imposte
+Utile
+
+
+
+
+
+
