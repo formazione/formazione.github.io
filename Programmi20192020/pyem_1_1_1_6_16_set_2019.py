@@ -1,17 +1,12 @@
-# v.1.1.1 - 16/09/2019 @ Giovanni Gatto
+# v.1.3 - 16/09/2019 @ Giovanni Gatto
 
 import tkinter as tk
 import glob
 from time import sleep
 import os
 """
-1.2
-Added ctrl+s <Control+s> to bind of text
-Added label to editor
-1.3
-added red symbol for rendering html
-1.4
-Added way to save render single txt file
+aggiunto ctrl+s <Control+s> to bind of text
+aggiunta label all'editor
 """
 
 class Ebook:
@@ -35,14 +30,6 @@ class Ebook:
         self.button.pack()
         self.button_ebook = tk.Button(self.frame2, text="Save ebook", command = self.save_ebook)
         self.button_ebook.pack()
-
-        # Save only current page
-        self.button_page = tk.Button(self.frame2, text="Save page", command = self.save_page)
-        self.button_page.pack()
-
-        # commit to git
-        self.button_commit = tk.Button(self.frame2, text="Commit", command = self.commit)
-        self.button_commit.pack()
 
         self.button_plus = tk.Button(self.frame2, text="+", command =lambda: self.new_window(Win1))
         self.button_plus.pack()
@@ -75,10 +62,6 @@ class Ebook:
     def new_window(self, _class):
         self.new = tk.Toplevel(self.root)
         _class(self.new)
-
-    def commit(self):
-        os.startfile("..\\commit.bat")
-
     
     def rename(self, filename):
         print(f"Renaming {self.filename}")
@@ -113,87 +96,41 @@ class Ebook:
 
     def delete_file(self):
         for num in self.lstb.curselection():
-            os.remove("{}.html".format(self.files[num][:-4]))
             os.remove(self.files[num])
         self.reload_list_files_delete()
 
     def save(self):
-        if self.text.get("1.0", tk.END) != "":
-            with open(self.filename, "w", encoding="utf-8") as file:
-                file.write(self.text.get("1.0", tk.END))
-            self.label_file_name["text"] += "...saved"
+        with open(self.filename, "w", encoding="utf-8") as file:
+            file.write(self.text.get("1.0", tk.END))
+        self.label_file_name["text"] += "...saved"
 
     def save_ebook(self):
         html = ""
         with open("ebook.html", "w", encoding="utf-8") as htmlfile:
-            for file in self.files: # this is the name of each file
+            for file in self.files:
+                f = file
+                fname = file.split("\\")[1][:-4]
+                html += f"<h3>{fname}</h3>"
                 with open(file, "r", encoding="utf-8") as singlefile:
                     # ================= SYMBOL => HTML ==============
-                    html += self.html_convert(singlefile.read())
+                    for line in singlefile:
+                        if line[0] == "*":
+                            line = line.replace("*","")
+                            html += f"<h2>{line}</h2>"
+                        elif line[0] == "^":
+                            line = line.replace("^","")
+                            html += f"<h3>{line}</h3>"
+                        elif line[0] == "#":
+                            line = line.replace("#","")
+                            html += f"<img src='img\\{line}' width='100%'><br>"
+                        elif line[0] == "=" and line[1]== ">":
+                            line = line.replace("=>", "")
+                            html += f"<span style='color:red'>{line}</span>"
+                        else:
+                            html += f"<p>{line}</p>"
             htmlfile.write(html)
-        self.label_file_name["text"] += "...Opening Ebook"
         os.startfile("ebook.html")
 
-    def save_page(self):
-        """Save a single page v. 1.4 23/09/2019 at 05:40"""
-        html = ""
-        current = self.lstb.get(tk.ACTIVE)[:-4] # The file selected without .txt
-        with open(f"{current}.html", "w", encoding="utf-8") as htmlfile:
-            # opend the active (selected) item in the listbox
-            with open(f"{current}.txt", "r", encoding="utf-8") as readfile:
-                read = readfile.read() # get the text of the active file
-                read = self.html_convert(read) # convert this text in html with *^=>
-                htmlfile.write(read) # create the new file with the rendered text
-
-        with open("..\\newlinks.js", "w") as filejs:
-            linka = str(self.lstb.get(tk.ACTIVE))
-            linka = linka.split("\\")[1]
-            current = current.split("\\")[1]
-            # CREATE THE LINKS TO THE HTML PAGES SAVED AS SINGLE FILES
-            listofhtml = []
-            for file in os.listdir("text"):
-                if file.endswith(".html"):
-                    listofhtml.append(file)
-            html1 = ""
-            for file in listofhtml:
-                html1+= """
-newlinks.innerHTML += "<a href='Programmi20192020/text/{}'>{}</a><br>"
-
-                """.format(file, file)
-
-            filejs.write(html1)
-        self.label_file_name["text"] += "...page rendered +"
-
-
-
-
-        os.startfile("text\\{}.html".format(current))
-        os.system("start ../index.html")
-
-
-
-    def html_convert(self, text_to_render):
-        """Convert to my Markup language"""
-        html = ""
-        text_to_render = text_to_render.split("\n")
-        print(text_to_render)
-        for line in text_to_render:
-            if line != "":
-                if line[0] == "*":
-                    line = line.replace("*","")
-                    html += f"<h2>{line}</h2>"
-                elif line[0] == "^":
-                    line = line.replace("^","")
-                    html += f"<h3>{line}</h3>"
-                elif line[0] == "#":
-                    line = line.replace("#","")
-                    html += f"<img src='img\\{line}' width='100%'><br>"
-                elif line[0] == "=" and line[1]== ">":
-                    line = line.replace("=>", "")
-                    html += f"<span style='color:red'>{line}</span>"
-                else:
-                    html += f"<p>{line}</p>"
-        return html
 
     def show_text_in_editor(self):
         """Shows text of selected file in the editor"""
@@ -260,5 +197,5 @@ if __name__ == "__main__":
         print("text folder created")
     root = tk.Tk()
     app = Ebook(root)
-    app.root.title("Programmazioni")
+    app.root.title("PyEbooks 1.3")
     root.mainloop()

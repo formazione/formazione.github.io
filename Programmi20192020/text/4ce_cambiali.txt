@@ -1,19 +1,20 @@
-Differenza pagherò e tratta
+Dall'immagine sottostante ricava i dati da inserire dopo la figura.
 
-             pagherò               tratta
-sogg.         2                        3
+#https://www.affarimiei.biz/wp-content/uploads/2017/02/cambiale.jpg
+=========== Esegui =======
+Beneficiario .........................
+Domiciliazione ....................
+Debitore ............................
+emittente ..........................
+pagherò/tratta? ................
+importo ............................
+bollo ......... [ ]11%o  [ ]12%o?
 
-nomi
-dei           emitt.                 traente
-soggetti   benef.                 trattario
-                                           benef.
-Debit.
-princ.      emitt.                  trattario se
-                                         accetta
 
-bollo     12 
 
-Chi firma  emitt.                  emitt. e tratt.
-                                          se accetta
+
+
+
+
 
 

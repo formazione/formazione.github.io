@@ -1,3 +1,5 @@
+<style>body{color:white;background:black;font-size:2em;margin:10%;}</style>
+
 Cos’è il turismo responsabile
 DEFINIZIONE DI TURISMO RESPONSABILE
 Adottata dall’assemblea di AITR in data 9 ottobre 2005 a Cervia
@@ -16,6 +18,35 @@ Ad ognuna di queste pratiche, infatti, si deve riconoscere la dignità di specif
 
 In pratica…è sicuramente una buona pratica quella dell’Ecoturismo attuato nel rispetto dell’ecosistema all’interno del quale si svolge il viaggio, ma se questa si riducesse solo al rispetto dell’ambiente e non contenesse in se stessa anche gli elementi basilari del rispetto dell’elemento umano e sociale che compartecipa alla sua attuazione (ad esempio quindi trascurasse di verificare e pretendere il rispetto dei diritti dei lavoratori coinvolti nella realizzazione del pacchetto eco-turistico), non sarebbe un autentico esempio di turismo responsabile….ma piuttosto rischierebbe di divenire una pratica ingannevole che “nasconde” i propri vizi celebrando solo “alcune” sue virtù.
 
+Dopo aver letto il testo, rispondi alle seguenti domande:
+
+1) Quali sono i principi del turismo responsabile?
+
+2) Qual è l'atteggiamento del turismo responsabile nei confronti della comunità ospitante e quale politica attua verso turisti, operatori e viaggiatori?
+
+3) Cosa vuole evitare in pratica il t.r.?
+
+Sol.:
+1) I principi che ispirano il turismo responsabile sono quelli della giustizia sociale ed economica, rispetto dell'ambiente e delle culture.
+
+2) Il t.r. riconosce la centralità della comunità ospitante e il diritto ad essere protagonista nello sviluppo de proprio territorio. Cerca, inoltre, di favorire una positiva interazione tra industria del turismo, comunità locali e viaggiatori.
+
+3) Il t.r. non vuole generare iniquità sociale ed economica a danno delle popolazioni delle regioni ospitanti il turismo.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 What is responsible tourism
 DEFINITION OF RESPONSIBLE TOURISM
 Adopted by the AITR assembly on 9 October 2005 in Cervia
@@ -33,3 +64,4 @@ In reality, Responsible Tourism can be implemented through the "sum" of these pr
 For each of these practices, in fact, the dignity of specification of "responsible tourism" must be recognized, but at the same time none of them, if it wants to be translated into a true example of responsible tourism, can claim to have no respect and respect for the implications that are subtended and that descend from other consequences.
 
 In practice… it is certainly a good practice that of Ecotourism implemented in respect of the ecosystem in which the journey takes place, but if this is reduced only to respect for the environment and does not contain in itself also the basic elements of the respect for the human and social element that participates in its implementation (for example, therefore, neglecting to verify and demand respect for the rights of workers involved in the implementation of the eco-tourism package), would not be a true example of responsible tourism ... but rather would risk to become a deceptive practice that "hides" its vices by celebrating only "some" of its virtues.
+

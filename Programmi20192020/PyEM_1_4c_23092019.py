@@ -166,8 +166,10 @@ class Ebook:
                     line = line.replace("^","")
                     html += f"<h3>{line}</h3>"
                 elif line[0] == "#":
-                    line = line.replace("#","")
-                    html += f"<img src='img\\{line}' width='100%'><br>"
+                    if line.startswith("http"):
+                        html += f"<img src='{line}' width='100%'><br>"
+                    else:                
+                        html += f"<img src='img\\{line}' width='100%'><br>"
                 elif line[0] == "=" and line[1]== ">":
                     line = line.replace("=>", "")
                     html += f"<span style='color:red'>{line}</span>"

@@ -12,6 +12,9 @@ Added label to editor
 added red symbol for rendering html
 1.4
 Added way to save render single txt file
+personal 2 c
+It shows the link to the rendered pages in the index.html
+Now it deletes also the html file when you delete the txt file
 """
 
 class Ebook:
@@ -187,7 +190,10 @@ newlinks.innerHTML += "<a href='Programmi20192020/text/{}'>{}</a><br>"
                     html += f"<h3>{line}</h3>"
                 elif line[0] == "#":
                     line = line.replace("#","")
-                    html += f"<img src='img\\{line}' width='100%'><br>"
+                    if line.startswith("http"):
+                        html += f"<img src='{line}' width='100%'><br>"
+                    else:                
+                        html += f"<img src='img\\{line}' width='100%'><br>"
                 elif line[0] == "=" and line[1]== ">":
                     line = line.replace("=>", "")
                     html += f"<span style='color:red'>{line}</span>"
@@ -216,7 +222,7 @@ newlinks.innerHTML += "<a href='Programmi20192020/text/{}'>{}</a><br>"
         self.text['font'] = "Arial 24"
         self.text.pack(fill=tk.Y, expand=1)
         self.text.bind("<Control-s>", lambda x: self.save())
-
+        self.text.bind("<Control-s>", lambda x: self.save())
 
 class Win1():
     def __init__(self, root):

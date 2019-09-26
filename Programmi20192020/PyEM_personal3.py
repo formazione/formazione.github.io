@@ -1,4 +1,5 @@
-# v.1.1.1 - 16/09/2019 @ Giovanni Gatto
+# pyem personal3
+# added ctrl + p to render single page
 
 import tkinter as tk
 import glob
@@ -12,6 +13,9 @@ Added label to editor
 added red symbol for rendering html
 1.4
 Added way to save render single txt file
+personal 2 c
+It shows the link to the rendered pages in the index.html
+Now it deletes also the html file when you delete the txt file
 """
 
 class Ebook:
@@ -71,6 +75,7 @@ class Ebook:
         print("self.files", self.files)
         for file in self.files:
             self.lstb.insert(tk.END, file)
+        self.lstb.bind("<Control-p>", lambda x: self.save_page())
 
     def new_window(self, _class):
         self.new = tk.Toplevel(self.root)
@@ -187,7 +192,10 @@ newlinks.innerHTML += "<a href='Programmi20192020/text/{}'>{}</a><br>"
                     html += f"<h3>{line}</h3>"
                 elif line[0] == "#":
                     line = line.replace("#","")
-                    html += f"<img src='img\\{line}' width='100%'><br>"
+                    if line.startswith("http"):
+                        html += f"<img src='{line}' width='100%'><br>"
+                    else:                
+                        html += f"<img src='img\\{line}' width='100%'><br>"
                 elif line[0] == "=" and line[1]== ">":
                     line = line.replace("=>", "")
                     html += f"<span style='color:red'>{line}</span>"
@@ -216,7 +224,7 @@ newlinks.innerHTML += "<a href='Programmi20192020/text/{}'>{}</a><br>"
         self.text['font'] = "Arial 24"
         self.text.pack(fill=tk.Y, expand=1)
         self.text.bind("<Control-s>", lambda x: self.save())
-
+        self.text.bind("<Control-p>", lambda x: self.save_page())
 
 class Win1():
     def __init__(self, root):

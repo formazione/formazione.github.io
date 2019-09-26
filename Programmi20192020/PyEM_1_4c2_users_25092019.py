@@ -1,4 +1,4 @@
-# v.1.1.1 - 16/09/2019 @ Giovanni Gatto
+# pyem_1_4c2 - 25/09/2019 @ Giovanni Gatto
 
 import tkinter as tk
 import glob
@@ -41,8 +41,8 @@ class Ebook:
         self.button_page.pack()
 
         # commit to git
-        self.button_commit = tk.Button(self.frame2, text="Commit", command = self.commit)
-        self.button_commit.pack()
+        # self.button_commit = tk.Button(self.frame2, text="Commit", command = self.commit)
+        # self.button_commit.pack()
 
         self.button_plus = tk.Button(self.frame2, text="+", command =lambda: self.new_window(Win1))
         self.button_plus.pack()
@@ -55,7 +55,7 @@ class Ebook:
             command= lambda: self.delete_file())
         self.button_delete.pack()
 
-        self.lab_help = tk.Label(self.frame2, text="Symbols:\n-------\n* = <h2>\n^ = <h3>\n# = <img...\n=> = red", bg="coral")
+        self.lab_help = tk.Label(self.frame2, text="Symbols:\n-------\n* = <h2>\n^ = <h3>\n# = <img...\n=> = red\n<F2> Rename", bg="coral")
         self.lab_help.pack()
 
         self.frame1 = tk.Frame(self.root)
@@ -68,7 +68,7 @@ class Ebook:
         self.lstb.bind("<<ListboxSelect>>", lambda x: self.show_text_in_editor())
         self.lstb.bind("<F2>", lambda x: self.new_window(Rename))
         self.files = glob.glob("text\\*.txt")
-        print("self.files", self.files)
+
         for file in self.files:
             self.lstb.insert(tk.END, file)
 
@@ -77,11 +77,11 @@ class Ebook:
         _class(self.new)
 
     def commit(self):
-        os.startfile("..\\commit.bat")
+        os.startfile("commit.bat")
 
     
     def rename(self, filename):
-        print(f"Renaming {self.filename}")
+
         os.rename(self.filename, "text\\" + filename)
         self.files = glob.glob("text\\*.txt")
         self.lstb.delete("active")
@@ -113,7 +113,6 @@ class Ebook:
 
     def delete_file(self):
         for num in self.lstb.curselection():
-            os.remove("{}.html".format(self.files[num][:-4]))
             os.remove(self.files[num])
         self.reload_list_files_delete()
 
@@ -144,31 +143,9 @@ class Ebook:
                 read = readfile.read() # get the text of the active file
                 read = self.html_convert(read) # convert this text in html with *^=>
                 htmlfile.write(read) # create the new file with the rendered text
-
-        with open("..\\newlinks.js", "w") as filejs:
-            linka = str(self.lstb.get(tk.ACTIVE))
-            linka = linka.split("\\")[1]
-            current = current.split("\\")[1]
-            # CREATE THE LINKS TO THE HTML PAGES SAVED AS SINGLE FILES
-            listofhtml = []
-            for file in os.listdir("text"):
-                if file.endswith(".html"):
-                    listofhtml.append(file)
-            html1 = ""
-            for file in listofhtml:
-                html1+= """
-newlinks.innerHTML += "<a href='Programmi20192020/text/{}'>{}</a><br>"
-
-                """.format(file, file)
-
-            filejs.write(html1)
-        self.label_file_name["text"] += "...page rendered +"
-
-
-
-
-        os.startfile("text\\{}.html".format(current))
-        os.system("start ../index.html")
+        self.label_file_name["text"] += "...page rendered"
+        os.startfile(f"{current}.html")
+        # os.system("start ../index.html")
 
 
 
@@ -176,7 +153,7 @@ newlinks.innerHTML += "<a href='Programmi20192020/text/{}'>{}</a><br>"
         """Convert to my Markup language"""
         html = ""
         text_to_render = text_to_render.split("\n")
-        print(text_to_render)
+
         for line in text_to_render:
             if line != "":
                 if line[0] == "*":
@@ -187,7 +164,10 @@ newlinks.innerHTML += "<a href='Programmi20192020/text/{}'>{}</a><br>"
                     html += f"<h3>{line}</h3>"
                 elif line[0] == "#":
                     line = line.replace("#","")
-                    html += f"<img src='img\\{line}' width='100%'><br>"
+                    if line.startswith("http"):
+                        html += f"<img src='{line}' width='100%'><br>"
+                    else:                
+                        html += f"<img src='img\\{line}' width='100%'><br>"
                 elif line[0] == "=" and line[1]== ">":
                     line = line.replace("=>", "")
                     html += f"<span style='color:red'>{line}</span>"
@@ -249,16 +229,16 @@ if __name__ == "__main__":
     # =============================== checks if folders exists &
                                    #= creates them if not
     if "text" in os.listdir():
-        print("text folder exists")
+        pass
     else:
         os.mkdir("text")
-        print("text folder created")
+
     if "img" in os.listdir():
-        print("img folder exists")
+        pass
     else:
         os.mkdir("img")
-        print("text folder created")
+
     root = tk.Tk()
     app = Ebook(root)
-    app.root.title("Programmazioni")
+    app.root.title("PyEbooks 1.4c2 users")
     root.mainloop()
