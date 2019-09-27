@@ -1,22 +1,17 @@
 # pyem personal3
 # added ctrl + p to render single page
+# personal 3b
+# corrected bug about renaming files
+# 3b - 27/9/19
+# - now saves page when you render the single page
+# [+] 207 self.filename = self.lstb.get(index)
+# commented 206 for a bug linked to not find filename
 
 import tkinter as tk
 import glob
 from time import sleep
 import os
-"""
-1.2
-Added ctrl+s <Control+s> to bind of text
-Added label to editor
-1.3
-added red symbol for rendering html
-1.4
-Added way to save render single txt file
-personal 2 c
-It shows the link to the rendered pages in the index.html
-Now it deletes also the html file when you delete the txt file
-"""
+
 
 class Ebook:
     def __init__(self, root):
@@ -41,7 +36,7 @@ class Ebook:
         self.button_ebook.pack()
 
         # Save only current page
-        self.button_page = tk.Button(self.frame2, text="Save page", command = self.save_page)
+        self.button_page = tk.Button(self.frame2, text="Render page", command = self.save_page)
         self.button_page.pack()
 
         # commit to git
@@ -161,10 +156,9 @@ class Ebook:
 
 
     def save(self):
-        if self.text.get("1.0", tk.END) != "":
-            with open(self.filename, "w", encoding="utf-8") as file:
-                file.write(self.text.get("1.0", tk.END))
-            self.label_file_name["text"] += "...saved"
+        with open(self.filename, "w", encoding="utf-8") as file:
+            file.write(self.text.get("1.0", tk.END))
+        self.label_file_name["text"] += "...saved"
 
     def save_ebook(self):
         html = ""
@@ -179,6 +173,7 @@ class Ebook:
 
     def save_page(self):
         """Save a single page v. 1.4 23/09/2019 at 05:40"""
+        self.save()
         html = ""
         current = self.lstb.get(tk.ACTIVE)[:-4] # The file selected without .txt
         with open(f"{current}.html", "w", encoding="utf-8") as htmlfile:
@@ -209,26 +204,13 @@ class Ebook:
         """Shows text of selected file in the editor"""
         if not self.lstb.curselection() is ():
             index = self.lstb.curselection()[0]
-            self.filename = self.files[index] # instead of self.lstb.get(index)
+            #self.filename = self.files[index] # instead of self.lstb.get(index)
+            self.filename = self.lstb.get(index)
             with open(self.filename, "r", encoding="utf-8") as file:
                 content = file.read()
             self.text.delete("1.0", tk.END)
             self.text.insert(tk.END, content)
             self.label_file_name['text'] = self.filename
-
-
-
-class Win1():
-    def __init__(self, root):
-        self.root = root
-        self.root.geometry("300x100")
-        self.root.title("Insert new file name")
-        self.label_file_name = tk.Label(self.root, text="Enter a name")
-        self.label_file_name.pack()
-        self.entry = tk.Entry(self.root)
-        self.entry.pack()
-        self.entry.focus()
-        self.entry.bind("<Return>", lambda x: app.new_chapter(self.entry.get()))
 
 class Rename():
     def __init__(self, root):
@@ -244,10 +226,21 @@ class Rename():
         self.entry_var.set(app.filename.split("\\")[1])
         self.entry.bind("<Return>", lambda x: app.rename(self.entry.get()))
 
+class Win1():
+    def __init__(self, root):
+        self.root = root
+        self.root.geometry("300x100")
+        self.root.title("Insert new file name")
+        self.label_file_name = tk.Label(self.root, text="Enter a name")
+        self.label_file_name.pack()
+        self.entry = tk.Entry(self.root)
+        self.entry.pack()
+        self.entry.focus()
+        self.entry.bind("<Return>", lambda x: app.new_chapter(self.entry.get()))
+
 
 if __name__ == "__main__":
-    # =============================== checks if folders exists &
-                                   #= creates them if not
+    #  checks if folders exists & creates them if not
     if "text" in os.listdir():
         print("text folder exists")
     else:

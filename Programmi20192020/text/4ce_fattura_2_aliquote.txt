@@ -1,0 +1,32 @@
+Un fornitore ci consegna 3 tipologie di merci con i seguenti prezzi:
+----------------------------------------
+Merce A    1.200 € + IVA 22%
+Merce B    2.380 € + IVA 10%
+Merce C       520 € + IVA 4%
+Spese di trasporto 86 €*
+-----------------------------------------
+*Vanno ripartite tra i tre beni e poi sommate a ogni bene
+per calcolare l'IVA
+
+1. Coefficiente di riparto del costo di trasporto: ...................
+2. Costo del trasporto Merce:
+    A: ................  B: .................... C: ....................
+3: Totale prezzo (senza IVA) + trasporto
+       A: ................  B: .................... C: ....................
+4. Calcolo IVA su A, B e C:
+      A: ................  B: .................... C: .................. = Totale = ...........
+
+Fattura
+                prezzo     trasporto    Iva    totale
+Merce A   ..........     .............    ........  .................
+Merce B   ..........     .............    ........  .................
+Merce C   ..........     .............    ........  .................
+Totale  =   ..........     .............    ........  .................
+
+
+
+Calcola coeff. di riparto del trasporto e il relativo costo di trasporto per ogni tipo di merce.
+Calcola l'IVA complessiva.
+Calcola l'importo complessivo da pagare al fornitore.
+
+

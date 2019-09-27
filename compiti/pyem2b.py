@@ -1,5 +1,10 @@
-# pyem personal3
-# added ctrl + p to render single page
+# pyem_1_4c2 - 25/09/2019 @ Giovanni Gatto
+# pyem_1_4c3_user_edition_26_set_2019_compiti
+# aggiunto ctrl+p per visualizza la singola pagina html generata
+# (si poteva fare col pulsante save page)
+# pyem2 - correct bug about renaming files
+# pyem2b - added at 196 and commented 195 (because of can't find filename) 
+            # self.filename = self.lstb.get(index)
 
 import tkinter as tk
 import glob
@@ -13,9 +18,6 @@ Added label to editor
 added red symbol for rendering html
 1.4
 Added way to save render single txt file
-personal 2 c
-It shows the link to the rendered pages in the index.html
-Now it deletes also the html file when you delete the txt file
 """
 
 class Ebook:
@@ -31,6 +33,11 @@ class Ebook:
     # Widgets on the left ===============|
     def menu(self):
         """Listbox on the left with file names"""
+
+        self.menubar = tk.Menu(self.root)
+        self.menubar.add_command(label="Help", command=self.help)
+        self.root.config(menu=self.menubar)
+
         self.frame2 = tk.Frame(self.root)
         self.frame2["bg"] = "coral"
         self.frame2.pack(side='left', fill=tk.Y)
@@ -45,8 +52,8 @@ class Ebook:
         self.button_page.pack()
 
         # commit to git
-        self.button_commit = tk.Button(self.frame2, text="Commit", command = self.commit)
-        self.button_commit.pack()
+        # self.button_commit = tk.Button(self.frame2, text="Commit", command = self.commit)
+        # self.button_commit.pack()
 
         self.button_plus = tk.Button(self.frame2, text="+", command =lambda: self.new_window(Win1))
         self.button_plus.pack()
@@ -59,7 +66,7 @@ class Ebook:
             command= lambda: self.delete_file())
         self.button_delete.pack()
 
-        self.lab_help = tk.Label(self.frame2, text="Symbols:\n-------\n* = <h2>\n^ = <h3>\n# = <img...\n=> = red", bg="coral")
+        self.lab_help = tk.Label(self.frame2, text="Symbols:\n-------\n* = <h2>\n^ = <h3>\n# = <img...\n=> = red\n<F2> Rename", bg="coral")
         self.lab_help.pack()
 
         self.frame1 = tk.Frame(self.root)
@@ -72,62 +79,27 @@ class Ebook:
         self.lstb.bind("<<ListboxSelect>>", lambda x: self.show_text_in_editor())
         self.lstb.bind("<F2>", lambda x: self.new_window(Rename))
         self.files = glob.glob("text\\*.txt")
-        print("self.files", self.files)
+
         for file in self.files:
             self.lstb.insert(tk.END, file)
-        self.lstb.bind("<Control-p>", lambda x: self.save_page())
-
-
-    def commit(self):
-        os.startfile("..\\commit.bat")
-
-    def delete_file(self):
-        for num in self.lstb.curselection():
-            os.remove("{}.html".format(self.files[num][:-4]))
-            os.remove(self.files[num])
-        self.reload_list_files_delete()
-
-    def editor(self):
-        """The text where you can write"""
-        self.label_file_name = tk.Label(self.root, text="Editor - choose a file on the left")
-        self.label_file_name.pack()
-        self.text = tk.Text(self.root, wrap=tk.WORD)
-        self.text['bg'] = "darkgreen"
-        self.text['fg'] = 'white'
-        self.text['font'] = "Arial 24"
-        self.text.pack(fill=tk.Y, expand=1)
-        self.text.bind("<Control-s>", lambda x: self.save())
-        self.text.bind("<Control-p>", lambda x: self.save_page())
-
-    def html_convert(self, text_to_render):
-        """Convert to my Markup language"""
-        html = ""
-        text_to_render = text_to_render.split("\n")
-        print(text_to_render)
-        for line in text_to_render:
-            if line != "":
-                if line[0] == "*":
-                    line = line.replace("*","")
-                    html += f"<h2>{line}</h2>"
-                elif line[0] == "^":
-                    line = line.replace("^","")
-                    html += f"<h3>{line}</h3>"
-                elif line[0] == "#":
-                    line = line.replace("#","")
-                    if line.startswith("http"):
-                        html += f"<img src='{line}' width='100%'><br>"
-                    else:                
-                        html += f"<img src='img\\{line}' width='100%'><br>"
-                elif line[0] == "=" and line[1]== ">":
-                    line = line.replace("=>", "")
-                    html += f"<span style='color:red'>{line}</span>"
-                else:
-                    html += f"<p>{line}</p>"
-        return html
 
     def new_window(self, _class):
         self.new = tk.Toplevel(self.root)
         _class(self.new)
+
+    def commit(self):
+        os.startfile("commit.bat")
+
+    def help(self):
+        print("Press <F2> to rename files")
+
+    
+    def rename(self, filename):
+        self.lstb.delete("active")
+        os.rename(self.filename, "text\\" + filename)
+        self.files = glob.glob("text\\*.txt")
+        self.reload_list_files(filename)
+        # self.lstb.insert(self.files.index("text\\" + filename), "text\\" + filename)
 
     def new_chapter(self, filename):
         self.new.destroy()
@@ -153,12 +125,10 @@ class Ebook:
         for file in self.files:
             self.lstb.insert(tk.END, file)
 
-    def rename(self, filename):
-        self.lstb.delete("active")
-        os.rename(self.filename, "text\\" + filename)
-        self.files = glob.glob("text\\*.txt")
-        self.reload_list_files(filename)
-
+    def delete_file(self):
+        for num in self.lstb.curselection():
+            os.remove(self.files[num])
+        self.reload_list_files_delete()
 
     def save(self):
         if self.text.get("1.0", tk.END) != "":
@@ -179,6 +149,7 @@ class Ebook:
 
     def save_page(self):
         """Save a single page v. 1.4 23/09/2019 at 05:40"""
+        self.save()
         html = ""
         current = self.lstb.get(tk.ACTIVE)[:-4] # The file selected without .txt
         with open(f"{current}.html", "w", encoding="utf-8") as htmlfile:
@@ -187,35 +158,61 @@ class Ebook:
                 read = readfile.read() # get the text of the active file
                 read = self.html_convert(read) # convert this text in html with *^=>
                 htmlfile.write(read) # create the new file with the rendered text
-        with open("..\\newlinks.js", "w") as filejs:
-            linka = str(self.lstb.get(tk.ACTIVE))
-            linka = linka.split("\\")[1]
-            current = current.split("\\")[1]
-            # CREATE THE LINKS TO THE HTML PAGES SAVED AS SINGLE FILES
-            listofhtml = []
-            for file in os.listdir("text"):
-                if file.endswith(".html"):
-                    listofhtml.append(file)
-            html1 = ""
-            for file in listofhtml:
-                html1+= """newlinks.innerHTML += "<a href='Programmi20192020/text/{}'>{}</a><br>"
-                """.format(file, file)
-            filejs.write(html1)
-        self.label_file_name["text"] += "...page rendered +"
-        os.startfile("text\\{}.html".format(current))
-        os.system("start ../index.html")
+        self.label_file_name["text"] += "...page rendered"
+        os.startfile(f"{current}.html")
+        # os.system("start ../index.html")
+
+
+
+    def html_convert(self, text_to_render):
+        """Convert to my Markup language"""
+        html = ""
+        text_to_render = text_to_render.split("\n")
+
+        for line in text_to_render:
+            if line != "":
+                if line[0] == "*":
+                    line = line.replace("*","")
+                    html += f"<h2>{line}</h2>"
+                elif line[0] == "^":
+                    line = line.replace("^","")
+                    html += f"<h3>{line}</h3>"
+                elif line[0] == "#":
+                    line = line.replace("#","")
+                    if line.startswith("http"):
+                        html += f"<img src='{line}' width='100%'><br>"
+                    else:                
+                        html += f"<img src='img\\{line}' width='100%'><br>"
+                elif line[0] == "=" and line[1]== ">":
+                    line = line.replace("=>", "")
+                    html += f"<span style='color:red'>{line}</span>"
+                else:
+                    html += f"<p>{line}</p>"
+        return html
 
     def show_text_in_editor(self):
         """Shows text of selected file in the editor"""
         if not self.lstb.curselection() is ():
             index = self.lstb.curselection()[0]
-            self.filename = self.files[index] # instead of self.lstb.get(index)
+            #self.filename = self.files[index] # instead of self.lstb.get(index)
+            self.filename = self.lstb.get(index)
             with open(self.filename, "r", encoding="utf-8") as file:
                 content = file.read()
             self.text.delete("1.0", tk.END)
             self.text.insert(tk.END, content)
             self.label_file_name['text'] = self.filename
 
+    def editor(self):
+        """The text where you can write"""
+        self.label_file_name = tk.Label(self.root, text="Editor - choose a file on the left")
+        self.label_file_name.pack()
+        self.text = tk.Text(self.root, wrap=tk.WORD)
+        self.text['bg'] = "darkgreen"
+        self.text['fg'] = 'white'
+        self.text['font'] = "Arial 24"
+        self.text.pack(fill=tk.Y, expand=1)
+        self.text.bind("<Control-s>", lambda x: self.save())
+        self.text.bind("<Control-p>", lambda x: self.save_page())
 
 
 class Win1():
@@ -249,16 +246,16 @@ if __name__ == "__main__":
     # =============================== checks if folders exists &
                                    #= creates them if not
     if "text" in os.listdir():
-        print("text folder exists")
+        pass
     else:
         os.mkdir("text")
-        print("text folder created")
+
     if "img" in os.listdir():
-        print("img folder exists")
+        pass
     else:
         os.mkdir("img")
-        print("text folder created")
+
     root = tk.Tk()
     app = Ebook(root)
-    app.root.title("Programmazioni")
+    app.root.title("pyem_1_4c3_user_edition_26_set_2019_compiti")
     root.mainloop()

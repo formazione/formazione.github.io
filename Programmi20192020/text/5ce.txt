@@ -23,6 +23,7 @@ Forma scalare, art. 2424, esercizio Conto economico
 Ratei e Risconti
 Esercizio sui fitti passivi
 Esercizio sugli interessi passivi
+I Risconti
 
 => Next: Conto economico
 Il conto economico ha questo schema:
@@ -35,6 +36,7 @@ E) Proventi e oneri straordinari
 Risultato prima delle imposte
 Imposte
 Utile
+
 
 
 

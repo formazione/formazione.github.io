@@ -1,0 +1,40 @@
+
+*Create a new image
+
+        self.image = Image.new('RGB', (90, 90), 'white')
+
+*Draw the face
+
+        draw = ImageDraw.Draw(self.image)
+        draw.ellipse((0, 0, 89, 89), self.color, 'blue')  # made this a little smaller..
+        draw.ellipse((25, 20, 35, 30), 'yellow', 'blue')
+        draw.ellipse((50, 20, 60, 30), 'yellow', 'blue')
+        draw.arc((20, 40, 70, 70), 0, 180, 'black')  # draw anarc in black
+
+* Save the image on pc
+
+    def save(self):
+    	self.image.save(self.color + ".png", "PNG")
+
+
+*The istance of Smile in gold (this runs the app)
+
+img = Smile("gold")
+
+*Prepare the image to go in the label
+
+orangesmile = PIL.ImageTk.PhotoImage(img.image)
+
+* The label that contains the image above
+
+label = tk.Label(root, image=orangesmile, bd=4)
+
+*The button to save the image (command=img.save)
+
+button_save = tk.Button(root, text="Save", command=img.save)
+
+
+
+
+
+

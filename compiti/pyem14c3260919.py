@@ -2,6 +2,7 @@
 # pyem_1_4c3_user_edition_26_set_2019_compiti
 # aggiunto ctrl+p per visualizza la singola pagina html generata
 # (si poteva fare col pulsante save page)
+# pyem2 - correct bug about renaming files
 
 import tkinter as tk
 import glob
@@ -92,11 +93,11 @@ class Ebook:
 
     
     def rename(self, filename):
-
+        self.lstb.delete("active")
         os.rename(self.filename, "text\\" + filename)
         self.files = glob.glob("text\\*.txt")
-        self.lstb.delete("active")
-        self.lstb.insert(self.files.index("text\\" + filename), "text\\" + filename)
+        self.reload_list_files(filename)
+        # self.lstb.insert(self.files.index("text\\" + filename), "text\\" + filename)
 
     def new_chapter(self, filename):
         self.new.destroy()

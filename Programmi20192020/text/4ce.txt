@@ -1,11 +1,16 @@
-16/09/2019
+*4CE - Programma
+
+^16/09/2019
 - cambiali
 - assegni
 - scorporo IVA
 - Fattura a 2 aliquote / riparto
+
 => Esercizio riparto
 ripartire tra 3 soci...
-24/9 - Riparto
+
+^24/9 - Riparto
+
 
 
 
