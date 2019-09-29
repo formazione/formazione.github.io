@@ -6,6 +6,7 @@
 # - now saves page when you render the single page
 # [+] 207 self.filename = self.lstb.get(index)
 # commented 206 for a bug linked to not find filename
+  # project: 
 
 import tkinter as tk
 import glob

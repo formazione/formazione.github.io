@@ -40,5 +40,6 @@ Coeff. = _________  Paolo _______ Marco ______ Alessio _______
 ESERCIZIO N. 5
 Tre dipendenti ricevono un premio di 1665 euro in base ai contratti conclusi. Paolo ha concluso 35 contratti, Marco ha concluso 70
 contratti, Sandra ha concluso 80 contratti.
-Coeff. = _________  Paolo _______ MArco ______ Sandra _______
+Coeff. = _________  Paolo _______ Marco ______ Sandra _______
+
 

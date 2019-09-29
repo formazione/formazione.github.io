@@ -4,12 +4,14 @@
 - cambiali
 - assegni
 - scorporo IVA
-- Fattura a 2 aliquote / riparto
+- Fattura a 2 o più aliquote / riparto
 
 => Esercizio riparto
 ripartire tra 3 soci...
 
 ^24/9 - Riparto
+28 - Esercizi sul riparto del costo 
+di trasporto tra tre prodotti con IVA diverse
 
 
 

@@ -1,4 +1,5 @@
-newlinks.innerHTML += "<a href='Programmi20192020/text/4ce.html'>4ce.html</a><br>"
+newlinks.innerHTML += "<a href='Programmi20192020/text/29092019_bilancio.html'>29092019_bilancio.html</a><br>"
+                newlinks.innerHTML += "<a href='Programmi20192020/text/4ce.html'>4ce.html</a><br>"
                 newlinks.innerHTML += "<a href='Programmi20192020/text/4ce_cambiali.html'>4ce_cambiali.html</a><br>"
                 newlinks.innerHTML += "<a href='Programmi20192020/text/4ce_fattura_2_aliquote.html'>4ce_fattura_2_aliquote.html</a><br>"
                 newlinks.innerHTML += "<a href='Programmi20192020/text/4ce_test_ingresso.html'>4ce_test_ingresso.html</a><br>"
