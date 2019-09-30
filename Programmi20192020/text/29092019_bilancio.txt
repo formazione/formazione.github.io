@@ -13,7 +13,7 @@ ESERCIZIO 2 - Stato Patrimoniale e Conto economico
 10) Rilevare il rateo passivo per interessi semestrali di 240 euro da pagare il primo febbraio dell'anno seguente.
 Si presentino il conto economico 2004 e lo stato patrimoniale.
 
-<a href='https://formazione.github.io/Programmi20192020/img/bilancio01.pdf'>Vedi l'esercizio completo sul bilancio</a>
+<a href='https://formazione.github.io/Programmi20192020/img/bilancio1.pdf'>Vedi l'esercizio completo sul bilancio</a>
 
 
 
