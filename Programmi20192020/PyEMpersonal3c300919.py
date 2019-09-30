@@ -7,6 +7,8 @@
 # [+] 207 self.filename = self.lstb.get(index)
 # commented 206 for a bug linked to not find filename
   # project: 
+# personal3c30092019 - bug: do not connect to a link index.html => render page => newlink.js
+# look for the ...
 
 import tkinter as tk
 import glob
@@ -194,7 +196,9 @@ class Ebook:
                     listofhtml.append(file)
             html1 = ""
             for file in listofhtml:
-                html1+= """newlinks.innerHTML += "<a href='https://Programmi20192020/text/{}'>{}</a><br>"
+                # I write the new link from the above list into the js file... then git commit to
+                # have it on the web site
+                html1+= """newlinks.innerHTML += "<a href='Programmi20192020/text/{}'>{}</a><br>"
                 """.format(file, file)
             filejs.write(html1)
         self.label_file_name["text"] += "...page rendered +"
