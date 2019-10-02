@@ -1,0 +1,1 @@
+orario = "5°BS D 5°CE D 4°CE\n 5°CE 5°BS 5°BS\n 4°CE D 5°BS 5°CE\n 4°CE 5°BS 5°CE\n 4°CE 4°CE 5°CE"

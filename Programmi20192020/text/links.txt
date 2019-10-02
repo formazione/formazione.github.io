@@ -1,16 +1,16 @@
-<!-- 5bs  turismo resp. -->
-
+<h3>5BS</h3>
 <a href="http://www.aitr.org/turismo-responsabile/cose-il-turismo-responsabile/">Turismo responsabile</a>
 <br>
+<h3>5CE</h3>
+<a href="https://formazione.github.io/bib/i/?book=bilancio.epub">Ebook Bilancio</h3>
 
-<!-- 4ce Cambiali -->
-
+<h3>4CE</h3>
 <a href="http://economia-azienda.blogspot.com/2018/02/esercizi-sulla-compilazione-delle.html">4ce - Es. Cambiali 1</a>
 
 <a href="https://www.theitaliantimes.it/economia/bollo-cambiale-calcolo_160919/">4ce: aumenta uso cambiali (news)</a>
 
-<p>I will show you how it works</p>
-<h3>Again</h3>
+
+
 
 
 

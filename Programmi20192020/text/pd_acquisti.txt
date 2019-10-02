@@ -1,0 +1,19 @@
+#https://www.cicalia.com/it/themes/cicaliatheme/img/cicalia-logo.png
+#https://www.cicalia.com/it/img/imgproducts/54054/cart_54054.jpg
+
+Spadoni farina per pizza croccante kg.25
+
+25 kg. a 23,22 €
+0,93 € al kg
+
+Spedizione prodotti	2,90 €
+Tot. Prodotti	139,32 €
+Totale	142,22 €
+A pagare	142,22 €
+
+<input id="d1" type="text" obchange="check()">
+<script>function check(){console.log("hi");if(d1.value==139,32){console.log(d1.value);d1.value += " Ok";}}</script>
+
+
+
+

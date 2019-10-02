@@ -14,17 +14,47 @@ import tkinter as tk
 import glob
 from time import sleep
 import os
-
+from orario import orario
 
 class Ebook:
-    def __init__(self, root):
+    def __init__(self, root, folder_class, newlinks, my_class, div_innerHTML):
         """Define window for the app"""
+        # Folders where to store data, js and data for index.html
+        self.folder_class = folder_class
+        self.newlinks =newlinks
+        self.div_innerHTML = div_innerHTML
+        self.my_class = my_class
+
+        self.text_help = "Symbols:\n-------\n* = <h2>\n^ = <h3>\n# = <img...\n=> = red\n<table>| | |</table>\n"
+
+        self.check_folders()
+
         self.root = root
         self.root.geometry("850x400")
         self.root["bg"] = "coral"
         self.menu()
         self.editor()
         self.root.bind("<Control-b>", lambda x: self.save_ebook())
+        self.activate_selection()
+
+    def check_folders(self):
+        if self.my_class in os.listdir():
+            print("folder exists")
+        else:
+            os.mkdir(self.my_class)
+            print("folder created")
+        if "img" in os.listdir():
+            print("img folder exists")
+        else:
+            os.mkdir("img")
+            print("text_5ce folder created")
+
+    def activate_selection(self):
+        "Select the first item at the start"
+        self.lstb.select_set(0)
+        self.filename = self.lstb.get("active")
+        self.show_text_in_editor()
+
 
     # Widgets on the left ===============|
     def menu(self):
@@ -38,7 +68,7 @@ class Ebook:
         self.button_ebook = tk.Button(self.frame2, text="Save ebook", command = self.save_ebook)
         self.button_ebook.pack()
 
-        # Save only current page
+        # Save only self.current page
         self.button_page = tk.Button(self.frame2, text="Render page", command = self.save_page)
         self.button_page.pack()
 
@@ -57,7 +87,7 @@ class Ebook:
             command= lambda: self.delete_file())
         self.button_delete.pack()
 
-        self.lab_help = tk.Label(self.frame2, text="Symbols:\n-------\n* = <h2>\n^ = <h3>\n# = <img...\n=> = red", bg="coral")
+        self.lab_help = tk.Label(self.frame2, text=self.text_help + orario, bg="coral")
         self.lab_help.pack()
 
         self.frame1 = tk.Frame(self.root)
@@ -69,7 +99,7 @@ class Ebook:
         self.lstb.pack(fill=tk.Y, expand=1)
         self.lstb.bind("<<ListboxSelect>>", lambda x: self.show_text_in_editor())
         self.lstb.bind("<F2>", lambda x: self.new_window(Rename))
-        self.files = glob.glob("text\\*.txt")
+        self.files = glob.glob("text_5ce\\*.txt")
         print("self.files", self.files)
         for file in self.files:
             self.lstb.insert(tk.END, file)
@@ -107,6 +137,11 @@ class Ebook:
                 if line[0] == "*":
                     line = line.replace("*","")
                     html += f"<h2>{line}</h2>"
+                if "|" in line:
+                    cells = line.split()
+                    line = line.replace("|","<td>")
+                    html += "<tr>" + line + "<tr>"
+
                 elif line[0] == "^":
                     line = line.replace("^","")
                     html += f"<h3>{line}</h3>"
@@ -131,30 +166,30 @@ class Ebook:
         self.new.destroy()
         if not filename.endswith(".txt"):
             filename += ".txt"
-        #os.chdir("text")
-        with open("text\\" + filename, "w", encoding="utf-8") as file:
+ 
+        with open(self.folder_class + filename, "w", encoding="utf-8") as file:
             file.write("")
         self.reload_list_files(filename)
 
     def reload_list_files(self, filename=""):
         #os.chdir("..")
         self.lstb.delete(0, tk.END)
-        self.files = [f for f in glob.glob("text\\*txt")]
+        self.files = [f for f in glob.glob(self.folder_class + "\\*txt")]
         for file in self.files:
             self.lstb.insert(tk.END, file)
-        self.lstb.select_set(self.files.index("text\\" + filename))
+        self.lstb.select_set(self.files.index(self.folder_class + filename))
 
     def reload_list_files_delete(self, filename=""):
         #os.chdir("..")
         self.lstb.delete(0, tk.END)
-        self.files = [f for f in glob.glob("text\\*txt")]
+        self.files = [f for f in glob.glob(self.folder_class + "\\*txt")]
         for file in self.files:
             self.lstb.insert(tk.END, file)
 
     def rename(self, filename):
         self.lstb.delete("active")
-        os.rename(self.filename, "text\\" + filename)
-        self.files = glob.glob("text\\*.txt")
+        os.rename(self.filename, self.folder_class + filename)
+        self.files = glob.glob(self.folder_class + "\\*.txt")
         self.reload_list_files(filename)
 
 
@@ -178,31 +213,44 @@ class Ebook:
         """Save a single page v. 1.4 23/09/2019 at 05:40"""
         self.save()
         html = ""
-        current = self.lstb.get(tk.ACTIVE)[:-4] # The file selected without .txt
-        with open(f"{current}.html", "w", encoding="utf-8") as htmlfile:
+        self.current = self.lstb.get(tk.ACTIVE)[:-4] # The file selected without .txt
+        with open(f"{self.current}.html", "w", encoding="utf-8") as htmlfile:
             # opend the active (selected) item in the listbox
-            with open(f"{current}.txt", "r", encoding="utf-8") as readfile:
+            with open(f"{self.current}.txt", "r", encoding="utf-8") as readfile:
                 read = readfile.read() # get the text of the active file
                 read = self.html_convert(read) # convert this text in html with *^=>
                 htmlfile.write(read) # create the new file with the rendered text
-        with open("..\\newlinks.js", "w") as filejs:
+        self.create_newlinks()
+    
+    def create_newlinks(self):    
+        with open(self.newlinks, "w") as filejs:
             linka = str(self.lstb.get(tk.ACTIVE))
             linka = linka.split("\\")[1]
-            current = current.split("\\")[1]
+            self.current = self.current.split("\\")[1]
+
+            # WE CAN HAVE MORE PYEMP FOR DIFFERENT CLASSES THAT SAVES INTO DIFFERENT FOLDERS
+            # THEY WILL SHOW UP INTO DIFFERENT DIVS???
             # CREATE THE LINKS TO THE HTML PAGES SAVED AS SINGLE FILES
             listofhtml = []
-            for file in os.listdir("text"):
+            for file in os.listdir(self.my_class):
                 if file.endswith(".html"):
                     listofhtml.append(file)
             html1 = ""
+
             for file in listofhtml:
                 # I write the new link from the above list into the js file... then git commit to
                 # have it on the web site
-                html1+= """newlinks.innerHTML += "<a href='Programmi20192020/text/{}'>{}</a><br>"
-                """.format(file, file)
+                # We will have a DIV THAT GETS THE LINKS FOR THIS PYEM AND RELATIVE FOLDER
+                # WE NEED A DIV newlinks_5ce and a js file newlinks_5ce.js and a <script src="newlinks5ce"
+                # just copy everything in index.html, put in place and copy th js fil
+                html1+= """{}.innerHTML += "<a href='Programmi20192020/{}/{}'>{}</a><br>"
+                """.format(self.div_innerHTML, self.folder_class , file, file)
             filejs.write(html1)
+
+
+
         self.label_file_name["text"] += "...page rendered +"
-        os.startfile("text\\{}.html".format(current))
+        os.startfile(self.folder_class + "\\{}.html".format(self.current))
         os.system("start ../index.html")
 
     def show_text_in_editor(self):
@@ -246,17 +294,11 @@ class Win1():
 
 if __name__ == "__main__":
     #  checks if folders exists & creates them if not
-    if "text" in os.listdir():
-        print("text folder exists")
-    else:
-        os.mkdir("text")
-        print("text folder created")
-    if "img" in os.listdir():
-        print("img folder exists")
-    else:
-        os.mkdir("img")
-        print("text folder created")
+
     root = tk.Tk()
-    app = Ebook(root)
-    app.root.title("Programmazioni")
+    app = Ebook(root, folder_class = "text_4ce",
+                newlinks = "..\\newlinks_4ce.js",
+                my_class = "4ce",
+                div_innerHTML = "newlinks_4ce")
+    app.root.title("Appunti 4ce PyEMP v.3d")
     root.mainloop()
