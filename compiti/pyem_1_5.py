@@ -10,7 +10,6 @@ import tkinter as tk
 import glob
 from time import sleep
 import os
-import re
 """
 1.2
 Added ctrl+s <Control+s> to bind of text
@@ -144,22 +143,7 @@ class Ebook:
         os.startfile(f"{current}.html")
         # os.system("start ../index.html")
 
-    def highlight(self, code):
-	"pass a string and it will be highlighted"
-		# keywords to be colored in orange
-		kw = kwlist
-		for k in kw:
-			k = k + " "
-			code = code.replace(k, "<b style='color:orange'>" + k + "</b>")
-		code = code.replace("\n","<br>")
-		#print(code)
-		# The 'indentation'
-		code = code.replace("\t", "&nbsp;&nbsp;&nbsp;&nbsp;")
-		# functions to be clored in blue
-		_def= re.findall("\w+\(", code)
-		for w in _def:
-			code = code.replace(w, "<b style='color:blue'>" + w[:-1] + "</b>(")
-		return code
+
 
     def html_convert(self, text_to_render):
         """Convert to my Markup language"""
@@ -185,8 +169,6 @@ class Ebook:
                     html += f"<span style='color:red'>{line}</span>"
                 else:
                     html += f"<p>{line}</p>"
-
-        html = self.highlight(html)
         return html
 
     def show_text_in_editor(self):

@@ -1,6 +1,0 @@
-*pil.glitch.me
-^My splash page about PIL
-
-26/9/2019 - added images and markups
-convert images to black and white
-

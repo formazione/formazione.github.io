@@ -6,11 +6,16 @@
 # pyem2b - added at 196 and commented 195 (because of can't find filename) 
             # self.filename = self.lstb.get(index)
 # version 1.5 - added menubar
+# version 1.6 - added highlight function to higlight code
+# if a line starts with ">"... so if there is >>> ...
+# 1.8 dark mode and light mode
+
 import tkinter as tk
 import glob
 from time import sleep
 import os
 import re
+from keyword import kwlist
 """
 1.2
 Added ctrl+s <Control+s> to bind of text
@@ -19,6 +24,9 @@ Added label to editor
 added red symbol for rendering html
 1.4
 Added way to save render single txt file
+1.8: added dark and light theme
+added ctrl + - to increase decrease letters and menu too
+now it opens the first file at start 
 """
 
 class Ebook:
@@ -29,7 +37,16 @@ class Ebook:
         self.root["bg"] = "coral"
         self.menu()
         self.editor()
+        self.letter_size = 24
         self.root.bind("<Control-b>", lambda x: self.save_ebook())
+        self.root.bind("<Control-+>", lambda x: self.big_letters())
+        self.root.bind("<Control-minus>", lambda x: self.small_letters())
+        self.root.bind("<Control-MouseWheel>", lambda x: self.wheel(x))
+        # Start with the first file opened
+        self.lstb.select_set(0)
+        self.filename = self.lstb.get("active")
+        self.show_text_in_editor()
+
 
     # Widgets on the left ===============|
     def menu(self):
@@ -40,16 +57,26 @@ class Ebook:
         # self.button_commit.pack()
 
         self.menubar = tk.Menu(self.root)
-        self.menubar.add_command(label="[ + ]", command = lambda: self.new_window(Win1))
-        self.menubar.add_command(label="[ Delete ]", command= lambda: self.delete_file())
-        self.menubar.add_command(label="[ Rename ]", command= lambda: self.new_window(Rename))
-        self.menubar.add_command(label="[ Page ]", command = self.save_page)
-        self.menubar.add_command(label="[ Ebook ]", command = self.save_ebook)
-        self.menubar.add_command(label="[ SAVE ]", command = self.save)       
-        self.menubar.add_command(label="[ Help ]", command= lambda: self.new_window(Help))
+        # List of themes
+        self.themes = tk.Menu(self.root)
+        self.themes.add_command(label="Dark mode", command=self.dark)
+        self.themes.add_command(label="Light mode", command=self.light)
+
+        self.letters = tk.Menu(self.root)
+        self.letters.add_command(label="Big", command=self.big_letters)
+        self.letters.add_command(label="Small", command=self.small_letters)
+
+        self.menubar.add_command(label="+", command = lambda: self.new_window(Win1))
+        self.menubar.add_command(label="DELETE", command= lambda: self.delete_file())
+        self.menubar.add_command(label="RENAME", command= lambda: self.new_window(Rename))
+        self.menubar.add_command(label="PAGE", command = self.save_page)
+        self.menubar.add_command(label="EBOOK", command = self.save_ebook)
+        self.menubar.add_command(label="SAVE", command = self.save)       
+        self.menubar.add_command(label="HELP", command= lambda: self.new_window(Help))
+        self.menubar.add_cascade(label="THEME", menu=self.themes)
+        self.menubar.add_cascade(label="LETTERS", menu=self.letters)
+        #self.root.config(menu=self.menu_theme)
         self.root.config(menu=self.menubar)
-
-
 
         self.frame1 = tk.Frame(self.root)
         self.frame1["bg"] = "coral"
@@ -64,6 +91,36 @@ class Ebook:
 
         for file in self.files:
             self.lstb.insert(tk.END, file)
+
+
+    # Themes
+    def dark(self):
+        self.text['bg'] = "black"
+        self.text['fg'] = 'white'
+
+    
+    def light(self):
+        self.text['bg'] = "darkgreen"
+        self.text['fg'] = 'white'
+        self.text['font'] = "Arial 24"
+
+    def big_letters(self):
+        if self.letter_size < 72:
+            self.letter_size += 2
+        self.text['font'] = "Arial " + str(self.letter_size)
+
+    def wheel(self, event):
+        print(event.delta)
+        if event.delta == 120:
+            self.big_letters()
+        else:
+            self.small_letters()
+
+    def small_letters(self):
+        if self.letter_size >8:
+            self.letter_size -= 2
+        self.text['font'] = "Arial " + str(self.letter_size)
+
 
     def new_window(self, _class):
         self.new = tk.Toplevel(self.root)
@@ -145,21 +202,21 @@ class Ebook:
         # os.system("start ../index.html")
 
     def highlight(self, code):
-	"pass a string and it will be highlighted"
-		# keywords to be colored in orange
-		kw = kwlist
-		for k in kw:
-			k = k + " "
-			code = code.replace(k, "<b style='color:orange'>" + k + "</b>")
-		code = code.replace("\n","<br>")
-		#print(code)
-		# The 'indentation'
-		code = code.replace("\t", "&nbsp;&nbsp;&nbsp;&nbsp;")
-		# functions to be clored in blue
-		_def= re.findall("\w+\(", code)
-		for w in _def:
-			code = code.replace(w, "<b style='color:blue'>" + w[:-1] + "</b>(")
-		return code
+        "pass a string and it will be highlighted"
+        # keywords to be colored in orange
+        kw = kwlist
+        for k in kw:
+            k = k + " "
+            code = code.replace(k, "<b style='color:orange'>" + k + "</b>")
+        code = code.replace("\n","<br>")
+        #print(code)
+        # The 'indentation'
+        code = code.replace("\t", "&nbsp;&nbsp;&nbsp;&nbsp;")
+        # functions to be clored in blue
+        _def= re.findall("\w+\(", code)
+        for w in _def:
+            code = code.replace(w, "<b style='color:blue'>" + w[:-1] + "</b>(")
+        return code
 
     def html_convert(self, text_to_render):
         """Convert to my Markup language"""
@@ -168,7 +225,10 @@ class Ebook:
 
         for line in text_to_render:
             if line != "":
-                if line[0] == "*":
+                if line[0] == ">":
+                    line = self.highlight(line) + "<br>"
+                    html += line
+                elif line[0] == "*":
                     line = line.replace("*","")
                     html += f"<h2>{line}</h2>"
                 elif line[0] == "^":
@@ -186,7 +246,7 @@ class Ebook:
                 else:
                     html += f"<p>{line}</p>"
 
-        html = self.highlight(html)
+        #html = self.highlight(html)
         return html
 
     def show_text_in_editor(self):
@@ -251,7 +311,8 @@ class Help():
 ^ H3
 § <img src=...
 => red
-<F2> rename"""
+<F2> rename
+> To highlight code"""
         self.text = tk.Text(self.root, width=30, height=6)
         self.text.insert("1.0", istruzioni)
         self.text.pack(fill=tk.BOTH, expand=1)
@@ -271,5 +332,5 @@ if __name__ == "__main__":
 
     root = tk.Tk()
     app = Ebook(root)
-    app.root.title("pyem_1_5")
+    app.root.title("pyem_1_8_dark_mode")
     root.mainloop()

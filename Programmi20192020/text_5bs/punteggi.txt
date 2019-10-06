@@ -1,0 +1,20 @@
+partecipa = {
+	"D'Apolito'" : [0],
+	"Giordano" : [5],
+	"Guariglia": [1],
+	"Landi": [7]
+	"Lembo": [8],
+	"Mauro" : [8],
+	"Malzone" : [11],
+	"Mazziotti" : [1],
+	"Scelza" : [16],
+	"Mainente" : [7],
+	"Saturno" : [3,2],
+	"Puglia" : [2],
+	"Tardio" : [8]
+}
+
+
+for nome in partecipa:
+	print(nome,sum(partecipa[nome]))
+

@@ -6,11 +6,14 @@
 # pyem2b - added at 196 and commented 195 (because of can't find filename) 
             # self.filename = self.lstb.get(index)
 # version 1.5 - added menubar
+# version 1.6 - added highlight function to higlight code
+# if a line starts with ">"... so if there is >>> ...
 import tkinter as tk
 import glob
 from time import sleep
 import os
 import re
+from keyword import kwlist
 """
 1.2
 Added ctrl+s <Control+s> to bind of text
@@ -48,8 +51,6 @@ class Ebook:
         self.menubar.add_command(label="[ SAVE ]", command = self.save)       
         self.menubar.add_command(label="[ Help ]", command= lambda: self.new_window(Help))
         self.root.config(menu=self.menubar)
-
-
 
         self.frame1 = tk.Frame(self.root)
         self.frame1["bg"] = "coral"
@@ -132,7 +133,7 @@ class Ebook:
     def save_page(self):
         """Save a single page v. 1.4 23/09/2019 at 05:40"""
         self.save()
-        html = ""
+        html = "<style>body{font-size:2em}</style>"
         current = self.lstb.get(tk.ACTIVE)[:-4] # The file selected without .txt
         with open(f"{current}.html", "w", encoding="utf-8") as htmlfile:
             # opend the active (selected) item in the listbox
@@ -145,21 +146,21 @@ class Ebook:
         # os.system("start ../index.html")
 
     def highlight(self, code):
-	"pass a string and it will be highlighted"
-		# keywords to be colored in orange
-		kw = kwlist
-		for k in kw:
-			k = k + " "
-			code = code.replace(k, "<b style='color:orange'>" + k + "</b>")
-		code = code.replace("\n","<br>")
-		#print(code)
-		# The 'indentation'
-		code = code.replace("\t", "&nbsp;&nbsp;&nbsp;&nbsp;")
-		# functions to be clored in blue
-		_def= re.findall("\w+\(", code)
-		for w in _def:
-			code = code.replace(w, "<b style='color:blue'>" + w[:-1] + "</b>(")
-		return code
+        "pass a string and it will be highlighted"
+        # keywords to be colored in orange
+        kw = kwlist
+        for k in kw:
+            k = k + " "
+            code = code.replace(k, "<b style='color:orange'>" + k + "</b>")
+        code = code.replace("\n","<br>")
+        #print(code)
+        # The 'indentation'
+        code = code.replace("\t", "&nbsp;&nbsp;&nbsp;&nbsp;")
+        # functions to be clored in blue
+        _def= re.findall("\w+\(", code)
+        for w in _def:
+            code = code.replace(w, "<b style='color:blue'>" + w[:-1] + "</b>(")
+        return code
 
     def html_convert(self, text_to_render):
         """Convert to my Markup language"""
@@ -168,7 +169,10 @@ class Ebook:
 
         for line in text_to_render:
             if line != "":
-                if line[0] == "*":
+                if line[0] == ">":
+                    line = self.highlight(line) + "<br>"
+                    html += line
+                elif line[0] == "*":
                     line = line.replace("*","")
                     html += f"<h2>{line}</h2>"
                 elif line[0] == "^":
@@ -186,7 +190,7 @@ class Ebook:
                 else:
                     html += f"<p>{line}</p>"
 
-        html = self.highlight(html)
+        #html = self.highlight(html)
         return html
 
     def show_text_in_editor(self):
@@ -251,7 +255,8 @@ class Help():
 ^ H3
 § <img src=...
 => red
-<F2> rename"""
+<F2> rename
+> To highlight code"""
         self.text = tk.Text(self.root, width=30, height=6)
         self.text.insert("1.0", istruzioni)
         self.text.pack(fill=tk.BOTH, expand=1)
@@ -271,5 +276,5 @@ if __name__ == "__main__":
 
     root = tk.Tk()
     app = Ebook(root)
-    app.root.title("pyem_1_5")
+    app.root.title("pyem_1_6")
     root.mainloop()
