@@ -1,0 +1,8 @@
+Il turista vuole ottenere redditi
+f
+Il turista pernotta almeno una notte
+v
+Il turista viaggia in modo regolare
+f
+I residenti fanno parte del turismo attivo
+

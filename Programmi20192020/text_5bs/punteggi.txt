@@ -9,7 +9,7 @@ partecipa = {
 	"Mazziotti" : [1],
 	"Scelza" : [16],
 	"Mainente" : [7],
-	"Saturno" : [3,2],
+	"Saturno" : [5],
 	"Puglia" : [2],
 	"Tardio" : [8]
 }
@@ -17,4 +17,5 @@ partecipa = {
 
 for nome in partecipa:
 	print(nome,sum(partecipa[nome]))
+
 

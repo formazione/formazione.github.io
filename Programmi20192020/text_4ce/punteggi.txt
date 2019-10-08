@@ -1,0 +1,19 @@
+Acone                    32         
+Battagliese              22         
+Fluri                    7          
+Romano                   10         
+Mautone                  7          
+Merola                   9          
+Borrelli                 11         
+Liguori                  9          
+Gonoshi                  19         
+Ricci                    29         
+Maiese                   2          
+Tierno                   23         
+Saja Andrea              7          
+Saja Pietro              14         
+Carracino                1          
+Ciardi                   20         
+Palladino                2          
+Donnianni                14         
+Simone                   4 

@@ -1,0 +1,14 @@
+<!-------- CODE ---------->
+<script>function see(inp,wright){if (d1.value==wright){console.log("YES");inp.innerHTML="Ok! Risposta esatta... è ";}}</script>
+<!--- end of code --->
+Il turista viaggia per ottenere redditi
+<input id="d1" type="text" onkeyup="see(d1,'f')")>
+<div id="risposta"></div>
+Il turista pernotta almeno una notte
+v
+Il turista viaggia in modo regolare
+f
+I residenti fanno parte del turismo attivo
+
+Rendi invisibile il testo
+d1.style.display='none';

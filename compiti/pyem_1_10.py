@@ -33,7 +33,7 @@ now it opens the first file at start
 class Ebook:
     def __init__(self, root):
         """Define window for the app"""
-        self.version = "Pybook 1.9"
+        self.version = "Pybook 1.10"
         self.root = root
         self.root.geometry("850x400")
         self.root["bg"] = "coral"
@@ -73,6 +73,7 @@ class Ebook:
         self.menubar.add_command(label="DELETE", command= lambda: self.delete_file())
         self.menubar.add_command(label="RENAME", command= lambda: self.new_window(Rename))
         self.menubar.add_command(label="PAGE", command = self.save_page)
+        self.menubar.add_command(label="PAGE 2", command = self.save_page2)
         self.menubar.add_command(label="EBOOK", command = self.save_ebook)
         self.menubar.add_command(label="SAVE", command = self.save)       
         self.menubar.add_command(label="HELP", command= lambda: self.new_window(Help))

@@ -1,0 +1,254 @@
+
+<html>
+<head>
+<style>
+#customers {
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#customers td, #customers th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#customers tr:nth-child(even){background-color: #f2f2f2;}
+
+#customers tr:hover {background-color: #ddd;}
+
+#customers th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #4CAF50;
+  color: white;
+}
+</style>
+</head>
+<body>
+
+<div id="questionDiv"></div>
+
+<script>
+let quiz = {
+
+
+'ROE' : [, '+return on equity', 'return on investment', 'return on sales', 'return on debts' ], 'ROI' : [, '+return on investment', 'return on equity', 'return on sales', 'return on debts' ], 'ROD' : [, '+return on debts', 'return on equity', 'return on investment', 'return on sales' ], 'ROS' : [, '+return on sales', 'return on equity', 'return on investment', 'return on debts' ], 'ROE = redditività' : [, '+del capitale proprio', 'del capitale investito', 'delle vendite', 'del capitale di debito' ], 'ROI = redditività' : [, '+del capitale investito', 'del capitale proprio', 'delle vendite', 'del capitale di debito' ], 'ROS = redditività' : [, '+delle vendite', 'del capitale proprio', 'del capitale investito', 'del capitale di debito' ], 'ROD = redditività' : [, '+del capitale di debito', 'del capitale proprio', 'del capitale investito', 'delle vendite' ], 'Nell’Attivo dello Stato patrimoniale ci sono' : [, '+attivo circolante e immobilizzazioni', 'immobilizzazioni e patrimonio netto', 'debiti e capitale circolante', 'attivo fisso e capitale proprio' ], 'L’attivo circolante: dove si trova?' : [, '+nell’attivo dello Stato patrimoniale', 'nel conto economico', 'tra le passività', 'nel passivo dello Stato patrimoniale' ], 'Il patrimonio netto è uguale a' : [, '+attivo - debiti', 'ricavi - costi', 'debiti - crediti', 'Iva a credito - debiti' ], 'L’utile è dato da' : [, '+ricavi - costi', 'ricavi + costi', 'debiti - crediti', 'iva * 22%' ], 'i conti finanziarie funzionano a' : [, '+entrate ed uscite', 'costi e ricavi', 'costi e uscite', 'ricavi ed entrate' ], 'i conti economici funzionano a' : [, '+costi e ricavi', 'entrate ed uscite', 'costi e uscite', 'ricavi ed entrate' ], 'In dare dei conti finanziari si rilevano' : [, '+entrate, + crediti e -debiti', 'uscite, - crediti e +debiti', 'costi e rettifiche di ricavi', 'ricavi e rettifiche di costi' ], 'In avere dei conti finanziari si rilevano' : [, '+uscite, - crediti e +debiti', 'entrate, + crediti e -debiti', 'costi e rettifiche di ricavi', 'ricavi e rettifiche di costi' ], 'In dare dei conti economici si rilevano' : [, '+costi e rettifiche di ricavi', 'entrate, + crediti e -debiti', 'uscite, - crediti e +debiti', 'ricavi e rettifiche di costi' ], 'In avere dei conti economici si rilevano' : [, '+ricavi e rettifiche di costi', 'entrate, + crediti e -debiti', 'uscite, - crediti e +debiti', 'costi e rettifiche di ricavi' ], 'Il bilancio è formato da' : [, '+Stato patrimoniale, Conto economico e Nota integrativa', 'Stato patrimoniale e Conto economico', 'Stato patrimoniale e Nota integrativa', 'Stato patrimoniale' ], 'Gli indici di redditività danno informazioni sulla' : [, '+situazione economica', 'situazione finanziaria', 'situazione patrimoniale', 'sitazione fiscale' ],
+ 
+  }
+// 1 metto le domande in un array
+// 2 mischio l'array
+// 3 mostro le domande dall'array mischiato
+// 4 e poi le risposte dall'object quiz (con le risposte mischiate)
+
+//1 - metto le key in domande (lista)
+function classwork(){
+  // domande a risposta multipla casuali
+  let domande = [];
+  for (d in quiz){
+    domande.push(d);
+  }
+  //2 - mischio le domande
+  domande.sort(function() {
+      return .5 - Math.random();
+   });
+
+  // 3 mostro le domande con le risposte mischiate e senza segno +
+
+  for (d=1; d<11; d++){
+    questionDiv.innerHTML += d + ") <b>" + domande[d] + "</b>";
+    let risposte = quiz[domande[d]];
+    risposte.sort(function() {
+        return .5 - Math.random();
+     });
+    // tolgo il segno + dalla risposta esatta
+    for (r in risposte){
+        risposte[r] = risposte[r].replace("+","");
+    }
+    // mischio le risposte
+    risposte.forEach(element => questionDiv.innerHTML += "<li>" + element + "</li>" );
+    questionDiv.innerHTML += "<br><br>";
+  }
+}
+
+
+function conti(){
+  // ==============================================
+  // situazione patrimoniale
+  let conti_s = {
+                  "fabbricati": "100.000",
+                  "attrezzature" : "60.000",
+                  "Software" : "10.000",
+                  "impianti" : "40.000",
+                  "crediti verso clienti" : "10.000",
+                  "debiti verso fornitori" : "30.000",
+                  "automezzi" : "20.000",
+                  "Magazzino merci" : "10.000",
+  };
+  return conti_s;
+}
+  
+  // =============================================
+  // situazione economica
+
+function conti2(){
+  let conti_e = {
+                 "Costi merci" : "50.000",
+                  "Costi materie prime" : "35.000",
+                  "Costi trasporti" : "5.000",
+                  "Interessi passivi" : "3.000",
+                  "Ricavi prodotti venduti" : "180.000"
+  };
+  return conti_e;
+}
+
+
+//                       per rendere casuali alcuni valori
+function rnd(x){
+  // x è un array che viene mischiato e restituito
+    x.sort(function() {
+      return .5 - Math.random();
+    });
+  return x[0];};
+
+
+
+function tableCreate(){
+    dati =  [
+             ["Costi per acquisto merci", rnd(["50.000","30.000","60.000","25.000"])],
+             ["Costi per acquisto materie prime", "35.000"],
+             ["Costi per trasporti", "5.000"],
+             ["Interessi passivi", "3.000"],
+             ["Interessi attivi", "400"], 
+             ["Ricavi prodotti venduti", rnd(["280.000","250.000","200.000","230.000"])],
+             ["fabbricati", "100.000"],
+             ["attrezzature" , rnd(["60.000","65.000","55.000"])],
+             ["Software" , "10.000"],
+             ["impianti" , "40.000"],
+             ["crediti verso clienti" , "10.000"],
+             ["debiti verso fornitori" , "30.000"],
+             ["automezzi" , "20.000"],
+             ["mutui passivi","50.000"],
+             ["Magazzino merci" , "10.000"],
+             ["Stipendi del personale", "80.000"],
+             ["Denaro in cassa","2.000"],
+             ["Banca c/c attivi", "8.000"],
+             ["Debiti per TFR", "80.000"],
+             ["Fondi rischi e oneri", "5.000"]
+        ];
+    // Mischio i dati
+    dati.sort(function() {return .5 - Math.random();});
+    
+    let body = document.getElementById("questionDiv");
+    let tbl  = document.createElement('table');
+    tbl.classList.add('customers');
+    //tbl.style.width  = '50%';
+    //tbl.style.border = '1px solid black';
+
+    for(var rows = 0; rows < dati.length; rows++){
+        var tr = tbl.insertRow();
+        for(var cols = 0; cols < 2; cols++){
+            var td = tr.insertCell();
+            td.appendChild(document.createTextNode(dati[rows][cols]));
+            td.style.border = '1px solid black';
+            }
+        }
+    body.appendChild(tbl);
+    }
+
+
+
+
+                  //        VISUALIZZA COMPITO SINGOLO
+
+function makeCompito(student){ 
+  questionDiv.innerHTML += "<h4>Compito in classe di " + student + "</h4>";
+  questionDiv.innerHTML += "<h5>A) Rispondi alle seguenti domande a risposte multiple</h5>";
+  
+
+                      //   ESERCIZIO 1
+              // Domande a risposta multipla casuali
+                            classwork();
+
+  //                       ESERCIZIO 2
+  questionDiv.innerHTML += "<h5>B) Inserisci i seguenti dati nella situazione patrimoniale e calcola il patrimonio netto.</h5>"
+
+                        //    TABELLA DATI
+                            tableCreate();
+
+  //                        IMMAGINE TABELLA VUOTA DA COMPILARE
+  questionDiv.innerHTML += "<br><img src='schema.PNG' />"
+
+
+                      //  5 domande aperte
+  domandeAperte();
+  // interruzione di pagina =============================
+  questionDiv.innerHTML += "<div style='page-break-after:always'></div>";
+}
+
+
+function domandeAperte(){
+  // tra 10 domande ne dò 5 scelte a caso per ciascuno
+  // array con le dieci domande
+  da = ["Cos'è il capitale proprio?",
+  "Quali sono le fasi della gestione?",
+  "Come è composto il bilancio?",
+  "Come si calcola il ROE?",
+  "Come si calcola il ROI?",
+  "Cosa sono i conti finanziari?",
+  "Cosa sono i conti economici?",
+  "Come si calcola l'utile",
+  "Come si finanzia l'impresa?",
+  "Come vengono remunerati il capitale proprio e di terzi?"]
+
+  da.sort(function() {return .5 - Math.random();});
+  questionDiv.innerHTML += "<h5>C. Domande aperte</h5><ol>"
+  
+  for (d=0; d<5; d++){
+    questionDiv.innerHTML += "<li>" + da[d] + "</li>"
+  }
+  questionDiv.innerHTML += "</ol>"
+}
+
+
+
+      //    CREA TANTI COMPITI PER OGNI ALUNNO CON MAKECOMPITO
+
+function start(){
+  for (alunno in classe){
+    makeCompito(classe[alunno]);
+  }
+}
+// ==================== Nomi degli alunni ================
+let classe = ["Dapolito",
+      "Galietta",
+      "Giordano",
+      "Guariglia",
+      "Landi",
+      "Lembo",
+      "Mainente",
+      "Malzone",
+      "Mauro",
+      "Mazziotti",
+      "Pepe",
+      "Puglia",
+      "Saturno",
+      "Scelza",
+      "Tardio"
+    ];
+// =======================================================
+
+
+//         DOPO AVER LETTO classe => va a start => per ogni alunno => makeCompito
+
+
+start();
+
+</script>
+</body>
+</html>
+
+
+
+
