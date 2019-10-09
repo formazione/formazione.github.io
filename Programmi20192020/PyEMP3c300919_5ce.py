@@ -201,7 +201,11 @@ class Ebook:
             # opend the active (selected) item in the listbox
             with open(f"{self.current}.txt", "r", encoding="utf-8") as readfile:
                 read = readfile.read() # get the text of the active file
-                read = self.html_convert(read) # convert this text in html with *^=>
+                if "#html_convert" in read:
+                    read = read.replace("#html_convert", "<!-- page converted -->")
+                    read = self.html_convert(read)
+                else:
+                    pass# convert this text in html with *^=>with *^=>
                 htmlfile.write(read) # create the new file with the rendered text
         self.create_newlinks()
     
