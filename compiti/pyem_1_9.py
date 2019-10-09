@@ -8,7 +8,9 @@
 # version 1.5 - added menubar
 # version 1.6 - added highlight function to higlight code
 # if a line starts with ">"... so if there is >>> ...
-# 1.8 dark mode and light mode
+# 1.8 dark mode and light mode + - button and mousewheel size
+# 1.9 #html_convert; without you can use html with no issues
+#     # or copy entire html pages
 
 import tkinter as tk
 import glob
@@ -27,13 +29,11 @@ Added way to save render single txt file
 1.8: added dark and light theme
 added ctrl + - to increase decrease letters and menu too
 now it opens the first file at start 
-1.9 - ctrl + mousewheel to change font size; new help
 """
 
 class Ebook:
     def __init__(self, root):
         """Define window for the app"""
-        self.version = "Pybook 1.9"
         self.root = root
         self.root.geometry("850x400")
         self.root["bg"] = "coral"
@@ -64,7 +64,6 @@ class Ebook:
         self.themes.add_command(label="Dark mode", command=self.dark)
         self.themes.add_command(label="Light mode", command=self.light)
 
-        # the menu voices for the letters size
         self.letters = tk.Menu(self.root)
         self.letters.add_command(label="Big", command=self.big_letters)
         self.letters.add_command(label="Small", command=self.small_letters)
@@ -72,8 +71,8 @@ class Ebook:
         self.menubar.add_command(label="+", command = lambda: self.new_window(Win1))
         self.menubar.add_command(label="DELETE", command= lambda: self.delete_file())
         self.menubar.add_command(label="RENAME", command= lambda: self.new_window(Rename))
-        self.menubar.add_command(label="PAGE", command = self.save_page)
-        self.menubar.add_command(label="EBOOK", command = self.save_ebook)
+        self.menubar.add_command(label="Render Page", command = self.save_page)
+        self.menubar.add_command(label="Render Ebook", command = self.save_ebook)
         self.menubar.add_command(label="SAVE", command = self.save)       
         self.menubar.add_command(label="HELP", command= lambda: self.new_window(Help))
         self.menubar.add_cascade(label="THEME", menu=self.themes)
@@ -198,22 +197,12 @@ class Ebook:
             # opend the active (selected) item in the listbox
             with open(f"{current}.txt", "r", encoding="utf-8") as readfile:
                 read = readfile.read() # get the text of the active file
-                read = self.html_convert(read) # convert this text in html with *^=>
-                htmlfile.write(read) # create the new file with the rendered text
-        self.label_file_name["text"] += "...page rendered"
-        os.startfile(f"{current}.html")
-        # os.system("start ../index.html")
 
-    def save_page2(self):
-        """Save a single page v. 1.4 23/09/2019 at 05:40"""
-        self.save()
-        html = ""
-        current = self.lstb.get(tk.ACTIVE)[:-4] # The file selected without .txt
-        with open(f"{current}.html", "w", encoding="utf-8") as htmlfile:
-            # opend the active (selected) item in the listbox
-            with open(f"{current}.txt", "r", encoding="utf-8") as readfile:
-                read = readfile.read() # get the text of the active file
-                #read = self.html_convert(read) # convert this text in html with *^=>
+                if "#html_convert" in read:
+                    read = read.replace("#html_convert", "<!-- page converted -->")
+                    read = self.html_convert(read)
+                else:
+                    pass# convert this text in html with *^=>
                 htmlfile.write(read) # create the new file with the rendered text
         self.label_file_name["text"] += "...page rendered"
         os.startfile(f"{current}.html")
@@ -238,7 +227,7 @@ class Ebook:
 
     def html_convert(self, text_to_render):
         """Convert to my Markup language"""
-        html = "<style>body{font-size:2em;}</style>"
+        html = ""
         text_to_render = text_to_render.split("\n")
 
         for line in text_to_render:
@@ -318,40 +307,29 @@ class Rename():
         self.entry.focus()
         self.entry_var.set(app.filename.split("\\")[1])
         self.entry.bind("<Return>", lambda x: app.rename(self.entry.get()))
-        self.root.destroy()
 
 class Help():
     def __init__(self, root):
-        "The instructions and Shortcuts"
         self.root = root
-        self.root.config(bg="gold")
-        self.root.title("PyBook Help")
-
-        self.label_file_name = tk.Label(self.root, text=app.version, bg="gold")
+        self.root.title("Shortcuts")
+        self.label_file_name = tk.Label(self.root, text="Shortcuts")
         self.label_file_name.pack()
-        istruzioni = """Symbols that highlight the text
-------------
-* H2
+        istruzioni = """* H2
 ^ H3
 § <img src=...
 => red
 <F2> rename
-> To highlight code (python)
+> To highlight code
 
-Shortcuts
--------
-save text file ctrl + s
-rename file F2
-Render page ctrl + p
-Make ebook ctrl + b
-Increase text ctrl + + or mousewheel up
-Decrease text ctrl + - or mousewheel down
+HTML
+If you want to write html code
+or javascript do not write
+#html_convert in the page
 
-by Giovanni Gatto 2019
 """
-        self.lab_help = tk.Label(self.root, anchor="w", relief=tk.RIDGE)
-        self.lab_help["text"] = istruzioni
-        self.lab_help.pack(fill=tk.BOTH)
+        self.text = tk.Text(self.root, width=30, height=6)
+        self.text.insert("1.0", istruzioni)
+        self.text.pack(fill=tk.BOTH, expand=1)
 
 if __name__ == "__main__":
     # =============================== checks if folders exists &
@@ -368,5 +346,5 @@ if __name__ == "__main__":
 
     root = tk.Tk()
     app = Ebook(root)
-    app.root.title(app.version)
+    app.root.title("pyem_1_8_dark_mode")
     root.mainloop()
