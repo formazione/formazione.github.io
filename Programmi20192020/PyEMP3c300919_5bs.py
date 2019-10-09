@@ -80,7 +80,14 @@ class Ebook:
 
 
     def commit(self):
-        os.startfile("..\\commit.bat")
+        os.chdir("..")
+        print(os.getcwd())
+        os.system("git pull")
+        os.system("git add .")
+        os.system("git commit -m \"another update\"")
+        os.system("git push")
+        #os.startfile("..\\commit.bat")
+        print("All done")
 
     def delete_file(self):
         for num in self.lstb.curselection():
