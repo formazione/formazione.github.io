@@ -1,21 +1,137 @@
-partecipa = {
-	"D'Apolito'" : [0],
-	"Giordano" : [5],
-	"Guariglia": [1],
-	"Landi": [7]
-	"Lembo": [8],
-	"Mauro" : [8],
-	"Malzone" : [11],
-	"Mazziotti" : [1],
-	"Scelza" : [16],
-	"Mainente" : [7],
-	"Saturno" : [5],
-	"Puglia" : [2],
-	"Tardio" : [8]
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>4BSchart</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+</head>
+<style>
+  body{
+    color:white;
+    background-color: black;
+    font-size: 2em;
+  }
+  input {
+    align:middle;
+    text-align:center;
+    width:80%;
+    color:white;
+    background-color: darkblue;
+    font-size: 2em;
+  }
+  </style>
+  
+<body>
+    <img src="https://thumbs.dreamstime.com/t/rainbow-banner-8001796.jpg" width="100%" height="10%" style="opacity:0.5"/>
+    <div id="scoretot"></div>
+  
+  
+          <!--Punteggi passati -->
+  
+
+      <!--------------------menu bar index 26/2/19-------------------------------->
+<div id="menuDiv"></div>
+<script src="https://quarta.glitch.me/index_menu.js"></script>
+<!---------------------------------------------------->
+<br>
+    <a href="https://quarta.glitch.me/firebase/client.html">Torna a Esercizi LIVE</a>
+ <br><br>
+
+    <center>Punteggi 5bs</center>
+
+
+<script src="https://www.gstatic.com/firebasejs/5.9.2/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyDp-mWaWEI07pIdRUhi6vA-salEMRWz4hw",
+    authDomain: "quiz-e5e5a.firebaseapp.com",
+    databaseURL: "https://quiz-e5e5a.firebaseio.com",
+    projectId: "quiz-e5e5a",
+    storageBucket: "quiz-e5e5a.appspot.com",
+    messagingSenderId: "901845403492"
+  };
+  firebase.initializeApp(config);
+  let database = firebase.database();
+  let ref = database.ref("docente_4bs2018");
+  ref.on("value", gotData)
+
+  // IMAGES
+let pen = "<img src='https://images.vexels.com/media/users/3/156893/isolated/preview/048e149a96bdff520db53ddba885cf0d-pen-icon-travel-icons-by-vexels.png' width='30' />";
+let cup = "<img src='https://cdn2.iconfinder.com/data/icons/thesquid-ink-40-free-flat-icon-pack/64/cup-512.png' width='30' />";
+let party ="<img src='http://icons.iconarchive.com/icons/google/noto-emoji-activities/1024/52707-party-popper-icon.png' width='30' >";
+  
+let scoretot = document.getElementById("scoretot");
+scoretot.align = "center";
+function gotData(data){
+  scoretot.innerHTML = "";
+    x = data.val();
+  /*
+    for (n in x){
+     if (x[n] > 100){
+      scoretot.innerHTML += "<b style='color:coral'> " + n + cup +": </b><b style='background:coral'>" + x[n]  + " </b> "
+     }
+      else {
+       scoretot.innerHTML += "<b style='color:coral'> [ </b>" + n + ": " + x[n] + " <b style='color:coral'> ] </b> "
+      }
+  }
+  */
+let arr = Object.values(x);
+let min = Math.min(...arr);
+let max = Math.max(...arr);
+  let winner = "";
+  for (n in x){
+    if (parseInt(x[n])==max) winner=n;
+    };
+  
+//scoretot.innerHTML += "<br><center><br>In pole position " + party +  ": <u style='color:coral'>" + winner + "</u> con <b style='background:coral'>" + max + "</b> punti.</center>";
+  
+  let keysSorted = Object.keys(x).sort(function(a,b){return x[b]-x[a]})
+  scoretot.innerHTML += "<u style='color:coral'>Graduatoria:</u><br>"
+  scoretot.innerHTML += "<center>";
+  let newx = [];
+  for (n in keysSorted){
+  //let xx = [keysSorted[n],x[keysSorted[n]]];
+   newx.push([keysSorted[n],x[keysSorted[n]]]); 
+  }
+  console.log(newx);
+  for (n in keysSorted){
+    let num = parseInt(n)+1;
+    // nome del primo classificato
+    if (n == 0){
+   scoretot.innerHTML += "<b style='font-size:2.5em;color:red'>" + num + ". <u>" + keysSorted[n] + "</u></b> ";
+      scoretot.innerHTML += party + cup + "<b style='font-size:2.5em;background:coral'>" + x[keysSorted[n]] + "</b><br>"; ;
+    }
+    else if (n == 1){
+      scoretot.innerHTML += "<b style='font-size:2em;color:coral'>" + num + ". " + keysSorted[n] + "</b> ";
+      if (x[keysSorted[n]] > 100) scoretot.innerHTML += cup;
+      scoretot.innerHTML += "<b style='font-size:2em;background:coral'>" + x[keysSorted[n]] + "</b><br>"; ;
+    }
+  else if (n == 2){
+      scoretot.innerHTML += "<b style='font-size:1.5em;color:gold'>" + num + ". " + keysSorted[n] + "</b> ";
+      if (x[keysSorted[n]] > 100) scoretot.innerHTML += cup;
+      scoretot.innerHTML += "<b style='font-size:1.5em;background:coral'>" + x[keysSorted[n]] + "</b><br>"; ;
+    }
+    else {
+      scoretot.innerHTML += "<b style='font-size:1.0em;color:white'>" + num + ". " + keysSorted[n] + "</b> ";
+      if (x[keysSorted[n]] > 100) scoretot.innerHTML += cup;
+      scoretot.innerHTML += "<b style='font-size:1.0em;background:coral'>" + x[keysSorted[n]] + "</b><br>"; ;
+    }
+    /*
+    if (x[keysSorted[n]] >100 && n!=0 && n!=1 && n!=2){
+    scoretot.innerHTML += cup + "<b style='background:coral'>" + x[keysSorted[n]] + "</b><br>"; 
+    }
+    */
+    //else {scoretot.innerHTML +=  x[keysSorted[n]] + "<br>";}
+    }
 }
+  scoretot.innerHTML += "<center>";
 
+</script>
 
-for nome in partecipa:
-	print(nome,sum(partecipa[nome]))
-
+</body>
+</html>
 

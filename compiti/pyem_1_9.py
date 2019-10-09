@@ -346,5 +346,5 @@ if __name__ == "__main__":
 
     root = tk.Tk()
     app = Ebook(root)
-    app.root.title("pyem_1_8_dark_mode")
+    app.root.title("PyBook 1.9b")
     root.mainloop()
