@@ -14,8 +14,8 @@ import tkinter as tk
 import glob
 from time import sleep
 import os
+# update the repository where this file is (the home dir is ..)
 from commit import commit
-
 
 class Ebook:
     def __init__(self, root):
@@ -73,7 +73,7 @@ class Ebook:
         self.lstb.pack(fill=tk.Y, expand=1)
         self.lstb.bind("<<ListboxSelect>>", lambda x: self.show_text_in_editor())
         self.lstb.bind("<F2>", lambda x: self.new_window(Rename))
-        self.files = glob.glob("text_5bs\\*.txt")
+        self.files = glob.glob("text_5ce\\*.txt")
         print("self.files", self.files)
         for file in self.files:
             self.lstb.insert(tk.END, file)
@@ -82,9 +82,16 @@ class Ebook:
 
 
     def delete_file(self):
-        for num in self.lstb.curselection():
-            os.remove("{}.html".format(self.files[num][:-4]))
-            os.remove(self.files[num])
+        num = self.lstb.curselection()
+        print("delete: " + self.lstb.get(num))
+        try:
+            os.remove("{}.html".format(self.lstb.get(num)[:-4]))
+        except:
+            # in case the html file has not been rendered
+            pass
+        # remove the file selected
+        os.remove(self.lstb.get(num))
+        # reload the list updated
         self.reload_list_files_delete()
 
     def editor(self):
@@ -101,7 +108,7 @@ class Ebook:
 
     def html_convert(self, text_to_render):
         """Convert to my Markup language"""
-        html = "<style>body{font-size:2em;}</style>"
+        html = ""
         text_to_render = text_to_render.split("\n")
         print(text_to_render)
         for line in text_to_render:
@@ -133,31 +140,39 @@ class Ebook:
         self.new.destroy()
         if not filename.endswith(".txt"):
             filename += ".txt"
-        #os.chdir("text_5bs")
-        with open("text_5bs\\" + filename, "w", encoding="utf-8") as file:
+        #os.chdir("text_5ce")
+        with open("text_5ce\\" + filename, "w", encoding="utf-8") as file:
             file.write("")
         self.reload_list_files(filename)
 
     def reload_list_files(self, filename=""):
         #os.chdir("..")
         self.lstb.delete(0, tk.END)
-        self.files = [f for f in glob.glob("text_5bs\\*txt")]
+        self.files = [f for f in glob.glob("text_5ce\\*txt")]
         for file in self.files:
             self.lstb.insert(tk.END, file)
-        self.lstb.select_set(self.files.index("text_5bs\\" + filename))
+        self.lstb.select_set(self.files.index("text_5ce\\" + filename))
 
     def reload_list_files_delete(self, filename=""):
         #os.chdir("..")
         self.lstb.delete(0, tk.END)
-        self.files = [f for f in glob.glob("text_5bs\\*txt")]
+        self.files = [f for f in glob.glob("text_5ce\\*txt")]
         for file in self.files:
             self.lstb.insert(tk.END, file)
 
-    def rename(self, filename):
-        self.lstb.delete("active")
-        os.rename(self.filename, "text_5bs\\" + filename)
-        self.files = glob.glob("text_5bs\\*.txt")
-        self.reload_list_files(filename)
+    def rename(self, new_filename):
+        num = self.lstb.curselection()
+        text_file = self.lstb.get(num)
+        file_html = text_file[:-4] + ".html"
+        # substitute the old filename with the new filename
+        # self.filename (old)
+        os.rename(self.filename, "text_5ce\\" + new_filename)
+        os.rename(file_html, "text_5ce\\" + new_filename[:-4] + ".html")
+        #self.lstb.delete("active")
+        
+        
+        self.files = glob.glob("text_5ce\\*.txt")
+        self.reload_list_files(new_filename)
 
 
     def save(self):
@@ -189,12 +204,12 @@ class Ebook:
                     read = read.replace("#html_convert", "<!-- page converted -->")
                     read = self.html_convert(read)
                 else:
-                    pass# convert this text in html with *^=>
+                    pass# convert this text in html with *^=>with *^=>
                 htmlfile.write(read) # create the new file with the rendered text
         self.create_newlinks()
     
     def create_newlinks(self):    
-        with open("..\\newlinks_5bs.js", "w") as filejs:
+        with open("..\\newlinks_5ce.js", "w") as filejs:
             linka = str(self.lstb.get(tk.ACTIVE))
             linka = linka.split("\\")[1]
             self.current = self.current.split("\\")[1]
@@ -203,7 +218,7 @@ class Ebook:
             # THEY WILL SHOW UP INTO DIFFERENT DIVS???
             # CREATE THE LINKS TO THE HTML PAGES SAVED AS SINGLE FILES
             listofhtml = []
-            for file in os.listdir("text_5bs"):
+            for file in os.listdir("text_5ce"):
                 if file.endswith(".html"):
                     listofhtml.append(file)
             html1 = ""
@@ -212,16 +227,16 @@ class Ebook:
                 # I write the new link from the above list into the js file... then git commit to
                 # have it on the web site
                 # We will have a DIV THAT GETS THE LINKS FOR THIS PYEM AND RELATIVE FOLDER
-                # WE NEED A DIV newlinks_5bs and a js file newlinks_5bs.js and a <script src="newlinks5bs"
+                # WE NEED A DIV newlinks_5ce and a js file newlinks_5ce.js and a <script src="newlinks5ce"
                 # just copy everything in index.html, put in place and copy th js fil
-                html1+= """newlinks_5bs.innerHTML += "<a href='Programmi20192020/text_5bs/{}'>{}</a><br>"
+                html1+= """newlinks_5ce.innerHTML += "<a href='Programmi20192020/text_5ce/{}'>{}</a><br>"
                 """.format(file, file)
             filejs.write(html1)
 
 
 
         self.label_file_name["text"] += "...page rendered +"
-        os.startfile("text_5bs\\{}.html".format(self.current))
+        os.startfile("text_5ce\\{}.html".format(self.current))
         os.system("start ../index.html")
 
     def show_text_in_editor(self):
@@ -265,17 +280,17 @@ class Win1():
 
 if __name__ == "__main__":
     #  checks if folders exists & creates them if not
-    if "text_5bs" in os.listdir():
-        print("text_5bs folder exists")
+    if "text_5ce" in os.listdir():
+        print("text_5ce folder exists")
     else:
-        os.mkdir("text_5bs")
-        print("text_5bs folder created")
+        os.mkdir("text_5ce")
+        print("text_5ce folder created")
     if "img" in os.listdir():
         print("img folder exists")
     else:
         os.mkdir("img")
-        print("text_5bs folder created")
+        print("text_5ce folder created")
     root = tk.Tk()
     app = Ebook(root)
-    app.root.title("Appunti 5bs PyEMP3c")
+    app.root.title("Appunti 5ce PyEMP3c")
     root.mainloop()

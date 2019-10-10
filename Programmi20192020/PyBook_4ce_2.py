@@ -9,11 +9,13 @@
   # project: 
 # personal3c30092019 - bug: do not connect to a link index.html => render page => newlink.js
 # look for the ...
+# PyBook_4ce_2: commit is an external module
 
 import tkinter as tk
 import glob
 from time import sleep
 import os
+from commit import commit
 
 
 class Ebook:
@@ -27,7 +29,6 @@ class Ebook:
         self.root.bind("<Control-b>", lambda x: self.save_ebook())
         self.lstb.select_set(0)
         self.filename = self.lstb.get("active")
-        self.show_text_in_editor()
 
     # Widgets on the left ===============|
     def menu(self):
@@ -46,7 +47,7 @@ class Ebook:
         self.button_page.pack()
 
         # commit to git
-        self.button_commit = tk.Button(self.frame2, text="Commit", command = self.commit)
+        self.button_commit = tk.Button(self.frame2, text="Commit", command = commit)
         self.button_commit.pack()
 
         self.button_plus = tk.Button(self.frame2, text="+", command =lambda: self.new_window(Win1))
@@ -72,15 +73,12 @@ class Ebook:
         self.lstb.pack(fill=tk.Y, expand=1)
         self.lstb.bind("<<ListboxSelect>>", lambda x: self.show_text_in_editor())
         self.lstb.bind("<F2>", lambda x: self.new_window(Rename))
-        self.files = glob.glob("text_5ce\\*.txt")
+        self.files = glob.glob("text_4ce\\*.txt")
         print("self.files", self.files)
         for file in self.files:
             self.lstb.insert(tk.END, file)
         self.lstb.bind("<Control-p>", lambda x: self.save_page())
 
-
-    def commit(self):
-        os.startfile("..\\commit.bat")
 
     def delete_file(self):
         num = self.lstb.curselection()
@@ -141,23 +139,23 @@ class Ebook:
         self.new.destroy()
         if not filename.endswith(".txt"):
             filename += ".txt"
-        #os.chdir("text_5ce")
-        with open("text_5ce\\" + filename, "w", encoding="utf-8") as file:
+        #os.chdir("text_4ce")
+        with open("text_4ce\\" + filename, "w", encoding="utf-8") as file:
             file.write("")
         self.reload_list_files(filename)
 
     def reload_list_files(self, filename=""):
         #os.chdir("..")
         self.lstb.delete(0, tk.END)
-        self.files = [f for f in glob.glob("text_5ce\\*txt")]
+        self.files = [f for f in glob.glob("text_4ce\\*txt")]
         for file in self.files:
             self.lstb.insert(tk.END, file)
-        self.lstb.select_set(self.files.index("text_5ce\\" + filename))
+        self.lstb.select_set(self.files.index("text_4ce\\" + filename))
 
     def reload_list_files_delete(self, filename=""):
         #os.chdir("..")
         self.lstb.delete(0, tk.END)
-        self.files = [f for f in glob.glob("text_5ce\\*txt")]
+        self.files = [f for f in glob.glob("text_4ce\\*txt")]
         for file in self.files:
             self.lstb.insert(tk.END, file)
 
@@ -167,12 +165,12 @@ class Ebook:
         file_html = text_file[:-4] + ".html"
         # substitute the old filename with the new filename
         # self.filename (old)
-        os.rename(self.filename, "text_5ce\\" + new_filename)
-        os.rename(file_html, "text_5ce\\" + new_filename[:-4] + ".html")
+        os.rename(self.filename, "text_4ce\\" + new_filename)
+        os.rename(file_html, "text_4ce\\" + new_filename[:-4] + ".html")
         #self.lstb.delete("active")
         
         
-        self.files = glob.glob("text_5ce\\*.txt")
+        self.files = glob.glob("text_4ce\\*.txt")
         self.reload_list_files(new_filename)
 
 
@@ -210,7 +208,7 @@ class Ebook:
         self.create_newlinks()
     
     def create_newlinks(self):    
-        with open("..\\newlinks_5ce.js", "w") as filejs:
+        with open("..\\newlinks_4ce.js", "w") as filejs:
             linka = str(self.lstb.get(tk.ACTIVE))
             linka = linka.split("\\")[1]
             self.current = self.current.split("\\")[1]
@@ -219,7 +217,7 @@ class Ebook:
             # THEY WILL SHOW UP INTO DIFFERENT DIVS???
             # CREATE THE LINKS TO THE HTML PAGES SAVED AS SINGLE FILES
             listofhtml = []
-            for file in os.listdir("text_5ce"):
+            for file in os.listdir("text_4ce"):
                 if file.endswith(".html"):
                     listofhtml.append(file)
             html1 = ""
@@ -228,16 +226,16 @@ class Ebook:
                 # I write the new link from the above list into the js file... then git commit to
                 # have it on the web site
                 # We will have a DIV THAT GETS THE LINKS FOR THIS PYEM AND RELATIVE FOLDER
-                # WE NEED A DIV newlinks_5ce and a js file newlinks_5ce.js and a <script src="newlinks5ce"
+                # WE NEED A DIV newlinks_4ce and a js file newlinks_4ce.js and a <script src="newlinks4ce"
                 # just copy everything in index.html, put in place and copy th js fil
-                html1+= """newlinks_5ce.innerHTML += "<a href='Programmi20192020/text_5ce/{}'>{}</a><br>"
+                html1+= """newlinks_4ce.innerHTML += "<a href='Programmi20192020/text_4ce/{}'>{}</a><br>"
                 """.format(file, file)
             filejs.write(html1)
 
 
 
         self.label_file_name["text"] += "...page rendered +"
-        os.startfile("text_5ce\\{}.html".format(self.current))
+        os.startfile("text_4ce\\{}.html".format(self.current))
         os.system("start ../index.html")
 
     def show_text_in_editor(self):
@@ -281,17 +279,17 @@ class Win1():
 
 if __name__ == "__main__":
     #  checks if folders exists & creates them if not
-    if "text_5ce" in os.listdir():
-        print("text_5ce folder exists")
+    if "text_4ce" in os.listdir():
+        print("text_4ce folder exists")
     else:
-        os.mkdir("text_5ce")
-        print("text_5ce folder created")
+        os.mkdir("text_4ce")
+        print("text_4ce folder created")
     if "img" in os.listdir():
         print("img folder exists")
     else:
         os.mkdir("img")
-        print("text_5ce folder created")
+        print("text_4ce folder created")
     root = tk.Tk()
     app = Ebook(root)
-    app.root.title("Appunti 5ce PyEMP3c")
+    app.root.title("Appunti 4ce PyEMP3c")
     root.mainloop()
