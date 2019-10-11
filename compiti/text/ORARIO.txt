@@ -1,0 +1,12 @@
+Orario
+1	2	3	4	5	6
+5°BS	D	5°CE	D	4°CE	.
+5°CE	5°BS	5°BS	.	.	.
+4°CE	4°CE	D	5°BS	5°CE
+.	.	.	5°BS	5°CE	4°CE
+.	4°CE	.	5°CE	.	.
+
+4a ora 11 - 11.50
+5a ora 11.50 - 12.40
+6a ora  12.40 - 13.30
+

@@ -29,10 +29,13 @@ class Ebook:
         self.lstb.select_set(0)
         self.filename = self.lstb.get("active")
         self.show_text_in_editor()
+        self.hidden = 0
+        self.root.bind("<Control-l>", lambda x: self.hide())
 
     # Widgets on the left ===============|
     def menu(self):
         """Listbox on the left with file names"""
+
         self.frame2 = tk.Frame(self.root)
         self.frame2["bg"] = "coral"
         self.frame2.pack(side='left', fill=tk.Y)
@@ -78,6 +81,13 @@ class Ebook:
         for file in self.files:
             self.lstb.insert(tk.END, file)
         self.lstb.bind("<Control-p>", lambda x: self.save_page())
+
+
+    def hide(self):
+        self.frame1.pack_forget()
+        self.frame2.pack_forget()
+
+
 
 
 

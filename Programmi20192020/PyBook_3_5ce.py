@@ -35,7 +35,27 @@ class Ebook:
         """Listbox on the left with file names"""
 
         # The menubar
+        self.menubar = tk.Menu(self.root)
+        # List of themes
+        self.themes = tk.Menu(self.root)
+        self.themes.add_command(label="Dark mode", command=self.dark)
+        self.themes.add_command(label="Light mode", command=self.light)
 
+        self.letters = tk.Menu(self.root)
+        self.letters.add_command(label="Big", command=self.big_letters)
+        self.letters.add_command(label="Small", command=self.small_letters)
+
+        self.menubar.add_command(label="+", command = lambda: self.new_window(Win1))
+        self.menubar.add_command(label="DELETE", command= lambda: self.delete_file())
+        self.menubar.add_command(label="RENAME", command= lambda: self.new_window(Rename))
+        self.menubar.add_command(label="Render Page", command = self.save_page)
+        self.menubar.add_command(label="Render Ebook", command = self.save_ebook)
+        self.menubar.add_command(label="SAVE", command = self.save)       
+        self.menubar.add_command(label="HELP", command= lambda: self.new_window(Help))
+        self.menubar.add_cascade(label="THEME", menu=self.themes)
+        self.menubar.add_cascade(label="LETTERS", menu=self.letters)
+        #self.root.config(menu=self.menu_theme)
+        self.root.config(menu=self.menubar)
 
 
 

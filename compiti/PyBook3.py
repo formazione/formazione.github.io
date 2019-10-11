@@ -38,16 +38,26 @@ class Ebook:
         self.root.geometry("850x400")
         self.root["bg"] = "coral"
         self.menu()
+
+
+        self.filelist() # add for hide *********************
         self.editor()
         self.letter_size = 24
         self.root.bind("<Control-b>", lambda x: self.save_ebook())
         self.root.bind("<Control-+>", lambda x: self.big_letters())
         self.root.bind("<Control-minus>", lambda x: self.small_letters())
         self.root.bind("<Control-MouseWheel>", lambda x: self.wheel(x))
-        # Start with the first file opened
+
         self.lstb.select_set(0)
         self.filename = self.lstb.get("active")
+
+
+        self.index = self.lstb.curselection() # add for hide *********
         self.show_text_in_editor()
+        self.root.bind("<Control-l>", lambda x: self.hide())
+
+        # new 1
+        self.hidden = 0 # add for hide *****************
 
 
     # Widgets on the left ===============|
@@ -80,6 +90,7 @@ class Ebook:
         #self.root.config(menu=self.menu_theme)
         self.root.config(menu=self.menubar)
 
+    def filelist(self):  # add for hide *******************
         self.frame1 = tk.Frame(self.root)
         self.frame1["bg"] = "coral"
         self.frame1.pack(side='left', fill=tk.Y)
@@ -93,6 +104,20 @@ class Ebook:
 
         for file in self.files:
             self.lstb.insert(tk.END, file)
+
+
+    def hide(self):
+        if self.hidden == 0:
+            
+            self.frame1.destroy()
+            self.hidden = 1
+        else:
+            self.frame2.destroy()
+            self.filelist()
+            self.editor()
+            self.lstb.select_set(self.index)
+            self.show_text_in_editor()
+            self.hidden = 0
 
 
     # Themes
@@ -257,11 +282,11 @@ class Ebook:
 
     def show_text_in_editor(self):
         """Shows text of selected file in the editor"""
-        
+        self.index = self.lstb.curselection() # add for hide ******
         if not self.lstb.curselection() is ():
-            index = self.lstb.curselection()[0]
+            #index = self.lstb.curselection()[0]
             #self.filename = self.files[index] # instead of self.lstb.get(index)
-            self.filename = self.lstb.get(index)
+            self.filename = self.lstb.get(self.index) # hide: change to self *** 
             with open(self.filename, "r", encoding="utf-8") as file:
                 content = file.read()
             self.text.delete("1.0", tk.END)
@@ -270,9 +295,15 @@ class Ebook:
 
     def editor(self):
         """The text where you can write"""
-        self.label_file_name = tk.Label(self.root, text="Editor - choose a file on the left")
+
+        # hide: add frame2 and to label and text
+        self.frame2 = tk.Frame(self.root) # hide
+        self.frame2["bg"] = "coral" # hide
+        self.frame2.pack(side='left', fill=tk.Y) # hide
+
+        self.label_file_name = tk.Label(self.frame2, text="Editor - choose a file on the left")
         self.label_file_name.pack()
-        self.text = tk.Text(self.root, wrap=tk.WORD)
+        self.text = tk.Text(self.frame2, wrap=tk.WORD)
         self.text['bg'] = "darkgreen"
         self.text['fg'] = 'white'
         self.text['font'] = "Arial 24"

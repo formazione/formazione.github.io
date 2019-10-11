@@ -1,0 +1,33 @@
+Changes to add hide to pybook
+add to 4ce 3 5ce
+
+line 43 55 60 Ebook
+        self.filelist() # add for hide *********************
+        self.index = self.lstb.curselection() # add for hide *********
+		self.hidden = 0 # add for hide *****************
+
+93 prima di frame1
+    def filelist(self):  # add for hide *******************
+
+
+after filelist()
+    def hide(self):
+        if self.hidden == 0:
+            
+            self.frame1.destroy()
+            self.hidden = 1
+        else:
+            self.frame2.destroy()
+            self.filelist()
+            self.editor()
+            self.lstb.select_set(self.index)
+            self.show_text_in_editor()
+            self.hidden = 0
+
+
+show_textin editor first line
+        self.index = self.lstb.curselection() # add for hide ******
+comment this after if not...
+            #index = self.lstb.curselection()[0]
+and after the commented line change index to self.index
+            self.filename = self.lstb.get(self.index) # hide: change to self 
