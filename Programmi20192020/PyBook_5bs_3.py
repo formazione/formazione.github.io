@@ -226,6 +226,14 @@ class Ebook:
         self.label_file_name["text"] += "...Opening Ebook"
         os.startfile("ebook.html")
 
+    def convert_if(self, read):
+        if "#html_convert" in read:
+            read = read.replace("#html_convert", "<!-- page converted -->")
+            read = self.html_convert(read)
+        else:
+            pass# convert this text in html with *^=>
+        return read
+
     def save_page(self):
         """Save a single page v. 1.4 23/09/2019 at 05:40"""
         self.save()
@@ -235,11 +243,7 @@ class Ebook:
             # opend the active (selected) item in the listbox
             with open(f"{self.current}.txt", "r", encoding="utf-8") as readfile:
                 read = readfile.read() # get the text of the active file
-                if "#html_convert" in read:
-                    read = read.replace("#html_convert", "<!-- page converted -->")
-                    read = self.html_convert(read)
-                else:
-                    pass# convert this text in html with *^=>
+                read = self.convert_if(read) # searches for #html_convert tag
                 htmlfile.write(read) # create the new file with the rendered text
         self.create_newlinks()
     
