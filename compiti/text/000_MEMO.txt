@@ -1,7 +1,2 @@
-- App per aggiornate punteggi 5ce 4ce
-	usare python?
 
-Finanziamenti 4ce
-Compito Bilancio 5ce
-Verifiche 5bs
 

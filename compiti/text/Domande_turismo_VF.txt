@@ -36,3 +36,4 @@ Il turismo di massa va dal <input id="d9a" type="text" onkeyup="see(this,'1960')
 Dal 1990 ad oggi abbiamo il turismo <input id="d10" type="text" onkeyup="see(this,'globale')")  size="7"  placeholder="turismo ...">
 
 
+

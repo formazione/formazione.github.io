@@ -1,9 +1,0 @@
-#html_convert
-
-With #html_convert the text will be converted to some simple html page.
-
-Without it you can write text with html tags and also javascript scripts without problems.
-
-
-
-

@@ -1,5 +1,11 @@
 04/10/2019 - Aggiornato pyem => pybook 1.6 (highlight)
 06/10/2019 - PyBook 1.8: dark mode e increase/reduce letters size
+11/10/2019 - Pybook 1.9b: #html_convert to make some simple conversion from text to html with some markup. Without this tag I can write plain text or full html code and javascript with no problem. I can copy and paste an html file and it will be rendered correctly.
+11/10/2019
+- autosave when change selection or quit page
+
+
+
 
 
 
