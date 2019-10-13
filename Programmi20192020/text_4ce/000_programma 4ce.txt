@@ -1,0 +1,22 @@
+#html_convert
+1. Recupero Titoli di credito e Fattura
+- Cambiali
+- Assegni
+- Fattura: Scorporo IVA
+- Riparto costi di trasporto su fattura
+
+2. Finanziamenti
+- Finanziamento e fabbisogno finanziario
+- Capitale proprio e utile
+- Capitale di terzi e interessi
+- Calcolo degli interessi
+
+
+
+
+
+
+
+
+
+

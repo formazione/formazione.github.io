@@ -282,8 +282,15 @@ class Ebook:
 
     def show_text_in_editor(self):
         """Shows text of selected file in the editor"""
+        with open(self.filename) as file:
+	        if file.read() == self.text.get("1.0", tk.END):
+	        	print("Niente da salvare")
+	        	pass
+	        else:
+	        	print(self.filename)
+		        self.save()
         self.index = self.lstb.curselection() # add for hide ******
-        if not self.lstb.curselection() is ():
+        if self.lstb.curselection() != ():
             #index = self.lstb.curselection()[0]
             #self.filename = self.files[index] # instead of self.lstb.get(index)
             self.filename = self.lstb.get(self.index) # hide: change to self *** 
