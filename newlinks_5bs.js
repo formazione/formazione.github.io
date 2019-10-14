@@ -1,4 +1,5 @@
-newlinks_5bs.innerHTML += "<a href='Programmi20192020/text_5bs/5ce_turismo.html'>5ce_turismo.html</a><br>"
+newlinks_5bs.innerHTML += "<a href='Programmi20192020/text_5bs/000_Programma.html'>000_Programma.html</a><br>"
+                newlinks_5bs.innerHTML += "<a href='Programmi20192020/text_5bs/5ce_turismo.html'>5ce_turismo.html</a><br>"
                 newlinks_5bs.innerHTML += "<a href='Programmi20192020/text_5bs/Esercizio_Turismo.html'>Esercizio_Turismo.html</a><br>"
                 newlinks_5bs.innerHTML += "<a href='Programmi20192020/text_5bs/fonti.html'>fonti.html</a><br>"
                 newlinks_5bs.innerHTML += "<a href='Programmi20192020/text_5bs/letture.html'>letture.html</a><br>"
