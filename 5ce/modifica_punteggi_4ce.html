@@ -112,7 +112,23 @@ dbRef1.on("value", snap => n1 = snap.val())</script><tr>
     var h1alunno12 = document.getElementById("h1alunno12");
   var dbRef12 = firebase.database().ref().child("4CE").child("Merola");
   dbRef12.on("value", snap => h1alunno12.innerText = snap.val());
-  dbRef12.on("value", snap => n12 = snap.val())</script><tr><td><button type="button" class="btn btn-warning btn-lg" onclick="dbRef13.set(--n13)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRef13.set(++n13)"> + </button>Romano<td><i id="h1alunno13"></i></p><script>
+  dbRef12.on("value", snap => n12 = snap.val())</script><tr>
+
+
+<!-- palladino -->
+
+<td>
+<button type="button" class="btn btn-warning btn-lg" onclick="dbRef12b.set(--n1)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRef12b.set(++n1)"> + </button>Palladino<td><i id="h1alunno12b"></i></p><script>
+var h1alunno12b = document.getElementById("h1alunno12b");
+var dbRef12b = firebase.database().ref().child("4CE").child("Palladino");
+dbRef12b.on("value", snap => h1alunno12b.innerText = snap.val());
+dbRef12b.on("value", snap => n1 = snap.val())</script><tr>
+
+
+
+
+
+  	<td><button type="button" class="btn btn-warning btn-lg" onclick="dbRef13.set(--n13)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRef13.set(++n13)"> + </button>Romano<td><i id="h1alunno13"></i></p><script>
     var h1alunno13 = document.getElementById("h1alunno13");
   var dbRef13 = firebase.database().ref().child("4CE").child("Romano");
   dbRef13.on("value", snap => h1alunno13.innerText = snap.val());
