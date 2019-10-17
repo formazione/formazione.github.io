@@ -178,6 +178,7 @@ class Ebook:
         #os.chdir("text")
         with open("text\\" + filename, "w", encoding="utf-8") as file:
             file.write("")
+        self.filename = filename
         self.reload_list_files(filename)
 
     def reload_list_files(self, filename=""):
@@ -198,7 +199,14 @@ class Ebook:
     def delete_file(self):
         for num in self.lstb.curselection():
             os.remove(self.files[num])
-        self.reload_list_files_delete()
+        self.lstb.delete(self.index)
+        self.lstb.select_set(0)
+        if self.lstb.curselection() != ():
+            self.filename = self.lstb.get(self.lstb.curselection()[0])
+            with open(self.filename):
+                self.text.insert("1.0", file)
+            self.start = 1
+            self.reload_list_files_delete()
 
     def save(self):
         if self.text.get("1.0", tk.END) != "":
@@ -287,9 +295,10 @@ class Ebook:
 
     def show_text_in_editor(self):
         """Shows text of selected file in the editor"""
+
         if self.start == 0:
             with open(self.filename) as file:
-                if file.read() == self.text.get("1.0", tk.END):
+                if file.read() == self.text.get("1.0", tk.END)[:-1]:
                     print("Niente da salvare")
                     pass
                 else:

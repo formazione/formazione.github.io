@@ -92,11 +92,27 @@ dbRef1.on("value", snap => n1 = snap.val())</script><tr>
     var h1alunno7 = document.getElementById("h1alunno7");
   var dbRef7 = firebase.database().ref().child("4CE").child("Fluri");
   dbRef7.on("value", snap => h1alunno7.innerText = snap.val());
-  dbRef7.on("value", snap => n7 = snap.val())</script><tr><td><button type="button" class="btn btn-warning btn-lg" onclick="dbRef8.set(--n8)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRef8.set(++n8)"> + </button>Gonoshi<td><i id="h1alunno8"></i></p><script>
+  dbRef7.on("value", snap => n7 = snap.val())</script><tr>
+
+
+<td>
+<button type="button" class="btn btn-warning btn-lg" onclick="dbRef7b.set(--n1)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRef7b.set(++n1)"> + </button>Ghiunghius<td><i id="h1alunno7b"></i></p><script>
+var h1alunno7b = document.getElementById("h1alunno7b");
+var dbRef7b = firebase.database().ref().child("4CE").child("Ghiunghius");
+dbRef7b.on("value", snap => h1alunno7b.innerText = snap.val());
+dbRef7b.on("value", snap => n1 = snap.val())</script><tr>
+
+
+
+    <td><button type="button" class="btn btn-warning btn-lg" onclick="dbRef8.set(--n8)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRef8.set(++n8)"> + </button>Gonoshi<td><i id="h1alunno8"></i></p><script>
     var h1alunno8 = document.getElementById("h1alunno8");
   var dbRef8 = firebase.database().ref().child("4CE").child("Gonoshi");
   dbRef8.on("value", snap => h1alunno8.innerText = snap.val());
-  dbRef8.on("value", snap => n8 = snap.val())</script><tr><td><button type="button" class="btn btn-warning btn-lg" onclick="dbRef9.set(--n9)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRef9.set(++n9)"> + </button>Liguori<td><i id="h1alunno9"></i></p><script>
+  dbRef8.on("value", snap => n8 = snap.val())</script><tr>
+
+
+
+    <td><button type="button" class="btn btn-warning btn-lg" onclick="dbRef9.set(--n9)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRef9.set(++n9)"> + </button>Liguori<td><i id="h1alunno9"></i></p><script>
     var h1alunno9 = document.getElementById("h1alunno9");
   var dbRef9 = firebase.database().ref().child("4CE").child("Liguori");
   dbRef9.on("value", snap => h1alunno9.innerText = snap.val());

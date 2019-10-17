@@ -1,20 +1,5 @@
-#html_convert
-1. Recupero Titoli di credito e Fattura
-- Cambiali
-- Assegni
-- Fattura: Scorporo IVA
-- Riparto costi di trasporto su fattura
+Finire correggere esercizio
 
-2. Finanziamenti
-Fasi della gestione: Fin,INV,PRod,DIS
-Finanziamento e fabbisogno finanziario
-Capitale proprio e utile
-Capitale di terzi e interessi
-Calcolo degli interessi
-Interessi di dilazione e di mora
-Azioni ed obbligazioni
-debitori e creditori
-Capitale proprio e di terzi
 Debiti di finanziamento e di regolamento
 Banche
 funzione di intermediazione creditizia
@@ -24,15 +9,6 @@ soggetti in avanzo e disavanzo finanziario
 Chi sono i siaf e i sidf?
 Funzione monetaria:
 assegni bancari e circolari, bonifici, carte di credito e debito, servizio ADUE e MAV.
-
-
-
-
-
-
-
-
-
 
 
 

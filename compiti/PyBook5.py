@@ -287,9 +287,10 @@ class Ebook:
 
     def show_text_in_editor(self):
         """Shows text of selected file in the editor"""
+
         if self.start == 0:
             with open(self.filename) as file:
-                if file.read() == self.text.get("1.0", tk.END):
+                if file.read() == self.text.get("1.0", tk.END)[:-1]:
                     print("Niente da salvare")
                     pass
                 else:

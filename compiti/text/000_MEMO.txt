@@ -1,6 +1,0 @@
-tkinter
-html
-Domande vf
-si mescolano
-crea tante pagine, una per alunno
-

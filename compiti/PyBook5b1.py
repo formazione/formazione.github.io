@@ -196,8 +196,15 @@ class Ebook:
             self.lstb.insert(tk.END, file)
 
     def delete_file(self):
-        for num in self.lstb.curselection():
-            os.remove(self.files[num])
+        os.remove(self.filename)
+        self.lstb.delete(self.index)
+        self.lstb.select_set(0)
+        self.filename = self.lstb.get(0)
+        if self.lstb.curselection() != ():
+            with open(self.filename, "r", encoding="utf-8") as file:
+                file = file.read()
+                self.text.insert("1.0", file)
+        self.start = 1
         self.reload_list_files_delete()
 
     def save(self):
@@ -287,9 +294,10 @@ class Ebook:
 
     def show_text_in_editor(self):
         """Shows text of selected file in the editor"""
+
         if self.start == 0:
             with open(self.filename) as file:
-                if file.read() == self.text.get("1.0", tk.END):
+                if file.read() == self.text.get("1.0", tk.END)[:-1]:
                     print("Niente da salvare")
                     pass
                 else:

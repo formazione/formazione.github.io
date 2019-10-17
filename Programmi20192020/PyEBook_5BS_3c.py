@@ -236,7 +236,7 @@ class Ebook:
         os.startfile("ebook.html")
 
     def convert_if(self, read):
-        if "#html_convert" in read:
+        if "#html_convert" in read or "#html_render" in read:
             read = read.replace("#html_convert", "<!-- page converted -->")
             read = self.html_convert(read)
         else:

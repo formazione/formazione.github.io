@@ -1,0 +1,150 @@
+<pre>
+Pag. 268 es. 28
+Una spa ha 40.000 azioni
+valore nominale 15
+
+Socio a 10.000 azioni
+socio b 15.000 azioni
+socio c 12.000 azioni
+socio d 3.000 azioni
+</pre>
+<p>
+Successivamenti i soci hanno versato 20.000 € ciascuno.
+Negli anni hanno rinunciato a prelevare 60.000 €.
+L'utile dell'esercizio di 35.800 è stato prelevato per il 25%.
+</p>
+<p>
+Calcola il Capitale proprio.
+</p>
+<br>
+Nome: <input type="text"><br>
+Soluzione:<input type="text"><br>
+
+<div id="prosegui"></div>
+<script src="https://www.gstatic.com/firebasejs/4.10.1/firebase.js"></script>
+<script>
+
+  var config = {
+    apiKey: "AIzaSyDp-mWaWEI07pIdRUhi6vA-salEMRWz4hw",
+    authDomain: "quiz-e5e5a.firebaseapp.com",
+    databaseURL: "https://quiz-e5e5a.firebaseio.com/",
+    projectId: "quiz-e5e5a",
+    storageBucket: "quiz-e5e5a.appspot.com",
+    messagingSenderId: "901845403492"
+  };
+  firebase.initializeApp(config);
+  let database = firebase.database();
+ref = database.ref().child("es28");
+  ref.on("value", gotData, errData);
+
+function gotData(data){
+    prosegui.innerHTML = "";
+    x = data.val();
+    for (n in x){
+      prosegui.innerHTML += n + ": " + x[n] + "<br>"
+    }
+  }
+function errData(err){
+    console.log("Error");
+    console.log(err);
+  }
+
+
+
+</script>
+<!---------- Alunno -----------------------
+Acone<br>
+Pass:<input id="passAcone" type="text">
+Soluz:<input id="acone123" type="text">
+<button onclick="manda(acone123.id, acone123.value, passAcone.value, 'acone')">Invia</button><br><br>
+
+
+
+Tardio<br>
+Pass:<input id="passTardio" type="text">
+Soluz:<input id="Tardio123" type="text">
+<button onclick="manda(Tardio123.id, Tardio123.value, passTardio.value, 'Tardio')">Invia</button><br><br>
+------------------------------->
+
+<div id="screen"></div>
+<script>
+lista = [
+"Acone",
+"Battagliese",
+"Borrelli",
+"Carracino",
+"Ciardi",
+"Donnianni",
+"Fluri",
+"Gonoshi",
+"Ghiungus",
+"Liguori",
+"Maiese",
+"Mautone",
+"Merola",
+"Palladino",
+"Ricci",
+"Romanno",
+"Saja_A",
+"Saja_P",
+"Tierno",
+
+]
+
+password = {
+"Acone" : "123",
+"Battagliese": "456",
+"Borrelli": "789",
+"Carracino": "12",
+"Ciardi" : "23",
+"Donnianni": "35",
+"Fluri" : "37",
+"Gonoshi": "78",
+"Ghiungus": "45",
+"Liguori": "43",
+"Maiese": "89",
+"Mautone": "67",
+"Merola": "11",
+"Palladino": "434",
+"Ricci": "456",
+"Romano": "778",
+"Saja_A": "654",
+"Saja_P": "80",
+"Tierno": "367",
+}
+
+screen = document.getElementById("screen");
+screen.innerHTML = "<h2>Inserite i dati</h2>"
+let pass_word = "";
+for (name of lista){
+  console.log(name);
+  pass_word = "pass" + name;
+  let html = ["<b style='background:coral;color:white;'>"+name+"</b>", "<br>",
+              `Password: <input id="` + pass_word + `" type="text">`,
+              "<br>",
+              `Soluzione: <input id="` + name + `" type="text">`,
+              "<br><br>",
+              `<button onclick="manda(`+name+`.id, `+name+`.value, `+pass_word+`.value, '`+name+`')">Invia</button><br><br>`
+              ]
+  for (data of html){
+  screen.innerHTML += data;
+  }
+
+}
+
+</script>
+
+<script>
+
+
+        
+
+function manda(alunno, valore, pass, name){
+  if (password[name] == pass){
+  	ref.child(alunno).set(valore);
+    console.log("inviato"+alunno+valore);
+  }
+}
+</script>
+
+
