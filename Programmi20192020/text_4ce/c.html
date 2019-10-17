@@ -1,0 +1,44 @@
+<style>
+body, button, input {
+font-size: 2em;
+background: black;
+color:white;
+}
+</style>
+
+<div id="prosegui"></div>
+<script src="https://www.gstatic.com/firebasejs/4.10.1/firebase.js"></script>
+<script>
+
+  var config = {
+    apiKey: "AIzaSyDp-mWaWEI07pIdRUhi6vA-salEMRWz4hw",
+    authDomain: "quiz-e5e5a.firebaseapp.com",
+    databaseURL: "https://quiz-e5e5a.firebaseio.com/",
+    projectId: "quiz-e5e5a",
+    storageBucket: "quiz-e5e5a.appspot.com",
+    messagingSenderId: "901845403492"
+  };
+  firebase.initializeApp(config);
+  let database = firebase.database();
+ref = database.ref().child("es28");
+  ref.on("value", gotData, errData);
+
+function gotData(data){
+
+    prosegui.innerHTML = "";
+    x = data.val();
+    for (n in x){
+      prosegui.innerHTML += n + ": " + x[n] + "<br>"
+    }
+
+}
+
+
+function errData(err){
+    console.log("Error");
+    console.log(err);
+  }
+
+
+
+</script>
