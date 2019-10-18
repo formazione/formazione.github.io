@@ -1,9 +1,7 @@
 #html_convert
 *Programma 5bs
-
 *Turismo
-
-Il turista
+1. Il turista
 Il turismo attivo, passivo e produttivo
 Conseguenze per i residenti e l'ambiente
 Incoming / outgoing
@@ -17,6 +15,12 @@ OMT
 UE
 Tendenze del turismo in Italia
 Cenni agli organismi di Governo, promozione e di statistica.
+
+2. Il Marketing
+Definizione di marketing
+Orientamenti al prodotto/vendite/mercato
+
+
 
 
 

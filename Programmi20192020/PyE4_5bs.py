@@ -56,8 +56,8 @@ class Ebook:
         self.menubar.add_command(label="RENAME", command= lambda: self.new_window(Rename))
 
         # ========= SUB RENDER ============
-        self.menubar.add_command(label="Render Page", command = self.render_page)
-        self.menubar.add_command(label="Render Ebook", command = self.save_ebook)
+        self.menubar.add_command(label="{Render-Page}", command = self.save_page)
+        self.menubar.add_command(label="{Ebook}", command = self.save_ebook)
 
 
         self.menubar.add_command(label="SAVE", command = self.save)       
@@ -81,7 +81,7 @@ class Ebook:
         #print("self.files", self.files)
         for file in self.files:
             self.lstb.insert(tk.END, file)
-        self.lstb.bind("<Control-p>", lambda x: self.render_page())
+        self.lstb.bind("<Control-p>", lambda x: self.save_page())
 
 
     def hide(self):
@@ -148,7 +148,7 @@ class Ebook:
         self.text['font'] = "Arial 24"
         self.text.pack(fill=tk.Y, expand=1)
         self.text.bind("<Control-s>", lambda x: self.save())
-        self.text.bind("<Control-p>", lambda x: self.render_page())
+        self.text.bind("<Control-p>", lambda x: self.save_page())
 
     def html_convert(self, text_to_render):
         """Convert to my Markup language"""
@@ -235,14 +235,14 @@ class Ebook:
         os.startfile("ebook.html")
 
     def convert_if(self, read):
-        if "#html_convert" in read:
+        if "#html_convert" in read or "#html_render" in read:
             read = read.replace("#html_convert", "<!-- page converted -->")
             read = self.html_convert(read)
         else:
             pass# convert this text in html with *^=>
         return read
 
-    def render_page(self):
+    def save_page(self):
         """Save a single page v. 1.4 23/09/2019 at 05:40"""
         self.save()
         html = ""
@@ -333,7 +333,7 @@ formazione.github.io
     |
     newlinks_4ce.js            # contains newlinks_4ce.innerHTML += "<a href='Programmi20192020/text_4ce/
                                     Compiti.html'>Compiti.html</a><br>" (made by create_newlinks called by
-                                    render_page that renders the page in html in the folder called text)
+                                    save_page that renders the page in html in the folder called text)
     index.html                 # This calles the script above and has a div id=newlinks_4ce that loads the links
     programmi20192020
         |
@@ -352,10 +352,11 @@ automatically go into index.html
 4. Open index.html, call the js script with the name you choose in js_link_to_html
 5. Create a div with the same name of the js file above without the .js
 """
-js_link_to_html = "newlinks_4ce"
+classe = "5bs"
+js_link_to_html = "newlinks_" + classe
 # This folder is in the folder of this script;
 # This script is into a folder (programmi20192020) of the root folder of github.io
-folder = "text_4ce"
+folder = "text_" + classe
 if __name__ == "__main__":
     #  checks if folders exists & creates them if not
     if f"{folder}" in os.listdir():
@@ -370,5 +371,5 @@ if __name__ == "__main__":
         print(f"{folder} folder created")
     root = tk.Tk()
     app = Ebook(root)
-    app.root.title("PyEBook 3c 4ce")
+    app.root.title("PyEBook 3c " + classe)
     root.mainloop()

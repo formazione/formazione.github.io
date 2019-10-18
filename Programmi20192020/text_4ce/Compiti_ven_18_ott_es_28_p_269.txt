@@ -5,7 +5,7 @@ background: black;
 color:white;
 }
 </style>
-
+<div id="screen"></div>
 <div id="prosegui"></div>
 <script src="https://www.gstatic.com/firebasejs/4.10.1/firebase.js"></script>
 <script>
@@ -39,25 +39,6 @@ function errData(err){
     console.log(err);
   }
 
-
-
-</script>
-<!---------- Alunno -----------------------
-Acone<br>
-Pass:<input id="passAcone" type="text">
-Soluz:<input id="acone123" type="text">
-<button onclick="manda(acone123.id, acone123.value, passAcone.value, 'acone')">Invia</button><br><br>
-
-
-
-Tardio<br>
-Pass:<input id="passTardio" type="text">
-Soluz:<input id="Tardio123" type="text">
-<button onclick="manda(Tardio123.id, Tardio123.value, passTardio.value, 'Tardio')">Invia</button><br><br>
-------------------------------->
-
-<div id="screen"></div>
-<script>
 lista = [
 "Acone",
 "Battagliese",
@@ -104,13 +85,27 @@ password = {
 }
 
 screen = document.getElementById("screen");
-
+// ============================= TESTO ESERCIZIO
 screen.innerHTML = `<h4 style="background:coral;color:yellow;">Traccia:</h4>
 
-In un...
+1. Un’impresa industriale ha ottenuto un finanziamento di euro 28.500 al tasso 8,30% da restituire dopo un
+anno.
+Calcola l’interesse maturato. 
+<br>
+2. Su un credito di euro 14.900 un’impresa commerciale concede a un cliente una dilazione di pagamento di 4 mesi euro al tasso 7,80%. Calcola l’interesse che il cliente dovrà pagare alla scadenza. 
+<br>
+3. Il 20 marzo un’agenzia di viaggi ottiene da una banca un finanziamento di euro 25.000 al tasso 6,90%.
+Calcola l’interesse da pagare, sapendo che la somma deve essere rimborsata il 20 settembre. 
+<br>
+4. Calcola il capitale che, impiegato al tasso 2,80% per un anno, ha fruttato interessi per euro 1.291,36. (soluzione: .. .120)
+<br>
+5. Calcola in quanti mesi un capitale di euro 35.750 investito al tasso 5,25% ha fruttato interessi per euro
+1.251,25.
+
 
 `
 
+// ============================== FINE ==================
 screen.innerHTML += "<h2>Inserite i dati</h2>"
 let pass_word = "";
 for (name of lista){
@@ -119,7 +114,7 @@ for (name of lista){
   let html = ["<b style='background:coral;color:white;'>"+name+"</b>", "<br>",
               `Password: <input id="` + pass_word + `" type="text" size=3>`,
               "<br>",
-              `Soluzione: <input id="` + name + `" type="text"> `,
+              `Soluzioni (indica il numero dell'esercizio prima della soluzione) 1)... 2)...: <input id="` + name + `" type="text"> `,
               `<button onclick="manda(`+name+`.id, `+name+`.value, `+pass_word+`.value, '`+name+`')">Invia</button><br><br>`
               ]
   for (data of html){
@@ -128,12 +123,6 @@ for (name of lista){
 
 }
 
-</script>
-
-<script>
-
-
-        
 
 function manda(alunno, valore, pass, name){
   if (password[name] == pass){
@@ -142,4 +131,6 @@ function manda(alunno, valore, pass, name){
   }
 }
 </script>
+
+
 

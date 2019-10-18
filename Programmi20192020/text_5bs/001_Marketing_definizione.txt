@@ -1,5 +1,5 @@
 #html_convert
-
+#https://cdn2.hubspot.net/hubfs/2557555/strategie%20di%20marketing.jpg
 *Cos'è il marketing?
 <iframe width="560" height="315" src="https://www.youtube.com/embed/lZfZs3F-gTo" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 Marketing deriva da to market, mercato in inglese. Potremmo tradurlo, quindi, con 'immettere o rendere adatto per il mercato'. Indica l'attività dell'impresa per gestire le relazioni con il mercato e facilitare la commercializzazione di beni e servizi (glossariomarketing.it).
@@ -25,4 +25,5 @@ Marketing is the management process for identifying, anticipating and satisfying
 Nel tempo il concetto di marketing è cambiato dall'impresa production oriented, focalizzata sulla produzione e sul prodotto, siamo giunti all'impresa market oriented, focalizzata sul cliente.
 La prima (impresa) ha come obiettivo il fatturato, punta a vendere quello che produce. La seconda si chiede prima cosa voglia il cliente e poi realizza un prodotto che lo soddisfi, mantendo il proprio profitto.
 L'impresa orientata al marketing individua e stimola i bisogni dei clienti, per soddisfarli e si adatta le strategie e i processi produttivi ai suoi mutamenti.
+
 
