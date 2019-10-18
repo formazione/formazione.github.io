@@ -134,3 +134,4 @@ function manda(alunno, valore, pass, name){
 
 
 
+
