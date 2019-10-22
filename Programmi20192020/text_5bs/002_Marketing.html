@@ -1,0 +1,95 @@
+<style>
+html, button {font-size:2em;}
+div {margin=20%}
+img {
+	width:50vw;
+}
+</style>
+
+
+<h3>IL MARKETING</h3>
+<div id="slide"><img src="https://c1.sfdcstatic.com/content/dam/blogs/ca/Blog%20Posts/improve-marketing-skills-og.png"></div>
+<center>
+<button onclick="goback()">Back</button>
+<button onclick="goon()">Next</button>
+</center>
+
+<script> // SLIDES ================>>>
+function goon(){
+	if(fw==0){
+		cnt+=2;}
+		fw=1;
+		slide.innerHTML=slides[cnt];
+		cnt+=1;
+	if(cnt>=slides.length){
+		cnt=0};
+}
+function goback(){
+	if(fw==1){
+		if (cnt==0 || cnt==1) {cnt=0;}
+		else {cnt-=2;}
+		fw=0;
+		slide.innerHTML=slides[cnt];
+		cnt-=1;}
+	else {
+		if (cnt>0){
+		cnt-=1;
+		slide.innerHTML=slides[cnt];
+	}
+}
+	if(cnt<=0){
+		cnt=0};
+}
+
+fw=1;
+let cnt=0
+slides = [
+		//    definizione
+
+`Il marketing è l’insieme delle attività che le imprese effettuano per far giungere il
+prodotto al cliente.<img src="https://www.associazionenazionaleforense.it/wp-content/uploads/2018/09/marketing.png" />`,
+
+		// Scopo
+
+`Lo scopo dell’impresa è quello di ottenere un profitto, mantenere una quota di
+mercato e mantenere i livello occupazionale. Per farlo deve soddisfare i clienti con il
+proprio prodotto.`,
+
+	// non solo pubblicità
+
+`Non coincide con le vendite o la pubblicità, ma con l’intero processo che parte dalla
+business idea alla vendita e prosegue anche oltre, per consentire con l’assistenza
+post-acquisto la fidelizzazione del cliente.`,
+
+		// vantaggio competitivo	
+
+`Il prodotto, infatti, non solo deve rispondere alle esigenze della clientela, ma questa
+deve conoscerlo (distinguendolo e preferendolo tra le tante proposte).`,
+
+		//  fidelizzazione, servizio post-vendita,
+
+`Se si riesce a
+creare attorno al prodotto una serie di servizi che lo differenziano dagli altri in modo
+utile al cliente, questo diventerà un cliente fidelizzato (che si fida del marchio e
+tende ad aver fiducia nei nuovi prodotti dell’impresa).`,
+
+		// passaparola
+
+`Questo cliente, inoltre,
+contribuirà al passaparola positivo che favorirà le vendite del prodotto, consentendo
+risparmi in pubblicità.
+`,
+
+		// orientamento
+
+`Le imprese possono avere un diverso approccio al mercato:
+ Orientamento delle imprese alla produzione: le imprese pensano che il
+prodotto si venda da solo, basta che il prezzo sia conveniente; si concentrano
+sulla riduzione dei costi; va bene per un mercato in cui la domanda supera
+l’offerta (anni 50-60).`
+
+]
+
+</script>
+
+
