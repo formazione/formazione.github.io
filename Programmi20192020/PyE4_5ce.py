@@ -288,7 +288,7 @@ class Ebook:
     def show_text_in_editor(self):
         """Shows text of selected file in the editor"""
         self.index = self.lstb.curselection()
-        if self.lstb.curselection() != ():
+        if not self.lstb.curselection() is ():
             #self.index = self.lstb.curselection()
             #index = self.lstb.curselection()[0]
             #self.filename = self.files[index] # instead of self.lstb.get(index)
