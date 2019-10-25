@@ -6,6 +6,67 @@ Il turismo è un fattore di sviluppo sia sociale che economico. Dal punto di vis
 Dal punto di vista sociale è fonte di conoscenza di culture e stili di vita diversi e facilita l'avvicinamento dei popoli.
 Il turismo negli ultimi anni ha subito una notevole evoluzione. Si è diffuso anche tra i Paesi che una volta venivano condiderati poveri come la Cina o l'India.
 
+Anni 50
+In questo periodo l'Italia godeva di una rendita di posizione. Era, cioè, conosciuta per la bellezza del paesaggio e le testimonianze architettoniche e artistiche del passato, il clima mite e la cucina. È il periodo del turismo di massa, inteso come tendenza dei flussi turistici a visitare gli stessi luoghi. Questo fenomeno nasceva dall'aumento del reddito prodotto dall'industrializzazione e dall'aumento del tempo libero per attività ricreative, dalla disponibilità di mezzi di trasporto a prezzi accessibili, come l'auto provata, allo spostamento dalla campagna alle città.
+
+Anni 70
+Nonostante la crisi pretrolifera, i flussi turistici aumentavano. Si svolgevano all'interno dei Paesi puù ricchi. Parte dei flussi si spostaron dal Mediterraneo al Pacifico.
+
+Anni 80
+Il turismo diventa un bisogno primario e passa da necessità di riposo a status symbol sociale. Diventa un momento di formazione culturale.
+
+Anni 90
+La disgregazione dell'Unione sovietica e dell'Jugoslavia portarono il turismo a spostartsi dall'Europa occidentale a quella dell'Est. La Cina si affaccia al mercato dell'outgoing grazie all'industrializzazione di quel Paese.
+
+Anni 2000
+Il turismo chiede periodi brevi di svago con decisioni prese last minute. La modalità di fruizione cambia, non non la richiesta. La domanda diventa sempre meno elastica.
+Internet favorisce un atteggiamento attivo del turista. Il pacchetto turistico tutto compreso non è più adatta ai clienti che cercano un'offerta suddivisa in moduli assemblabili. Il web modifica anche il passaparola, che si trasforma da consigli tra amici a momenti di opinioni vissuti direttamente in rete.
+
+<table class="" border=1><td>Periodo</td><td>METE</td><td>DURATA DEL VIAGGIO</td><tr><td>60</td><td>................................</td><td>.................................</td><tr><td>70</td><td>................................</td><td>.................................</td><tr><td>80</td><td>................................</td><td>.................................</td><tr><td>2000</td><td>................................</td><td>.................................</td><tr></table>
+
+Il tasso di cambio
+Per regolare gli scambi internazionali occorre conoscere il rapporto di cambio, cioè il valore della valuta del turista rispetto al valore della valuta del Paese visitato. Quanti dollari posso acquistare con un euro? 1,10. Il cambio Euro / Dollaro è 1,10, oggi. Significa che ad 1 euro corrispondono 1,10 dollari. L'euro, quindi, vale il 10% in più del dollaro. Un aumento del valore dell'euro (ad esempio un rapporto 1,20 tra eur/usd) renderebbe più costosa la meta Italia per gli americani del Nord.
+
+Esempi. Calcola quanti dollari ricevi per
+500 € - rapporto eur/usd 1,10
+500 € - rapporto eur/usd 1,15
+
+1 : 500 = 1,10 : x oppure 1:1,10=500:x
+x = 500*1,10:1 = 550 $
+------ [ In pratica ] ------------------------
+Per passare da euro a dollari MOLTIPLICO per 1.10
+Da dollari ad euro DIVIDO per 1.10
+
+Risolvi
+cambio eur/usd		Conversione
+1,1	 $500,00 	………………….
+1,15	 750,00 € 	………………….
+1,4	 $500,00 	………………….
+1,05	 $500,00 	………………….
+0,9	 300,00 € 	………………….
+
+
+*La bilancia turistica
+
+All'interno della bilancia dei pagamenti, che misura le transazioni economiche e finanziarie tra gli Statu, è compresa la bilancia turistica.
+È il documento che registra le entrate derivanti dai viaggi dei turisti stranieri in Italia e le uscite generate dai viaggi che gli italiani compiono all'estero.
+
+*CINR
+Sono i Consumi in Italia dei Non Residenti (le spese dei viaggiatori stranieri)
+
+*CERI
+Sono i Consumi all'Estero dei Residenti in Italia.
+
+Il saldo della bilancia turistica viene riportato nella bilancia dei pagamenti.
+
+Gli enti di statistica del turismo
+
+
+
+
+
+
+
 
 
 

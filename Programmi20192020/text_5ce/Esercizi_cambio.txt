@@ -1,0 +1,4 @@
+Calcola il valore di 500 euro in dollari al cambio di 1.10
+<input type="text" onchange="ris1=document.getElementById('ris1');if (this.value=='575'){ris1.innerHTML='bravo';}" />
+<div id="ris1"></div>
+
