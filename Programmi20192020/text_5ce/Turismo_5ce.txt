@@ -1,25 +1,28 @@
 #html_convert
-
+<style>body{font-size:2em;color:white;background:black;}a:visited{color:green}</style>
 *Il turismo
 
 Il turismo è un fattore di sviluppo sia sociale che economico. Dal punto di vista economico contribuisce per il 10% al PIL mondiale. In Italia, gli occupati del settore sono circa 2 milioni. La bilancia turistica presenta, per il nostro Paese, un saldo attivo. I consumi in Italia dei non residenti (CINR), infatti, sono superiori ai Cosumi all'estero dei residenti in Italia (CERI). Questo a un effetto positivo sulla nostra economia.
 Dal punto di vista sociale è fonte di conoscenza di culture e stili di vita diversi e facilita l'avvicinamento dei popoli.
 Il turismo negli ultimi anni ha subito una notevole evoluzione. Si è diffuso anche tra i Paesi che una volta venivano condiderati poveri come la Cina o l'India.
 
-Anni 50
+*Anni 50
 In questo periodo l'Italia godeva di una rendita di posizione. Era, cioè, conosciuta per la bellezza del paesaggio e le testimonianze architettoniche e artistiche del passato, il clima mite e la cucina. È il periodo del turismo di massa, inteso come tendenza dei flussi turistici a visitare gli stessi luoghi. Questo fenomeno nasceva dall'aumento del reddito prodotto dall'industrializzazione e dall'aumento del tempo libero per attività ricreative, dalla disponibilità di mezzi di trasporto a prezzi accessibili, come l'auto provata, allo spostamento dalla campagna alle città.
 
-Anni 70
-Nonostante la crisi pretrolifera, i flussi turistici aumentavano. Si svolgevano all'interno dei Paesi puù ricchi. Parte dei flussi si spostaron dal Mediterraneo al Pacifico.
+*Anni 70
+Nonostante la crisi pretrolifera, i flussi turistici aumentavano. Si svolgevano all'interno dei Paesi puù ricchi. Parte dei flussi si spostarono dal Mediterraneo al Pacifico.
 
-Anni 80
+*Anni 80
 Il turismo diventa un bisogno primario e passa da necessità di riposo a status symbol sociale. Diventa un momento di formazione culturale.
 
-Anni 90
+*Anni 90
 La disgregazione dell'Unione sovietica e dell'Jugoslavia portarono il turismo a spostartsi dall'Europa occidentale a quella dell'Est. La Cina si affaccia al mercato dell'outgoing grazie all'industrializzazione di quel Paese.
 
-Anni 2000
+*Anni 2000
 Il turismo chiede periodi brevi di svago con decisioni prese last minute. La modalità di fruizione cambia, non non la richiesta. La domanda diventa sempre meno elastica.
+
+
+
 Internet favorisce un atteggiamento attivo del turista. Il pacchetto turistico tutto compreso non è più adatta ai clienti che cercano un'offerta suddivisa in moduli assemblabili. Il web modifica anche il passaparola, che si trasforma da consigli tra amici a momenti di opinioni vissuti direttamente in rete.
 
 <table class="" border=1><td>Periodo</td><td>METE</td><td>DURATA DEL VIAGGIO</td><tr><td>60</td><td>................................</td><td>.................................</td><tr><td>70</td><td>................................</td><td>.................................</td><tr><td>80</td><td>................................</td><td>.................................</td><tr><td>2000</td><td>................................</td><td>.................................</td><tr></table>
@@ -60,6 +63,8 @@ Sono i Consumi all'Estero dei Residenti in Italia.
 Il saldo della bilancia turistica viene riportato nella bilancia dei pagamenti.
 
 Gli enti di statistica del turismo
+
+
 
 
 

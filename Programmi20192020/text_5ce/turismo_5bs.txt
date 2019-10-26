@@ -1,3 +1,5 @@
+#html_convert
+<style>body{font-size:2em;color:white;background:black;}a:visited{color:green}</style>
 <a href="https://docs.google.com/document/d/1TEplKDbGboQ7YxK8LQd9M1yDdFMaEJeIlV2nuh8D45I/edit?usp=sharing">Vedi il documento</a>
 <a href="https://docs.google.com/document/d/e/2PACX-1vQgekv1n7FjC7_TxA0SucMCOL4CFojr9Wq70r9FkZzIKPfzJCLiIrBKXsESExL3aV9veDzQDCz8bOQZ/pub">Turismo</a>
 
@@ -126,6 +128,7 @@ ENTI ORGANISMI DELLE STATISTICHE DEL TURISMO
 -ISTAT(istituto nazionale di statistica)
 -BANCA D’ITALIA 
 -ONT 
+
 
 
 
