@@ -1,4 +1,25 @@
-Calcola il valore di 500 euro in dollari al cambio di 1.10
-<input type="text" onchange="ris1=document.getElementById('ris1');if (this.value=='575'){ris1.innerHTML='bravo');}" />
-<div id="ris1"></div>
+<!-- copia e incolla da start a end e cambia traccia, risultato(this.value) e ris1 (ce ne sono 4)-->
+
+
+
+<script>
+function es(traccia, sol, id){
+document.write(`
+<!--- Start -->
+<h3>`+traccia+`</h3>
+<input type="text" onchange="`+id+`=document.getElementById('`+id+`');if (this.value=='`+sol+`') {`+id+`.innerHTML='Bravo';}else{`+id+`.innerHTML='Sbagliato';}" />
+<div id="`+id+`"></div>
+<!-- end -->
+
+`);
+}
+
+// Esercizi
+es("Calcola il valore di 500 euro in dollari al cambio di 1.10","550","ris1")
+es("Calcola il valore di 500 euro in dollari al cambio di 1.15","575","ris2")
+
+</script>
+
+
+
 
