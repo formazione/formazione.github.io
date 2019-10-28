@@ -5,7 +5,16 @@ background: black;
 color:white;
 }
 </style>
-
+<h4 style="background:coral;color:yellow;">Traccia:</h4>
+<br>
+<button onclick="e1.style.visibility='visible'">Es 1</button>
+<div id="e1" style="visibility:hidden">
+1. Un debito di 4.500 € viene pagato in anticipo di un anno, calcola lo sconto commerciale al tasso del 3% e il valore attuale del debito.
+</div>
+<button onclick="e2.style.visibility='visible';e1.style.visibility='hidden'">Es 2</button>
+<div id="e2" style="visibility:hidden">
+Un debito di 7.600 € viene pagato in anticipo di 2 anni. Calcola lo sconto commerciale al tasso del 4,5% e il valore attuale del debito.
+</div>
 <div id="prosegui"></div>
 <script src="https://www.gstatic.com/firebasejs/4.10.1/firebase.js"></script>
 <script>
@@ -42,3 +51,5 @@ function errData(err){
 
 
 </script>
+
+

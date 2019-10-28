@@ -85,27 +85,22 @@ password = {
 }
 
 screen = document.getElementById("screen");
-// ============================= TESTO ESERCIZIO
-screen.innerHTML = `<h4 style="background:coral;color:yellow;">Traccia:</h4>
+// ===> inserisci qui sotto il TESTO ESERCIZIO
+screen.innerHTML = `
 
-1. Un’impresa industriale ha ottenuto un finanziamento di euro 28.500 al tasso 8,30% da restituire dopo un
-anno.
-Calcola l’interesse maturato. 
+<h4 style="background:coral;color:yellow;">Traccia:</h4>
 <br>
-2. Su un credito di euro 14.900 un’impresa commerciale concede a un cliente una dilazione di pagamento di 4 mesi euro al tasso 7,80%. Calcola l’interesse che il cliente dovrà pagare alla scadenza. 
-<br>
-3. Il 20 marzo un’agenzia di viaggi ottiene da una banca un finanziamento di euro 25.000 al tasso 6,90%.
-Calcola l’interesse da pagare, sapendo che la somma deve essere rimborsata il 20 settembre. 
-<br>
-4. Calcola il capitale che, impiegato al tasso 2,80% per un anno, ha fruttato interessi per euro 1.291,36. (soluzione: .. .120)
-<br>
-5. Calcola in quanti mesi un capitale di euro 35.750 investito al tasso 5,25% ha fruttato interessi per euro
-1.251,25.
+<button onclick="e1.style.visibility='visible'">Es 1</button>
+<div id="e1" style="visibility:hidden">
+1. Un debito di 4.500 € viene pagato in anticipo di un anno, calcola lo sconto commerciale al tasso del 3% e il valore attuale del debito.
+</div>
+<button onclick="e2.style.visibility='visible';e1.style.visibility='hidden'">Es 2</button>
+<div id="e2" style="visibility:hidden">
+Un debito di 7.600 € viene pagato in anticipo di 2 anni. Calcola lo sconto commerciale al tasso del 4,5% e il valore attuale del debito.
+</div>
+<textarea cols=30 rows=3 style="font-size:2em;"></textarea>
 
-
-`
-
-// ============================== FINE ==================
+`// == FINE testo esercizio ====
 screen.innerHTML += "<h2>Inserite i dati</h2>"
 let pass_word = "";
 for (name of lista){
@@ -131,6 +126,8 @@ function manda(alunno, valore, pass, name){
   }
 }
 </script>
+
+
 
 
 
