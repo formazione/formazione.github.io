@@ -7,6 +7,7 @@ img {width:50vw;}
 
 
 <h3 id="title">IL MARKETING</h3>
+<a href="Marketing_full.pdf">Slides sul marketing</a>
 <center>
 <button onclick="cnt-=1;goon()">Back</button>
 <button onclick="cnt+=1;goon()">Next</button>
@@ -119,5 +120,6 @@ for (n of slides){
 }
 
 </script>
+
 
 

@@ -1,0 +1,68 @@
+<style>
+body, input{font-size:2em;}
+
+
+input[type=text]:focus {
+  background-color: lightblue;
+}
+input[type=text] {
+   width: 100;
+  box-sizing: border-box;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+
+
+}
+
+</style>
+<h4>
+Indica con una crocetta se le operazioni si riferiscono al marketing strategico od operativo
+</h4><br><br><br><br><br>
+Un Hotel esegue una ricerca di mercato
+<br>Strategico<input type="text">
+<br>Operativo<input type="text">
+<br><br><br><br><br><br>
+
+Un ristorante decide il cambiamento del logo e dell'insegna
+<br>Strategico<input type="text">
+<br>Operativo<input type="text">
+<br><br><br><br><br><br>
+
+Decide un cambiamento dell'arredamento
+<br>Strategico<input type="text">
+<br>Operativo<input type="text">
+<br><br><br><br><br><br>
+
+Introduzione di dolci tipici locali
+<br>Strategico<input type="text">
+<br>Operativo<input type="text">
+<br><br><br><br><br><br>
+
+Commissiona una ricerca di mercato
+<br>Strategico<input type="text">
+<br>Operativo<input type="text">
+<br><br><br><br><br><br>
+
+L'ufficio marketing analizza una statistica sui flussi turistici<br>Strategico<input type="text">
+<br>Operativo<input type="text">
+<br><br><br><br><br><br>
+
+Un fast-food decide le pietanze del menu
+<br>Strategico<input type="text">
+<br>Operativo<input type="text">
+<br><br><br><br><br><br>
+
+Una catena di hotel stabilisce i termini di un accordo con un TO<br>Strategico<input type="text">
+<br>Operativo<input type="text">
+<br><br><br><br><br><br>
+
+Un ristorante calcola la percentuale di clienti che preferisce menu semplici e quella che preferisce menu elaborati
+<br>Strategico<input type="text">
+<br>Operativo<input type="text">
+<br><br><br><br><br><br>
+
+Un motel individua come opportunità l'apertura nelle vicinanze di un nuovo svincolo stradale<br>Strategico<input type="text">
+<br>Operativo<input type="text">
+<br><br><br><br><br><br>
+
+
