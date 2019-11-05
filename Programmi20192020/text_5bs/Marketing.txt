@@ -7,7 +7,15 @@ img {width:50vw;}
 
 
 <h3 id="title">IL MARKETING</h3>
+
+<!-- SLIDES SUL MARKETING -->
+
 <a href="Marketing_full.pdf">Slides sul marketing</a>
+
+<!-- COMPITO 1 -->
+<br>
+<a href="https://formazione.github.io/classe_5bs/marketing_compito1.pdf">Compito 1 sul marketing</a>
+
 <center>
 <button onclick="cnt-=1;goon()">Back</button>
 <button onclick="cnt+=1;goon()">Next</button>
@@ -130,6 +138,7 @@ for (n of slides){
 }
 
 </script>
+
 
 
 

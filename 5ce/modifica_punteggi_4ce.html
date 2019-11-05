@@ -36,8 +36,12 @@ tr:nth-child(even){background-color: #f2f2f2}
 	
 </style>
 
+
 <body>
 <h1>4CE livello di partecipazione</h1>
+<script src="https://glitch.com/~pass.env"></script>
+<input type="text" onchange="if (this.value==password){div1.style.visibility='visible';}">
+
 <script src="https://www.gstatic.com/firebasejs/4.10.1/firebase.js"></script>
 <script>
   var config = {
@@ -51,7 +55,7 @@ tr:nth-child(even){background-color: #f2f2f2}
   firebase.initializeApp(config);
   var database = firebase.database()
 </script>
-<div class="w3-main" style="margin-left:50px">
+<div id="div1" class="w3-main" style="margin-left:50px">
 <table class="table-bordered">
 
 
@@ -96,11 +100,11 @@ dbRef1.on("value", snap => n1 = snap.val())</script><tr>
 
 
 <td>
-<button type="button" class="btn btn-warning btn-lg" onclick="dbRef7b.set(--n1)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRef7b.set(++n1)"> + </button>Ghiunghius<td><i id="h1alunno7b"></i></p><script>
+<button type="button" class="btn btn-warning btn-lg" onclick="dbRef7b.set(--n7b)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRef7b.set(++n7b)"> + </button>Ghiunghius<td><i id="h1alunno7b"></i></p><script>
 var h1alunno7b = document.getElementById("h1alunno7b");
 var dbRef7b = firebase.database().ref().child("4CE").child("Ghiunghius");
 dbRef7b.on("value", snap => h1alunno7b.innerText = snap.val());
-dbRef7b.on("value", snap => n1 = snap.val())</script><tr>
+dbRef7b.on("value", snap => n7b = snap.val())</script><tr>
 
 
 
@@ -134,11 +138,11 @@ dbRef7b.on("value", snap => n1 = snap.val())</script><tr>
 <!-- palladino -->
 
 <td>
-<button type="button" class="btn btn-warning btn-lg" onclick="dbRef12b.set(--n1)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRef12b.set(++n1)"> + </button>Palladino<td><i id="h1alunno12b"></i></p><script>
+<button type="button" class="btn btn-warning btn-lg" onclick="dbRef12b.set(--n12b)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRef12b.set(++n12b)"> + </button>Palladino<td><i id="h1alunno12b"></i></p><script>
 var h1alunno12b = document.getElementById("h1alunno12b");
 var dbRef12b = firebase.database().ref().child("4CE").child("Palladino");
 dbRef12b.on("value", snap => h1alunno12b.innerText = snap.val());
-dbRef12b.on("value", snap => n1 = snap.val())</script><tr>
+dbRef12b.on("value", snap => n12b = snap.val())</script><tr>
 
 
 
@@ -160,10 +164,17 @@ dbRef12b.on("value", snap => n1 = snap.val())</script><tr>
     var h1alunno16 = document.getElementById("h1alunno16");
   var dbRef16 = firebase.database().ref().child("4CE").child("Saja_P");
   dbRef16.on("value", snap => h1alunno16.innerText = snap.val());
-  dbRef16.on("value", snap => n16 = snap.val())</script><tr><td><button type="button" class="btn btn-warning btn-lg" onclick="dbRef17.set(--n17)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRef17.set(++n17)"> + </button>Tierno<td><i id="h1alunno17"></i></p><script>
-    var h1alunno17 = document.getElementById("h1alunno17");
-  var dbRef17 = firebase.database().ref().child("4CE").child("Tierno");
-  dbRef17.on("value", snap => h1alunno17.innerText = snap.val());
-  dbRef17.on("value", snap => n17 = snap.val())</script>
+  dbRef16.on("value", snap => n16 = snap.val())</script><tr>
+
+    <td><button type="button" class="btn btn-warning btn-lg" onclick="dbRef16b.set(--n16b)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRef16b.set(++n16b)"> + </button>Tierno<td><i id="h1alunno16b"></i></p><script>
+    var h1alunno16b = document.getElementById("h1alunno16b");
+  var dbRef16b = firebase.database().ref().child("4CE").child("Tierno");
+  dbRef16b.on("value", snap => h1alunno16b.innerText = snap.val());
+  dbRef16b.on("value", snap => n16b = snap.val())</script>
 </table>
 </div>
+
+<script>
+div1 = document.getElementById("div1")
+div1.style.visibility="hidden";
+</script>

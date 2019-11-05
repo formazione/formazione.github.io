@@ -65,7 +65,7 @@ function gotData(data){
   /*
     for (n in x){
      if (x[n] > 100){
-      scoretot.innerHTML += "<b style='color:coral'> " + n + cup +": </b><b style='background:coral'>" + x[n]  + " </b> "
+      scoretot.innerHTML += "<b style='color:coral'> " + n[0] + cup +": </b><b style='background:coral'>" + x[n][0]  + " </b> "
      }
       else {
        scoretot.innerHTML += "<b style='color:coral'> [ </b>" + n + ": " + x[n] + " <b style='color:coral'> ] </b> "
@@ -131,5 +131,6 @@ let max = Math.max(...arr);
 Esercitazioni sullo sconto; sconto commerciale con l'anno civile e l'anno commerciale; la formula inversa per trovare il tasso. Il conto corrente e il fido.
 </body>
 </html>
+
 
 
