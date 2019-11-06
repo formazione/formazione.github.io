@@ -95,21 +95,21 @@ let max = Math.max(...arr);
     let num = parseInt(n)+1;
     // nome del primo classificato
     if (n == 0){
-   scoretot.innerHTML += "<img src='" + keysSorted[n]  + ".PNG'><b style='font-size:2.5em;color:red'>" + num + ". <u>" + keysSorted[n] + "</u></b> ";
+   scoretot.innerHTML += "<img src='" + keysSorted[n].toLowerCase()  + ".PNG'><b style='font-size:2.5em;color:red'>" + num + ". <u>" + keysSorted[n] + "</u></b> ";
       scoretot.innerHTML += party + cup + "<b style='font-size:2.5em;background:coral'>" + x[keysSorted[n]] + "</b><br><br>"; ;
     }
     else if (n == 1){
-      scoretot.innerHTML += "<img src='" + keysSorted[n]  + ".PNG'><b style='font-size:2em;color:coral'>" + num + ". " + keysSorted[n] + "</b> ";
+      scoretot.innerHTML += "<img src='" + keysSorted[n].toLowerCase()  + ".PNG'><b style='font-size:2em;color:coral'>" + num + ". " + keysSorted[n] + "</b> ";
       if (x[keysSorted[n]] > 100) scoretot.innerHTML += cup;
       scoretot.innerHTML += "<b style='font-size:2em;background:coral'>" + x[keysSorted[n]] + "</b><br><br>"; ;
     }
   else if (n == 2){
-      scoretot.innerHTML += "<img src='" + keysSorted[n]  + ".PNG'><b style='font-size:1.5em;color:gold'>" + num + ". " + keysSorted[n] + "</b> ";
+      scoretot.innerHTML += "<img src='" + keysSorted[n].toLowerCase()  + ".PNG'><b style='font-size:1.5em;color:gold'>" + num + ". " + keysSorted[n] + "</b> ";
       if (x[keysSorted[n]] > 100) scoretot.innerHTML += cup;
       scoretot.innerHTML += "<b style='font-size:1.5em;background:coral'>" + x[keysSorted[n]] + "</b><br><br>"; ;
     }
     else {
-      scoretot.innerHTML += "<span style='background:gray'><img src='" + keysSorted[n]  + ".PNG' width='30px'><b style='font-size:1.0em;color:white'>" + keysSorted[n] + "</b> ";
+      scoretot.innerHTML += "<span style='background:gray'><img src='" + keysSorted[n].toLowerCase()  + ".PNG' width='30px'><b style='font-size:1.0em;color:white'>" + keysSorted[n] + "</b> ";
       if (x[keysSorted[n]] > 100) scoretot.innerHTML += cup;
       scoretot.innerHTML += "<b style='font-size:1.0em;background:coral'>" + x[keysSorted[n]] + "</b>&nbsp;&nbsp;</span>";
     }
