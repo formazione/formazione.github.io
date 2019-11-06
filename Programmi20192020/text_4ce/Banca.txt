@@ -37,7 +37,7 @@ Il fido è l’importo massimo di credito che una banca concede ad un cliente.
 Dipende dal patrimonio del cliente, dal suo reddito, dalle sue capacità professionali e dalle sue doti morali.
 Forme di finanziamento
 Finanziamenti a breve termine
-Le imprese lo usano per finanziare l’attivo circolante (magazzino, crediti a breve, banca e cassa)
+Le imprese lo usano per finanziare l’attivo circolante (magazzino, crediti a breve, banca e cassa).
 
 
 Hanno una scadenza non superiore a 18 mesi
@@ -71,5 +71,6 @@ Leasing operativo:
 L’impresa locatrice produce il bene e lo cede in uso al conduttore senza intermediari
 Sale and lease back:
 L’impresa possiede già il bene, ma lo vende alla società di leasing e continua ad usarlo pagando il canone, ottenendo liquidità immediata che le serve per altri investimenti.
+
 
 
