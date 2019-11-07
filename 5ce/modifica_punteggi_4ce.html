@@ -30,8 +30,8 @@ th, td {
     padding: 8px;
 }
 
-tr:nth-child(even){background-color: #f2f2f2}
-
+tr:nth-child(even){background-color: coral; color: white;}
+tr:nth-child(odd){background-color: navy; color: white;}
 
 	
 </style>
@@ -62,7 +62,7 @@ tr:nth-child(even){background-color: #f2f2f2}
 <td>
 <button type="button" class="btn btn-warning btn-lg" onclick="dbRef1.set(--n1)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRef1.set(++n1)"> + </button>Acone<td><i id="h1alunno1"></i></p><script>
 var h1alunno1 = document.getElementById("h1alunno1");
-var dbRef1 = firebase.database().ref().child("4CE").child("Acone");
+var dbRef1 = firebase.database().ref().child("4CE").child("Maiuri");
 dbRef1.on("value", snap => h1alunno1.innerText = snap.val());
 dbRef1.on("value", snap => n1 = snap.val())</script><tr>
 
@@ -87,9 +87,9 @@ dbRef1.on("value", snap => n1 = snap.val())</script><tr>
     var h1alunno5 = document.getElementById("h1alunno5");
   var dbRef5 = firebase.database().ref().child("4CE").child("Ciardi");
   dbRef5.on("value", snap => h1alunno5.innerText = snap.val());
-  dbRef5.on("value", snap => n5 = snap.val())</script><tr><td><button type="button" class="btn btn-warning btn-lg" onclick="dbRef6.set(--n6)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRef6.set(++n6)"> + </button>Donnianni<td><i id="h1alunno6"></i></p><script>
+  dbRef5.on("value", snap => n5 = snap.val())</script><tr><td><button type="button" class="btn btn-warning btn-lg" onclick="dbRef6.set(--n6)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRef6.set(++n6)"> + </button>Donianni<td><i id="h1alunno6"></i></p><script>
     var h1alunno6 = document.getElementById("h1alunno6");
-  var dbRef6 = firebase.database().ref().child("4CE").child("Donnnianni");
+  var dbRef6 = firebase.database().ref().child("4CE").child("Donnianni");
   dbRef6.on("value", snap => h1alunno6.innerText = snap.val());
   dbRef6.on("value", snap => n6 = snap.val())</script><tr><td><button type="button" class="btn btn-warning btn-lg" onclick="dbRef7.set(--n7)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRef7.set(++n7)"> + </button>Fluri<td><i id="h1alunno7"></i></p><script>
     var h1alunno7 = document.getElementById("h1alunno7");
@@ -172,8 +172,3 @@ dbRef12b.on("value", snap => n12b = snap.val())</script><tr>
   dbRef16b.on("value", snap => n16b = snap.val())</script>
 </table>
 </div>
-<<<<<<< HEAD
-
-
-=======
->>>>>>> bb1a0749d8266d26a45049c818025e25561518ef
