@@ -60,7 +60,7 @@ tr:nth-child(odd){background-color: navy; color: white;}
 
 				<!-- Alunno 1 -->
 <td>
-<button type="button" class="btn btn-warning btn-lg" onclick="dbRef1.set(--n1)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRef1.set(++n1)"> + </button>Acone<td><i id="h1alunno1"></i></p><script>
+<button type="button" class="btn btn-warning btn-lg" onclick="dbRef1.set(--n1)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRef1.set(++n1)"> + </button>Maiuri<td><i id="h1alunno1"></i></p><script>
 var h1alunno1 = document.getElementById("h1alunno1");
 var dbRef1 = firebase.database().ref().child("4CE").child("Maiuri");
 dbRef1.on("value", snap => h1alunno1.innerText = snap.val());
