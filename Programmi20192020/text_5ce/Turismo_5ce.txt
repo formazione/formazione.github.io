@@ -21,6 +21,15 @@ La disgregazione dell'Unione sovietica e dell'Jugoslavia portarono il turismo a 
 *Anni 2000
 Il turismo chiede periodi brevi di svago con decisioni prese last minute. La modalità di fruizione cambia, non non la richiesta. La domanda diventa sempre meno elastica.
 
+#https://aziendaitalia.altervista.org/wp-content/uploads/2019/11/elastica2.png
+
+Dal grafico si nota come ad un aumento percentuale del prezzo corrisponde una variazione in diminuzione del prezzo più che proporzionale, per cui la domanda è molto elastica e rende conveniente ridurre il prezzo (si guadagnano 10.000 € in più nella combinazione tra prezzo a 90 € e richieste pari a 1.000 €). Nel calcolo, ovviamente vanno considerati anche altri fattori. L'azienda è in grado di produrre le quantità richieste o corre il rischio di lasciare dei clienti insoddisfatti, perché non riesce a produrre tutti i modelli in tempo? Ci sono delle economie di scala (minori costi dividendo dei costi fissi per un numero maggiore di prodotti o, al contrario, delle diseconomie a causa, ad esempio, della necessità di assumere nuovo personale per  aumentare la produzione, che potrebbe annullare i maggiori ricavi?). Chiaramente, il prezzo, non è l'unico fattore da considerare, perché occorre considerare anche l'impatto dell'aumentata produzione sul costo (non solo sui ricavi).
+
+*Domanda anelastica
+In questo caso aumentando il prezzo guadagno di più, perché la riduzione delle vendite non è tale da ridurre il guadagno complessivo generato dall'aumento di prezzo.
+Se, invece, riducessimo il prezzo, i ricavi diminuirebbero, perché l'aumento delle vendite è inferiore a quanto di perde riducendo il prezzo.
+Esempio di aumento del prezzo con domanda anelastica (con guadagno):
+#https://aziendaitalia.altervista.org/wp-content/uploads/2019/11/anelastica2.png
 
 
 Internet favorisce un atteggiamento attivo del turista. Il pacchetto turistico tutto compreso non è più adatta ai clienti che cercano un'offerta suddivisa in moduli assemblabili. Il web modifica anche il passaparola, che si trasforma da consigli tra amici a momenti di opinioni vissuti direttamente in rete.
@@ -63,6 +72,10 @@ Sono i Consumi all'Estero dei Residenti in Italia.
 Il saldo della bilancia turistica viene riportato nella bilancia dei pagamenti.
 
 Gli enti di statistica del turismo
+
+
+
+
 
 
 
