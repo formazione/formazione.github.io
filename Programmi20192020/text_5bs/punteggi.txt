@@ -91,6 +91,7 @@ let max = Math.max(...arr);
   }
   console.log(newx);
   for (n in keysSorted){
+  
     let num = parseInt(n)+1;
     // nome del primo classificato
     if (n == 0){
@@ -108,24 +109,26 @@ let max = Math.max(...arr);
       scoretot.innerHTML += "<b style='font-size:1.5em;background:coral'>" + x[keysSorted[n]] + "</b><br><br>"; ;
     }
     else {
-      scoretot.innerHTML += "<span style='background:gray'><img src='" + keysSorted[n]  + ".PNG' width='45px'><b style='font-size:1.0em;color:white'>" + keysSorted[n] + "</b> ";
-      if (x[keysSorted[n]] > 100) scoretot.innerHTML += cup;
-      scoretot.innerHTML += "<b style='font-size:1.0em;background:coral'>" + x[keysSorted[n]] + "</b>&nbsp;&nbsp;</span>";
-    }
-    /*
-    if (x[keysSorted[n]] >100 && n!=0 && n!=1 && n!=2){
-    scoretot.innerHTML += cup + "<b style='background:coral'>" + x[keysSorted[n]] + "</b><br>"; 
-    }
-    */
-    //else {scoretot.innerHTML +=  x[keysSorted[n]] + "<br>";}
-    }
-}
-  // scoretot.innerHTML += "<center>";
+      
+      // Chi non è nei primi 3...
 
+      scoretot.innerHTML += "<div style='background:white;width:50%;color:black'><img src=\"" + keysSorted[n]  + ".PNG\" width='100px'> <b style='color:black'>" + keysSorted[n] + "</b><b style='font-size:3.0em'> " + x[keysSorted[n]] + "</b></div><br>";
+
+      // Se superi 100 punti... 
+      if (x[keysSorted[n]] > 100) {
+                  scoretot.innerHTML += cup;}
+
+    }
+    }
+
+}
 </script>
 
 </body>
 </html>
+
+
+
 
 
 
