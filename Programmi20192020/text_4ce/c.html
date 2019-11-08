@@ -29,7 +29,7 @@ Un debito di 7.600 € viene pagato in anticipo di 2 anni. Calcola lo sconto com
   };
   firebase.initializeApp(config);
   let database = firebase.database();
-ref = database.ref().child("es28");
+ref = database.ref().child("verifica_finanziamenti");
   ref.on("value", gotData, errData);
 
 function gotData(data){
@@ -51,5 +51,6 @@ function errData(err){
 
 
 </script>
+
 
 
