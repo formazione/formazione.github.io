@@ -1,3 +1,4 @@
 #html_convert
-Correggere esercizi sullo sconto (1 punto per esercizio svolto)
 Terminare il modulo sui finanziamenti con i finanziamenti a breve e a lungo termine
+- Esercizi ultimi 30':
+ interessi, sconto, anticipo su ft.
