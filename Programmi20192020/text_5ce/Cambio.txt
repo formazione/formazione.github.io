@@ -1,5 +1,7 @@
 <!-- copia e incolla da start a end e cambia traccia, risultato(this.value) e ris1 (ce ne sono 4)-->
-
+<style>
+body, input{font-size:2em;}
+</style>
 
 
 <script>
@@ -14,11 +16,21 @@ document.write(`
 `);
 }
 
-// Esercizi
-es("Calcola il valore di 500 euro in dollari al cambio di 1.10","550","ris1")
+
+es("Il metodo con il quale viene determinato il valore dell'Euro si chiama Certo per ...", "incerto", "ris3");
+
+es("Il valore che rimane fisso è quello ... del/dell' ","Euro","es4");
+
+// Cambio 1
+es("Calcola il valore di 500 euro in dollari al cambio di 1.10","550","ris1");
+
+// cambio 2
 es("Calcola il valore di 500 euro in dollari al cambio di 1.15","575","ris2")
 
+// 
+
 </script>
+
 
 
 

@@ -279,7 +279,7 @@ class Ebook:
                 # WE NEED A DIV {} and a js file {}.js and a <script src="newlinks4ce"
                 # just copy everything in index.html, put in place and copy th js fil
                 html1+= """{}.innerHTML += "<a href='Programmi20192020/{}/{}'>{}</a><br>"
-                """.format(js_link_to_html, folder, file, file)
+                """.format(js_link_to_html, folder, file, file[:-5])
             filejs.write(html1)
 
         self.label_file_name["text"] += "...page rendered +"
