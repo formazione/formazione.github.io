@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>5CE</title>
+  <title>4CE</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
@@ -95,24 +95,23 @@ let max = Math.max(...arr);
     let num = parseInt(n)+1;
     // nome del primo classificato
     if (n == 0){
-   scoretot.innerHTML += "<img src='" + keysSorted[n].toLowerCase()  + ".PNG'><b style='font-size:2.5em;color:red'>" + num + ". <u>" + keysSorted[n] + "</u></b> ";
-      scoretot.innerHTML += party + cup + "<b style='font-size:2.5em;background:coral'>" + x[keysSorted[n]] + "</b><br><br>"; ;
+   scoretot.innerHTML += "<div style='background:gold;width:100%;color:black'><img src='" + keysSorted[n]  + ".PNG'><br><b style='font-size:2.5em;color:red'>" + num + ". <u>" + keysSorted[n] + "</u><br></b> " + party + cup + "<b style='font-size:2.5em;background:coral'>" + x[keysSorted[n]] + "</b><br></div><br>"; 
     }
     else if (n == 1){
-      scoretot.innerHTML += "<img src='" + keysSorted[n].toLowerCase()  + ".PNG'><b style='font-size:2em;color:coral'>" + num + ". " + keysSorted[n] + "</b> ";
-      if (x[keysSorted[n]] > 100) scoretot.innerHTML += cup;
-      scoretot.innerHTML += "<b style='font-size:2em;background:coral'>" + x[keysSorted[n]] + "</b><br><br>"; ;
+      scoretot.innerHTML += "<div style='background:navy;width:85%;color:black'><img src='" + keysSorted[n]  + ".PNG'><br><b style='font-size:2em;color:coral'>" + num + ". " + keysSorted[n] + "</b><br> <b style='font-size:2em;background:coral'>" + x[keysSorted[n]] + "</b><br></div><br>"; 
+if (x[keysSorted[n]] > 100) scoretot.innerHTML += cup;
     }
   else if (n == 2){
-      scoretot.innerHTML += "<img src='" + keysSorted[n].toLowerCase()  + ".PNG'><b style='font-size:1.5em;color:gold'>" + num + ". " + keysSorted[n] + "</b> ";
-      if (x[keysSorted[n]] > 100) scoretot.innerHTML += cup;
-      scoretot.innerHTML += "<b style='font-size:1.5em;background:coral'>" + x[keysSorted[n]] + "</b><br><br>"; ;
+      scoretot.innerHTML += "<div style='background:coral;width:70%;color:black'><img src='" + keysSorted[n]  + ".PNG'><br><b style='font-size:1.5em;color:gold'>" + num + ". " + keysSorted[n] + "</b><br><b style='font-size:1.5em;background:coral'>" + x[keysSorted[n]] + "</b><br></div><br>"; 
+
+ if (x[keysSorted[n]] > 100) scoretot.innerHTML += cup;
+
     }
     else {
       
       // Chi non è nei primi 3...
 
-      scoretot.innerHTML += "<div style='background:white;width:50%;color:black'><img src=\"" + keysSorted[n].toLowerCase()  + ".PNG\" width='100px'> <b style='color:black'>" + keysSorted[n] + "</b><b style='font-size:3.0em'> " + x[keysSorted[n]] + "</b></div><br>";
+      scoretot.innerHTML += "<div style='background:white;width:50%;color:black'><img src=\"" + keysSorted[n]  + ".PNG\" width='100px'><br><b style='color:black'>" + keysSorted[n] + "</b><br><b style='font-size:3.0em'> " + x[keysSorted[n]] + "</b></div><br>";
 
       // Se superi 100 punti... 
       if (x[keysSorted[n]] > 100) {

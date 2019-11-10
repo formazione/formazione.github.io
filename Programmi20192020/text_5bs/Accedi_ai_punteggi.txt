@@ -1,3 +1,0 @@
-<h3>Clicca per acccedere alla pagina dei punteggi con username e password</h3>
-
-<a href="https://accesspage.glitch.me/">Clicca qui per accedere</a>
