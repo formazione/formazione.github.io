@@ -1,4 +1,0 @@
-#html_convert
-Terminare il modulo sui finanziamenti con i finanziamenti a breve e a lungo termine
-- Esercizi ultimi 30':
- interessi, sconto, anticipo su ft.

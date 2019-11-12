@@ -1,0 +1,18 @@
+#html_convert
+^La matrice SWOT.
+
+È un modello di analisi che il marketing usa per prendere le sue decisioni strategiche, di lungo periodo.
+
+SWOT significa:
+- Strengths: punti di forza dell'impresa (interni)
+- Weaknesses, punti deboli dell'impresa (interni)
+- Opportunities: le opportunità del mercato da cogliere (esterne) 
+- Threats, le minacce esterne alla realizzazione dei nostri obiettivi (esterne).
+
+Quindi, dall'analisi interna si traggono i punti di forza e debolezza.
+Dall'analisi esterna le opportunità e le minacce.
+
+#https://cdn.semrush.com/blog/static/media/c1/af/c1af74fce7766f1345615260d258eb19/analisi-swot-matrice-esempio.jpg
+
+
+
