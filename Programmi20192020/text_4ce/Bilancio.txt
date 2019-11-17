@@ -1,0 +1,37 @@
+<style>
+body{
+margin:20%;
+color:white;
+background:black;
+font-size:2em;
+}
+</style>
+
+<h4>Comunicazione aziendale</h4>
+
+Le imprese per poter sopravvivere devono essere conosciute dai clienti. Non basta realizzare un buon prodotto, se i clienti ne ignorano l'esistenza. Da qui la necessità di sviluppare le capacità di comunicazione dell'impresa.
+<br>
+L'impresa, inoltre, deve saper comunicare con i finanziatori ed è obbligata a fornire delle informazioni allo Stato.
+
+<h4>Tipi di comunicazione</h4>
+
+<h3>Comunicazione economico - finanziaria</h4>
+Questo tipo di comunicazione è rivolta ai finanziatori ed è essenzialmente costituita dal bilancio.
+
+<h4>Comunicazione socio - ambientale</h4>
+Si rivolge alla collettività in cui opera l'impresa e fornisce informazioni sulla capacità dell'impresa di generare ricchezza per i cittadini, di rispettare l'ambiente e di migliorare le condizioni generali della società attraverso il suo operato. Questo tipo di comunicazione è fondamentale per mantenere buoni rapporti con la collettività che, altrimenti, potrebbe avviare azioni per ostacolarne l'esistenza.
+
+<h4>Comunicazione di marketing</h4>
+Questo tipo di comunicazione, invece, è rivolta ai cliente e serve a far conoscere il prodotto e a spiegarne i motivi di utilità per i clienti.
+
+<h4>Sistema informativo aziendale</h4>
+È l'insieme dei dipendenti, del software, dei computer, che svolgono la funzione di raccogliere, memorizzare e analizzare i dati riguardanti l'azienda.
+
+<h4>Cos'è un conto</h4>
+<p>La gestione è composta da tantissime operazioni che comportano altrettanti dati da memorizzare. La rilevazione delle operazioni di gestione viene effettuata attraverso i conti che rappresentano le scritture contabili.
+</p>
+<p>
+Il conto è un insieme di scritture che misurano un determinato oggetto, evidenziandone le quantità iniziali e le variazioni successive.
+</p>
+<table class="" border=1><td><center><b>Denaro in Cassa</b></center></td><tr><td><input type='text'><input type='text'></td><tr></table>
+
