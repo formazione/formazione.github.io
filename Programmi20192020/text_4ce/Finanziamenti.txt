@@ -103,6 +103,10 @@ concessione di una somma di denaro tramite, ad es., l'apertura di credito in con
 ^- sconto di cambiali:
 banca anticipa l'importo delle cambiali non ancora giunte a scadenza, con deduzione dello sconto e delle commissioni;
 
+<br>
+<a href="https://aziendaitalia.altervista.org/wp-content/uploads/2019/11/output4.mp4">VIDEO SULLO SCONTO</a>
+<br>
+
 ^- l'anticipo su portafoglio sbf (salvo buon fine):
 la banca anticipa l'intero importo di cambiali o Ri.Ba., al netto delle commissioni e con addebito degli interessi ogni trimestre (di solito).
 
@@ -127,4 +131,5 @@ l'impresa costruttrice cede il bene in locazione dietro pagamento di un canone d
 
 ^- Sale and lease back:
 in cui l'impresa utilizzatrice vende il bene alla banca, ma lo continua ad usare pagando un canone alla banca, così da ottenere liquidità.
+
 
