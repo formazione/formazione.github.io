@@ -2,4 +2,5 @@ newlinks_5ce.innerHTML += "<a href='Programmi20192020/text_5ce/Bilancio.html'>Bi
                 newlinks_5ce.innerHTML += "<a href='Programmi20192020/text_5ce/Cambio.html'>Cambio</a><br>"
                 newlinks_5ce.innerHTML += "<a href='Programmi20192020/text_5ce/Punteggi.html'>Punteggi</a><br>"
                 newlinks_5ce.innerHTML += "<a href='Programmi20192020/text_5ce/Turismo.html'>Turismo</a><br>"
+                newlinks_5ce.innerHTML += "<a href='Programmi20192020/text_5ce/Turismo2.html'>Turismo2</a><br>"
                 

@@ -5,6 +5,7 @@ margin-right:5%:}
 img {width:50vw;}
 </style>
 
+<a href="http://wps.pearsoned.it/ema_it_hpe_blythe_fondmarketing_2/142/36359/9307981.cw/-/9307983/index.html">Esercizio sul marketing</a>
 
 <h3 id="title">IL MARKETING</h3>
 
@@ -138,6 +139,7 @@ for (n of slides){
 }
 
 </script>
+
 
 
 
