@@ -61,7 +61,7 @@ Il reddito pro capite dei russi è pari a___15.000 €___30.000 €___10.000 €
 Il reddito pro capite degli staunitensi è pari a___38.000 €___25.000 €___10.000 €___10
 Il reddito pro capite degli indiani è pari a___73 €___25.000 €___10.000 €___10
 Cosa significa segmento MICE___Meeting Incentive, conference, exibition___Mondial Tourism Country EuropeMany tourists coming in Europe___Meeting
-La popolazione statunitense ammonta a circa___1 miliardo di abitanti___315 milioni di abitanti___100 milioni___143 milioni
+La popolazione statunitense ammonta a circa___315 milioni di abitanti___1 miliardo di abitanti___100 milioni___143 milioni
 I turisti over 60 rappresentano il 20% dei turisti statunitensi___Vero___Falso
 SWOT sta per___Strengths, weaknesses, opportunities, threats___Strengths, weaknesses, opportunities, tricks___Strengths, weaknesses, opportunities, trets
 L'analisi interna rileva___punti di forza e debolezza___opportunità e minacce___punti di forza e opportunità___punti di forza e minacce
@@ -501,6 +501,7 @@ height:100vh;
 </div>
 
 			
+
 
 
 
