@@ -8,7 +8,72 @@
     <!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>-->
 	<script src="https://code.jquery.com/jquery-1.11.1.min.js" integrity="sha256-VAvG3sHdS5LqTT+5A/aeq/bZGa/Uj04xKxY8KM/w9EE=" crossorigin="anonymous"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-    <script>
+
+
+
+<script src="https://www.gstatic.com/firebasejs/5.9.2/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/5.9.2/firebase-database.js"></script>
+<b id="scoretot"></b><br>
+Nome: <input id="nomestudente" type="text">Codice: <input id="codice" type="text">
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyDp-mWaWEI07pIdRUhi6vA-salEMRWz4hw",
+    authDomain: "quiz-e5e5a.firebaseapp.com",
+    databaseURL: "https://quiz-e5e5a.firebaseio.com",
+    projectId: "quiz-e5e5a",
+    storageBucket: "quiz-e5e5a.appspot.com",
+    messagingSenderId: "901845403492"
+  };
+  firebase.initializeApp(config);
+  let database = firebase.database();
+
+
+  // Nome del child dove vanno i risultati
+
+  let ref = database.ref("5CE_test1");
+  
+  // ref.set(); // delete all
+
+  ref.on("value", gotData)
+
+  let scoretot = document.getElementById("scoretot");
+scoretot.align = "center";
+function gotData(data){
+    x = data.val();
+    for (name in x){
+  scoretot.innerHTML += "(" + name + ":" + x[name] + ") ";
+}
+}
+
+listanomi = ["Merola", "Dragonetti", "D_Amato", "Marzucca", "Di_crisci", "Camaran", "Teodosio", "Niglio", "Cirillo", "Mannina", "Massaro", "Bortone", "Torraca", "Vetrale", "Cortazzo", "Di_Siervi", "Squitieri", "Giuliani", "Greco", "Iannuzzi", "Simone", "Tardio", "Alfarano"];
+
+code = {
+    "Merola" : "ali5",
+    "Dragonetti" : "itt3",
+    "D_Amato" : "ota5",
+    "Marzucca" : "acc2",
+    "Di_crisci" : "ics67",
+    "Camaran" : "nar4",
+    "Teodosio" : "7ois",
+    "Niglio" : "oi3l",
+    "Cirillo" : "ol6l",
+    "Mannina" : "ani3n",
+    "Massaro" : "or3a",
+    "Bortone" : "e8no",
+    "Torraca" : "3aca",
+    "Vetrale" : "e6lar",
+    "Cortazzo" : "ozz6",
+    "Di_Siervi" : "8ivr",
+    "Squitieri" : "i8re",
+    "Giuliani" : "in8a",
+    "Greco" : "3oce",
+    "Iannuzzi" : "i6zz",
+    "Simone" : "e8no", 
+    "Tardio" : "o7id", 
+    "Alfarano" : "2ona"};
+
+
 
     var quiztitle = "Pianificazione e programmazione";
 
@@ -58,10 +123,10 @@ if (!("scramble" in Array.prototype)) {
 let mydom = `L'Europa è la prima destinazione turistica mondiale___Vero___Falso
 La popolazione Russa ammonta a circa___143 milioni___1 miliardo di abitanti___50 milioni di abitanti___100 milioni
 Il reddito pro capite dei russi è pari a___15.000 €___30.000 €___10.000 €___10
-Il reddito pro capite degli staunitensi è pari a___38.000 €___25.000 €___10.000 €___10
-Il reddito pro capite degli indiani è pari a___73 €___25.000 €___10.000 €___10
+Il reddito pro capite degli staunitensi è pari a___38.000 €___25.000 €___10.000 €___150 €
+Il reddito pro capite degli indiani è pari a___73 €___25.000 €___10.000 €___100 €
 Cosa significa segmento MICE___Meeting Incentive, conference, exibition___Mondial Tourism Country EuropeMany tourists coming in Europe___Meeting
-La popolazione statunitense ammonta a circa___315 milioni di abitanti___1 miliardo di abitanti___100 milioni___143 milioni
+La popolazione statunitense ammonta a circa___315 milioni di abitanti___100 milioni___143 milioni___1 miliardo di abitanti
 I turisti over 60 rappresentano il 20% dei turisti statunitensi___Vero___Falso
 SWOT sta per___Strengths, weaknesses, opportunities, threats___Strengths, weaknesses, opportunities, tricks___Strengths, weaknesses, opportunities, trets
 L'analisi interna rileva___punti di forza e debolezza___opportunità e minacce___punti di forza e opportunità___punti di forza e minacce
@@ -312,15 +377,27 @@ function processQuestion(choice){
 			$('.rsform-block-submit').addClass('show');
 			$('#question').text("Hai risposto bene a " + score + " domande su " + quiz.length + " complessive.");
       speak("hai risposto in modo corretto a " + score + " domande su " + quiz.length + " complessive");
+
+//==================================== ##################### ====
+//let nomestu = document.getElementById("nomestudente");
+scoretot.innerHTML = "";
+
+let nome = nomestudente.value;
+if (listanomi.includes(nomestudente.value) && code[nomestudente.value]==codice.value && x[nomestudente.value] == undefined){
+  ref.child(nome).set(Math.round(score/quiz.length * 100));
+}
+
+// ========================================================
       
       let percent = Math.round(score/quiz.length * 100);
+      speak(nomestudente.value);
       if (percent == 100) speak("Hai ottenuto il massimo punteggio! Ottimo!");
       else if (percent < 100 && percent >80) speak("Bel risultato, complimenti");
       else if (percent < 80 && percent >70) speak("Hai risposto in modo discreto, bravo.");
       else if (percent < 70 && percent >60) speak("HAi risposto in modo sufficientemente corretto.");
       else speak("Devi impegnarti di più. Riprova");
     
-			$(document.createElement('h4')).addClass('score').text(Math.round(score/quiz.length * 100) + '%').insertAfter('#question');			
+			$(document.createElement('h4')).addClass('score').text(nomestudente.value + " " + Math.round(score/quiz.length * 100) + '%').insertAfter('#question');			
 		}
 
         /**
@@ -486,22 +563,25 @@ height:100vh;
 
   
 </script>
-<body>
+<body  oncontextmenu="return false">
 
  
-  <!-- home button -->
+  <!-- home button 
   <div id="menuDiv">
 <script src="https://quarta.glitch.me/dropdownclassi.js"></script>
 </div>
 
+  -->
 
 
 <div class="form-group rsform-block rsform-block-framecontent"><div id="frame" role="content"></div>
 
 </div>
-
-			
-
-
+<script>
+document.write("Come scrivere i nomi:<br>")
+for (n of listanomi){
+  document.write(n + " ");
+}	
+</script>
 
 
