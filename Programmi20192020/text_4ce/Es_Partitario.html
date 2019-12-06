@@ -1,0 +1,45 @@
+<div id="root"></div>
+<script>
+  let counter = 0;
+  function stampa(data, traccia, sold, sola){
+      let doc = `<br>`+data + " " + traccia+`<br>
+data<input type="text" size=4 value="01/01">
+descrizione operazione
+<input type="text" value="">
+<br>
+dare<input id="d`+counter+`" type="text" size=10>
+avere<input id="a`+counter+`" type="text" size=10>
+<br>
+<button onclick="if ((d`+counter+`.value=='`+sold+`') && (a`+counter+`.value=='`+sola+`')) {scene`+counter+`.innerHTML='Giusto'}else{scene`+counter+`.innerHTML='No'}">Verifica</button>
+<div id="scene`+counter+`"></div>`
+counter++
+  return doc
+  }
+</script>
+<h3>Esercizio 1</h3>
+<p>
+  L'impresa di catering Flash Food SPA di Roma 
+effettua le seguenti operazioni nei confronti del fornitore Allevamenti maremmansi SPA di grosseto:
+  </p>
+<br>
+
+<br>
+<h5>Fornitore: Allevamenti Maremmani</h5>
+<script>
+root.innerHTML=stampa("01/01", "Debito residuo del trimestre precedente 12.650 €",
+                      "","12.650");
+root.innerHTML+=stampa("10/01", "Ricevuta fattura n. 3 acquisto carne 15.820 €+IVA 10%",
+                      "","17.402");
+root.innerHTML+=stampa("30/01", "Inviato Bonifico bancario a saldo debito trimestre precedente","12.650","");
+root.innerHTML+=stampa("15/02", "Ricevuta fattura 28 acquisto carne 18.678 €+IVA 10%",
+                      "","20.545,80");                 
+root.innerHTML+=stampa("28/02", "Inviato Bonifico bancario per pagamento metà importo fatt. n. 3","8.701","");
+root.innerHTML+=stampa("15/02", "Ricevuta ft. 44 acquisto carne 7.850 €+IVA 10%",
+                      "","8.635");
+root.innerHTML+=stampa("20/03", "Bonifico a saldo ft. n. 3","8.701","");
+root.innerHTML+=stampa("20/03", "Estinta RIBA a favore Allevamenti Maremmani per ft. 28","20.545,80","");
+root.innerHTML+=stampa("-", "Totale movimenti gen/feb/mar","50.597,80","59.232,80");
+root.innerHTML+=stampa("-", "Saldo a nostro debito","8.635","");
+root.innerHTML+=stampa("-", "Totale a pareggio","59.232,80","59.232,80");
+  </script>
+
