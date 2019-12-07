@@ -1,0 +1,344 @@
+<style type="text/css" id="sns_styles">@import url(https://fonts.googleapis.com/css?family=Work+Sans:300,600);
+
+body{
+    font-size: 20px;
+    font-family: 'Work Sans', sans-serif;
+    color: #333;
+  font-weight: 300;
+  text-align: center;
+  background-color: #f8f6f0;
+}
+h1{
+  font-weight: 300;
+  margin: 0px;
+  padding: 10px;
+  font-size: 20px;
+  background-color: #444;
+  color: #fff;
+}
+.question{
+  font-size: 30px;
+  margin-bottom: 10px;
+}
+.answers {
+  margin-bottom: 20px;
+  text-align: left;
+  display: inline-block;
+}
+.answers label{
+  display: block;
+  margin-bottom: 10px;
+}
+button{
+  font-family: 'Work Sans', sans-serif;
+    font-size: 22px;
+    background-color: #279;
+    color: #fff;
+    border: 0px;
+    border-radius: 3px;
+    padding: 20px;
+    cursor: pointer;
+    margin-bottom: 20px;
+    display:block;
+}
+
+#submit {
+  background-color: green;
+}
+
+#previous {
+  background-color: pink;
+}
+
+button:hover{
+    background-color: #38a;
+}
+
+
+
+
+
+.slide{
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  width: 100%;
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+.active-slide{
+  opacity: 1;
+  z-index: 2;
+}
+.quiz-container{
+  position: relative;
+  height: 250px;
+  margin-top: 40px;
+}
+</style>
+
+<h1>Test sul turismo</h1>
+<div class="quiz-container">
+<div id="quiz"></div>
+</div>
+<hr />
+<p><button id="next">Avanti</button><br />
+
+<button id="submit">Controlla i risultati</button></p>
+<div id="results"></div>
+<script>
+
+
+ (function() {
+  const myQuestions = [
+    {
+      question: "Chi è il turista?",
+
+      answers: {
+        a: "Chi fa un viaggio che dura oltre l'anno",
+        b: "Chi viaggia per vari motivi, ma non si prefigge di conseguire redditi",
+        c: "Chi non pernotta durante il viaggio",
+        d: "non lo so"
+      },
+
+      correctAnswer: "b"
+    },
+    {
+      question: "Il turismo moderno interessa un periodo che va",
+      answers: {
+        a: "dal 1700 al 1960",
+        b: "dal 1960 al 1990",
+        c: "dal 1990 ad oggi",
+        d: "dall'antichità classica fino al 1700"
+      },
+      correctAnswer: "a"
+    },
+
+    {
+      question: "La liberalizzazione dei mercati e l'apertura delle frontiere hanno dato luogo",
+      answers: {
+        a: "alla crisi economica",
+        b: "al capitalismo",
+        c: "alla minaccia islamica",
+        d: "alla globalizzazione"
+      },
+      correctAnswer: "d"
+    },
+
+        {
+      question: "La motivazione dei turisti fa parte dei fattori _______ che influenzano i turisti",
+      answers: {
+        a: "economici",
+        b: "sociali"
+      },
+      correctAnswer: "b"
+    },
+
+  {
+      question: "L'OMT è",
+      answers: {
+        a: "L'organizzazione mondiale dei trasporti",
+        b: "L'organizzazione mondiale del turismo",
+        c: "L'organizzazione modiale del traffico",
+        d: "L'organizzazione Meeting Turistici"
+      },
+      correctAnswer: "b"
+    },
+      {
+      question: "Il trattato di Roma ha istituito",
+      answers: {
+        a: "La comunità economica europea",
+        b: "L'unione monetaria e monetaria",
+        c: "Il trattato di Maastricht",
+        d: "gli Accordi di Shengen"
+      },
+      correctAnswer: "a"
+    },
+
+      {
+      question: "Numero di presenze fratto arrivi = ",
+      answers: {
+        a: "Tasso di propensione turistica",
+        b: "Tassi di ricettività",
+        c: "Densità ricettiva",
+        d: "Permanenza media"
+      },
+      correctAnswer: "d"
+    },
+         {
+      question: "Viaggi degli abitanti / numero di abitanti = ",
+      answers: {
+        a: "Tasso di propensione turistica",
+        b: "Tassi di ricettività",
+        c: "Densità ricettiva",
+        d: "Permanenza media"
+      },
+      correctAnswer: "a"
+    },
+         {
+      question: "Posti letto / abitanti = ",
+      answers: {
+        a: "Tasso di propensione turistica",
+        b: "Tassi di ricettività",
+        c: "Densità ricettiva",
+        d: "Permanenza media"
+      },
+      correctAnswer: "b"
+    },
+         {
+      question: "Posti letto / Kmq = ",
+      answers: {
+        a: "Tasso di propensione turistica",
+        b: "Tassi di ricettività",
+        c: "Densità ricettiva",
+        d: "Permanenza media"
+      },
+      correctAnswer: "c"
+    },
+    {
+
+      question: "Indica il saldo tra consumi turistici degli stranieri in italia e consumi turistici degli italiani all'estero",
+      answers: {
+        a: "Bilancia dei pagamenti",
+        b: "Bilancia delle partit correnti",
+        c: "Bilancia economica",
+        d: "Bilancia turistica"
+      },correctAnswer: "d"},
+{
+    question: "In Italia sono in aumento",
+      answers: {
+        a: "I turisti italiani in Italia",
+        b: "I turisti stranieri in Italia",
+        c: "entrambi",
+        d: "né l'uno ne l'altro"
+      },correctAnswer: "b"}
+
+
+  ];
+
+/*
+    question: "",
+      answers: {
+        a: "",
+        b: "",
+        c: "",
+        d: ""
+      },correctAnswer: ""}
+
+
+  ];
+*/
+  function buildQuiz() {
+    // we'll need a place to store the HTML output
+    const output = [];
+
+    // for each question...
+    myQuestions.forEach((currentQuestion, questionNumber) => {
+      // we'll want to store the list of answer choices
+      const answers = [];
+
+      // and for each available answer...
+      for (letter in currentQuestion.answers) {
+        // ...add an HTML radio button
+        answers.push(
+          `<label>
+             <input type="radio" name="question${questionNumber}" value="${letter}">
+              ${letter} :
+              ${currentQuestion.answers[letter]}
+           </label>`
+        );
+      }
+
+      // add this question and its answers to the output
+      output.push(
+        `<div class="slide">
+           <div class="question"> ${currentQuestion.question} </div>
+           <div class="answers"> ${answers.join("")} </div>
+         </div>`
+      );
+    });
+
+    // finally combine our output list into one string of HTML and put it on the page
+    quizContainer.innerHTML = output.join("");
+  }
+
+  function showResults() {
+    // gather answer containers from our quiz
+    const answerContainers = quizContainer.querySelectorAll(".answers");
+
+    // keep track of user's answers
+    let numCorrect = 0;
+
+    // for each question...
+    myQuestions.forEach((currentQuestion, questionNumber) => {
+      // find selected answer
+      const answerContainer = answerContainers[questionNumber];
+      const selector = `input[name=question${questionNumber}]:checked`;
+      const userAnswer = (answerContainer.querySelector(selector) || {}).value;
+
+      // if answer is correct
+      if (userAnswer === currentQuestion.correctAnswer) {
+        // add to the number of correct answers
+        numCorrect++;
+
+        // color the answers green
+        answerContainers[questionNumber].style.color = "lightgreen";
+      } else {
+        // if answer is wrong or blank
+        // color the answers red
+        answerContainers[questionNumber].style.color = "red";
+      }
+    });
+
+    // show number of correct answers out of total
+    resultsContainer.innerHTML = `${numCorrect} su ${myQuestions.length}`;
+  }
+
+  function showSlide(n) {
+    slides[currentSlide].classList.remove("active-slide");
+    slides[n].classList.add("active-slide");
+    currentSlide = n;
+
+    if (currentSlide === slides.length - 1) {
+      nextButton.style.display = "none";
+      submitButton.style.display = "inline-block";
+    } else {
+      nextButton.style.display = "inline-block";
+      submitButton.style.display = "none";
+    }
+  }
+
+  function showNextSlide() {
+    showSlide(currentSlide + 1);
+  }
+
+  function showPreviousSlide() {
+    showSlide(currentSlide - 1);
+  }
+
+  const quizContainer = document.getElementById("quiz");
+  const resultsContainer = document.getElementById("results");
+  const submitButton = document.getElementById("submit");
+
+  // display quiz right away
+  buildQuiz();
+
+
+  const nextButton = document.getElementById("next");
+  const slides = document.querySelectorAll(".slide");
+  let currentSlide = 0;
+
+  showSlide(0);
+
+  // on submit, show results
+  submitButton.addEventListener("click", showResults);
+
+  nextButton.addEventListener("click", showNextSlide);
+})();
+
+
+
+
+
+</script>

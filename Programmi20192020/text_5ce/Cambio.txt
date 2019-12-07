@@ -35,3 +35,4 @@ es("Calcola il valore di 500 euro in dollari al cambio di 1.15","575","ris2")
 
 
 
+
