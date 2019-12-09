@@ -49,11 +49,12 @@ class Ebook:
         self.themes = tk.Menu(self.root)
         self.themes.add_command(label="Dark mode", command=self.dark)
         self.themes.add_command(label="Light mode", command=self.light)
-
-
-        self.menubar.add_command(label="+", command = lambda: self.new_window(Win1))
-        self.menubar.add_command(label="DELETE", command= lambda: self.delete_file())
-        self.menubar.add_command(label="RENAME", command= lambda: self.new_window(Rename))
+        self.menubar.add_command(
+            label="+", command=lambda: self.new_window(Win1))
+        self.menubar.add_command(
+            label="DELETE", command=lambda: self.delete_file())
+        self.menubar.add_command(
+            label="RENAME", command=lambda: self.new_window(Rename))
 
         # ========= SUB RENDER ============
         self.menubar.add_command(label="{Render-Page}", command = self.save_page)
@@ -97,11 +98,11 @@ class Ebook:
             self.show_text_in_editor()
             self.hidden = 0
 
-
     # Themes
     def dark(self):
         self.text['bg'] = "black"
         self.text['fg'] = 'white'
+        self.text['insertbackground'] = "white"
 
     def light(self):
         self.text['bg'] = "darkgreen"
