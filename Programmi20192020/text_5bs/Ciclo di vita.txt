@@ -1,0 +1,36 @@
+<style>body{margin:10%; font-size:2em;font-style:arial;}</style>
+<h3>Ciclo di vita del prodotto</h3>
+<ul>
+<li>I prodotti hanno un periodo di vita limitato.
+<li>le vendite e i profitti hanno diverse fasi
+</ul>
+Per ogni fase, le strategie sono diverse.
+<h3>Le fasi del CVP</h3>
+Le fasi del ciclo di vita del prodotto sono:
+<ul>
+<li>Il lancio
+<li>Lo sviluppo
+<li>la maturità
+<li>il declino
+</ul>
+Nella fase del declino, il prodotto viene ritirato o rilanciato con nuove strategie di vendita.
+<img src="https://farenumeri.it/wp-content/uploads/2019/07/ciclo-di-vita-del-prodotto.png">
+
+<h3>Lancio</h3>
+<img src="https://www.georgefiorini.eu/images/pubblicita/lancio-nuovo-prodotto/lancio-nuovo-prodotto.jpg">
+Nella fase di lancio l'obiettivo è la diffusione del prodotto. Il prezzo può essere alto o basso a seconda del prodotto. Se si tratta di un ristorante facente parte della ristorazione veloce, il prezzo sarà basso, per attirare i clienti e strapparli alla concorrenza. In caso di ristoranti di alta qualità, invece, il prezzo non potrebbe essere basso, in quanto si darebbe l'impressione di servire prodotti di scarsa qualità, cosa non adatta per il tipo di clientela cui si rivolge tale tipo di attività.
+<img src="https://www.collis.it/wp-content/uploads/2017/08/nuovo-prodotto-234x300.jpg">
+In fase di lancio occorre puntare molto sulla pubblicità per far conoscere un nuovo esponente dell'offerta che deve farsi notare, soprattutto se i competitors sono molti e sono noti. All'inizio la produzione è limitata, perché la clientela è ancora ridotta, perché il prodotto non è ancora conosciuto. Le imprese probabilmente operano in perdita all'inizio, perché il numero limitato di vendite non consente di recuperare subito tutti i costi iniziali.
+<br>
+In questa fase i clienti si chiamano innovatori (2%), seguiti dai pionieri (early adopters) (14%), early majority (34%), late majority (34%) e laggards o ritardatari.
+<img src="https://www.mirkomaiorano.it/wp-content/uploads/2015/02/Rogers-Adoption-Curve-1.jpg">
+I primi acquirenti sono disposti a pagare un prezzo superiore (premium price) per l'innovazione.
+
+
+<h3>Diverse strategie</h3>
+Si può puntare su una strategia ad alto livello di immagine (high level image strategy) con una qualità e prezzo elevati (prezzi di scrematura del mercato) e una intensa promozione mirata al target.
+Il target deve avere un'alta capacità di spesa ed è disposta a pagare per avere un prodotto di alto livello, in quanto vive il prodotto come uno status symbol, che rappresenta il proprio stato sociale.
+<br>
+Vi può essere, al contrario, una strategia di penetrazione massiccia (mass market penetretion strategy) con prodotti di media qualità e prezi bassi, con intensa attività promozionale. <br>Si adatta a mercati con un domanda elevata, con molti concorrenti e con clienti con reddito medio basso, sensibili al prezzo.
+
+
