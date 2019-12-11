@@ -46,3 +46,9 @@ I profitti in questa fase non sono elevati, perché per sconfiggere la concorren
 <h4>Fase di declino</h4>
 Le vendite e i profitti diminuscono. I consumatori acquistano altri prodotti. In questa fase si può tentare il rilancio del prodotto o il suo definitivo ritiro dal mercato.
 <br>L'impresa deve analizzare la situazione interna e del mercato per decidere quale sia la scelta più vantaggiosa.
+
+<h4>The chasm (kas'm)</h4>
+In Crossing the Chasm, Moore begins with the diffusion of innovations theory from Everett Rogers, and argues there is a chasm between the early adopters of the product (the technology enthusiasts and visionaries) and the early majority (the pragmatists). Moore believes visionaries and pragmatists have very different expectations, and he attempts to explore those differences and suggest techniques to successfully cross the "chasm," including choosing a target market, understanding the whole product concept, positioning the product, building a marketing strategy, choosing the most appropriate distribution channel and pricing.
+
+
+

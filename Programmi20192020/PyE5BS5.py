@@ -265,8 +265,8 @@ class Ebook:
                 htmlfile.write(read)
         pdfkit.from_file(f"{self.current}.html", f"{self.current}.pdf")
         os.startfile(f"{self.current}.pdf")
+        print("There should be a file")
         self.create_newlinks()
-
 
 
 

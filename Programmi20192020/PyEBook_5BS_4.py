@@ -15,7 +15,6 @@ import glob
 from time import sleep
 import os
 from commit import commit
-import pdfkit
 
 
 class Ebook:
@@ -50,31 +49,31 @@ class Ebook:
         self.themes = tk.Menu(self.root)
         self.themes.add_command(label="Dark mode", command=self.dark)
         self.themes.add_command(label="Light mode", command=self.light)
-        self.menubar.add_command(
-            label="+", command=lambda: self.new_window(Win1))
-        self.menubar.add_command(
-            label="DELETE", command=lambda: self.delete_file())
-        self.menubar.add_command(
-            label="RENAME", command=lambda: self.new_window(Rename))
-        self.menubar.add_command(
-            label="Create PDF", command=lambda: self.create_PDF())
+
+
+        self.menubar.add_command(label="+", command = lambda: self.new_window(Win1))
+        self.menubar.add_command(label="DELETE", command= lambda: self.delete_file())
+        self.menubar.add_command(label="RENAME", command= lambda: self.new_window(Rename))
 
         # ========= SUB RENDER ============
-        self.menubar.add_command(
-            label="{Render-Page}", command=self.save_page)
-        self.menubar.add_command(
-            label="{Ebook}", command=self.save_ebook)
-
+        self.render = tk.Menu(self.root)
+        self.render.add_command(label="Render Page", command = self.save_page)
+        self.render.add_command(label="Render Ebook", command = self.save_ebook)
+        self.menubar.add_cascade(label="RENDER", menu=self.render)
 
         self.menubar.add_command(label="SAVE", command = self.save)       
         self.menubar.add_command(label="HELP", command= lambda: self.new_window(Help))
         self.menubar.add_cascade(label="THEME", menu=self.themes)
+        self.menubar.add_cascade(label="COMMIT", menu=self.commit)
         #self.root.config(menu=self.menu_theme)
         self.root.config(menu=self.menubar)
 
-    def create_PDF(self):
-        "Menu voice... to create a pdf file from the actual page"
-        print("This is not implemented yet")
+    def commit(self):
+        os.system("git status")
+        os.system("git add .")
+        os.system("git commit -m 'new stuffs'")
+        os.system("git push")
+        print("Files have been committed")
 
     def filelist(self):
         self.frame1 = tk.Frame(self.root)
@@ -96,6 +95,7 @@ class Ebook:
 
     def hide(self):
         if self.hidden == 0:
+            
             self.frame1.destroy()
             self.hidden = 1
         else:
@@ -106,17 +106,16 @@ class Ebook:
             self.show_text_in_editor()
             self.hidden = 0
 
+
     # Themes
     def dark(self):
         self.text['bg'] = "black"
         self.text['fg'] = 'white'
-        self.text['insertbackground'] = "white"
 
     def light(self):
         self.text['bg'] = "darkgreen"
         self.text['fg'] = 'white'
         self.text['font'] = "Arial 24"
-        self.text['insertbackground'] = "white"
 
     def big_letters(self):
         if self.letter_size < 72:
@@ -256,21 +255,15 @@ class Ebook:
         """Save a single page v. 1.4 23/09/2019 at 05:40"""
         self.save()
         html = ""
-        self.current = self.lstb.get(tk.ACTIVE)[:-4]
+        self.current = self.lstb.get(tk.ACTIVE)[:-4] # The file selected without .txt
         with open(f"{self.current}.html", "w", encoding="utf-8") as htmlfile:
+            # opend the active (selected) item in the listbox
             with open(f"{self.current}.txt", "r", encoding="utf-8") as readfile:
-                read = readfile.read()
-                read = self.convert_if(read)
-                html = read
-                htmlfile.write(read)
-        pdfkit.from_file(f"{self.current}.html", f"{self.current}.pdf")
-        os.startfile(f"{self.current}.pdf")
+                read = readfile.read() # get the text of the active file
+                read = self.convert_if(read) # searches for #html_convert tag
+                htmlfile.write(read) # create the new file with the rendered text
         self.create_newlinks()
-
-
-
-
-
+    
     def create_newlinks(self):
         """This creates a list of links to the web pages created with render page"""
         with open("..\\{}.js".format(js_link_to_html), "w") as filejs:
@@ -294,7 +287,7 @@ class Ebook:
                 # WE NEED A DIV {} and a js file {}.js and a <script src="newlinks4ce"
                 # just copy everything in index.html, put in place and copy th js fil
                 html1+= """{}.innerHTML += "<a href='Programmi20192020/{}/{}'>{}</a><br>"
-                """.format(js_link_to_html, folder, file, file[:-5])
+                """.format(js_link_to_html, folder, file, file)
             filejs.write(html1)
 
         self.label_file_name["text"] += "...page rendered +"
@@ -304,7 +297,7 @@ class Ebook:
     def show_text_in_editor(self):
         """Shows text of selected file in the editor"""
         self.index = self.lstb.curselection()
-        if self.lstb.curselection() != ():
+        if not self.lstb.curselection() is ():
             #self.index = self.lstb.curselection()
             #index = self.lstb.curselection()[0]
             #self.filename = self.files[index] # instead of self.lstb.get(index)
