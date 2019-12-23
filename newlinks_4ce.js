@@ -1,4 +1,6 @@
-newlinks_4ce.innerHTML += "<a href='Programmi20192020/text_4ce/Bilancio.html'>Bilancio</a><br>"
+newlinks_4ce.innerHTML += "<a href='Programmi20192020/text_4ce/4ce_test2.html'>4ce_test2</a><br>"
+                newlinks_4ce.innerHTML += "<a href='Programmi20192020/text_4ce/access_page.html'>access_page</a><br>"
+                newlinks_4ce.innerHTML += "<a href='Programmi20192020/text_4ce/Bilancio.html'>Bilancio</a><br>"
                 newlinks_4ce.innerHTML += "<a href='Programmi20192020/text_4ce/compiti.html'>compiti</a><br>"
                 newlinks_4ce.innerHTML += "<a href='Programmi20192020/text_4ce/Es_conti_2.html'>Es_conti_2</a><br>"
                 newlinks_4ce.innerHTML += "<a href='Programmi20192020/text_4ce/Es_Partitario.html'>Es_Partitario</a><br>"

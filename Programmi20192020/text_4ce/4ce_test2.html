@@ -15,29 +15,25 @@
 <script>
 
 listanomi = [
-            "Alfarano",
-            "Bortone",
-            "Camaran",
-            "Cirillo",
-            "Cortazzo",
-            "D_Amato",
-            "Di_crisci",
-            "Dragonetti",
-            "Mannina",
-            "Marzucca",
-            "Niglio", 
-            "Massaro",
+            "Acone",
+            "Battagliese",
+            "Borrelli",
+            "Carracino",
+            "Ciardi",
+            "Donnianni",
+            "Fluri",
+            "Ghiunghius",
+            "Gonoshi",
+            "Liguori",
+            "Maiese",
+            "Mautone",
             "Merola",
-            "Torraca",
-            "Di_Siervi",
-            "Giuliani",
-            "Greco",
-            "Iannuzzi",
-            "Squitieri",
-            "Simone",
+            "Palladino",
+            "Ricci",
+            "Romano",
+            "Saja_A",
+            "Saja_P",
             "Tardio",
-            "Teodosio",
-            "Vetrale",
             ];
 
 let html = "<select id='nomestudente' name='carlist' form='carform'>";
@@ -71,7 +67,7 @@ Codice: <input id="codice" type="text"> (Con il codice memorizzi il punteggio qu
   let database = firebase.database();
 
 
-  // Nome del child dove vanno i risultati
+  // Nome del child dove vanno i risultati =========== !!! ===>>>
 
   let ref = database.ref("4ce_test2");
   
@@ -91,29 +87,25 @@ function gotData(data){
 
 
 code = {
-    "Alfarano" : "000",
-    "Bortone" : "000",
-    "Camaran" : "000",
-    "Cirillo" : "000",
-    "Cortazzo" : "000",
-    "D_Amato" : "000",
-    "Di_crisci" : "000",
-    "Di_Siervi" : "000",
-    "Dragonetti" : "000",
-    "Giuliani" : "000",
-    "Greco" : "000",
-    "Iannuzzi" : "000",
-    "Mannina" : "000",
-    "Marzucca" : "000",
-    "Massaro" : "000",
-    "Merola" : "000",
-    "Niglio" : "000",
-    "Squitieri" : "000",
-    "Simone" : "000", 
-    "Tardio" : "000", 
-    "Teodosio" : "000",
-    "Torraca" : "000",
-    "Vetrale" : "000",
+      "Acone": "000",
+      "Battagliese": "000",
+      "Borrelli": "000",
+      "Carracino": "000",
+      "Ciardi": "000",
+      "Donnianni": "000",
+      "Fluri": "000",
+      "Ghiunghius": "000",
+      "Gonoshi": "000",
+      "Liguori": "000",
+      "Maiese": "000",
+      "Mautone": "000",
+      "Merola": "000",
+      "Palladino": "000",
+      "Ricci": "000",
+      "Romano" : "000",
+      "Saja_A": "000",
+      "Saja_P": "000",
+      "Tardio": "000",
   };
 
 
@@ -163,7 +155,7 @@ if (!("scramble" in Array.prototype)) {
 }		
 
       
-let mydom = `Il costo delle attrezzature è un costo___pluriennale___di esercizio
+let mydom = `Il conto attrezzature è un costo___pluriennale___di esercizio
 L'acquisto delle materie prime genera___un costo e un'uscita___un ricavo e un'entrata___un costo e un'entrata___un ricavo ed un'uscita
 La vendita di un prodotto, per l'impresa comporta un ___debito verso lo Stato per l'IVA incassata dal cliente___credito verso lo Stato per l'IVA incassata dal cliente
 La merce in magazzino a fine anno è___un costo sospeso all'anno prossimo___un costo dell'attuale esercizio (anno)

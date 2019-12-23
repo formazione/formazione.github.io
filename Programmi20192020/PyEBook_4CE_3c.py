@@ -139,7 +139,8 @@ class Ebook:
         self.frame2 = tk.Frame(self.root)
         self.frame2["bg"] = "coral"
         self.frame2.pack(side='left', fill=tk.Y)
-
+        self.scrollbar = tk.Scrollbar(self.frame2)
+        self.scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
         self.label_file_name = tk.Label(self.frame2, text="Editor - choose a file on the left")
         self.label_file_name.pack(fill=tk.BOTH, expand=1)
         self.text = tk.Text(self.frame2, wrap=tk.WORD)
@@ -149,6 +150,8 @@ class Ebook:
         self.text.pack(fill=tk.Y, expand=1)
         self.text.bind("<Control-s>", lambda x: self.save())
         self.text.bind("<Control-p>", lambda x: self.render_page())
+        self.text.config(yscrollcommand=self.scrollbar.set)
+        self.scrollbar.config(command=self.text.yview)
 
     def html_convert(self, text_to_render):
         """Convert to my Markup language"""
