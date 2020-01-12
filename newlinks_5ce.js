@@ -2,6 +2,7 @@ newlinks_5ce.innerHTML += "<a href='Programmi20192020/text_5ce/5CE_testbp2.html'
                 newlinks_5ce.innerHTML += "<a href='Programmi20192020/text_5ce/Bilancio.html'>Bilancio</a><br>"
                 newlinks_5ce.innerHTML += "<a href='Programmi20192020/text_5ce/Budget_esercizio_1.html'>Budget_esercizio_1</a><br>"
                 newlinks_5ce.innerHTML += "<a href='Programmi20192020/text_5ce/Cambio.html'>Cambio</a><br>"
+                newlinks_5ce.innerHTML += "<a href='Programmi20192020/text_5ce/Esercizio_Budget_100_coperti.html'>Esercizio_Budget_100_coperti</a><br>"
                 newlinks_5ce.innerHTML += "<a href='Programmi20192020/text_5ce/Punteggi.html'>Punteggi</a><br>"
                 newlinks_5ce.innerHTML += "<a href='Programmi20192020/text_5ce/Test_turismo_1.html'>Test_turismo_1</a><br>"
                 newlinks_5ce.innerHTML += "<a href='Programmi20192020/text_5ce/Test_turismo_2.html'>Test_turismo_2</a><br>"
