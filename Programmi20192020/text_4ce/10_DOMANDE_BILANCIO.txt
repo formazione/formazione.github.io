@@ -1,0 +1,45 @@
+<h2>10 domande sul Bilancio</h2>
+<a href="https://aziendaitalia.altervista.org/10-domande-sul-bilancio/">Domande (audio)</a>
+<h1>Solo testo</h1>
+<h2>1. A cosa serve la comunicazione aziendale?</h2>
+La comunicazione aziendale informa gli <strong>stakeholders</strong> con il fine di far raggiungere all'impresa i suoi <strong>obiettivi</strong>. Gli <strong>stakeholders</strong> sono soggetti <strong>interni</strong> o <strong>esterni</strong> che hanno interesse nel buon andamento dell'impresa.
+<h2>2. A chi è rivolta la comunicazione interna?</h2>
+Si rivolge <strong>all'alta dirigenza</strong> che utilizza le informazioni per prendere decisioni strategiche, ma anche ai <strong>dipendenti</strong> che devono indirizzare il loro operato nella stessa direzione che l'alta dirigenza ha deciso. Tutto il personale deve conoscere e condividere gli obiettivi e le strategie dell'impresa.
+<h2>3. Quali sono i tipi di comunicazione esterna?</h2>
+Sono la comunicazione economico-finanziaria, la comunicazione socio-ambientale e di marketing.
+
+La <strong>comunicazione economico-finanziaria</strong> si rivolge ai finanziatori (soci, banche ecc.) e vuole indicare la sitazione patrimoniale, economica e finanziaria dell'impresa. Si concretizza, praticamente, nel bilancio di esercizio e nel business plan. Sono interessati alla situazione dell'impresa anche i fornitori (per i crediti di regolamento che eventualmente hanno concesso) e lo Stato (per le imposte).
+
+La <strong>comunicazione socio - ambientale</strong> è rivolta alla collettività,  in quanto l'azienda può fornire occasioni di lavoro e così contribuire all'aumento del reddito delle località in cui opera, ma deve anche assicurare il rispetto dell'ambiente. Con il bilancio sociale l'impresa rende conto del suo impatto sull'economia e sull'ambiente.
+
+La comunicazione di <strong>marketing</strong> è rivolta principalmente ai clienti. Attraverso questo tipo di informazione si cerca di convincere i clienti ad acquistare i prodotti. I mezzi per farlo sono molti, tra questi il più conosciuto è la pubblicità, ma non è l'unico.
+<h2>4. Cos'è il sistema informativo aziendale?</h2>
+È l'insieme coordinato dei <strong>dipendenti</strong>, dei <strong>software</strong> e <strong>dell'hardware</strong> che ha il compito di raccogliere, memorizzare e comunicare le informazioni ai soggetti che sono interessati all'attività dell'impresa.
+<h2>5. Cos'è un conto?</h2>
+Il conto è un insieme di scritture riferite ad un oggetto (Denaro in cassa, Banca x c/c, Merci c/acquisti ecc.), a cui lo stesso conto viene intestato, che evidenzia in modo ordinato la quantità iniziale e le variazioni.
+<h2>6. Differenza tra <strong>conti</strong> finanziari ed economici.</h2>
+I conti <strong>finanziari</strong> riguardano i mezzi monetari o assimilati, crediti e debiti che l'impresa detiene per acquistare i beni e servizi necessari a produrre. I conti <strong>economici</strong> riguardano i fattori produttivi il cui valore è misurato dai mezzi finanziari necessari ad acquistarli. I primi sono espressi in moneta all'origine, i secondi sono espressi in valore moneario solo dopo una valutazione o contrattazione.
+<h2>7. Quali sono le scritture complesse?</h2>
+Sono quelle <strong>scritture</strong> che raccolgono i dati dell'intera gestione e hanno come obiettivo la determinazione del <strong>patrimonio</strong> e del <strong>risultato economico</strong> dell'azienda. Queste sono formate dai conti redatti sul libro giornale (in cui vengono rilevate, in ordine di data, le operazioni di gestione e nei conti di <strong>mastro</strong> (tutti i conti).
+<h2>8. In cosa consiste la Partita Doppia?</h2>
+È un metodo che, per ogni operazione, registra in dare e in avere lo stesso valore.
+<h2>9. Cosa sono le scritture di assestamento?</h2>
+Sono le scritture che vengono effettuate per consentire la redazione del bilancio. Sono - ad esempio - i <strong>ratei</strong>, i <strong>risconti</strong>, gli <strong>ammortamenti</strong> e le <strong>rimanenze</strong> di magazzino.
+
+<strong>Ratei</strong>: quote di entrate o di uscite che si riferiscono a costi o ricavi (che aumentano progressivamente nel tempo) e che sono pagati in via posticipata.
+
+<strong>Risconti</strong>: quote di costi o di ricavi non ancora maturati alla fine dell'esercizio, che sono stati pagati in via anticipata.
+
+<strong>Ammortamenti</strong>: percentuale di perdita di valore dei beni pluriennali.
+
+<strong>Rimanenze di magazzino</strong>: merci acquistate, ma non utilizzate, che conservano il loro valore e che non vanno calcolate tra i costi dell'esercizio, ma vanno rimandati all'esercizio successivo.
+<h2>10. Cos'è il bilancio e com'è composto?</h2>
+Il <strong>bilancio</strong> è il documento che viene redatto al termine dell'esercizio per rappresentare la <strong>situazione patrimoniale</strong>, <strong>finanziaria</strong> ed <strong>economica</strong> dell'azienda. È composto dallo Stato Patrimoniale, dal Conto economico e dalla Nota Integrativa.
+
+Lo <strong>stato patrimoniale</strong> è composta da 2 sezioni, l'attivo e il passivo.
+
+L'<strong>attivo</strong> comprende le <strong>immobilizzazioni</strong> (beni durevoli) e l'<strong>attivo circolante</strong> (magazzino, crediti, cassa, banca, ratei e risconti attivi)
+
+Il <strong>passivo</strong> comprende il <strong>patrimonio netto</strong>, i <strong>debiti</strong>, i <strong>ratei</strong> e <strong>risconti</strong> <strong>passivi</strong>.
+
+Il <strong>conto economico</strong> comprende i <strong>ricavi</strong> e i <strong>costi</strong> di esercizio e dalla differenza tra <strong>ricavi</strong> e costi si determina il <strong>risultato economico</strong>, che può essere un utile o una perdita.
