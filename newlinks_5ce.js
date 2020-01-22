@@ -1,5 +1,6 @@
 newlinks_5ce.innerHTML += "<a href='Programmi20192020/text_5ce/5CE_testbp2.html'>5CE_testbp2</a><br>"
                 newlinks_5ce.innerHTML += "<a href='Programmi20192020/text_5ce/Bilancio.html'>Bilancio</a><br>"
+                newlinks_5ce.innerHTML += "<a href='Programmi20192020/text_5ce/BUDGET.html'>BUDGET</a><br>"
                 newlinks_5ce.innerHTML += "<a href='Programmi20192020/text_5ce/Budget_es2.html'>Budget_es2</a><br>"
                 newlinks_5ce.innerHTML += "<a href='Programmi20192020/text_5ce/Budget_esercizio_1.html'>Budget_esercizio_1</a><br>"
                 newlinks_5ce.innerHTML += "<a href='Programmi20192020/text_5ce/Cambio.html'>Cambio</a><br>"
