@@ -1,9 +1,6 @@
-newlinks_5ce.innerHTML += "<a href='Programmi20192020/text_5ce/5CE_testbp2.html'>5CE_testbp2</a><br>"
-                newlinks_5ce.innerHTML += "<a href='Programmi20192020/text_5ce/Bilancio.html'>Bilancio</a><br>"
-                newlinks_5ce.innerHTML += "<a href='Programmi20192020/text_5ce/Budget_full.html'>Budget_full</a><br>"
-                newlinks_5ce.innerHTML += "<a href='Programmi20192020/text_5ce/Cambio.html'>Cambio</a><br>"
+newlinks_5ce.innerHTML += "<a href='Programmi20192020/text_5ce/budget_test1.html'>budget_test1</a><br>"
+                newlinks_5ce.innerHTML += "<a href='Programmi20192020/text_5ce/modulo_0_bilancio.html'>modulo_0_bilancio</a><br>"
+                newlinks_5ce.innerHTML += "<a href='Programmi20192020/text_5ce/modulo_1_turismo.html'>modulo_1_turismo</a><br>"
+                newlinks_5ce.innerHTML += "<a href='Programmi20192020/text_5ce/modulo_2_budget.html'>modulo_2_budget</a><br>"
                 newlinks_5ce.innerHTML += "<a href='Programmi20192020/text_5ce/Punteggi.html'>Punteggi</a><br>"
-                newlinks_5ce.innerHTML += "<a href='Programmi20192020/text_5ce/Quiz_budget.html'>Quiz_budget</a><br>"
-                newlinks_5ce.innerHTML += "<a href='Programmi20192020/text_5ce/Test_turismo.html'>Test_turismo</a><br>"
-                newlinks_5ce.innerHTML += "<a href='Programmi20192020/text_5ce/Turismo_appunti_completo.html'>Turismo_appunti_completo</a><br>"
                 
