@@ -1,0 +1,24 @@
+<h3>Esercizi</h3>
+<div id="desk"></div>
+
+<script>
+let es = [
+["esercizi/es1.html","Esercizio 1 - Conti finanziari o economici?"],
+["esercizi/es2.html","Esercizio 2 - Il bilancio"],
+["https://docs.google.com/spreadsheets/d/1PnQ7iuANLZPPuvac0Svp3JqWX1aXOYHPtt9fxFMqJJo/edit?usp=sharing", "Esercizio 3 - Partita doppia (google sheet/fogli)"],
+["https://docs.google.com/spreadsheets/d/1NkwieqB2GwGHat9SNBL5ypzs4SpNm0e1acQXgZ27Ank/edit#gid=360812980", "Esercizio 4 - il libro giornale (fogli di Google)"]
+];
+
+
+
+for (e in es){
+	address = es[e][0];
+	text = es[e][1]
+     desk.innerHTML += "<a href='" + address + "'>" + text + "</a><br>";
+}
+
+</script>
+
+
+
+
