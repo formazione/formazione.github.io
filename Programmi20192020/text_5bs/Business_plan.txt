@@ -5,5 +5,9 @@ font-size: 2em}
 <a href="bp/business_plan_approfondito_unifi.pdf">Schema Business Plan Università di Firenze</a>
 <br>
 <a href="bp/busplan.html">Business plan (par. 1)</a>
+<br>
+<a href="bp/bp1.pdf">Esempio: Zucchero e Cannella</a>
+
+
 
 
