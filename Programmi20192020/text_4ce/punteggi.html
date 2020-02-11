@@ -11,6 +11,14 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 </head>
 <style>
+@media screen and (min-width: 1024px){
+img {
+  width: 30%;
+}
+img.cup {
+  width: 50px;
+}
+}
   body{
     color:white;
     background-color: black;
@@ -54,9 +62,9 @@
   ref.on("value", gotData)
 
   // IMAGES
-let pen = "<img src='https://images.vexels.com/media/users/3/156893/isolated/preview/048e149a96bdff520db53ddba885cf0d-pen-icon-travel-icons-by-vexels.png' width='30' />";
-let cup = "<img src='https://cdn2.iconfinder.com/data/icons/thesquid-ink-40-free-flat-icon-pack/64/cup-512.png' width='30' />";
-let party ="<img src='http://icons.iconarchive.com/icons/google/noto-emoji-activities/1024/52707-party-popper-icon.png' width='30' >";
+let pen = "<img class='cup' src='https://images.vexels.com/media/users/3/156893/isolated/preview/048e149a96bdff520db53ddba885cf0d-pen-icon-travel-icons-by-vexels.png' width='30' />";
+let cup = "<img  class='cup' src='https://cdn2.iconfinder.com/data/icons/thesquid-ink-40-free-flat-icon-pack/64/cup-512.png' width='30' />";
+let party ="<img  class='cup' src='http://icons.iconarchive.com/icons/google/noto-emoji-activities/1024/52707-party-popper-icon.png' width='30' >";
   
 let scoretot = document.getElementById("scoretot");
 scoretot.align = "center";
