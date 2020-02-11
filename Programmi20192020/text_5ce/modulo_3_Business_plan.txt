@@ -1,0 +1,8 @@
+<style>
+body {
+ font-size: 2em;
+}
+</style>
+
+<a href="https://docs.google.com/document/d/1kIEO4LAXMi97-km08QFui8bxlfEX29rzfHa8K7YDDyk/edit?usp=sharing">Business Plan 2</a>
+
