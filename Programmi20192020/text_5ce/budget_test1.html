@@ -56,7 +56,7 @@ let record_firebase = "5ce_budget";
 
 
 
-let html = "<select id='nomestudente' name='carlist' form='carform'>";
+let html = "<select id='nomestudente' name='carlist' form='carform' onchange='nomstu.src=nomestudente.value + \".png\"'>";
 
 listanomi = [];
 for (nome in code){
@@ -76,6 +76,11 @@ document.write(html);
 
     <!-- -------------------- Casella codice -------------------->
 
+<img id="nomstu" width=50>
+<script>
+nomstu.src=nomestudente.value + ".png"
+  </script>
+  
 Codice: <input id="codice" type="text">
 
 
@@ -111,7 +116,7 @@ scoretot.align = "center";
 function gotData(data){
     x = data.val();
     for (name in x){
-  scoretot.innerHTML += "(" + name + ":" + x[name] + ") ";
+  scoretot.innerHTML += "<img src='"+name+".png' width='100'>(" + name + ":" + x[name] + ") ";
 }
 }
 

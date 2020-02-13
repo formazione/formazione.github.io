@@ -26,37 +26,35 @@ Nome: <input id="nomestudente" type="text">
 <script>
 
 code = {
-    "Alfarano" : "000",
-    "Bortone" : "000",
-    "Camaran" : "000",
-    "Cirillo" : "000",
-    "Cortazzo" : "000",
-    "D_Amato" : "000",
-    "Di_crisci" : "000",
-    "Di_Siervi" : "000",
-    "Dragonetti" : "000",
-    "Giuliani" : "000",
-    "Greco" : "000",
-    "Marzucca" : "000",
-    "Merola" : "000",
-    "Iannuzzi" : "000",
-    "Niglio" : "000",
-    "Teodosio" : "000",
-    "Mannina" : "000",
-    "Massaro" : "000",
-    "Simone" : "000", 
-    "Squitieri" : "000",
-    "Tardio" : "000", 
-    "Torraca" : "000",
-    "Vetrale" : "000",
-    };
+"DApolito Giuliano": "000",
+"Giordano Emilio": "000",
+"Guariglia Livio": "000",
+"Landi Anna Maria": "000",
+"Lembo Giulia": "000",
+"Mainente Giuseppina": "000",
+"Malzone Tatiana": "000",
+"Mauro Nicole": "000",
+"Mazziotti Christian": "000",
+"Pepe Raffaele": "000",
+"Puglia Alessia": "000",
+"Saturno Antonio": "000",
+"Scelza Filomena": "000",
+"Tardio Monica" : "000"};
   
 // Nome del test che diventa un child di firebase
-let record_firebase = "5ce_budget";
+// the name is taken from the text file name where the questions are
+let record_firebase = "5bs_bilancio";
 
 
+/* CREA LA LISTA E QUANDO CAMBIA STUDENTE CAMBIA IMMAGINE id=nomstu
+trovi il div placeholder della immagine qualche riga sotto
+*/
 
-let html = "<select id='nomestudente' name='carlist' form='carform' onchange='nomstu.src=nomestudente.value + \".png\"'>";
+function namePng(name){
+  return "../" + name + ".png";
+}
+
+let html = "<select id='nomestudente' name='carlist' form='carform' onchange='nomstu.src=namePng(nomestudente.value)'>";
 
 listanomi = [];
 for (nome in code){
@@ -75,13 +73,12 @@ document.write(html);
 </script>
 
     <!-- -------------------- Casella codice -------------------->
-
 <img id="nomstu" width=50>
+<script>
+nomstu.src= "../" + nomestudente.value + ".png"
+  </script>
 Codice: <input id="codice" type="text">
 
-<script>
-nomstu.src=nomestudente.value + ".png"
-  </script>
 
 <div class="form-group rsform-block rsform-block-framecontent">
 <div id="frame" role="content"></div>
@@ -115,7 +112,7 @@ scoretot.align = "center";
 function gotData(data){
     x = data.val();
     for (name in x){
-  scoretot.innerHTML += "<img src='"+name+".png' width='100'>(" + name + ":" + x[name] + ") ";
+  scoretot.innerHTML += "<img src='../" + name + ".png' width='100'>(" + name + ":" + x[name] + ") ";
 }
 }
 
@@ -169,19 +166,26 @@ if (!("scramble" in Array.prototype)) {
   });
 }   
 
-let mydom = `La pianificazione riguarda___il lungo periodo___il breve periodo
-Le opportunità si rilevano nella___analisi ambientale/previsionale___analisi aziendale
-Il controllo di gestione è___la conclusione della pianificazione___fa parte della pianificazione
-La programmazione riguarda il___breve periodo___lungo periodo
-Il budget è uno strumento di___programmazione___pianificazione
-Le scelte strategiche vengono definite___dalla pianificazione___dalla programmazione
-I punti di forza sono___competenza dei lavoratori___aumento della domanda___aumento del reddito dei clienti
-I punti di forza e debolezza si analizzano___nell'analisi aziendale___nell'analisi ambientale
-La sintesi dell'analisi viene fatta con___l'analisi SWOT___il budget
-Riguarda costi e ricavi___piano economico___piano finanziario
-Nei momenti di sviluppo si mettono in pratica___strategie di espansione___strategie di consolidamento
-Il budget economico deriva dai budget settoriali___vero___falso
-Il budget generale d'esercizio è un___bilancio preventivo___bilancio consuntivo`;
+let mydom = `Il bilancio è obbligatorio___per tutte le imprese___per le società di persone___per le imprese individuali___per le società di capitali
+Il bilancio viene redatto___alla fine dell'esercizio___a metà anno___ogni 3 mesi
+È un documento solo interno___per le imprese individuali e le società di persone___per le società di persone___per le società di capitali___per le imprese individuali
+Il bilancio delle società di capitali va approvato___entro 120 giorni dalla fine dell'esercizio___entro 60 giorni dalla fine dell'esercizio___entro 30 giorni  dalla fine dell'esercizio
+Il bilancio socio-ambientale si rivolge___alla collettività___agli investitori___ai soci
+Il bilancio socio-ambientale riguarda l'impatto___sia ambientale che economico sulla collettività___economico della società sulla collettività___ambientale della società sulla collettività
+L'aspetto finanziario è rappresentato___nello Stato patrimoniale___nel Conto economico
+Versati 100 euro in cassa___dare___avere
+Prelevati 1000 euro dal c/c bancario___dare___avere
+Crediti verso clienti per 200 euro___dare___avere
+Ricevuta ft. per 1000 euro___costo=1000 iva a credito=220 debito=1220___costo=1000 iva a debito=220 debito=1220___ricavo=1000 iva a credito=220 debito=1220
+Le entrate vanno in___dare___avere
+I costi vanno in___dare___avere
+I ricavi vanno in___dare___avere
+Le uscite vanno in___dare___avere
+I crediti vanno in___dare___avere
+Il pagamento di un debito da parte dell'impresa va in___dare___avere
+Se un cliente paga un credito, scriviamo nel conto crediti v/clienti in___dare___avere
+aumento di capitale proprio___dare___avere
+Ricevuto un bonifico sul c/c___dare___avere`;
 
       
   // -------- substitute this -----------------    
@@ -618,15 +622,11 @@ height:100vh;
 
   
 </script>
+
+
+<!-- cannot right click 
 <body  oncontextmenu="return false">
-
-
-
-
-
-
-
-
+-->
 
 
 

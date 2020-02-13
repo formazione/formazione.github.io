@@ -1,4 +1,26 @@
+"""
+CREATE HTML QUIZ
+FROM A TXT FILE LIKE THIS
 
+Quanto scoppiò la rivoluzione francese?
+1789
+1790
+1800
+1801
+"""
+import tkinter as tk
+import os
+
+def create():
+    with open("exercise.html", "w", encoding="utf-8") as file:
+        file.write(html)
+
+root = tk.Tk()
+root.geometry("300x300")
+root.title("5 C E")
+
+
+html = """
 
 <head>
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -26,37 +48,35 @@ Nome: <input id="nomestudente" type="text">
 <script>
 
 code = {
-    "Alfarano" : "000",
-    "Bortone" : "000",
-    "Camaran" : "000",
-    "Cirillo" : "000",
-    "Cortazzo" : "000",
-    "D_Amato" : "000",
-    "Di_crisci" : "000",
-    "Di_Siervi" : "000",
-    "Dragonetti" : "000",
-    "Giuliani" : "000",
-    "Greco" : "000",
-    "Marzucca" : "000",
-    "Merola" : "000",
-    "Iannuzzi" : "000",
-    "Niglio" : "000",
-    "Teodosio" : "000",
-    "Mannina" : "000",
-    "Massaro" : "000",
-    "Simone" : "000", 
-    "Squitieri" : "000",
-    "Tardio" : "000", 
-    "Torraca" : "000",
-    "Vetrale" : "000",
-    };
+"DApolito Giuliano": "000",
+"Giordano Emilio": "000",
+"Guariglia Livio": "000",
+"Landi Anna Maria": "000",
+"Lembo Giulia": "000",
+"Mainente Giuseppina": "000",
+"Malzone Tatiana": "000",
+"Mauro Nicole": "000",
+"Mazziotti Christian": "000",
+"Pepe Raffaele": "000",
+"Puglia Alessia": "000",
+"Saturno Antonio": "000",
+"Scelza Filomena": "000",
+"Tardio Monica" : "000"};
   
 // Nome del test che diventa un child di firebase
-let record_firebase = "5ce_budget";
+// the name is taken from the text file name where the questions are
+let record_firebase = "5bs_budget";
 
 
+/* CREA LA LISTA E QUANDO CAMBIA STUDENTE CAMBIA IMMAGINE id=nomstu
+trovi il div placeholder della immagine qualche riga sotto
+*/
 
-let html = "<select id='nomestudente' name='carlist' form='carform' onchange='nomstu.src=nomestudente.value + \".png\"'>";
+function namePng(name){
+  return "../" + name + ".png";
+}
+
+let html = "<select id='nomestudente' name='carlist' form='carform' onchange='nomstu.src=namePng(nomestudente.value)'>";
 
 listanomi = [];
 for (nome in code){
@@ -75,13 +95,12 @@ document.write(html);
 </script>
 
     <!-- -------------------- Casella codice -------------------->
-
 <img id="nomstu" width=50>
+<script>
+nomstu.src= "../" + nomestudente.value + ".png"
+  </script>
 Codice: <input id="codice" type="text">
 
-<script>
-nomstu.src=nomestudente.value + ".png"
-  </script>
 
 <div class="form-group rsform-block rsform-block-framecontent">
 <div id="frame" role="content"></div>
@@ -115,7 +134,7 @@ scoretot.align = "center";
 function gotData(data){
     x = data.val();
     for (name in x){
-  scoretot.innerHTML += "<img src='"+name+".png' width='100'>(" + name + ":" + x[name] + ") ";
+  scoretot.innerHTML += "<img src='../" + name + ".png' width='100'>(" + name + ":" + x[name] + ") ";
 }
 }
 
@@ -169,26 +188,14 @@ if (!("scramble" in Array.prototype)) {
   });
 }   
 
-let mydom = `La pianificazione riguarda___il lungo periodo___il breve periodo
-Le opportunità si rilevano nella___analisi ambientale/previsionale___analisi aziendale
-Il controllo di gestione è___la conclusione della pianificazione___fa parte della pianificazione
-La programmazione riguarda il___breve periodo___lungo periodo
-Il budget è uno strumento di___programmazione___pianificazione
-Le scelte strategiche vengono definite___dalla pianificazione___dalla programmazione
-I punti di forza sono___competenza dei lavoratori___aumento della domanda___aumento del reddito dei clienti
-I punti di forza e debolezza si analizzano___nell'analisi aziendale___nell'analisi ambientale
-La sintesi dell'analisi viene fatta con___l'analisi SWOT___il budget
-Riguarda costi e ricavi___piano economico___piano finanziario
-Nei momenti di sviluppo si mettono in pratica___strategie di espansione___strategie di consolidamento
-Il budget economico deriva dai budget settoriali___vero___falso
-Il budget generale d'esercizio è un___bilancio preventivo___bilancio consuntivo`;
+//--let mydom =;
 
       
   // -------- substitute this -----------------    
 function createQuiz(){
   // returns a list with data in {} for each question
   let quiz = [];
-  mydom = mydom.split("\n");
+  mydom = mydom.split("\\n");
   console.log(mydom);
   // mescola le domande
   mydom.sort(function() {return .5 - Math.random();});
@@ -618,7 +625,19 @@ height:100vh;
 
   
 </script>
+
+
+<!-- cannot right click 
 <body  oncontextmenu="return false">
+-->
+
+
+
+
+
+
+
+"""
 
 
 
@@ -627,10 +646,38 @@ height:100vh;
 
 
 
+def check(event):
+    global html
+    ind = lstb.curselection()[0]
+    filename = lstb.get(ind)
+    with open(filename, "r", encoding="utf-8") as file:
+        text = file.read()
+    # print(text)
+    text = text.split("\n\n")
+    for n,t in enumerate(text):
+        text[n] = t.replace("\n","___")
+    text = "\n".join(text)
+    # print(text)
+    text = text.replace("'","\'")
+    
+    # Added these two lines in _2 version to get the name of the record from the txt file
+    # with the questions; change the name of the class for the different classes
+    record_name = "5bs_" + lstb.get(ind)[:-5]
+    html = html.replace("5bs_budget", record_name)
+
+    html = html.replace("//--let mydom =;", "let mydom = `" + text + "`;")
+    with open("quiz/" + filename[:-5] + ".html", "w", encoding="utf-8") as file:
+        file.write(html)
+    os.system("start quiz/" + filename[:-5] + ".html")
+    root.destroy()
+
+lstb = tk.Listbox(root)
+lstb.pack()
+lstb.bind("<Double-Button>", check)
+
+for file in os.listdir():
+  if file.endswith(".quiz"):
+    lstb.insert(tk.END, file)
 
 
-
-
-
-
-
+root.mainloop()
