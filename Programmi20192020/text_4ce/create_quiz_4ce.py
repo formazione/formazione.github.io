@@ -17,7 +17,7 @@ def create():
 
 root = tk.Tk()
 root.geometry("300x300")
-root.title("5 C E")
+root.title("4 C E")
 
 
 html = """
@@ -104,7 +104,7 @@ document.write(html);
 <script>
 nomstu.src= "../" + nomestudente.value + ".png"
   </script>
-Codice: <input id="codice" type="text">
+Codice: <input id="codice" type="text" value=000>
 
 
 <div class="form-group rsform-block rsform-block-framecontent">
