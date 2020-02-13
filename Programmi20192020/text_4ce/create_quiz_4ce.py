@@ -78,7 +78,7 @@ trovi il div placeholder della immagine qualche riga sotto
 */
 
 function namePng(name){
-  return "../" + name + ".png";
+  return "../" + name + ".PNG";
 }
 
 let html = "<select id='nomestudente' name='carlist' form='carform' onchange='nomstu.src=namePng(nomestudente.value)'>";
@@ -102,7 +102,7 @@ document.write(html);
     <!-- -------------------- Casella codice -------------------->
 <img id="nomstu" width=50>
 <script>
-nomstu.src= "../" + nomestudente.value + ".png"
+nomstu.src= "../" + nomestudente.value + ".PNG"
   </script>
 Codice: <input id="codice" type="text" value=000>
 
@@ -139,7 +139,7 @@ scoretot.align = "center";
 function gotData(data){
     x = data.val();
     for (name in x){
-  scoretot.innerHTML += "<img src='../" + name + ".png' width='100'>(" + name + ":" + x[name] + ") ";
+  scoretot.innerHTML += "<img src='../" + name + ".PNG' width='100'>(" + name + ":" + x[name] + ") ";
 }
 }
 
