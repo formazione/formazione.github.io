@@ -1,26 +1,4 @@
-"""
-CREATE HTML QUIZ
-FROM A TXT FILE LIKE THIS
 
-Quanto scoppiò la rivoluzione francese?
-1789
-1790
-1800
-1801
-"""
-import tkinter as tk
-import os
-
-def create():
-    with open("exercise.html", "w", encoding="utf-8") as file:
-        file.write(html)
-
-root = tk.Tk()
-root.geometry("300x300")
-root.title("5 C E")
-
-
-html = """
 
 <head>
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -76,7 +54,7 @@ code = {
   
 // Nome del test che diventa un child di firebase
 // the name is taken from the text file name where the questions are
-let record_firebase = "5ce_budget";
+let record_firebase = "5ce_business_plan_2";
 
 
 /* CREA LA LISTA E QUANDO CAMBIA STUDENTE CAMBIA IMMAGINE id=nomstu
@@ -199,14 +177,29 @@ if (!("scramble" in Array.prototype)) {
   });
 }   
 
-//--let mydom =;
+let mydom = `Il business plan o studio di ...___fattibilità___fattore___merito___programmi
+Il business plan valuta la .... dell'idea di busines___convenienza___capacità___dimensione___caratteristica___politica
+riguarda gli aspetti caratterizzanti la futura impresa:___l'idea di business___la fattibilità___il piano economico finanziario
+l'utile è___la differenza tra ricavi e costi di esercizio___la differenza tra entrate e uscite___la somma di ricavi ed entrate
+il ricavo è___l'utile lordo___l'utile dell'impresa___l'utile netto dell'impresa
+Il piano degli investimenti___quantifica le immobilizzazioni necessarie___riguarda costi di esercizio e ricavi
+La quota di ammortamento è___costo storico : periodo di ammortamento___costo storico x periodo di ammortamento
+Il fabbisogno finanziario___immobilizzazioni + attivo circolante___immobilizzazioni - attivo circolante___immobilizzazioni x attivo circolante : 100
+Indica la composizione di attività, passività e patrimonio netto___piano patrimoniale___piano economico___piano degli investimenti
+La programmazione operativa deve:___predisporre i budget___definire le scelte di fondo___definire le scelte operative di lungo periodo
+L'analisi ambientale si occupa di:___sviluppo tecnologico del mercato___flessibilità dell'impresa___disponibilità di mezzi propri___potenziale del prodotto dell'impresa
+Se l'impresa vuole svilupparsi in nuovi mercati, segue strategie di___espansione___consolidamento___di periodo___operativa
+Il piano finanziario indica___il fabbisogno finanziario___gli investimenti necessari___i costi degli esercizi futuri___la convenienza economica dell'impresa
+Il budget economico prevede___i ricavi e i costi del futuro esercizio___il fabbisogno finanziario del futuro esercizio___entrate ed uscite future___investimenti futuri
+Si prevedono 1500 menu a 30 euro ciascuno a marzo, il ricavo sarà___45.000 euro___4.500 euro___3.000 euro___35.000 euro
+Si prevedono 1500 menu a marzo, ogni menu costa 20 euro, i costi per menu saranno___30.000 euro___15.000 euro___3.000 euro___1.500 euro`;
 
       
   // -------- substitute this -----------------    
 function createQuiz(){
   // returns a list with data in {} for each question
   let quiz = [];
-  mydom = mydom.split("\\n");
+  mydom = mydom.split("\n");
   console.log(mydom);
   // mescola le domande
   mydom.sort(function() {return .5 - Math.random();});
@@ -645,62 +638,8 @@ height:100vh;
 
 <body>
 
-[[body]]
+
+
 
 </body>
 </html>
-"""
-
-
-
-
-
-
-
-
-def check(event):
-    global html
-    ind = lstb.curselection()[0]
-    filename = lstb.get(ind)
-    with open(filename, "r", encoding="utf-8") as file:
-        text = file.read()
-    # print(text)
-    text = text.split("\n\n")
-    for n,t in enumerate(text):
-        text[n] = t.replace("\n","___")
-    text = "\n".join(text)
-    # print(text)
-    text = text.replace("'","\'")
-    
-    # Added these two lines in _2 version to get the name of the record from the txt file
-    # with the questions; change the name of the class for the different classes
-    record_name = "5ce_" + lstb.get(ind)[:-5]
-    html = html.replace("5ce_budget", record_name)
-
-    html = html.replace("//--let mydom =;", "let mydom = `" + text + "`;")
-    html = html.replace("[[body]]", textbox.get("1.0", tk.END))
-    filename = "quiz/" + filename[:-5] + ".html"
-    with open(filename, "w", encoding="utf-8") as file:
-        file.write(html)
-    print(filename)
-    os.system("start " + filename)
-    root.destroy()
-
-
-label =tk.Label(root, text="Scegli un file con le domande:").pack()
-
-
-lstb = tk.Listbox(root)
-lstb.pack()
-lstb.bind("<Double-Button>", check)
-
-for file in os.listdir():
-  if file.endswith(".quiz"):
-    lstb.insert(tk.END, file)
-
-label2 =tk.Label(root, text="Testo introduttivo (facoltativo)").pack()
-textbox = tk.Text(root)
-textbox.pack()
-
-
-root.mainloop()
