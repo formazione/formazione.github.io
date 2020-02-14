@@ -5,16 +5,22 @@ font-size:2em;	}</style>
 <h2>Test</h2>
 
 <p>
-Per registrare il proprio risultato in modo che compaia in fondo alla pagina del test, dopo aver scelto il proprio nome (casella in alto), inserire nella casella a fianco al nome 000 (tre zeri). Se non si vuole registrare il risultato (per allenarsi), cancellare 000.
+Tutti gli studenti hanno lo stesso codice, lasciare 000 accanto al poprio nome per salvare il risultato.
 </p>
 <li>
-<a href="quiz/bilancio.html">Test sul Bilancio 1 (codice uguale 000)</a>
+<a href="quiz/bilancio.html">Test sul Bilancio 1 </a>
+
 <li>
-<a href="quiz/bilancio_2.html">Test sul Bilancio 2 (50 domande - codici diversi)
+<a href="quiz/budget.html">Test sul budget 1 </a>
+<br>
+<h2>Nuovi:</h2>
+
+Ogni studente ha un codice diverso da inserire per salvare il risultato del test.
 <li>
-<a href="quiz/budget.html">Test sul budget 1 (codice uguale 000)</a>
+<a href="quiz/bilancio_2.html">Test sul Bilancio 2 (50 domande)
 <li>
-<a href="quiz/business_plan_2.html">Business plan (codici diversi)</a>
+<a href="quiz/business_plan_2.html">Business plan</a>
+
 
 
 
