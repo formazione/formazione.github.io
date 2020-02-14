@@ -65,7 +65,7 @@ code = {
       "Romano" : "000",
       "Saja_A": "000",
       "Saja_P": "000",
-      "Tardio": "000",
+      "Tierno": "000",
   };
 
 // Nome del test che diventa un child di firebase
