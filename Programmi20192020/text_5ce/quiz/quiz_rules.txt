@@ -1,0 +1,40 @@
+===========================
+bilancio_2
+===========================
+non fatto al 14_2_2020
+	record name di firebase: 5ce_bilancio_2
+	50 domande
+	si entra con questi codici
+
+	 "scegli_nome_studente": "000",
+    "Alfarano" : "00a",
+    "Bortone" : "00b",
+    "Camaran" : "00c",
+    "Cirillo" : "0ci",
+    "Cortazzo" : "0co",
+    "D_Amato" : "0da",
+    "Di_crisci" : "0dc",
+    "Di_Siervi" : "0ds",
+    "Dragonetti" : "00d",
+    "Giuliani" : "00g",
+    "Greco" : "0gr",
+    "Mannina" : "00m",
+    "Marzucca" : "0ma",
+    "Massaro" : "0ms",
+    "Merola" : "0me",
+    "Iannuzzi" : "00i",
+    "Niglio" : "00n",
+    "Teodosio" : "00t",
+    "Simone" : "00s",
+    "Squitieri" : "0sq",
+    "Tardio" : "00t", 
+    "Torraca" : "0to",
+    "Vetrale" : "00v",
+
+====================================
+business_plan_2
+====================================
+non fatto al 14_2_2020
+	
+
+	Stessi codici di bilancio_2
