@@ -246,7 +246,7 @@ jQuery(document).ready(function($){
           .createElement('li'))
           .addClass('choice choice-box btn')
           .attr('data-index', i)
-          .text(choices[i])
+          .html(choices[i])
           .appendTo('#choice-block')
           .css({'font-size':'28px'});   //  Aggiunge risposte
       }
