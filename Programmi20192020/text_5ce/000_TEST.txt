@@ -5,7 +5,7 @@ font-size:2em;	}</style>
 <h2>Test</h2>
 
 <p>
-Tutti gli studenti hanno lo stesso codice, lasciare 000 accanto al poprio nome per salvare il risultato.
+Scegliere il nome (lasciando 000 come codice)
 </p>
 <li>
 <a href="quiz/bilancio.html">Test sul Bilancio 1 </a>
