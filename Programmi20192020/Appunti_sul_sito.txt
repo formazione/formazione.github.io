@@ -1,0 +1,17 @@
+Caricare immagini
+
+- case sensitive: modifica di immagine
+	ricorda di chiamare .PNG il file o .png (windows non è case sensitive, ma linux sì)
+
+- una nuova immagine con lo stesso nome:
+	- cancella l'immagine in locale
+	- fai git add, git commit e git push per cancellare l'immagine su github
+	- salva la nuova immagine in locale
+	- fai git add, git commit e git push per aggiungere l'immagine su github
+
+	*Non fare git add di una immagine che già c'è con lo stesso nome, cancellala prima,
+	altrimenti rimarrà uguale a quella vecchia
+
+
+Attenzione a chiamare il file .png o .PNG
+Cancella prima il file originale, fai il git... così da cancellare il vecchio da github, e poi fai l'upload del file nuovo
