@@ -1,11 +1,17 @@
-<style>body { font-size: 2em;}</style>
-<a href="compito_indici.pdf">Simulazione compito sugli indici di bilancio</a>
-<br>
+<h3>Modulo Business plan</h3>
 
-<a href="https://docs.google.com/document/d/1kIEO4LAXMi97-km08QFui8bxlfEX29rzfHa8K7YDDyk/edit?usp=sharing">Business Plan 2</a>
-<br>
-<br>
-<a href="http://www.madonnas.it/PISA/CORSI/BILANCIO/SLIDES/INDICI/4INDICI_ECONOMICI.pdf">ROI e ROE (Pisa)</a>
+
+<style>body { font-size: 3em;}</style>
+<a href="https://docs.google.com/document/d/1kIEO4LAXMi97-km08QFui8bxlfEX29rzfHa8K7YDDyk/edit?usp=sharing">Business Plan 2 (appunti)</a>
+<hr>
+<a href="compito_indici.pdf">Simulazione compito sugli indici di bilancio</a>
+<hr>
+
+
+<a href="https://it.pearson.com/content/dam/region-core/italy/pearson-italy/pdf/diritto-economia/area-economico-aziendale/esercitazioni/classe-quinta-strategia-pianificazione-controllo/AREE%20DISCIPLINARI%20-%20PARAMOND%20-%20ECOAZ%20-%20Maggio%202018%20-%20PDF%20%E2%80%93%20Esercitazione%20Tardia%202.pdf">Esercizio della Paramond sul Business plan</a>
+
+
+
 
 
 
