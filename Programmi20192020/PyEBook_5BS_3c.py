@@ -14,7 +14,7 @@ import tkinter as tk
 import glob
 from time import sleep
 import os
-from commit import commit
+ # from commit import commit
 
 
 

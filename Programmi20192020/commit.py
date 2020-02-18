@@ -10,4 +10,3 @@ def commit():
     #os.startfile("..\\commit.bat")
     print("All done")
 
-commit()
