@@ -1,13 +1,3 @@
-<!-- 
-Readme
-======
-
-Metti gli esercizi nella cartella esercizi.
-Altri esercizi potrebbero essere dei collegamenti diretti a fogli di Google.
-Vanno inseriti nella variabile es.
-
--->
-
 <style>
 body { font-size:2em;}
 </style>
@@ -41,6 +31,8 @@ console.log(text);
 }
 
 </script>
+
+
 
 
 
