@@ -53,9 +53,9 @@
   ref.on("value", gotData)
 
   // IMAGES
-let pen = "<img src='https://images.vexels.com/media/users/3/156893/isolated/preview/048e149a96bdff520db53ddba885cf0d-pen-icon-travel-icons-by-vexels.png' width='30' />";
-let cup = "<img src='https://cdn2.iconfinder.com/data/icons/thesquid-ink-40-free-flat-icon-pack/64/cup-512.png' width='30' />";
-let party ="<img src='http://icons.iconarchive.com/icons/google/noto-emoji-activities/1024/52707-party-popper-icon.png' width='30' >";
+let pen = "<img src='https://images.vexels.com/media/users/3/156893/isolated/preview/048e149a96bdff520db53ddba885cf0d-pen-icon-travel-icons-by-vexels.png' width='60' />";
+let cup = "<img src='https://cdn2.iconfinder.com/data/icons/thesquid-ink-40-free-flat-icon-pack/64/cup-512.png' width='60' />";
+let party ="<img src='http://icons.iconarchive.com/icons/google/noto-emoji-activities/1024/52707-party-popper-icon.png' width='60' >";
   
 let scoretot = document.getElementById("scoretot");
 scoretot.align = "center";
@@ -86,6 +86,30 @@ let max = Math.max(...arr);
   scoretot.innerHTML += "<u style='color:coral'>Graduatoria:</u><br>"
   // scoretot.innerHTML += "<center>";
   let newx = [];
+
+// new functions to emultare range and to add cups every 100 points
+// emulation of range in python
+function range(start, stop, step) {
+    if (typeof stop == 'undefined') {
+        // one param defined
+        stop = start;
+        start = 0;}
+    if (typeof step == 'undefined') {
+        step = 1;}
+    if ((step > 0 && start >= stop) || (step < 0 && start <= stop)) {
+        return [];}
+    var result = [];
+    for (var i = start; step > 0 ? i < stop : i > stop; i += step) {
+        result.push(i);}
+    return result;
+};
+
+
+function check_cups(x){
+  for (many_cups in range(Math.floor(x / 100))) scoretot.innerHTML += cup;
+}
+
+
   for (n in keysSorted){
   //let xx = [keysSorted[n],x[keysSorted[n]]];
    newx.push([keysSorted[n],x[keysSorted[n]]]); 
@@ -96,27 +120,27 @@ let max = Math.max(...arr);
     let num = parseInt(n)+1;
     // nome del primo classificato
     if (n == 0){
-   scoretot.innerHTML += "<div style='background:gold;width:100%;color:black'><img src='" + keysSorted[n]  + ".PNG'><br><b style='font-size:2.5em;color:red'>" + num + ". <u>" + keysSorted[n] + "</u><br></b> " + party + cup + "<b style='font-size:2.5em;background:coral'>" + x[keysSorted[n]] + "</b><br></div><br>"; 
+      check_cups(x[keysSorted[n]]);
+   scoretot.innerHTML += party + "<div style='background:gold;width:100%;color:black'><img src='" + keysSorted[n]  + ".PNG'><br><b style='font-size:2.5em;color:red'>" + num + ". <u>" + keysSorted[n] + "</u><br></b><b style='font-size:2.5em;background:coral'>" + x[keysSorted[n]] + "</b><br></div><br>"; 
     }
     else if (n == 1){
-      scoretot.innerHTML += "<div style='background:navy;width:85%;color:black'><img src='" + keysSorted[n]  + ".PNG'><br><b style='font-size:2em;color:coral'>" + num + ". " + keysSorted[n] + "</b><br> <b style='font-size:2em;background:coral'>" + x[keysSorted[n]] + "</b><br></div><br>"; 
-if (x[keysSorted[n]] > 100) scoretot.innerHTML += cup;
+        // Mostra una coppa sopra i cento punti
+        check_cups(x[keysSorted[n]]);
+        scoretot.innerHTML += "<div style='background:navy;width:85%;color:black'><img src='" + keysSorted[n]  + ".PNG'><br><b style='font-size:2em;color:coral'>" + num + ". " + keysSorted[n] + "</b><br> <b style='font-size:2em;background:coral'>" + x[keysSorted[n]] + "</b><br></div><br>"; 
     }
   else if (n == 2){
+      // la coppa sopra i 100
+      check_cups(x[keysSorted[n]]);
       scoretot.innerHTML += "<div style='background:coral;width:70%;color:black'><img src='" + keysSorted[n]  + ".PNG'><br><b style='font-size:1.5em;color:gold'>" + num + ". " + keysSorted[n] + "</b><br><b style='font-size:1.5em;background:coral'>" + x[keysSorted[n]] + "</b><br></div><br>"; 
 
- if (x[keysSorted[n]] > 100) scoretot.innerHTML += cup;
 
     }
     else {
       
       // Chi non è nei primi 3...
-
+      check_cups(x[keysSorted[n]]);
       scoretot.innerHTML += "<div style='background:white;width:50%;color:black'><img src=\"" + keysSorted[n]  + ".PNG\" width='100px'><br><b style='color:black'>" + keysSorted[n] + "</b><br><b style='font-size:3.0em'> " + x[keysSorted[n]] + "</b></div><br>";
 
-      // Se superi 100 punti... 
-      if (x[keysSorted[n]] > 100) {
-                  scoretot.innerHTML += cup;}
 
     }
     }
