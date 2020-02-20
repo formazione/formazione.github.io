@@ -26,24 +26,29 @@ Nome: <input id="nomestudente" type="text">
 <script>
 
 code = {
-"DApolito Giuliano": "000",
-"Giordano Emilio": "000",
-"Guariglia Livio": "000",
-"Landi Anna Maria": "000",
-"Lembo Giulia": "000",
-"Mainente Giuseppina": "000",
-"Malzone Tatiana": "000",
-"Mauro Nicole": "000",
-"Mazziotti Christian": "000",
-"Pepe Raffaele": "000",
-"Puglia Alessia": "000",
-"Saturno Antonio": "000",
-"Scelza Filomena": "000",
-"Tardio Monica" : "000"};
-  
+      "Maiuri": "000",
+      "Battagliese": "000",
+      "Borrelli": "000",
+      "Carracino": "000",
+      "Ciardi": "000",
+      "Donnianni": "000",
+      "Fluri": "000",
+      "Ghiunghius": "000",
+      "Liguori": "000",
+      "Maiese": "000",
+      "Mautone": "000",
+      "Merola": "000",
+      "Palladino": "000",
+      "Ricci": "000",
+      "Romano" : "000",
+      "Saja_A": "000",
+      "Saja_P": "000",
+      "Tierno": "000",
+  };
+
 // Nome del test che diventa un child di firebase
 // the name is taken from the text file name where the questions are
-let record_firebase = "5bs_bilancio";
+let record_firebase = "4ce_quiz_indici";
 
 
 /* CREA LA LISTA E QUANDO CAMBIA STUDENTE CAMBIA IMMAGINE id=nomstu
@@ -51,7 +56,7 @@ trovi il div placeholder della immagine qualche riga sotto
 */
 
 function namePng(name){
-  return name + ".png";
+  return "../" + name + ".PNG";
 }
 
 let html = "<select id='nomestudente' name='carlist' form='carform' onchange='nomstu.src=namePng(nomestudente.value)'>";
@@ -75,9 +80,9 @@ document.write(html);
     <!-- -------------------- Casella codice -------------------->
 <img id="nomstu" width=50>
 <script>
-nomstu.src=nomestudente.value + ".png"
+nomstu.src= "../" + nomestudente.value + ".PNG"
   </script>
-Codice: <input id="codice" type="text">
+Codice: <input id="codice" type="text" value=000>
 
 
 <div class="form-group rsform-block rsform-block-framecontent">
@@ -112,7 +117,7 @@ scoretot.align = "center";
 function gotData(data){
     x = data.val();
     for (name in x){
-  scoretot.innerHTML += "<img src='"+name+".png' width='100'>(" + name + ":" + x[name] + ") ";
+  scoretot.innerHTML += "<img src='../" + name + ".PNG' width='100'>(" + name + ":" + x[name] + ") ";
 }
 }
 
@@ -166,26 +171,24 @@ if (!("scramble" in Array.prototype)) {
   });
 }   
 
-let mydom = `Il bilancio è obbligatorio___per tutte le imprese___per le società di persone___per le imprese individuali___per le società di capitali
-Il bilancio viene redatto___alla fine dell'esercizio___a metà anno___ogni 3 mesi
-È un documento solo interno___per le imprese individuali e le società di persone___per le società di persone___per le società di capitali___per le imprese individuali
-Il bilancio delle società di capitali va approvato___entro 120 giorni dalla fine dell'esercizio___entro 60 giorni dalla fine dell'esercizio___entro 30 giorni  dalla fine dell'esercizio
-Il bilancio socio-ambientale si rivolge___alla collettività___agli investitori___ai soci
-Il bilancio socio-ambientale riguarda l'impatto___sia ambientale che economico sulla collettività___economico della società sulla collettività___ambientale della società sulla collettività
-L'aspetto finanziario è rappresentato___nello Stato patrimoniale___nel Conto economico
-Versati 100 euro in cassa___dare___avere
-Prelevati 1000 euro dal c/c bancario___dare___avere
-Crediti verso clienti per 200 euro___dare___avere
-Ricevuta ft. per 1000 euro___costo=1000 iva a credito=220 debito=1220___costo=1000 iva a debito=220 debito=1220___ricavo=1000 iva a credito=220 debito=1220
-Le entrate vanno in___dare___avere
-I costi vanno in___dare___avere
-I ricavi vanno in___dare___avere
-Le uscite vanno in___dare___avere
-I crediti vanno in___dare___avere
-Il pagamento di un debito da parte dell'impresa va in___dare___avere
-Se un cliente paga un credito, scriviamo nel conto crediti v/clienti in___dare___avere
-aumento di capitale proprio___dare___avere
-Ricevuto un bonifico sul c/c___dare___avere`;
+let mydom = `Quale articolo del c.c. prevede lo schema dello Stato patrimoniale?___2424___2425___2423___2427___2428___2430
+Fanno parte delle disponibilità liquide___Denaro in cassa___Crediti___Ratei attivi___Debiti verso fornitori
+Fanno parte delle disponibilità finanziarie___Crediti verso clienti___Banca x c/c___Immobizzzazioni finanziarie___Patrimonio netto
+Il patrimonio netto è dato da___Attivo - passivo___Attivo + passivo___Capitale proprio + passivo___Banca x c/c + Denaro in cassa
+L'utile si calcola con la formula___ricavi - costi___costi + ricavi___utile operativo - utile netto___utile operativo - imposte
+L'utile operativo___comprende interessi passivi e imposte___è l'utile distribuito ai soci___è il risultato economico prima delle imposte
+Ritornano in forma liquida prima___I crediti a breve termine___Le immobilizzazioni___I beni durevoli___i crediti a lungo termine
+I conti finanziari sono___denaro in cassa, banca, crediti e debiti___merci c/acquisti, merci c/vendite, attrezzature, impianti___interessi attivi, bollette, assicurazione, fitti attivi
+È un conto finanziario___Crediti verso clienti___Merci c/acquisti___Merci c/vendite___Impianti___Attrezzature___Software
+è un conto economico___Impianti___Denaro in cassa___Banca x c/c___Crediti verso clienti___Debiti verso fornitori
+I conti economici funzionano in dare e avere, rispettivamente___costi e ricavi___ricavi e costi___entrate ed uscite___uscite ed entrate
+I conti FINANZIARI funzionano in dare e avere, rispettivamente___entrate ed uscite___costi e ricavi___ricavi e costi___uscite ed entrate
+Un credito si registra___in dare, è un costo___in avere, è un ricavo___in dare, è un'entrata futura___in avere, è un'uscita futura
+Merci c/acquisti funziona solo in___dare___avere
+Merci c/vendite funziona solo in___avere___dare
+Gli aumenti di Capitale proprio vanno in___avere___dare
+L'IVA sugli acquisti è:___un credito verso lo Stato___un debito verso lo Stato
+L'IVA sulle vendite è:___un debito verso lo Stato___un credito verso lo Stato`;
 
       
   // -------- substitute this -----------------    
@@ -238,7 +241,7 @@ jQuery(document).ready(function($){
           .createElement('li'))
           .addClass('choice choice-box btn')
           .attr('data-index', i)
-          .text(choices[i])
+          .html(choices[i])
           .appendTo('#choice-block')
           .css({'font-size':'28px'});   //  Aggiunge risposte
       }
@@ -318,7 +321,43 @@ function processQuestion(choice){
         $('#explanation')
           .html('<span class="correct">ESATTO!</span> ' + (quiz[currentquestion]['explanation']));
         
-        let ff = ["è giusto","è proprio così","e certo!","ci siamo","sei bravo o brava","continua così","sì","ok","bene","risposta esatta","hai risposto bene","complimenti per la risposta","bravo","yes","ouì","corretto","esatto","perfetto","eh sì","sì, sì","certo","giusto","sìì"].sort(function(){return 0.5 - Math.random()})[0];
+        let ff = [
+                  "accipicchia che bravura",
+                  "bene",
+                  "benissimo",
+                  "bravo o brava",
+                  "bravo",
+                  "certo!",
+                  "ci siamo",
+                  "complimenti per la risposta",
+                  "congratulazioni",
+                  "continua così",
+                  "corretto",
+                  "eh sì",
+                  "eccezionale",
+                  "esatto",
+                  "fantastico",
+                  "favoloso",
+                  "geniale",
+                  "giusto",
+                  "giusto",
+                  "grande",
+                  "hai risposto bene",
+                  "mamma mia",
+                  "meraviglia",
+                  "ok",
+                  "ottimo",
+                  "ottimo risultato",
+                  "perfetto",
+                  "proprio così",
+                  "risposta esatta",
+                  "stai andando bene",
+                  "sì",
+                  "sì, sì",
+                  "sìì",
+                  "ti stai impegnando",
+                  "yes",
+                  ].sort(function(){return 0.5 - Math.random()})[0];
         speak(ff);
         score++;
         count_speak = 0;
