@@ -1,52 +1,22 @@
-<style>body { font-size:3em;}</style>
+<style>body{font-size:2em;}</style>
+<h2>Test interattivi a risposta multipla</h2>
+<p>
+Per registrare il tuo risultato, inserisci il codice al posto di 000, dopo aver scelto il tuo nome tra l'elenco.
+</p>
+<li>
+<a href="quiz/quiz_indici.html">
+Quiz: indici di bilancio (18 domande) [nuovo]</a>
 
-<h3>Esercizi</h3>
-<!-- qui vengono visualizzati i link -->
-<div id="desk"></div>
-
-
-
-<script>
-// array con [[indirizzo/titolo]] dei link degli es.
-let es = [
-
-["https://play.kahoot.it/v2/lobby?quizId=3b5266ec-c691-4ae1-b2c5-268de83e43ad","KAHOOT:  conti economici o finanziari?"],
-
-["quiz/quiz_indici.html","<img src='https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.sunnywayteambuilding.com%2Fit%2Fnews%2Fteam-building-quiz&psig=AOvVaw35QgxNT-g7u4c7kal78Y8a&ust=1582281550718000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCIDUlaL43-cCFQAAAAAdAAAAABAD'>(new)Quiz: gli indici"]
-,
-["quiz/bilancio.html","Quiz: il bilancio (25 dom.)"],
-["quiz/fin_o_eco.html","Quiz: Conti finanziari o economici? (40 dom.)"],
-
-["https://docs.google.com/spreadsheets/d/1PnQ7iuANLZPPuvac0Svp3JqWX1aXOYHPtt9fxFMqJJo/edit?usp=sharing", "Fogli: Partita doppia"],
-["https://docs.google.com/spreadsheets/d/1NkwieqB2GwGHat9SNBL5ypzs4SpNm0e1acQXgZ27Ank/edit#gid=360812980", "Fogli: Libro giornale"],
-["https://docs.google.com/document/d/1XmWOjEe6Ie1cQ7on44D28zQrJkUp8QLl1KBmYRSOZHw/edit?usp=sharing","Documenti: Caso aziendale, 2 esercizi"]
-];
-
-// ciclo loop che visualizza
-// gli esercizi nel div id="desk"
-
-for (e in es){
-	let address = es[e][0];
-	let quiz = ""; 
-	let text = es[e][1];
-console.log(text);
-	if (text.includes("Quiz")){
-	let quiz = "<img src='https://www.sharing.to.it/site/wp-content/uploads/2019/02/quiz.jpg'>";
-}
-     desk.innerHTML += quiz + e + ". <a href='" + address + "'>" + text + "</a><br><br>";
-}
-
-</script>
-
-
-
-
-
-
-
-
-
-
+<li>
+<a href="quiz/fin_o_eco.html">
+Quiz: Conti finanziari ed economici (40 domande) [nuovo] </a>
+<br>
+<li>
+<a href="quiz/bilancio.html">
+Quiz: indici di bilancio (25 domande) [fatto]</a>
+<h2>Kahoot</h2>
+<li>
+<a href="https://play.kahoot.it/v2/?quizId=825d0e1b-6b38-4e91-9e27-d3295282b518">Indici di Bilancio (50 domande)</a>
 
 
 
