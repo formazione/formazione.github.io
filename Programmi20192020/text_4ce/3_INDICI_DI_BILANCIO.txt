@@ -7,8 +7,10 @@ body{
 </style>
 <h3>Il bilancio e gli indici di bilancio</h3>
 
+<b style="color:red">New</b> 
+<a href="https://docs.google.com/spreadsheets/d/1kZt-s80IAPiaan-n7hFuCYnNKTbrj82twbQCZnrqoFs/edit?usp=sharing">Simulazione compito sugli indici di bilancio</a>
 
-<!-- TEORIA -->
+<hr>
 
 <a href="https://docs.google.com/document/d/1nUQwf5rGlDT_KGPlzxr0W-iuZaS40_q_syXOyI8f-X8/edit?usp=sharing">Bilancio e indici (teoria)</a>
 
@@ -18,15 +20,7 @@ body{
 <a href="https://docs.google.com/document/d/1XznTt3OGg-C1XAwIRV-2Y29kwiZOdNCRCer53ZlwrNc/edit?usp=sharing">Esercizi sulla partita doppia</a>
 
 
-<br>
 
-<h3> Nuovi esercizi </h3>
-<h4>Verso gli indici di bilancio</h3>
-
-<a href="https://docs.google.com/spreadsheets/d/1kZt-s80IAPiaan-n7hFuCYnNKTbrj82twbQCZnrqoFs/edit?usp=sharing">Esercizio 1 - Compila il bilancio secondo il codice civile art. 2424 (fogli di Google)</a>
-<br>
-<br>
-<a href="https://aziendaitalia.altervista.org/esercizio-sullo-stato-patrimoniale-ex-art-2424-c-c/">Esercizio 2 - sullo Stato patrimoniale ex art.2424 (Test a risposta breve)</a>
 
 
 
