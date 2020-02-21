@@ -13,6 +13,10 @@
 <style>
 *{padding: 0; margin: 0; box-sizing: border-box;}
 body{height: 900px;}
+.div {
+  border-radius: 0 0 85% 85% / 50%;
+  background-image: linear-gradient( 135deg, #9f05ff69 10%, #fd5e086b 100%);
+}
 header {
   background: url('https://www.hotelinstitutemontreux.com/media/image/0/2016_medium_16_9/bachelor-of-business-administration-in-hospitality-management-4@2x.jpg');
   text-align: center;
@@ -45,7 +49,7 @@ h3, p {
   margin-bottom: 30px;
 }
 
-button, .nice {
+button {
   border: none;
   outline: none;
   padding: 10px 20px;
@@ -55,8 +59,41 @@ button, .nice {
   margin-bottom: 50px;
   box-shadow: 0 3px 20px 0 #0000003b;
 }
+
+.nice {
+  border: none;
+  outline: none;
+  padding: 10px 20px;
+  border-radius: 10px;
+  color: #333;
+  background: #fff;
+  margin-bottom: 10px;
+  box-shadow: 0 3px 20px 0 #0000003b;
+
+}
+
 button:hover{
   cursor: pointer;
+}
+
+a {
+  background-color: red;
+  box-shadow: 0 2px 0 darkred;
+  color: white;
+  padding: 0px 0px;
+  position: relative;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+a:hover {
+  background-color: #ce0606;
+  cursor: pointer;
+}
+
+a:active {
+  box-shadow: none;
+  top: 1px;
 }
 
 
