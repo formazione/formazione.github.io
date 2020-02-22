@@ -1,0 +1,19 @@
+<h2>Test interattivi a risposta multipla</h2>
+<p>
+Per registrare il tuo risultato, inserisci il codice al posto di 000, dopo aver scelto il tuo nome tra l'elenco.
+</p>
+<p>
+Chiedi il codice al professore</p>
+<li>
+<a href="quiz/bilancio_50_dom.html">Test: Bilancio, 50 domande circa</a>
+<li><a href="file:///H:/formazione.github.io/formazione.github.io/Programmi20192020/text_5bs/bilancio..html">Test 2 - Bilancio</a>
+
+<h2>Kahoot</h2>
+<li>
+<a href="https://play.kahoot.it/v2/?quizId=825d0e1b-6b38-4e91-9e27-d3295282b518">Indici di Bilancio (50 domande)</a>
+
+
+
+
+
+

@@ -1,7 +1,4 @@
-<style>
-body{
-font-size: 2em}
-</style>
+<link rel="stylesheet" type="text/css" href="../a_style.css">
 <hr>
 <b style="color:red">New</b> 
 <a href="https://docs.google.com/spreadsheets/d/1kZt-s80IAPiaan-n7hFuCYnNKTbrj82twbQCZnrqoFs/edit?usp=sharing">Simulazione n. 2 - Recupero sugli indici di bilancio</a>
@@ -21,6 +18,8 @@ font-size: 2em}
 <a href="bp/busplan.html">Business plan (par. 1)</a>
 <br>
 <a href="bp/bp1.pdf">Esempio: Zucchero e Cannella</a>
+
+
 
 
 
