@@ -1,3 +1,4 @@
+<script src="../../menu.js"></script>
 <h2>10 domande sul Bilancio</h2>
 <a href="https://aziendaitalia.altervista.org/10-domande-sul-bilancio/">Domande (audio)</a>
 <h1>Solo testo</h1>
@@ -43,3 +44,4 @@ L'<strong>attivo</strong> comprende le <strong>immobilizzazioni</strong> (beni d
 Il <strong>passivo</strong> comprende il <strong>patrimonio netto</strong>, i <strong>debiti</strong>, i <strong>ratei</strong> e <strong>risconti</strong> <strong>passivi</strong>.
 
 Il <strong>conto economico</strong> comprende i <strong>ricavi</strong> e i <strong>costi</strong> di esercizio e dalla differenza tra <strong>ricavi</strong> e costi si determina il <strong>risultato economico</strong>, che può essere un utile o una perdita.
+

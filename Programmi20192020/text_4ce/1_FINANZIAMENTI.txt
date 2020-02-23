@@ -1,3 +1,4 @@
+<script src="../../menu.js"></script>
 #html_convert
 Domande per la verifica orale
 
@@ -131,6 +132,7 @@ l'impresa costruttrice cede il bene in locazione dietro pagamento di un canone d
 
 ^- Sale and lease back:
 in cui l'impresa utilizzatrice vende il bene alla banca, ma lo continua ad usare pagando un canone alla banca, così da ottenere liquidità.
+
 
 
 

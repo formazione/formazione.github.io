@@ -1,3 +1,6 @@
-<h2>Sintesi Marketing operativo</h2>
+<script src="../../menu.js"></script>
+<a href="https://docs.google.com/document/d/1VFj6rjZuqSaJ9IALlZpxn9eoff8CC9uNendP0ecLR30/edit?usp=sharing">Sintesi sul Marketing operativo</a>
 
-<a href="https://docs.google.com/document/d/1VFj6rjZuqSaJ9IALlZpxn9eoff8CC9uNendP0ecLR30/edit?usp=sharing">Clicca per leggere la sintesi</a>
+
+
+

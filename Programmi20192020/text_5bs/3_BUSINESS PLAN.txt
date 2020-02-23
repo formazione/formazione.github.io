@@ -1,4 +1,4 @@
-<link rel="stylesheet" type="text/css" href="../../a_style.css">
+<script src="../../menu.js"></script>
 <br><br>
 <b style="color:red">New</b> 
 <a href="https://docs.google.com/spreadsheets/d/1kZt-s80IAPiaan-n7hFuCYnNKTbrj82twbQCZnrqoFs/edit?usp=sharing">Indici 2</a>
@@ -8,13 +8,13 @@
 <a href="https://docs.google.com/document/d/1XV9iPQ68gmytyRJcbgUt8O476qHt0OCKePBQoTFjgGY/edit?usp=sharing">Business plan</a>
 <br><br>
 
-
-
-<br><br>
-<a href="bp/business_plan_approfondito_unifi.pdf">Schema Business Plan Università di Firenze</a>
+<a href="bp/business_plan_approfondito_unifi.pdf">Schema BP Università Firenze</a>
 
 <br><br>
 <a href="bp/bp1.pdf">Esempio</a>
+
+
+
 
 
 

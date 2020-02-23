@@ -1,6 +1,4 @@
-<style>body {margin-left:10%;
-margin-right:10%;
-font-size:2em;	}</style>
+<script src="../../menu.js"></script>
 
 <h2>Kahoot</h2>
 
@@ -26,6 +24,8 @@ Ogni studente ha un codice diverso da inserire per salvare il risultato del test
 <a href="quiz/bilancio_2.html">Test sul Bilancio 2 (50 domande)
 <li>
 <a href="quiz/business_plan_2.html">Business plan</a>
+
+
 
 
 
