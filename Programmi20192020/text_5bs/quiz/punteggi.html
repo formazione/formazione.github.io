@@ -1,9 +1,8 @@
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>4CE</title>
+  <title>5BS</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
@@ -11,14 +10,6 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 </head>
 <style>
-@media screen and (min-width: 1024px){
-img {
-  width: 30%;
-}
-img.cup {
-  width: 50px;
-}
-}
   body{
     color:white;
     background-color: black;
@@ -37,7 +28,7 @@ img.cup {
 <body>
 
 <div class="jumbotron" style="background:coral">
-    <center>Partecipazione 4CE 2019 - 2020<br>
+    <center>Partecipazione 5BS 2019 - 2020<br>
       <a href="https://formazione.github.io">[ H O M E ]</a>
   </center>
   </div>
@@ -58,13 +49,13 @@ img.cup {
   };
   firebase.initializeApp(config);
   let database = firebase.database();
-  let ref = database.ref("4CE");
+  let ref = database.ref("docente_4bs2018");
   ref.on("value", gotData)
 
   // IMAGES
-let pen = "<img class='cup' src='https://images.vexels.com/media/users/3/156893/isolated/preview/048e149a96bdff520db53ddba885cf0d-pen-icon-travel-icons-by-vexels.png' width='30' />";
-let cup = "<img  class='cup' src='https://cdn2.iconfinder.com/data/icons/thesquid-ink-40-free-flat-icon-pack/64/cup-512.png' width='30' />";
-let party ="<img  class='cup' src='http://icons.iconarchive.com/icons/google/noto-emoji-activities/1024/52707-party-popper-icon.png' width='30' >";
+let pen = "<img src='https://images.vexels.com/media/users/3/156893/isolated/preview/048e149a96bdff520db53ddba885cf0d-pen-icon-travel-icons-by-vexels.png' width='60' />";
+let cup = "<img src='https://cdn2.iconfinder.com/data/icons/thesquid-ink-40-free-flat-icon-pack/64/cup-512.png' width='60' />";
+let party ="<img src='http://icons.iconarchive.com/icons/google/noto-emoji-activities/1024/52707-party-popper-icon.png' width='60' >";
   
 let scoretot = document.getElementById("scoretot");
 scoretot.align = "center";
@@ -95,12 +86,8 @@ let max = Math.max(...arr);
   scoretot.innerHTML += "<u style='color:coral'>Graduatoria:</u><br>"
   // scoretot.innerHTML += "<center>";
   let newx = [];
-  for (n in keysSorted){
-  //let xx = [keysSorted[n],x[keysSorted[n]]];
-   newx.push([keysSorted[n],x[keysSorted[n]]]); 
-  }
-  console.log(newx);
 
+// new functions to emultare range and to add cups every 100 points
 // emulation of range in python
 function range(start, stop, step) {
     if (typeof stop == 'undefined') {
@@ -122,6 +109,16 @@ function check_cups(x){
   for (many_cups in range(Math.floor(x / 100))) scoretot.innerHTML += cup;
 }
 
+function shuffle(s) {
+  var arr = s.split('');           // Convert String to array
+  
+  arr.sort(function() {
+    return 0.5 - Math.random();
+  });  
+  s = arr.join('');                // Convert Array to string
+  return s;                        // Return shuffled string
+}
+
   for (n in keysSorted){
   
     let num = parseInt(n)+1;
@@ -130,15 +127,15 @@ function check_cups(x){
       // This adds a cup every 100 points
       check_cups(x[keysSorted[n]]);
       // if (x[keysSorted[n]] > 199) scoretot.innerHTML += cup;
-      scoretot.innerHTML += party + "<div style='background:gold;width:100%;color:black'><img src='" + keysSorted[n]  + ".PNG' width='100%'><br><b style='font-size:2.5em;color:red'>" + num + ". <u>" + keysSorted[n] + "</u><br></b><b style='font-size:2.5em;background:coral'>" + x[keysSorted[n]] + "</b><br></div><br>"; 
+      scoretot.innerHTML += party + "<div style='background:gold;width:100%;color:black'><img src='../" + keysSorted[n]  + ".PNG' width='100%'><br><b style='font-size:2.5em;color:red'>" + num + ". <u>" + shuffle(keysSorted[n]) + "</u><br></b><b style='font-size:2.5em;background:coral'>" + x[keysSorted[n]] + "</b><br></div><br>"; 
     }
     else if (n == 1){
       check_cups(x[keysSorted[n]]);
-      scoretot.innerHTML += "<div style='background:navy;width:85%;color:black'><img src='" + keysSorted[n]  + ".PNG' width='100%'><br><b style='font-size:2em;color:coral'>" + num + ". " + keysSorted[n] + "</b><br> <b style='font-size:2em;background:coral'>" + x[keysSorted[n]] + "</b><br></div><br>"; 
+      scoretot.innerHTML += "<div style='background:navy;width:85%;color:black'><img src='../" + keysSorted[n]  + ".PNG' width='100%'><br><b style='font-size:2em;color:coral'>" + num + ". " + shuffle(keysSorted[n]) + "</b><br> <b style='font-size:2em;background:coral'>" + x[keysSorted[n]] + "</b><br></div><br>"; 
     }
   else if (n == 2){
       check_cups(x[keysSorted[n]]);
-      scoretot.innerHTML += "<div style='background:coral;width:70%;color:black'><img src='" + keysSorted[n]  + ".PNG' width='100%'><br><b style='font-size:1.5em;color:gold'>" + num + ". " + keysSorted[n] + "</b><br><b style='font-size:1.5em;background:coral'>" + x[keysSorted[n]] + "</b><br></div><br>"; 
+      scoretot.innerHTML += "<div style='background:coral;width:70%;color:black'><img src='../" + keysSorted[n]  + ".PNG' width='100%'><br><b style='font-size:1.5em;color:gold'>" + num + ". " + shuffle(keysSorted[n]) + "</b><br><b style='font-size:1.5em;background:coral'>" + x[keysSorted[n]] + "</b><br></div><br>"; 
 
 
     }
@@ -146,7 +143,7 @@ function check_cups(x){
       
       // Chi non è nei primi 3... se ha cento
       check_cups(x[keysSorted[n]]);
-      scoretot.innerHTML += "<div style='background:white;width:50%;color:black'><img src=\"" + keysSorted[n]  + ".PNG\" width='100%'><br><b style='color:black'>" + keysSorted[n] + "</b><br><b style='font-size:3.0em'> " + x[keysSorted[n]] + "</b></div><br>";
+      scoretot.innerHTML += "<div style='background:white;width:50%;color:black'><img src=\"../" + keysSorted[n]  + ".PNG\" width='100%'><br><b style='color:black'>" + num + ". " + shuffle(keysSorted[n]) + "</b><br><b style='font-size:3.0em'> " + x[keysSorted[n]] + "</b></div><br>";
 
       // Se superi 100 punti... 
 
@@ -158,22 +155,3 @@ function check_cups(x){
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

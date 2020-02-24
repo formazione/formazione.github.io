@@ -1,0 +1,10 @@
+Nome alunno: <input id='name' type=text><h3>How is the triple of 500?</h3>
+<input id="i1" type="text" onchange="ris=document.getElementById('ris1');if(this.value=='1500'){ris1.innerHTML='Good!';counter[1]=1}else{ris1.innerHTML='No! It is wrong, try again.'}">
+<div id="ris1"></div><h3>How is the triple of 1500?</h3>
+<input id="i2" type="text" onchange="ris=document.getElementById('ris2');if(this.value=='4500'){ris2.innerHTML='Good!';counter[2]=1}else{ris2.innerHTML='No! It is wrong, try again.'}">
+<div id="ris2"></div><h3>Is it Rome the capital of Italy [y/n]</h3>
+<input id="i3" type="text" onchange="ris=document.getElementById('ris3');if(this.value=='y'){ris3.innerHTML='Good!';counter[3]=1}else{ris3.innerHTML='No! It is wrong, try again.'}">
+<div id="ris3"></div><div id='result1'>...</div><button onclick="result=document.getElementById('result1');result.innerHTML=counter">Check</button>
+<script>
+counter = [];
+</script>
