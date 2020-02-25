@@ -1,0 +1,84 @@
+*{padding: 0; margin: 0; box-sizing: border-box;}
+
+
+
+
+body{height: 200px;}
+.div {
+  border-radius: 0 0 85% 85% / 50%;
+  /*background-image: linear-gradient( 135deg, #9f05ff69 10%, #fd5e086b 100%);*/
+}
+header {
+  background: url('cover6.png');
+  text-align: center;
+  width: 100%;
+  height: auto;
+  background-size: 100%;
+  /*background-attachment: fixed;*/
+  position: relative;
+  overflow: hidden;
+  border-radius: 0 0 85% 85% / 30%;
+}
+header .overlay{
+  width: 100%;
+  height: 100%;
+  padding: 50px;
+  color: #FFF;
+  text-shadow: 1px 1px 1px #333;
+  background-image: linear-gradient( 135deg, #9f05ff69 10%, #fd5e086b 100%);
+  
+}
+
+h1 {
+  font-family: 'Dancing Script', cursive;
+  font-size: 80px;
+  margin-bottom: 30px;
+}
+
+h3, p, h2 {
+  color: coral;
+  font-family: 'Open Sans', sans-serif;
+  margin-bottom: 30px;
+}
+
+button, .nice {
+  border: none;
+  outline: none;
+  padding: 10px 20px;
+  border-radius: 50px;
+  color: #333;
+  background: #fff;
+  margin-bottom: 50px;
+  box-shadow: 0 3px 20px 0 #0000003b;
+}
+
+
+
+button:hover{
+  cursor: pointer;
+}
+
+a {
+    font-size: 2em;
+    background-color: #e25a73;
+    box-shadow: 0 0px 0 #dff2ff;
+    color: #ffffff;
+    padding: 2px 2px;
+    position: relative;
+    text-decoration: none;
+    text-transform: uppercase;
+    text-decoration: none;
+}
+
+a:hover {
+  text-decoration: none;
+  background-color: #ce0606;
+  cursor: pointer;
+}
+
+a:active {
+  box-shadow: none;
+  top: 1px;
+}
+
+
