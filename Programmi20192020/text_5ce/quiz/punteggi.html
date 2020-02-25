@@ -126,30 +126,33 @@ function shuffle(s) {
   for (n in keysSorted){
   
     let num = parseInt(n)+1;
-    // nome del primo classificato
+
+    // 1°
     if (n == 0){
       // This adds a cup every 100 points
       check_cups(x[keysSorted[n]]);
-      // if (x[keysSorted[n]] > 199) scoretot.innerHTML += cup;
-      scoretot.innerHTML += party + "<div style='background:gold;width:100%;color:black'><img src='../" + keysSorted[n]  + ".PNG' width='100%'><br><b style='font-size:2.5em;color:red'>" + num + ". <u>" + shuffle(keysSorted[n]) + "</u><br></b><b style='font-size:2.5em;background:coral'>" + x[keysSorted[n]] + "</b><br></div><br>"; 
+      scoretot.innerHTML += party + "<div style='background:gold;color:gold'><img src='../" + keysSorted[n]  + ".PNG'><br><b style='font-size:2.5em;color:red'>" + num + ". <u>" + shuffle(keysSorted[n]) + "</u><br></b><b style='font-size:2.5em;background:coral'>" + x[keysSorted[n]] + "</b><br></div><br>"; 
     }
+
+    // 2°
     else if (n == 1){
       check_cups(x[keysSorted[n]]);
-      scoretot.innerHTML += "<div style='background:navy;width:85%;color:black'><img src='../" + keysSorted[n]  + ".PNG' width='100%'><br><b style='font-size:2em;color:coral'>" + num + ". " + shuffle(keysSorted[n]) + "</b><br> <b style='font-size:2em;background:coral'>" + x[keysSorted[n]] + "</b><br></div><br>"; 
+      scoretot.innerHTML += "<div style='background:navy;color:blue;width:80%'><img src='../" + keysSorted[n]  + ".PNG'><br><b style='font-size:2em;color:coral'>" + num + ". " + shuffle(keysSorted[n]) + "</b><br> <b style='font-size:2em;background:coral'>" + x[keysSorted[n]] + "</b><br></div><br>"; 
     }
+
+    // 3°
   else if (n == 2){
       check_cups(x[keysSorted[n]]);
-      scoretot.innerHTML += "<div style='background:coral;width:70%;color:black'><img src='../" + keysSorted[n]  + ".PNG' width='100%'><br><b style='font-size:1.5em;color:gold'>" + num + ". " + shuffle(keysSorted[n]) + "</b><br><b style='font-size:1.5em;background:coral'>" + x[keysSorted[n]] + "</b><br></div><br>"; 
+      scoretot.innerHTML += "<div style='background:coral;width:70%;color:black'><img src='../" + keysSorted[n]  + ".PNG'><br><b style='font-size:1.5em;color:gold'>" + num + ". " + shuffle(keysSorted[n]) + "</b><br><b style='font-size:1.5em;background:coral'>" + x[keysSorted[n]] + "</b><br></div><br>"; 
 
 
     }
     else {
       
-      // Chi non è nei primi 3... se ha cento
+      // Dopo il terzo posto
       check_cups(x[keysSorted[n]]);
-      scoretot.innerHTML += "<div style='background:white;width:50%;color:black'><img src=\"../" + keysSorted[n]  + ".PNG\" width='100%'><br><b style='color:black'>" + num + ". " + shuffle(keysSorted[n]) + "</b><br><b style='font-size:3.0em'> " + x[keysSorted[n]] + "</b></div><br>";
+      scoretot.innerHTML += "<div style='background:white;width:50%;color:black'><img src='../" + keysSorted[n]  + ".PNG' style='max-width:100%'><br><b style='color:black'>" + num + ". " + shuffle(keysSorted[n]) + "</b><br><b style='font-size:3.0em'> " + x[keysSorted[n]] + "</b></div><br>";
 
-      // Se superi 100 punti... 
 
     }
     }
