@@ -1,0 +1,178 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>PIL</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <!-- import the webpage's stylesheet -->
+    <link rel="stylesheet" href="/static/style.css">
+    
+    <link href="https://fonts.googleapis.com/css?family=Literata&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    
+    
+  </head>  
+  <body>
+    
+      <!-- menu -->
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <!-- 
+      <a class="navbar-brand" href="/">PIL</a>
+      -->
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+  </button>
+
+      
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="/">Home<span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/info">Info</a>
+      </li>
+            <li class="nav-item">
+        <a class="nav-link" href="/tkinter">Tkinter</a>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Dropdown
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="https:\\pythonprogramming.altervista.org">My blog</a>
+          <a class="dropdown-item" href="http:\\pythontutorial.glitch.me">pythontutorial</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="https:\\aziendaitalia.altervista.org">AziendaItalia</a>
+        </div>
+      </li>
+    </ul>
+    <form class="form-inline my-2 my-lg-0">
+      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+  </div>
+</nav>
+    
+    <!-- end of menu -->
+   
+
+<div class="jumbotron">
+  <center>
+    <h1>PIL Python Image Library</h1>
+  <h3>
+    Elaborate image with Python
+  </h3>
+  <a href="https://pythonprogramming.altervista.org">Powered by Pythonprogramming.altervista.org</a>
+  <br>
+    <img src="https://i1.wp.com/pythonprogramming.altervista.org/wp-content/uploads/2019/06/cropped-altervista2.png?fit=156%2C55&ssl=1" />
+  </center>
+  <br>
+</div>
+<div class="container">
+   
+      <div class="row">
+         <div class="col-md-4"> <h3>What is PIL</h3> </div> <!-- colonna titolo -->
+         <div class="col-md-8"> <p><b>PIL</b> is a powerful module for <b>Python</b> that allows you to create and elaborate <b>images</b> coding in Python. You can do almost anything, building the perfect image tools for your needs.We will take a fast look at the main functions of this very useful module.<br><hr><i style="color:green">This site is made with Python and Flask. We use Python 3. Take a look at this video to see how to do it. In <a href="http://pythonprogramming.altervista.org">pythonprogramming.altervista.org</a> you will find many posts about using flask on glitch.</i><hr></p> </div> <!-- colonna paragrafo -->
+      </div>
+  <hr>
+  
+      <div class="row">
+         <div class="col-md-4"> <h3>Install</h3> </div> <!-- colonna titolo -->
+         <div class="col-md-8"> <p>First you need to install pil's fork pillow:pip install pillow<img src="https://cdn.glitch.com/8f79309f-0a88-41bb-bfd9-ccac7007a188%2Fpip_install_pil.PNG?v=1569514131173" width="100%"/></p> </div> <!-- colonna paragrafo -->
+      </div>
+  <hr>
+  
+      <div class="row">
+         <div class="col-md-4"> <h3>Import</h3> </div> <!-- colonna titolo -->
+         <div class="col-md-8"> <p>    The first thing you need to import is the Class Image    <br>>>> <b style='color:orange'>from </b>PIL <b style='color:orange'>import </b>Image</p> </div> <!-- colonna paragrafo -->
+      </div>
+  <hr>
+  
+      <div class="row">
+         <div class="col-md-4"> <h3>Create</h3> </div> <!-- colonna titolo -->
+         <div class="col-md-8"> <p>>>> img = Image.<b style='color:blue'>new</b>('RBG', (200,200), 'yellow')<br><br>This will <b>create</b> a yellow square image of 200 px of <b>width</b> and 200 px of <b>height.</b> <b>RGB</b> is for Red, Green and Blue, aka the image is in color. If you want to use <b>transparency</b> you have to use <b>RGBA</b> instead of RGB.</p> </div> <!-- colonna paragrafo -->
+      </div>
+  <hr>
+  
+      <div class="row">
+         <div class="col-md-4"> <h3>Open</h3> </div> <!-- colonna titolo -->
+         <div class="col-md-8"> <p>>>> img = Image.<b style='color:blue'>open</b>('existing.png')</p> </div> <!-- colonna paragrafo -->
+      </div>
+  <hr>
+  
+      <div class="row">
+         <div class="col-md-4"> <h3>Save</h3> </div> <!-- colonna titolo -->
+         <div class="col-md-8"> <p>>>> img.<b style='color:blue'>save</b>('myimage.png')</p> </div> <!-- colonna paragrafo -->
+      </div>
+  <hr>
+  
+      <div class="row">
+         <div class="col-md-4"> <h3>Show</h3> </div> <!-- colonna titolo -->
+         <div class="col-md-8"> <p>>>> img.<b style='color:blue'>show</b>()</p> </div> <!-- colonna paragrafo -->
+      </div>
+  <hr>
+  
+      <div class="row">
+         <div class="col-md-4"> <h3>Resize</h3> </div> <!-- colonna titolo -->
+         <div class="col-md-8"> <p>>>> img.<b style='color:blue'>resize</b>((100,100), Image.ANTIALIAS)</p> </div> <!-- colonna paragrafo -->
+      </div>
+  <hr>
+  
+      <div class="row">
+         <div class="col-md-4"> <h3>Filters for the images</h3> </div> <!-- colonna titolo -->
+         <div class="col-md-8"> <p>>>> img.<b style='color:blue'>filter</b>(ImageFilter.BLUR)<br><br>There's a much smoother blur called SMOOTH<br>>>> i = i.<b style='color:blue'>filter</b>(ImageFilter.SMOOTH )<br><br>You can then create a 'contour' effect<br>>>> i = i.<b style='color:blue'>filter</b>( ImageFilter.CONTOUR )</p> </div> <!-- colonna paragrafo -->
+      </div>
+  <hr>
+  
+      <div class="row">
+         <div class="col-md-4"> <h3>Blend 2 images together</h3> </div> <!-- colonna titolo -->
+         <div class="col-md-8"> <p>>>> img = Image.<b style='color:blue'>blend</b>(Image.<b style='color:blue'>open</b>('image1.png','image2.png', 0.5) )</p> </div> <!-- colonna paragrafo -->
+      </div>
+  <hr>
+  
+      <div class="row">
+         <div class="col-md-4"> <h3>Pasting an image on another</h3> </div> <!-- colonna titolo -->
+         <div class="col-md-8"> <p>>>> img.<b style='color:blue'>paste</b>((0,0),'image2.png')</p> </div> <!-- colonna paragrafo -->
+      </div>
+  <hr>
+  
+      <div class="row">
+         <div class="col-md-4"> <h3>Write text on an image (ImageDraw)</h3> </div> <!-- colonna titolo -->
+         <div class="col-md-8"> <p>>>> draw = ImageDraw.<b style='color:blue'>Draw</b>(img)<br>>>> draw.<b style='color:blue'>text</b>((0,0),'Th<b style='color:orange'>is </b>text goes on top of the image')</p> </div> <!-- colonna paragrafo -->
+      </div>
+  <hr>
+  
+      <div class="row">
+         <div class="col-md-4"> <h3>Thumbnail</h3> </div> <!-- colonna titolo -->
+         <div class="col-md-8"> <p>>>> im.<b style='color:blue'>thumbnail</b>((128, 128), Image.ANTIALIAS)</p> </div> <!-- colonna paragrafo -->
+      </div>
+  <hr>
+  
+      <div class="row">
+         <div class="col-md-4"> <h3>text and font</h3> </div> <!-- colonna titolo -->
+         <div class="col-md-8"> <p>To add a <b>text</b> onto an <b>image</b> after you created an image:<br>>>> im = img.<b style='color:blue'>new</b>("RGBA", (600,400), "yellow")<br>You have to create an <b style='color:blue'>ImageDraw</b>.Draw object to wich you pass the <b style='color:blue'>im</b> object you created and on wich you will draw, as an argument:<br>>>> d = ImageDraw.<b style='color:blue'>Draw</b>(im)<br><br>Now you can add the text to the <b style='color:blue'>d</b> object.But first, let's define the <b>size</b> and <b>family</b> of the text, using the <b style='color:blue'>ImageFont</b> <b>class</b> (that you need to import from PIL) together with the method <b style='color:blue'>truetype:<br><br>>>></b> font = ImageFont.<b style='color:blue'>truetype</b>("Arial 20")<br><br>We will use this font in the next method (text) applied to the d object with created.<br>Here is the code that makes the magic happen.<br><br>>>> d.<b style='color:blue'>text</b>((10,10), "text to show", (255,255,255), font=font)<br><br>You pass this arguments to the method text:<ol>  <li>  the position (10, 10)  <li>  The text  <li>  the color  <li>  the type and font size memorizes in the object font (font = ImageFont.truetype("Arial 20"))</ol><br>That's all. Your job is done.</p> </div> <!-- colonna paragrafo -->
+      </div>
+  <hr>
+  
+      <div class="row">
+         <div class="col-md-4"> <h3>Examples</h3> </div> <!-- colonna titolo -->
+         <div class="col-md-8"> <p><a href='https://pythonprogramming.altervista.org/a-brief-guide-to-pil-python-image-library/'>PIL GUIDE</a><br><a href='https://pythonprogramming.altervista.org/a-matrix-wallpaper-with-python-and-pil-1/'>Matrix wallpaper with PIL</a><br><a href='https://pythonprogramming.altervista.org/cheat-sheet-for-pythons-pil-module/'>Pil Cheat sheet</a><br><a href='https://pythonprogramming.altervista.org/animated-cartoon-gif-with-pil-and-python-1/'>Animated Gif</a><br><a href='https://pythonprogramming.altervista.org/installing-pil-on-python-3-7-to-make-thumbnails/'>Install PIL and make thumbnail</a><br><a href='https://pythonprogramming.altervista.org/make-an-image-with-text-with-python/'>Create an image with text</a><br><a href='https://pythonprogramming.altervista.org/transform-a-png-in-a-thumbnail/'>Make a thumbnail (2)</a><br><a href='https://pythonprogramming.altervista.org/powerpoint-pil-png-animated-gif/'>Gif with Powerpoint and PIL</a><br><a href='https://pythonprogramming.altervista.org/resize-images-with-pil/'>Resize Images</a><br></p> </div> <!-- colonna paragrafo -->
+      </div>
+  <hr>
+   
+</div>  
+
+    
+    <br>
+
+    <a href="/info">Powered by G.G.</a>
+
+  </body>
+</html>
