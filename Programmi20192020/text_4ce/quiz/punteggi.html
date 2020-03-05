@@ -147,11 +147,11 @@ function gotData(data){
       // This adds a cup every 100 points
       check_cups(x[keysSorted[n]]);
       // if (x[keysSorted[n]] > 199) scoretot.innerHTML += cup;
-      scoretot.innerHTML += party + "<div style='background:gold;color:gold'><img src='../" + keysSorted[n]  + ".PNG'><br><b style='font-size:2.5em;color:red'>" + num + ". <u>" + anonymize(keysSorted[n]) + "</u><br></b><b style='font-size:2.5em;background:coral'>" + x[keysSorted[n]] + "</b><br></div><br>"; 
+      scoretot.innerHTML += party + "<div style='background:gold;color:gold'><img src='../" + keysSorted[n]  + ".PNG' style='max-width:100%'><br><b style='font-size:2.5em;color:red'>" + num + ". <u>" + anonymize(keysSorted[n]) + "</u><br></b><b style='font-size:2.5em;background:coral'>" + x[keysSorted[n]] + "</b><br></div><br>"; 
     }
     else if (n == 1){
       check_cups(x[keysSorted[n]]);
-      scoretot.innerHTML += "<div style='background:navy;color:blue;width:80%'><img src='../" + keysSorted[n]  + ".PNG'><br><b style='font-size:2em;color:coral'>" + num + ". " + anonymize(keysSorted[n]) + "</b><br> <b style='font-size:2em;background:coral'>" + x[keysSorted[n]] + "</b><br></div><br>"; 
+      scoretot.innerHTML += "<div style='background:navy;color:blue;width:80%'><img src='../" + keysSorted[n]  + ".PNG' width=100%><br><b style='font-size:2em;color:coral'>" + num + ". " + anonymize(keysSorted[n]) + "</b><br> <b style='font-size:2em;background:coral'>" + x[keysSorted[n]] + "</b><br></div><br>"; 
     }
   else if (n == 2){
       check_cups(x[keysSorted[n]]);
