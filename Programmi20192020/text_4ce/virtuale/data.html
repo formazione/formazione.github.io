@@ -1,14 +1,4 @@
-import pandas as pd
-import os
-from tkinter import Tk
-from tkinter.filedialog import askopenfilename
-
-Tk().withdraw()
-filename = askopenfilename(initialdir=".")
-
-table_class = "rwd-table"
-
-html = """<style>
+<style>
 @import "https://fonts.googleapis.com/css?family=Montserrat:300,400,700";
 .rwd-table {
   margin: 1em 0;
@@ -23,15 +13,19 @@ html = """<style>
   if (document.location.search.match(/type=embed/gi)) {
     window.parent.postMessage("resize", "*");
   }
-</script>"""
-
-
-
-df = pd.read_excel(filename)
-df.to_html("data.html")
-with open("data.html") as file:
-    file = file.read()
-file = file.replace("<table ", "<table class=\"" + table_class + "\" ")
-with open("data.html", "w") as file_to_write:
-    file_to_write.write(html + file)
-os.startfile("data.html")
+</script><table class="rwd-table" border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>data</th>
+      <th>attività</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2020-03-06</td>
+      <td>Esercitazione sulla PD propedeutica all'analisi per Indici</td>
+    </tr>
+  </tbody>
+</table>

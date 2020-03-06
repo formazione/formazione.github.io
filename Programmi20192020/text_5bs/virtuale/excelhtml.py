@@ -4,7 +4,7 @@ from tkinter import Tk
 from tkinter.filedialog import askopenfilename
 
 Tk().withdraw()
-filename = askopenfilename()
+filename = askopenfilename(initialdir=".")
 
 table_class = "rwd-table"
 
