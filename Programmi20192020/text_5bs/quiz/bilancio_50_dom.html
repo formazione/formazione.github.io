@@ -78,8 +78,9 @@ document.write(html);
 <script>
 nomstu.src= "../" + nomestudente.value + ".PNG"
   </script>
+  <!--
 Codice: <input id="codice" type="text">
-
+-->
 
 <div class="form-group rsform-block rsform-block-framecontent">
 <div id="frame" role="content"></div>
@@ -469,7 +470,11 @@ let nome = nomestudente.value;
 // Vale solo la prima volta
 //if (listanomi.includes(nomestudente.value) && code[nomestudente.value]==codice.value && x[nomestudente.value] == undefined){
 
-if (listanomi.includes(nomestudente.value) && code[nomestudente.value]==codice.value){
+
+// UNCOMMENT QUESTA RIGA SE VUOI CHE INSERISCANO IL CODICE
+//if (listanomi.includes(nomestudente.value) && code[nomestudente.value]==codice.value){
+
+if (listanomi.includes(nomestudente.value)){
   ref.child(nome).set(Math.round(score/quiz.length * 100));
 }
 
