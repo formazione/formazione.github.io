@@ -1,13 +1,3 @@
-"""
-CREATE HTML QUIZ
-FROM A TXT FILE LIKE THIS
-
-Quanto scoppiò la rivoluzione francese?
-1789
-1790
-1800
-1801
-"""
 import tkinter as tk
 import os
 
