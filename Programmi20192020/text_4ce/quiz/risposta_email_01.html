@@ -1,0 +1,86 @@
+<style>
+body, input {
+font-size: 3em;
+background: black;
+color:white;
+}
+
+button {
+font-size: 3em;
+background: white;
+color:coral;
+
+}
+
+textarea {
+  background: cyan;
+  color: black;
+  font-size: 3em;
+  width: 80vw;
+}
+</style>
+
+<div id="index"></div>
+<div id="prosegui"></div>
+<div id="screen"></div>
+<script>
+
+password = {
+"Maiuri" : "123",
+"Battagliese": "456",
+"Borrelli": "789",
+"Carracino": "12",
+"Ciardi" : "23",
+"Donnianni": "35",
+"Fluri" : "37",
+"Ghiungus": "45",
+"Liguori": "43",
+"Maiese": "89",
+"Mautone": "67",
+"Merola": "11",
+"Palladino": "434",
+"Ricci": "456",
+"Romano": "778",
+"Saja_A": "654",
+"Saja_P": "80",
+"Tierno": "367",
+}
+
+screen = document.getElementById("screen");
+
+screen.innerHTML = `<h4 style="background:coral;color:yellow;">Traccia:
+</h4>
+`
+traccia = "What is the capital of Italy?"
+
+screen.innerHTML += "<b>Answers:</b><br>"
+let pass_word = "";
+
+
+for (name in password){
+      index.innerHTML += "<a href='#student"+name+"'>" + name + "</a> ";
+}
+
+for (name in password){
+  console.log(name);
+  pass_word = "pass" + name; // this is the id of input (the password user input)
+  let html = ["<div style='background:coral' id='student"+name+"''><center><img src='../"+name+".png'></center><br>"+name+": rispondi e poi premi invia</div>"+ traccia,
+              //"<b style='background:coral;color:white;font-size:2em;'>"+name+"</b>",
+              `<table><td>Password<td><input id="` + pass_word + `" type="text" size=3><button onclick="manda(`+name+`.id, `+name+`.value, `+pass_word+`.value, '`+name+`')">Rispondi e poi Invia</button><tr><td>Soluzione:<td><textarea id="` + name + `" type="text" rows=5>`,`</table><br>`,"<hr>"
+              ]
+  for (data of html){
+  screen.innerHTML += data;
+  }
+
+}
+
+</script>
+
+<script>
+
+function manda(alunno, valore, pass, name){
+  if (password[name] == pass){
+    window.open('mailto:gatto.gio@gmail.com?subject='+alunno+' - es28&body='+valore)
+  }
+}
+</script>

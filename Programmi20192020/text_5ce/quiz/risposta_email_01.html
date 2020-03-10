@@ -1,0 +1,131 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<style>
+body{
+font-size: 3em;
+background: black;
+color:white;
+}
+input {
+font-size: 3em;
+background: gold;
+color:white;
+}
+button {
+font-size: 3em;
+background: navy;
+color:coral;
+
+}
+
+textarea {
+  background: cyan;
+  color: black;
+  font-size: 3em;
+  width: 80vw;
+}
+</style>
+<h3>Esercitazione del 10 marzo 2020 di Diritto e tecniche amministrative</h3>
+<div id="index"></div>
+<div id="prosegui"></div>
+<div id="screen"></div>
+<script>
+
+password = {
+    "Alfarano" : "00a",
+    "Bortone" : "00b",
+    "Camaran" : "00c",
+    "Cirillo" : "0ci",
+    "Cortazzo" : "0co",
+    "D_Amato" : "0da",
+    "Di_crisci" : "0dc",
+    "Di_Siervi" : "0ds",
+    "Dragonetti" : "00d",
+    "Giuliani" : "00g",
+    "Greco" : "0gr",
+    "Mannina" : "00m",
+    "Marzucca" : "0ma",
+    "Massaro" : "0ms",
+    "Merola" : "0me",
+    "Iannuzzi" : "00i",
+    "Niglio" : "00n",
+    "Teodosio" : "00t",
+    "Simone" : "00s",
+    "Squitieri" : "0sq",
+    "Tardio" : "00t", 
+    "Torraca" : "0to",
+    "Vetrale" : "00v",
+    };
+
+
+screen = document.getElementById("screen");
+
+screen.innerHTML = `<h4 style="background:coral;color:yellow;">Traccia:
+</h4>
+`
+
+            //          TRACCIA                  //
+
+traccia = `Con l'aiuto del seguente documento, rispondi alle domande sugli indici di bilancio
+
+<a href='http://www.conticiani.it/Classe_5/Lezioni%20classe%20V/Indici_di_bilancio/Gli%20indici%20di%20bilancio.pdf'>
+<center>`
+
+// ICONA DELL'IMMAGINE DA SCARICARE
+traccia += `<img src="https://adamascienza.com/wp-content/uploads/2013/10/pdfIcon-copy.jpg">
+<br></a><br>`
+
+// Le domande sul testo precedente
+traccia += `<h2>Domande:</h2>
+
+<div style="color:coral">
+<ol>
+<li>Cos'è e a cosa serve l'analisi di bilancio?</li>
+<li>È importante il numero di indici utilizzati?</li>
+<li>Quali sono le tre situazioni dell'impresa che gli indici analizzano? Gli indici hanno un significato autonomo?</li>
+<li>Come si raggiungono i migliori risultati interpretativi del bilancio?</li>
+<li>Qual è il presupposto dell'analisi di Bilancio?</li>
+<li>Cos'è la riclassificazione e a cosa serve?</li>
+<li>Cosa significa che lo Stato patrimoniale viene riclassificato secondo criteri finanziari?</li>
+<li>Quali sono i tre scopi fondamentali della riclassificazione?</li>
+<li>Cos'è il reddito operativo? Da quali componenti fiscali prescinde?</li>
+<li>Cosa indica un reddito operativo positivo?</li>
+</ol>
+</div>`
+
+traccia += `
+Inserisci il tuo codice personale qui sotto (chiedilo al docente anche via email gatto.gio@gmail.com), poi inserisci la risposta e infini clicca sul pulsante Invia a gatto.gio@gmail.com.`
+
+screen.innerHTML += "<b>Answers:</b><br>"
+let pass_word = "";
+
+
+for (name in password){
+      index.innerHTML += "<a href='#student"+name+"'><img src='../"+name+".PNG' width=100>" + name + "</a><br> ";
+}
+
+for (name in password){
+  new_image = "<img src='https://source.unsplash.com/1000x700' width=100%>";
+  // new_image = "https://source.unsplash.com/1000x700";
+  console.log(name);
+  pass_word = "pass" + name; // this is the id of input (the password user input)
+  let html = ["<div style='background:coral' id='student"+name+"''><center><img src='../"+name+".PNG'></center><br>"+name+"</div>"+ traccia,
+              //"<b style='background:coral;color:white;font-size:2em;'>"+name+"</b>",
+              `<table><td>Password<td><input placeholder="..." id="` + pass_word + `" type="password" size=3> <button onclick="manda(`+name+`.id, `+name+`.value, `+pass_word+`.value, '`+name+`')"><i class="fa fa-envelope"> Invia a gatto.gio@gmail.com </i></button><tr><td>Soluzione:<td><textarea placeholder="..." id="` + name + `" type="text" rows=10>`,`</table><br>`,"Fine dello spazio di "+name+new_image+"<hr>"
+              ]
+  for (data of html){
+  screen.innerHTML += data;
+  }
+
+}
+
+</script>
+
+<script>
+
+function manda(alunno, valore, pass, name){
+  if (password[name] == pass){
+    window.open('mailto:gatto.gio@gmail.com?subject='+alunno+' - Esercizio 10.3.2020&body='+valore)
+  }
+}
+</script>
