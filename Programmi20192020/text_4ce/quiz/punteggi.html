@@ -105,7 +105,26 @@ function shuffle(s) {
 }
 
 function anonymize(x){
-  x = x[0] + x[1] + x[2] + "*****";
+  if (x == "Maiuri") x="Sara";
+  else if (x == "Saja_P") x="Pietro";
+  else if (x == "Saja_A") x="Andrea";
+  else if (x == "Saja_A") x="Andrea";
+  else if (x == "Tierno") x="Carmen";
+  else if (x == "Battagliese") x="Ilaria";
+  else if (x == "Borrelli") x="Federica";
+  else if (x == "Romano") x="Luca";
+  else if (x == "Ciardi") x="Federica";
+  else if (x == "Mautone") x="Anthony";
+  else if (x == "Palladino") x="...";
+  else if (x == "Ciardi") x="Federica";
+  else if (x == "Carracino") x="Dante";
+  else if (x == "Liguori") x="Samuele";
+  else if (x == "Ricci") x="Maria Teresa";
+  else if (x == "Ghiunghius") x="Roberto";
+  else if (x == "Donnianni") x="Francesco";
+  else{
+    x = x[0] + x[1] + x[2] + x[4];
+  };
   return x;
 }
 
