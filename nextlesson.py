@@ -28,8 +28,8 @@ root.geometry("400x400+200+10")
 root.title("Select to delete and ctr+s to save")
 label = tk.Label(root, text="4ce")
 label.pack()
-list1 = tk.Variable(value="""lunedì 10.30 - 11.30 - martedì 9.30 - 10.30
-mercoledì 12.00 - 13.00
+list1 = tk.Variable(value="""lunedì 10.00 - 11.30
+mercoledì 10.00 - 11.30
 Venerdì 10.30 - 11.30""".splitlines())
 text1 = tk.Listbox(root, listvariable=list1, height=5)
 text1.pack()
@@ -41,9 +41,9 @@ text1.bind("<<ListboxSelect>>", lambda x: text1.delete(tk.ANCHOR))
 # 5ce
 label = tk.Label(root, text="5ce")
 label.pack()
-list2 = tk.Variable(value="""lunedì 11.30 - 12.30
-mercoledì 9.00 - 11.00
-Venerdì 11.30 - 12.30""".splitlines())
+list2 = tk.Variable(value="""lunedì 10.00 - 11.30
+mercoledì 10.00 - 11.30
+Venerdì 10.30 - 11.30""".splitlines())
 text2 = tk.Listbox(root, listvariable=list2, height=5)
 text2.pack()
 
@@ -54,10 +54,9 @@ text2.bind("<<ListboxSelect>>", lambda x: text2.delete(tk.ANCHOR))
 #5bs
 label = tk.Label(root, text="5bs")
 label.pack()
-list3 = tk.Variable(value="""lunedì 9.30 - 10.30
-martedì 10.30 - 11.30
-mercoledì 11.00 - 12.00
-Venerdì 9.30 - 10.30""".splitlines())
+list3 = tk.Variable(value="""lunedì 10.00 - 11.30
+mercoledì 10.00 - 11.30
+Venerdì 10.30 - 11.30""".splitlines())
 
 text3 = tk.Listbox(root, listvariable=list3, height=5)
 text3.pack()
