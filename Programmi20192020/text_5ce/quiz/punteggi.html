@@ -124,8 +124,34 @@ function shuffle(s) {
 }
 
 function anonymize(x){
-  x = x[0] + x[1] + x[2] + x[3];
-  return x;
+      console.log(x)
+      let name = {
+        "Alfarano": "Antonio",
+        "Bortone": "Biagio",
+        "Camaran": "Carmela",
+        "Cirillo": "Fernando",
+        "Cortazzo": "Alessandro",
+        "D_Amato": "Costabile",
+        "Di_crisci": "Chiara",
+        "Di_Siervi": "Cristian",
+        "Dragonetti": "Angela",
+        "Giuliani": "Michele",
+        "Greco": "Paolo",
+        "Iannuzzi": "Marco",
+        "Mannina": "Mario",
+        "Marzucca": "Sabrina",
+        "Massaro": "Tomas",
+        "Merola": "Anna",
+        "Niglio": "Peppe",
+        "Simone": "Angelo",
+        "Squitieri": "Warrior",
+        "Tardio": "Simone",
+        "Teodosio": "Ilaria",
+        "Torraca": "Elvira",
+        "Vetrale": "Fabio"
+         };
+
+     return name[x];
 }
 
   for (n in keysSorted){
