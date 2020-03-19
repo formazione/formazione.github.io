@@ -90,7 +90,11 @@ function shuffle(s) {
 }
 
 function anonymize(x){
-  x = x[0] + x[1] + x[2] + "*****";
+  if (x == "Puglia Alessia"){ x = "Alessia"}
+  else if (x == "Scelza Filomena"){ x = "Filomena"}
+  else if (x == "Lembo Giulia"){ x = "Giulia"}
+  else { x = x[0] + x[1] + x[2]}
+  
   return x;
 }
 
