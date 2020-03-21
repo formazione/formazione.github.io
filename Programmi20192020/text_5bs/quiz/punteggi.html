@@ -93,6 +93,17 @@ function anonymize(x){
   if (x == "Puglia Alessia"){ x = "Alessia"}
   else if (x == "Scelza Filomena"){ x = "Filomena"}
   else if (x == "Lembo Giulia"){ x = "Giulia"}
+  else if (x == "Malzone Tatiana"){ x = "Tatiana"}
+  else if (x == "Mauro Nicole"){ x = "Nicole"}
+  else if (x == "Mazziotti Christian"){ x = "Cristian"}
+  else if (x == "Pepe Raffaele"){ x = "Raffaele"}
+  else if (x.split(" ")[0] == "Mainente"){ x = "Giusy"}
+  else if (x.split(" ")[0] == "Saturno"){ x = "Antonio"}
+  else if (x.split(" ")[0] == "DApolito"){ x = "Giuliano"}
+  else if (x.split(" ")[0] == "Tardio"){ x = "Monica"}
+  else if (x.split(" ")[0] == "Guariglia"){ x = "Livio"}
+  else if (x.split(" ")[0] == "Giordano"){ x = "Emilio"}
+  else if (x.split(" ")[0] == "Landi"){ x = "Anna"}
   else { x = x[0] + x[1] + x[2]}
   
   return x;
