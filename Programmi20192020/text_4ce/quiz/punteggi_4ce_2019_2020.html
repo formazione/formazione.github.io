@@ -1,0 +1,197 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>4CE</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+</head>
+<style>
+@media screen and (min-width: 1024px){
+img {
+  width: 30%;
+}
+img.cup {
+  width: 50px;
+}
+}
+  body{
+    color:white;
+    background-color: black;
+    font-size: 2em;
+  }
+  input {
+    align:middle;
+    text-align:center;
+    width:80%;
+    color:white;
+    background-color: darkblue;
+    font-size: 2em;
+  }
+  </style>
+  
+<body>
+
+<div class="jumbotron" style="background:coral">
+    <center>Partecipazione 4CE 2019 - 2020<br>
+      <a href="https://formazione.github.io">[ H O M E ]</a>
+  </center>
+  </div>
+
+    <div id="scoretot"></div>
+
+
+<script src="https://www.gstatic.com/firebasejs/5.9.2/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyDp-mWaWEI07pIdRUhi6vA-salEMRWz4hw",
+    authDomain: "quiz-e5e5a.firebaseapp.com",
+    databaseURL: "https://quiz-e5e5a.firebaseio.com",
+    projectId: "quiz-e5e5a",
+    storageBucket: "quiz-e5e5a.appspot.com",
+    messagingSenderId: "901845403492"
+  };
+  firebase.initializeApp(config);
+  let database = firebase.database();
+  let ref = database.ref("4CE");
+  ref.on("value", gotData)
+
+  // IMAGES
+let pen = "<img class='cup' src='https://images.vexels.com/media/users/3/156893/isolated/preview/048e149a96bdff520db53ddba885cf0d-pen-icon-travel-icons-by-vexels.png' width='30' />";
+let cup = "<img  class='cup' src='https://cdn2.iconfinder.com/data/icons/thesquid-ink-40-free-flat-icon-pack/64/cup-512.png' width='30' />";
+let party ="<img  class='cup' src='http://icons.iconarchive.com/icons/google/noto-emoji-activities/1024/52707-party-popper-icon.png' width='30' >";
+  
+let scoretot = document.getElementById("scoretot");
+scoretot.align = "center";
+
+// somefunctions (start) ================
+
+// emulation of range in python
+function range(start, stop, step) {
+    if (typeof stop == 'undefined') {
+        // one param defined
+        stop = start;
+        start = 0;
+      }
+    if (typeof step == 'undefined') step = 1;
+    if ((step > 0 && start >= stop) || (step < 0 && start <= stop)) {
+        return [];
+        }
+    var result = [];
+    for (var i = start; step > 0 ? i < stop : i > stop; i += step) {
+        result.push(i);
+      }
+    return result;
+}
+
+
+function check_cups(x){
+  for (many_cups in range(Math.floor(x / 100))) scoretot.innerHTML += cup;
+}
+
+function shuffle(s) {
+  s = "________"
+  var arr = s.split('');           // Convert String to array
+  arr.sort(function() {
+    return 0.5 - Math.random();
+  });  
+  s = arr.join('').toLowerCase();                // Convert Array to string
+  return s;                        // Return shuffled string
+}
+
+function anonymize(x){
+        console.log(x)
+        let name = {
+        "Maiuri": "Sara",
+        "Saja_P": "Pietro",
+        "Saja_A": "Andrea",
+        "Saja_A": "Andrea",
+        "Tierno": "Carmen",
+        "Battagliese": "Ilaria",
+        "Borrelli": "Federica",
+        "Romano": "Luca",
+        "Ciardi": "Federica",
+        "Mautone": "Anthony",
+        "Palladino": "...",
+        "Ciardi": "Federica",
+        "Carracino": "Dante",
+        "Liguori": "Samuele",
+        "Ricci": "Maria Teresa",
+        "Ghiunghius": "Roberto",
+        "Donnianni": "Francesco",
+        };
+
+
+          return name[x];
+}
+
+// somefunctions (end) =========
+
+function gotData(data){
+  scoretot.innerHTML = "";
+  // iterator of values in the database record 4CE
+  x = data.val();
+
+  let arr = Object.values(x);
+  let min = Math.min(...arr);
+  let max = Math.max(...arr);
+  let winner = "";
+
+  for (n in x){
+    if (parseInt(x[n])==max) winner=n;
+    };
+
+  
+  // ORDERING BY POINTS  
+  let keysSorted = Object.keys(x).sort(function(a,b){return x[b]-x[a]})
+  scoretot.innerHTML += "<u style='color:coral'>Graduatoria:</u><br>"
+
+
+  let newx = [];
+  for (n in keysSorted){
+   newx.push([keysSorted[n],x[keysSorted[n]]]); 
+  }
+
+
+  console.log(newx);
+
+  for (n in keysSorted){
+  
+    let num = parseInt(n)+1;
+    // nome del primo classificato
+    if (n == 0){
+      // This adds a cup every 100 points
+      check_cups(x[keysSorted[n]]);
+      // if (x[keysSorted[n]] > 199) scoretot.innerHTML += cup;
+      scoretot.innerHTML += party + "<div style='background:gold;color:gold'><img src='../" + keysSorted[n]  + ".PNG' style='max-width:100%'><br><b style='font-size:2.5em;color:red'>" + num + ". <u>" + anonymize(keysSorted[n]) + "</u><br></b><b style='font-size:2.5em;background:coral'>" + x[keysSorted[n]] + "</b><br></div><br>"; 
+    }
+    else if (n == 1){
+      check_cups(x[keysSorted[n]]);
+      scoretot.innerHTML += "<div style='background:navy;color:blue;width:80%'><img src='../" + keysSorted[n]  + ".PNG' width=100%><br><b style='font-size:2em;color:coral'>" + num + ". " + anonymize(keysSorted[n]) + "</b><br> <b style='font-size:2em;background:coral'>" + x[keysSorted[n]] + "</b><br></div><br>"; 
+    }
+  else if (n == 2){
+      check_cups(x[keysSorted[n]]);
+      scoretot.innerHTML += "<div style='background:coral;width:70%;color:black'><img src='../" + keysSorted[n]  + ".PNG' width='100%'><br><b style='font-size:1.5em;color:gold'>" + num + ". " + anonymize(keysSorted[n]) + "</b><br><b style='font-size:1.5em;background:coral'>" + x[keysSorted[n]] + "</b><br></div><br>"; 
+
+
+    }
+    else {
+      
+      // Dopo il terzo posto
+      check_cups(x[keysSorted[n]]);
+      scoretot.innerHTML += "<div style='background:white;width:50%;color:black'><img src='../" + keysSorted[n]  + ".PNG' style='max-width:100%'><br><b style='color:black'>" + num + ". " + anonymize(keysSorted[n]) + "</b><br><b style='font-size:3.0em'> " + x[keysSorted[n]] + "</b></div><br>";
+
+    }
+    }
+
+}
+</script>
+
+</body>
+</html>
+

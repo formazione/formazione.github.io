@@ -355,10 +355,10 @@ automatically go into index.html
 4. Open index.html, call the js script with the name you choose in js_link_to_html
 5. Create a div with the same name of the js file above without the .js
 """
-js_link_to_html = "newlinks_4ce"
+js_link_to_html = "newlinks_3ce"
 # This folder is in the folder of this script;
 # This script is into a folder (programmi20192020) of the root folder of github.io
-folder = "5ce20202021"
+folder = "3ce"
 if __name__ == "__main__":
     #  checks if folders exists & creates them if not
     if f"{folder}" in os.listdir():
@@ -373,5 +373,5 @@ if __name__ == "__main__":
         print(f"{folder} folder created")
     root = tk.Tk()
     app = Ebook(root)
-    app.root.title("5ce 2020 2021")
+    app.root.title("3ce 2020 2021")
     root.mainloop()
