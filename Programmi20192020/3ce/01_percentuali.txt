@@ -1,3 +1,6 @@
+<h2>Esercizi</h2>
+<a href="https://docs.google.com/forms/d/e/1FAIpQLSfoaLoS0fvK3LYywmhowKD4FpCXcRsh7_TCy1TDP7SwJWyvuw/viewform">Esercizi sulle proporzioni 1</a>
+
 <h1>Modulo 1 - Proporzioni</h1>
 <p>
 Programma e domande sulle proporzioni. In questo file trovate tutto quello che dovete imparare per questo modulo.
@@ -68,5 +71,6 @@ Esercizio B
 <a href="https://spark.adobe.com/page/WgYjo6C1UwnEQ/">Collegamento</a>
 
 <iframe width="1040" height="650" src="https://www.youtube.com/embed/vt3ENmuWia0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 
 
