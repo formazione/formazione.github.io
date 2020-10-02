@@ -37,7 +37,7 @@ img.cup {
 <body>
 
 <div class="jumbotron" style="background:coral">
-    <center>Partecipazione 4CE 2019 - 2020<br>
+    <center>Partecipazione 3CE 2020 - 2021<br>
       <a href="https://formazione.github.io">[ H O M E ]</a>
   </center>
   </div>
@@ -58,7 +58,7 @@ img.cup {
   };
   firebase.initializeApp(config);
   let database = firebase.database();
-  let ref = database.ref("4CE");
+  let ref = database.ref("3ce_2020");
   ref.on("value", gotData)
 
   // IMAGES
@@ -107,23 +107,22 @@ function shuffle(s) {
 function anonymize(x){
         console.log(x)
         let name = {
-        "Maiuri": "Sara",
-        "Saja_P": "Pietro",
-        "Saja_A": "Andrea",
-        "Saja_A": "Andrea",
-        "Tierno": "Carmen",
-        "Battagliese": "Ilaria",
-        "Borrelli": "Federica",
-        "Romano": "Luca",
-        "Ciardi": "Federica",
-        "Mautone": "Anthony",
-        "Palladino": "...",
-        "Ciardi": "Federica",
-        "Carracino": "Dante",
-        "Liguori": "Samuele",
-        "Ricci": "Maria Teresa",
-        "Ghiunghius": "Roberto",
-        "Donnianni": "Francesco",
+          "Acanfora":"Aca",
+          "Della_Torre":"Det",
+          "Guariglia":"Gua",
+          "Marino":"Mar",
+          "Materazzi":"Mat",
+          "Matrella":"Matre",
+          "Niglio":"Nig",
+          "Orlando":"Orl",
+          "Paradiso":"Par",
+          "Paragano":"Parag",
+          "Petruzzelli":"Pet",
+          "Serra_D":"Ser_D",
+          "Serra_G":"Ser_G",
+          "Sessa":"Ses",
+          "Simone":"Sim",
+          "Graniti":"Gra",
         };
 
 
@@ -166,25 +165,25 @@ function gotData(data){
     // nome del primo classificato
     if (n == 0){
       // This adds a cup every 100 points
-      check_cups(x[keysSorted[n]][0]);
+      check_cups(x[keysSorted[n]]);
       // if (x[keysSorted[n]] > 199) scoretot.innerHTML += cup;
-      scoretot.innerHTML += party + "<div style='background:gold;color:gold'><img src='../" + keysSorted[n]  + ".PNG' style='max-width:100%'><br><b style='font-size:2.5em;color:red'>" + num + ". <u>" + anonymize(keysSorted[n]) + "</u><br></b><b style='font-size:2.5em;background:coral'>" + x[keysSorted[n][0]] + "</b><br></div><br>"; 
+      scoretot.innerHTML += party + "<div style='background:gold;color:gold'><img src='imgs/" + keysSorted[n]  + ".PNG' style='max-width:100%'><br><b style='font-size:2.5em;color:red'>" + num + ". <u>" + anonymize(keysSorted[n]) + "</u><br></b><b style='font-size:2.5em;background:coral'>" + x[keysSorted[n]] + "</b><br></div><br>"; 
     }
     else if (n == 1){
-      check_cups(x[keysSorted[n]][0]);
-      scoretot.innerHTML += "<div style='background:navy;color:blue;width:80%'><img src='../" + keysSorted[n]  + ".PNG' width=100%><br><b style='font-size:2em;color:coral'>" + num + ". " + anonymize(keysSorted[n]) + "</b><br> <b style='font-size:2em;background:coral'>" + x[keysSorted[n]][0] + "</b><br></div><br>"; 
+      check_cups(x[keysSorted[n]]);
+      scoretot.innerHTML += "<div style='background:navy;color:blue;width:80%'><img src='imgs/" + keysSorted[n]  + ".PNG' width=100%><br><b style='font-size:2em;color:coral'>" + num + ". " + anonymize(keysSorted[n]) + "</b><br> <b style='font-size:2em;background:coral'>" + x[keysSorted[n]] + "</b><br></div><br>"; 
     }
   else if (n == 2){
-      check_cups(x[keysSorted[n]][0]);
-      scoretot.innerHTML += "<div style='background:coral;width:70%;color:black'><img src='../" + keysSorted[n]  + ".PNG' width='100%'><br><b style='font-size:1.5em;color:gold'>" + num + ". " + anonymize(keysSorted[n]) + "</b><br><b style='font-size:1.5em;background:coral'>" + x[keysSorted[n]][0] + "</b><br></div><br>"; 
+      check_cups(x[keysSorted[n]]);
+      scoretot.innerHTML += "<div style='background:coral;width:70%;color:black'><img src='imgs/" + keysSorted[n]  + ".PNG' width='100%'><br><b style='font-size:1.5em;color:gold'>" + num + ". " + anonymize(keysSorted[n]) + "</b><br><b style='font-size:1.5em;background:coral'>" + x[keysSorted[n]] + "</b><br></div><br>"; 
 
 
     }
     else {
       
       // Dopo il terzo posto
-      check_cups(x[keysSorted[n]][0]);
-      scoretot.innerHTML += "<div style='background:white;width:50%;color:black'><img src='../" + keysSorted[n]  + ".PNG' style='max-width:100%'><br><b style='color:black'>" + num + ". " + anonymize(keysSorted[n]) + "</b><br><b style='font-size:3.0em'> " + x[keysSorted[n]][0] + "</b></div><br>";
+      check_cups(x[keysSorted[n]]);
+      scoretot.innerHTML += "<div style='background:white;width:50%;color:black'><img src='imgs/" + keysSorted[n]  + ".PNG' style='max-width:100%'><br><b style='color:black'>" + num + ". " + anonymize(keysSorted[n]) + "</b><br><b style='font-size:3.0em'> " + x[keysSorted[n]] + "</b></div><br>";
 
     }
     }

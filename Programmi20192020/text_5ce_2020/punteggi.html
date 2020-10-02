@@ -58,7 +58,7 @@ img.cup {
   };
   firebase.initializeApp(config);
   let database = firebase.database();
-  let ref = database.ref("4CE");
+  let ref = database.ref("5ce_2020");
   ref.on("value", gotData)
 
   // IMAGES
@@ -110,7 +110,6 @@ function anonymize(x){
         "Maiuri": "Sara",
         "Saja_P": "Pietro",
         "Saja_A": "Andrea",
-        "Saja_A": "Andrea",
         "Tierno": "Carmen",
         "Battagliese": "Ilaria",
         "Borrelli": "Federica",
@@ -124,6 +123,9 @@ function anonymize(x){
         "Ricci": "Maria Teresa",
         "Ghiunghius": "Roberto",
         "Donnianni": "Francesco",
+        "Merola":"?",
+        "Maiese": "?",
+        "Fluri": "?"
         };
 
 
@@ -166,25 +168,25 @@ function gotData(data){
     // nome del primo classificato
     if (n == 0){
       // This adds a cup every 100 points
-      check_cups(x[keysSorted[n]][0]);
+      check_cups(x[keysSorted[n]]);
       // if (x[keysSorted[n]] > 199) scoretot.innerHTML += cup;
-      scoretot.innerHTML += party + "<div style='background:gold;color:gold'><img src='../" + keysSorted[n]  + ".PNG' style='max-width:100%'><br><b style='font-size:2.5em;color:red'>" + num + ". <u>" + anonymize(keysSorted[n]) + "</u><br></b><b style='font-size:2.5em;background:coral'>" + x[keysSorted[n][0]] + "</b><br></div><br>"; 
+      scoretot.innerHTML += party + "<div style='background:gold;color:gold'><img src='../text_4ce/" + keysSorted[n]  + ".PNG' style='max-width:100%'><br><b style='font-size:2.5em;color:red'>" + num + ". <u>" + anonymize(keysSorted[n]) + "</u><br></b><b style='font-size:2.5em;background:coral'>" + x[keysSorted[n]] + "</b><br></div><br>"; 
     }
     else if (n == 1){
-      check_cups(x[keysSorted[n]][0]);
-      scoretot.innerHTML += "<div style='background:navy;color:blue;width:80%'><img src='../" + keysSorted[n]  + ".PNG' width=100%><br><b style='font-size:2em;color:coral'>" + num + ". " + anonymize(keysSorted[n]) + "</b><br> <b style='font-size:2em;background:coral'>" + x[keysSorted[n]][0] + "</b><br></div><br>"; 
+      check_cups(x[keysSorted[n]]);
+      scoretot.innerHTML += "<div style='background:navy;color:blue;width:80%'><img src='../text_4ce/" + keysSorted[n]  + ".PNG' width=100%><br><b style='font-size:2em;color:coral'>" + num + ". " + anonymize(keysSorted[n]) + "</b><br> <b style='font-size:2em;background:coral'>" + x[keysSorted[n]] + "</b><br></div><br>"; 
     }
   else if (n == 2){
-      check_cups(x[keysSorted[n]][0]);
-      scoretot.innerHTML += "<div style='background:coral;width:70%;color:black'><img src='../" + keysSorted[n]  + ".PNG' width='100%'><br><b style='font-size:1.5em;color:gold'>" + num + ". " + anonymize(keysSorted[n]) + "</b><br><b style='font-size:1.5em;background:coral'>" + x[keysSorted[n]][0] + "</b><br></div><br>"; 
+      check_cups(x[keysSorted[n]]);
+      scoretot.innerHTML += "<div style='background:coral;width:70%;color:black'><img src='../text_4ce/" + keysSorted[n]  + ".PNG' width='100%'><br><b style='font-size:1.5em;color:gold'>" + num + ". " + anonymize(keysSorted[n]) + "</b><br><b style='font-size:1.5em;background:coral'>" + x[keysSorted[n]] + "</b><br></div><br>"; 
 
 
     }
     else {
       
       // Dopo il terzo posto
-      check_cups(x[keysSorted[n]][0]);
-      scoretot.innerHTML += "<div style='background:white;width:50%;color:black'><img src='../" + keysSorted[n]  + ".PNG' style='max-width:100%'><br><b style='color:black'>" + num + ". " + anonymize(keysSorted[n]) + "</b><br><b style='font-size:3.0em'> " + x[keysSorted[n]][0] + "</b></div><br>";
+      check_cups(x[keysSorted[n]]);
+      scoretot.innerHTML += "<div style='background:white;width:50%;color:black'><img src='../text_4ce/" + keysSorted[n]  + ".PNG' style='max-width:100%'><br><b style='color:black'>" + num + ". " + anonymize(keysSorted[n]) + "</b><br><b style='font-size:3.0em'> " + x[keysSorted[n]] + "</b></div><br>";
 
     }
     }
