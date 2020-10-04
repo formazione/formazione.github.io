@@ -15,3 +15,64 @@ body {
 
 /* Page Content */
 .content {padding:20px;}
+
+
+
+/* per tablets e cellulari */
+@media only screen and (max-width: 800px) {
+.header {
+  /*background: url('newstudentspng.png');*/
+  width: 100vw;
+  background-size: cover;
+  color: yellow;
+  min-height: 100vh;
+  top: 0;
+  /*position: fixed;*/
+}
+body, h2 {
+  font-size: 2em;
+}
+}
+
+@media only screen and (min-width: 800px) {
+.header {
+  /*background: url('newstudentspng.png');*/
+  width: 100vw;
+  background-size: cover;
+  color: yellow;
+  min-height: 100vh;
+  top: 0;
+  /*position: fixed;*/
+}
+
+}
+.header {
+  /*background: url('newstudentspng.png');*/
+  width: 100vw;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  top: 0;
+  /*position: fixed;*/
+ 
+}
+h1 {
+  background-color: #00000066;
+}
+h2, p, h3 {
+  color: coral;
+}
+.nice:hover {
+  text-decoration: none;
+  background-color: lightgray;
+}
+button, .nice {
+  border: none;
+  outline: none;
+  padding: 5px 5px;
+  border-radius: 50px;
+  color: #333;
+  background: #fff;
+  margin-bottom: 50px;
+  box-shadow: 0 3px 20px 0 #0000003b;
+}
