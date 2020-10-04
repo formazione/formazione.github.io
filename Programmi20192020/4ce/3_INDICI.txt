@@ -1,0 +1,30 @@
+<script src="../../menu.js"></script>
+
+</style>
+<h3>Il bilancio e indici</h3>
+
+<b style="color:red">New</b> 
+<a href="https://docs.google.com/spreadsheets/d/1kZt-s80IAPiaan-n7hFuCYnNKTbrj82twbQCZnrqoFs/edit?usp=sharing">Compito indici di bilancio</a>
+
+<hr>
+
+<a href="https://docs.google.com/document/d/1nUQwf5rGlDT_KGPlzxr0W-iuZaS40_q_syXOyI8f-X8/edit?usp=sharing">Bilancio e indici (teoria)</a>
+
+<br>
+<!-- ESERCIZI PD -->
+
+<a href="https://docs.google.com/document/d/1XznTt3OGg-C1XAwIRV-2Y29kwiZOdNCRCer53ZlwrNc/edit?usp=sharing">Esercizi sulla partita doppia</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

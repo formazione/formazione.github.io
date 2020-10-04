@@ -4,7 +4,7 @@
 
 body, table, button {
 
-  font-size: 2em;
+  font-size: 1em;
 }
 
 .btn.btn-warning.btn-lg {
@@ -16,13 +16,13 @@ body, table, button {
   color:blue;
 }
 
-ul {font-size: 2em;}
-i {font-size : 2em;}
-p { font-size: 2em; }
+ul {font-size: 1em;}
+i {font-size : 1em;}
+p { font-size: 1em; }
 td {font-size: 1.5em;}
 table {
     border-collapse: collapse;
-    width: 100%;
+    width: 50%;
 }
 
 th, td {
@@ -107,11 +107,6 @@ dbRef7b.on("value", snap => n7b = snap.val())</script><tr>
 
 
 
-    <td><button type="button" class="btn btn-warning btn-lg" onclick="dbRef8.set(--n8)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRef8.set(++n8)"> + </button>Gonoshi<td><i id="h1alunno8"></i></p><script>
-    var h1alunno8 = document.getElementById("h1alunno8");
-  var dbRef8 = firebase.database().ref().child("5ce_2020").child("Gonoshi");
-  dbRef8.on("value", snap => h1alunno8.innerText = snap.val());
-  dbRef8.on("value", snap => n8 = snap.val())</script><tr>
 
 
 

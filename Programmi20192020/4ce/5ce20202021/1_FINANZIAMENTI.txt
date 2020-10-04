@@ -1,0 +1,139 @@
+<script src="../../menu.js"></script>
+#html_convert
+Domande per la verifica orale
+
+1) Cos'è un finanziamento?
+
+2) Quali sono le fasi della gestione?
+
+3) Cos'è e come si calcola il fabbisogno finanziario?
+
+4) Cosa sono le dilazioni di pagamento?
+
+5) Cos'è l'interesse e come si calcola?
+
+6) Cos'è il capitale proprio (autofinanziamento) e di debito (o di terzi)?
+
+7) Cosa sono le obbligazioni e le azioni?
+
+8) Cosa sono i debiti di regolamento e di finanziamento?
+
+9) Cos'è la banca e quali funzioni svolge?
+
+10) Cos'è il conto corrente e il fido?
+
+11) Quali sono i finanziamenti a breve termine e a lungo termine?
+
+*Risposte.
+
+^Cos'è il finanziamento?
+
+Tutte le imprese hanno bisogno di risorse finanziarie per poter acquistare i beni e servizi necessari ad effettuare la produzione.
+
+L'insieme di operazioni di gestione con le quali l'impresa si procura i mezzi necessari per la sua attività, si chiama finanziamento. I finanziamenti possono provenire dal proprietario o dai soci (capitale proprio) o da finanziatori esterni all'impresa (banche o risparmiatori).
+
+^Quali sono le fasi della gestione?
+
+Finanziamento: (per acquistare i fattori produttivi)
+
+Investimento: (acquisto dei fattori produttivi utili a creare valore / prodotti / servizi)
+
+Produzione: (fase di creazione dei prodotti con l'utilizzo dei fattori produttivi)
+
+Disinvestimento: vendita e recupero dei mezzi finanziari.
+
+^Cos'è il fabbisogno finanziario?
+
+È l'ammontare delle risorse finanziarie di cui l'impresa necessita alla sua costituzione e nella gestione corrente. Serve ad acquistare i beni dell'attivo fisso (beni che durano più anni) e dell'attivo circolante (beni che si trasformano in denaro nell'arco di un anno o sono già in forma liquida).
+
+^Da cosa dipende il fabbisogno finanziario di un'impresa?
+
+Dalla sua dimensione e dalla struttura, dal tipo di attività svolta e dai fattori a breve ciclo di utilizzo che deve acquistare, dalla durata della produzione, dalle dilazioni di pagamento sui debiti e sui crediti.
+
+^Cos'è l'interesse?
+
+È il compenso che spetta a chi presta una somma di denaro (creditore) ad un altro soggetto (debitore).
+
+Gli interessi si calcolano in base al capitale, al tasso e al tempo. Il tasso di interesse rispetto ad un anno è una percentuale. Per calcolarlo si moltiplica per il tasso e si divide per 100 (moltiplicando per il numero degli anni). Se il tempo è espresso in mesi, si moltiplica il capitale per il tasso e i mesi e si divide per 1200 (12 mesi per 100). In giorni, gli interessi sono pari al capitale per il tasso per i giorni diviso 36.500 (se i giorni sono 365, 36.600 per gli anni bisestili e 36.000 per l'anno commerciale, con i mesi considerati tutti di 30 giorni).
+
+^Le azioni
+
+Sono una quota del capitale delle società per azioni (e delle Società in Accomandita per Azioni). Chi possiede un'azione è compropietario di una società, ha diritto a votare nelle assemblee e a ricevere un utile in proporzione al numero delle azioni possedute (dividendo).
+
+^Le obbligazioni
+
+Le società per azioni possono emettere obbligazioni, titoli che rappresentano quote di un prestito fatto alla società. Gli obbligazionisti hanno diritto a ricevere interessi in base al tasso concordato. Gli obbligazionisti sono creditori della società che ha emesso i titoli.
+
+^L'autofinanziamento
+
+È l'utile che l'azienda ha prodotto, ma che non ha distribuito ai soci per reinvestirlo in acquisto di beni o servizi.
+
+^I debiti di finanziamento
+
+Sono somme di denaro che una banca ha prestato all'impresa e che l'impresa deve restituire ad una scadenza, pagando degli interessi.
+
+^I debiti di regolamento
+
+Sono ritardati pagamenti di acquisti di merci, che consentono all'impresa di rinviare l'esborso monetario.
+
+^Cos'è una banca?
+
+È un'impresa di servizi che fa da intermediaria tra i soggetti in avanzo e i soggetti in disavanzo favorendo l'utilizzo dei mezzi monetari dei risparmiatori e il finanziamento delle imprese. Guadagna dalla differenza tra gli interessi (irrisori) dati ai risparmiatori e gli interessi percepiti dai soggetti finanziati dalle bance (con i soldi dei risparmiatori raccolti).
+
+La funzione monetaria della banca consiste nella creazione di strumenti che sostituiscono il denaro (assegni, bonifici, carte di credito e debito, il servizio ADUE e MAV.
+
+Svolge anche servizi come le cassette di sicurezza, incassi e pagamenti di cambiali e Ri.Ba., gestione del risparmio e consulenze.
+
+^Il conto corrente
+
+È lo strumento principale per regolare i rapporti tra il cliente e la banca, attraverso il quale vengono regolati i rapporti tra di loro: incassi e pagamenti, finannziamenti, riscossioni di cambiali e Ri.Ba ecc.
+
+^Il fido
+
+Per ottenere un finanziamento, occorre otennere un fido, l'importo massimo di credito che una banca si impegna a concedere ad un cliente.
+
+Dipende dalla consistenza del patrimonio, dal reddito, dalle doti morali e professionali del cliente.
+
+*Finanziamenti a breve termine
+
+Servono a finanziare il capitale circolante delle imprese e durano fino ad un massimo di 18 mesi. Si distinguono in
+
+^- prestiti:
+concessione di una somma di denaro tramite, ad es., l'apertura di credito in conto corrente, con la quale un cliente può prelevare anche in rosso fino all'ammontare del fido;
+
+^- sconto di cambiali:
+banca anticipa l'importo delle cambiali non ancora giunte a scadenza, con deduzione dello sconto e delle commissioni;
+
+<br>
+<a href="https://aziendaitalia.altervista.org/wp-content/uploads/2019/11/output4.mp4">VIDEO SULLO SCONTO</a>
+<br>
+
+^- l'anticipo su portafoglio sbf (salvo buon fine):
+la banca anticipa l'intero importo di cambiali o Ri.Ba., al netto delle commissioni e con addebito degli interessi ogni trimestre (di solito).
+
+^- L'anticipo su fatture:
+la banca anticipa l'importo (80% di solito) delle fatture
+
+^- factoring:
+la banca oltre ad anticipare il valore dei crediti, valuta la solvibilità dei clienti e si occupa del recupero dei crediti, dietro pagameto di commissioni.
+
+*Finanziamento a lungo termine
+
+Serve ad acquistare i beni del capitale immobilizzato.
+
+^- il mutuo impotecario:
+la banca concede un prestito garantito dall'ipoteca sull'immobile
+
+^- leasing finanziario:
+la banca acquista un bene che poi viene ceduto in locazione ad un'impresa dietro pagamento di un canone comprensivo di una quota del costo e di interessi. Alla fine l'impresa può esercitare il diritto di riscatto.
+
+^- leasing operativo:
+l'impresa costruttrice cede il bene in locazione dietro pagamento di un canone direttamente all'impresa utilizzatrice
+
+^- Sale and lease back:
+in cui l'impresa utilizzatrice vende il bene alla banca, ma lo continua ad usare pagando un canone alla banca, così da ottenere liquidità.
+
+
+
+
+
