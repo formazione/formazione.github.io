@@ -1,0 +1,65 @@
+Divide this price of 6800 among different employees in proportion to the hours they worked to the project that are listed below:
+Worker n. 1: 95
+Worker n. 2: 75
+Worker n. 3: 30
+Worker n. 4: 75
+Worker n. 5: 65
+
+Divide this price of 1700 among different employees in proportion to the hours they worked to the project that are listed below:
+Worker n. 1: 90
+Worker n. 2: 75
+Worker n. 3: 10
+Worker n. 4: 90
+
+Divide this price of 6700 among different employees in proportion to the hours they worked to the project that are listed below:
+Worker n. 1: 55
+Worker n. 2: 75
+Worker n. 3: 35
+Worker n. 4: 15
+Worker n. 5: 40
+
+Divide this price of 3000 among different employees in proportion to the hours they worked to the project that are listed below:
+Worker n. 1: 90
+Worker n. 2: 40
+Worker n. 3: 20
+Worker n. 4: 30
+Worker n. 5: 50
+
+Divide this price of 2800 among different employees in proportion to the hours they worked to the project that are listed below:
+Worker n. 1: 65
+Worker n. 2: 15
+Worker n. 3: 75
+Worker n. 4: 65
+Worker n. 5: 60
+
+Divide this price of 4300 among different employees in proportion to the hours they worked to the project that are listed below:
+Worker n. 1: 5
+Worker n. 2: 60
+Worker n. 3: 35
+Worker n. 4: 25
+Worker n. 5: 55
+
+Divide this price of 8600 among different employees in proportion to the hours they worked to the project that are listed below:
+Worker n. 1: 50
+Worker n. 2: 80
+Worker n. 3: 80
+Worker n. 4: 45
+Worker n. 5: 5
+
+Divide this price of 8900 among different employees in proportion to the hours they worked to the project that are listed below:
+Worker n. 1: 40
+Worker n. 2: 85
+Worker n. 3: 90
+Worker n. 4: 45
+
+Divide this price of 3700 among different employees in proportion to the hours they worked to the project that are listed below:
+Worker n. 1: 60
+Worker n. 2: 5
+Worker n. 3: 15
+Worker n. 4: 65
+Worker n. 5: 90
+
+Divide this price of 7300 among different employees in proportion to the hours they worked to the project that are listed below:
+Worker n. 1: 35
+Worker n. 2: 85
+Worker n. 3: 30
