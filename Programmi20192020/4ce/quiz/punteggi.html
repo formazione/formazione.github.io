@@ -58,7 +58,7 @@ img.cup {
   };
   firebase.initializeApp(config);
   let database = firebase.database();
-  let ref = database.ref("3ce_2020");
+  let ref = database.ref("4ce_2020");
   ref.on("value", gotData)
 
   // IMAGES
@@ -107,22 +107,26 @@ function shuffle(s) {
 function anonymize(x){
         console.log(x)
         let name = {
-          "Acanfora":"Aca",
-          "Della_Torre":"Det",
-          "Guariglia":"Gua",
-          "Marino":"Mar",
-          "Materazzi":"Mat",
-          "Matrella":"Matre",
-          "Niglio":"Nig",
-          "Orlando":"Orl",
-          "Paradiso":"Par",
-          "Paragano":"Parag",
-          "Petruzzelli":"Pet",
-          "Serra_D":"Ser_D",
-          "Serra_G":"Ser_G",
-          "Sessa":"Ses",
-          "Simone":"Sim",
-          "Graniti":"Gra",
+  "Abagnale" : "Aba",
+  "Agresta" : "Agr",
+  "Chirico" : "Chi",
+  "Cona" : "Con",
+  "Cuda" : "Cud",
+  "DAgosto" : "DAg",
+  "DiNola" : "DiN",
+  "Filosa" : "Fil",
+  "Mariosa" : "Mar",
+  "Mazzeo" : "Maz",
+  "Merola" : "Mer",
+  "Pandullo" : "Pan",
+  "Paolino" : "Pao",
+  "Papa" : "Pap",
+  "Petrone" : "Pet",
+  "Ruggiero" : "Rug",
+  "Savino" : "Sav",
+  "Scottino" : "Sco",
+  "Vassallo" : "Vas",
+  "Volpe" : "Vol",
         };
 
 

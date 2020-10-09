@@ -1,4 +1,9 @@
 <script src="../../menu.js"></script>
+<style>
+body {
+ margin: 10%;
+}
+</style>
 #html_convert
 Domande per la verifica orale
 
