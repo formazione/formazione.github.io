@@ -1,0 +1,13 @@
+Exercises:
+1 Find the € you need to buy 2950 $ at and exchange rate of 1.99.
+2 Find the € you need to buy 750 $ at and exchange rate of 1.8.
+3 How many € you must pay to get 1950 $ at and exchange rate of 1.82?
+4 How many € you must pay to get 250 $ at and exchange rate of 1.85?
+5 Change 2000 $ in euro at an exchange rate of 1.71.
+
+Solutions:
+1 1 You get 2950 $ for [1482.41 €]  at an exchange rate of 1.99
+2 2 You get 750 $ for [416.67 €]  at an exchange rate of 1.8
+3 3 You get 1950 $ for [1071.43 €]  at an exchange rate of 1.82
+4 4 You get 250 $ for [135.14 €]  at an exchange rate of 1.85
+5 5 You get 2000 $ for [1169.59 €]  at an exchange rate of 1.71
