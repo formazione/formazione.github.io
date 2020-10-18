@@ -1,0 +1,140 @@
+    <script>
+let punteggio = 0;
+function check(casella, giusta, num){
+    giusta = giusta.toLowerCase();
+    casella.value = casella.value.toLowerCase();
+        if (casella.value == 'aiuto'){
+        if (casella.value.length >= 3){
+        casella.value = giusta[0]+giusta[1]+ giusta[2]
+        }
+    }
+    else{
+    if (casella.value == giusta){
+        casella.style.background = 'yellow';
+        casella.style.color = 'blue';
+        punteggio +=1
+        score.innerHTML = punteggio;
+        document.getElementById(casella.id).readOnly = true;
+        return casella.value.includes(giusta);
+    }
+    else{
+        casella.style.background = 'red';
+    }
+
+}
+}
+
+
+function checkWhat(casella, giusta, num){
+    giusta = giusta.toLowerCase();
+    casella.value = casella.value.toLowerCase();
+    if (casella.value == 'aiuto'){
+        if (casella.value.length >= 3){
+        casella.value = giusta[0]+giusta[1]+ giusta[2]
+        }
+    }
+    else {
+    for (r of giusta.split(" ")){
+    if (casella.value.includes(r)){
+        casella.style.background = 'yellow';
+        return casella.value.includes(giusta);
+    }
+        else{
+        casella.style.background = 'red';
+    }
+    }
+}
+
+}
+
+
+function print_it(parola){
+    if (soluzioni.innerHTML.includes(parola)){
+    }
+    else {
+        soluzioni.innerHTML += " - " + parola;
+    }
+}
+
+
+var sol = [];
+    var countdom = 0;
+
+
+                            //  INPUT //
+var num = 0;
+function input(dom_s, giusta, dom_e){
+    var inizio = "";
+    var fine = "";
+    sol[countdom] = giusta;
+    num = countdom + 1
+    countdom++
+    var dom_h2 = inizio + dom_s;
+    var part1 = dom_h2 + "<input id='inp" + countdom + "' style='font-size:20;display:inline' size=10 type=text class='t1' placeholder='"
+    part1 += giusta[0] + "....' onchange=\"if (check(this,'";
+    part1 += giusta + "')){print_it(this.value)};\" /><td>" + dom_e + fine
+    document.write(part1);
+}
+
+
+function print(lite){
+    document.write(lite);
+}
+
+
+    function guessWhat(dom_s, giusta, dom_e){
+        dom_s = dom_s.replace("#"," ");
+        var inizio = "";
+        var fine = "";
+        sol[countdom] = giusta;
+        num = countdom + 1
+        countdom++
+        var dom_h2 = inizio + dom_s;
+        var part1 = dom_h2 + "<input style='font-size:30;display:inline;' type=text class='t1' placeholder='" + giusta[0] + "....' onchange=\"if (checkWhat(this,'";
+        part1 += giusta + "')){print_it(this.value)};\" /><td>" + dom_e + fine
+        document.write(part1);
+    }
+
+
+function addsol(){
+    document.write("<div id='soluzioni'>Suggerimenti: </div>");
+    sol.sort();
+    for (s of sol){
+        soluzioni.innerHTML += " [" + s[0] + s[1] + s[2] + "] ";
+    }
+}
+</script>
+<style>
+    body{
+        font-size:1.2em;
+        }
+    h1, h2, h3 {
+
+        background-color:coral;
+        color: white;
+    }
+
+    p {
+        color:blue;
+        font-size:1.4em;
+    }
+</style>
+
+<div id="score"></div>
+<script>
+print('<p><h2>strumenti di lavoro</h2></p>');
+
+print('<p>Completa il seguente test con parole omesse nel testo.</p>');
+input("Un rapporto è il ", "risultato","di una divisione.");
+
+print('<p>Ora da questo...</p>');
+input("L`uguaglianza di due rapporti si chiama ", "proporzione","");
+
+print('<p>Sappiamo che...</p>');
+
+print('<p>Il primo e l`ultimo termine si chiamano:</p>');
+input(" ", "estremi","");
+
+print('<p>Il secondo e il terzo termine della proporzione si chiamano:</p>');
+input(" ", "medi","");
+</script>

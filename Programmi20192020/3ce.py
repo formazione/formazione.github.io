@@ -59,12 +59,27 @@ class Ebook:
         self.menubar.add_command(label="Render Page", command = self.render_page)
         self.menubar.add_command(label="Render Ebook", command = self.save_ebook)
 
+        # Tempa scuro o chiaro
 
         self.menubar.add_command(label="SAVE", command = self.save)       
         self.menubar.add_command(label="HELP", command= lambda: self.new_window(Help))
         self.menubar.add_cascade(label="THEME", menu=self.themes)
         #self.root.config(menu=self.menu_theme)
+
+
+        # 18.10.20
+        self.menubar.add_command(label="Readdress", command=self.readdress)
+
         self.root.config(menu=self.menubar)
+
+    # 18.10.20
+    def readdress(self):
+        # indirizzare ad una pagina
+        location = """<script>
+window.location.href = "";
+</script>"""
+        self.text.insert(tk.END, location);
+
 
     def filelist(self):
         self.frame1 = tk.Frame(self.root)

@@ -1,31 +1,3 @@
-<a href="https:\\formazione.github.io">Home</a>
-<h1>
-<a href="https://spark.adobe.com/page/YiapwABORmRzW/">
-<img src="https://istruzionixluso.altervista.org/blog/wp-content/uploads/2011/09/calcolo-percentuali.jpg" /><br>
-Percentuali e proporzioni</a>
-<h2>Esercizi</h2>
-Percentuali e riparti
-<pre>
-In una cucina di un albergo si utilizzano 105 uova per 42 ospiti. Il giorno successivo si prevedono 68 ospiti. Quante uova bisogna ordinare? Risposta
-Qual è la proprietà fondamentale delle proporzioni?
-Si ha uno sconto del 20% su un prezzo pari a 830 euro. Calcola lo sconto
-Su un prezzo di 18 euro si ottiene uno sconto di 2,70 euro. A quanto ammonta l’aliquota? (calcolo percentuale inverso)
-Paghiamo 400 euro di assicurazione pari all’8% del valore delle merci. A quanto ammonta il valore delle merci?
-Calcola il valore del termine incognito delle seguenti proporzioni:
-25 : 75 = 31 : x
-6 : x = 12 : 60
-54 : 9 = x : 2
-X : 56 = 13 : 104
-Un fornaio incassa 76 euro per 20 kg di pane. Quanti kg deve vendere per incassare 190 euro?
-Una camera doppia costa 140 euro. Se usata da una sola persona il prezzo si riduce del 20%. Calcola il prezzo nel caso sia utilizzata da una persona.
-Dei prodotti hanno un peso lordo di 66 kg. Calcola la tara pari al 4%.
-12 tavoli in un ristorante sono all’aperto e corrispondono al 25% dei tavoli totali. Quanti tavoli ha il ristorante?
-</pre>
-<h2>Statistiche e grafici</h2>
-<a href="https://www.youtube.com/trends/articles/covid-impact/?utm_source=trends-report&utm_medium=email&utm_campaign=july-trends-report">Statistiche durante il lockdown da youtube</a>
-
-
-
-
-
-
+<script>
+window.location.href = "https://spark.adobe.com/page/YiapwABORmRzW/";
+</script>
