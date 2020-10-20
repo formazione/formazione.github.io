@@ -36,6 +36,8 @@ start = """
 
     input {
         font-size:24;
+        display:inline;
+        size:10;
 
     }
 
@@ -105,7 +107,7 @@ for n, line in enumerate(testo[1:]):
         pass
     # if there is no --
     elif "--" not in line:
-        content += f"\nprint('<p>{line}</p>');\n"
+        content += f"\ndocument.write('<p>{line}</p>');\n"
     else:
         dom = line.split(splitsign)
         if line[0] == line[1] == "-":
@@ -127,8 +129,11 @@ print(content + end)
 
 end = "</script>"
 
-script = """    <script>
+script = """ <div id="soluzioni">Soluzioni: </div><script>
 let punteggio = 0;
+
+// ==================== check ======================
+
 function check(casella, giusta, num){
     giusta = giusta.toLowerCase();
     casella.value = casella.value.toLowerCase();
@@ -154,6 +159,8 @@ function check(casella, giusta, num){
 }
 
 
+// ===================== checkWhat =======
+
 function checkWhat(casella, giusta, num){
     giusta = giusta.toLowerCase();
     casella.value = casella.value.toLowerCase();
@@ -164,10 +171,10 @@ function checkWhat(casella, giusta, num){
     }
     else {
     for (r of giusta.split(" ")){
-    if (casella.value.includes(r)){
-        casella.style.background = 'yellow';
-        return casella.value.includes(giusta);
-    }
+        if (casella.value == r){
+            casella.style.background = 'yellow';
+            return casella.value.includes(giusta);
+        }
         else{
         casella.style.background = 'red';
     }
@@ -176,6 +183,7 @@ function checkWhat(casella, giusta, num){
 
 }
 
+// ============================ print_it ============
 
 function print_it(parola){
     if (soluzioni.innerHTML.includes(parola)){
@@ -190,49 +198,49 @@ var sol = [];
     var countdom = 0;
 
 
-                            //  INPUT //
+// ==================== input ====================
+
 var num = 0;
-function input(dom_s, giusta, dom_e){
-    var inizio = "";
-    var fine = "";
-    sol[countdom] = giusta;
-    num = countdom + 1
-    countdom++
-    var dom_h2 = inizio + dom_s;
-    var part1 = dom_h2 + "<input id='inp" + countdom + "' style='display:inline' size=10 type=text class='t1' placeholder='"
+function input(dom_s, giusta, dom_e){ 
+    sol.push(giusta); 
+    var part1 = dom_s + "<input type=text class='t1' placeholder='"
     part1 += giusta[0] + "....' onchange=\\"if (check(this,'";
-    part1 += giusta + "')){print_it(this.value)};\\" /><td>" + dom_e + fine
+    part1 += giusta + "')){print_it(this.value)};\\" /><td>" + dom_e
     document.write(part1);
 }
 
 
-function print(lite){
-    document.write(lite);
-}
-
+// ==================== guessWhat =====================
 
     function guessWhat(dom_s, giusta, dom_e){
         dom_s = dom_s.replace("#"," ");
-        var inizio = "";
-        var fine = "";
-        sol[countdom] = giusta;
-        num = countdom + 1
-        countdom++
-        var dom_h2 = inizio + dom_s;
-        var part1 = dom_h2 + "<input style='display:inline;' type=text class='t1' placeholder='" + giusta[0] + "....' onchange=\\"if (checkWhat(this,'";
-        part1 += giusta + "')){print_it(this.value)};\\" /><td>" + dom_e + fine
+        sol.push(giusta);
+        var part1 = dom_s + "<input type=text class='t1' placeholder='"
+        part1 += giusta[0] + "....' onchange=\\"if (checkWhat(this,'";
+        part1 += giusta + "')){print_it(this.value)};\\" /><td>" + dom_e
         document.write(part1);
     }
 
 
+// ============================= addsol ==================
+
 function addsol(){
-    document.write("<div id='soluzioni'>Suggerimenti: </div>");
-    sol.sort();
+    //document.write("<div id='soluzioni'>Suggerimenti: </div>");
+    //sol.sort();
+    console.log("Before loop");
+    }
+
+function mostra_soluzioni(){
+    console.log(sol);
     for (s of sol){
-        soluzioni.innerHTML += " [" + s[0] + s[1] + s[2] + "] ";
+        console.log(sol);
     }
 }
-</script>"""
+
+</script>
+
+
+"""
 
 text = script + start + content + end
 filename = f"{filename}.html"

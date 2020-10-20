@@ -1,0 +1,3 @@
+<script>
+window.location.href = "https://docs.google.com/forms/d/e/1FAIpQLSdI2OoMmNOm7nYjuIfNFx_u9pIKZdqEwYnQgFyCcuSKgYWMJQ/viewform";
+</script>
