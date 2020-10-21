@@ -132,6 +132,18 @@ dbRef7b.on("value", snap => n7b = snap.val())</script><tr>
   dbRef12.on("value", snap => n12 = snap.val())</script><tr>
 
 
+
+    <td><button type="button" class="btn btn-warning btn-lg" onclick="dbRef12p.set(--n12p)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRef12p.set(++n12p)"> + </button>Papa<td><i id="h1alunno12p"></i></p><script>
+var h1alunno12p = document.getElementById("h1alunno12p");
+var dbRef12p = firebase.database().ref().child(codice_classe).child("Papa");
+
+dbRef12p.on("value", snap => h1alunno12p.innerText = snap.val());
+dbRef12p.on("value", snap => n12p = snap.val())</script><tr>
+
+
+
+
+
 <!--                               Inizia a copiar qui per aggiungere un alunno
 bdRef12 è il collegamento al database quiz-
  petrone     cambia n12  nome       h1alunno12(ce ne sono 3)          dbRef12 (ce ne sono 3)                     -->
