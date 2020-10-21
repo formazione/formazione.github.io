@@ -26,8 +26,18 @@ var codice_classe = "4ce_2020"; // nome del record di firebase quiz... dove sono
   firebase.initializeApp(config);
   var database = firebase.database()
 </script>
+<div id="alunni"></div>
+<script>
+def addAlunno(nome){
+  
+}
+
+
+</script>
 <div id="div1" class="w3-main" style="margin-left:50px">
 <table class="table-bordered">
+
+
 
 
 				<!-- Alunno 1 -->
@@ -191,7 +201,7 @@ h1alunno12a => c             4        identificatore del div dove viene mostrato
 
 
 
-<!-- Vassallo -->
+<!-- Volpe -->
 
 <td>
 <button type="button" class="btn btn-warning btn-lg" onclick="dbRef12b.set(--n12b)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRef12b.set(++n12b)"> + </button>Vassallo<td><i id="h1alunno12b"></i></p><script>
@@ -200,7 +210,12 @@ var dbRef12b = firebase.database().ref().child(codice_classe).child("Vassallo");
 dbRef12b.on("value", snap => h1alunno12b.innerText = snap.val());
 dbRef12b.on("value", snap => n12b = snap.val())</script><tr>
 
-
+<td>
+<button type="button" class="btn btn-warning btn-lg" onclick="dbRef12v.set(--n12v)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRef12v.set(++n12v)"> + </button>Volpe<td><i id="h1alunno12v"></i></p><script>
+var h1alunno12v = document.getElementById("h1alunno12v");
+var dbRef12v = firebase.database().ref().child(codice_classe).child("Volpe");
+dbRef12v.on("value", snap => h1alunno12v.innerText = snap.val());
+dbRef12v.on("value", snap => n12v = snap.val())</script><tr>
 
 
 </table>
