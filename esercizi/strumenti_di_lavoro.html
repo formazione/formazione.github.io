@@ -70,7 +70,7 @@ function input(dom_s, giusta, dom_e){
     num = countdom + 1
     countdom++
     var dom_h2 = inizio + dom_s;
-    var part1 = dom_h2 + "<input id='inp" + countdom + "' style='font-size:20;display:inline' size=10 type=text class='t1' placeholder='"
+    var part1 = dom_h2 + "<input id='inp" + countdom + "' style='font-size:30;display:inline' size=" + giusta.length + " type=text class='t1' placeholder='"
     part1 += giusta[0] + "....' onchange=\"if (check(this,'";
     part1 += giusta + "')){print_it(this.value)};\" /><td>" + dom_e + fine
     document.write(part1);
@@ -99,21 +99,33 @@ function print(lite){
 function addsol(){
     document.write("<div id='soluzioni'>Suggerimenti: </div>");
     sol.sort();
+    soluzioni.innerHTML = "<p style='color:gray'>";
     for (s of sol){
-        soluzioni.innerHTML += " [" + s[0] + s[1] + s[2] + "] ";
+        soluzioni.innerHTML += s + " ";
     }
+    //soluzioni.innerHTML += "</p>";
 }
 </script>
 <style>
     body{
+        margine:50px;
         font-size:1.2em;
         }
-    h1, h2, h3 {
-
+    h1, h2{
+        width: 500px;
         background-color:coral;
         color: white;
     }
+    .gold{
+        color: whitesmoke;
+        background-color: #0065ff;
+    }
 
+    h3 {
+        width: 500px;
+        background-color: azure;
+        color: white;
+    }
     p {
         color:blue;
         font-size:1.4em;
@@ -124,17 +136,35 @@ function addsol(){
 <script>
 print('<p><h2>strumenti di lavoro</h2></p>');
 
-print('<p>Completa il seguente test con parole omesse nel testo.</p>');
-input("Un rapporto è il ", "risultato","di una divisione.");
+print('<p><img src="imgs/percentuali.png"><br></p>');
 
-print('<p>Ora da questo...</p>');
+print('<p>Completa il seguente test con parole omesse nel testo.</p>');
+
+print('<p><h3>Rapporti numerici</h3></p>');
+input("Un rapporto è il ", "risultato","di una divisione.");
 input("L`uguaglianza di due rapporti si chiama ", "proporzione","");
 
-print('<p>Sappiamo che...</p>');
+print('<p><h3>I termini</h3></p>');
 
 print('<p>Il primo e l`ultimo termine si chiamano:</p>');
 input(" ", "estremi","");
 
 print('<p>Il secondo e il terzo termine della proporzione si chiamano:</p>');
 input(" ", "medi","");
-</script>
+
+print('<p><h3>La proprietà fondamentale</h3></p>');
+input("Il ", "prodotto","dei medi è uguale al");
+input(" ", "prodotto","degli estremi.");
+
+print('<p><h3 class="gold">Esercizio n.1 Sul calcolo direttamente proporzionale</h3></p>');
+
+print('<p><img src="https://i.imgur.com/nCUycYh.png"></p>');
+
+print('<p>Se per 200 ospiti sono necessari 20 kg di farina, quanti ne occorrono per 360?</p>');
+input("200 : ", "20","=");
+input(" ", "360",": x");
+
+print('<p>Soluzione</p>');
+input("x = ", "36","");
+document.write("</p>");
+addsol();</script>

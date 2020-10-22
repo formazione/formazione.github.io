@@ -31,14 +31,24 @@ Nella versione attuale, ogni riga deve avere un --parola--, altrimenti aggiunge 
 start = """
 <style>
     body{
+        margine:50px;
         font-size:1.2em;
         }
-    h1, h2, h3 {
-
+    h1, h2{
+        width: 500px;
         background-color:coral;
         color: white;
     }
+    .gold{
+        color: whitesmoke;
+        background-color: #0065ff;
+    }
 
+    h3 {
+        width: 500px;
+        background-color: azure;
+        color: white;
+    }
     p {
         color:blue;
         font-size:1.4em;
@@ -60,8 +70,8 @@ start += "<script>"
                         # NOTA BENE !!!
 # LA PRIMA RIGA è IL NOME DEL FILE HTML CHE CONTERRA' L'ESERCIZIO
 #                   ||
-#                   \/
-testo = """stumenti_di_lavoro
+#                   \/         nome del file
+testo = """strumenti_di_lavoro
 <h2>strumenti di lavoro</h2>
 <img src="imgs/percentuali.png"><br>
 Completa il seguente test con parole omesse nel testo.
@@ -83,13 +93,19 @@ Il secondo e il terzo termine della proporzione si chiamano:
 Il --prodotto-- dei medi è uguale al 
 --prodotto-- degli estremi.
 
-<h3>Esercizio n.1 Sul calcolo direttamente proporzionale</h3>
+<h3 class="gold">Esercizio n.1 Sul calcolo direttamente proporzionale</h3>
 <img src="https://i.imgur.com/nCUycYh.png">
 Se per 200 ospiti sono necessari 20 kg di farina, quanti ne occorrono per 360?
 200 : --20-- =  
 --360-- : x
 Soluzione
 x = --36--
+
+<h2>Lo sconto</h
+
+2>
+
+
 """
 
 testo = testo.replace("'", "`")
