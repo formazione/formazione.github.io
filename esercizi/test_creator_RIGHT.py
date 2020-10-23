@@ -76,7 +76,7 @@ start += "<script>"
 #                   \/         nome del file
 testo = """strumenti_di_lavoro
 <h2>strumenti di lavoro</h2>
-<img src="imgs/percentuali.png"><br>
+<img src="imgs/percentuali.PNG"><br>
 Completa il seguente test con parole omesse nel testo.
 
 <h3 class="blue">Rapporti numerici</h3>
