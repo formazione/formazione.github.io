@@ -77,7 +77,7 @@ function input(dom_s, giusta, dom_e){
 }
 
 
-function print(lite){
+function print_text(lite){
     document.write(lite);
 }
 
@@ -116,7 +116,7 @@ function addsol(){
         background-color:coral;
         color: white;
     }
-    .gold{
+    .blue{
         color: whitesmoke;
         background-color: #0065ff;
     }
@@ -131,40 +131,151 @@ function addsol(){
         font-size:1.4em;
     }
 </style>
+<script>
+let image = 'imgs/esercizi.png';
 
+</script>
 <div id="score"></div>
 <script>
-print('<p><h2>strumenti di lavoro</h2></p>');
+print_text('<p><h2>strumenti di lavoro</h2></p>');
 
-print('<p><img src="imgs/percentuali.png"><br></p>');
+print_text('<p><img src="imgs/percentuali.png"><br></p>');
 
-print('<p>Completa il seguente test con parole omesse nel testo.</p>');
+print_text('<p>Completa il seguente test con parole omesse nel testo.</p>');
 
-print('<p><h3>Rapporti numerici</h3></p>');
+print_text('<p><h3 class="blue">Rapporti numerici</h3></p>');
 input("Un rapporto è il ", "risultato","di una divisione.");
 input("L`uguaglianza di due rapporti si chiama ", "proporzione","");
 
-print('<p><h3>I termini</h3></p>');
+print_text('<p><h3>I termini</h3></p>');
 
-print('<p>Il primo e l`ultimo termine si chiamano:</p>');
+print_text('<p>Il primo e l`ultimo termine si chiamano:</p>');
 input(" ", "estremi","");
 
-print('<p>Il secondo e il terzo termine della proporzione si chiamano:</p>');
+print_text('<p>Il secondo e il terzo termine della proporzione si chiamano:</p>');
 input(" ", "medi","");
 
-print('<p><h3>La proprietà fondamentale</h3></p>');
+print_text('<p><h3 class="blue">La proprietà fondamentale</h3></p>');
 input("Il ", "prodotto","dei medi è uguale al");
 input(" ", "prodotto","degli estremi.");
 
-print('<p><h3 class="gold">Esercizio n.1 Sul calcolo direttamente proporzionale</h3></p>');
+print_text('<p><h3 class="blue">Esercizio n.1 Sul calcolo direttamente proporzionale</h3></p>');
 
-print('<p><img src="https://i.imgur.com/nCUycYh.png"></p>');
+print_text('<p><img src="https://i.imgur.com/nCUycYh.png"></p>');
 
-print('<p>Se per 200 ospiti sono necessari 20 kg di farina, quanti ne occorrono per 360?</p>');
+print_text('<p>========================</p>');
+
+print_text('<p>Se per 200 ospiti sono necessari 20 kg di farina, quanti ne occorrono per 360?</p>');
 input("200 : ", "20","=");
 input(" ", "360",": x");
 
-print('<p>Soluzione</p>');
+print_text('<p>Soluzione</p>');
 input("x = ", "36","");
+
+print_text('<p>========================</p>');
+
+print_text('<p><h2>Lo sconto</h2></p>');
+
+print_text('<p>==========================</p>');
+
+print_text('<p>Lo <b>sconto</b>, nell`uso del linguaggio comune, è una <b>riduzione</b> del costo della merce o servizio acquistato.</p>');
+
+print_text('<p>Lo sconto può essere</p>');
+input(" ", "mercantile","<img src='imgs/arrowleft.png'> semplice riduzione percentuale del prezzo");
+
+print_text('<p><br></p>');
+input(" ", "commerciale","<img src='imgs/arrowleft.png'> quando la riduzione del prezzo / debito deriva da un pagamento anticipato del prezzo o del debito");
+
+print_text('<p><h3 class="blue">Esercizio</h3></p>');
+
+print_text('<p>========================</p>');
+
+print_text('<p><img src=\'imgs/esercizio.png\'></p>');
+
+print_text('<p>Calcola uno sconto del 10% su un prodotto che costa 3.500 €:</p>');
+input(" ", "350","€");
+
+print_text('<p>Costo del prodotto scontato</p>');
+input(" ", "3.150","€");
+
+print_text('<p><img src=\'imgs/esercizio.png\'></p>');
+
+print_text('<p>Calcola uno sconto del 20% su un prodotto che costa 3.500 €:</p>');
+input(" ", "700","€");
+
+print_text('<p>Costo del prodotto scontato</p>');
+input(" ", "2.800","€");
+
+print_text('<p><img src=\'imgs/esercizio.png\'></p>');
+
+print_text('<p>Calcola uno sconto del 30% su un prodotto che costa 3.500 €:</p>');
+input(" ", "1.050","€");
+
+print_text('<p>Costo del prodotto scontato</p>');
+input(" ", "2-450","€");
+
+print_text('<p>Lo sconto commerciale si calcola in proporzione a:</p>');
+
+print_text('<p>==============</p>');
+input(" ", "capitale","a scadenza");
+
+print_text('<p>==============</p>');
+input(" ", "tasso","di sconto");
+
+print_text('<p>==============</p>');
+input(" ", "tempo","indicato con");
+input(" ", "t","per gli anni");
+input(" ", "m","per i mesi e");
+input(" ", "g","per i giorni");
+
+print_text('<p><br><hr></p>');
+input("Per l`interesse si conosce il ", "capitale","iniziale");
+
+print_text('<p><br></p>');
+input("Per lo sconto si conosce il capitale a ", "scadenza","");
+
+print_text('<p><br></p>');
+
+print_text('<p><h2>Differenza tra interesse e sconto</h2></p>');
+input("Le formule per lo sconto sono le stesse viste per l`interesse. La differenza è che l`interesse si ", "aggiunge","");
+input("ad un capitale iniziale. Lo sconto si ", "sottrae","al capitale a scadenza.");
+
+print_text('<p><h2>Formula con il tempo espresso in anni</h2></p>');
+input("Sc = ", "C","");
+input("x", "r","");
+input("x", "t","");
+input("/", "100","");
+
+print_text('<p><hr></p>');
+
+print_text('<p><h2>Formula con il tempo espresso in mesi</h2></p>');
+input("Sc = ", "C","");
+input("x", "r","");
+input("x", "m","");
+input("/", "1.200","infatti i mesi sono m/12 di un anno");
+
+print_text('<p><hr></p>');
+
+print_text('<p><h2>Formula con il tempo espresso in giorni (anno civile)</h2></p>');
+input("Sc = ", "C","");
+input("x", "r","");
+input("x", "g","");
+input("/", "36.500","infatti divido per i giorni dell`anno oltre che per 100");
+
+print_text('<p><hr></p>');
+
+print_text('<p><h2>Formula con il tempo espresso in giorni (anno bisestile)</h2></p>');
+input("Sc = ", "C","");
+input("x", "r","");
+input("x", "g","");
+input("/", "36.600","infatti divido per i giorni dell`anno oltre che per 100");
+
+print_text('<p><hr></p>');
+
+print_text('<p><h2>Formula con il tempo espresso in giorni (anno commerciale)</h2></p>');
+input("Sc = ", "C","");
+input("x", "r","");
+input("x", "g","");
+input("/", "36.000","infatti divido per i giorni dell`anno oltre che per 100");
 document.write("</p>");
 addsol();</script>

@@ -39,7 +39,7 @@ start = """
         background-color:coral;
         color: white;
     }
-    .gold{
+    .blue{
         color: whitesmoke;
         background-color: #0065ff;
     }
@@ -54,7 +54,10 @@ start = """
         font-size:1.4em;
     }
 </style>
+<script>
+let image = 'imgs/esercizi.png';
 
+</script>
 <div id="score"></div>
 """
 
@@ -76,7 +79,7 @@ testo = """strumenti_di_lavoro
 <img src="imgs/percentuali.png"><br>
 Completa il seguente test con parole omesse nel testo.
 
-<h3>Rapporti numerici</h3>
+<h3 class="blue">Rapporti numerici</h3>
 Un rapporto è il --risultato-- di una divisione.
 
 L'uguaglianza di due rapporti si chiama --proporzione--
@@ -89,27 +92,115 @@ Il primo e l'ultimo termine si chiamano:
 Il secondo e il terzo termine della proporzione si chiamano:
 --medi--
 
-<h3>La proprietà fondamentale</h3>
+<h3 class="blue">La proprietà fondamentale</h3>
 Il --prodotto-- dei medi è uguale al 
 --prodotto-- degli estremi.
 
-<h3 class="gold">Esercizio n.1 Sul calcolo direttamente proporzionale</h3>
+
+
+<h3 class="blue">Esercizio n.1 Sul calcolo direttamente proporzionale</h3>
+
 <img src="https://i.imgur.com/nCUycYh.png">
+
+========================
 Se per 200 ospiti sono necessari 20 kg di farina, quanti ne occorrono per 360?
 200 : --20-- =  
 --360-- : x
 Soluzione
 x = --36--
-
-<h2>Lo sconto</h
-
-2>
+========================
 
 
+
+
+<h2>Lo sconto</h2>
+==========================
+Lo <b>sconto</b>, nell'uso del linguaggio comune, è una <b>riduzione</b> del costo della merce o servizio acquistato.
+
+Lo sconto può essere
+
+--mercantile-- >> semplice riduzione percentuale del prezzo
+<br>
+--commerciale-- >> quando la riduzione del prezzo / debito deriva da un pagamento anticipato del prezzo o del debito
+
+<h3 class="blue">Esercizio</h3>
+========================
+<esercizio>
+Calcola uno sconto del 10% su un prodotto che costa 3.500 €:
+--350-- €
+Costo del prodotto scontato
+--3.150-- €
+
+<esercizio>
+Calcola uno sconto del 20% su un prodotto che costa 3.500 €:
+--700-- €
+Costo del prodotto scontato
+--2.800-- €
+
+<esercizio>
+Calcola uno sconto del 30% su un prodotto che costa 3.500 €:
+--1.050-- €
+Costo del prodotto scontato
+--2-450-- €
+Lo sconto commerciale si calcola in proporzione a:
+==============
+--capitale-- a scadenza
+==============
+--tasso-- di sconto
+==============
+--tempo-- indicato con 
+--t-- per gli anni 
+--m-- per i mesi e 
+--g-- per i giorni
+
+<br><hr>
+Per l'interesse si conosce il --capitale-- iniziale
+<br>
+Per lo sconto si conosce il capitale a --scadenza--
+<br>
+<h2>Differenza tra interesse e sconto</h2>
+Le formule per lo sconto sono le stesse viste per l'interesse. La differenza è che l'interesse si --aggiunge--
+ad un capitale iniziale. Lo sconto si --sottrae-- al capitale a scadenza.
+
+<h2>Formula con il tempo espresso in anni</h2>
+Sc = --C--
+x--r--
+x--t--
+/--100--
+<hr>
+<h2>Formula con il tempo espresso in mesi</h2>
+Sc = --C--
+x--r--
+x--m--
+/--1.200-- infatti i mesi sono m/12 di un anno
+
+<hr>
+<h2>Formula con il tempo espresso in giorni (anno civile)</h2>
+Sc = --C--
+x--r--
+x--g--
+/--36.500-- infatti divido per i giorni dell'anno oltre che per 100
+
+<hr>
+<h2>Formula con il tempo espresso in giorni (anno bisestile)</h2>
+Sc = --C--
+x--r--
+x--g--
+/--36.600-- infatti divido per i giorni dell'anno oltre che per 100
+
+<hr>
+<h2>Formula con il tempo espresso in giorni (anno commerciale)</h2>
+Sc = --C--
+x--r--
+x--g--
+/--36.000-- infatti divido per i giorni dell'anno oltre che per 100
 """
 
 testo = testo.replace("'", "`")
-
+# ================================== Parola chiave per FRECCIA DA SINISTRA a DESTRA ========
+testo = testo.replace(">>", "<img src=\'imgs/arrowleft.png\'>")
+image = 'imgs/esercizio.png'
+testo = testo.replace(f"<esercizio>", "<img src=\\'imgs/esercizio.png\\'>")
 print(start)
 content = ""
 
@@ -122,7 +213,7 @@ for n, line in enumerate(testo[1:]):
         pass
     # if there is no --
     elif "--" not in line:
-        content += f"\nprint('<p>{line}</p>');\n"
+        content += f"\nprint_text(\'<p>{line}</p>\');\n"
     else:
         dom = line.split("--")
         if line[0] == line[1] == "-":
@@ -218,7 +309,7 @@ function input(dom_s, giusta, dom_e){
 }
 
 
-function print(lite){
+function print_text(lite){
     document.write(lite);
 }
 
