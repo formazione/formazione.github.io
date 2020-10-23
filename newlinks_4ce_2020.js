@@ -3,6 +3,7 @@ newlinks_4ce_2020.innerHTML += "<a href='Programmi20192020/4ce/0_TEST.html'>0_TE
                 newlinks_4ce_2020.innerHTML += "<a href='Programmi20192020/4ce/2_BILANCIO.html'>2_BILANCIO</a><br>"
                 newlinks_4ce_2020.innerHTML += "<a href='Programmi20192020/4ce/3_INDICI.html'>3_INDICI</a><br>"
                 newlinks_4ce_2020.innerHTML += "<a href='Programmi20192020/4ce/4_contratto.html'>4_contratto</a><br>"
+                newlinks_4ce_2020.innerHTML += "<a href='Programmi20192020/4ce/Modulo_1_test_3.html'>Modulo_1_test_3</a><br>"
                 newlinks_4ce_2020.innerHTML += "<a href='Programmi20192020/4ce/Percentuali.html'>Percentuali</a><br>"
                 newlinks_4ce_2020.innerHTML += "<a href='Programmi20192020/4ce/Test 6.html'>Test 6</a><br>"
                 
