@@ -1,0 +1,113 @@
+<style>
+
+	
+ body, table, button {font-size: 1em; } .btn.btn-warning.btn-lg {background:pink; color:red; } .btn.btn-info.btn-lg {background:cyan; color:blue; } ul {font-size: 1em;} i {font-size : 1em;} p { font-size: 1em; } td {font-size: 1.5em;} table {border-collapse: collapse; width: 50%; } th, td {text-align: left; padding: 8px; } tr:nth-child(even){background-color: coral; color: white;} tr:nth-child(odd){background-color: navy; color: white;}
+	
+</style>
+
+
+<body>
+<h1>4ce_2020 livello di partecipazione</h1>
+
+
+<script src="https://www.gstatic.com/firebasejs/4.10.1/firebase.js"></script>
+<script>
+
+var codice_classe = "4ce_2020"; // nome del record di firebase quiz... dove sono memorizzati i dati della classe
+
+  var config = {
+    apiKey: "AIzaSyDp-mWaWEI07pIdRUhi6vA-salEMRWz4hw",
+    authDomain: "quiz-e5e5a.firebaseapp.com",
+    databaseURL: "https://quiz-e5e5a.firebaseio.com/",
+    projectId: "quiz-e5e5a",
+    storageBucket: "quiz-e5e5a.appspot.com",
+    messagingSenderId: "901845403492"
+  };
+  firebase.initializeApp(config);
+  var database = firebase.database()
+</script>
+<div id="alunni"></div>
+<script>
+
+
+
+function get_names(){
+
+        let name = {
+  "Abagnale" : "Aba",
+  "Agresta" : "Agr",
+  "Chirico" : "Chi",
+  "Cona" : "Con",
+  "Cuda" : "Cud",
+  "DAgosto" : "DAg",
+  "DiNola" : "DiN",
+  "Filosa" : "Fil",
+  "Mariosa" : "Mar",
+  "Mazzeo" : "Maz",
+  "Merola" : "Mer",
+  "Pandullo" : "Pan",
+  "Paolino" : "Pao",
+  "Papa" : "Pap",
+  "Petrone" : "Pet",
+  "Ruggiero" : "Rug",
+  "Savino" : "Sav",
+  "Scottino" : "Sco",
+  "Vassallo" : "Vas",
+  "Volpe" : "Vol",
+        };
+
+
+          return name;
+}
+
+let counter = 0;
+
+
+
+
+function button(alunno){
+	// button + - to modify values
+	let div_id = "alunno" + counter;
+	var h1alunno1 = document.getElementById(div_id);
+	let dbRef1 = firebase.database().ref().child(codice_classe).child(alunno);
+	// crea un elemento button
+  	var buttonplus = document.createElement('button');
+	buttonplus.innerHTML = '+' + alunno;
+	buttonplus.onclick = function(){
+	    dbRef1.set(++counter);
+	}
+  	document.body.appendChild(buttonplus);
+
+	var buttonless = document.createElement('button');
+	buttonless.innerHTML = '-' + alunno;
+	buttonless.onclick = function(){
+	    dbRef1.set(--counter);
+	}
+  	document.body.appendChild(buttonplus);
+  	document.body.appendChild(buttonless);
+  	var br = document.createElement('br');
+  	document.body.appendChild(br);
+
+
+	dbRef1.on("value", snap => alunni.innerHTML += "<b>" + alunno + "</b>: " + snap.val() + "<br>");
+	dbRef1.on("value", snap => counter = snap.val());
+    counter += 1
+	
+	// attacca azione onclick
+
+	// alunni.innerHTML += `<button type="button" class="btn btn-warning btn-lg" onclick="dbRef1.set(--n`+counter+`)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRef1.set(++n`+counter+`)"> + </button>`+alunno+`<i id="alunno`+counter+`"></i><br>`
+
+
+}
+
+names = get_names();
+
+for (name in names){
+	if (names[name] != null) {
+		button(name);
+	}
+		
+}
+
+
+</script>

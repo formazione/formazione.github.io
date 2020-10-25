@@ -58,7 +58,11 @@ img.cup {
   };
   firebase.initializeApp(config);
   let database = firebase.database();
+
+  // apre il database al punto dove sono i record della 4ce
   let ref = database.ref("4ce_2020");
+  // prende i valori con questa funzione gotData
+  // la funzione gotData(data) prende i valori del record 4ce_2020 memorizzati in ref
   ref.on("value", gotData)
 
   // IMAGES
@@ -138,30 +142,36 @@ function anonymize(x){
 function gotData(data){
   scoretot.innerHTML = "";
   // iterator of values in the database record 4CE
+  // data contiene i record di 4ce_2020, con val creo una lista dei valori delle key 4ce_2020
   x = data.val();
 
+  // memorizzo i valori di x (dizionario) in arr
   let arr = Object.values(x);
+  // trovo il valore minimo e masimo
   let min = Math.min(...arr);
   let max = Math.max(...arr);
   let winner = "";
 
+  // itero tutti i valori di x (dizionario) per trovare il primo
   for (n in x){
     if (parseInt(x[n])==max) winner=n;
     };
 
   
-  // ORDERING BY POINTS  
+  // ORDERING BY POINTS
+  // Ordino gli alunni in funzione della differenza tra il loro punteggi
   let keysSorted = Object.keys(x).sort(function(a,b){return x[b]-x[a]})
   scoretot.innerHTML += "<u style='color:coral'>Graduatoria:</u><br>"
 
 
-  let newx = [];
-  for (n in keysSorted){
-   newx.push([keysSorted[n],x[keysSorted[n]]]); 
-  }
+  // let newx = [];
+  // // memorizzo in newx il dizionario ordinato per punteggi (perché?)
+  // for (n in keysSorted){
+  //  newx.push([keysSorted[n],x[keysSorted[n]]]); 
+  // }
 
 
-  console.log(newx);
+  // console.log(newx);
 
   for (n in keysSorted){
   
