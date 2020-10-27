@@ -71,7 +71,7 @@ start += "<script>"
 # LA PRIMA RIGA è IL NOME DEL FILE HTML CHE CONTERRA' L'ESERCIZIO
 #                   ||
 #                   \/
-testo = """stumenti_di_lavoro
+testo = """strumenti_di_lavoro
 <h2>strumenti di lavoro</h2>
 
 <h3>Rispondi</h3>

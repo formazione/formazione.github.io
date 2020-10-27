@@ -15,7 +15,7 @@
 <script>
 
 listanomi = [
-		"Scegli_il_nome",
+		"Scegli_il_cognome",
         "Maiuri",
         "Saja_P",
         "Saja_A",
@@ -37,12 +37,45 @@ listanomi = [
         "Fluri"
             ];
 
-let html = "<select id='nomestudente' name='carlist' form='carform'>";
-for (nome of listanomi){
-  html +="<option value='"+nome+"'>"+nome+"</option>";
+nomi = [
+		"Scegli_nome",
+        "Sara",
+        "Pietro",
+        "Andrea",
+        "Carmen",
+        "Ilaria",
+        "Federica",
+        "Luca",
+        "Federica",
+        "Anthony",
+        "Alessandro",
+        "Federica",
+        "Dante",
+        "Samuele",
+        "Maria Teresa",
+        "Roberto",
+        "Francesco",
+        "Antonio",
+        "Francesco",
+        "Dennis"
+  ];
+
+
+function select(lista, idsel){
+	
+	let html = "<select id=idsel name='carlist' form='carform'>";
+	for (nome of lista){
+	  html +="<option value='"+nome+"'>"+nome+"</option>";
+	}
+	html += "</select>";
+	document.write(html);
 }
-html += "</select>";
-document.write(html);
+
+select(listanomi, 'nomestudente')
+
+
+
+
 </script>
 
 
@@ -51,7 +84,7 @@ document.write(html);
 <script src="https://www.gstatic.com/firebasejs/5.9.2/firebase-database.js"></script>
 
 
-(cognome) <br><input id="codice" type="text">(nome)
+<!-- (cognome) <br><input id="codice" type="text">(nome) -->
 
 
 <script>
@@ -434,7 +467,8 @@ let nome = nomestudente.value;
 let nome_in_lista = listanomi.includes(nomestudente.value);
 let password_corretta = code[nomestudente.value]==codice.value;
 //let prima_volta = x[nomestudente.value] == undefined;
-if (nome_in_lista && password_corretta){
+if (nome_in_lista){ // per password togli il commento dalla seguente
+// if (nome_in_lista && password_corretta){
   ref.child(nome).set(Math.round(score/quiz.length * 100));
 }
 // ========================================================
