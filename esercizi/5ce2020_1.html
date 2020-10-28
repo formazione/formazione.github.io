@@ -15,61 +15,34 @@
 <script>
 
 listanomi = [
-		"Scegli_il_cognome",
-        "Acanfora",
-        "Della_Torre",
-        "Graniti",
-        "Guariglia",
-        "Marino",
-        "Materazzi",
-        "Matrella",
-        "Niglio",
-        "Orlando",
-        "Serra_Davide",
-        "Serra_Giulia",
-        "Sessa",
+		"Scegli_il_nome",
+        "Maiuri",
+        "Saja_P",
+        "Saja_A",
+        "Tierno",
+        "Battagliese",
+        "Borrelli",
+        "Romano",
+        "Ciardi",
+        "Mautone",
+        "Palladino",
+        "Ciardi",
+        "Carracino",
+        "Liguori",
+        "Ricci",
+        "Ghiunghius",
+        "Donnianni",
+        "Merola",
+        "Maiese",
+        "Fluri"
             ];
 
-nomi = [
-		"Scegli_nome",
-        "Sara",
-        "Pietro",
-        "Andrea",
-        "Carmen",
-        "Ilaria",
-        "Federica",
-        "Luca",
-        "Federica",
-        "Anthony",
-        "Alessandro",
-        "Federica",
-        "Dante",
-        "Samuele",
-        "Maria Teresa",
-        "Roberto",
-        "Francesco",
-        "Antonio",
-        "Francesco",
-        "Dennis"
-  ];
-
-
-function select(lista, idsel){
-	// l'errore era nel fatto che non avevo messo " + idsel + ", ma solo idsel
-	// inoltre devo togliere alla riga 469 la variabile codice che non uso più
-	let html = "<select id=" + idsel + " name='carlist' form='carform'>";
-	for (nome of lista){
-	  html +="<option value='"+nome+"'>"+nome+"</option>";
-	}
-	html += "</select>";
-	document.write(html);
-}
-
-select(listanomi, 'nomestudente')
-
-
-
-
+let html = "<select id='nomestudente' name='carlist' form='carform'>";
+for (nome of listanomi){
+  html +="<option value='"+nome+"'>"+nome+"</option>";
+}k
+html += "</select>";
+document.write(html);
 </script>
 
 
@@ -78,7 +51,7 @@ select(listanomi, 'nomestudente')
 <script src="https://www.gstatic.com/firebasejs/5.9.2/firebase-database.js"></script>
 
 
-<!-- (cognome) <br><input id="codice" type="text">(nome) -->
+(cognome) <br><input id="codice" type="text">(nome)
 
 
 <script>
@@ -94,13 +67,10 @@ select(listanomi, 'nomestudente')
   firebase.initializeApp(config);
   let database = firebase.database();
 
-  // ###############################
-  let RECORD = "3ce2020_1"
-  // ###############################
 
   // Nome del child dove vanno i risultati
 
-  let ref = database.ref(RECORD);
+  let ref = database.ref("5ce2020_1");
   
   // ref.set(); // delete all
 
@@ -187,221 +157,62 @@ if (!("scramble" in Array.prototype)) {
 }		
 
       
-// let mydom = `L'industria dei viaggi ha un forte impatto sia dal punto di vista economico che ___sociale___politico___artistico
-// Il turismo contribuisce alla formazione del PIL per il ___10% ___20% ___50%
-// In Italia, il turismo dà occupazione a circa ___2 milioni di addetti ___1 milione di addetti
-// Il turismo è uno dei settori che ___meno risente della crisi ___più risente della crisi
-// Il turismo ha avuto una leggera flessione nel ___2009 ___2010 ___2005
-// Il turismo è cresciuto ad un ritmo medio del ___4,5% ___1% ___8%
-// L'Europa sta subendo una forte concorrenza da parte delle destinazioni ___asiatiche ___africane ___australiane ___del Nord America
-// Indica il turismo interno ___incoming ___outgoing ___strenghts
-// La quota di mercato è data dal ___rapporto tra vendite dell'impresa e del totale delle imprese del mercato ___prodotto tra le vendite dell'impresa e il totale delle imprese del mercato
-// Il turismo di massa nasce dagli anni ___60___70___80___90
-// La crisi petrolifera ci fu negli anni___70___80___90___2000
-// Il turismo diventa un bisogno primario dagli anni ___80___70___90___2000
-// La domanda turistica è ___poco elastica___molto elastica
-// L'euro viene quotato con il metodo___certo per incerto___incerto per certo
-// Nel metodo certo per incerto rimane fissa___la valuta nazionale___la valuta estera
-// Il saldo della bilancia turistica italiana è in ___attivo___passivo
-// I CINR sono i consumi dei ___turisti stranieri in Italia ___turisti italiani all'estero
-// I CERI sono i consumi dei___turisti italiani all'estero ___turisti stranieri in Italia
-// L'Istituto nazionale di statistica si chiama___ISTAT___ENIT___ONT___ISNART
-// L'agenzia nazionale del turismo si chiama ___ENIT___ISTAT___ONT___ISNART
-// I turisti rinuncianno facilmente ai viaggi se i prezzi aumentano___no___sì`;
+let mydom = `L'industria dei viaggi ha un forte impatto sia dal punto di vista economico che ___sociale___politico___artistico
+Il turismo contribuisce alla formazione del PIL per il ___10% ___20% ___50%
+In Italia, il turismo dà occupazione a circa ___2 milioni di addetti ___1 milione di addetti
+Il turismo è uno dei settori che ___meno risente della crisi ___più risente della crisi
+Il turismo ha avuto una leggera flessione nel ___2009 ___2010 ___2005
+Il turismo è cresciuto ad un ritmo medio del ___4,5% ___1% ___8%
+L'Europa sta subendo una forte concorrenza da parte delle destinazioni ___asiatiche ___africane ___australiane ___del Nord America
+Indica il turismo interno ___incoming ___outgoing ___strenghts
+La quota di mercato è data dal ___rapporto tra vendite dell'impresa e del totale delle imprese del mercato ___prodotto tra le vendite dell'impresa e il totale delle imprese del mercato
+Il turismo di massa nasce dagli anni ___60___70___80___90
+La crisi petrolifera ci fu negli anni___70___80___90___2000
+Il turismo diventa un bisogno primario dagli anni ___80___70___90___2000
+La domanda turistica è ___poco elastica___molto elastica
+L'euro viene quotato con il metodo___certo per incerto___incerto per certo
+Nel metodo certo per incerto rimane fissa___la valuta nazionale___la valuta estera
+Il saldo della bilancia turistica italiana è in ___attivo___passivo
+I CINR sono i consumi dei ___turisti stranieri in Italia ___turisti italiani all'estero
+I CERI sono i consumi dei___turisti italiani all'estero ___turisti stranieri in Italia
+L'Istituto nazionale di statistica si chiama___ISTAT___ENIT___ONT___ISNART
+L'agenzia nazionale del turismo si chiama ___ENIT___ISTAT___ONT___ISNART
+I turisti rinuncianno facilmente ai viaggi se i prezzi aumentano___no___sì`;
 
       
-//   // -------- substitute this -----------------    
-// function createQuiz(){
-//   // returns a list with data in {} for each question
-//   let quiz = [];
-//   mydom = mydom.split("\n");
-//   console.log(mydom);
-//   // mescola le domande
-//   mydom.sort(function() {return .5 - Math.random();});
-//   for (d in mydom){
-//       let darr = mydom[d].split("___");
-//     domanda = darr[0];
-//     corretta = darr[1];
-//     console.log(darr);
-//       let dnew = darr.reverse();
-//       dnew.pop();
-//       dnew.sort(function() {return .5 - Math.random();});
-//       // ------------- quiz.push ---------------------
-//       quiz.push({
-//           "question": domanda,
-//           "image":  "",
-//           "choices": dnew,
-//           "correct": corretta,
-//           "explanation": ""
-//         })
-//       // ---------------------------------------------
-//   }
-//   return quiz;
-// }
+  // -------- substitute this -----------------    
+function createQuiz(){
+  // returns a list with data in {} for each question
+  let quiz = [];
+  mydom = mydom.split("\n");
+  console.log(mydom);
+  // mescola le domande
+  mydom.sort(function() {return .5 - Math.random();});
+  for (d in mydom){
+      let darr = mydom[d].split("___");
+    domanda = darr[0];
+    corretta = darr[1];
+    console.log(darr);
+      let dnew = darr.reverse();
+      dnew.pop();
+      dnew.sort(function() {return .5 - Math.random();});
+      // ------------- quiz.push ---------------------
+      quiz.push({
+          "question": domanda,
+          "image":  "",
+          "choices": dnew,
+          "correct": corretta,
+          "explanation": ""
+        })
+      // ---------------------------------------------
+  }
+  return quiz;
+}
       
-// let quiz = createQuiz(); // returns a list with data in {} for each question
+let quiz = createQuiz(); // returns a list with data in {} for each question
  
-let quiz = [	
-		{
-	        "question"      :   "Un rapporto è",
-	        "image"         :   "https://image.freepik.com/free-vector/time-management-planning-events-flat-vector-illustration-design-business-concept-date-planning-organizing-events-events-management-icon-design_1223-140.jpg",
-	        "choices"       :   ['il risultato di una divisione', "l'uguaglianza di due numeri", "l'uguaglianza di due prodotti", "l'uguaglianza di due divisioni"],
-	        "correct"       :   "il risultato di una divisione",
-	        "explanation"   :   "",
-	    },
 
-	    {
-	        "question"      :   "La proporzione",
-	        "image"         :   "https://image.freepik.com/free-vector/time-management-planning-events-flat-vector-illustration-design-business-concept-date-planning-organizing-events-events-management-icon-design_1223-140.jpg",
-	        "choices"       :   ["l'uguaglianza di due rapporti", 'il risultato di una divisione', "l'uguaglianza di due numeri", "l'uguaglianza di due prodotti"],
-	        "correct"       :   "l'uguaglianza di due rapporti",
-	        "explanation"   :   "",
-	    },
-
-
-]
-
-/*	    {
-	        "question"      :   "Il secondo e il terzo termine di una proporzione sono detti",
-	        "image"         :   "https://www.accademia.bcc.it/fusione/img/04-pianificazione-commerciale.png",
-	        "choices"       :   ['medi', 'estremi', 'aliquote', 'somme di riferimento'],
-	        "correct"       :   "medi",
-	        "explanation"   :   "",
-	    },{
-	        "question"      :   "Dividendo una somma per il totale dei parametri in un riparto ottengo",
-	        "image"         :   "https://tuocoach.files.wordpress.com/2018/11/cambiamento-10.jpg?w=345&h=294",
-	        "choices"       :   ['il coefficiente di riparto', 'una percentuale', 'un prodotto', "un'aliquota"],
-	        "correct"       :   "il coefficiente di riparto",
-	        "explanation"   :   "",
-	    },{
-	        "question"      :   "100 sta a 20 come 200 sta a x",
-	        "image"         :   "https://image.freepik.com/free-vector/time-management-planning-events-flat-vector-illustration-design-business-concept-date-planning-organizing-events-events-management-icon-design_1223-140.jpg",
-	        "choices"       :   ['x = 40', 'x = 10', 'x = 5', 'x = 6'],
-	        "correct"       :   "x = 40",
-	        "explanation"   :   "",
-	    },{
-	        "question"      :   "100 sta a 20 come 250 sta a x",
-	        "image"         :   "https://organizzazioneaziendale.net/wp-content/uploads/2012/04/Pianificazione-e-Controllo-della-Produzione1.jpg",
-	        "choices"       :   ['x = 50', 'x = 10', 'x = 5', 'x = 6'],
-	        "correct"       :   "x = 50",
-	        "explanation"   :   "",
-	    },{
-	        "question"      :   "100 sta a 25 come 200 sta a x",
-	        "image"         :   "https://qsfera.it/media/k2/items/cache/1698b847c2e4fe98c05adcdc9d420590_XL.jpg",
-	        "choices"       :   ['x = 50', 'x = 10', 'x = 5', 'x = 6'],
-	        "correct"       :   "x = 50",
-	        "explanation"   :   "",
-	    },{
-	        "question"      :   "100 sta a 25 come 300 sta a x",
-	        "image"         :   "https://www.abparma.it/documenti/immagini/elaborati_pianificazione.jpg",
-	        "choices"       :   ['x = 75', 'x = 50', 'x = 40', 'x = 6'],
-	        "correct"       :   "x = 75",
-	        "explanation"   :   "",
-	    },{
-	        "question"      :   "Nel calcolo percentuale diretto calcolo:",
-	        "image"         :   "",
-	        "choices"       :   ['P', 'S', 'r', 'S o r'],
-	        "correct"       :   "P",
-	        "explanation"   :   "",
-	    },{
-	        "question"      :   "Nel calcolo percentuale inverso calcolo:",
-	        "image"         :   "https://www.accademia.bcc.it/fusione/img/04-pianificazione-commerciale.png",
-	        "choices"       :   ['S o r', 'P', 'S', 'r'],
-	        "correct"       :   "S o r",
-	        "explanation"   :   "",
-	    },{
-	        "question"      :   "Cosa significa percentuale?",
-	        "image"         :   "https://help.sap.com/doc/saphelp_byd1805_it/2018.05/it-IT/KTP/Software-Components/01200615320100003379/WEKTRA_for_Work_Centers/SCM/Ess/BillOfOperations/BOO_Structure1.png",
-	        "choices"       :   ['Si indica il valore di una grandezza riferito a 100', 'Si indica il valore di una grandezza riferito a 1000', 'Si indica il valore di una grandezza riferito a 10', 'Si indica il valore di una grandezza riferito a 1'],
-	        "correct"       :   "Si indica il valore di una grandezza riferito a 100",
-	        "explanation"   :   "",
-	    },{
-	        "question"      :   "Qual è la regola fondamentale delle proporzioni",
-	        "image"         :   "",
-	        "choices"       :   ['il prodotto dei medi è uguale al prodotto degli estremi', 'il rapporto dei medi è uguale al rapporto degli estremi', 'il rapporto dei medi è uguale al prodotto degli estremi', 'il prodotto dei medi è uguale al rapporto degli estremi'],
-	        "correct"       :   "il prodotto dei medi è uguale al prodotto degli estremi",
-	        "explanation"   :   "",
-	    },{
-	        "question"      :   "Se non conosco un estremo lo trovo facendo",
-	        "image"         :   "https://www.accademia.bcc.it/fusione/img/04-pianificazione-commerciale.png",
-	        "choices"       :   ['medio x medio : estremo noto', 'medio : medio : estremo noto', 'medio : medio x estremo noto', 'estrem x estremo : medio noto'],
-	        "correct"       :   "medio x medio : estremo noto",
-	        "explanation"   :   "",
-	    },{
-	        "question"      :   "Se non conosco un medio lo trovo facendo",
-	        "image"         :   "",
-	        "choices"       :   ['estrem x estremo : medio noto', 'medio x medio : estremo noto', 'medio : medio : estremo noto', 'medio : medio x estremo noto'],
-	        "correct"       :   "estrem x estremo : medio noto",
-	        "explanation"   :   "",
-	    },{
-	        "question"      :   "Cosa significa r",
-	        "image"         :   "https://help.sap.com/doc/saphelp_byd1805_it/2018.05/it-IT/KTP/Software-Components/01200615320100003379/WEKTRA_for_Work_Centers/SCM/Ess/BillOfOperations/BOO_Structure1.png",
-	        "choices"       :   ['aliquota percentuale', 'proporzione', 'percentuale totale', 'somma di riferimento'],
-	        "correct"       :   "aliquota percentuale",
-	        "explanation"   :   "",
-	    },{
-	        "question"      :   "Cosa significa S",
-	        "image"         :   "https://image.freepik.com/free-vector/time-management-planning-events-flat-vector-illustration-design-business-concept-date-planning-organizing-events-events-management-icon-design_1223-140.jpg",
-	        "choices"       :   ['somma di riferimento', 'aliquota percentuale', 'proporzione', 'percentuale totale'],
-	        "correct"       :   "somma di riferimento",
-	        "explanation"   :   "",
-	    },{
-	        "question"      :   "Cosa significa P",
-	        "image"         :   "https://help.sap.com/doc/saphelp_byd1805_it/2018.05/it-IT/KTP/Software-Components/01200615320100003379/WEKTRA_for_Work_Centers/SCM/Ess/BillOfOperations/BOO_Structure1.png",
-	        "choices"       :   ['percentuale totale', 'aliquota percentuale', 'proporzione', 'somma di riferimento'],
-	        "correct"       :   "percentuale totale",
-	        "explanation"   :   "",
-	    },{
-	        "question"      :   "Clicca sul calcolo sopracento",
-	        "image"         :   "https://qsfera.it/media/k2/items/cache/1698b847c2e4fe98c05adcdc9d420590_XL.jpg",
-	        "choices"       :   ['100 : (100 + r) = S : P', '100 : (100 + r) = S : (S + P)', '100 : (100 - r) = S : (S - P)', '100 : r = S : P'],
-	        "correct"       :   "100 : (100 + r) = S : P",
-	        "explanation"   :   "",
-	    },{
-	        "question"      :   "Clicca sul calcolo sottocento",
-	        "image"         :   "https://www.accademia.bcc.it/fusione/img/04-pianificazione-commerciale.png",
-	        "choices"       :   ['100 : (100 - r) = S : (S - P)', '100 : (100 + r) = S : P', '100 : (100 + r) = S : (S + P)', '100 : r = S : P'],
-	        "correct"       :   "100 : (100 - r) = S : (S - P)",
-	        "explanation"   :   "",
-	    },{
-	        "question"      :   "È il compenso che spetta a chi presta una somma di denaro",
-	        "image"         :   "https://www.abparma.it/documenti/immagini/elaborati_pianificazione.jpg",
-	        "choices"       :   ['interesse', 'utile', 'busta paga', 'salario'],
-	        "correct"       :   "interesse",
-	        "explanation"   :   "",
-	    },{
-	        "question"      :   "Lo sconto mercantile",
-	        "image"         :   "https://tuocoach.files.wordpress.com/2018/11/cambiamento-10.jpg?w=345&h=294",
-	        "choices"       :   ['non è proporzionale al tempo', 'è proporzionale al tempo'],
-	        "correct"       :   "non è proporzionale al tempo",
-	        "explanation"   :   "",
-	    },{
-	        "question"      :   "Lo sconto commerciale",
-	        "image"         :   "https://qsfera.it/media/k2/items/cache/1698b847c2e4fe98c05adcdc9d420590_XL.jpg",
-	        "choices"       :   ['non è proporzionale al tempo', 'è proporzionale al tempo'],
-	        "correct"       :   "non è proporzionale al tempo",
-	        "explanation"   :   "",
-	    },{
-	        "question"      :   "Il Montante è",
-	        "image"         :   "https://image.freepik.com/free-vector/time-management-planning-events-flat-vector-illustration-design-business-concept-date-planning-organizing-events-events-management-icon-design_1223-140.jpg",
-	        "choices"       :   ['M = C + I', 'M = C - I'],
-	        "correct"       :   "M = C + I",
-	        "explanation"   :   "",
-	    },{
-	        "question"      :   "Il valore attuale commerciale è",
-	        "image"         :   "https://qsfera.it/media/k2/items/cache/1698b847c2e4fe98c05adcdc9d420590_XL.jpg",
-	        "choices"       :   ['Vc = C - Sc', 'Vc = C + Sc'],
-	        "correct"       :   "Vc = C - Sc",
-	        "explanation"   :   "",
-	    },{
-	        "question"      :   "Le formule dell'interesse e dello sconto sono uguali",
-	        "image"         :   "https://organizzazioneaziendale.net/wp-content/uploads/2012/04/Pianificazione-e-Controllo-della-Produzione1.jpg",
-	        "choices"       :   ['Vero', 'Falso'],
-	        "correct"       :   "Vero",
-	        "explanation"   :   "",
-	    },
-];
-      */
+      
 
       
 var currentquestion = 0, score = 0, submt=true, picked;
@@ -621,10 +432,9 @@ function processQuestion(choice){
 scoretot.innerHTML = "";
 let nome = nomestudente.value;
 let nome_in_lista = listanomi.includes(nomestudente.value);
-// let password_corretta = code[nomestudente.value]==codice.value;
+let password_corretta = code[nomestudente.value]==codice.value;
 //let prima_volta = x[nomestudente.value] == undefined;
-if (nome_in_lista){ // per password togli il commento dalla seguente
-// if (nome_in_lista && password_corretta){
+if (nome_in_lista && password_corretta){
   ref.child(nome).set(Math.round(score/quiz.length * 100));
 }
 // ========================================================
@@ -639,10 +449,7 @@ if (nome_in_lista){ // per password togli il commento dalla seguente
       else if (percent < 70 && percent >60) speak("HAi risposto in modo sufficientemente corretto.");
       else speak("Devi impegnarti di più. Riprova");
     
-			$(document.createElement('h4')).addClass('score').text(Math.round(score/quiz.length * 100) + '%').insertAfter('#question');			
-			$(document.createElement('h4')).addClass('score').text("").insertAfter('#question');			
-				
-			$(document.createElement('h4')).addClass('score').text(nomestudente.value).insertAfter('#question');			
+			$(document.createElement('h4')).addClass('score').text(nomestudente.value + " " + Math.round(score/quiz.length * 100) + '%').insertAfter('#question');			
 		}
 
         /**
@@ -808,9 +615,9 @@ height:100vh;
 
   
 </script>
-<!-- <body  oncontextmenu="return false"> -->
-<body>
- <h2><u>Percentuali e proporzioni</u></h2>
+<body  oncontextmenu="return false">
+
+ <h2><u>Test sul Turismo internazionale 1</u></h2>
   <!-- home button 
   <div id="menuDiv">
 <script src="https://quarta.glitch.me/dropdownclassi.js"></script>
@@ -823,6 +630,6 @@ height:100vh;
 
 </div>
 
-<p>Scegli il tuo cognome in alto. In questo modo il tuo risultato verrà registrato a tuo nome.</p>
+<p>Scegli il tuo cognome in alto a destra e inserisci il nome dopo CODICE. In questo modo il tuo risultato verrà registrato</p>
 <p>Puoi svolgere l'esercizio più volte. Verrà registrato l'ultimo tentativo.<p>
 Un punto ogni 10% di percentuale di risposte esatte.

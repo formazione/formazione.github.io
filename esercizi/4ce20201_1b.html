@@ -63,7 +63,7 @@ nomi = [
 
 function select(lista, idsel){
 	
-	let html = "<select id=idsel name='carlist' form='carform'>";
+	let html = "<select id=" + idsel + " name='carlist' form='carform'>";
 	for (nome of lista){
 	  html +="<option value='"+nome+"'>"+nome+"</option>";
 	}
@@ -617,7 +617,7 @@ function processQuestion(choice){
 scoretot.innerHTML = "";
 let nome = nomestudente.value;
 let nome_in_lista = listanomi.includes(nomestudente.value);
-let password_corretta = code[nomestudente.value]==codice.value;
+// let password_corretta = code[nomestudente.value]==codice.value;
 //let prima_volta = x[nomestudente.value] == undefined;
 if (nome_in_lista){ // per password togli il commento dalla seguente
 // if (nome_in_lista && password_corretta){
@@ -635,7 +635,10 @@ if (nome_in_lista){ // per password togli il commento dalla seguente
       else if (percent < 70 && percent >60) speak("HAi risposto in modo sufficientemente corretto.");
       else speak("Devi impegnarti di più. Riprova");
     
-			$(document.createElement('h4')).addClass('score').text(nomestudente.value + " " + Math.round(score/quiz.length * 100) + '%').insertAfter('#question');			
+			$(document.createElement('h4')).addClass('score').text(Math.round(score/quiz.length * 100) + '%').insertAfter('#question');			
+			$(document.createElement('h4')).addClass('score').text("").insertAfter('#question');			
+				
+			$(document.createElement('h4')).addClass('score').text(nomestudente.value).insertAfter('#question');		
 		}
 
         /**
