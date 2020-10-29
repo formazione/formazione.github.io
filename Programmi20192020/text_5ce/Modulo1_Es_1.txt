@@ -1,5 +1,0 @@
-<script>
-window.location.href = "https://formazione.github.io/esercizi/5ce2020_1b.html";
-</script>
-
-
