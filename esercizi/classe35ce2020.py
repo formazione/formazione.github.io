@@ -1,0 +1,15 @@
+listanomi = [
+		"Scegli_il_cognome",
+        "Acanfora",
+        "Della_Torre",
+        "Graniti",
+        "Guariglia",
+        "Marino",
+        "Materazzi",
+        "Matrella",
+        "Niglio",
+        "Orlando",
+        "Serra_Davide",
+        "Serra_Giulia",
+        "Sessa",
+            ];

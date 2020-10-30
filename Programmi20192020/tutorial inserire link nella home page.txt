@@ -1,0 +1,21 @@
+Prova di file
+da convertire
+in pdf
+
+Gli esercizi sono in
+
+esercizi/...
+
+quindi per inserirli nel menu della 5ce, ad esempio
+
+
+- usa H:\formazione.github.io\formazione.github.io\Programmi20192020\pyEbook_5CE_3c.py
+
+- inserisci una pagina per il collegamento
+  - metti questo codice
+    <script>
+window.location.href = "https://formazione.github.io/esercizi/5ce2020_1b.html";
+</script>
+
+	in index.html il link è alla pagina del collegamento
+	che reindirizzerà l'utente verso il window.location.href
