@@ -84,7 +84,7 @@ select(listanomi, 'nomestudente')
 function start(recordname){
 	// crea il record - ricorda di cambiare il record per 
 	// esercizi diversi
-	let ref = database.ref(recordname);
+	ref = database.ref(recordname);
 	ref.child("Scegli_il_cognome").set(0)
 	ref.on("value", gotData);
 	div_scoretot()

@@ -30,28 +30,28 @@ listanomi = [
         "Sessa",
             ];
 
-nomi = [
-		"Scegli_nome",
-        "Sara",
-        "Pietro",
-        "Andrea",
-        "Carmen",
-        "Ilaria",
-        "Federica",
-        "Luca",
-        "Federica",
-        "Anthony",
-        "Alessandro",
-        "Federica",
-        "Dante",
-        "Samuele",
-        "Maria Teresa",
-        "Roberto",
-        "Francesco",
-        "Antonio",
-        "Francesco",
-        "Dennis"
-  ];
+// nomi = [
+// 		"Scegli_nome",
+//         "Sara",
+//         "Pietro",
+//         "Andrea",
+//         "Carmen",
+//         "Ilaria",
+//         "Federica",
+//         "Luca",
+//         "Federica",
+//         "Anthony",
+//         "Alessandro",
+//         "Federica",
+//         "Dante",
+//         "Samuele",
+//         "Maria Teresa",
+//         "Roberto",
+//         "Francesco",
+//         "Antonio",
+//         "Francesco",
+//         "Dennis"
+//   ];
 
 
 function select(lista, idsel){
@@ -84,7 +84,8 @@ select(listanomi, 'nomestudente')
 function start(recordname){
 	// crea il record - ricorda di cambiare il record per 
 	// esercizi diversi
-	let ref = database.ref(recordname);
+	// to make it global do not use var before ref
+	ref = database.ref(recordname);
 	ref.child("Scegli_il_cognome").set(0)
 	ref.on("value", gotData);
 	div_scoretot()
@@ -103,7 +104,8 @@ function gotData(data){
 	}
 }
 
-start("3ce2020_1")
+// crea questo record (vedi config.js per il nome del db)
+start("3ce2020_asincrona_1")
 
 
 // code = {
@@ -230,161 +232,66 @@ if (!("scramble" in Array.prototype)) {
       
 // let quiz = createQuiz(); // returns a list with data in {} for each question
  
-let quiz = [	
-		{
-	        "question"      :   "Un rapporto è",
-	        "image"         :   "https://image.freepik.com/free-vector/time-management-planning-events-flat-vector-illustration-design-business-concept-date-planning-organizing-events-events-management-icon-design_1223-140.jpg",
-	        "choices"       :   ['il risultato di una divisione', "l'uguaglianza di due numeri", "l'uguaglianza di due prodotti", "l'uguaglianza di due divisioni"],
-	        "correct"       :   "il risultato di una divisione",
-	        "explanation"   :   "",
-	    },
-
-	    {
-	        "question"      :   "La proporzione",
-	        "image"         :   "https://image.freepik.com/free-vector/time-management-planning-events-flat-vector-illustration-design-business-concept-date-planning-organizing-events-events-management-icon-design_1223-140.jpg",
-	        "choices"       :   ["l'uguaglianza di due rapporti", 'il risultato di una divisione', "l'uguaglianza di due numeri", "l'uguaglianza di due prodotti"],
-	        "correct"       :   "l'uguaglianza di due rapporti",
-	        "explanation"   :   "",
-	    },
-
-
-	    {
-	        "question"      :   "Il secondo e il terzo termine di una proporzione sono detti",
-	        "image"         :   "https://www.accademia.bcc.it/fusione/img/04-pianificazione-commerciale.png",
-	        "choices"       :   ['medi', 'estremi', 'aliquote', 'somme di riferimento'],
-	        "correct"       :   "medi",
-	        "explanation"   :   "",
-	    },{
-	        "question"      :   "Dividendo una somma per il totale dei parametri in un riparto ottengo",
+let quiz = [
+{
+	        "question"      :   " Un prestito di 10000 al tasso del 7 % concesso per 1 anno produce interessi per… ",
 	        "image"         :   "https://tuocoach.files.wordpress.com/2018/11/cambiamento-10.jpg?w=345&h=294",
-	        "choices"       :   ['il coefficiente di riparto', 'una percentuale', 'un prodotto', "un'aliquota"],
-	        "correct"       :   "il coefficiente di riparto",
+	        "choices"       :   [' 700,00 € ', ' 830,00 € ', ' 900,00 € ', ' 1.070,00 € '],
+	        "correct"       :   " 700,00 € ",
 	        "explanation"   :   "",
 	    },{
-	        "question"      :   "100 sta a 20 come 200 sta a x",
-	        "image"         :   "https://image.freepik.com/free-vector/time-management-planning-events-flat-vector-illustration-design-business-concept-date-planning-organizing-events-events-management-icon-design_1223-140.jpg",
-	        "choices"       :   ['x = 40', 'x = 10', 'x = 5', 'x = 6'],
-	        "correct"       :   "x = 40",
-	        "explanation"   :   "",
-	    },{
-	        "question"      :   "100 sta a 20 come 250 sta a x",
-	        "image"         :   "https://organizzazioneaziendale.net/wp-content/uploads/2012/04/Pianificazione-e-Controllo-della-Produzione1.jpg",
-	        "choices"       :   ['x = 50', 'x = 10', 'x = 5', 'x = 6'],
-	        "correct"       :   "x = 50",
-	        "explanation"   :   "",
-	    },{
-	        "question"      :   "100 sta a 25 come 200 sta a x",
-	        "image"         :   "https://qsfera.it/media/k2/items/cache/1698b847c2e4fe98c05adcdc9d420590_XL.jpg",
-	        "choices"       :   ['x = 50', 'x = 10', 'x = 5', 'x = 6'],
-	        "correct"       :   "x = 50",
-	        "explanation"   :   "",
-	    },{
-	        "question"      :   "100 sta a 25 come 300 sta a x",
-	        "image"         :   "https://www.abparma.it/documenti/immagini/elaborati_pianificazione.jpg",
-	        "choices"       :   ['x = 75', 'x = 50', 'x = 40', 'x = 6'],
-	        "correct"       :   "x = 75",
-	        "explanation"   :   "",
-	    },{
-	        "question"      :   "Nel calcolo percentuale diretto calcolo:",
-	        "image"         :   "",
-	        "choices"       :   ['P', 'S', 'r', 'S o r'],
-	        "correct"       :   "P",
-	        "explanation"   :   "",
-	    },{
-	        "question"      :   "Nel calcolo percentuale inverso calcolo:",
-	        "image"         :   "https://www.accademia.bcc.it/fusione/img/04-pianificazione-commerciale.png",
-	        "choices"       :   ['S o r', 'P', 'S', 'r'],
-	        "correct"       :   "S o r",
-	        "explanation"   :   "",
-	    },{
-	        "question"      :   "Cosa significa percentuale?",
-	        "image"         :   "https://help.sap.com/doc/saphelp_byd1805_it/2018.05/it-IT/KTP/Software-Components/01200615320100003379/WEKTRA_for_Work_Centers/SCM/Ess/BillOfOperations/BOO_Structure1.png",
-	        "choices"       :   ['Si indica il valore di una grandezza riferito a 100', 'Si indica il valore di una grandezza riferito a 1000', 'Si indica il valore di una grandezza riferito a 10', 'Si indica il valore di una grandezza riferito a 1'],
-	        "correct"       :   "Si indica il valore di una grandezza riferito a 100",
-	        "explanation"   :   "",
-	    },{
-	        "question"      :   "Qual è la regola fondamentale delle proporzioni",
-	        "image"         :   "",
-	        "choices"       :   ['il prodotto dei medi è uguale al prodotto degli estremi', 'il rapporto dei medi è uguale al rapporto degli estremi', 'il rapporto dei medi è uguale al prodotto degli estremi', 'il prodotto dei medi è uguale al rapporto degli estremi'],
-	        "correct"       :   "il prodotto dei medi è uguale al prodotto degli estremi",
-	        "explanation"   :   "",
-	    },{
-	        "question"      :   "Se non conosco un estremo lo trovo facendo",
-	        "image"         :   "https://www.accademia.bcc.it/fusione/img/04-pianificazione-commerciale.png",
-	        "choices"       :   ['medio x medio : estremo noto', 'medio : medio : estremo noto', 'medio : medio x estremo noto', 'estrem x estremo : medio noto'],
-	        "correct"       :   "medio x medio : estremo noto",
-	        "explanation"   :   "",
-	    },{
-	        "question"      :   "Se non conosco un medio lo trovo facendo",
-	        "image"         :   "",
-	        "choices"       :   ['estrem x estremo : medio noto', 'medio x medio : estremo noto', 'medio : medio : estremo noto', 'medio : medio x estremo noto'],
-	        "correct"       :   "estrem x estremo : medio noto",
-	        "explanation"   :   "",
-	    },{
-	        "question"      :   "Cosa significa r",
-	        "image"         :   "https://help.sap.com/doc/saphelp_byd1805_it/2018.05/it-IT/KTP/Software-Components/01200615320100003379/WEKTRA_for_Work_Centers/SCM/Ess/BillOfOperations/BOO_Structure1.png",
-	        "choices"       :   ['aliquota percentuale', 'proporzione', 'percentuale totale', 'somma di riferimento'],
-	        "correct"       :   "aliquota percentuale",
-	        "explanation"   :   "",
-	    },{
-	        "question"      :   "Cosa significa S",
-	        "image"         :   "https://image.freepik.com/free-vector/time-management-planning-events-flat-vector-illustration-design-business-concept-date-planning-organizing-events-events-management-icon-design_1223-140.jpg",
-	        "choices"       :   ['somma di riferimento', 'aliquota percentuale', 'proporzione', 'percentuale totale'],
-	        "correct"       :   "somma di riferimento",
-	        "explanation"   :   "",
-	    },{
-	        "question"      :   "Cosa significa P",
-	        "image"         :   "https://help.sap.com/doc/saphelp_byd1805_it/2018.05/it-IT/KTP/Software-Components/01200615320100003379/WEKTRA_for_Work_Centers/SCM/Ess/BillOfOperations/BOO_Structure1.png",
-	        "choices"       :   ['percentuale totale', 'aliquota percentuale', 'proporzione', 'somma di riferimento'],
-	        "correct"       :   "percentuale totale",
-	        "explanation"   :   "",
-	    },{
-	        "question"      :   "Clicca sul calcolo sopracento",
-	        "image"         :   "https://qsfera.it/media/k2/items/cache/1698b847c2e4fe98c05adcdc9d420590_XL.jpg",
-	        "choices"       :   ['100 : (100 + r) = S : P', '100 : (100 + r) = S : (S + P)', '100 : (100 - r) = S : (S - P)', '100 : r = S : P'],
-	        "correct"       :   "100 : (100 + r) = S : P",
-	        "explanation"   :   "",
-	    },{
-	        "question"      :   "Clicca sul calcolo sottocento",
-	        "image"         :   "https://www.accademia.bcc.it/fusione/img/04-pianificazione-commerciale.png",
-	        "choices"       :   ['100 : (100 - r) = S : (S - P)', '100 : (100 + r) = S : P', '100 : (100 + r) = S : (S + P)', '100 : r = S : P'],
-	        "correct"       :   "100 : (100 - r) = S : (S - P)",
-	        "explanation"   :   "",
-	    },{
-	        "question"      :   "È il compenso che spetta a chi presta una somma di denaro",
-	        "image"         :   "https://www.abparma.it/documenti/immagini/elaborati_pianificazione.jpg",
-	        "choices"       :   ['interesse', 'utile', 'busta paga', 'salario'],
-	        "correct"       :   "interesse",
-	        "explanation"   :   "",
-	    },{
-	        "question"      :   "Lo sconto mercantile",
+	        "question"      :   " Un prestito di 5000 al tasso del 5 % concesso per 3 anni produce interessi per… ",
 	        "image"         :   "https://tuocoach.files.wordpress.com/2018/11/cambiamento-10.jpg?w=345&h=294",
-	        "choices"       :   ['non è proporzionale al tempo', 'è proporzionale al tempo'],
-	        "correct"       :   "non è proporzionale al tempo",
+	        "choices"       :   [' 750,00 € ', ' 860,00 € ', ' 1.000,00 € ', ' 1.190,00 € '],
+	        "correct"       :   " 750,00 € ",
 	        "explanation"   :   "",
 	    },{
-	        "question"      :   "Lo sconto commerciale",
-	        "image"         :   "https://qsfera.it/media/k2/items/cache/1698b847c2e4fe98c05adcdc9d420590_XL.jpg",
-	        "choices"       :   ['è proporzionale al tempo', 'non è proporzionale al tempo'],
-	        "correct"       :   "non è proporzionale al tempo",
+	        "question"      :   " Un prestito di 8000 al tasso del 9 % concesso per 5 mesi produce interessi per… ",
+	        "image"         :   "https://tuocoach.files.wordpress.com/2018/11/cambiamento-10.jpg?w=345&h=294",
+	        "choices"       :   [' 300,00 € ', ' 380,00 € ', ' 420,00 € ', ' 570,00 € '],
+	        "correct"       :   " 300,00 € ",
 	        "explanation"   :   "",
 	    },{
-	        "question"      :   "Il Montante è",
-	        "image"         :   "https://image.freepik.com/free-vector/time-management-planning-events-flat-vector-illustration-design-business-concept-date-planning-organizing-events-events-management-icon-design_1223-140.jpg",
-	        "choices"       :   ['M = C + I', 'M = C - I'],
-	        "correct"       :   "M = C + I",
+	        "question"      :   " Un prestito di 15000 al tasso del 6 % concesso per 6 anni produce interessi per… ",
+	        "image"         :   "https://tuocoach.files.wordpress.com/2018/11/cambiamento-10.jpg?w=345&h=294",
+	        "choices"       :   [' 5.400,00 € ', ' 5.510,00 € ', ' 5.710,00 € ', ' 5.580,00 € '],
+	        "correct"       :   " 5.400,00 € ",
 	        "explanation"   :   "",
 	    },{
-	        "question"      :   "Il valore attuale commerciale è",
-	        "image"         :   "https://qsfera.it/media/k2/items/cache/1698b847c2e4fe98c05adcdc9d420590_XL.jpg",
-	        "choices"       :   ['Vc = C - Sc', 'Vc = C + Sc'],
-	        "correct"       :   "Vc = C - Sc",
+	        "question"      :   " Un prestito di 12000 al tasso del 5 % concesso per 9 mesi produce interessi per… ",
+	        "image"         :   "https://tuocoach.files.wordpress.com/2018/11/cambiamento-10.jpg?w=345&h=294",
+	        "choices"       :   [' 450,00 € ', ' 460,00 € ', ' 280,00 € ', ' 170,00 € '],
+	        "correct"       :   " 450,00 € ",
 	        "explanation"   :   "",
 	    },{
-	        "question"      :   "Le formule dell'interesse e dello sconto sono uguali",
-	        "image"         :   "https://organizzazioneaziendale.net/wp-content/uploads/2012/04/Pianificazione-e-Controllo-della-Produzione1.jpg",
-	        "choices"       :   ['Vero', 'Falso'],
-	        "correct"       :   "Vero",
+	        "question"      :   " Un prestito di 45000 al tasso del 4,5 % concesso per 250 giorni produce interessi per… ",
+	        "image"         :   "https://tuocoach.files.wordpress.com/2018/11/cambiamento-10.jpg?w=345&h=294",
+	        "choices"       :   [' 1.386,99 € ', ' 1.406,99 € ', ' 1.546,99 € ', ' 1.556,99 € '],
+	        "correct"       :   " 1.386,99 € ",
+	        "explanation"   :   "",
+	    },{
+	        "question"      :   " Un prestito di 25000 al tasso del 5 % concesso per 3 anni produce interessi per… ",
+	        "image"         :   "https://tuocoach.files.wordpress.com/2018/11/cambiamento-10.jpg?w=345&h=294",
+	        "choices"       :   [' 3.750,00 € ', ' 3.940,00 € ', ' 3.790,00 € ', ' 3.680,00 € '],
+	        "correct"       :   " 3.750,00 € ",
+	        "explanation"   :   "",
+	    },{
+	        "question"      :   " Un prestito di 30000 al tasso del 8 % concesso per 7 mesi produce interessi per… ",
+	        "image"         :   "https://tuocoach.files.wordpress.com/2018/11/cambiamento-10.jpg?w=345&h=294",
+	        "choices"       :   [' 1.400,00 € ', ' 1.590,00 € ', ' 1.630,00 € ', ' 1.590,00 € '],
+	        "correct"       :   " 1.400,00 € ",
+	        "explanation"   :   "",
+	    },{
+	        "question"      :   " Un prestito di 15000 al tasso del 7 % concesso per 80 giorni produce interessi per… ",
+	        "image"         :   "https://tuocoach.files.wordpress.com/2018/11/cambiamento-10.jpg?w=345&h=294",
+	        "choices"       :   [' 230,14 € ', ' 340,14 € ', ' 470,14 € ', ' 640,14 € '],
+	        "correct"       :   " 230,14 € ",
+	        "explanation"   :   "",
+	    },{
+	        "question"      :   " Un prestito di 20000 al tasso del 10 % concesso per 120 giorni produce interessi per… ",
+	        "image"         :   "https://tuocoach.files.wordpress.com/2018/11/cambiamento-10.jpg?w=345&h=294",
+	        "choices"       :   [' 657,53 € ', ' 717,53 € ', ' 747,53 € ', ' 887,53 € '],
+	        "correct"       :   " 657,53 € ",
 	        "explanation"   :   "",
 	    },
 ];
