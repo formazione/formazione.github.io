@@ -76,55 +76,69 @@ select(listanomi, 'nomestudente')
 
 <script src="https://www.gstatic.com/firebasejs/5.9.2/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/5.9.2/firebase-database.js"></script>
-<!-- configurazione  -->
-<script src="config.js"></script>
+
+
+<!-- (cognome) <br><input id="codice" type="text">(nome) -->
+
+
 <script>
-// nome del record del database 
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyDp-mWaWEI07pIdRUhi6vA-salEMRWz4hw",
+    authDomain: "quiz-e5e5a.firebaseapp.com",
+    databaseURL: "https://quiz-e5e5a.firebaseio.com",
+    projectId: "quiz-e5e5a",
+    storageBucket: "quiz-e5e5a.appspot.com",
+    messagingSenderId: "901845403492"
+  };
+  firebase.initializeApp(config);
+  let database = firebase.database();
 
-function start(recordname){
-	let ref = database.ref(recordname);
-	ref.on("value", gotData);
-	div_scoretot()
-}
+  // ###############################
+  let RECORD = "3ce2020_1"
+  // ###############################
 
-function div_scoretot(){
-	let scoretot = document.getElementById("scoretot");
-	scoretot.align = "center";
-}
+  // Nome del child dove vanno i risultati
 
+  let ref = database.ref(RECORD);
+  
+  // ref.set(); // delete all
+
+  ref.on("value", gotData)
+
+  let scoretot = document.getElementById("scoretot");
+scoretot.align = "center";
 function gotData(data){
-	// prende i valori e li scrive in scoretot
     x = data.val();
     for (name in x){
-  		scoretot.innerHTML += "(" + name + ":" + x[name] + ") ";
-	}
+  scoretot.innerHTML += "(" + name + ":" + x[name] + ") ";
+}
 }
 
-start("3ce2020_1")
 
 
-// code = {
-// 		"Scegli il nome": "",
-//         "Maiuri": "Sara",
-//         "Saja_P": "Pietro",
-//         "Saja_A": "Andrea",
-//         "Tierno": "Carmen",
-//         "Battagliese": "Ilaria",
-//         "Borrelli": "Federica",
-//         "Romano": "Luca",
-//         "Ciardi": "Federica",
-//         "Mautone": "Anthony",
-//         "Palladino": "Alessandro",
-//         "Ciardi": "Federica",
-//         "Carracino": "Dante",
-//         "Liguori": "Samuele",
-//         "Ricci": "Maria Teresa",
-//         "Ghiunghius": "Roberto",
-//         "Donnianni": "Francesco",
-//         "Merola":"Antonio",
-//         "Maiese": "Francesco",
-//         "Fluri": "Dennis"
-//   };
+code = {
+		"Scegli il nome": "",
+        "Maiuri": "Sara",
+        "Saja_P": "Pietro",
+        "Saja_A": "Andrea",
+        "Tierno": "Carmen",
+        "Battagliese": "Ilaria",
+        "Borrelli": "Federica",
+        "Romano": "Luca",
+        "Ciardi": "Federica",
+        "Mautone": "Anthony",
+        "Palladino": "Alessandro",
+        "Ciardi": "Federica",
+        "Carracino": "Dante",
+        "Liguori": "Samuele",
+        "Ricci": "Maria Teresa",
+        "Ghiunghius": "Roberto",
+        "Donnianni": "Francesco",
+        "Merola":"Antonio",
+        "Maiese": "Francesco",
+        "Fluri": "Dennis"
+  };
 
 
 
@@ -338,7 +352,7 @@ let quiz = [
 	    },{
 	        "question"      :   "Clicca sul calcolo sopracento",
 	        "image"         :   "https://qsfera.it/media/k2/items/cache/1698b847c2e4fe98c05adcdc9d420590_XL.jpg",
-	        "choices"       :   ['100 : (100 + r) = S : P', '100 : (100 + r) = S : (S + P)', '100 : (100 - r) = S : (S - P)', '100 : r = S : P'],
+	        "choices"       :   ['100 : (100+r) = S : (S+P)', '100 : (100+r) = S : P', '100 : (100-r) = S : (S-P)', '100 : r = S : P'],
 	        "correct"       :   "100 : (100 + r) = S : P",
 	        "explanation"   :   "",
 	    },{
@@ -362,7 +376,7 @@ let quiz = [
 	    },{
 	        "question"      :   "Lo sconto commerciale",
 	        "image"         :   "https://qsfera.it/media/k2/items/cache/1698b847c2e4fe98c05adcdc9d420590_XL.jpg",
-	        "choices"       :   ['è proporzionale al tempo', 'non è proporzionale al tempo'],
+	        "choices"       :   ['non è proporzionale al tempo', 'è proporzionale al tempo'],
 	        "correct"       :   "non è proporzionale al tempo",
 	        "explanation"   :   "",
 	    },{
@@ -385,13 +399,9 @@ let quiz = [
 	        "explanation"   :   "",
 	    },
 ];
-   
-   for (q in quiz){
-   	quiz[q]["image"] = "";
-   }   
+      
 
-   quiz.forEach(q => q.choices.scramble()); // Mescola l'ordine delle risposte
-   quiz = shuffle(quiz);   
+      
 var currentquestion = 0, score = 0, submt=true, picked;
 let count_speak = 0;
       
@@ -705,19 +715,99 @@ if (nome_in_lista){ // per password togli il commento dalla seguente
 	    
     </script>
     <style type="text/css" media="all">
- .btn:hover, .btn:active {color: blue; font-weight: 800; background-image: url("http://www.myiconfinder.com/uploads/iconsets/65192ff2984e9928d32fd577bc743ea5.png"); background-size: 100%; } /*        BODY                 */ body {margin: 0; font-family: "Consolas",Helvetica,Arial,sans-serif; font-size: 24px; line-height: 20px; color: #ffffff; background-color: #21517ee8; } h3.question {font-family: "Consolas",Helvetica,Arial,sans-serif; font-weight: normal; margin: 20px 0; padding: 0; font-style: italic; display: block; color: whitesmoke; } input { height:30px !important; } input[type=checkbox] { height:30px !important; margin-top:-3px !important; margin-right:5px !important; box-shadow:none; background-color:#ffffff; position:relative !important; } textarea { width: 90%; margin: 0 auto; display: block; } input[type=radio] { height:30px !important; margin-top:-3px !important; margin-right:5px !important; box-shadow:none; background-color:#ffffff; position:relative !important; } .form-group input, .form-group select 					{ height:30px; padding: 0px 12px; } .form-horizontal .form-group							{ margin:10px; } .formContainer .formControlLabel 						{ width:auto !important; min-width:150px; margin:0; padding:0; } .formControls											{ width:100%; padding:0; margin: 10px 0 20px auto; } .radio 													{ padding-top:0 !important; padding-left:8px !important; } .radio-inline											{ margin-right:10px; padding-top:0 !important; display:inline; } .bold													{ font-weight:bold; } .italic 												{ font-style:italic; } .clear					 								{ width:100%; margin:0 !important; } .rsform-block-submit 									{ display:none; } .show 													{ display: block !important; } #submit													{ margin:0 auto; display:block; } /* QUIZ STYLES */ li.choice-block {font-size: 28px}; ol,ul 													{ list-style:none; font-size: 48} strong 													{ font-weight:700; } #frame 													{ width:auto; max-width: 800px; background:transparent; margin:3px auto; padding:10px;     color: #f94a4a !important; } div#frame h2 ul li											{ color: white; width:auto; border-bottom:1px solid #bdbdbd; padding:0 0 5px 0; font-size:32px; } h3.question 											{ font-weight:normal; margin:20px 0; padding:0; font-style:italic; display:block; } p.pager 												{ margin:5px 0 5px; color:#999; text-align:right; } .qnumber 												{ font-size:25px; font-weight:bold; font-style:italic; vertical-align:bottom; } .number 												{ font-family: "Consolas",Helvetica,Arial,sans-serif;font-size:24px; font-weight:bold; font-style:normal; vertical-align:inherit; padding-right:10px; } .score 													{ width:100%; display:inline-block; margin:30px 0; font-size:100px; text-align:center; } img.question-image 										{ width:25%; height:auto; display:block; max-width:150px; margin:10px auto; border:1px solid #ccc; } #choice-block 											{ display:block; list-style:none; margin:0; padding:0; cursor: pointer; } /*	#submitbutton 											{ cursor:pointer; -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px; } */ /*	#submitbutton:hover 									{ background:#7b8da6; } */ #explanation 											{ width:auto; min-height:0px; margin:0 auto; padding:0px 0; text-align:center;} #explanation span 										{ font-weight:bold; padding-right:8px; } .choice-box 											{ width:100%;  display:block;  text-align:center;  margin:5px auto !important; padding:10px 0 !important; border:1px solid #bdbdbd; } .choice-box.btn {font-size: 28px;} .correct 												{ color:#51a351; font-size: 32px; display: block; margin-bottom: 5px; border-bottom: 1px #51a351 solid; padding-bottom: 5px; } .incorrect 												{ color:#f93939; font-size: 32px; display: block; margin-bottom: 5px; border-bottom: 1px #f93939 solid; padding-bottom: 5px; } #body{width:100vw; height:100vh; }
+      
+      .btn:hover, .btn:active {
+        color: blue;
+        font-weight: 800;
+      background-image: url("http://www.myiconfinder.com/uploads/iconsets/65192ff2984e9928d32fd577bc743ea5.png");
+        background-size: 100%;
+  
+      }
+
+      /*        BODY                 */
+body {
+    margin: 0;
+    font-family: "Consolas",Helvetica,Arial,sans-serif;
+    font-size: 24px;
+    line-height: 20px;
+    color: #ffffff;
+    background-color: #21517ee8;
+}
+    h3.question {
+    font-family: "Consolas",Helvetica,Arial,sans-serif;
+    font-weight: normal;
+    margin: 20px 0;
+    padding: 0;
+    font-style: italic;
+    display: block;
+    color: whitesmoke;
+    
+}  
+      
+		input 	
+      
+      { height:30px !important; }
+      
+		input[type=checkbox]
+      
+      { height:30px !important; margin-top:-3px !important; 
+        margin-right:5px !important; box-shadow:none; background-color:#ffffff;
+        position:relative !important; }
+      
+		textarea												
+      { width: 90%; margin: 0 auto; display: block; }
+      
+		input[type=radio]								
+      { height:30px !important; margin-top:-3px !important; margin-right:5px !important; box-shadow:none; background-color:#ffffff; position:relative !important; }
+      
+		.form-group input, .form-group select 					{ height:30px; padding: 0px 12px; }
+		.form-horizontal .form-group							{ margin:10px; }
+		.formContainer .formControlLabel 						{ width:auto !important; min-width:150px; margin:0; padding:0; }
+		.formControls											{ width:100%; padding:0; margin: 10px 0 20px auto; }
+		.radio 													{ padding-top:0 !important; padding-left:8px !important; }
+		.radio-inline											{ margin-right:10px; padding-top:0 !important; display:inline; }
+		.bold													{ font-weight:bold; }
+		.italic 												{ font-style:italic; }
+		.clear					 								{ width:100%; margin:0 !important; }
+		.rsform-block-submit 									{ display:none; }
+		.show 													{ display: block !important; }
+		#submit													{ margin:0 auto; display:block; }
+
+		/* QUIZ STYLES */
+      li.choice-block {font-size: 28px};
+		ol,ul 													{ list-style:none; font-size: 48}
+		strong 													{ font-weight:700; }
+		#frame 													{ width:auto; max-width: 800px; background:transparent; margin:3px auto; padding:10px;     color: #f94a4a !important; }
+		div#frame h2 ul li											{ color: white; width:auto; border-bottom:1px solid #bdbdbd; padding:0 0 5px 0; font-size:32px; }
+		h3.question 											{ font-weight:normal; margin:20px 0; padding:0; font-style:italic; display:block; }
+		p.pager 												{ margin:5px 0 5px; color:#999; text-align:right; }
+		.qnumber 												{ font-size:25px; font-weight:bold; font-style:italic; vertical-align:bottom; }
+		.number 												{ font-family: "Consolas",Helvetica,Arial,sans-serif;font-size:24px; font-weight:bold; font-style:normal; vertical-align:inherit; padding-right:10px; }
+		.score 													{ width:100%; display:inline-block; margin:30px 0; font-size:100px; text-align:center; }
+		img.question-image 										{ width:25%; height:auto; display:block; max-width:150px; margin:10px auto; border:1px solid #ccc; }
+		#choice-block 											{ display:block; list-style:none; margin:0; padding:0; cursor: pointer; }
+	/*	#submitbutton 											{ cursor:pointer; -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px; } */
+	/*	#submitbutton:hover 									{ background:#7b8da6; } */
+		#explanation 											{ width:auto; min-height:0px; margin:0 auto; padding:0px 0; text-align:center;}
+		#explanation span 										{ font-weight:bold; padding-right:8px; }
+		.choice-box 											{ width:100%;  display:block;  text-align:center;  margin:5px auto !important; padding:10px 0 !important; border:1px solid #bdbdbd; }
+      .choice-box.btn {font-size: 28px;}
+		.correct 												{ color:#51a351; font-size: 32px; display: block; margin-bottom: 5px; border-bottom: 1px #51a351 solid; padding-bottom: 5px; }
+		.incorrect 												{ color:#f93939; font-size: 32px; display: block; margin-bottom: 5px; border-bottom: 1px #f93939 solid; padding-bottom: 5px; }
+    
+#body{
+width:100vw;
+height:100vh;
+}
+ 
     </style>
 
 </head>
 
   
 </script>
-
-<!-- This avoids right menu click -->
-    <!-- <body  oncontextmenu="return false"> -->
-    <body >
-
-<a href="https://formazione.githun.io">Home</a><br>
+<!-- <body  oncontextmenu="return false"> -->
+<body>
  <h2><u>Percentuali e proporzioni</u></h2>
   <!-- home button 
   <div id="menuDiv">
