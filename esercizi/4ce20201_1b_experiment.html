@@ -16,18 +16,25 @@
 
 listanomi = [
 		"Scegli_il_cognome",
-        "Acanfora",
-        "Della_Torre",
-        "Graniti",
-        "Guariglia",
-        "Marino",
-        "Materazzi",
-        "Matrella",
-        "Niglio",
-        "Orlando",
-        "Serra_Davide",
-        "Serra_Giulia",
-        "Sessa",
+        "Agresta",
+        "Chirico",
+        "Cona",
+        "Cuda",
+        "DAgosto",
+        "DiNola",
+        "Filosa",
+        "Mariosa",
+        "Mazzeo",
+        "Merola",
+        "Pandullo",
+        "Paolino",
+        "Papa",
+        "Petrone",
+        "Ruggiero",
+        "Savino",
+        "Vassallo",
+        "Volpe",
+
             ];
 
 nomi = [
@@ -55,8 +62,7 @@ nomi = [
 
 
 function select(lista, idsel){
-	// l'errore era nel fatto che non avevo messo " + idsel + ", ma solo idsel
-	// inoltre devo togliere alla riga 469 la variabile codice che non uso più
+	
 	let html = "<select id=" + idsel + " name='carlist' form='carform'>";
 	for (nome of lista){
 	  html +="<option value='"+nome+"'>"+nome+"</option>";
@@ -76,7 +82,8 @@ select(listanomi, 'nomestudente')
 
 <script src="https://www.gstatic.com/firebasejs/5.9.2/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/5.9.2/firebase-database.js"></script>
-
+<br>
+<b id="rispostedate"></b><br>
 
 <!-- (cognome) <br><input id="codice" type="text">(nome) -->
 
@@ -94,27 +101,28 @@ select(listanomi, 'nomestudente')
   firebase.initializeApp(config);
   let database = firebase.database();
 
-  // ###############################
-  let RECORD = "3ce2020_1"
-  // ###############################
 
   // Nome del child dove vanno i risultati
 
-  let ref = database.ref(RECORD);
+  let ref = database.ref("4ce2020_1");
+  let risposte = database.ref("comunicazione");
   
   // ref.set(); // delete all
 
-  ref.on("value", gotData)
+  //ref.on("value", gotData)
+  risposte.on("value", gotData)
 
   let scoretot = document.getElementById("scoretot");
+  let rispostedate = document.getElementById("rispostedate");
 scoretot.align = "center";
 function gotData(data){
     x = data.val();
     for (name in x){
-  scoretot.innerHTML += "(" + name + ":" + x[name] + ") ";
+  //scoretot.innerHTML += "(" + name + ":" + x[name] + ") ";
+  rispostedate.innerHTML += "(" + name + ":" + x[name] + ") ";
 }
 }
-
+	
 
 
 code = {
@@ -241,57 +249,52 @@ if (!("scramble" in Array.prototype)) {
       
 // let quiz = createQuiz(); // returns a list with data in {} for each question
  
-let quiz = [	
-		{
+let quiz = [
+{
 	        "question"      :   "Un rapporto è",
-	        "image"         :   "https://image.freepik.com/free-vector/time-management-planning-events-flat-vector-illustration-design-business-concept-date-planning-organizing-events-events-management-icon-design_1223-140.jpg",
+	        "image"         :   "",
 	        "choices"       :   ['il risultato di una divisione', "l'uguaglianza di due numeri", "l'uguaglianza di due prodotti", "l'uguaglianza di due divisioni"],
 	        "correct"       :   "il risultato di una divisione",
 	        "explanation"   :   "",
-	    },
-
-	    {
+	    },{
 	        "question"      :   "La proporzione",
-	        "image"         :   "https://image.freepik.com/free-vector/time-management-planning-events-flat-vector-illustration-design-business-concept-date-planning-organizing-events-events-management-icon-design_1223-140.jpg",
+	        "image"         :   "",
 	        "choices"       :   ["l'uguaglianza di due rapporti", 'il risultato di una divisione', "l'uguaglianza di due numeri", "l'uguaglianza di due prodotti"],
 	        "correct"       :   "l'uguaglianza di due rapporti",
 	        "explanation"   :   "",
-	    },
-
-
-	    {
+	    },{
 	        "question"      :   "Il secondo e il terzo termine di una proporzione sono detti",
-	        "image"         :   "https://www.accademia.bcc.it/fusione/img/04-pianificazione-commerciale.png",
+	        "image"         :   "",
 	        "choices"       :   ['medi', 'estremi', 'aliquote', 'somme di riferimento'],
 	        "correct"       :   "medi",
 	        "explanation"   :   "",
 	    },{
 	        "question"      :   "Dividendo una somma per il totale dei parametri in un riparto ottengo",
-	        "image"         :   "https://tuocoach.files.wordpress.com/2018/11/cambiamento-10.jpg?w=345&h=294",
+	        "image"         :   "",
 	        "choices"       :   ['il coefficiente di riparto', 'una percentuale', 'un prodotto', "un'aliquota"],
 	        "correct"       :   "il coefficiente di riparto",
 	        "explanation"   :   "",
 	    },{
 	        "question"      :   "100 sta a 20 come 200 sta a x",
-	        "image"         :   "https://image.freepik.com/free-vector/time-management-planning-events-flat-vector-illustration-design-business-concept-date-planning-organizing-events-events-management-icon-design_1223-140.jpg",
+	        "image"         :   "",
 	        "choices"       :   ['x = 40', 'x = 10', 'x = 5', 'x = 6'],
 	        "correct"       :   "x = 40",
 	        "explanation"   :   "",
 	    },{
 	        "question"      :   "100 sta a 20 come 250 sta a x",
-	        "image"         :   "https://organizzazioneaziendale.net/wp-content/uploads/2012/04/Pianificazione-e-Controllo-della-Produzione1.jpg",
+	        "image"         :   "",
 	        "choices"       :   ['x = 50', 'x = 10', 'x = 5', 'x = 6'],
 	        "correct"       :   "x = 50",
 	        "explanation"   :   "",
 	    },{
 	        "question"      :   "100 sta a 25 come 200 sta a x",
-	        "image"         :   "https://qsfera.it/media/k2/items/cache/1698b847c2e4fe98c05adcdc9d420590_XL.jpg",
+	        "image"         :   "",
 	        "choices"       :   ['x = 50', 'x = 10', 'x = 5', 'x = 6'],
 	        "correct"       :   "x = 50",
 	        "explanation"   :   "",
 	    },{
 	        "question"      :   "100 sta a 25 come 300 sta a x",
-	        "image"         :   "https://www.abparma.it/documenti/immagini/elaborati_pianificazione.jpg",
+	        "image"         :   "",
 	        "choices"       :   ['x = 75', 'x = 50', 'x = 40', 'x = 6'],
 	        "correct"       :   "x = 75",
 	        "explanation"   :   "",
@@ -303,13 +306,13 @@ let quiz = [
 	        "explanation"   :   "",
 	    },{
 	        "question"      :   "Nel calcolo percentuale inverso calcolo:",
-	        "image"         :   "https://www.accademia.bcc.it/fusione/img/04-pianificazione-commerciale.png",
+	        "image"         :   "",
 	        "choices"       :   ['S o r', 'P', 'S', 'r'],
 	        "correct"       :   "S o r",
 	        "explanation"   :   "",
 	    },{
 	        "question"      :   "Cosa significa percentuale?",
-	        "image"         :   "https://help.sap.com/doc/saphelp_byd1805_it/2018.05/it-IT/KTP/Software-Components/01200615320100003379/WEKTRA_for_Work_Centers/SCM/Ess/BillOfOperations/BOO_Structure1.png",
+	        "image"         :   "",
 	        "choices"       :   ['Si indica il valore di una grandezza riferito a 100', 'Si indica il valore di una grandezza riferito a 1000', 'Si indica il valore di una grandezza riferito a 10', 'Si indica il valore di una grandezza riferito a 1'],
 	        "correct"       :   "Si indica il valore di una grandezza riferito a 100",
 	        "explanation"   :   "",
@@ -321,7 +324,7 @@ let quiz = [
 	        "explanation"   :   "",
 	    },{
 	        "question"      :   "Se non conosco un estremo lo trovo facendo",
-	        "image"         :   "https://www.accademia.bcc.it/fusione/img/04-pianificazione-commerciale.png",
+	        "image"         :   "",
 	        "choices"       :   ['medio x medio : estremo noto', 'medio : medio : estremo noto', 'medio : medio x estremo noto', 'estrem x estremo : medio noto'],
 	        "correct"       :   "medio x medio : estremo noto",
 	        "explanation"   :   "",
@@ -333,79 +336,83 @@ let quiz = [
 	        "explanation"   :   "",
 	    },{
 	        "question"      :   "Cosa significa r",
-	        "image"         :   "https://help.sap.com/doc/saphelp_byd1805_it/2018.05/it-IT/KTP/Software-Components/01200615320100003379/WEKTRA_for_Work_Centers/SCM/Ess/BillOfOperations/BOO_Structure1.png",
+	        "image"         :   "",
 	        "choices"       :   ['aliquota percentuale', 'proporzione', 'percentuale totale', 'somma di riferimento'],
 	        "correct"       :   "aliquota percentuale",
 	        "explanation"   :   "",
 	    },{
 	        "question"      :   "Cosa significa S",
-	        "image"         :   "https://image.freepik.com/free-vector/time-management-planning-events-flat-vector-illustration-design-business-concept-date-planning-organizing-events-events-management-icon-design_1223-140.jpg",
+	        "image"         :   "",
 	        "choices"       :   ['somma di riferimento', 'aliquota percentuale', 'proporzione', 'percentuale totale'],
 	        "correct"       :   "somma di riferimento",
 	        "explanation"   :   "",
 	    },{
 	        "question"      :   "Cosa significa P",
-	        "image"         :   "https://help.sap.com/doc/saphelp_byd1805_it/2018.05/it-IT/KTP/Software-Components/01200615320100003379/WEKTRA_for_Work_Centers/SCM/Ess/BillOfOperations/BOO_Structure1.png",
+	        "image"         :   "",
 	        "choices"       :   ['percentuale totale', 'aliquota percentuale', 'proporzione', 'somma di riferimento'],
 	        "correct"       :   "percentuale totale",
 	        "explanation"   :   "",
 	    },{
 	        "question"      :   "Clicca sul calcolo sopracento",
-	        "image"         :   "https://qsfera.it/media/k2/items/cache/1698b847c2e4fe98c05adcdc9d420590_XL.jpg",
+	        "image"         :   "",
 	        "choices"       :   ['100 : (100 + r) = S : P', '100 : (100 + r) = S : (S + P)', '100 : (100 - r) = S : (S - P)', '100 : r = S : P'],
 	        "correct"       :   "100 : (100 + r) = S : P",
 	        "explanation"   :   "",
 	    },{
 	        "question"      :   "Clicca sul calcolo sottocento",
-	        "image"         :   "https://www.accademia.bcc.it/fusione/img/04-pianificazione-commerciale.png",
+	        "image"         :   "",
 	        "choices"       :   ['100 : (100 - r) = S : (S - P)', '100 : (100 + r) = S : P', '100 : (100 + r) = S : (S + P)', '100 : r = S : P'],
 	        "correct"       :   "100 : (100 - r) = S : (S - P)",
 	        "explanation"   :   "",
 	    },{
 	        "question"      :   "È il compenso che spetta a chi presta una somma di denaro",
-	        "image"         :   "https://www.abparma.it/documenti/immagini/elaborati_pianificazione.jpg",
+	        "image"         :   "",
 	        "choices"       :   ['interesse', 'utile', 'busta paga', 'salario'],
 	        "correct"       :   "interesse",
 	        "explanation"   :   "",
 	    },{
 	        "question"      :   "Lo sconto mercantile",
-	        "image"         :   "https://tuocoach.files.wordpress.com/2018/11/cambiamento-10.jpg?w=345&h=294",
+	        "image"         :   "",
 	        "choices"       :   ['non è proporzionale al tempo', 'è proporzionale al tempo'],
 	        "correct"       :   "non è proporzionale al tempo",
 	        "explanation"   :   "",
 	    },{
 	        "question"      :   "Lo sconto commerciale",
-	        "image"         :   "https://qsfera.it/media/k2/items/cache/1698b847c2e4fe98c05adcdc9d420590_XL.jpg",
-	        "choices"       :   ['è proporzionale al tempo', 'non è proporzionale al tempo'],
+	        "image"         :   "",
+	        "choices"       :   ['non è proporzionale al tempo', 'è proporzionale al tempo'],
 	        "correct"       :   "non è proporzionale al tempo",
 	        "explanation"   :   "",
 	    },{
 	        "question"      :   "Il Montante è",
-	        "image"         :   "https://image.freepik.com/free-vector/time-management-planning-events-flat-vector-illustration-design-business-concept-date-planning-organizing-events-events-management-icon-design_1223-140.jpg",
+	        "image"         :   "",
 	        "choices"       :   ['M = C + I', 'M = C - I'],
 	        "correct"       :   "M = C + I",
 	        "explanation"   :   "",
 	    },{
 	        "question"      :   "Il valore attuale commerciale è",
-	        "image"         :   "https://qsfera.it/media/k2/items/cache/1698b847c2e4fe98c05adcdc9d420590_XL.jpg",
+	        "image"         :   "",
 	        "choices"       :   ['Vc = C - Sc', 'Vc = C + Sc'],
 	        "correct"       :   "Vc = C - Sc",
 	        "explanation"   :   "",
 	    },{
 	        "question"      :   "Le formule dell'interesse e dello sconto sono uguali",
-	        "image"         :   "https://organizzazioneaziendale.net/wp-content/uploads/2012/04/Pianificazione-e-Controllo-della-Produzione1.jpg",
+	        "image"         :   "",
 	        "choices"       :   ['Vero', 'Falso'],
 	        "correct"       :   "Vero",
 	        "explanation"   :   "",
 	    },
 ];
-   
+      
+// in alcuni file manda questo
+
    for (q in quiz){
    	quiz[q]["image"] = "";
    }   
 
    quiz.forEach(q => q.choices.scramble()); // Mescola l'ordine delle risposte
-   quiz = shuffle(quiz);   
+   quiz = shuffle(quiz);
+//============================== serviva a randomizzare
+      
 var currentquestion = 0, score = 0, submt=true, picked;
 let count_speak = 0;
       
@@ -644,7 +651,7 @@ if (nome_in_lista){ // per password togli il commento dalla seguente
 			$(document.createElement('h4')).addClass('score').text(Math.round(score/quiz.length * 100) + '%').insertAfter('#question');			
 			$(document.createElement('h4')).addClass('score').text("").insertAfter('#question');			
 				
-			$(document.createElement('h4')).addClass('score').text(nomestudente.value).insertAfter('#question');			
+			$(document.createElement('h4')).addClass('score').text(nomestudente.value).insertAfter('#question');		
 		}
 
         /**
@@ -719,18 +726,99 @@ if (nome_in_lista){ // per password togli il commento dalla seguente
 	    
     </script>
     <style type="text/css" media="all">
- .btn:hover, .btn:active {color: blue; font-weight: 800; background-image: url("http://www.myiconfinder.com/uploads/iconsets/65192ff2984e9928d32fd577bc743ea5.png"); background-size: 100%; } /*        BODY                 */ body {margin: 0; font-family: "Consolas",Helvetica,Arial,sans-serif; font-size: 24px; line-height: 20px; color: #ffffff; background-color: #21517ee8; } h3.question {font-family: "Consolas",Helvetica,Arial,sans-serif; font-weight: normal; margin: 20px 0; padding: 0; font-style: italic; display: block; color: whitesmoke; } input { height:30px !important; } input[type=checkbox] { height:30px !important; margin-top:-3px !important; margin-right:5px !important; box-shadow:none; background-color:#ffffff; position:relative !important; } textarea { width: 90%; margin: 0 auto; display: block; } input[type=radio] { height:30px !important; margin-top:-3px !important; margin-right:5px !important; box-shadow:none; background-color:#ffffff; position:relative !important; } .form-group input, .form-group select 					{ height:30px; padding: 0px 12px; } .form-horizontal .form-group							{ margin:10px; } .formContainer .formControlLabel 						{ width:auto !important; min-width:150px; margin:0; padding:0; } .formControls											{ width:100%; padding:0; margin: 10px 0 20px auto; } .radio 													{ padding-top:0 !important; padding-left:8px !important; } .radio-inline											{ margin-right:10px; padding-top:0 !important; display:inline; } .bold													{ font-weight:bold; } .italic 												{ font-style:italic; } .clear					 								{ width:100%; margin:0 !important; } .rsform-block-submit 									{ display:none; } .show 													{ display: block !important; } #submit													{ margin:0 auto; display:block; } /* QUIZ STYLES */ li.choice-block {font-size: 28px}; ol,ul 													{ list-style:none; font-size: 48} strong 													{ font-weight:700; } #frame 													{ width:auto; max-width: 800px; background:transparent; margin:3px auto; padding:10px;     color: #f94a4a !important; } div#frame h2 ul li											{ color: white; width:auto; border-bottom:1px solid #bdbdbd; padding:0 0 5px 0; font-size:32px; } h3.question 											{ font-weight:normal; margin:20px 0; padding:0; font-style:italic; display:block; } p.pager 												{ margin:5px 0 5px; color:#999; text-align:right; } .qnumber 												{ font-size:25px; font-weight:bold; font-style:italic; vertical-align:bottom; } .number 												{ font-family: "Consolas",Helvetica,Arial,sans-serif;font-size:24px; font-weight:bold; font-style:normal; vertical-align:inherit; padding-right:10px; } .score 													{ width:100%; display:inline-block; margin:30px 0; font-size:100px; text-align:center; } img.question-image 										{ width:25%; height:auto; display:block; max-width:150px; margin:10px auto; border:1px solid #ccc; } #choice-block 											{ display:block; list-style:none; margin:0; padding:0; cursor: pointer; } /*	#submitbutton 											{ cursor:pointer; -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px; } */ /*	#submitbutton:hover 									{ background:#7b8da6; } */ #explanation 											{ width:auto; min-height:0px; margin:0 auto; padding:0px 0; text-align:center;} #explanation span 										{ font-weight:bold; padding-right:8px; } .choice-box 											{ width:100%;  display:block;  text-align:center;  margin:5px auto !important; padding:10px 0 !important; border:1px solid #bdbdbd; } .choice-box.btn {font-size: 28px;} .correct 												{ color:#51a351; font-size: 32px; display: block; margin-bottom: 5px; border-bottom: 1px #51a351 solid; padding-bottom: 5px; } .incorrect 												{ color:#f93939; font-size: 32px; display: block; margin-bottom: 5px; border-bottom: 1px #f93939 solid; padding-bottom: 5px; } #body{width:100vw; height:100vh; }
+      
+      .btn:hover, .btn:active {
+        color: blue;
+        font-weight: 800;
+      background-image: url("http://www.myiconfinder.com/uploads/iconsets/65192ff2984e9928d32fd577bc743ea5.png");
+        background-size: 100%;
+  
+      }
+
+      /*        BODY                 */
+body {
+    margin: 0;
+    font-family: "Consolas",Helvetica,Arial,sans-serif;
+    font-size: 24px;
+    line-height: 20px;
+    color: #ffffff;
+    background-color: #21517ee8;
+}
+    h3.question {
+    font-family: "Consolas",Helvetica,Arial,sans-serif;
+    font-weight: normal;
+    margin: 20px 0;
+    padding: 0;
+    font-style: italic;
+    display: block;
+    color: whitesmoke;
+    
+}  
+      
+		input 	
+      
+      { height:30px !important; }
+      
+		input[type=checkbox]
+      
+      { height:30px !important; margin-top:-3px !important; 
+        margin-right:5px !important; box-shadow:none; background-color:#ffffff;
+        position:relative !important; }
+      
+		textarea												
+      { width: 90%; margin: 0 auto; display: block; }
+      
+		input[type=radio]								
+      { height:30px !important; margin-top:-3px !important; margin-right:5px !important; box-shadow:none; background-color:#ffffff; position:relative !important; }
+      
+		.form-group input, .form-group select 					{ height:30px; padding: 0px 12px; }
+		.form-horizontal .form-group							{ margin:10px; }
+		.formContainer .formControlLabel 						{ width:auto !important; min-width:150px; margin:0; padding:0; }
+		.formControls											{ width:100%; padding:0; margin: 10px 0 20px auto; }
+		.radio 													{ padding-top:0 !important; padding-left:8px !important; }
+		.radio-inline											{ margin-right:10px; padding-top:0 !important; display:inline; }
+		.bold													{ font-weight:bold; }
+		.italic 												{ font-style:italic; }
+		.clear					 								{ width:100%; margin:0 !important; }
+		.rsform-block-submit 									{ display:none; }
+		.show 													{ display: block !important; }
+		#submit													{ margin:0 auto; display:block; }
+
+		/* QUIZ STYLES */
+      li.choice-block {font-size: 28px};
+		ol,ul 													{ list-style:none; font-size: 48}
+		strong 													{ font-weight:700; }
+		#frame 													{ width:auto; max-width: 800px; background:transparent; margin:3px auto; padding:10px;     color: #f94a4a !important; }
+		div#frame h2 ul li											{ color: white; width:auto; border-bottom:1px solid #bdbdbd; padding:0 0 5px 0; font-size:32px; }
+		h3.question 											{ font-weight:normal; margin:20px 0; padding:0; font-style:italic; display:block; }
+		p.pager 												{ margin:5px 0 5px; color:#999; text-align:right; }
+		.qnumber 												{ font-size:25px; font-weight:bold; font-style:italic; vertical-align:bottom; }
+		.number 												{ font-family: "Consolas",Helvetica,Arial,sans-serif;font-size:24px; font-weight:bold; font-style:normal; vertical-align:inherit; padding-right:10px; }
+		.score 													{ width:100%; display:inline-block; margin:30px 0; font-size:100px; text-align:center; }
+		img.question-image 										{ width:25%; height:auto; display:block; max-width:150px; margin:10px auto; border:1px solid #ccc; }
+		#choice-block 											{ display:block; list-style:none; margin:0; padding:0; cursor: pointer; }
+	/*	#submitbutton 											{ cursor:pointer; -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px; } */
+	/*	#submitbutton:hover 									{ background:#7b8da6; } */
+		#explanation 											{ width:auto; min-height:0px; margin:0 auto; padding:0px 0; text-align:center;}
+		#explanation span 										{ font-weight:bold; padding-right:8px; }
+		.choice-box 											{ width:100%;  display:block;  text-align:center;  margin:5px auto !important; padding:10px 0 !important; border:1px solid #bdbdbd; }
+      .choice-box.btn {font-size: 28px;}
+		.correct 												{ color:#51a351; font-size: 32px; display: block; margin-bottom: 5px; border-bottom: 1px #51a351 solid; padding-bottom: 5px; }
+		.incorrect 												{ color:#f93939; font-size: 32px; display: block; margin-bottom: 5px; border-bottom: 1px #f93939 solid; padding-bottom: 5px; }
+    
+#body{
+width:100vw;
+height:100vh;
+}
+ 
     </style>
 
 </head>
 
   
 </script>
+<body  oncontextmenu="return false">
 
-<!-- This avoids right menu click -->
-    <body  oncontextmenu="return false">
-
-<a href="https://formazione.githun.io">Home</a><br>
  <h2><u>Percentuali e proporzioni</u></h2>
   <!-- home button 
   <div id="menuDiv">
@@ -744,6 +832,6 @@ if (nome_in_lista){ // per password togli il commento dalla seguente
 
 </div>
 
-<p>Scegli il tuo cognome in alto. In questo modo il tuo risultato verrà registrato a tuo nome.</p>
+<p>Scegli il tuo cognome in alto a destra e inserisci il nome dopo CODICE. In questo modo il tuo risultato verrà registrato</p>
 <p>Puoi svolgere l'esercizio più volte. Verrà registrato l'ultimo tentativo.<p>
 Un punto ogni 10% di percentuale di risposte esatte.

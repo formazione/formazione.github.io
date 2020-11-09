@@ -190,27 +190,27 @@ if (!("scramble" in Array.prototype)) {
 }		
 
       
-let mydom = `L'industria dei viaggi ha un forte impatto sia dal punto di vista economico che ___sociale___politico___artistico
-Il turismo contribuisce alla formazione del PIL per il ___10% ___20% ___50%
-In Italia, il turismo dà occupazione a circa ___2 milioni di addetti ___1 milione di addetti
-Il turismo è uno dei settori che ___meno risente della crisi ___più risente della crisi
-Il turismo ha avuto una leggera flessione nel ___2009 ___2010 ___2005
-Il turismo è cresciuto ad un ritmo medio del ___4,5% ___1% ___8%
-L'Europa sta subendo una forte concorrenza da parte delle destinazioni ___asiatiche ___africane ___australiane ___del Nord America
-Indica il turismo interno ___incoming ___outgoing ___strenghts
-La quota di mercato è data dal ___rapporto tra vendite dell'impresa e del totale delle imprese del mercato ___prodotto tra le vendite dell'impresa e il totale delle imprese del mercato
-Il turismo di massa nasce dagli anni ___60___70___80___90
-La crisi petrolifera ci fu negli anni___70___80___90___2000
-Il turismo diventa un bisogno primario dagli anni ___80___70___90___2000
-La domanda turistica è ___poco elastica___molto elastica
-L'euro viene quotato con il metodo___certo per incerto___incerto per certo
-Nel metodo certo per incerto rimane fissa___la valuta nazionale___la valuta estera
-Il saldo della bilancia turistica italiana è in ___attivo___passivo
-I CINR sono i consumi dei ___turisti stranieri in Italia ___turisti italiani all'estero
-I CERI sono i consumi dei___turisti italiani all'estero ___turisti stranieri in Italia
-L'Istituto nazionale di statistica si chiama___ISTAT___ENIT___ONT___ISNART
-L'agenzia nazionale del turismo si chiama ___ENIT___ISTAT___ONT___ISNART
-I turisti rinuncianno facilmente ai viaggi se i prezzi aumentano___no___sì`;
+// let mydom = `L'industria dei viaggi ha un forte impatto sia dal punto di vista economico che ___sociale___politico___artistico
+// Il turismo contribuisce alla formazione del PIL per il ___10% ___20% ___50%
+// In Italia, il turismo dà occupazione a circa ___2 milioni di addetti ___1 milione di addetti
+// Il turismo è uno dei settori che ___meno risente della crisi ___più risente della crisi
+// Il turismo ha avuto una leggera flessione nel ___2009 ___2010 ___2005
+// Il turismo è cresciuto ad un ritmo medio del ___4,5% ___1% ___8%
+// L'Europa sta subendo una forte concorrenza da parte delle destinazioni ___asiatiche ___africane ___australiane ___del Nord America
+// Indica il turismo interno ___incoming ___outgoing ___strenghts
+// La quota di mercato è data dal ___rapporto tra vendite dell'impresa e del totale delle imprese del mercato ___prodotto tra le vendite dell'impresa e il totale delle imprese del mercato
+// Il turismo di massa nasce dagli anni ___60___70___80___90
+// La crisi petrolifera ci fu negli anni___70___80___90___2000
+// Il turismo diventa un bisogno primario dagli anni ___80___70___90___2000
+// La domanda turistica è ___poco elastica___molto elastica
+// L'euro viene quotato con il metodo___certo per incerto___incerto per certo
+// Nel metodo certo per incerto rimane fissa___la valuta nazionale___la valuta estera
+// Il saldo della bilancia turistica italiana è in ___attivo___passivo
+// I CINR sono i consumi dei ___turisti stranieri in Italia ___turisti italiani all'estero
+// I CERI sono i consumi dei___turisti italiani all'estero ___turisti stranieri in Italia
+// L'Istituto nazionale di statistica si chiama___ISTAT___ENIT___ONT___ISNART
+// L'agenzia nazionale del turismo si chiama ___ENIT___ISTAT___ONT___ISNART
+// I turisti rinuncianno facilmente ai viaggi se i prezzi aumentano___no___sì`;
 
       
 //   // -------- substitute this -----------------    
@@ -398,7 +398,15 @@ let quiz = [
 	    },
 ];
       
+// in alcuni file manda questo
 
+   for (q in quiz){
+   	quiz[q]["image"] = "";
+   }   
+
+   quiz.forEach(q => q.choices.scramble()); // Mescola l'ordine delle risposte
+   quiz = shuffle(quiz);
+//============================== serviva a randomizzare
       
 var currentquestion = 0, score = 0, submt=true, picked;
 let count_speak = 0;

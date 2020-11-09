@@ -376,7 +376,7 @@ let quiz = [
 	    },{
 	        "question"      :   "Lo sconto commerciale",
 	        "image"         :   "https://qsfera.it/media/k2/items/cache/1698b847c2e4fe98c05adcdc9d420590_XL.jpg",
-	        "choices"       :   ['è proporzionale al tempo', 'non è proporzionale al tempo'],
+	        "choices"       :   ['non è proporzionale al tempo', 'è proporzionale al tempo'],
 	        "correct"       :   "non è proporzionale al tempo",
 	        "explanation"   :   "",
 	    },{
@@ -400,12 +400,16 @@ let quiz = [
 	    },
 ];
    
+// in alcuni file manda questo
+
    for (q in quiz){
    	quiz[q]["image"] = "";
    }   
 
    quiz.forEach(q => q.choices.scramble()); // Mescola l'ordine delle risposte
-   quiz = shuffle(quiz);   
+   quiz = shuffle(quiz);
+//============================== serviva a randomizzare
+
 var currentquestion = 0, score = 0, submt=true, picked;
 let count_speak = 0;
       
