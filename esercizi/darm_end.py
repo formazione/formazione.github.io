@@ -104,7 +104,9 @@ jQuery(document).ready(function($){
           .css({'font-size':'36px', 'font-weight':'bold', 'border-color':'#51a351', 'color':'#fff'});
 				$('#explanation')
           .html('<span class="correct">ESATTO!</span> ' + (quiz[currentquestion]['explanation']));
-              let ff = ["sì","ok","bene","bravo","yes","corretto","esatto","perfetto","eh sì","ma sì","certo","giusto","sìì"].sort(function(){return 0.5 - Math.random()})[0];
+              let ff = ["sì","ok","bene","bravo","corretto","esatto","perfetto","eh sì","ma sì","certo","giusto","sì",
+              "molto bene","ottimo","stai andando bene", "continua così", "ottimo lavoro", "va benissimo", "certamente"]
+              .sort(function(){return 0.5 - Math.random()})[0];
         speak(ff);
 				      score++;
               count_speak = 0;
