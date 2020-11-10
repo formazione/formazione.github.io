@@ -68,7 +68,7 @@ def createDarm():
 	for d in qdic:
 		htmlpage += makeQ(d, qdic[d])
 	htmlpage += endpage
-	createfile(f"esercizio_3ce.html",htmlpage)
+	createfile(f"turismo_3ce.html",htmlpage)
 
 menu()
 createDarm()
