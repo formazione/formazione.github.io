@@ -19,8 +19,8 @@ quiz = [{
 	    },{
 	        "question"      :   "Gli escursionisti",
 	        "image"         :   "https://tuocoach.files.wordpress.com/2018/11/cambiamento-10.jpg?w=345&h=294",
-	        "choices"       :   ['pernottano', 'non pernottano'],
-	        "correct"       :   "pernottano",
+	        "choices"       :   ['non pernottano', 'pernottano'],
+	        "correct"       :   "non pernottano",
 	        "explanation"   :   "",
 	    },{
 	        "question"      :   "I viaggi leisure sono",
