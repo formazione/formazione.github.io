@@ -1,73 +1,61 @@
 <head>
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="viewport" content="initial-scale=1.0">
+	<meta name="viewport" content="initial-scale=1.0">
     <title>Quiz</title>
     <!-- jquery for maximum compatibility -->
-  <link type="text/css" rel="stylesheet" href="https://stackpath.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css">
+	<link type="text/css" rel="stylesheet" href="https://stackpath.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css">
     <!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>-->
-  <script src="https://code.jquery.com/jquery-1.11.1.min.js" integrity="sha256-VAvG3sHdS5LqTT+5A/aeq/bZGa/Uj04xKxY8KM/w9EE=" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+	<script src="https://code.jquery.com/jquery-1.11.1.min.js" integrity="sha256-VAvG3sHdS5LqTT+5A/aeq/bZGa/Uj04xKxY8KM/w9EE=" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
 
 
 <b id="scoretot"></b><br>
+
+
+
+
+<!--
+
+											TEMPLATE PER LA 3 C E
+							
+							file collegati
+
+
+								- listanomi3ce.js   lista dei nomi         Personalizzare per altre classi
+								- dati\turismo3ce.js 		domande
+
+
+							Da fare:
+								crea script python per creare le domande e salvarle in dati\turismo3ce.js
+								prendendole dal file txt marketing in dati\
+
+								crea una GUI per caricare il file txt dare il nome al file html
+								e scegliere la classe (listanomi3ce.js, ad esempio)
+
+							Oppure: usare domande.js per tutti i file html e mettere in una cartella
+							specifica ogni esercizio
+
+
+-->
+
+<script src="listanomi3ce.js"></script>
+
+
 <script>
-
-listanomi = [
-    "Scegli_il_cognome",
-        "Acanfora",
-        "Della_Torre",
-        "Graniti",
-        "Guariglia",
-        "Marino",
-        "Materazzi",
-        "Matrella",
-        "Niglio",
-        "Orlando",
-        "Serra_Davide",
-        "Serra_Giulia",
-        "Sessa",
-            ];
-
-nomi = [
-    "Scegli_nome",
-        "Sara",
-        "Pietro",
-        "Andrea",
-        "Carmen",
-        "Ilaria",
-        "Federica",
-        "Luca",
-        "Federica",
-        "Anthony",
-        "Alessandro",
-        "Federica",
-        "Dante",
-        "Samuele",
-        "Maria Teresa",
-        "Roberto",
-        "Francesco",
-        "Antonio",
-        "Francesco",
-        "Dennis"
-  ];
-
-
 function select(lista, idsel){
-  // l'errore era nel fatto che non avevo messo " + idsel + ", ma solo idsel
-  // inoltre devo togliere alla riga 469 la variabile codice che non uso più
-  let html = "<select id=" + idsel + " name='carlist' form='carform'>";
-  for (nome of lista){
-    html +="<option value='"+nome+"'>"+nome+"</option>";
-  }
-  html += "</select>";
-  document.write(html);
+	// l'errore era nel fatto che non avevo messo " + idsel + ", ma solo idsel
+	// inoltre devo togliere alla riga 469 la variabile codice che non uso più
+	let html = "<select id=" + idsel + " name='carlist' form='carform'>";
+	for (nome of lista){
+	  html +="<option value='"+nome+"'>"+nome+"</option>";
+	}
+	html += "</select>";
+	document.write(html);
 }
 
 select(listanomi, 'nomestudente')
-
-
 
 
 </script>
@@ -82,53 +70,28 @@ select(listanomi, 'nomestudente')
 // nome del record del database 
 
 function start(recordname){
-  // crea il record - ricorda di cambiare il record per 
-  // esercizi diversi
-  ref = database.ref(recordname);
-  ref.child("Scegli_il_cognome").set(0)
-  ref.on("value", gotData);
-  div_scoretot()
+	// crea il record - ricorda di cambiare il record per 
+	// esercizi diversi
+	ref = database.ref(recordname);
+	ref.child("Scegli_il_cognome").set(0)
+	ref.on("value", gotData);
+	div_scoretot()
 }
 
 function div_scoretot(){
-  let scoretot = document.getElementById("scoretot");
-  scoretot.align = "center";
+	let scoretot = document.getElementById("scoretot");
+	scoretot.align = "center";
 }
 
 function gotData(data){
-  // prende i valori e li scrive in scoretot
+	// prende i valori e li scrive in scoretot
     x = data.val();
     for (name in x){
-      scoretot.innerHTML += "(" + name + ":" + x[name] + ") ";
-  }
+  		scoretot.innerHTML += "(" + name + ":" + x[name] + ") ";
+	}
 }
 
-start("3ce2020_1")
-
-
-// code = {
-//    "Scegli il nome": "",
-//         "Maiuri": "Sara",
-//         "Saja_P": "Pietro",
-//         "Saja_A": "Andrea",
-//         "Tierno": "Carmen",
-//         "Battagliese": "Ilaria",
-//         "Borrelli": "Federica",
-//         "Romano": "Luca",
-//         "Ciardi": "Federica",
-//         "Mautone": "Anthony",
-//         "Palladino": "Alessandro",
-//         "Ciardi": "Federica",
-//         "Carracino": "Dante",
-//         "Liguori": "Samuele",
-//         "Ricci": "Maria Teresa",
-//         "Ghiunghius": "Roberto",
-//         "Donnianni": "Francesco",
-//         "Merola":"Antonio",
-//         "Maiese": "Francesco",
-//         "Fluri": "Dennis"
-//   };
-
+start("3ce2020_prova")
 
 
     var quiztitle = "Pianificazione e programmazione";
@@ -158,7 +121,7 @@ function shuffle(array) {
   }
   return array;
 }
-      
+	    
 if (!("scramble" in Array.prototype)) {
   Object.defineProperty(Array.prototype, "scramble", {
     enumerable: false,
@@ -173,133 +136,44 @@ if (!("scramble" in Array.prototype)) {
       return this;
     }
   });
-}   
-quiz = [{
-	        "question"      :   "I turisti viaggiano in modo",
-	        "image"         :   "https://tuocoach.files.wordpress.com/2018/11/cambiamento-10.jpg?w=345&h=294",
-	        "choices"       :   ['irregolare', 'regolare'],
-	        "correct"       :   "irregolare",
-	        "explanation"   :   "",
-	    },{
-	        "question"      :   "I turisti viaggiano",
-	        "image"         :   "https://tuocoach.files.wordpress.com/2018/11/cambiamento-10.jpg?w=345&h=294",
-	        "choices"       :   ['non per ottenere un reddito', 'per ottenere un reddito'],
-	        "correct"       :   "non per ottenere un reddito",
-	        "explanation"   :   "",
-	    },{
-	        "question"      :   "I turisti",
-	        "image"         :   "https://tuocoach.files.wordpress.com/2018/11/cambiamento-10.jpg?w=345&h=294",
-	        "choices"       :   ['pernottano', 'non pernottano'],
-	        "correct"       :   "pernottano",
-	        "explanation"   :   "",
-	    },{
-	        "question"      :   "Gli escursionisti",
-	        "image"         :   "https://tuocoach.files.wordpress.com/2018/11/cambiamento-10.jpg?w=345&h=294",
-	        "choices"       :   ['pernottano', 'non pernottano'],
-	        "correct"       :   "pernottano",
-	        "explanation"   :   "",
-	    },{
-	        "question"      :   "I viaggi leisure sono",
-	        "image"         :   "https://tuocoach.files.wordpress.com/2018/11/cambiamento-10.jpg?w=345&h=294",
-	        "choices"       :   ['viaggi di piacere', "viaggi d'affari"],
-	        "correct"       :   "viaggi di piacere",
-	        "explanation"   :   "",
-	    },{
-	        "question"      :   "Il turismo contrende le relazioni tra",
-	        "image"         :   "https://tuocoach.files.wordpress.com/2018/11/cambiamento-10.jpg?w=345&h=294",
-	        "choices"       :   ['turisti, ambiente, residenti e operatori economici del settore', 'turisti e operatori economici del settore'],
-	        "correct"       :   "turisti, ambiente, residenti e operatori economici del settore",
-	        "explanation"   :   "",
-	    },{
-	        "question"      :   "Il turismo produttivo è formato da",
-	        "image"         :   "https://tuocoach.files.wordpress.com/2018/11/cambiamento-10.jpg?w=345&h=294",
-	        "choices"       :   ['operatori economici del settore', 'turisti', 'residenti', 'ambiente'],
-	        "correct"       :   "operatori economici del settore",
-	        "explanation"   :   "",
-	    },{
-	        "question"      :   "I turisti italiani che viaggiano in Italia fanno parte del turismo",
-	        "image"         :   "https://tuocoach.files.wordpress.com/2018/11/cambiamento-10.jpg?w=345&h=294",
-	        "choices"       :   ['domestico', 'interno', 'nazionale', 'internazionale'],
-	        "correct"       :   "domestico",
-	        "explanation"   :   "",
-	    },{
-	        "question"      :   "i turisti italiani e stranieri che viaggiano in ITALIA fanno parte del turismo",
-	        "image"         :   "https://tuocoach.files.wordpress.com/2018/11/cambiamento-10.jpg?w=345&h=294",
-	        "choices"       :   ['interno', 'domestico', 'nazionale', 'internazionale'],
-	        "correct"       :   "interno",
-	        "explanation"   :   "",
-	    },{
-	        "question"      :   "i turisti italiani che viaggiano in ITALIA ed ESTERO fanno parte del turismo",
-	        "image"         :   "https://tuocoach.files.wordpress.com/2018/11/cambiamento-10.jpg?w=345&h=294",
-	        "choices"       :   ['nazionale', 'domestico', 'interno', 'internazionale'],
-	        "correct"       :   "nazionale",
-	        "explanation"   :   "",
-	    },{
-	        "question"      :   "Tutti i turisti che oltrepassano la frontiera fanno parte del turismo",
-	        "image"         :   "https://tuocoach.files.wordpress.com/2018/11/cambiamento-10.jpg?w=345&h=294",
-	        "choices"       :   ['internazionale', 'domestico', 'interno', 'nazionale'],
-	        "correct"       :   "internazionale",
-	        "explanation"   :   "",
-	    },{
-	        "question"      :   "Le attività offerte al turista in entrata in un Paese fanno parte del",
-	        "image"         :   "https://tuocoach.files.wordpress.com/2018/11/cambiamento-10.jpg?w=345&h=294",
-	        "choices"       :   ['turismo produttivo incoming', 'turismo produttivo outgoing'],
-	        "correct"       :   "turismo produttivo incoming",
-	        "explanation"   :   "",
-	    },{
-	        "question"      :   "Le attività offerte al turista in uscita da un Paese fanno parte del",
-	        "image"         :   "https://tuocoach.files.wordpress.com/2018/11/cambiamento-10.jpg?w=345&h=294",
-	        "choices"       :   ['turismo produttivo outgoing', 'turismo produttivo incoming'],
-	        "correct"       :   "turismo produttivo outgoing",
-	        "explanation"   :   "",
-	    },{
-	        "question"      :   "Quali sono gli effetti negativi del turismo per i residenti",
-	        "image"         :   "https://tuocoach.files.wordpress.com/2018/11/cambiamento-10.jpg?w=345&h=294",
-	        "choices"       :   ['inquinamento ed aumento dei prezzi', 'riduzione del reddito', "riduzione dell'occupazione", 'peggioramento del livello di benessere'],
-	        "correct"       :   "inquinamento ed aumento dei prezzi",
-	        "explanation"   :   "",
-	    },{
-	        "question"      :   "Il turismo sostenibile mira a",
-	        "image"         :   "https://tuocoach.files.wordpress.com/2018/11/cambiamento-10.jpg?w=345&h=294",
-	        "choices"       :   ["favorire un turismo che non altera l'ambiente", 'sostenere le imprese che inquinano'],
-	        "correct"       :   "favorire un turismo che non altera l'ambiente",
-	        "explanation"   :   "",
-	    },{
-	        "question"      :   "Il bisogno è",
-	        "image"         :   "https://tuocoach.files.wordpress.com/2018/11/cambiamento-10.jpg?w=345&h=294",
-	        "choices"       :   ['uno stato di insoddisfazione', 'uno stato di soddisfazione'],
-	        "correct"       :   "uno stato di insoddisfazione",
-	        "explanation"   :   "",
-	    },
-];
+}		
 
-quiz.forEach(q => q.choices.scramble()); // Mescola l'ordine delle risposte
-quiz = shuffle(quiz);
+</script>
+
+
+<script src="dati\turismo3ce.js"></script>
+
+<script>
+   
+   for (q in quiz){
+   	quiz[q]["image"] = "";
+   }   
+
+   quiz.forEach(q => q.choices.scramble()); // Mescola l'ordine delle risposte
+   quiz = shuffle(quiz);   
 var currentquestion = 0, score = 0, submt=true, picked;
 let count_speak = 0;
+      
+      
 jQuery(document).ready(function($){
-
   
-  
-  
-  
-	function addChoices(choices){
-			if(typeof choices !== "undefined" && $.type(choices) == "array"){
-				$('#choice-block').empty();
-				for(var i=0;i<choices.length; i++){
+  function addChoices(choices){
+      if(typeof choices !== "undefined" && $.type(choices) == "array"){
+        $('#choice-block').empty();
+        for(var i=0;i<choices.length; i++){
           // added .css({'font-size':'36px'}) il 2 marzo 2019
-				$(document
+        $(document
           .createElement('li'))
           .addClass('choice choice-box btn')
           .attr('data-index', i)
           .text(choices[i])
           .appendTo('#choice-block')
           .css({'font-size':'28px'});		//  Aggiunge risposte
-        }
-			}
-        
-		}
-        
+      }
+    }
+
+  }
+                 
 
   
   
@@ -329,17 +203,14 @@ jQuery(document).ready(function($){
           .remove();
 			}
 
-    
 			addChoices(quiz[currentquestion]['choices']);
-      
 			setupButtons();
-
-			// parla solo una volta ======|||||||||=====>>>
-            if (count_speak==0 && is_on==1){
+      // parla solo una volta ======|||||||||=====>>>
+      if (count_speak==0 && is_on==1){
         speak(quiz[currentquestion]['question']);
         count_speak = 1;
       }
-           // parla solo una volta ======|||||||||=====>>>
+    // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  parla solo una volta ======|||||||||=====>>>
     
 			jQuery(document).ready(function($){
 				$("#question").html(function(){
@@ -364,10 +235,8 @@ jQuery(document).ready(function($){
         } // function nextQuestion
 
 
-  function processQuestion(choice){
-    
-    
-    // ===========   Risposta ESATTA!  ==============================
+function processQuestion(choice){  
+    // ===========   Risposta ESATTA!  ============================== //
     if(quiz[currentquestion]['choices'][choice] == quiz[currentquestion]['correct'])
       {
 				$('.choice')
@@ -376,15 +245,14 @@ jQuery(document).ready(function($){
           .css({'font-size':'36px', 'font-weight':'bold', 'border-color':'#51a351', 'color':'#fff'});
 				$('#explanation')
           .html('<span class="correct">ESATTO!</span> ' + (quiz[currentquestion]['explanation']));
-              let ff = ["sì","ok","bene","bravo","corretto","esatto","perfetto","eh sì","ma sì","certo","giusto","sì",
-              "molto bene","ottimo","stai andando bene", "continua così", "ottimo lavoro", "va benissimo", "certamente"]
-              .sort(function(){return 0.5 - Math.random()})[0];
+        
+        let ff = ["Giusto", "Corretto", "Sì", "Bene", "Molto bene", "Ok", "Esatto", "Perfetto", "Risposta esatta"].sort(function(){return 0.5 - Math.random()})[0];
         speak(ff);
-				      score++;
-              count_speak = 0;
+        score++;
+        count_speak = 0;
 			} 
       
-    
+    // ================================ |  Risposta sbagliata  | ======================== //
     else {
       $('.choice')
             .eq(choice)
@@ -409,6 +277,7 @@ jQuery(document).ready(function($){
           .addClass('btn-info')
           .css({'border-color':'#3a87ad', 'color':'#fff'})
           .on('click', function(){
+          
 					    $(this).text('GET QUIZ RESULTS')
                 .on('click');
 					endQuiz();
@@ -419,25 +288,18 @@ jQuery(document).ready(function($){
       else if (currentquestion < quiz.length){ 
       // SE CI SONO ANCORA DOMANDE, RIMETTE IL PULSANTE CONTROLLA LA RISPOSTA
         
-				$('#submitbutton').html('VAI ALLA PROSSIMA DOMANDA &raquo;')
+				$('#submitbutton').html(' VERIFICA >>> ')
           .removeClass('btn-success')
           .addClass('btn-warning')
           .css({'font-weight':'bold', 'border-color':'#faa732', 'color':'#fff'})
-          .on('click', function(){
+          .off('click', function(){
           
-          
-        $(this).text(' CONTROLLA LA RISPOSTA ')
+        $(this).text('VERIFICA')
           .removeClass('btn-warning')
           .addClass('btn-success')
           .css({'font-weight':'bold', 'border-color':'#51a351', 'color':'#fff'})
           .on('click');
-				  
-         ///////////////////////////////////////////////////////////////////////////////////////////////
-         ////////////////////////////////// nextQuestion(); // VA ALLA PROSSIMA DOMANDA
-         //////////////////////////////////////////////////////////////////////////////////////////////
           
-          
-
 				})
   			
 			} 
@@ -453,16 +315,25 @@ jQuery(document).ready(function($){
 		}
 
        
-  
+                                  /*
+                                  
+                                  Qui sotto c'è il codice che segue
+                                  la scelta di una opzione
+                                                |
+                                                |
+                                               \/
+                                  */
 	
   
   function setupButtons(){
-      //speak(quiz[currentquestion]['question'])
 			$('.choice').on('click', function(){
-
-		synth.cancel();
+      //speak(quiz[currentquestion]['choice'])
+    // Ogni volta che clicco un pulsante
+      
+        synth.cancel();
         is_on = 0;
-
+    
+            
 				picked = $(this).attr('data-index');
 				$('.choice').removeAttr('style').off('mouseout mouseover');
 				$(this).css({'font-weight':'900', 'border-color':'#51a351', 'color':'#51a351', 'background' : 'gold'});
@@ -487,8 +358,38 @@ jQuery(document).ready(function($){
 			$('#choice-block').empty();
 			$('#submitbutton').remove();
 			$('.rsform-block-submit').addClass('show');
-			$('#question').text("You got " + score + " out of " + quiz.length + " correct.");
+			$('#question').text("Hai risposto bene a " + score + " domande su " + quiz.length + " complessive.");
+      speak("hai risposto in modo corretto a " + score + " domande su " + quiz.length + " complessive");
+
+
+
+
+// AGGIUNGE IL PUNTEGGIO AL DATABASE, SE NON HA GIÀ RISPOSTO
+scoretot.innerHTML = "";
+let nome = nomestudente.value;
+let nome_in_lista = listanomi.includes(nomestudente.value);
+// let password_corretta = code[nomestudente.value]==codice.value;
+//let prima_volta = x[nomestudente.value] == undefined;
+if (nome_in_lista){ // per password togli il commento dalla seguente
+// if (nome_in_lista && password_corretta){
+  ref.child(nome).set(Math.round(score/quiz.length * 100));
+}
+// ========================================================
+ 
+
+
+      let percent = Math.round(score/quiz.length * 100);
+      speak(nomestudente.value);
+      if (percent == 100) speak("Hai ottenuto il massimo punteggio! Ottimo!");
+      else if (percent < 100 && percent >80) speak("Bel risultato, complimenti");
+      else if (percent < 80 && percent >70) speak("Hai risposto in modo discreto, bravo.");
+      else if (percent < 70 && percent >60) speak("HAi risposto in modo sufficientemente corretto.");
+      else speak("Devi impegnarti di più. Riprova");
+    
 			$(document.createElement('h4')).addClass('score').text(Math.round(score/quiz.length * 100) + '%').insertAfter('#question');			
+			$(document.createElement('h4')).addClass('score').text("").insertAfter('#question');			
+				
+			$(document.createElement('h4')).addClass('score').text(nomestudente.value).insertAfter('#question');			
 		}
 
         /**
@@ -526,7 +427,7 @@ jQuery(document).ready(function($){
 				addChoices(quiz[0]['choices']);
 				
 				//add submit button
-				$(document.createElement('div')).addClass('btn-success choice-box').attr('id', 'submitbutton').text('- CONTROLLA LA RISPOSTA -').css({'font-weight':'bold', 'color':'#fff','padding':'30px 0', 'border-radius':'10px'}).appendTo('#frame');
+				$(document.createElement('div')).addClass('btn-warning choice-box').attr('id', 'submitbutton').text('VERIFICA >>>').css({'font-weight':'bold', 'color':'#fff','padding':'30px 0', 'border-radius':'10px'}).appendTo('#frame');
 				
 				setupButtons();
 			}
@@ -563,115 +464,31 @@ jQuery(document).ready(function($){
 	    
     </script>
     <style type="text/css" media="all">
-      
-      .btn:hover, .btn:active {
-        color: blue;
-        font-weight: 800;
-      background-image: url("http://www.myiconfinder.com/uploads/iconsets/65192ff2984e9928d32fd577bc743ea5.png");
-        background-size: 100%;
-  
-      }
-
-      /*        BODY                 */
-body {
-    margin: 0;
-    font-family: "Consolas",Helvetica,Arial,sans-serif;
-    font-size: 24px;
-    line-height: 20px;
-    color: #ffffff;
-    background-color: #21517ee8;
-}
-    h3.question {
-    font-family: "Consolas",Helvetica,Arial,sans-serif;
-    font-weight: normal;
-    margin: 20px 0;
-    padding: 0;
-    font-style: italic;
-    display: block;
-    color: whitesmoke;
-    
-}  
-      
-		input 	
-      
-      { height:30px !important; }
-      
-		input[type=checkbox]
-      
-      { height:30px !important; margin-top:-3px !important; 
-        margin-right:5px !important; box-shadow:none; background-color:#ffffff;
-        position:relative !important; }
-      
-		textarea												
-      { width: 90%; margin: 0 auto; display: block; }
-      
-		input[type=radio]								
-      { height:30px !important; margin-top:-3px !important; margin-right:5px !important; box-shadow:none; background-color:#ffffff; position:relative !important; }
-      
-		.form-group input, .form-group select 					{ height:30px; padding: 0px 12px; }
-		.form-horizontal .form-group							{ margin:10px; }
-		.formContainer .formControlLabel 						{ width:auto !important; min-width:150px; margin:0; padding:0; }
-		.formControls											{ width:100%; padding:0; margin: 10px 0 20px auto; }
-		.radio 													{ padding-top:0 !important; padding-left:8px !important; }
-		.radio-inline											{ margin-right:10px; padding-top:0 !important; display:inline; }
-		.bold													{ font-weight:bold; }
-		.italic 												{ font-style:italic; }
-		.clear					 								{ width:100%; margin:0 !important; }
-		.rsform-block-submit 									{ display:none; }
-		.show 													{ display: block !important; }
-		#submit													{ margin:0 auto; display:block; }
-
-		/* QUIZ STYLES */
-      li.choice-block {font-size: 28px};
-		ol,ul 													{ list-style:none; font-size: 48}
-		strong 													{ font-weight:700; }
-		#frame 													{ width:auto; max-width: 800px; background:transparent; margin:3px auto; padding:10px;     color: #f94a4a !important; }
-		div#frame h2 ul li											{ color: white; width:auto; border-bottom:1px solid #bdbdbd; padding:0 0 5px 0; font-size:32px; }
-		h3.question 											{ font-weight:normal; margin:20px 0; padding:0; font-style:italic; display:block; }
-		p.pager 												{ margin:5px 0 5px; color:#999; text-align:right; }
-		.qnumber 												{ font-size:25px; font-weight:bold; font-style:italic; vertical-align:bottom; }
-		.number 												{ font-family: "Consolas",Helvetica,Arial,sans-serif;font-size:24px; font-weight:bold; font-style:normal; vertical-align:inherit; padding-right:10px; }
-		.score 													{ width:100%; display:inline-block; margin:30px 0; font-size:100px; text-align:center; }
-		img.question-image 										{ width:25%; height:auto; display:block; max-width:150px; margin:10px auto; border:1px solid #ccc; }
-		#choice-block 											{ display:block; list-style:none; margin:0; padding:0; cursor: pointer; }
-	/*	#submitbutton 											{ cursor:pointer; -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px; } */
-	/*	#submitbutton:hover 									{ background:#7b8da6; } */
-		#explanation 											{ width:auto; min-height:0px; margin:0 auto; padding:0px 0; text-align:center;}
-		#explanation span 										{ font-weight:bold; padding-right:8px; }
-		.choice-box 											{ width:100%;  display:block;  text-align:center;  margin:5px auto !important; padding:10px 0 !important; border:1px solid #bdbdbd; }
-      .choice-box.btn {font-size: 28px;}
-		.correct 												{ color:#51a351; font-size: 32px; display: block; margin-bottom: 5px; border-bottom: 1px #51a351 solid; padding-bottom: 5px; }
-		.incorrect 												{ color:#f93939; font-size: 32px; display: block; margin-bottom: 5px; border-bottom: 1px #f93939 solid; padding-bottom: 5px; }
-    
-#body{
-width:100vw;
-height:100vh;
-}
- 
+ .btn:hover, .btn:active {color: blue; font-weight: 800; background-image: url("http://www.myiconfinder.com/uploads/iconsets/65192ff2984e9928d32fd577bc743ea5.png"); background-size: 100%; } /*        BODY                 */ body {margin: 0; font-family: "Consolas",Helvetica,Arial,sans-serif; font-size: 24px; line-height: 20px; color: #ffffff; background-color: #21517ee8; } h3.question {font-family: "Consolas",Helvetica,Arial,sans-serif; font-weight: normal; margin: 20px 0; padding: 0; font-style: italic; display: block; color: whitesmoke; } input { height:30px !important; } input[type=checkbox] { height:30px !important; margin-top:-3px !important; margin-right:5px !important; box-shadow:none; background-color:#ffffff; position:relative !important; } textarea { width: 90%; margin: 0 auto; display: block; } input[type=radio] { height:30px !important; margin-top:-3px !important; margin-right:5px !important; box-shadow:none; background-color:#ffffff; position:relative !important; } .form-group input, .form-group select 					{ height:30px; padding: 0px 12px; } .form-horizontal .form-group							{ margin:10px; } .formContainer .formControlLabel 						{ width:auto !important; min-width:150px; margin:0; padding:0; } .formControls											{ width:100%; padding:0; margin: 10px 0 20px auto; } .radio 													{ padding-top:0 !important; padding-left:8px !important; } .radio-inline											{ margin-right:10px; padding-top:0 !important; display:inline; } .bold													{ font-weight:bold; } .italic 												{ font-style:italic; } .clear					 								{ width:100%; margin:0 !important; } .rsform-block-submit 									{ display:none; } .show 													{ display: block !important; } #submit													{ margin:0 auto; display:block; } /* QUIZ STYLES */ li.choice-block {font-size: 28px}; ol,ul 													{ list-style:none; font-size: 48} strong 													{ font-weight:700; } #frame 													{ width:auto; max-width: 800px; background:transparent; margin:3px auto; padding:10px;     color: #f94a4a !important; } div#frame h2 ul li											{ color: white; width:auto; border-bottom:1px solid #bdbdbd; padding:0 0 5px 0; font-size:32px; } h3.question 											{ font-weight:normal; margin:20px 0; padding:0; font-style:italic; display:block; } p.pager 												{ margin:5px 0 5px; color:#999; text-align:right; } .qnumber 												{ font-size:25px; font-weight:bold; font-style:italic; vertical-align:bottom; } .number 												{ font-family: "Consolas",Helvetica,Arial,sans-serif;font-size:24px; font-weight:bold; font-style:normal; vertical-align:inherit; padding-right:10px; } .score 													{ width:100%; display:inline-block; margin:30px 0; font-size:100px; text-align:center; } img.question-image 										{ width:25%; height:auto; display:block; max-width:150px; margin:10px auto; border:1px solid #ccc; } #choice-block 											{ display:block; list-style:none; margin:0; padding:0; cursor: pointer; } /*	#submitbutton 											{ cursor:pointer; -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px; } */ /*	#submitbutton:hover 									{ background:#7b8da6; } */ #explanation 											{ width:auto; min-height:0px; margin:0 auto; padding:0px 0; text-align:center;} #explanation span 										{ font-weight:bold; padding-right:8px; } .choice-box 											{ width:100%;  display:block;  text-align:center;  margin:5px auto !important; padding:10px 0 !important; border:1px solid #bdbdbd; } .choice-box.btn {font-size: 28px;} .correct 												{ color:#51a351; font-size: 32px; display: block; margin-bottom: 5px; border-bottom: 1px #51a351 solid; padding-bottom: 5px; } .incorrect 												{ color:#f93939; font-size: 32px; display: block; margin-bottom: 5px; border-bottom: 1px #f93939 solid; padding-bottom: 5px; } #body{width:100vw; height:100vh; }
     </style>
 
 </head>
 
-<body>
   
+</script>
 
-  <!-- home button -->
+<!-- This avoids right menu click -->
+    <!-- <body  oncontextmenu="return false"> -->
+    <body >
+
+<a href="https://formazione.github.io">Home</a><br>
+ <h2><u>Percentuali e proporzioni</u></h2>
+  <!-- home button 
   <div id="menuDiv">
 <script src="https://quarta.glitch.me/dropdownclassi.js"></script>
 </div>
 
+  -->
 
-  
 
 <div class="form-group rsform-block rsform-block-framecontent"><div id="frame" role="content"></div>
 
 </div>
-<script>
-  
-  
-  </script>
-			
 
-</body>
-</html>
+<p>Scegli il tuo cognome nella lista in altro a sinistra</p>
 
