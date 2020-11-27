@@ -1,0 +1,20 @@
+Denaro in cassa
+Finanziario
+Economico
+
+Crediti v/clienti
+Finanziario
+Economico
+
+Merci c/acquisti
+Economico
+Finanziario
+
+Merci c/vendite
+Economico
+Finanziario
+
+Iva ns Credito
+Finanziario
+Economico
+

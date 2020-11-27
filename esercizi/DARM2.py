@@ -27,25 +27,33 @@ def makeQ(q,ch):
 
 qdic = {}
 def mklist(filename):
-	"Return a dictionary and a list of questions and aswers in a txt file where there is a question and answers for each line separated by an empty line for every group of question and answers"
+	"Opens the filename (from user choice see menu())\
+	splits each empty line = \n \n \
+	\
+	"
 	global qdic
 	flist = []
-	with open(filename, 'r', encoding='utf-8') as file:
-		file = file.read()
-		file = file.split("\n\n")
-	for eachstring in file:
-		flist.append(eachstring.split("\n"))
-	for eachsublist in flist:
-		for e in eachsublist:
-		
-		# avoid empty lines at the end
-			if e == '':
-				eachsublist.pop(eachsublist.index(e))
-		# avoid empty lines at the end
-		
-		question = eachsublist[0]
-		eachsublist.pop(0)
-		qdic[question] = eachsublist
+	def openfile(filename):
+		"Read text in file and split for empty lines"
+		with open(filename, 'r', encoding='utf-8') as file:
+			file = file.read()
+			file = file.split("\n\n")
+		return file
+
+	def create_dic(listquestions):
+		for eachstring in listofquestions:
+			flist.append(eachstring.split("\n"))
+		for eachsublist in flist:
+			for e in eachsublist:
+				if e == '':
+					eachsublist.pop(eachsublist.index(e))
+			question = eachsublist[0]
+			eachsublist.pop(0)
+			qdic[question] = eachsublist
+		return qdic
+
+	listofquestions = openfile(filename)
+	qdic = create_dic(listofquestions)
 	return qdic
 
 
