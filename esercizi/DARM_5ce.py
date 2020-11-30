@@ -82,6 +82,7 @@ def file_write(filename, content):
 def replace_js_title(filetext, filename):
 	filetext = filetext.replace("marketing.js", filename + ".js")
 	filetext = filetext.replace("Percentuali e proporzioni", filename)
+	filetext = filetext.replace("5ce2020_prova", filename)
 	return filetext
 
 def create_html(filename):
@@ -89,7 +90,7 @@ def create_html(filename):
      .js contains the questions\
      .html contains the html code\
 	"
-	filetext = open_template("template3_5ce.html")
+	filetext = open_template("template4_5ce.html")
 	filetext = replace_js_title(filetext, filename)
 	file_write(filename + ".html", filetext)
 	os.startfile(filename + ".html")
