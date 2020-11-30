@@ -1,0 +1,55 @@
+quiz = [{
+	        "question"      :   "Norma fondamentale dello Stato",
+	        "image"         :   "https://tuocoach.files.wordpress.com/2018/11/cambiamento-10.jpg?w=345&h=294",
+	        "choices"       :   ['Costituzione', 'Leggi costituzionali', 'Legge ordinaria', 'decreti legislativi', 'decreti legge', 'leggi regionali', 'regolamenti', 'usi e consuetudini'],
+	        "correct"       :   "Costituzione",
+	        "explanation"   :   "",
+	    },{
+	        "question"      :   "Possono modificare la costituzione",
+	        "image"         :   "https://tuocoach.files.wordpress.com/2018/11/cambiamento-10.jpg?w=345&h=294",
+	        "choices"       :   ['Leggi costituzionali', 'Costituzione', 'Legge ordinaria', 'decreti legislativi', 'decreti legge', 'leggi regionali', 'regolamenti', 'usi e consuetudini'],
+	        "correct"       :   "Leggi costituzionali",
+	        "explanation"   :   "",
+	    },{
+	        "question"      :   "Sono approvate dal Parlamento",
+	        "image"         :   "https://tuocoach.files.wordpress.com/2018/11/cambiamento-10.jpg?w=345&h=294",
+	        "choices"       :   ['Leggi ordinarie', 'Costituzione', 'Leggi costituzionali', 'decreti legislativi', 'decreti legge', 'leggi regionali', 'regolamenti', 'usi e consuetudini'],
+	        "correct"       :   "Leggi ordinarie",
+	        "explanation"   :   "",
+	    },{
+	        "question"      :   "Approvati dal Governo grazie ad una legge delega",
+	        "image"         :   "https://tuocoach.files.wordpress.com/2018/11/cambiamento-10.jpg?w=345&h=294",
+	        "choices"       :   ['decreti legislativi', 'Costituzione', 'Leggi costituzionali', 'Legge ordinaria', 'decreti legge', 'leggi regionali', 'regolamenti', 'usi e consuetudini'],
+	        "correct"       :   "decreti legislativi",
+	        "explanation"   :   "",
+	    },{
+	        "question"      :   "Approvati dal Governo in casi di urgenza",
+	        "image"         :   "https://tuocoach.files.wordpress.com/2018/11/cambiamento-10.jpg?w=345&h=294",
+	        "choices"       :   ['decreti legge', 'Costituzione', 'Leggi costituzionali', 'Legge ordinaria', 'decreti legislativi', 'leggi regionali', 'regolamenti', 'usi e consuetudini'],
+	        "correct"       :   "decreti legge",
+	        "explanation"   :   "",
+	    },{
+	        "question"      :   "Le leggi sul turismo sono di competenza di",
+	        "image"         :   "https://tuocoach.files.wordpress.com/2018/11/cambiamento-10.jpg?w=345&h=294",
+	        "choices"       :   ['Regioni', 'Stato'],
+	        "correct"       :   "Regioni",
+	        "explanation"   :   "",
+	    },{
+	        "question"      :   "Sono approvate dai consigli regionali",
+	        "image"         :   "https://tuocoach.files.wordpress.com/2018/11/cambiamento-10.jpg?w=345&h=294",
+	        "choices"       :   ['leggi regionali', 'Costituzione', 'Leggi costituzionali', 'Legge ordinaria', 'decreti legislativi', 'decreti legge', 'regolamenti', 'usi e consuetudini'],
+	        "correct"       :   "leggi regionali",
+	        "explanation"   :   "",
+	    },{
+	        "question"      :   "Sono emanati dal Governo e sono subordinati alla legge",
+	        "image"         :   "https://tuocoach.files.wordpress.com/2018/11/cambiamento-10.jpg?w=345&h=294",
+	        "choices"       :   ['regolamenti', 'Costituzione', 'Leggi costituzionali', 'Legge ordinaria', 'decreti legislativi', 'decreti legge', 'leggi regionali', 'usi e consuetudini'],
+	        "correct"       :   "regolamenti",
+	        "explanation"   :   "",
+	    },{
+	        "question"      :   "Fonti non scritte",
+	        "image"         :   "https://tuocoach.files.wordpress.com/2018/11/cambiamento-10.jpg?w=345&h=294",
+	        "choices"       :   ['usi e consuetudini', 'Costituzione', 'Leggi costituzionali', 'Legge ordinaria', 'decreti legislativi', 'decreti legge', 'leggi regionali', 'regolamenti'],
+	        "correct"       :   "usi e consuetudini",
+	        "explanation"   :   "",
+	    },];

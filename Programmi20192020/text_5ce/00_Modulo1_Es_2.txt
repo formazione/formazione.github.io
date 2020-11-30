@@ -1,0 +1,3 @@
+<script>
+window.location.href = "https://formazione.github.io/esercizi/leggi.html";
+</script>
