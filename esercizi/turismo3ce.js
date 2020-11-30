@@ -19,8 +19,8 @@ quiz = [{
 	    },{
 	        "question"      :   "Gli escursionisti",
 	        "image"         :   "https://tuocoach.files.wordpress.com/2018/11/cambiamento-10.jpg?w=345&h=294",
-	        "choices"       :   ['non pernottano', 'pernottano'],
-	        "correct"       :   "non pernottano",
+	        "choices"       :   ['pernottano', 'non pernottano'],
+	        "correct"       :   "pernottano",
 	        "explanation"   :   "",
 	    },{
 	        "question"      :   "I viaggi leisure sono",
@@ -35,13 +35,13 @@ quiz = [{
 	        "correct"       :   "turisti, ambiente, residenti e operatori economici del settore",
 	        "explanation"   :   "",
 	    },{
-	        "question"      :   "Il turismo produttivo � formato da",
+	        "question"      :   "Il turismo produttivo è formato da",
 	        "image"         :   "https://tuocoach.files.wordpress.com/2018/11/cambiamento-10.jpg?w=345&h=294",
 	        "choices"       :   ['operatori economici del settore', 'turisti', 'residenti', 'ambiente'],
 	        "correct"       :   "operatori economici del settore",
 	        "explanation"   :   "",
 	    },{
-	        "question"      :   "I turisti italiani che viaggiano in Italia fanno parte del turismo",
+	        "question"      :   "I turisti italiani che viaggiano solo in Italia fanno parte del turismo",
 	        "image"         :   "https://tuocoach.files.wordpress.com/2018/11/cambiamento-10.jpg?w=345&h=294",
 	        "choices"       :   ['domestico', 'interno', 'nazionale', 'internazionale'],
 	        "correct"       :   "domestico",
@@ -65,13 +65,13 @@ quiz = [{
 	        "correct"       :   "internazionale",
 	        "explanation"   :   "",
 	    },{
-	        "question"      :   "Le attivit� offerte al turista in entrata in un Paese fanno parte del",
+	        "question"      :   "Le attività offerte al turista in entrata in un Paese fanno parte del",
 	        "image"         :   "https://tuocoach.files.wordpress.com/2018/11/cambiamento-10.jpg?w=345&h=294",
 	        "choices"       :   ['turismo produttivo incoming', 'turismo produttivo outgoing'],
 	        "correct"       :   "turismo produttivo incoming",
 	        "explanation"   :   "",
 	    },{
-	        "question"      :   "Le attivit� offerte al turista in uscita da un Paese fanno parte del",
+	        "question"      :   "Le attività offerte al turista in uscita da un Paese fanno parte del",
 	        "image"         :   "https://tuocoach.files.wordpress.com/2018/11/cambiamento-10.jpg?w=345&h=294",
 	        "choices"       :   ['turismo produttivo outgoing', 'turismo produttivo incoming'],
 	        "correct"       :   "turismo produttivo outgoing",
@@ -89,9 +89,69 @@ quiz = [{
 	        "correct"       :   "favorire un turismo che non altera l'ambiente",
 	        "explanation"   :   "",
 	    },{
-	        "question"      :   "Il bisogno �",
+	        "question"      :   "Il bisogno è",
 	        "image"         :   "https://tuocoach.files.wordpress.com/2018/11/cambiamento-10.jpg?w=345&h=294",
 	        "choices"       :   ['uno stato di insoddisfazione', 'uno stato di soddisfazione'],
 	        "correct"       :   "uno stato di insoddisfazione",
+	        "explanation"   :   "",
+	    },{
+	        "question"      :   "È l'insieme dei prodotti immessi nel mercato dalle imprese",
+	        "image"         :   "https://tuocoach.files.wordpress.com/2018/11/cambiamento-10.jpg?w=345&h=294",
+	        "choices"       :   ['Offerta', 'Domanda'],
+	        "correct"       :   "Offerta",
+	        "explanation"   :   "",
+	    },{
+	        "question"      :   "È l'insieme delle richieste di prodotti dei clienti",
+	        "image"         :   "https://tuocoach.files.wordpress.com/2018/11/cambiamento-10.jpg?w=345&h=294",
+	        "choices"       :   ['Domanda', 'Offerta'],
+	        "correct"       :   "Domanda",
+	        "explanation"   :   "",
+	    },{
+	        "question"      :   "L'elasticità della domanda è data dal rapporto tra",
+	        "image"         :   "https://tuocoach.files.wordpress.com/2018/11/cambiamento-10.jpg?w=345&h=294",
+	        "choices"       :   ['variazione della domanda e variazione del prezzo', 'prezzo e domanda', 'domanda e prezzo'],
+	        "correct"       :   "variazione della domanda e variazione del prezzo",
+	        "explanation"   :   "",
+	    },{
+	        "question"      :   "Presenze fratto arrivi uguale",
+	        "image"         :   "https://tuocoach.files.wordpress.com/2018/11/cambiamento-10.jpg?w=345&h=294",
+	        "choices"       :   ['permanenza media', 'permanenza netta'],
+	        "correct"       :   "permanenza media",
+	        "explanation"   :   "",
+	    },{
+	        "question"      :   "Viaggi fratto abitanti =",
+	        "image"         :   "https://tuocoach.files.wordpress.com/2018/11/cambiamento-10.jpg?w=345&h=294",
+	        "choices"       :   ['tasso di propensione turistica', 'tasso di ricettività'],
+	        "correct"       :   "tasso di propensione turistica",
+	        "explanation"   :   "",
+	    },{
+	        "question"      :   "posti letto fratto kilometri =",
+	        "image"         :   "https://tuocoach.files.wordpress.com/2018/11/cambiamento-10.jpg?w=345&h=294",
+	        "choices"       :   ['densità ricettiva', 'tasso di ricettività'],
+	        "correct"       :   "densità ricettiva",
+	        "explanation"   :   "",
+	    },{
+	        "question"      :   "tasso di ricettività =",
+	        "image"         :   "https://tuocoach.files.wordpress.com/2018/11/cambiamento-10.jpg?w=345&h=294",
+	        "choices"       :   ['posti letto fratto abitanti', 'posti letto fratto kilometri', 'presenze fratto arrivi'],
+	        "correct"       :   "posti letto fratto abitanti",
+	        "explanation"   :   "",
+	    },{
+	        "question"      :   "nel prodotto turistico, il clima fa parte degli",
+	        "image"         :   "https://tuocoach.files.wordpress.com/2018/11/cambiamento-10.jpg?w=345&h=294",
+	        "choices"       :   ['elementi primari', 'elementi di supporto'],
+	        "correct"       :   "elementi primari",
+	        "explanation"   :   "",
+	    },{
+	        "question"      :   "I ristoranti fanno parte, nel prodotto turistico, degl elementi",
+	        "image"         :   "https://tuocoach.files.wordpress.com/2018/11/cambiamento-10.jpg?w=345&h=294",
+	        "choices"       :   ['di supporto', 'primari'],
+	        "correct"       :   "di supporto",
+	        "explanation"   :   "",
+	    },{
+	        "question"      :   "Tra domanda e prezzo dei servizi turistici",
+	        "image"         :   "https://tuocoach.files.wordpress.com/2018/11/cambiamento-10.jpg?w=345&h=294",
+	        "choices"       :   ["c'è un rapporto di proporzionalità indiretta", "c'è un rapporto di proporzionalità diretta"],
+	        "correct"       :   "c'è un rapporto di proporzionalità indiretta",
 	        "explanation"   :   "",
 	    },];

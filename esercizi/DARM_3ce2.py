@@ -79,7 +79,7 @@ def menu():
 
 
 def file_write(filename, content):
-	with open(f"{filename}", "w") as file:
+	with open(f"{filename}", "w", encoding="utf-8") as file:
 		file.write(content)
 
 def create_html(filename):
@@ -103,7 +103,7 @@ def create_domande_js(filename):
 	for d in qdic:
 		domandejs += makeQ(d, qdic[d])
 	domandejs += "];"
-	with open(f"{filename}.js", "w") as file:
+	with open(f"{filename}.js", "w", encoding="utf-8") as file:
 		file.write(domandejs)
 	# os.startfile("domande.js")
 

@@ -1,5 +1,8 @@
-    <script>
+ <div id="soluzioni">Soluzioni: </div><script>
 let punteggio = 0;
+
+// ==================== check ======================
+
 function check(casella, giusta, num){
     giusta = giusta.toLowerCase();
     casella.value = casella.value.toLowerCase();
@@ -13,7 +16,7 @@ function check(casella, giusta, num){
         casella.style.background = 'yellow';
         casella.style.color = 'blue';
         punteggio +=1
-        score.innerHTML = punteggio;
+        score.innerHTML = "<b>Score: " + punteggio + "<b>";
         document.getElementById(casella.id).readOnly = true;
         return casella.value.includes(giusta);
     }
@@ -25,6 +28,8 @@ function check(casella, giusta, num){
 }
 
 
+// ===================== checkWhat =======
+
 function checkWhat(casella, giusta, num){
     giusta = giusta.toLowerCase();
     casella.value = casella.value.toLowerCase();
@@ -35,10 +40,10 @@ function checkWhat(casella, giusta, num){
     }
     else {
     for (r of giusta.split(" ")){
-    if (casella.value.includes(r)){
-        casella.style.background = 'yellow';
-        return casella.value.includes(giusta);
-    }
+        if (casella.value == r){
+            casella.style.background = 'yellow';
+            return casella.value.includes(giusta);
+        }
         else{
         casella.style.background = 'red';
     }
@@ -47,6 +52,7 @@ function checkWhat(casella, giusta, num){
 
 }
 
+// ============================ print_it ============
 
 function print_it(parola){
     if (soluzioni.innerHTML.includes(parola)){
@@ -61,221 +67,90 @@ var sol = [];
     var countdom = 0;
 
 
-                            //  INPUT //
+// ==================== input ====================
+
 var num = 0;
-function input(dom_s, giusta, dom_e){
-    var inizio = "";
-    var fine = "";
-    sol[countdom] = giusta;
-    num = countdom + 1
-    countdom++
-    var dom_h2 = inizio + dom_s;
-    var part1 = dom_h2 + "<input id='inp" + countdom + "' style='font-size:30;display:inline' size=" + giusta.length + " type=text class='t1' placeholder='"
+function input(dom_s, giusta, dom_e){ 
+    sol.push(giusta); 
+    var part1 = dom_s + "<input type=text class='t1' placeholder='"
     part1 += giusta[0] + "....' onchange=\"if (check(this,'";
-    part1 += giusta + "')){print_it(this.value)};\" /><td>" + dom_e + fine
+    part1 += giusta + "')){print_it(this.value)};\" /><td>" + dom_e
     document.write(part1);
 }
 
 
-function print_text(lite){
-    document.write(lite);
-}
-
+// ==================== guessWhat =====================
 
     function guessWhat(dom_s, giusta, dom_e){
         dom_s = dom_s.replace("#"," ");
-        var inizio = "";
-        var fine = "";
-        sol[countdom] = giusta;
-        num = countdom + 1
-        countdom++
-        var dom_h2 = inizio + dom_s;
-        var part1 = dom_h2 + "<input style='font-size:30;display:inline;' type=text class='t1' placeholder='" + giusta[0] + "....' onchange=\"if (checkWhat(this,'";
-        part1 += giusta + "')){print_it(this.value)};\" /><td>" + dom_e + fine
+        sol.push(giusta);
+        var part1 = dom_s + "<input type=text class='t1' placeholder='"
+        part1 += giusta[0] + "....' onchange=\"if (checkWhat(this,'";
+        part1 += giusta + "')){print_it(this.value)};\" /><td>" + dom_e
         document.write(part1);
     }
 
 
+// ============================= addsol ==================
+
 function addsol(){
-    document.write("<div id='soluzioni'>Suggerimenti: </div>");
-    sol.sort();
-    soluzioni.innerHTML = "<p style='color:gray'>";
-    for (s of sol){
-        soluzioni.innerHTML += s + " ";
+    //document.write("<div id='soluzioni'>Suggerimenti: </div>");
+    //sol.sort();
+    console.log("Before loop");
     }
-    //soluzioni.innerHTML += "</p>";
+
+function mostra_soluzioni(){
+    console.log(sol);
+    for (s of sol){
+        console.log(sol);
+    }
 }
+
 </script>
+
+
+
 <style>
     body{
-        margine:50px;
-        font-size:1.2em;
+        font-size:2em;
         }
-    h1, h2{
-        width: 500px;
+
+    input {
+        font-size:24;
+        display:inline;
+        size:10;
+
+    }
+
+
+    h1, h2, h3 {
+
         background-color:coral;
         color: white;
     }
-    .blue{
-        color: whitesmoke;
-        background-color: #0065ff;
-    }
 
-    h3 {
-        width: 500px;
-        background-color: azure;
-        color: white;
-    }
-    p {
+    p{
         color:blue;
+        background-color:lightgreen;
         font-size:1.4em;
     }
 </style>
+<a href="https://formazione.github.io">Home</a>
+<div id="score"><b>Score: </b></div>
 <script>
-let image = 'imgs/esercizi.png';
+document.write('<p><h2>strumenti di lavoro</h2></p>');
 
-</script>
-<div id="score"></div>
-<script>
-print_text('<p><h2>strumenti di lavoro</h2></p>');
+document.write('<p><h3>Rispondi</h3></p>');
 
-print_text('<p><img src="imgs/percentuali.PNG"><br></p>');
+document.write('<p>Come si chiama il risultato di una divisione?</p>');
+input(" ", "rapporto","");
 
-print_text('<p>Completa il seguente test con parole omesse nel testo.</p>');
+document.write('<p>L`uguaglianza di due rapporti si chiama</p>');
+input(" ", "proporzione","");
 
-print_text('<p><h3 class="blue">Rapporti numerici</h3></p>');
-input("Un rapporto è il ", "risultato","di una divisione.");
-input("L`uguaglianza di due rapporti si chiama ", "proporzione","");
-
-print_text('<p><h3>I termini</h3></p>');
-
-print_text('<p>Il primo e l`ultimo termine si chiamano:</p>');
+document.write('<p>Sappiamo che il primo e l`ultimo termine si chiamano:</p>');
 input(" ", "estremi","");
 
-print_text('<p>Il secondo e il terzo termine della proporzione si chiamano:</p>');
+document.write('<p>Il secondo e il terzo termine della proporzione si chiamano:</p>');
 input(" ", "medi","");
-
-print_text('<p><h3 class="blue">La proprietà fondamentale</h3></p>');
-input("Il ", "prodotto","dei medi è uguale al");
-input(" ", "prodotto","degli estremi.");
-
-print_text('<p><h3 class="blue">Esercizio n.1 Sul calcolo direttamente proporzionale</h3></p>');
-
-print_text('<p><img src="https://i.imgur.com/nCUycYh.png"></p>');
-
-print_text('<p>========================</p>');
-
-print_text('<p>Se per 200 ospiti sono necessari 20 kg di farina, quanti ne occorrono per 360?</p>');
-input("200 : ", "20","=");
-input(" ", "360",": x");
-
-print_text('<p>Soluzione</p>');
-input("x = ", "36","");
-
-print_text('<p>========================</p>');
-
-print_text('<p><h2>Lo sconto</h2></p>');
-
-print_text('<p>==========================</p>');
-
-print_text('<p>Lo <b>sconto</b>, nell`uso del linguaggio comune, è una <b>riduzione</b> del costo della merce o servizio acquistato.</p>');
-
-print_text('<p>Lo sconto può essere</p>');
-input(" ", "mercantile","<img src='imgs/arrowleft.png'> semplice riduzione percentuale del prezzo");
-
-print_text('<p><br></p>');
-input(" ", "commerciale","<img src='imgs/arrowleft.png'> quando la riduzione del prezzo / debito deriva da un pagamento anticipato del prezzo o del debito");
-
-print_text('<p><h3 class="blue">Esercizio</h3></p>');
-
-print_text('<p>========================</p>');
-
-print_text('<p><img src=\'imgs/esercizio.png\'></p>');
-
-print_text('<p>Calcola uno sconto del 10% su un prodotto che costa 3.500 €:</p>');
-input(" ", "350","€");
-
-print_text('<p>Costo del prodotto scontato</p>');
-input(" ", "3.150","€");
-
-print_text('<p><img src=\'imgs/esercizio.png\'></p>');
-
-print_text('<p>Calcola uno sconto del 20% su un prodotto che costa 3.500 €:</p>');
-input(" ", "700","€");
-
-print_text('<p>Costo del prodotto scontato</p>');
-input(" ", "2.800","€");
-
-print_text('<p><img src=\'imgs/esercizio.png\'></p>');
-
-print_text('<p>Calcola uno sconto del 30% su un prodotto che costa 3.500 €:</p>');
-input(" ", "1.050","€");
-
-print_text('<p>Costo del prodotto scontato</p>');
-input(" ", "2-450","€");
-
-print_text('<p>Lo sconto commerciale si calcola in proporzione a:</p>');
-
-print_text('<p>==============</p>');
-input(" ", "capitale","a scadenza");
-
-print_text('<p>==============</p>');
-input(" ", "tasso","di sconto");
-
-print_text('<p>==============</p>');
-input(" ", "tempo","indicato con");
-input(" ", "t","per gli anni");
-input(" ", "m","per i mesi e");
-input(" ", "g","per i giorni");
-
-print_text('<p><br><hr></p>');
-input("Per l`interesse si conosce il ", "capitale","iniziale");
-
-print_text('<p><br></p>');
-input("Per lo sconto si conosce il capitale a ", "scadenza","");
-
-print_text('<p><br></p>');
-
-print_text('<p><h2>Differenza tra interesse e sconto</h2></p>');
-input("Le formule per lo sconto sono le stesse viste per l`interesse. La differenza è che l`interesse si ", "aggiunge","");
-input("ad un capitale iniziale. Lo sconto si ", "sottrae","al capitale a scadenza.");
-
-print_text('<p><h2>Formula con il tempo espresso in anni</h2></p>');
-input("Sc = ", "C","");
-input("x", "r","");
-input("x", "t","");
-input("/", "100","");
-
-print_text('<p><hr></p>');
-
-print_text('<p><h2>Formula con il tempo espresso in mesi</h2></p>');
-input("Sc = ", "C","");
-input("x", "r","");
-input("x", "m","");
-input("/", "1.200","infatti i mesi sono m/12 di un anno");
-
-print_text('<p><hr></p>');
-
-print_text('<p><h2>Formula con il tempo espresso in giorni (anno civile)</h2></p>');
-input("Sc = ", "C","");
-input("x", "r","");
-input("x", "g","");
-input("/", "36.500","infatti divido per i giorni dell`anno oltre che per 100");
-
-print_text('<p><hr></p>');
-
-print_text('<p><h2>Formula con il tempo espresso in giorni (anno bisestile)</h2></p>');
-input("Sc = ", "C","");
-input("x", "r","");
-input("x", "g","");
-input("/", "36.600","infatti divido per i giorni dell`anno oltre che per 100");
-
-print_text('<p><hr></p>');
-
-print_text('<p><h2>Formula con il tempo espresso in giorni (anno commerciale)</h2></p>');
-input("Sc = ", "C","");
-input("x", "r","");
-input("x", "g","");
-input("/", "36.000","infatti divido per i giorni dell`anno oltre che per 100");
-document.write("</p>");
-addsol();</script>
+</script>

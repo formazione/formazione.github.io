@@ -46,7 +46,7 @@
 <script>
 function select(lista, idsel){
 	// l'errore era nel fatto che non avevo messo " + idsel + ", ma solo idsel
-	// inoltre devo togliere alla riga 469 la variabile codice che non uso più
+	// inoltre devo togliere alla riga 469 la variabile codice che non uso piÃ¹
 	let html = "<select id=" + idsel + " name='carlist' form='carform'>";
 	for (nome of lista){
 	  html +="<option value='"+nome+"'>"+nome+"</option>";
@@ -246,7 +246,7 @@ function processQuestion(choice){
 				$('#explanation')
           .html('<span class="correct">ESATTO!</span> ' + (quiz[currentquestion]['explanation']));
         
-        let ff = ["Giusto", "Corretto", "Sì", "Bene", "Molto bene", "Ok", "Esatto", "Perfetto", "Risposta esatta"].sort(function(){return 0.5 - Math.random()})[0];
+        let ff = ["Giusto", "Corretto", "SÃ¬", "Bene", "Molto bene", "Ok", "Esatto", "Perfetto", "Risposta esatta"].sort(function(){return 0.5 - Math.random()})[0];
         speak(ff);
         score++;
         count_speak = 0;
@@ -260,11 +260,11 @@ function processQuestion(choice){
             .css({'font-weight':'bold', 'border-color':'#f93939', 'color':'#fff'});
       $('#explanation')
         .html('<span class="incorrect">INESATTO!</span> ' + (quiz[currentquestion]['explanation']));
-        speak("No! è " + quiz[currentquestion]['correct']);
+        speak("No! Ã¨ " + quiz[currentquestion]['correct']);
             }
         count_speak = 0;
         currentquestion++;
-    // ========================= qui è stata aggiunta da 322
+    // ========================= qui Ã¨ stata aggiunta da 322
     if (currentquestion < quiz.length)  nextQuestion();
     // =========================
   
@@ -317,7 +317,7 @@ function processQuestion(choice){
        
                                   /*
                                   
-                                  Qui sotto c'è il codice che segue
+                                  Qui sotto c'Ã¨ il codice che segue
                                   la scelta di una opzione
                                                 |
                                                 |
@@ -364,7 +364,7 @@ function processQuestion(choice){
 
 
 
-// AGGIUNGE IL PUNTEGGIO AL DATABASE, SE NON HA GIÀ RISPOSTO
+// AGGIUNGE IL PUNTEGGIO AL DATABASE, SE NON HA GIÃ€ RISPOSTO
 scoretot.innerHTML = "";
 let nome = nomestudente.value;
 let nome_in_lista = listanomi.includes(nomestudente.value);
@@ -384,7 +384,7 @@ if (nome_in_lista){ // per password togli il commento dalla seguente
       else if (percent < 100 && percent >80) speak("Bel risultato, complimenti");
       else if (percent < 80 && percent >70) speak("Hai risposto in modo discreto, bravo.");
       else if (percent < 70 && percent >60) speak("HAi risposto in modo sufficientemente corretto.");
-      else speak("Devi impegnarti di più. Riprova");
+      else speak("Devi impegnarti di piÃ¹. Riprova");
     
 			$(document.createElement('h4')).addClass('score').text(Math.round(score/quiz.length * 100) + '%').insertAfter('#question');			
 			$(document.createElement('h4')).addClass('score').text("").insertAfter('#question');			
