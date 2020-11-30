@@ -15,9 +15,6 @@ import os
 				- domande.js
 				- file.html
 
-
-
-
 '''
 
 
@@ -82,19 +79,27 @@ def file_write(filename, content):
 	with open(f"{filename}", "w", encoding="utf-8") as file:
 		file.write(content)
 
-def create_html(filename):
-	"Substitute something in template3_ece and create as new file with new name"
-	# filename = filename.split("\\")[1]
-	print(filename)
-	with open("template3_3ce.html") as file:
-		filetext = file.read()
-	# REPLACE THE NAME OF JS FILE WITH QUESTIONS CREATED BY create_domande_js
-	# NAME OF JS IS MARKETING.JS IN THE TEMPLATE TO BE SUBSTITUTED BY TXT NAME
+def replace_js_title(filetext, filename):
 	filetext = filetext.replace("marketing.js", filename + ".js")
-	# SUBSTITUTE THE TITLE THAT IS percentuali e proporzioni in TEMPLATE
 	filetext = filetext.replace("Percentuali e proporzioni", filename)
+	return filetext
+
+def create_html(filename):
+	"Substitute something in template3_3ce and create as new file with new name\
+     .js contains the questions\
+     .html contains the html code\
+	"
+	filetext = open_template("template3_3ce.html")
+	filetext = replace_js_title(filetext, filename)
 	file_write(filename + ".html", filetext)
 	os.startfile(filename + ".html")
+
+
+def open_template(filename):
+	with open(filename) as file:
+		filetext = file.read()
+	return filetext
+
 
 
 def create_domande_js(filename):
