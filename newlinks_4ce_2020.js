@@ -7,4 +7,5 @@ newlinks_4ce_2020.innerHTML += "<a href='Programmi20192020/4ce/01_Modulo_1_es1.h
                 newlinks_4ce_2020.innerHTML += "<a href='Programmi20192020/4ce/Modulo_1_test_3.html'>Modulo_1_test_3</a><br>"
                 newlinks_4ce_2020.innerHTML += "<a href='Programmi20192020/4ce/Percentuali.html'>Percentuali</a><br>"
                 newlinks_4ce_2020.innerHTML += "<a href='Programmi20192020/4ce/Test 6.html'>Test 6</a><br>"
+                newlinks_4ce_2020.innerHTML += "<a href='Programmi20192020/4ce/02_Modulo2_test1.html'>02_Modulo2_test1</a><br>"
                 
