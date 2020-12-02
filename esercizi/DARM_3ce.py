@@ -2,9 +2,21 @@
 
 import glob
 from random import choice
-from createfile import createfile
-from darm_start_3ce import *
-from darm_end import *
+# from createfile import createfile
+import os
+
+'''
+
+			Usa un template solo prova_marketing.html
+			sostituisci marketing.js con il nome del file txt che
+			usi per le domande (rendi la variabile filename globale)
+
+			salva:
+				- domande.js
+				- file.html
+
+'''
+
 
 imgRnd = """https://tuocoach.files.wordpress.com/2018/11/cambiamento-10.jpg?w=345&h=294
 """.splitlines()
@@ -59,16 +71,53 @@ def menu():
 	file_number = int(input("Scegli il numero del file? > "))
 	fn = glob.glob("dati/*.txt")[file_number]
 	mklist(fn)
+	return fn
 	#print(mklist(fn))
 
 
-def createDarm():
-	global htmlpage
-	htmlpage += "quiz = ["
-	for d in qdic:
-		htmlpage += makeQ(d, qdic[d])
-	htmlpage += endpage
-	createfile(f"turismo_3ce.html",htmlpage)
+def file_write(filename, content):
+	with open(f"{filename}", "w", encoding="utf-8") as file:
+		file.write(content)
 
-menu()
-createDarm()
+def replace_js_title(filetext, filename):
+	filetext = filetext.replace("marketing.js", filename + ".js")
+	filetext = filetext.replace("Percentuali e proporzioni", filename)
+	filetext = filetext.replace("5ce2020_prova", filename)
+	return filetext
+
+def create_html(filename):
+	"Substitute something in template3_3ce and create as new file with new name\
+     .js contains the questions\
+     .html contains the html code\
+	"
+	filetext = open_template("template4_3ce.html")
+	filetext = replace_js_title(filetext, filename)
+	file_write(filename + ".html", filetext)
+	os.startfile(filename + ".html")
+
+
+def open_template(filename):
+	with open(filename) as file:
+		filetext = file.read()
+	return filetext
+
+
+
+def create_domande_js(filename):
+
+	domandejs = "quiz = ["
+	for d in qdic:
+		domandejs += makeQ(d, qdic[d])
+	domandejs += "];"
+	with open(f"{filename}.js", "w", encoding="utf-8") as file:
+		file.write(domandejs)
+	# os.startfile("domande.js")
+
+
+
+fn = menu()
+fn = fn.split("\\")[1]
+print(fn)
+create_domande_js(fn[:-4])
+create_html(fn[:-4])
+# createDarm()
