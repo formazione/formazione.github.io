@@ -67,7 +67,8 @@ def createDarm():
 	for d in qdic:
 		htmlpage += makeQ(d, qdic[d])
 	htmlpage += endpage
-	createfile("paste_in_darm.html",htmlpage)
+	filename = f"{input('nome del file')}.html"
+	createfile(filename, htmlpage)
 
 menu()
 createDarm()
