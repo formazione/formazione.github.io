@@ -246,7 +246,7 @@ function processQuestion(choice){
 				$('#explanation')
           .html('<span class="correct">ESATTO!</span> ' + (quiz[currentquestion]['explanation']));
         
-        let ff = ["Giusto", "Corretto", "SÃ¬", "Bene", "Molto bene", "Ok", "Esatto", "Perfetto", "Risposta esatta"].sort(function(){return 0.5 - Math.random()})[0];
+        let ff = ["Giusto", "Corretto", "Si", "Bene", "Molto bene", "Ok", "Esatto", "Perfetto", "Risposta esatta"].sort(function(){return 0.5 - Math.random()})[0];
         speak(ff);
         score++;
         count_speak = 0;
