@@ -66,9 +66,9 @@ Qual è percentuale dei turisti dall'Europa in Italia
 30%
 10%
 
-Si recano per turismo business più in Italia o nei Paesi asiatici?
-No
-Si
+Si recano per turismo business più in Italia rispetto ai Paesi asiatici
+Falso
+Vero
 
 Che posto occupa l'Italia tra gli arrivi internazionali?
 5

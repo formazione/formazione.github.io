@@ -22,11 +22,6 @@ imgRnd = """https://tuocoach.files.wordpress.com/2018/11/cambiamento-10.jpg?w=34
 """.splitlines()
 
 def makeQ(q, ch):
-	ch_html = "quiz = ["
-	for r in ch:
-		ch_html += "\"" + r + "\","
-	ch_html += "]" 
-
 	html = f"""{{
 	        "question"      :   "{q}",
 	        "image"         :   "{choice(imgRnd)}",
@@ -105,7 +100,7 @@ def open_template(filename):
 
 
 def create_domande_js(filename):
-
+	
 	domandejs = "quiz = ["
 	for d in qdic:
 		domandejs += makeQ(d, qdic[d])
@@ -120,5 +115,8 @@ fn = menu()
 fn = fn.split("\\")[1]
 print(fn)
 create_domande_js(fn[:-4])
+
+
+# this is to create the hml
 create_html(fn[:-4])
 # createDarm()

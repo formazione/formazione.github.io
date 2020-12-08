@@ -89,10 +89,10 @@ quiz = [{
 	        "correct"       :   "70%",
 	        "explanation"   :   "",
 	    },{
-	        "question"      :   "Si recano per turismo business più in Italia o nei Paesi asiatici?",
+	        "question"      :   "Si recano per turismo business più in Italia rispetto ai Paesi asiatici",
 	        "image"         :   "https://tuocoach.files.wordpress.com/2018/11/cambiamento-10.jpg?w=345&h=294",
-	        "choices"       :   ['No', 'Si'],
-	        "correct"       :   "No",
+	        "choices"       :   ['Falso', 'Vero'],
+	        "correct"       :   "Falso",
 	        "explanation"   :   "",
 	    },{
 	        "question"      :   "Che posto occupa l'Italia tra gli arrivi internazionali?",
