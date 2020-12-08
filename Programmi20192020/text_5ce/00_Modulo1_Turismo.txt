@@ -1,12 +1,4 @@
-<a href="https:\\formazione.github.io">Home</a>
-<h1>Turismo</h1>
-<h2>
-<a href="https://spark.adobe.com/page/vnOXAaWZMrGMr/">
-<img src="https://cdn.travelfool.it/posts/media/40/post_40.jpg?w=1000&q=65&sharpen" />
-<br>
-Il turismo internazionale
-</a>
-
-</h2>
-
+<script>
+window.location.href = "https://spark.adobe.com/page/vnOXAaWZMrGMr/";
+</script>
 

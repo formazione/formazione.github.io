@@ -183,7 +183,7 @@ jQuery(document).ready(function($){
 			$('#explanation').empty(); // svuota spiegazione
 			$('#question').text(quiz[currentquestion]['question']); // domanda attuale
       // domanda n. di ... totale domande
-			$('#pager').text('Domanda' + Number(currentquestion + 1) + ' di ' + quiz.length);
+			$('#pager').text('Domanda' + Number(currentquestion + 1) + ' di ' + 10);
       // Immagine... ?
 			if(quiz[currentquestion].hasOwnProperty('image') && quiz[currentquestion]['image'] != ""){
 				if($('#question-image').length == 0){
@@ -265,7 +265,7 @@ function processQuestion(choice){
         count_speak = 0;
         currentquestion++;
     // ========================= qui è stata aggiunta da 322
-    if (currentquestion < quiz.length)  nextQuestion();
+    if (currentquestion < 10)  nextQuestion();
     // =========================
   
 
@@ -289,7 +289,7 @@ function processQuestion(choice){
 				
 			}
       
-      else if (currentquestion < quiz.length){ 
+      else if (currentquestion < 10){ 
       // SE CI SONO ANCORA DOMANDE, RIMETTE IL PULSANTE CONTROLLA LA RISPOSTA
         
 				$('#submitbutton').html(' VERIFICA >>> ')
@@ -362,8 +362,8 @@ function processQuestion(choice){
 			$('#choice-block').empty();
 			$('#submitbutton').remove();
 			$('.rsform-block-submit').addClass('show');
-			$('#question').text("Hai risposto bene a " + score + " domande su " + quiz.length + " complessive.");
-      speak("hai risposto in modo corretto a " + score + " domande su " + quiz.length + " complessive");
+			$('#question').text("Hai risposto bene a " + score + " domande su " + 10 + " complessive.");
+      speak("hai risposto in modo corretto a " + score + " domande su " + 10 + " complessive");
 
 
 
@@ -376,13 +376,13 @@ let nome_in_lista = listanomi.includes(nomestudente.value);
 //let prima_volta = x[nomestudente.value] == undefined;
 if (nome_in_lista){ // per password togli il commento dalla seguente
 // if (nome_in_lista && password_corretta){
-  ref.child(nome).set(Math.round(score/quiz.length * 100));
+  ref.child(nome).set(Math.round(score/10 * 100));
 }
 // ========================================================
  
 
 
-      let percent = Math.round(score/quiz.length * 100);
+      let percent = Math.round(score/10 * 100);
       speak(nomestudente.value);
       if (percent == 100) speak("Hai ottenuto il massimo punteggio! Ottimo!");
       else if (percent < 100 && percent >80) speak("Bel risultato, complimenti");
@@ -390,7 +390,7 @@ if (nome_in_lista){ // per password togli il commento dalla seguente
       else if (percent < 70 && percent >60) speak("HAi risposto in modo sufficientemente corretto.");
       else speak("Devi impegnarti di più. Riprova");
     
-			$(document.createElement('h4')).addClass('score').text(Math.round(score/quiz.length * 100) + '%').insertAfter('#question');			
+			$(document.createElement('h4')).addClass('score').text(Math.round(score/10 * 100) + '%').insertAfter('#question');			
 			$(document.createElement('h4')).addClass('score').text("").insertAfter('#question');			
 				
 			$(document.createElement('h4')).addClass('score').text(nomestudente.value).insertAfter('#question');			
