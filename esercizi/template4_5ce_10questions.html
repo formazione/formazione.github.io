@@ -24,11 +24,11 @@
 
 
 								- listanomi3ce.js   lista dei nomi         Personalizzare per altre classi
-								- verifica_turismo2_5ce.js 		domande
+								- marketing.js 		domande
 
 
 							Da fare:
-								crea script python per creare le domande e salvarle in verifica_turismo2_5ce.js
+								crea script python per creare le domande e salvarle in marketing.js
 								prendendole dal file txt marketing in dati\
 
 								crea una GUI per caricare il file txt dare il nome al file html
@@ -46,7 +46,7 @@
 <script>
 function select(lista, idsel){
 	// l'errore era nel fatto che non avevo messo " + idsel + ", ma solo idsel
-	// inoltre devo togliere alla riga 469 la variabile codice che non uso piÃ¹
+	// inoltre devo togliere alla riga 469 la variabile codice che non uso più
 	let html = "<select id=" + idsel + " name='carlist' form='carform'>";
 	for (nome of lista){
 	  html +="<option value='"+nome+"'>"+nome+"</option>";
@@ -91,7 +91,7 @@ function gotData(data){
 	}
 }
 
-start("verifica_turismo2_5ce")
+start("5ce2020_prova")
 
 
     var quiztitle = "Pianificazione e programmazione";
@@ -141,7 +141,7 @@ if (!("scramble" in Array.prototype)) {
 </script>
 
 
-<script src="verifica_turismo2_5ce.js"></script>
+<script src="marketing.js"></script>
 
 <script>
    
@@ -260,11 +260,11 @@ function processQuestion(choice){
             .css({'font-weight':'bold', 'border-color':'#f93939', 'color':'#fff'});
       $('#explanation')
         .html('<span class="incorrect">INESATTO!</span> ' + (quiz[currentquestion]['explanation']));
-        speak("No! Ã¨ " + quiz[currentquestion]['correct']);
+        speak("No! è " + quiz[currentquestion]['correct']);
             }
         count_speak = 0;
         currentquestion++;
-    // ========================= qui Ã¨ stata aggiunta da 322
+    // ========================= qui è stata aggiunta da 322
     if (currentquestion < quiz.length)  nextQuestion();
     // =========================
   
@@ -321,7 +321,7 @@ function processQuestion(choice){
        
                                   /*
                                   
-                                  Qui sotto c'Ã¨ il codice che segue
+                                  Qui sotto c'è il codice che segue
                                   la scelta di una opzione
                                                 |
                                                 |
@@ -368,7 +368,7 @@ function processQuestion(choice){
 
 
 
-// AGGIUNGE IL PUNTEGGIO AL DATABASE, SE NON HA GIÃ€ RISPOSTO
+// AGGIUNGE IL PUNTEGGIO AL DATABASE, SE NON HA GIÀ RISPOSTO
 scoretot.innerHTML = "";
 let nome = nomestudente.value;
 let nome_in_lista = listanomi.includes(nomestudente.value);
@@ -388,7 +388,7 @@ if (nome_in_lista){ // per password togli il commento dalla seguente
       else if (percent < 100 && percent >80) speak("Bel risultato, complimenti");
       else if (percent < 80 && percent >70) speak("Hai risposto in modo discreto, bravo.");
       else if (percent < 70 && percent >60) speak("HAi risposto in modo sufficientemente corretto.");
-      else speak("Devi impegnarti di piÃ¹. Riprova");
+      else speak("Devi impegnarti di più. Riprova");
     
 			$(document.createElement('h4')).addClass('score').text(Math.round(score/quiz.length * 100) + '%').insertAfter('#question');			
 			$(document.createElement('h4')).addClass('score').text("").insertAfter('#question');			
@@ -483,7 +483,7 @@ if (nome_in_lista){ // per password togli il commento dalla seguente
     <body >
 
 <a href="https://formazione.github.io">Home</a><br>
- <h2><u>verifica_turismo2_5ce</u></h2>
+ <h2><u>Percentuali e proporzioni</u></h2>
   <!-- home button 
   <div id="menuDiv">
 <script src="https://quarta.glitch.me/dropdownclassi.js"></script>

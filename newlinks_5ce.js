@@ -9,4 +9,5 @@ newlinks_5ce.innerHTML += "<a href='Programmi20192020/text_5ce/00_Modulo1_Es_1.h
                 newlinks_5ce.innerHTML += "<a href='Programmi20192020/text_5ce/6_CONTRATTO.html'>6_CONTRATTO</a><br>"
                 newlinks_5ce.innerHTML += "<a href='Programmi20192020/text_5ce/7_CONTRATTO_RISTORAZIONE.html'>7_CONTRATTO_RISTORAZIONE</a><br>"
                 newlinks_5ce.innerHTML += "<a href='Programmi20192020/text_5ce/Didattica a distanza.html'>Didattica a distanza</a><br>"
+                newlinks_5ce.innerHTML += "<a href='Programmi20192020/text_5ce/00_Modulo1_Verifica2.html'>00_Modulo1_Verifica2</a><br>"
                 
