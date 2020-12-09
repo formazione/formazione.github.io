@@ -149,10 +149,10 @@ quiz = [{
 	        "correct"       :   "Governo, in caso di urgenza.",
 	        "explanation"   :   "",
 	    },{
-	        "question"      :   "Di cosa c'è bisogno per approvare i ",
+	        "question"      :   "Di cosa c'è bisogno per approvare i decreti legislativi?",
 	        "image"         :   "https://tuocoach.files.wordpress.com/2018/11/cambiamento-10.jpg?w=345&h=294",
-	        "choices"       :   ['decreti legislativi?', 'Di una legge delega approvata dal Parlamento', 'Di un decreto legge approvato dal Parlamento'],
-	        "correct"       :   "decreti legislativi?",
+	        "choices"       :   ['Di una legge delega approvata dal Parlamento', 'Di un decreto legge approvato dal Parlamento'],
+	        "correct"       :   "Di una legge delega approvata dal Parlamento",
 	        "explanation"   :   "",
 	    },{
 	        "question"      :   "Cosa bisogna fare perché i decreti legge non perdano di efficacia?",
