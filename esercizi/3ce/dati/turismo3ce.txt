@@ -1,22 +1,22 @@
-I turisti viaggiano in modo
-irregolare
-regolare
+I turisti viaggiano in modo irregolare
+vero
+falso
 
-I turisti viaggiano
-non per ottenere un reddito
-per ottenere un reddito
+I turisti viaggiano per ottenere un reddito
+falso
+vero
 
-I turisti
-pernottano
-non pernottano
+I turisti pernottano almeno un giorno
+vero
+falso
 
 Gli escursionisti
 pernottano
 non pernottano
 
-I viaggi leisure sono
-viaggi di piacere
-viaggi d'affari
+I viaggi leisure sono viaggi di piacere
+vero
+falso
 
 Il turismo contrende le relazioni tra
 turisti, ambiente, residenti e operatori economici del settore
@@ -34,33 +34,33 @@ interno
 nazionale
 internazionale
 
-i turisti italiani e stranieri che viaggiano in ITALIA fanno parte del turismo
+Turisti italiani in ITALIA, turismo
 interno
 domestico
 nazionale
 internazionale
 
-i turisti italiani che viaggiano in ITALIA ed ESTERO fanno parte del turismo
+Turisti italiani in ITALIA ed ESTERO, turismo
 nazionale
 domestico
 interno
 internazionale
 
-Tutti i turisti che oltrepassano la frontiera fanno parte del turismo
+Turisti italiani e stranieri che oltrepassano la frontiera, turismo
 internazionale
 domestico
 interno
 nazionale
 
-Le attività offerte al turista in entrata in un Paese fanno parte del
+Attività offerte al turista in entrata
 turismo produttivo incoming
 turismo produttivo outgoing
 
-Le attività offerte al turista in uscita da un Paese fanno parte del
+Attività offerte al turista in uscita
 turismo produttivo outgoing
 turismo produttivo incoming
 
-Quali sono gli effetti negativi del turismo per i residenti
+Effetti negativi del turismo per i residenti
 inquinamento ed aumento dei prezzi
 riduzione del reddito
 riduzione dell'occupazione
@@ -74,18 +74,17 @@ Il bisogno è
 uno stato di insoddisfazione
 uno stato di soddisfazione
 
-È l'insieme dei prodotti immessi nel mercato dalle imprese
-Offerta
-Domanda
+La quantià di un certo prodotto realizzato dalle imprese
+Costituiscono l'offerta di quel prodotto
+Costituiscono la domanda di quel prodotto
 
-È l'insieme delle richieste di prodotti dei clienti
+Somma delle richieste della clienti di un prodotto
 Domanda
 Offerta
 
-L'elasticità della domanda è data dal rapporto tra
-variazione della domanda e variazione del prezzo
-prezzo e domanda
-domanda e prezzo
+L'elasticità della domanda è data dal rapporto tra variazione della domanda e variazione del prezzo
+vero
+falso
 
 Presenze fratto arrivi uguale
 permanenza media

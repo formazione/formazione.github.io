@@ -1,0 +1,22 @@
+listanomi = [
+		"Scegli_il_cognome",
+        "Maiuri",
+        "Saja_P",
+        "Saja_A",
+        "Tierno",
+        "Battagliese",
+        "Borrelli",
+        "Romano",
+        "Ciardi",
+        "Mautone",
+        "Palladino",
+        "Ciardi",
+        "Carracino",
+        "Liguori",
+        "Ricci",
+        "Ghiunghius",
+        "Donnianni",
+        "Merola",
+        "Maiese",
+        "Fluri"
+            ];

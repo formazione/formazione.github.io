@@ -6,8 +6,7 @@
     <!-- jquery for maximum compatibility -->
 	<link type="text/css" rel="stylesheet" href="https://stackpath.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css">
     <!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>-->
-	<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-<script src="https://code.jquery.com/jquery-migrate-3.3.2.js"></script>
+	<script src="https://code.jquery.com/jquery-1.11.1.min.js" integrity="sha256-VAvG3sHdS5LqTT+5A/aeq/bZGa/Uj04xKxY8KM/w9EE=" crossorigin="anonymous"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
 
@@ -25,11 +24,11 @@
 
 
 								- listanomi3ce.js   lista dei nomi         Personalizzare per altre classi
-								- marketing.js 		domande
+								- formazione.githu.js 		domande
 
 
 							Da fare:
-								crea script python per creare le domande e salvarle in marketing.js
+								crea script python per creare le domande e salvarle in formazione.githu.js
 								prendendole dal file txt marketing in dati\
 
 								crea una GUI per caricare il file txt dare il nome al file html
@@ -41,13 +40,13 @@
 
 -->
 
-<script src="listanomi3ce.js"></script>
+<script src="config/listanomi3ce.js"></script>
 
 
 <script>
 function select(lista, idsel){
 	// l'errore era nel fatto che non avevo messo " + idsel + ", ma solo idsel
-	// inoltre devo togliere alla riga 469 la variabile codice che non uso più
+	// inoltre devo togliere alla riga 469 la variabile codice che non uso piÃ¹
 	let html = "<select id=" + idsel + " name='carlist' form='carform'>";
 	for (nome of lista){
 	  html +="<option value='"+nome+"'>"+nome+"</option>";
@@ -66,7 +65,7 @@ select(listanomi, 'nomestudente')
 <script src="https://www.gstatic.com/firebasejs/5.9.2/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/5.9.2/firebase-database.js"></script>
 <!-- configurazione  -->
-<script src="config.js"></script>
+<script src="config/config.js"></script>
 <script>
 // nome del record del database 
 
@@ -92,7 +91,7 @@ function gotData(data){
 	}
 }
 
-start("5ce2020_prova")
+start("formazione.githu")
 
 
     var quiztitle = "Pianificazione e programmazione";
@@ -142,7 +141,7 @@ if (!("scramble" in Array.prototype)) {
 </script>
 
 
-<script src="marketing.js"></script>
+<script src="formazione.githu.js"></script>
 
 <script>
    
@@ -261,11 +260,11 @@ function processQuestion(choice){
             .css({'font-weight':'bold', 'border-color':'#f93939', 'color':'#fff'});
       $('#explanation')
         .html('<span class="incorrect">INESATTO!</span> ' + (quiz[currentquestion]['explanation']));
-        speak("No! è " + quiz[currentquestion]['correct']);
+        speak("No! Ã¨ " + quiz[currentquestion]['correct']);
             }
         count_speak = 0;
         currentquestion++;
-    // ========================= qui è stata aggiunta da 322
+    // ========================= qui Ã¨ stata aggiunta da 322
     if (currentquestion < quiz.length)  nextQuestion();
     // =========================
   
@@ -273,15 +272,18 @@ function processQuestion(choice){
       // SONO FINITE LE DOMANDE... MOSTRA I RISULTATI
 			if(currentquestion == quiz.length){
 				$('#submitbutton')
-          .html('GET QUIZ RESULTS')
+          .html('Vedi il risultato, ma... ricorda il nome in altro a sinistra')
           .removeClass('btn-success')
           .addClass('btn-info')
           .css({'border-color':'#3a87ad', 'color':'#fff'})
           .on('click', function(){
           
-					    $(this).text('GET QUIZ RESULTS')
+			    $(this).text('Vedi il risultato\nHai messo il nome in altro a sinistra?')
                 .on('click');
+                if (nomestudente.value != "Scegli_il_cognome"){
 					endQuiz();
+                }
+                else speak("Devi mettere il tuo nome in alto a sinistra prima")
 				})
 				
 			}
@@ -318,7 +320,7 @@ function processQuestion(choice){
        
                                   /*
                                   
-                                  Qui sotto c'è il codice che segue
+                                  Qui sotto c'Ã¨ il codice che segue
                                   la scelta di una opzione
                                                 |
                                                 |
@@ -365,7 +367,7 @@ function processQuestion(choice){
 
 
 
-// AGGIUNGE IL PUNTEGGIO AL DATABASE, SE NON HA GIÀ RISPOSTO
+// AGGIUNGE IL PUNTEGGIO AL DATABASE, SE NON HA GIÃ€ RISPOSTO
 scoretot.innerHTML = "";
 let nome = nomestudente.value;
 let nome_in_lista = listanomi.includes(nomestudente.value);
@@ -385,7 +387,7 @@ if (nome_in_lista){ // per password togli il commento dalla seguente
       else if (percent < 100 && percent >80) speak("Bel risultato, complimenti");
       else if (percent < 80 && percent >70) speak("Hai risposto in modo discreto, bravo.");
       else if (percent < 70 && percent >60) speak("HAi risposto in modo sufficientemente corretto.");
-      else speak("Devi impegnarti di più. Riprova");
+      else speak("Devi impegnarti di piÃ¹. Riprova");
     
 			$(document.createElement('h4')).addClass('score').text(Math.round(score/quiz.length * 100) + '%').insertAfter('#question');			
 			$(document.createElement('h4')).addClass('score').text("").insertAfter('#question');			
@@ -478,7 +480,7 @@ if (nome_in_lista){ // per password togli il commento dalla seguente
     <body >
 
 <a href="https://formazione.github.io">Home</a><br>
- <h2><u>Percentuali e proporzioni</u></h2>
+ <h2><u>formazione.githu</u></h2>
   <!-- home button 
   <div id="menuDiv">
 <script src="https://quarta.glitch.me/dropdownclassi.js"></script>
