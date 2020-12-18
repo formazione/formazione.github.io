@@ -1,0 +1,55 @@
+quiz = [{
+	        "question"      :   "i ratei sono",
+	        "image"         :   "imgs/ratei.png",
+	        "choices"       :   ['conti finanziari', 'conti economici'],
+	        "correct"       :   "conti finanziari",
+	        "explanation"   :   "",
+	    },{
+	        "question"      :   "I ratei riguardano",
+	        "image"         :   "imgs/ratei.png",
+	        "choices"       :   ['pagamenti posticipati', 'pagamenti anticipati'],
+	        "correct"       :   "pagamenti posticipati",
+	        "explanation"   :   "",
+	    },{
+	        "question"      :   "Un fitto passivo annuo di 12.000 € da pagare il primo marzo 2021 comporta un rateo passivo al 31.12.2020 di",
+	        "image"         :   "imgs/ratei.png",
+	        "choices"       :   ['10.000', '2.000', '8.000'],
+	        "correct"       :   "10.000",
+	        "explanation"   :   "",
+	    },{
+	        "question"      :   "Un fitto passivo annuo di 6.000 € da pagare il primo giugno 2021 comporta un rateo passivo al 31.12.2020 di",
+	        "image"         :   "imgs/ratei.png",
+	        "choices"       :   ['3.500', '8.000', '2.000'],
+	        "correct"       :   "3.500",
+	        "explanation"   :   "",
+	    },{
+	        "question"      :   "Le scritture di assestamento servono a redigere il bilancio",
+	        "image"         :   "imgs/ratei.png",
+	        "choices"       :   ['vero', 'falso'],
+	        "correct"       :   "vero",
+	        "explanation"   :   "",
+	    },{
+	        "question"      :   "Pagamento posticipato di un fitto trimestrale di 3.000 € da dic 2020 a fine feb 2021. Scrittura",
+	        "image"         :   "imgs/ratei.png",
+	        "choices"       :   ['Fitti passivi 1000 (dare) Ratei passivi 1000 (avere)', 'Ratei passivi 1000 (dare) Fitti passivi 1000 (avere)'],
+	        "correct"       :   "Fitti passivi 1000 (dare) Ratei passivi 1000 (avere)",
+	        "explanation"   :   "",
+	    },{
+	        "question"      :   "Un rateo è una quota di entrate o uscite future per costi già maturati al 31.12, ma con pagamento posticipato",
+	        "image"         :   "imgs/ratei.png",
+	        "choices"       :   ['vero', 'falso'],
+	        "correct"       :   "vero",
+	        "explanation"   :   "",
+	    },{
+	        "question"      :   "I ratei passivi sono",
+	        "image"         :   "imgs/ratei.png",
+	        "choices"       :   ['uscite future che misurano costi già maturati', 'costi'],
+	        "correct"       :   "uscite future che misurano costi già maturati",
+	        "explanation"   :   "",
+	    },{
+	        "question"      :   "Le scritture di assestamento si redigono",
+	        "image"         :   "imgs/ratei.png",
+	        "choices"       :   ["alla fine dell'anno", 'a metà anno'],
+	        "correct"       :   "alla fine dell'anno",
+	        "explanation"   :   "",
+	    },];

@@ -1,0 +1,37 @@
+i ratei sono
+conti finanziari
+conti economici
+
+I ratei riguardano
+pagamenti posticipati
+pagamenti anticipati
+
+Un fitto passivo annuo di 12.000 € da pagare il primo marzo 2021 comporta un rateo passivo al 31.12.2020 di
+10.000
+2.000
+8.000
+
+Un fitto passivo annuo di 6.000 € da pagare il primo giugno 2021 comporta un rateo passivo al 31.12.2020 di
+3.500
+8.000
+2.000
+
+Le scritture di assestamento servono a redigere il bilancio
+vero
+falso
+
+Pagamento posticipato di un fitto trimestrale di 3.000 € da dic 2020 a fine feb 2021. Scrittura
+Fitti passivi 1000 (dare) Ratei passivi 1000 (avere)
+Ratei passivi 1000 (dare) Fitti passivi 1000 (avere)
+
+Un rateo è una quota di entrate o uscite future per costi già maturati al 31.12, ma con pagamento posticipato
+vero
+falso
+
+I ratei passivi sono
+uscite future che misurano costi già maturati
+costi
+
+Le scritture di assestamento si redigono
+alla fine dell'anno
+a metà anno

@@ -18,7 +18,8 @@ import os
 '''
 
 
-imgRnd = """https://tuocoach.files.wordpress.com/2018/11/cambiamento-10.jpg?w=345&h=294
+imgRnd = """imgs/ratei.png
+imgs/ratei.png
 """.splitlines()
 
 def makeQ(q, ch):
