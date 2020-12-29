@@ -1,0 +1,3 @@
+<script>
+window.location.href = "https://docs.google.com/spreadsheets/d/13QT_-i0aukAdHuFoki4woUlWRtTJn4fbmZoWcIZd6Ao/edit?usp=sharing";
+</script>

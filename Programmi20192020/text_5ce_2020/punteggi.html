@@ -11,33 +11,11 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 </head>
 <style>
-@media screen and (min-width: 1024px){
-img {
-  width: 30%;
-}
-img.cup {
-  width: 50px;
-}
-}
-  body{
-    margin-left: 30%;
-    margin-right: 30%;
-    color:white;
-    background-color: black;
-    font-size: 2em;
-  }
-  input {
-    align:middle;
-    text-align:center;
-    width:80%;
-    color:white;
-    background-color: darkblue;
-    font-size: 2em;
-  }
+@import "particles.css"
   </style>
   
 <body>
-
+<canvas></canvas>
 <div class="jumbotron" style="background:coral">
     <center>Partecipazione 5CE 2020 - 20201<br>
       <a href="https://formazione.github.io">[ H O M E ]</a>
@@ -172,7 +150,7 @@ function gotData(data){
       // This adds a cup every 100 points
       check_cups(x[keysSorted[n]]);
       // if (x[keysSorted[n]] > 199) scoretot.innerHTML += cup;
-      scoretot.innerHTML += party + "<div style='background:gold;color:gold'><img src='../text_4ce/" + keysSorted[n]  + ".PNG' style='max-width:100%'><br><b style='font-size:2.5em;color:red'>" + num + ". <u>" + anonymize(keysSorted[n]) + "</u><br></b><b style='font-size:2.5em;background:coral'>" + x[keysSorted[n]] + "</b><br></div><br>"; 
+      scoretot.innerHTML += party + "<div style='background:rgba(255,215,0,.5);color:rgba(0,0,0,.5)'><img src='../text_4ce/" + keysSorted[n]  + ".PNG' style='max-width:100%;z-index:100'><br><b style='font-size:2.5em;color:red'>" + num + ". <u>" + anonymize(keysSorted[n]) + "</u><br></b><b style='font-size:2.5em;background:coral'>" + x[keysSorted[n]] + "</b><br></div><br>"; 
     }
     else if (n == 1){
       check_cups(x[keysSorted[n]]);
@@ -195,7 +173,7 @@ function gotData(data){
 
 }
 </script>
-
+<script src="particles.js"></script>
 </body>
 </html>
 
