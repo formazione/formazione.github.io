@@ -1,3 +1,4 @@
 <script>
-window.location.href = "https://formazione.github.io/esercizi_DARM_all/output/marketing_strategico_verifica.html.html";
+window.location.href = "https://formazione.github.io/esercizi_DARM_all/output/marketing_strategico_verifica.html";
 </script>
+
