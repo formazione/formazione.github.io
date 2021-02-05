@@ -1,0 +1,3 @@
+<script>
+window.location.href = "https://formazione.github.io/esercizi_DARM_all/output/bilancio_destinazione.html";
+</script>

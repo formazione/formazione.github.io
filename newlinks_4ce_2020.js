@@ -10,4 +10,6 @@ newlinks_4ce_2020.innerHTML += "<a href='Programmi20192020/4ce/01_Modulo_1_es1.h
                 newlinks_4ce_2020.innerHTML += "<a href='Programmi20192020/4ce/02_Modulo2_test1.html'>02_Modulo2_test1</a><br>"
                 newlinks_4ce_2020.innerHTML += "<a href='Programmi20192020/4ce/Es_contabilit_2.html'>Es_contabilit_2</a><br>"
                 newlinks_4ce_2020.innerHTML += "<a href='Programmi20192020/4ce/EsercizioPD.html'>EsercizioPD</a><br>"
+                newlinks_4ce_2020.innerHTML += "<a href='Programmi20192020/4ce/Esercizio_Verifica_Assestamento.html'>Esercizio_Verifica_Assestamento</a><br>"
+                newlinks_4ce_2020.innerHTML += "<a href='Programmi20192020/4ce/Es_bilancio_destinazione.html'>Es_bilancio_destinazione</a><br>"
                 

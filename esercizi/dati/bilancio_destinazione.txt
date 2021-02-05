@@ -1,0 +1,51 @@
+Debiti v/fornitori: in quale prospetto di Bilancio andrà?
+Stato patrimoniale
+Conto economico
+
+Prodotti c/vendite: in quale prospetto di Bilancio andrà?
+Conto economico
+Stato patrimoniale
+
+Interessi passivi: in quale prospetto di Bilancio andrà?
+Conto economico
+Stato patrimoniale
+
+Ammortamenti: in quale prospetto di Bilancio andrà?
+Conto economico
+Stato patrimoniale
+
+Merci c/acquisti: in quale prospetto di Bilancio andrà?
+Conto economico
+Stato patrimoniale
+
+Capitale sociale: in quale prospetto di Bilancio andrà?
+Stato patrimoniale
+Conto economico
+
+Denaro in cassa: in quale prospetto di Bilancio andrà?
+Stato patrimoniale
+Conto economico
+
+Risconti attivi: in quale prospetto di Bilancio andrà?
+Stato patrimoniale
+Conto economico
+
+Merci in magazzino: in quale prospetto di Bilancio andrà?
+Stato patrimoniale
+Conto economico
+
+Banca x c/c: in quale prospetto di Bilancio andrà?
+Stato patrimoniale
+Conto economico
+
+Crediti v/clienti: in quale prospetto di Bilancio andrà?
+Stato patrimoniale
+Conto economico
+
+Fitti passivi: in quale prospetto di Bilancio andrà?
+Conto economico
+Stato patrimoniale
+
+Mutui passivi: in quale prospetto di Bilancio andrà?
+Stato patrimoniale
+Conto economico
