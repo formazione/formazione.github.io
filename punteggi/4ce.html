@@ -1,0 +1,287 @@
+
+<style>
+
+	
+ body, table, button {font-size: 1em; } .btn.btn-warning.btn-lg {background:pink; color:red; } .btn.btn-info.btn-lg {background:cyan; color:blue; } ul {font-size: 1em;} i {font-size : 1em;} p { font-size: 1em; } td {font-size: 1.5em;} table {border-collapse: collapse; width: 50%; } th, td {text-align: left; padding: 8px; } tr:nth-child(even){background-color: coral; color: white;} tr:nth-child(odd){background-color: navy; color: white;}
+	
+</style>
+
+
+<body>
+<h1>4ce_2020 livello di partecipazione</h1>
+
+
+<script src="https://www.gstatic.com/firebasejs/4.10.1/firebase.js"></script>
+<script>
+
+var codice_classe = "4ce_2020"; // nome del record di firebase quiz... dove sono memorizzati i dati della classe
+
+  var config = {
+    apiKey: "AIzaSyDp-mWaWEI07pIdRUhi6vA-salEMRWz4hw",
+    authDomain: "quiz-e5e5a.firebaseapp.com",
+    databaseURL: "https://quiz-e5e5a.firebaseio.com/",
+    projectId: "quiz-e5e5a",
+    storageBucket: "quiz-e5e5a.appspot.com",
+    messagingSenderId: "901845403492"
+  };
+  firebase.initializeApp(config);
+  var database = firebase.database()
+</script>
+<div id="alunni"></div>
+<script>
+
+
+
+</script>
+<div id="div1" class="w3-main" style="margin-left:50px">
+<table class="table-bordered">
+
+<script>
+
+function dimHead(ref, name){
+  ref.on("value", snap => name.style.width = snap.val() + 10);
+}
+
+function ref(child){
+    var db = firebase.database().ref().child(codice_classe).child(child);
+    return db;
+}
+
+  function alunno(db, div, name){
+    var div_var = document.getElementById(div);
+    dimHead(db, name);
+    return db
+  }
+</script>
+
+
+				<!-- Alunno 1 -->
+<td><img id="agresta" src="https:\\formazione.github.io\Programmi20192020\4ce\quiz\imgs\Agresta.PNG" width=100>
+<button type="button" class="btn btn-warning btn-lg" onclick="dbRef1.set(--n1)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRef1.set(++n1)"> + </button>Agresta<td><i id="h1alunno1"></i></p><script>
+  dbRef1 = ref("Agresta");
+  dbRef1.on("value", snap => h1alunno1.innerText = snap.val());
+  dbRef1.on("value", snap => n1 = snap.val());
+  alunno(dbRef1, "h1alunno1", agresta);
+</script><tr>
+
+
+				<!-- alunno 2 -->
+
+<td><img id="chirico" src="G:\formazione.github.io\Programmi20192020\4ce\quiz\imgs\Chirico.PNG" width=100>
+  <button type="button" class="btn btn-warning btn-lg" onclick="dbRef2.set(--n2)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRef2.set(++n2)"> + </button>Chirico<td><i id="h1alunno2"></i></p>
+  <script> // -------------------------------------------
+  dbRef2 = ref("Chirico");
+  dbRef2.on("value", snap => h1alunno2.innerText = snap.val());
+  dbRef2.on("value", snap => n2 = snap.val());
+  alunno(dbRef2, "h1alunno2", chirico);
+  </script>
+  <tr>
+
+
+
+<!-- alunno 3 -->
+
+<td><img id="cona" src="G:\formazione.github.io\Programmi20192020\4ce\quiz\imgs\Cona.PNG" width=100>
+  <button type="button" class="btn btn-warning btn-lg" onclick="dbRef3.set(--n3)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRef3.set(++n3)"> + </button>Cona<td><i id="h1alunno3"></i></p>
+  <script>
+  dbRef3 = ref("Cona");
+  dbRef3.on("value", snap => h1alunno3.innerText = snap.val());
+  dbRef3.on("value", snap => n3 = snap.val());
+  alunno(dbRef3, "h1alunno3", cona);
+</script>
+  <tr>
+
+
+    <td><img id="cuda" src="G:\formazione.github.io\Programmi20192020\4ce\quiz\imgs\Cuda.PNG" width=100>
+      <button type="button" class="btn btn-warning btn-lg" onclick="dbRef4.set(--n4)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRef4.set(++n4)"> + </button>Cuda<td><i id="h1alunno4"></i></p>
+  <script> // change name ("Cuda") numers cuda
+    dbRef4 = ref("Cuda");
+    dbRef4.on("value", snap => h1alunno4.innerText = snap.val());
+    dbRef4.on("value", snap => n4 = snap.val());
+    alunno(dbRef4, "h1alunno3", cuda);
+  </script>
+<tr>
+
+
+    <td>
+      <img id="dagosto" src="G:\formazione.github.io\Programmi20192020\4ce\quiz\imgs\DAgosto.PNG" width=100>
+      <button type="button" class="btn btn-warning btn-lg" onclick="dbRef5.set(--n5)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRef5.set(++n5)"> + </button>DAgosto<td><i id="h1alunno5"></i></p>
+  <script> // change name ("Cuda") numers cuda
+    dbRef5 = ref("DAgosto");
+    dbRef5.on("value", snap => h1alunno5.innerText = snap.val());
+    dbRef5.on("value", snap => n5 = snap.val());
+    alunno(dbRef5, "h1alunno5", dagosto);
+  </script>
+        <tr>
+
+
+    <td>
+      <img id="dinola" src="G:\formazione.github.io\Programmi20192020\4ce\quiz\imgs\DiNola.PNG" width=100><button type="button" class="btn btn-warning btn-lg" onclick="dbRef6.set(--n6)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRef6.set(++n6)"> + </button>DiNola<td><i id="h1alunno6"></i></p>
+  <script>
+    dbRef6 = ref("DiNola");
+    dbRef6.on("value", snap => h1alunno6.innerText = snap.val());
+    dbRef6.on("value", snap => n6 = snap.val());
+    alunno(dbRef6, "h1alunno6", dinola);
+  </script><tr>
+
+
+    <td>
+<img id="filosa" src="G:\formazione.github.io\Programmi20192020\4ce\quiz\imgs\Filosa.PNG" width=100>
+      <button type="button" class="btn btn-warning btn-lg" onclick="dbRef7.set(--n7)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRef7.set(++n7)"> + </button>Filosa<td><i id="h1alunno7"></i></p><script>
+    var h1alunno7 = document.getElementById("h1alunno7");
+  var dbRef7 = firebase.database().ref().child(codice_classe).child("Filosa");
+  dbRef7.on("value", snap => h1alunno7.innerText = snap.val());
+  dimHead(dbRef7, filosa)
+  dbRef7.on("value", snap => n7 = snap.val())</script><tr>
+
+
+<td><img src="G:\formazione.github.io\Programmi20192020\4ce\quiz\imgs\Mariosa.PNG" width=100>
+<button type="button" class="btn btn-warning btn-lg" onclick="dbRef7b.set(--n7b)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRef7b.set(++n7b)"> + </button>Mariosa<td><i id="h1alunno7b"></i></p><script>
+var h1alunno7b = document.getElementById("h1alunno7b");
+var dbRef7b = firebase.database().ref().child(codice_classe).child("Mariosa");
+dbRef7b.on("value", snap => h1alunno7b.innerText = snap.val());
+dbRef7b.on("value", snap => n7b = snap.val())</script><tr>
+
+
+
+
+
+
+    <td>
+      <img src="G:\formazione.github.io\Programmi20192020\4ce\quiz\imgs\Mazzeo.PNG" width=100>
+      <button type="button" class="btn btn-warning btn-lg" onclick="dbRef9.set(--n9)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRef9.set(++n9)"> + </button>Mazzeo<td><i id="h1alunno9"></i></p><script>
+    var h1alunno9 = document.getElementById("h1alunno9");
+  var dbRef9 = firebase.database().ref().child(codice_classe).child("Mazzeo");
+  dbRef9.on("value", snap => h1alunno9.innerText = snap.val());
+  dbRef9.on("value", snap => n9 = snap.val())</script><tr>
+
+
+    <td>
+<img src="G:\formazione.github.io\Programmi20192020\4ce\quiz\imgs\Merola.PNG" width=100>
+      <button type="button" class="btn btn-warning btn-lg" onclick="dbRef10.set(--n10)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRef10.set(++n10)"> + </button>Merola<td><i id="h1alunno10"></i></p><script>
+    var h1alunno10 = document.getElementById("h1alunno10");
+  var dbRef10 = firebase.database().ref().child(codice_classe).child("Merola");
+  dbRef10.on("value", snap => h1alunno10.innerText = snap.val());
+  dbRef10.on("value", snap => n10 = snap.val())</script><tr>
+
+
+    <td>
+<img src="G:\formazione.github.io\Programmi20192020\4ce\quiz\imgs\Pandullo.PNG" width=100>
+      <button type="button" class="btn btn-warning btn-lg" onclick="dbRef11.set(--n11)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRef11.set(++n11)"> + </button>Pandullo<td><i id="h1alunno11"></i></p><script>
+    var h1alunno11 = document.getElementById("h1alunno11");
+  var dbRef11 = firebase.database().ref().child(codice_classe).child("Pandullo");
+  dbRef11.on("value", snap => h1alunno11.innerText = snap.val());
+  dbRef11.on("value", snap => n11 = snap.val())</script><tr>
+
+
+    <td><img src="G:\formazione.github.io\Programmi20192020\4ce\quiz\imgs\Paolino.PNG" width=100>
+      <button type="button" class="btn btn-warning btn-lg" onclick="dbRef12.set(--n12)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRef12.set(++n12)"> + </button>Paolino<td><i id="h1alunno12"></i></p><script>
+    var h1alunno12 = document.getElementById("h1alunno12");
+  var dbRef12 = firebase.database().ref().child(codice_classe).child("Paolino");
+  dbRef12.on("value", snap => h1alunno12.innerText = snap.val());
+  dbRef12.on("value", snap => n12 = snap.val())</script><tr>
+
+
+
+    <td><img src="G:\formazione.github.io\Programmi20192020\4ce\quiz\imgs\Papa.PNG" width=100>
+
+      <button type="button" class="btn btn-warning btn-lg" onclick="dbRef12p.set(--n12p)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRef12p.set(++n12p)"> + </button>Papa<td><i id="h1alunno12p"></i></p><script>
+var h1alunno12p = document.getElementById("h1alunno12p");
+var dbRef12p = firebase.database().ref().child(codice_classe).child("Papa");
+
+dbRef12p.on("value", snap => h1alunno12p.innerText = snap.val());
+dbRef12p.on("value", snap => n12p = snap.val())</script><tr>
+
+
+
+
+
+<!--                               Inizia a copiar qui per aggiungere un alunno
+bdRef12 è il collegamento al database quiz-
+ petrone     cambia n12  nome       h1alunno12(ce ne sono 3)          dbRef12 (ce ne sono 3)                     -->
+    <td><img src="G:\formazione.github.io\Programmi20192020\4ce\quiz\imgs\Petrone.PNG" width=100>
+    <button type="button" class="btn btn-warning btn-lg" onclick="dbRef12a.set(--n12a)"> - 
+    </button><button type="button" class="btn btn-info btn-lg" onclick="dbRef12a.set(++n12a)"> + 
+    </button>Petrone<td>
+    <i id="h1alunno12a"></i></p>
+    <script>
+  var h1alunno12a = document.getElementById("h1alunno12a"); // div id in cui inserire il valore di Petrone
+  var dbRef12a = firebase.database().ref().child(codice_classe).child("Petrone"); // valore di Petrone
+  dbRef12a.on("value", snap => h1alunno12a.innerText = snap.val()); // Inserisce il valore di Petrone nel div 
+  dbRef12a.on("value", snap => n12a = snap.val()); // ? 
+  </script><tr>
+<!----------------------------------------------------------------------- copia fin qui ---------------->
+
+
+<!-- Ruggiero start -->
+
+<!--                               Inizia a copiar qui per aggiungere un alunno
+CAMBIARE:
+nome: Petrone => Ruggiero    2        nome alunno corrispondente alla key del database (deve essere in firebase)
+bdRef12a => c                5        riferimento al record dell'alunno
+n12a => c                    3        contatore per i punteggi
+h1alunno12a => c             4        identificatore del div dove viene mostrato il punteggio  
+-->
+    <td><img src="G:\formazione.github.io\Programmi20192020\4ce\quiz\imgs\Ruggiero.PNG" width=100>
+    <button type="button" class="btn btn-warning btn-lg" onclick="dbRef12c.set(--n12c)"> - 
+    </button><button type="button" class="btn btn-info btn-lg" onclick="dbRef12c.set(++n12c)"> + 
+    </button>Ruggiero<td>
+    <i id="h1alunno12c"></i></p>
+    <script>
+  
+  var h1alunno12c = document.getElementById("h1alunno12c"); // div id in cui inserire il valore di Ruggiero
+  var dbRef12c = firebase.database().ref().child(codice_classe).child("Ruggiero"); // valore di Ruggiero
+  dbRef12c.on("value", snap => h1alunno12c.innerText = snap.val()); // Inserisce il valore di Ruggiero nel div 
+  dbRef12c.on("value", snap => n12c = snap.val()); // ? 
+  </script><tr>
+<!----------------------------------------------------------------------- copia fin qui ---------------->
+
+
+<!--   Savino
+              CAMBIARE:
+nome: Petrone => Savino    2        nome alunno corrispondente alla key del database (deve essere in firebase)
+bdRef12a => c                5        riferimento al record dell'alunno
+n12a => c                    3        contatore per i punteggi
+h1alunno12a => c             4        identificatore del div dove viene mostrato il punteggio  -->
+<td><img src="G:\formazione.github.io\Programmi20192020\4ce\quiz\imgs\Savino.PNG" width=100>
+  <!-- pulsanti + e - -->
+<button type="button" class="btn btn-warning btn-lg" onclick="dbRef12d.set(--n12d)"> - 
+</button><button type="button" class="btn btn-info btn-lg" onclick="dbRef12d.set(++n12d)"> + 
+</button>Savino<td>
+<i id="h1alunno12d"></i></p>
+
+  <script>
+  var h1alunno12d = document.getElementById("h1alunno12d"); // div id in cui inserire il valore di Savino
+  var dbRef12d = firebase.database().ref().child(codice_classe).child("Savino"); // valore di Savino
+  dbRef12d.on("value", snap => h1alunno12d.innerText = snap.val()); // Inserisce il valore di Savino nel div 
+  dbRef12d.on("value", snap => n12d = snap.val()); // ? 
+  </script><tr>
+<!----------------------------------------------------------------------- copia fin qui ---------------->
+
+
+
+
+
+
+
+
+<!-- Volpe -->
+
+<td>
+  <img src="G:\formazione.github.io\Programmi20192020\4ce\quiz\imgs\Vassallo.PNG" width=100>
+<button type="button" class="btn btn-warning btn-lg" onclick="dbRef12b.set(--n12b)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRef12b.set(++n12b)"> + </button>Vassallo<td><i id="h1alunno12b"></i></p><script>
+var h1alunno12b = document.getElementById("h1alunno12b");
+var dbRef12b = firebase.database().ref().child(codice_classe).child("Vassallo");
+dbRef12b.on("value", snap => h1alunno12b.innerText = snap.val());
+dbRef12b.on("value", snap => n12b = snap.val())</script><tr>
+
+<td><img src="G:\formazione.github.io\Programmi20192020\4ce\quiz\imgs\Volpe.PNG" width=100>
+<button type="button" class="btn btn-warning btn-lg" onclick="dbRef12v.set(--n12v)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRef12v.set(++n12v)"> + </button>Volpe<td><i id="h1alunno12v"></i></p><script>
+var h1alunno12v = document.getElementById("h1alunno12v");
+var dbRef12v = firebase.database().ref().child(codice_classe).child("Volpe");
+dbRef12v.on("value", snap => h1alunno12v.innerText = snap.val());
+dbRef12v.on("value", snap => n12v = snap.val())</script><tr>
+
+
+</table>
+</div>
