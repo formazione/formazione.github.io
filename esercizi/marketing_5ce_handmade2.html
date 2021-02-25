@@ -1,0 +1,914 @@
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta name="viewport" content="initial-scale=1.0">
+    <title>Quiz</title>
+    <!-- jquery for maximum compatibility -->
+	<link type="text/css" rel="stylesheet" href="https://stackpath.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css">
+    <!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>-->
+	<script src="https://code.jquery.com/jquery-1.11.1.min.js" integrity="sha256-VAvG3sHdS5LqTT+5A/aeq/bZGa/Uj04xKxY8KM/w9EE=" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+
+
+<b id="scoretot"></b><br>
+
+
+
+
+<!--
+
+											TEMPLATE PER LA 3 C E
+							
+							file collegati
+
+
+								- listanomi3ce.js   lista dei nomi         Personalizzare per altre classi
+								- marketing.js 		domande
+
+
+							Da fare:
+								crea script python per creare le domande e salvarle in marketing.js
+								prendendole dal file txt marketing in dati\
+
+								crea una GUI per caricare il file txt dare il nome al file html
+								e scegliere la classe (listanomi3ce.js, ad esempio)
+
+							Oppure: usare domande.js per tutti i file html e mettere in una cartella
+							specifica ogni esercizio
+
+
+-->
+
+<script src="listanomi5ce.js"></script>
+
+
+<script>
+// `
+
+
+</script>
+
+
+
+<script src="https://www.gstatic.com/firebasejs/5.9.2/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/5.9.2/firebase-database.js"></script>
+<!-- configurazione  -->
+<script src="config.js"></script>
+<script>
+// nome del record del database 
+
+function start(recordname){
+	// crea il record - ricorda di cambiare il record per 
+	// esercizi diversi
+	ref = database.ref(recordname);
+	ref.child("Scegli_il_cognome").set(0)
+	ref.on("value", gotData);
+	div_scoretot()
+}
+
+function div_scoretot(){
+	let scoretot = document.getElementById("scoretot");
+	scoretot.align = "center";
+}
+
+function gotData(data){
+	// prende i valori e li scrive in scoretot
+    x = data.val();
+    for (name in x){
+  		scoretot.innerHTML += "(" + name + ":" + x[name] + ") ";
+	}
+}
+
+start("5ce2021_marketing")
+
+
+    var quiztitle = "Pianificazione e programmazione";
+
+    /**
+    * Set the information about your questions here. The correct answer string needs to match
+    * the correct choice exactly, as it does string matching. (case sensitive)
+    *
+    */
+
+// ========================== Nuova funzione speak ===========
+function speak(x) {
+  synth = speechSynthesis
+  utt = new SpeechSynthesisUtterance(x);
+  synth.speak(utt);
+  is_on = 1;
+}
+      
+function shuffle(array) {
+  var currentIndex = array.length, temporaryValue, randomIndex;
+  while (0 !== currentIndex) {
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
+    temporaryValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
+  }
+  return array;
+}
+	    
+if (!("scramble" in Array.prototype)) {
+  Object.defineProperty(Array.prototype, "scramble", {
+    enumerable: false,
+    value: function() {
+      var o, i, ln = this.length;
+      while (ln--) {
+        i = Math.random() * (ln + 1) | 0;
+        o = this[ln];
+        this[ln] = this[i];
+        this[i] = o;
+      }
+      return this;
+    }
+  });
+}		
+
+</script>
+
+
+<script src="marketing.js"></script>
+
+<script>
+   
+   for (q in quiz){
+   	quiz[q]["image"] = "";
+   }   
+
+   quiz.forEach(q => q.choices.scramble()); // Mescola l'ordine delle risposte
+   quiz = shuffle(quiz);   
+var currentquestion = 0, score = 0, submt=true, picked;
+let count_speak = 0;
+      
+      
+jQuery(document).ready(function($){
+  
+  function addChoices(choices){
+      if(typeof choices !== "undefined" && $.type(choices) == "array"){
+        $('#choice-block').empty();
+        for(var i=0;i<choices.length; i++){
+          // added .css({'font-size':'36px'}) il 2 marzo 2019
+        $(document
+          .createElement('li'))
+          .addClass('choice choice-box btn')
+          .attr('data-index', i)
+          .text(choices[i])
+          .appendTo('#choice-block')
+          .css({'font-size':'28px'});		//  Aggiunge risposte
+      }
+    }
+
+  }
+                 
+
+  
+  
+  function nextQuestion(){
+     
+			submt = true;
+			$('#explanation').empty(); // svuota spiegazione
+			$('#question').text(quiz[currentquestion]['question']); // domanda attuale
+      // domanda n. di ... totale domande
+			$('#pager').text('Domanda' + Number(currentquestion + 1) + ' di ' + quiz.length);
+      // Immagine... ?
+			if(quiz[currentquestion].hasOwnProperty('image') && quiz[currentquestion]['image'] != ""){
+				if($('#question-image').length == 0){
+					$(document.createElement('img'))
+            .addClass('question-image')
+            .attr('id', 'question-image')
+            .attr('src', quiz[currentquestion]['image'])
+            .attr('alt', (quiz[currentquestion]['question']))
+            .insertAfter('#question');
+				} else {
+					$('#question-image')
+            .attr('src', quiz[currentquestion]['image'])
+            .attr('alt', (quiz[currentquestion]['question']));
+				}
+			} else {
+				$('#question-image')
+          .remove();
+			}
+
+			addChoices(quiz[currentquestion]['choices']);
+			setupButtons();
+      // parla solo una volta ======|||||||||=====>>>
+      if (count_speak==0 && is_on==1){
+        speak(quiz[currentquestion]['question']);
+        count_speak = 1;
+      }
+    // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  parla solo una volta ======|||||||||=====>>>
+    
+			jQuery(document).ready(function($){
+				$("#question").html(function(){
+					var text= $(this).text().trim().split(" ");
+					var first = text.shift();
+					return (text.length > 0 ? "<span class='number'>"+ first +"</span> " : first) + text.join(" ");
+				});
+				
+				$('p.pager').each(function(){
+					var text = $(this).text().split(' ');
+					if(text.length < 2)
+						return;
+					
+					text[1] = '<span class="qnumber">'+text[1]+'</span>';
+					$(this).html(
+						text.join(' ')
+					);
+				});
+			});
+				
+			
+        } // function nextQuestion
+
+
+function processQuestion(choice){  
+    // ===========   Risposta ESATTA!  ============================== //
+    if(quiz[currentquestion]['choices'][choice] == quiz[currentquestion]['correct'])
+      {
+				$('.choice')
+          .eq(choice)
+          .addClass('btn-success')
+          .css({'font-size':'36px', 'font-weight':'bold', 'border-color':'#51a351', 'color':'#fff'});
+				$('#explanation')
+          .html('<span class="correct">ESATTO!</span> ' + (quiz[currentquestion]['explanation']));
+        
+        let ff = ["Giusto", "Corretto", "Si", "Bene", "Molto bene", "Ok", "Esatto", "Perfetto", "Risposta esatta"].sort(function(){return 0.5 - Math.random()})[0];
+        speak(ff);
+        score++;
+        count_speak = 0;
+			} 
+      
+    // ================================ |  Risposta sbagliata  | ======================== //
+    else {
+      $('.choice')
+            .eq(choice)
+            .addClass('btn-danger')
+            .css({'font-weight':'bold', 'border-color':'#f93939', 'color':'#fff'});
+      $('#explanation')
+        .html('<span class="incorrect">INESATTO!</span> ' + (quiz[currentquestion]['explanation']));
+        speak("No! è " + quiz[currentquestion]['correct']);
+            }
+        count_speak = 0;
+        currentquestion++;
+    // ========================= qui è stata aggiunta da 322
+    if (currentquestion < quiz.length)  nextQuestion();
+    // =========================
+  
+
+      // SONO FINITE LE DOMANDE... MOSTRA I RISULTATI
+			if(currentquestion == quiz.length){
+				$('#submitbutton')
+          .html('Vedi il risultato, ma... ricorda il nome in altro a sinistra')
+          .removeClass('btn-success')
+          .addClass('btn-info')
+          .css({'border-color':'#3a87ad', 'color':'#fff'})
+          .on('click', function(){
+          
+			    $(this).text('Vedi il risultato\nHai messo il nome in altro a sinistra?')
+                .on('click');
+                if (nomestudente.value != "Scegli_il_cognome"){
+					endQuiz();
+                }
+                else speak("Devi mettere il tuo nome in alto a sinistra prima")
+				})
+				
+			}
+      
+      else if (currentquestion < quiz.length){ 
+      // SE CI SONO ANCORA DOMANDE, RIMETTE IL PULSANTE CONTROLLA LA RISPOSTA
+        
+				$('#submitbutton').html(' VERIFICA >>> ')
+          .removeClass('btn-success')
+          .addClass('btn-warning')
+          .css({'font-weight':'bold', 'border-color':'#faa732', 'color':'#fff'})
+          .off('click', function(){
+          
+        $(this).text('VERIFICA')
+          .removeClass('btn-warning')
+          .addClass('btn-success')
+          .css({'font-weight':'bold', 'border-color':'#51a351', 'color':'#fff'})
+          .on('click');
+          
+				})
+  			
+			} 
+    
+    else {
+				$('#submitbutton').html('VAI ALLA PROSSIMA DOMANDA &raquo;').on('click', function(){
+				$(this).text('- CONTROLLA LA RISPOSTA -').css({'color':'inherit'}).on('click');
+				})
+			}
+
+          
+			
+		}
+
+       
+                                  /*
+                                  
+                                  Qui sotto c'è il codice che segue
+                                  la scelta di una opzione
+                                                |
+                                                |
+                                               \/
+                                  */
+	
+  
+  function setupButtons(){
+			$('.choice').on('click', function(){
+      //speak(quiz[currentquestion]['choice'])
+    // Ogni volta che clicco un pulsante
+      
+        synth.cancel();
+        is_on = 0;
+    
+            
+				picked = $(this).attr('data-index');
+				$('.choice').removeAttr('style').off('mouseout mouseover');
+				$(this).css({'font-weight':'900', 'border-color':'#51a351', 'color':'#51a351', 'background' : 'gold'});
+				if(submt){
+					submt=false;
+					$('#submitbutton').css({'color':'#fff','cursor':'pointer'}).on('click', function(){
+						$('.choice').off('click');
+						$(this).off('click');
+						processQuestion(picked);
+            //
+					});
+				}
+			})
+		}
+        
+        
+  
+  
+	function endQuiz(){
+			$('#explanation').empty();
+			$('#question').empty();
+			$('#choice-block').empty();
+			$('#submitbutton').remove();
+			$('.rsform-block-submit').addClass('show');
+			$('#question').text("Hai risposto bene a " + score + " domande su " + quiz.length + " complessive.");
+      speak("hai risposto in modo corretto a " + score + " domande su " + quiz.length + " complessive");
+
+
+
+
+// AGGIUNGE IL PUNTEGGIO AL DATABASE, SE NON HA GIÀ RISPOSTO
+scoretot.innerHTML = "";
+let nome = nomestudente.value;
+let nome_in_lista = listanomi.includes(nomestudente.value);
+// let password_corretta = code[nomestudente.value]==codice.value;
+//let prima_volta = x[nomestudente.value] == undefined;
+if (nome_in_lista){ // per password togli il commento dalla seguente
+// if (nome_in_lista && password_corretta){
+  ref.child(nome).set(Math.round(score/quiz.length * 100));
+}
+// ========================================================
+ 
+
+
+      let percent = Math.round(score/quiz.length * 100);
+      speak(nomestudente.value);
+      if (percent == 100) speak("Hai ottenuto il massimo punteggio! Ottimo!");
+      else if (percent < 100 && percent >80) speak("Bel risultato, complimenti");
+      else if (percent < 80 && percent >70) speak("Hai risposto in modo discreto, bravo.");
+      else if (percent < 70 && percent >60) speak("HAi risposto in modo sufficientemente corretto.");
+      else speak("Devi impegnarti di più. Riprova");
+    
+			$(document.createElement('h4')).addClass('score').text(Math.round(score/quiz.length * 100) + '%').insertAfter('#question');			
+			$(document.createElement('h4')).addClass('score').text("").insertAfter('#question');			
+				
+			$(document.createElement('h4')).addClass('score').text(nomestudente.value).insertAfter('#question');			
+		}
+
+        /**
+         * Runs the first time and creates all of the elements for the quiz
+         */
+		function init(){
+      speak(quiz[currentquestion]['question'])
+			//add title
+      /*
+			if(typeof quiztitle !== "undefined" && $.type(quiztitle) === "string"){
+				$(document.createElement('h2')).text(quiztitle).appendTo('#frame');
+			} else {
+				$(document.createElement('h2')).text("Quiz").appendTo('#frame');
+			}
+      I removed the title to leave more space */
+			
+			//add pager and questions
+			if(typeof quiz !== "undefined" && $.type(quiz) === "array"){
+				//add pager
+        
+				$(document.createElement('p')).addClass('pager').attr('id','pager').text('Domanda 1 di ' + quiz.length).appendTo('#frame');
+				//add first question
+				$(document.createElement('h3')).addClass('question').attr('id', 'question').text(quiz[0]['question']).appendTo('#frame');
+				//add image if present
+				if(quiz[0].hasOwnProperty('image') && quiz[0]['image'] != ""){
+					$(document.createElement('img')).addClass('question-image').attr('width','100px').attr('id', 'question-image').attr('src', quiz[0]['image']).attr('alt', (quiz[0]['question'])).appendTo('#frame');
+				}
+				
+				$(document.createElement('p')).addClass('explanation').attr('id','explanation').html('').appendTo('#question');
+				
+				//questions holder
+				$(document.createElement('ul')).attr('id', 'choice-block').appendTo('#frame');
+				
+				//add choices
+				addChoices(quiz[0]['choices']);
+				
+				//add submit button
+				$(document.createElement('div')).addClass('btn-warning choice-box').attr('id', 'submitbutton').text('VERIFICA >>>').css({'font-weight':'bold', 'color':'#fff','padding':'30px 0', 'border-radius':'10px'}).appendTo('#frame');
+				
+				setupButtons();
+			}
+		}
+	
+		init();
+	
+	});
+		
+	jQuery(document).ready(function($){			
+		$("#question").html(function(){
+		var text= $(this).text().trim().split(" ");
+		var first = text.shift();
+			return (text.length > 0 ? "<span class='number'>"+ first +"</span> " : first) + text.join(" ");
+		});
+		
+		$('p.pager').each(function(){
+			var text = $(this).text().split(' ');
+			if(text.length < 2)
+				return;
+			
+			text[1] = '<span class="qnumber">'+text[1]+'</span>';
+			$(this).html(
+				text.join(' ')
+			);
+		});
+
+	});	
+
+		function copyText() {
+			var output = document.getElementById("frame").innerHTML;
+			document.getElementById("placecontent").value = output;
+		}
+	    
+    </script>
+    <style type="text/css" media="all">
+ .btn:hover, .btn:active {color: blue; font-weight: 800; background-image: url("http://www.myiconfinder.com/uploads/iconsets/65192ff2984e9928d32fd577bc743ea5.png"); background-size: 100%; } /*        BODY                 */ body {margin: 0; font-family: "Consolas",Helvetica,Arial,sans-serif; font-size: 24px; line-height: 20px; color: #ffffff; background-color: #21517ee8; } h3.question {font-family: "Consolas",Helvetica,Arial,sans-serif; font-weight: normal; margin: 20px 0; padding: 0; font-style: italic; display: block; color: whitesmoke; } input { height:30px !important; } input[type=checkbox] { height:30px !important; margin-top:-3px !important; margin-right:5px !important; box-shadow:none; background-color:#ffffff; position:relative !important; } textarea { width: 90%; margin: 0 auto; display: block; } input[type=radio] { height:30px !important; margin-top:-3px !important; margin-right:5px !important; box-shadow:none; background-color:#ffffff; position:relative !important; } .form-group input, .form-group select 					{ height:30px; padding: 0px 12px; } .form-horizontal .form-group							{ margin:10px; } .formContainer .formControlLabel 						{ width:auto !important; min-width:150px; margin:0; padding:0; } .formControls											{ width:100%; padding:0; margin: 10px 0 20px auto; } .radio 													{ padding-top:0 !important; padding-left:8px !important; } .radio-inline											{ margin-right:10px; padding-top:0 !important; display:inline; } .bold													{ font-weight:bold; } .italic 												{ font-style:italic; } .clear					 								{ width:100%; margin:0 !important; } .rsform-block-submit 									{ display:none; } .show 													{ display: block !important; } #submit													{ margin:0 auto; display:block; } /* QUIZ STYLES */ li.choice-block {font-size: 28px}; ol,ul 													{ list-style:none; font-size: 48} strong 													{ font-weight:700; } #frame 													{ width:auto; max-width: 800px; background:transparent; margin:3px auto; padding:10px;     color: #f94a4a !important; } div#frame h2 ul li											{ color: white; width:auto; border-bottom:1px solid #bdbdbd; padding:0 0 5px 0; font-size:32px; } h3.question 											{ font-weight:normal; margin:20px 0; padding:0; font-style:italic; display:block; } p.pager 												{ margin:5px 0 5px; color:#999; text-align:right; } .qnumber 												{ font-size:25px; font-weight:bold; font-style:italic; vertical-align:bottom; } .number 												{ font-family: "Consolas",Helvetica,Arial,sans-serif;font-size:24px; font-weight:bold; font-style:normal; vertical-align:inherit; padding-right:10px; } .score 													{ width:100%; display:inline-block; margin:30px 0; font-size:100px; text-align:center; } img.question-image 										{ width:25%; height:auto; display:block; max-width:150px; margin:10px auto; border:1px solid #ccc; } #choice-block 											{ display:block; list-style:none; margin:0; padding:0; cursor: pointer; } /*	#submitbutton 											{ cursor:pointer; -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px; } */ /*	#submitbutton:hover 									{ background:#7b8da6; } */ #explanation 											{ width:auto; min-height:0px; margin:0 auto; padding:0px 0; text-align:center;} #explanation span 										{ font-weight:bold; padding-right:8px; } .choice-box 											{ width:100%;  display:block;  text-align:center;  margin:5px auto !important; padding:10px 0 !important; border:1px solid #bdbdbd; } .choice-box.btn {font-size: 28px;} .correct 												{ color:#51a351; font-size: 32px; display: block; margin-bottom: 5px; border-bottom: 1px #51a351 solid; padding-bottom: 5px; } .incorrect 												{ color:#f93939; font-size: 32px; display: block; margin-bottom: 5px; border-bottom: 1px #f93939 solid; padding-bottom: 5px; } #body{width:100vw; height:100vh; }
+    </style>
+
+
+  
+</script>
+ <style> body, table, button {font-size: 1em; } .btn.btn-warning.btn-lg {background:pink; color:red; } .btn.btn-info.btn-lg {background:cyan; color:blue; } ul {font-size: 1em;} i {font-size : 1em;} p { font-size: 1em; } td {font-size: 1.5em;} table {border-collapse: collapse; width: 50%; } th, td {text-align: left; padding: 8px; } tr:nth-child(even){background-color: coral; color: white;} tr:nth-child(odd){background-color: navy; color: white;} </style>
+
+</head>
+
+<!-- shows the quiz -->
+
+<!-- This avoids right menu click -->
+    <!-- <body  oncontextmenu="return false"> -->
+    <body >
+<a href="https://formazione.github.io">Home</a><br>
+ <h2><u>Percentuali e proporzioni</u></h2>
+<div class="form-group rsform-block rsform-block-framecontent"><div id="frame" role="content"></div>
+</div>
+
+
+
+
+<!-- -->
+<script>
+
+function show_data(div, record, nome){
+	var h1alunno1 = document.getElementById(div);
+	var dbRef1 = firebase.database().ref().child(record).child(nome);
+	dbRef1.on("value", snap => h1alunno1.innerText = snap.val());
+	dbRef1.on("value", snap => n1 = snap.val());
+	return dbRef1;
+}
+
+</script>
+
+
+<h1>Risposta scelta</h1>
+
+<div id="div1" class="w3-main" style="margin-left:50px">
+<table class="table-bordered">
+
+<!-- Maiuri -------------------------------------------------------------->
+<th>Nome<th>Risposta<th>Punti<tr>
+<td>Maiuri<td>
+<button type="button" class="btn btn-warning btn-lg" onclick="dbRef1.set(--n1)"> - </button>
+<button type="button" class="btn btn-info btn-lg" onclick="dbRef1.set(++n1)"> + </button>
+<i id="h1alunno1"></i> <!-- Scelta domanda -->
+<td>
+<button type="button" class="btn btn-warning btn-lg" onclick="dbRef_2_1.set(--n_2_1)"> - </button>
+<button type="button" class="btn btn-info btn-lg" onclick="dbRef_2_1.set(++n_2_1)"> + </button>
+<i id="h1_2_alunno1"></i><tr> <!-- punteggio -->
+<script>
+// risposta scelta
+// var h1alunno1 = document.getElementById("h1alunno1");
+// var dbRef1 = firebase.database().ref().child("5ce_scelta").child("Maiuri");
+// dbRef1.on("value", snap => h1alunno1.innerText = snap.val());
+// dbRef1.on("value", snap => n1 = snap.val())
+dbRef1 = show_data("h1alunno1", "5ce_scelta", "Maiuri")
+dbRef_2_1 = show_data("h1_2_alunno1", "5ce2021_marketing", "Maiuri")
+
+// punteggio
+// var h1_2_alunno1 = document.getElementById("h1_2_alunno1");
+// var dbRef_2_1 = firebase.database().ref().child("5ce2021_marketing").child("Maiuri");
+// dbRef_2_1.on("value", snap => h1_2_alunno1.innerText = snap.val());
+// dbRef_2_1.on("value", snap => n_2_1 = snap.val())
+</script><!-----------------   end Maiuri ------------------------------->
+
+<!-- alunno 2 -->
+<td><button type="button" class="btn btn-warning btn-lg" onclick="dbRef2.set(--n2)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRef2.set(++n2)"> + </button>Battagliese<td><i id="h1alunno2"></i></p><script>
+    var h1alunno2 = document.getElementById("h1alunno2");
+  var dbRef2 = firebase.database().ref().child("5ce_scelta").child("Battagliese");
+  dbRef2.on("value", snap => h1alunno2.innerText = snap.val());
+  dbRef2.on("value", snap => n2 = snap.val())</script><tr>
+
+
+
+
+
+
+
+<td><button type="button" class="btn btn-warning btn-lg" onclick="dbRef3.set(--n3)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRef3.set(++n3)"> + </button>Borrelli<td><i id="h1alunno3"></i></p><script>
+    var h1alunno3 = document.getElementById("h1alunno3");
+  var dbRef3 = firebase.database().ref().child("5ce_scelta").child("Borrelli");
+  dbRef3.on("value", snap => h1alunno3.innerText = snap.val());
+  dbRef3.on("value", snap => n3 = snap.val())</script><tr>
+
+
+    <td><button type="button" class="btn btn-warning btn-lg" onclick="dbRef4.set(--n4)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRef4.set(++n4)"> + </button>Carracino<td><i id="h1alunno4"></i></p><script>
+    var h1alunno4 = document.getElementById("h1alunno4");
+  var dbRef4 = firebase.database().ref().child("5ce_scelta").child("Carracino");
+  dbRef4.on("value", snap => h1alunno4.innerText = snap.val());
+  dbRef4.on("value", snap => n4 = snap.val())</script><tr>
+
+
+    <td><button type="button" class="btn btn-warning btn-lg" onclick="dbRef5.set(--n5)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRef5.set(++n5)"> + </button>Ciardi<td><i id="h1alunno5"></i></p><script>
+    var h1alunno5 = document.getElementById("h1alunno5");
+  var dbRef5 = firebase.database().ref().child("5ce_scelta").child("Ciardi");
+  dbRef5.on("value", snap => h1alunno5.innerText = snap.val());
+  dbRef5.on("value", snap => n5 = snap.val())</script><tr>
+
+
+    <td><button type="button" class="btn btn-warning btn-lg" onclick="dbRef6.set(--n6)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRef6.set(++n6)"> + </button>Donianni<td><i id="h1alunno6"></i></p><script>
+    var h1alunno6 = document.getElementById("h1alunno6");
+  var dbRef6 = firebase.database().ref().child("5ce_scelta").child("Donnianni");
+  dbRef6.on("value", snap => h1alunno6.innerText = snap.val());
+  dbRef6.on("value", snap => n6 = snap.val())</script><tr>
+
+
+    <td><button type="button" class="btn btn-warning btn-lg" onclick="dbRef7.set(--n7)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRef7.set(++n7)"> + </button>Fluri<td><i id="h1alunno7"></i></p><script>
+    var h1alunno7 = document.getElementById("h1alunno7");
+  var dbRef7 = firebase.database().ref().child("5ce_scelta").child("Fluri");
+  dbRef7.on("value", snap => h1alunno7.innerText = snap.val());
+  dbRef7.on("value", snap => n7 = snap.val())</script><tr>
+
+
+
+<td>
+<button type="button" class="btn btn-warning btn-lg" onclick="dbRef7b.set(--n7b)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRef7b.set(++n7b)"> + </button>Ghiunghius<td><i id="h1alunno7b"></i></p><script>
+var h1alunno7b = document.getElementById("h1alunno7b");
+var dbRef7b = firebase.database().ref().child("5ce_scelta").child("Ghiunghius");
+dbRef7b.on("value", snap => h1alunno7b.innerText = snap.val());
+dbRef7b.on("value", snap => n7b = snap.val())</script><tr>
+
+
+<!-- 
+    <td><button type="button" class="btn btn-warning btn-lg" onclick="dbRef8.set(--n8)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRef8.set(++n8)"> + </button>Gonoshi<td><i id="h1alunno8"></i></p><script>
+    var h1alunno8 = document.getElementById("h1alunno8");
+  var dbRef8 = firebase.database().ref().child("5ce_scelta").child("Gonoshi");
+  dbRef8.on("value", snap => h1alunno8.innerText = snap.val());
+  dbRef8.on("value", snap => n8 = snap.val())</script><tr> -->
+
+
+
+    <td><button type="button" class="btn btn-warning btn-lg" onclick="dbRef9.set(--n9)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRef9.set(++n9)"> + </button>Liguori<td><i id="h1alunno9"></i></p><script>
+    var h1alunno9 = document.getElementById("h1alunno9");
+  var dbRef9 = firebase.database().ref().child("5ce_scelta").child("Liguori");
+  dbRef9.on("value", snap => h1alunno9.innerText = snap.val());
+  dbRef9.on("value", snap => n9 = snap.val())</script><tr>
+
+
+    <td><button type="button" class="btn btn-warning btn-lg" onclick="dbRef10.set(--n10)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRef10.set(++n10)"> + </button>Maiese<td><i id="h1alunno10"></i></p><script>
+    var h1alunno10 = document.getElementById("h1alunno10");
+  var dbRef10 = firebase.database().ref().child("5ce_scelta").child("Maiese");
+  dbRef10.on("value", snap => h1alunno10.innerText = snap.val());
+  dbRef10.on("value", snap => n10 = snap.val())</script><tr>
+
+
+
+    <td><button type="button" class="btn btn-warning btn-lg" onclick="dbRef11.set(--n11)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRef11.set(++n11)"> + </button>Mautone<td><i id="h1alunno11"></i></p><script>
+    var h1alunno11 = document.getElementById("h1alunno11");
+  var dbRef11 = firebase.database().ref().child("5ce_scelta").child("Mautone");
+  dbRef11.on("value", snap => h1alunno11.innerText = snap.val());
+  dbRef11.on("value", snap => n11 = snap.val())</script><tr>
+
+    <td><button type="button" class="btn btn-warning btn-lg" onclick="dbRef12.set(--n12)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRef12.set(++n12)"> + </button>Merola<td><i id="h1alunno12"></i></p><script>
+    var h1alunno12 = document.getElementById("h1alunno12");
+  var dbRef12 = firebase.database().ref().child("5ce_scelta").child("Merola");
+  dbRef12.on("value", snap => h1alunno12.innerText = snap.val());
+  dbRef12.on("value", snap => n12 = snap.val())</script><tr>
+
+
+
+
+<!-- palladino -->
+
+<td>
+<button type="button" class="btn btn-warning btn-lg" onclick="dbRef12b.set(--n12b)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRef12b.set(++n12b)"> + </button>Palladino<td><i id="h1alunno12b"></i></p><script>
+var h1alunno12b = document.getElementById("h1alunno12b");
+var dbRef12b = firebase.database().ref().child("5ce_scelta").child("Palladino");
+dbRef12b.on("value", snap => h1alunno12b.innerText = snap.val());
+dbRef12b.on("value", snap => n12b = snap.val())</script><tr>
+
+
+
+
+
+
+
+    <td><button type="button" class="btn btn-warning btn-lg" onclick="dbRef13.set(--n13)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRef13.set(++n13)"> + </button>Romano<td><i id="h1alunno13"></i></p><script>
+    var h1alunno13 = document.getElementById("h1alunno13");
+  var dbRef13 = firebase.database().ref().child("5ce_scelta").child("Romano");
+  dbRef13.on("value", snap => h1alunno13.innerText = snap.val());
+  dbRef13.on("value", snap => n13 = snap.val())</script><tr>
+
+    <td><button type="button" class="btn btn-warning btn-lg" onclick="dbRef14.set(--n14)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRef14.set(++n14)"> + </button>Ricci<td><i id="h1alunno14"></i></p><script>
+    var h1alunno14 = document.getElementById("h1alunno14");
+  var dbRef14 = firebase.database().ref().child("5ce_scelta").child("Ricci");
+  dbRef14.on("value", snap => h1alunno14.innerText = snap.val());
+  dbRef14.on("value", snap => n14 = snap.val())</script><tr>
+
+
+
+
+
+
+    <td>Saja_A<td><button type="button" class="btn btn-info btn-lg" onclick="dbRef15.set(--n15)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRef15.set(++n15)"> + </button><i id="h1alunno15"></i></p>
+
+    	<script>
+  var h1alunno15 = document.getElementById("h1alunno15");
+  var dbRef15 = firebase.database().ref().child("5ce_scelta").child("Saja_A");
+  dbRef15.on("value", snap => h1alunno15.innerText = snap.val());
+  dbRef15.on("value", snap => n15 = snap.val())
+	</script>
+
+  <td><button type="button" class="btn btn-warning btn-lg" onclick="dbRef_2_15.set(--n_2_15)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRef_2_15.set(++n_2_15)"> + </button> <i id="h1_2_alunno15"></i></p><script>
+  
+  var h1_2_alunno15 = document.getElementById("h1_2_alunno15");
+  var dbRef_2_15 = firebase.database().ref().child("5ce2021_marketing").child("Saja_A");
+  dbRef_2_15.on("value", snap => h1_2_alunno15.innerText = snap.val());
+  dbRef_2_15.on("value", snap => n_2_15 = snap.val())</script><tr>
+
+
+<tr>
+
+    <td>Saja_P<td><button type="button" class="btn btn-warning btn-lg" onclick="dbRef16.set(--n16)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRef16.set(++n16)"> + </button><i id="h1alunno16"></i></p>
+
+    	<script>
+  var h1alunno16 = document.getElementById("h1alunno16");
+  var dbRef16 = firebase.database().ref().child("5ce_scelta").child("Saja_P");
+  dbRef16.on("value", snap => h1alunno16.innerText = snap.val());
+  dbRef16.on("value", snap => n16 = snap.val())
+	</script>
+
+  <td><button type="button" class="btn btn-warning btn-lg" onclick="dbRef_2_16.set(--n_2_16)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRef_2_16.set(++n_2_16)"> + </button> <i id="h1_2_alunno16"></i></p><script>
+  
+  var h1_2_alunno16 = document.getElementById("h1_2_alunno16");
+  var dbRef_2_16 = firebase.database().ref().child("5ce2021_marketing").child("Saja_P");
+  dbRef_2_16.on("value", snap => h1_2_alunno16.innerText = snap.val());
+  dbRef_2_16.on("value", snap => n_2_16 = snap.val())</script><tr>
+
+
+
+
+
+    	<td>Tierno<td>
+    <button type="button" class="btn btn-warning btn-lg" onclick="dbRef16b.set(--n16b)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRef16b.set(++n16b)"> + </button>
+    	<i id="h1alunno16b"></i></p><script>
+  var h1alunno16b = document.getElementById("h1alunno16b");
+  var dbRef16b = firebase.database().ref().child("5ce_scelta").child("Tierno");
+  dbRef16b.on("value", snap => h1alunno16b.innerText = snap.val());
+  dbRef16b.on("value", snap => n16b = snap.val())</script>
+
+  <td><button type="button" class="btn btn-warning btn-lg" onclick="dbRef_2_16b.set(--n_2_16b)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRef_2_16b.set(++n_2_16b)"> + </button> <i id="h1_2_alunno16b"></i></p><script>
+    var h1_2_alunno16b = document.getElementById("h1_2_alunno16b");
+  var dbRef_2_16b = firebase.database().ref().child("5ce2021_marketing").child("Tierno");
+  dbRef_2_16b.on("value", snap => h1_2_alunno16b.innerText = snap.val());
+  dbRef_2_16b.on("value", snap => n_2_16b = snap.val())</script>
+
+</table>
+</div>
+
+
+5ce_scelta
+
+<!-- <script src="https://www.gstatic.com/firebasejs/4.10.1/firebase.js"></script>
+<script>
+  var config = {
+    apiKey: "AIzaSyDp-mWaWEI07pIdRUhi6vA-salEMRWz4hw",
+    authDomain: "quiz-e5e5a.firebaseapp.com",
+    databaseURL: "https://quiz-e5e5a.firebaseio.com/",
+    projectId: "quiz-e5e5a",
+    storageBucket: "quiz-e5e5a.appspot.com",
+    messagingSenderId: "901845403492"
+  };
+  firebase.initializeApp(config);
+  database = firebase.database()
+</script> -->
+
+<p>Punteggio aggiunto</p>
+<script>
+/* 
+Change
+
+n1
+Maiuri
+h1alunno1
+
+*/
+template = `
+<td>
+<!-- Buttons [+] [-] -->
+<button type="button" class="btn btn-warning btn-lg" onclick="dbRef1.set(--n1)"> - </button>
+<button type="button" class="btn btn-info btn-lg" onclick="dbRef1.set(++n1)"> + </button>
+<!-- name -->
+Maiuri<td>
+<!-- here goes the score -->
+<i id="h1alunno1"></i>
+</p><script>
+// where you write the score
+var h1alunno1 = document.getElementById("h1alunno1");
+// get the reference to where the score is saved in the db
+var dbRef1 = firebase.database().ref().child("5ce2021_marketing").child("Maiuri");
+// get the value and put it into where the score goes
+// This displays the value
+dbRef1.on("value", snap => h1alunno1.innerText = snap.val());
+// This lets update the value
+bdbRef1.on("value", snap => n1 = snap.val())
+`
+
+names = "Maiuri Battagliese Borrelli Carracino Ciardi Donianni Fluri Liguori Maiese Mautone Merola Palladino Ricci Saja_A Saja_P Tierno"
+</script>
+<tr>
+
+
+
+</script>
+
+<div id="div1" class="w3-main" style="margin-left:50px">
+<table class="table-bordered">
+
+        <!-- Alunno 1 -->
+<td>
+<!-- Buttons [+] [-] -->
+<button type="button" class="btn btn-warning btn-lg" onclick="dbRef_2_1.set(--n_2_1)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRef_2_1.set(++n_2_1)"> + </button>Maiuri<td>
+<!-- name -->
+<!-- here goes the score -->
+<i id="h1_2_alunno1"></i>
+</p><script>
+// where you write the score
+var h1_2_alunno1 = document.getElementById("h1_2_alunno1");
+// get the reference to where the score is saved in the db
+var dbRef_2_1 = firebase.database().ref().child("5ce2021_marketing").child("Maiuri");
+// get the value and put it into where the score goes
+// This displays the value
+dbRef_2_1.on("value", snap => h1_2_alunno1.innerText = snap.val());
+// This lets update the value
+dbRef_2_1.on("value", snap => n_2_1 = snap.val())
+</script>
+<tr>
+
+        <!-- alunno 2 -->
+
+<td><button type="button" class="btn btn-warning btn-lg" onclick="dbRef_2_2.set(--n_2_2)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRef_2_2.set(++n_2_2)"> + </button>Battagliese<td><i id="h1_2_alunno2"></i></p><script>
+    var h1_2_alunno2 = document.getElementById("h1_2_alunno2");
+  var dbRef_2_2 = firebase.database().ref().child("5ce2021_marketing").child("Battagliese");
+  dbRef_2_2.on("value", snap => h1_2_alunno2.innerText = snap.val());
+  dbRef_2_2.on("value", snap => n_2_2 = snap.val())</script><tr>
+
+
+<td><button type="button" class="btn btn-warning btn-lg" onclick="dbRef_2_3.set(--n_2_3)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRef_2_3.set(++n_2_3)"> + </button>Borrelli<td><i id="h1_2_alunno3"></i></p><script>
+    var h1_2_alunno3 = document.getElementById("h1_2_alunno3");
+  var dbRef_2_3 = firebase.database().ref().child("5ce2021_marketing").child("Borrelli");
+  dbRef_2_3.on("value", snap => h1_2_alunno3.innerText = snap.val());
+  dbRef_2_3.on("value", snap => n_2_3 = snap.val())</script><tr>
+
+
+    <td><button type="button" class="btn btn-warning btn-lg" onclick="dbRef_2_4.set(--n_2_4)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRef_2_4.set(++n_2_4)"> + </button>Carracino<td><i id="h1_2_alunno4"></i></p><script>
+    var h1_2_alunno4 = document.getElementById("h1_2_alunno4");
+  var dbRef_2_4 = firebase.database().ref().child("5ce2021_marketing").child("Carracino");
+  dbRef_2_4.on("value", snap => h1_2_alunno4.innerText = snap.val());
+  dbRef_2_4.on("value", snap => n_2_4 = snap.val())</script><tr>
+
+
+    <td><button type="button" class="btn btn-warning btn-lg" onclick="dbRef_2_5.set(--n_2_5)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRef_2_5.set(++n_2_5)"> + </button>Ciardi<td><i id="h1_2_alunno5"></i></p><script>
+    var h1_2_alunno5 = document.getElementById("h1_2_alunno5");
+  var dbRef_2_5 = firebase.database().ref().child("5ce2021_marketing").child("Ciardi");
+  dbRef_2_5.on("value", snap => h1_2_alunno5.innerText = snap.val());
+  dbRef_2_5.on("value", snap => n_2_5 = snap.val())</script><tr>
+
+
+    <td><button type="button" class="btn btn-warning btn-lg" onclick="dbRef_2_6.set(--n_2_6)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRef_2_6.set(++n_2_6)"> + </button>Donianni<td><i id="h1_2_alunno6"></i></p><script>
+    var h1_2_alunno6 = document.getElementById("h1_2_alunno6");
+  var dbRef_2_6 = firebase.database().ref().child("5ce2021_marketing").child("Donnianni");
+  dbRef_2_6.on("value", snap => h1_2_alunno6.innerText = snap.val());
+  dbRef_2_6.on("value", snap => n_2_6 = snap.val())</script><tr>
+
+
+    <td><button type="button" class="btn btn-warning btn-lg" onclick="dbRef_2_7.set(--n_2_7)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRef_2_7.set(++n_2_7)"> + </button>Fluri<td><i id="h1_2_alunno7"></i></p><script>
+    var h1_2_alunno7 = document.getElementById("h1_2_alunno7");
+  var dbRef_2_7 = firebase.database().ref().child("5ce2021_marketing").child("Fluri");
+  dbRef_2_7.on("value", snap => h1_2_alunno7.innerText = snap.val());
+  dbRef_2_7.on("value", snap => n_2_7 = snap.val())</script><tr>
+
+
+
+<td>
+<button type="button" class="btn btn-warning btn-lg" onclick="dbRef_2_7b.set(--n_2_7b)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRef_2_7b.set(++n_2_7b)"> + </button>Ghiunghius<td><i id="h1_2_alunno7b"></i></p><script>
+var h1_2_alunno7b = document.getElementById("h1_2_alunno7b");
+var dbRef_2_7b = firebase.database().ref().child("5ce2021_marketing").child("Ghiunghius");
+dbRef_2_7b.on("value", snap => h1_2_alunno7b.innerText = snap.val());
+dbRef_2_7b.on("value", snap => n_2_7b = snap.val())</script><tr>
+
+
+<!-- 
+    <td><button type="button" class="btn btn-warning btn-lg" onclick="dbRef_2_8.set(--n_2_8)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRef_2_8.set(++n_2_8)"> + </button>Gonoshi<td><i id="h1_2_alunno8"></i></p><script>
+    var h1_2_alunno8 = document.getElementById("h1_2_alunno8");
+  var dbRef_2_8 = firebase.database().ref().child("5ce2021_marketing").child("Gonoshi");
+  dbRef_2_8.on("value", snap => h1_2_alunno8.innerText = snap.val());
+  dbRef_2_8.on("value", snap => n_2_8 = snap.val())</script><tr> -->
+
+
+
+    <td><button type="button" class="btn btn-warning btn-lg" onclick="dbRef_2_9.set(--n_2_9)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRef_2_9.set(++n_2_9)"> + </button>Liguori<td><i id="h1_2_alunno9"></i></p><script>
+    var h1_2_alunno9 = document.getElementById("h1_2_alunno9");
+  var dbRef_2_9 = firebase.database().ref().child("5ce2021_marketing").child("Liguori");
+  dbRef_2_9.on("value", snap => h1_2_alunno9.innerText = snap.val());
+  dbRef_2_9.on("value", snap => n_2_9 = snap.val())</script><tr>
+
+
+    <td><button type="button" class="btn btn-warning btn-lg" onclick="dbRef_2_10.set(--n_2_10)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRef_2_10.set(++n_2_10)"> + </button>Maiese<td><i id="h1_2_alunno10"></i></p><script>
+    var h1_2_alunno10 = document.getElementById("h1_2_alunno10");
+  var dbRef_2_10 = firebase.database().ref().child("5ce2021_marketing").child("Maiese");
+  dbRef_2_10.on("value", snap => h1_2_alunno10.innerText = snap.val());
+  dbRef_2_10.on("value", snap => n_2_10 = snap.val())</script><tr>
+
+
+
+    <td><button type="button" class="btn btn-warning btn-lg" onclick="dbRef_2_11.set(--n_2_11)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRef_2_11.set(++n_2_11)"> + </button>Mautone<td><i id="h1_2_alunno11"></i></p><script>
+    var h1_2_alunno11 = document.getElementById("h1_2_alunno11");
+  var dbRef_2_11 = firebase.database().ref().child("5ce2021_marketing").child("Mautone");
+  dbRef_2_11.on("value", snap => h1_2_alunno11.innerText = snap.val());
+  dbRef_2_11.on("value", snap => n_2_11 = snap.val())</script><tr>
+
+    <td><button type="button" class="btn btn-warning btn-lg" onclick="dbRef_2_12.set(--n_2_12)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRef_2_12.set(++n_2_12)"> + </button>Merola<td><i id="h1_2_alunno12"></i></p><script>
+    var h1_2_alunno12 = document.getElementById("h1_2_alunno12");
+  var dbRef_2_12 = firebase.database().ref().child("5ce2021_marketing").child("Merola");
+  dbRef_2_12.on("value", snap => h1_2_alunno12.innerText = snap.val());
+  dbRef_2_12.on("value", snap => n_2_12 = snap.val())</script><tr>
+
+
+
+
+<!-- palladino -->
+
+<td>
+<button type="button" class="btn btn-warning btn-lg" onclick="dbRef_2_12b.set(--n_2_12b)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRef_2_12b.set(++n_2_12b)"> + </button>Palladino<td><i id="h1_2_alunno12b"></i></p><script>
+var h1_2_alunno12b = document.getElementById("h1_2_alunno12b");
+var dbRef_2_12b = firebase.database().ref().child("5ce2021_marketing").child("Palladino");
+dbRef_2_12b.on("value", snap => h1_2_alunno12b.innerText = snap.val());
+dbRef_2_12b.on("value", snap => n_2_12b = snap.val())</script><tr>
+
+
+
+
+
+
+
+    <td><button type="button" class="btn btn-warning btn-lg" onclick="dbRef_2_13.set(--n_2_13)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRef_2_13.set(++n_2_13)"> + </button>Romano<td><i id="h1_2_alunno13"></i></p><script>
+    var h1_2_alunno13 = document.getElementById("h1_2_alunno13");
+  var dbRef_2_13 = firebase.database().ref().child("5ce2021_marketing").child("Romano");
+  dbRef_2_13.on("value", snap => h1_2_alunno13.innerText = snap.val());
+  dbRef_2_13.on("value", snap => n_2_13 = snap.val())</script><tr>
+
+    <td><button type="button" class="btn btn-warning btn-lg" onclick="dbRef_2_14.set(--n_2_14)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRef_2_14.set(++n_2_14)"> + </button>Ricci<td><i id="h1_2_alunno14"></i></p><script>
+    var h1_2_alunno14 = document.getElementById("h1_2_alunno14");
+  var dbRef_2_14 = firebase.database().ref().child("5ce2021_marketing").child("Ricci");
+  dbRef_2_14.on("value", snap => h1_2_alunno14.innerText = snap.val());
+  dbRef_2_14.on("value", snap => n_2_14 = snap.val())</script><tr>
+
+
+
+
+</table>
+</div>
+
