@@ -1,0 +1,41 @@
+Come si calcola il Patrimonio netto?
+Attivo + passivo
+Attivo - passivo
+Utile + Ricavi
+Ricavi - costi
+
+Il ROE si calcola facendo:
+utili / attivo x 100
+reddito operativo / attivo
+utili / capitale proprio x 100
+ricavi - costi
+
+Il ROI è il rendimento del capitale investito per:
+tutti gli investitori
+per i soli soci
+per le banche
+per lo Stato
+
+Il ROD si calcola:
+interessi attivi / debiti
+utile / debiti
+interessi passivi / capitale proprio
+interessi passivi / debiti
+
+I’indice di autocopertura è:
+capitale proprio / immobilizzazioni
+capitale proprio + Passività consolidate / attivo circolante
+capitale proprio + Passività consolidate / Immobilizzazioni
+Passività / capitale proprio
+
+Il grado di capitalizzazione è:
+Debiti / capitale proprio
+Capitale proprio / Debiti
+Interessi passivi / interessi attivi
+utile / attivo x 100
+
+Il Conto economico è regolato dall’art. del c.c.:
+2424
+2423
+2425
+2426

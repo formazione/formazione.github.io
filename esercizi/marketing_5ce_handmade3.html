@@ -485,7 +485,8 @@ if (nome_in_lista){ // per password togli il commento dalla seguente
 function show_data(div, record, nome){
 	var h1alunno1 = document.getElementById(div);
 	var dbRef1 = firebase.database().ref().child(record).child(nome);
-
+	dbRef1.on("value", snap => h1alunno1.innerText = snap.val());
+	dbRef1.on("value", snap => n1 = snap.val());
 	return dbRef1, n1;
 }
 
@@ -509,8 +510,6 @@ function show_data(div, record, nome){
 <button type="button" class="btn btn-info btn-lg" onclick="dbRef1b.set(++n1b)"> + </button>
 <i id="divMaiurib"></i><tr> <!-- punteggio -->
 <script>
-dbRef1.on("value", snap => h1alunno1.innerText = snap.val());
-dbRef1.on("value", snap => n1 = snap.val());
 dbRef1 = show_data("divMaiuri", "5ce_scelta", "Maiuri")
 dbRef1b = show_data("divMaiurib", "5ce2021_marketing", "Maiuri")
 </script><!-----------------   end Maiuri ------------------------------->
