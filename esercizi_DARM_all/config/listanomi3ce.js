@@ -7,9 +7,10 @@ listanomi = [
         "Marino",
         "Materazzi",
         "Matrella",
+        "Mercanti",
         "Niglio",
         "Orlando",
         "Serra_Davide",
         "Serra_Giulia",
-        "Sessa",
+        "Sessa_federica",
             ];

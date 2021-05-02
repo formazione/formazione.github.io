@@ -6,7 +6,8 @@
     <!-- jquery for maximum compatibility -->
 	<link type="text/css" rel="stylesheet" href="https://stackpath.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css">
     <!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>-->
-	<script src="https://code.jquery.com/jquery-1.11.1.min.js" integrity="sha256-VAvG3sHdS5LqTT+5A/aeq/bZGa/Uj04xKxY8KM/w9EE=" crossorigin="anonymous"></script>
+	<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://code.jquery.com/jquery-migrate-3.3.2.js"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
 
@@ -24,11 +25,11 @@
 
 
 								- listanomi3ce.js   lista dei nomi         Personalizzare per altre classi
-								- fattura2.js 		domande
+								- costi.js 		domande
 
 
 							Da fare:
-								crea script python per creare le domande e salvarle in fattura2.js
+								crea script python per creare le domande e salvarle in costi.js
 								prendendole dal file txt marketing in dati\
 
 								crea una GUI per caricare il file txt dare il nome al file html
@@ -40,7 +41,7 @@
 
 -->
 
-<script src="../config/listanomi3ce.js"></script>
+<script src="listanomi3ce.js"></script>
 
 
 <script>
@@ -65,7 +66,7 @@ select(listanomi, 'nomestudente')
 <script src="https://www.gstatic.com/firebasejs/5.9.2/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/5.9.2/firebase-database.js"></script>
 <!-- configurazione  -->
-<script src="config/config.js"></script>
+<script src="config.js"></script>
 <script>
 // nome del record del database 
 
@@ -91,7 +92,7 @@ function gotData(data){
 	}
 }
 
-start("fattura2")
+start("costi")
 
 
     var quiztitle = "Pianificazione e programmazione";
@@ -141,7 +142,7 @@ if (!("scramble" in Array.prototype)) {
 </script>
 
 
-<script src="fattura2.js"></script>
+<script src="costi.js"></script>
 
 <script>
    
@@ -272,18 +273,15 @@ function processQuestion(choice){
       // SONO FINITE LE DOMANDE... MOSTRA I RISULTATI
 			if(currentquestion == quiz.length){
 				$('#submitbutton')
-          .html('Vedi il risultato, ma... ricorda il nome in altro a sinistra')
+          .html('GET QUIZ RESULTS')
           .removeClass('btn-success')
           .addClass('btn-info')
           .css({'border-color':'#3a87ad', 'color':'#fff'})
           .on('click', function(){
           
-			    $(this).text('Vedi il risultato\nHai messo il nome in altro a sinistra?')
+					    $(this).text('GET QUIZ RESULTS')
                 .on('click');
-                if (nomestudente.value != "Scegli_il_cognome"){
 					endQuiz();
-                }
-                else speak("Devi mettere il tuo nome in alto a sinistra prima")
 				})
 				
 			}
@@ -480,7 +478,7 @@ if (nome_in_lista){ // per password togli il commento dalla seguente
     <body >
 
 <a href="https://formazione.github.io">Home</a><br>
- <h2><u>fattura2</u></h2>
+ <h2><u>costi</u></h2>
   <!-- home button 
   <div id="menuDiv">
 <script src="https://quarta.glitch.me/dropdownclassi.js"></script>
