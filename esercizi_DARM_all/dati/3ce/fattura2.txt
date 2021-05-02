@@ -1,0 +1,105 @@
+Da chi viene emessa la fattura?
+dal venditore
+dall'acquirente
+dal cliente
+dall'Agenzia delle entrate
+
+Deve essere emessa entro 10 giorni dalla consegna:
+fattura immediata
+fattura differita
+fattura riepilogativa
+cambiale attiva
+
+Si emette il DDT quando si usa:
+la fattura differita
+la fattura immediata
+sia la fattura differita che immediata
+lo scontrino
+
+La fattura elettronica viene inviata
+all'Agenzia delle entrate
+direttamente al cliente
+al venditore
+all'INPS
+
+Il numero della fattura si trova:
+nella parte descrittiva
+nella parte tabellare
+non viene riportata nella fattura
+non saprei
+
+Lo sconto viene effettuato:
+prima del calcolo dell'IVA
+dopo il calcolo dell'IVA
+
+La liquidazione IVA risulta da:
+Iva sulle vendite - Iva sugli acquisti
+Iva sugli acquisti - Iva sulle vendite
+Iva sulle vendite + Iva sugli acquisti
+Iva sugli acquisti x 22 : 100
+
+Sugli interessi:
+non si applica l'IVA
+si applica l'IVA
+dipende
+non so
+
+Quali sono i presupposti dell'IVA?
+oggettivo, soggettivo e territoriale
+oggettivo, soggettivo e patrimoniale
+oggettivo, territoriale e proporzionale
+oggettivo e soggettivo
+
+L'IVA colpisce in modo definitivo:
+il consumatore
+le imprese
+sia le imprese che il consumatore
+i commercianti
+
+Le aliquote IVA sono:
+4
+2
+3
+5
+
+L'aliquota super-ridotta è del:
+5%
+4%
+10%
+22%
+
+Se un prodotto costa 244 euro iva inclusa al 22%, il prezzo senza IVA è:
+200 €
+100 €
+122 €
+222 €
+
+Il meccanismo per versare l'IVA allo Stato si chiama:
+deduzione imposta da imposta
+riduzione dell'imposta
+detrazione delle imposte
+calcolo dell'imposta
+
+Entro quale giorno del mese successivo si versa l'IVA, per i contribuenti mensili?
+entro il giorno 16
+entro il giorno 15 
+entro il giorno 12
+entro il giorno 30
+
+Le spese accessorie non documentate vanno:
+prima del calcolo dell'IVA, nella base impobibile
+dopo il calcolo dell'IVA
+non vanno inserite in fattura
+non so
+
+Le cauzioni vanno:
+dopo il calcolo dell'IVA
+prima del calcolo dell'IVA
+dipende
+non so
+
+La base imponibile IVA è
+la somma sulla quale si calcola l'IVA
+il totale della fattura
+l'importo dell'iVA
+non so

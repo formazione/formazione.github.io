@@ -42,7 +42,7 @@ def mklist(filename):
 	"Return a dictionary and a list of questions and aswers in a txt file where there is a question and answers for each line separated by an empty line for every group of question and answers"
 	global qdic, classe
 	flist = []
-	with open(f"{os.getcwd()}/dati/{classe}/{filename}", 'r', encoding='utf-8') as file:
+	with open(f"G:/formazione.github.io/esercizi_DARM_all//dati/{classe}/{filename}", 'r', encoding='utf-8') as file:
 		file = file.read()
 		file = file.split("\n\n")
 	for eachstring in file:
@@ -72,8 +72,8 @@ def menu():
 	print("------------------------------------")
 	file_number = int(input("Scegli il numero del file? > "))
 	print(classe)
-	path = f"{os.getcwd()}"
-	fn = glob.glob(f"{path}/dati/{classe}/*.txt")
+	path = "G:/formazione.github.io/esercizi_DARM_all/"#  f"{os.getcwd()}"
+	fn = glob.glob(f"G:/formazione.github.io/esercizi_DARM_all//dati/{classe}/*.txt")
 	print(fn)
 	fn = fn[file_number].split("\\")[-1]
 	print(fn)
@@ -141,14 +141,15 @@ def main():
 
 	classe = classchooser("3ce 4ce 5ce")
 	fn = menu()
+	path = fn
 	fn = fn.split("\\")[0]
 	print(fn)
 	# crea le domande dal file scelto
-	create_domande_js(fn[:-4])
+	create_domande_js(path[:-4])
 	# crea l'html con i nomi degli alunni e le domande scelte dal file
 	create_html(
 		classe,
-		fn[:-4])
+		path[:-4])
 	# createDarm()
 
 main()

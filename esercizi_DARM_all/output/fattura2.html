@@ -24,11 +24,11 @@
 
 
 								- listanomi3ce.js   lista dei nomi         Personalizzare per altre classi
-								- domande_marketing_mix.js 		domande
+								- fattura2.js 		domande
 
 
 							Da fare:
-								crea script python per creare le domande e salvarle in domande_marketing_mix.js
+								crea script python per creare le domande e salvarle in fattura2.js
 								prendendole dal file txt marketing in dati\
 
 								crea una GUI per caricare il file txt dare il nome al file html
@@ -40,7 +40,7 @@
 
 -->
 
-<script src="listanomi3ce.js"></script>
+<script src="config/listanomi3ce.js"></script>
 
 
 <script>
@@ -65,7 +65,7 @@ select(listanomi, 'nomestudente')
 <script src="https://www.gstatic.com/firebasejs/5.9.2/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/5.9.2/firebase-database.js"></script>
 <!-- configurazione  -->
-<script src="config.js"></script>
+<script src="config/config.js"></script>
 <script>
 // nome del record del database 
 
@@ -91,7 +91,7 @@ function gotData(data){
 	}
 }
 
-start("5ce2020_prova")
+start("fattura2")
 
 
     var quiztitle = "Pianificazione e programmazione";
@@ -141,7 +141,7 @@ if (!("scramble" in Array.prototype)) {
 </script>
 
 
-<script src="domande_marketing_mix.js"></script>
+<script src="fattura2.js"></script>
 
 <script>
    
@@ -246,7 +246,7 @@ function processQuestion(choice){
 				$('#explanation')
           .html('<span class="correct">ESATTO!</span> ' + (quiz[currentquestion]['explanation']));
         
-        let ff = ["Giusto", "Corretto", "SÃ¬", "Bene", "Molto bene", "Ok", "Esatto", "Perfetto", "Risposta esatta"].sort(function(){return 0.5 - Math.random()})[0];
+        let ff = ["Giusto", "Corretto", "Si", "Bene", "Molto bene", "Ok", "Esatto", "Perfetto", "Risposta esatta"].sort(function(){return 0.5 - Math.random()})[0];
         speak(ff);
         score++;
         count_speak = 0;
@@ -272,15 +272,18 @@ function processQuestion(choice){
       // SONO FINITE LE DOMANDE... MOSTRA I RISULTATI
 			if(currentquestion == quiz.length){
 				$('#submitbutton')
-          .html('GET QUIZ RESULTS')
+          .html('Vedi il risultato, ma... ricorda il nome in altro a sinistra')
           .removeClass('btn-success')
           .addClass('btn-info')
           .css({'border-color':'#3a87ad', 'color':'#fff'})
           .on('click', function(){
           
-					    $(this).text('GET QUIZ RESULTS')
+			    $(this).text('Vedi il risultato\nHai messo il nome in altro a sinistra?')
                 .on('click');
+                if (nomestudente.value != "Scegli_il_cognome"){
 					endQuiz();
+                }
+                else speak("Devi mettere il tuo nome in alto a sinistra prima")
 				})
 				
 			}
@@ -477,7 +480,7 @@ if (nome_in_lista){ // per password togli il commento dalla seguente
     <body >
 
 <a href="https://formazione.github.io">Home</a><br>
- <h2><u>domande_marketing_mix</u></h2>
+ <h2><u>fattura2</u></h2>
   <!-- home button 
   <div id="menuDiv">
 <script src="https://quarta.glitch.me/dropdownclassi.js"></script>
