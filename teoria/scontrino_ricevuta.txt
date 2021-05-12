@@ -1,0 +1,14 @@
+Scontrino e ricevuta fiscale
+
+Non tutti gli operatori economici devono emettere la fattura. Ci sono due docimenti che si possono usare in alternativa:
+- la ricevuta fiscale e lo scontrino fiscale
+
+Possono emetterli gli alberghi i ristoranti, i commercianti al dettagli o, farmacie, parrucchieri, artigiani.
+
+Possono scegliere l'uno o l'altro e alternarli.
+
+Lo Scontrino: cos'è? (facciamolo vedere)
+è un documento che certifica le vendite e contiene:
+data
+ora
+numero progressivo di emissione

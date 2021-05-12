@@ -1,11 +1,56 @@
-Calcola il costo pieno di 100 prodotti con costi variabili unitari sono pari a 11,50 € e costi fissi pari a 120.
-1270
-240
-1150
-100
+I costi per il fitto sono
+costi fissi
+costi variabili
+ricavi
+costi diretti
 
-Con un costo pieno di 1270 per 100 prodotti, se voglio guadagnare 300 euro, a che prezzo devo venderli?
-15,70
-12,70
-10,00
-30,00
+I costi per le materie prime sono
+costi variabili
+costi fissi
+costi indiretti
+ricavi
+
+I costi indiretti
+Devono essere ripartiti
+Si attribuiscono in modo certo e immediato
+non so
+sono i costi delle materie prime
+
+Il costo complessivo è uguale
+alla somma dei costi diretti e indiretti
+alla somma dei costi diretti
+agli oneri figurativi
+al costo primo
+
+Gli oneri figurativi sono costi per cui l'impresa non ha sostenuto un esborso monetario
+vero
+falso
+
+Alimenti 1.200 €, Fitti 1.000, oneri figurativi pari al 10% del costo complessivo, il costo economico tecnico è
+2.420 €
+2.425 €
+2.520 €
+1.220 €
+
+Gli interessi di computo sono:
+oneri figurativi
+costi diretti
+oneri fiscali
+nessuno di questi
+
+Il full costing
+calcola sia i costi diretti che indiretti
+calcola solo i costi diretti
+non calcola nessun costo
+
+Se i costi diretti sono pari a 3 € e sono il 30% del prezzo, il prezzo è
+10 €
+11 €
+12 €
+9 €
+
+I costi indiretti di 1000 euro in base agli ospiti 150 e 350 per i matrimoni A e B, sono attribuiti al matrimonio A per un valore di:
+300
+200
+100
+500
