@@ -1,0 +1,10 @@
+L'assegno bancario
+L'assegno circolare
+Traente
+Trattario
+Beneficiario
+Importo in euro
+Importo in lettere
+Accettazione
+Pagherò
+Tratta

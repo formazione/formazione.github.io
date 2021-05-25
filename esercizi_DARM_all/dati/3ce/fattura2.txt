@@ -1,105 +1,196 @@
-Da chi viene emessa la fattura?
-dal venditore
-dall'acquirente
-dal cliente
-dall'Agenzia delle entrate
+Quale articolo del c.c. disciplina la compravendita
+1470
+1480
 
-Deve essere emessa entro 10 giorni dalla consegna:
-fattura immediata
-fattura differita
-fattura riepilogativa
-cambiale attiva
+L'art. 1470 disciplina
+Compravendita
+Azienda
+Imprenditore
+Conto economico
 
-Si emette il DDT quando si usa:
+Cosa emettono i ristoranti?
+Scontrino, ricevuta e fattura
+Fattura
+Scontrino soltanto
+Ricevuta soltanto
+
+La fattura IMMEDIATA si emette
+entro le 24 ore del giorno di sped. o cons.
+entro fine mese
+entro il 15 del mese di spedizione
+
+Quando si deve emettere la fattura differita
+entro il 15 del mese successivo alla consegna o sped.
+entro 10 giorni dalla spedizione o pagamento servizio
+entro il mese
+entro il 16 del mese successivo
+
+La fattura è un documento obbligatorio della compravendita?
+sì
+no
+
+In inglese fattura si dice:
+invoice
+voice
+facture
+
+IVA significa
+imposta sul valore aggiunto
+impresa a valore aggiunto
+
+Il documento di trasporto va emesso con la fattura
 la fattura differita
 la fattura immediata
-sia la fattura differita che immediata
-lo scontrino
 
-La fattura elettronica viene inviata
-all'Agenzia delle entrate
-direttamente al cliente
-al venditore
-all'INPS
+DDT significa documento di
+Trasporto
+Transito
+Tragitto
 
-Il numero della fattura si trova:
-nella parte descrittiva
-nella parte tabellare
-non viene riportata nella fattura
-non saprei
+DDC significa documento di
+consegna
+consolidamento
+contratto
 
-Lo sconto viene effettuato:
-prima del calcolo dell'IVA
-dopo il calcolo dell'IVA
+Il DDT e il DDC indicano
+lo stesso documento
+due documenti diversi
 
-La liquidazione IVA risulta da:
-Iva sulle vendite - Iva sugli acquisti
-Iva sugli acquisti - Iva sulle vendite
-Iva sulle vendite + Iva sugli acquisti
-Iva sugli acquisti x 22 : 100
-
-Sugli interessi:
-non si applica l'IVA
-si applica l'IVA
+Il DDT contiene l'IVA
+No
+Sì
 dipende
-non so
-
-Quali sono i presupposti dell'IVA?
-oggettivo, soggettivo e territoriale
-oggettivo, soggettivo e patrimoniale
-oggettivo, territoriale e proporzionale
-oggettivo e soggettivo
-
-L'IVA colpisce in modo definitivo:
-il consumatore
-le imprese
-sia le imprese che il consumatore
-i commercianti
-
-Le aliquote IVA sono:
-4
-2
-3
-5
-
-L'aliquota super-ridotta è del:
-5%
-4%
-10%
-22%
-
-Se un prodotto costa 244 euro iva inclusa al 22%, il prezzo senza IVA è:
-200 €
-100 €
-122 €
-222 €
-
-Il meccanismo per versare l'IVA allo Stato si chiama:
-deduzione imposta da imposta
-riduzione dell'imposta
-detrazione delle imposte
-calcolo dell'imposta
-
-Entro quale giorno del mese successivo si versa l'IVA, per i contribuenti mensili?
-entro il giorno 16
-entro il giorno 15 
-entro il giorno 12
-entro il giorno 30
-
-Le spese accessorie non documentate vanno:
-prima del calcolo dell'IVA, nella base impobibile
-dopo il calcolo dell'IVA
-non vanno inserite in fattura
-non so
-
-Le cauzioni vanno:
-dopo il calcolo dell'IVA
-prima del calcolo dell'IVA
-dipende
-non so
 
 La base imponibile IVA è
-la somma sulla quale si calcola l'IVA
-il totale della fattura
-l'importo dell'iVA
-non so
+la somma cui applicare l'IVA
+L'imposta sul valore aggiunto
+Il totale fattura
+Uno sconto mercantile
+
+Il numero della fattura si trova
+nella parte descrittiva
+nella parte tabellare
+
+I dati del compratore nella fattura si trovano
+a destra in alto
+a sinistra in basso
+
+I dati del compratore nella fattura si trovano
+nella parte descrittiva
+nella parte tabellare
+
+IVA significa imposta
+sul valore aggiunto
+sulla vera azienda
+sul valore aziendale	
+
+Nella fattura l'indicazione dell'IVA
+è obbligatoria
+è facolatativa
+
+La funzione della fattura è
+provare la compravendita
+complicare la vita ai commercianti
+fare pubblicità alll'azienda
+
+Gli sconti incondizionati si applicano
+su tutti gli acquisti
+solo su un certo quantitativo di acquisti
+solo se si paga in contanti
+
+L'IVA al 22% su un imponibile di 1000 € è
+220
+110
+440
+120
+
+L'IVA al 22% su un imponibile di 2000 € è
+440
+220
+110
+
+La proporzione per calcolare l'IVA al 22% è
+100 : 22 = S : x
+100 : 22 = x : S
+
+Calcola il 10% su 185 €:
+18,5
+36
+10
+
+Profit oriented significa
+con scopo di lucro
+senza scopo di lucro
+
+Fornitore in inglese
+supplier
+customer
+
+Imposte e tasse sono sinonimi?
+No
+Sì
+
+Spa, srl, sapa sono società di
+capitali
+persone
+
+I soci accomandatari possono amministrare?
+Sì
+No
+
+Governa l'impresa
+soggetto economico
+soggetto giuridico
+
+I quadri intermedi sono superiori a
+impiegati
+dirigenti
+
+I costi si generano nella fase di
+investimento
+produzione
+
+Se le entrate di cassa fanno fronte alle uscite
+c'è equilibrio finanziario
+c'è equilibrio economico
+
+Equilibrio economico significa
+ricavi > costi
+entrate > uscite
+
+L'onere che l'impresa sostiene si chiama
+costo
+ricavo
+
+I ricavi dell'impresa sono
+proventi
+oneri
+
+Il ricavo è uguale all'utile?
+No
+Sì
+
+Il costo dei beni durevoli
+va diviso negli anni di uso del bene
+viene attribuito tutto all'anno di acquisto
+
+Cos'è l'ammortamento?
+Il parte di costo del bene durevole che si è persa in un anno
+Il costo delle materie prime acquistate in un anno
+
+In 5 anni si usa un automezzo acquistato a 9000 €
+l'ammortamento è 1800 €
+l'ammortamento è 3600 €
+l'ammortamento è 900 €
+
+Quante sono le aliquote IVA?
+4
+3
+2
+1
+
+Qual è l'aliquota ridotta?
+10
+4
+5
+22
