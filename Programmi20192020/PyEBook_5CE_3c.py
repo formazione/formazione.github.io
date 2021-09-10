@@ -300,6 +300,7 @@ class Ebook:
             self.text.insert(tk.END, content)
             self.label_file_name['text'] = self.filename
 
+
 class Rename():
     def __init__(self, root):
         self.root = root
@@ -314,6 +315,7 @@ class Rename():
         self.entry_var.set(app.filename.split("\\")[1])
         self.entry.bind("<Return>", lambda x: app.rename(self.entry.get()))
 
+
 class Win1():
     def __init__(self, root):
         self.root = root
@@ -325,6 +327,16 @@ class Win1():
         self.entry.pack()
         self.entry.focus()
         self.entry.bind("<Return>", lambda x: app.new_chapter(self.entry.get()))
+
+
+class Help():
+    def __init__(self):
+        self.root = tk.Tk()
+        self.label = tk.Label(text="Ciao")
+        self.label.pack()
+
+        
+
 
 global folder
 global js_link_to_html

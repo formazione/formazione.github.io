@@ -15,6 +15,8 @@ def check_text_file():
 
 
 def write_html(event=""):
+    global content
+    
     # content = txbx.get("0.0", tk.END)
     # if test:
     #     print(content)
@@ -26,6 +28,8 @@ def write_html(event=""):
 
 
 def pdf(event=""):
+    global content
+
     filename = "memo.pdf"
     content = txbx.get("0.0", tk.END)
     # write_html(content)
