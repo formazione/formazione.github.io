@@ -1,0 +1,61 @@
+quiz = [{
+	        "question"      :   "Nella s.a.s. è socio accomandante chi:",
+	        "image"         :   "https://tuocoach.files.wordpress.com/2018/11/cambiamento-10.jpg?w=345&h=294",
+	        "choices"       :   ['ha la responsabilità limitata alla quota sottoscritta, ma non l’amministrazione della società', 'ha la responsabilità limitata alla quota sottoscritta e amministra la società', 'ha la responsabilità illimitata e l’amministrazione della società', 'presta solo l’attività lavorativa'],
+	        "correct"       :   "ha la responsabilità limitata alla quota sottoscritta, ma non l’amministrazione della società",
+	        "explanation"   :   "",
+	    },{
+	        "question"      :   "Responsabilità solidale in una s.n.c. significa che:",
+	        "image"         :   "https://tuocoach.files.wordpress.com/2018/11/cambiamento-10.jpg?w=345&h=294",
+	        "choices"       :   ['Ogni socio può essere chiamato dal creditore a rispondere anche per gli altri soci', 'I soci rispondono solo per i debiti sorti nell’ultimo anno di gestione', 'Ogni socio può essere chiamato a rispondere solo per la sua quota di debito', 'I soci sono chiamati a rispondere solo con le quote conferite nella società'],
+	        "correct"       :   "Ogni socio può essere chiamato dal creditore a rispondere anche per gli altri soci",
+	        "explanation"   :   "",
+	    },{
+	        "question"      :   "Il capitale di una S.P.A. è costituito da:",
+	        "image"         :   "https://tuocoach.files.wordpress.com/2018/11/cambiamento-10.jpg?w=345&h=294",
+	        "choices"       :   ['Azione di uguale valore', 'Quote di diverso valore', 'Azioni di diverso valore', 'Quote di uguale valore'],
+	        "correct"       :   "Azione di uguale valore",
+	        "explanation"   :   "",
+	    },{
+	        "question"      :   "Le società per azioni:",
+	        "image"         :   "https://tuocoach.files.wordpress.com/2018/11/cambiamento-10.jpg?w=345&h=294",
+	        "choices"       :   ['Hanno autonomia patrimoniale perfetta', 'Non hanno autonomia patrimoniale perfetta', 'Hanno autonomia patrimoniale imperfetta', 'Hanno autonomia patrimoniale limitata'],
+	        "correct"       :   "Hanno autonomia patrimoniale perfetta",
+	        "explanation"   :   "",
+	    },{
+	        "question"      :   "Con le operazioni di finanziamento l’azienda:",
+	        "image"         :   "https://tuocoach.files.wordpress.com/2018/11/cambiamento-10.jpg?w=345&h=294",
+	        "choices"       :   ['Si procura le risorse finanziarie', 'Vende prodotti e servizi', 'Acquista i fattori produttivi', 'Trasforma i fattori produttivi per ottenere prodotti e servizi da vendere sul mercato'],
+	        "correct"       :   "Si procura le risorse finanziarie",
+	        "explanation"   :   "",
+	    },{
+	        "question"      :   "Per patrimonio netto dell'azienda si intende:",
+	        "image"         :   "https://tuocoach.files.wordpress.com/2018/11/cambiamento-10.jpg?w=345&h=294",
+	        "choices"       :   ['La differenza tra impieghi e fonti', 'Insieme di impieghi e fonti', 'il totale delle fonti', 'Il totale degli impieghi'],
+	        "correct"       :   "La differenza tra impieghi e fonti",
+	        "explanation"   :   "",
+	    },{
+	        "question"      :   "L’attivo circolante comprende",
+	        "image"         :   "https://tuocoach.files.wordpress.com/2018/11/cambiamento-10.jpg?w=345&h=294",
+	        "choices"       :   ['crediti, scorte e liquidità', 'Le immobilizzazioni materiali, immateriali e finanziarie', 'Solo le immobilizzazioni finanziarie', 'I crediti e i debiti a breve termine'],
+	        "correct"       :   "crediti, scorte e liquidità",
+	        "explanation"   :   "",
+	    },{
+	        "question"      :   "Per applicare l’IVA devono verificarsi i presupposti:",
+	        "image"         :   "https://tuocoach.files.wordpress.com/2018/11/cambiamento-10.jpg?w=345&h=294",
+	        "choices"       :   ['Soggettivo, oggettivo e territoriale', 'Oggettivo e territoriale', 'Soggettivo e territoriale', 'Soggettivo, oggettivo e extraterritoriale'],
+	        "correct"       :   "Soggettivo, oggettivo e territoriale",
+	        "explanation"   :   "",
+	    },{
+	        "question"      :   "L’aliquota IVA da applicare dipende:",
+	        "image"         :   "https://tuocoach.files.wordpress.com/2018/11/cambiamento-10.jpg?w=345&h=294",
+	        "choices"       :   ['Dal tipo di bene venduto o servizio prestato', 'Da chi effettua la cessione dei beni', 'Da chi effettua la prestazione dei servizi', 'Da chi acquista il bene o il servizio'],
+	        "correct"       :   "Dal tipo di bene venduto o servizio prestato",
+	        "explanation"   :   "",
+	    },{
+	        "question"      :   "L’offerta turistica è rigida perché:",
+	        "image"         :   "https://tuocoach.files.wordpress.com/2018/11/cambiamento-10.jpg?w=345&h=294",
+	        "choices"       :   ['Non varia al variare della domanda nel breve periodo', 'Varia al variare della domanda', 'Varia al variare dei prezzi dei beni durevoli', 'Non varia per inerzia degli operatori economici'],
+	        "correct"       :   "Non varia al variare della domanda nel breve periodo",
+	        "explanation"   :   "",
+	    },];
