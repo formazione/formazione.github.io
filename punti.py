@@ -29,7 +29,7 @@ def day(dd):
        for k in a:
               a[k][dd] = 0
        return dd
-# ===================== 20.9
+# ===================== 18.9
 dd = day("18.9")
 alunno("Malzone", 3)
 alunno("Mandia", 7)
@@ -39,7 +39,7 @@ alunno("Musto", 1)
 dd = day("20.9")
 # a["Mandia"][dd] = 5
 # a["Mandia"][dd] = 10
-alunno("Mandia", 2)
+alunno("Mandia", 0)
 
 
 # ====================== 22 settembre
