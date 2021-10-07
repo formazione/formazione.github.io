@@ -149,7 +149,7 @@ def main():
 		return classe
 
 
-	classe = classchooser("3ce 4ce 5ce")
+	classe = classchooser("3ce 4ce 4ae 5ae 5ce")
 	fn = menu()
 	fn = fn.split("\\")[0]
 	print(fn)
