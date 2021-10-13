@@ -105,7 +105,7 @@ for (i of x){
 		html += printex()
 	print("</script>")
 	html += "</script>"
-	with open("fabbisogno1.html", "w") as file:
+	with open("fabbisogno1.html", "w", encoding="utf-8") as file:
 		file.write(html)
 	os.startfile("fabbisogno1.html")
 
