@@ -1,0 +1,45 @@
+
+<style>
+	.fontbig {
+		font-size: 1.5em;
+	}
+</style>
+<body oncontextmenu="return false;">
+<script>
+
+function check(casella, giusta, num){
+	// the solutions are good both for low and capital letters
+
+	if (giusta.includes(casella.value.split("#"))){
+		casella.style.background = 'yellow';
+		return casella.value;
+	}
+	else{
+		casella.style.background = 'red';
+	}
+}
+
+function print_it(parola){
+	if (soluzioni.innerHTML.includes(parola)){
+	}
+	else {
+    	soluzioni.innerHTML += " - " + parola;
+	}
+}
+
+var countdom = 1;
+function input(domanda, giusta){
+	var dom_h2 = "<table style='background:#fcab41;'><td><p class='fontbig' style='color: blue'>" + countdom++ + " " + domanda;
+	var part1 = dom_h2 + "<center>Prezzo delle merci vendute<input id='casella' class='fontbig' type=text class='t1' placeholder='?...' onchange=\"if (check(this,'";
+	part1 += giusta + "')){print_it(this.value)};\" /></center></p></table>";
+	document.write(part1);
+	}
+	
+
+x = document.getElementsByClassName('t1');
+for (i of x){
+    i.value = "";
+}
+
+</script><script>
+		input("Calcola il valore delle merci acquistate il primo gennaio al prezzo di 200 € delle quali il primo novembre si vende il 50 % applicando un ricarico del 35 %.", "135.0 # 135,0");input("Devi trovare il valore delle merci acquistate il primo febbraio al prezzo di 800 € delle quali il primo agosto si vende il 60 % applicando un ricarico del 45 %.", "696.0 # 696,0");input("Devi trovare il valore delle merci acquistate il primo gennaio al prezzo di 100 € delle quali il primo ottobre si vende il 70 % applicando un ricarico del 35 %.", "94.5 # 94,5");input("Fai il calcolo del valore delle merci acquistate il primo aprile al prezzo di 200 € delle quali il primo dicembre si vende il 50 % applicando un ricarico del 45 %.", "145.0 # 145,0");input("Calcolare il valore delle merci acquistate il primo aprile al prezzo di 900 € delle quali il primo novembre si vende il 70 % applicando un ricarico del 35 %.", "850.5 # 850,5");input("Calcola il valore delle merci acquistate il primo febbraio al prezzo di 900 € delle quali il primo settembre si vende il 70 % applicando un ricarico del 45 %.", "913.5 # 913,5");input("Trovare il valore delle merci acquistate il primo marzo al prezzo di 100 € delle quali il primo giugno si vende il 50 % applicando un ricarico del 45 %.", "72.5 # 72,5");input("Devi trovare il valore delle merci acquistate il primo marzo al prezzo di 700 € delle quali il primo settembre si vende il 50 % applicando un ricarico del 45 %.", "507.5 # 507,5");input("Calcolare il valore delle merci acquistate il primo gennaio al prezzo di 400 € delle quali il primo dicembre si vende il 50 % applicando un ricarico del 45 %.", "290.0 # 290,0");input("A quanto ammonta il valore delle merci acquistate il primo maggio al prezzo di 800 € delle quali il primo luglio si vende il 50 % applicando un ricarico del 45 %.", "580.0 # 580,0");</script>
