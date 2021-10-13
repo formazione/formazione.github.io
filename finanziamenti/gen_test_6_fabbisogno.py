@@ -95,7 +95,10 @@ for (i of x){
     i.value = "";
 }
 
-</script><script>
+</script>
+<h1>Fabbisogno 1</h1>
+
+<script>
 		"""
 	print(html)
 	for x in range(10):
