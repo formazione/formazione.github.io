@@ -38,15 +38,27 @@ def genex():
 
 	r = s["prezzo_venduto"] = str(prezzo_venduto)
 
-	if "." in str(r):
-		s["prezzo_venduto"] = str(prezzo_venduto) + " # " + str(prezzo_venduto).replace(".", ",")
+	if int(prezzo_venduto) == prezzo_venduto:
+		s["prezzo_venduto"] = str(r).split(".")[0]
+	else:
+		s["prezzo_venduto"] = r + "#" + r.replace(".", ",") +  "#" + r + "0" + "#" + r.replace(".", ",") + "0"
+
+
+
+
 
 
 	return s
 
 def printex():
 	s = genex()
-	inp = """input("{random_start} valore delle merci acquistate il primo {mese_acquisto} al prezzo di {valore_merci} € delle quali il primo {mese_pag} si vende il {percentuale_vendite} % applicando un ricarico del {perc_ricarico} %.", "{prezzo_venduto}");""".format(**s)
+	x = random.choice([1,2])
+	match x:
+		case 1:
+			inp = """input("{random_start} valore delle merci acquistate il primo {mese_acquisto} al prezzo di {valore_merci} € delle quali il primo {mese_pag} si vende il {percentuale_vendite} % applicando un ricarico del {perc_ricarico} %.", "{prezzo_venduto}");""".format(**s)
+		case 2:
+			inp = """input("Sapendo che un'azienda ha acquistato merci il primo {mese_acquisto} pagandole {valore_merci} €, calcola quanto incasserà al momento del pagamento delle stesse concordato per il primo di {mese_pag}, data in cui ha venduto il {percentuale_vendite} % delle merci. Il ricarico sulle merci vendute è pari al {perc_ricarico} %", "{prezzo_venduto}");""".format(**s)
+
 	print(inp)
 	return inp
 
@@ -58,21 +70,39 @@ def show():
 	.fontbig {
 		font-size: 1.5em;
 	}
+
+/**
+Code By Web Dev Trick ( https://webdevtrick.com )
+For More Source Code Visit Our Blog ( https://webdevtrick.com )
+**/
+ 
+body, html {
+ background: #ECEDEF;
+ margin-left: 10%;
+ margin-right: 10%;
+ padding: 0;
+}
+ 
+
 </style>
-<body oncontextmenu="return false;">
+<!-- <body oncontextmenu="return false;"> -->
 <script>
 
+// ======================== CHECK ======================= >
 function check(casella, giusta, num){
 	// the solutions are good both for low and capital letters
 
-	if (giusta.includes(casella.value.split("#"))){
+	if (giusta.split("#").includes(casella.value)){
+
 		casella.style.background = 'yellow';
 		return casella.value;
 	}
 	else{
 		casella.style.background = 'red';
 	}
-}
+	console.log(giusta);
+	// console.log(casella.value.split("#));
+} // ====================================== CHECK === !
 
 function print_it(parola){
 	if (soluzioni.innerHTML.includes(parola)){
@@ -85,8 +115,8 @@ function print_it(parola){
 var countdom = 1;
 function input(domanda, giusta){
 	var dom_h2 = "<table style='background:#fcab41;'><td><p class='fontbig' style='color: blue'>" + countdom++ + " " + domanda;
-	var part1 = dom_h2 + "<center>Prezzo delle merci vendute<input id='casella' class='fontbig' type=text class='t1' placeholder='?...' onchange=\\"if (check(this,'";
-	part1 += giusta + "')){print_it(this.value)};\\" /></center></p></table>";
+	var part1 = dom_h2 + "<br><i style='color:red'>Prezzo delle merci vendute</i><br><input id='casella' class='fontbig' type=text class='t1' placeholder='?...' onchange=\\"if (check(this,'";
+	part1 += giusta + "')){print_it(this.value)};\\" style='text-align:right'/></center></p></table>";
 	document.write(part1);
 	}
 	
@@ -98,6 +128,12 @@ for (i of x){
 
 </script>
 <h1>Fabbisogno 1</h1>
+<script>
+ function calcNumbers(result){
+ form.displayResult.value=form.displayResult.value+result;
+ 
+ }
+ </script>
 
 <script>
 		"""

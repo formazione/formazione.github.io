@@ -3,21 +3,39 @@
 	.fontbig {
 		font-size: 1.5em;
 	}
+
+/**
+Code By Web Dev Trick ( https://webdevtrick.com )
+For More Source Code Visit Our Blog ( https://webdevtrick.com )
+**/
+ 
+body, html {
+ background: #ECEDEF;
+ margin-left: 10%;
+ margin-right: 10%;
+ padding: 0;
+}
+ 
+
 </style>
-<body oncontextmenu="return false;">
+<!-- <body oncontextmenu="return false;"> -->
 <script>
 
+// ======================== CHECK ======================= >
 function check(casella, giusta, num){
 	// the solutions are good both for low and capital letters
 
-	if (giusta.includes(casella.value.split("#"))){
+	if (giusta.split("#").includes(casella.value)){
+
 		casella.style.background = 'yellow';
 		return casella.value;
 	}
 	else{
 		casella.style.background = 'red';
 	}
-}
+	console.log(giusta);
+	// console.log(casella.value.split("#));
+} // ====================================== CHECK === !
 
 function print_it(parola){
 	if (soluzioni.innerHTML.includes(parola)){
@@ -30,8 +48,8 @@ function print_it(parola){
 var countdom = 1;
 function input(domanda, giusta){
 	var dom_h2 = "<table style='background:#fcab41;'><td><p class='fontbig' style='color: blue'>" + countdom++ + " " + domanda;
-	var part1 = dom_h2 + "<center>Prezzo delle merci vendute<input id='casella' class='fontbig' type=text class='t1' placeholder='?...' onchange=\"if (check(this,'";
-	part1 += giusta + "')){print_it(this.value)};\" /></center></p></table>";
+	var part1 = dom_h2 + "<br><i style='color:red'>Prezzo delle merci vendute</i><br><input id='casella' class='fontbig' type=text class='t1' placeholder='?...' onchange=\"if (check(this,'";
+	part1 += giusta + "')){print_it(this.value)};\" style='text-align:right'/></center></p></table>";
 	document.write(part1);
 	}
 	
@@ -43,6 +61,12 @@ for (i of x){
 
 </script>
 <h1>Fabbisogno 1</h1>
+<script>
+ function calcNumbers(result){
+ form.displayResult.value=form.displayResult.value+result;
+ 
+ }
+ </script>
 
 <script>
-		input("A quanto ammonta il valore delle merci acquistate il primo aprile al prezzo di 100 € delle quali il primo dicembre si vende il 70 % applicando un ricarico del 35 %.", "94.5 # 94,5");input("Trovare il valore delle merci acquistate il primo maggio al prezzo di 300 € delle quali il primo luglio si vende il 50 % applicando un ricarico del 35 %.", "202.5 # 202,5");input("Trovare il valore delle merci acquistate il primo gennaio al prezzo di 400 € delle quali il primo agosto si vende il 50 % applicando un ricarico del 35 %.", "270.0 # 270,0");input("Trovare il valore delle merci acquistate il primo aprile al prezzo di 200 € delle quali il primo agosto si vende il 60 % applicando un ricarico del 35 %.", "162.0 # 162,0");input("Calcola il valore delle merci acquistate il primo febbraio al prezzo di 600 € delle quali il primo ottobre si vende il 60 % applicando un ricarico del 25 %.", "450.0 # 450,0");input("Calcola il valore delle merci acquistate il primo maggio al prezzo di 200 € delle quali il primo giugno si vende il 50 % applicando un ricarico del 25 %.", "125.0 # 125,0");input("Calcola il valore delle merci acquistate il primo aprile al prezzo di 400 € delle quali il primo giugno si vende il 70 % applicando un ricarico del 35 %.", "378.0 # 378,0");input("Trova il valore delle merci acquistate il primo febbraio al prezzo di 400 € delle quali il primo agosto si vende il 60 % applicando un ricarico del 35 %.", "324.0 # 324,0");input("Calcolare il valore delle merci acquistate il primo gennaio al prezzo di 600 € delle quali il primo settembre si vende il 60 % applicando un ricarico del 25 %.", "450.0 # 450,0");input("Devi trovare il valore delle merci acquistate il primo febbraio al prezzo di 200 € delle quali il primo dicembre si vende il 60 % applicando un ricarico del 35 %.", "162.0 # 162,0");</script>
+		input("Sapendo che un'azienda ha acquistato merci il primo aprile pagandole 400 €, calcola quanto incasserà al momento del pagamento delle stesse concordato per il primo di agosto, data in cui ha venduto il 50 % delle merci. Il ricarico sulle merci vendute è pari al 35 %", "270");input("Sapendo che un'azienda ha acquistato merci il primo maggio pagandole 700 €, calcola quanto incasserà al momento del pagamento delle stesse concordato per il primo di agosto, data in cui ha venduto il 50 % delle merci. Il ricarico sulle merci vendute è pari al 45 %", "507.5#507,5#507.50#507,50");input("Calcola il valore delle merci acquistate il primo febbraio al prezzo di 900 € delle quali il primo novembre si vende il 70 % applicando un ricarico del 45 %.", "913.5#913,5#913.50#913,50");input("Devi trovare il valore delle merci acquistate il primo febbraio al prezzo di 300 € delle quali il primo giugno si vende il 70 % applicando un ricarico del 35 %.", "283.5#283,5#283.50#283,50");input("Sapendo che un'azienda ha acquistato merci il primo marzo pagandole 300 €, calcola quanto incasserà al momento del pagamento delle stesse concordato per il primo di agosto, data in cui ha venduto il 50 % delle merci. Il ricarico sulle merci vendute è pari al 45 %", "217.5#217,5#217.50#217,50");input("Sapendo che un'azienda ha acquistato merci il primo febbraio pagandole 700 €, calcola quanto incasserà al momento del pagamento delle stesse concordato per il primo di ottobre, data in cui ha venduto il 70 % delle merci. Il ricarico sulle merci vendute è pari al 35 %", "661.5#661,5#661.50#661,50");input("Devi trovare il valore delle merci acquistate il primo febbraio al prezzo di 900 € delle quali il primo novembre si vende il 60 % applicando un ricarico del 45 %.", "783");input("Trovare il valore delle merci acquistate il primo marzo al prezzo di 600 € delle quali il primo agosto si vende il 50 % applicando un ricarico del 25 %.", "375");input("Trova il valore delle merci acquistate il primo febbraio al prezzo di 300 € delle quali il primo settembre si vende il 60 % applicando un ricarico del 25 %.", "225");input("Trovare il valore delle merci acquistate il primo aprile al prezzo di 100 € delle quali il primo giugno si vende il 60 % applicando un ricarico del 25 %.", "75");</script>
