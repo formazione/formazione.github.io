@@ -85,7 +85,7 @@ body, html {
  
 
 </style>
-<!-- <body oncontextmenu="return false;"> -->
+<html oncontextmenu="return false;">
 <script>
 
 // ======================== CHECK ======================= >
