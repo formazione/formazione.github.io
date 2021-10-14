@@ -1,0 +1,68 @@
+
+<style>
+	.fontbig {
+		font-size: 1.5em;
+	}
+
+/**
+Code By Web Dev Trick ( https://webdevtrick.com )
+For More Source Code Visit Our Blog ( https://webdevtrick.com )
+**/
+ 
+body, html {
+ background: #ECEDEF;
+ margin-left: 10%;
+ margin-right: 10%;
+ padding: 0;
+}
+ 
+
+</style>
+<html oncontextmenu="return false;">
+<script>
+
+// ======================== CHECK ======================= >
+function check(casella, giusta, num){
+	// the solutions are good both for low and capital letters
+
+	if (giusta.split("#").includes(casella.value)){
+
+		casella.style.background = 'yellow';
+		return casella.value;
+	}
+	else{
+		casella.style.background = 'red';
+	}
+	console.log(giusta);
+	// console.log(casella.value.split("#));
+} // ====================================== CHECK === !
+
+function print_it(parola){
+	if (soluzioni.innerHTML.includes(parola)){
+	}
+	else {
+    	soluzioni.innerHTML += " - " + parola;
+	}
+}
+
+var countdom = 1;
+function input(domanda, giusta){
+	var dom_h2 = "<table style='background:#fcab41;'><td><p class='fontbig' style='color: blue'>" + countdom++ + " " + domanda;
+	var part1 = dom_h2 + "<br><i style='color:red'>Prezzo delle merci vendute</i><br><input id='casella' class='fontbig' type=text class='t1' placeholder='?...' onchange=\"if (check(this,'";
+	part1 += giusta + "')){print_it(this.value)};\" style='text-align:right'/></center></p></table>";
+	document.write(part1);
+	}
+	
+
+x = document.getElementsByClassName('t1');
+for (i of x){
+    i.value = "";
+}
+
+</script>
+<h1>Fabbisogno 1</h1>
+
+Il fabbisogno finanziario dipende anche dalle risorse finanziarie necessarie all'impresa per la gestione corrente. Controlliamo in questi esercizi se l'ammontare delle risorse derivanti dalle vendite sono sufficienti a far fronte ai debiti per gli acquisti. Di solito le imprese chiedono ai fornitori di poter pagare ad una certa data le merci acquistate, in modo da poter ottenere, nel frattempo, le risorse vendendo i prodotti acquistati. Probabilmente non riusciranno a vendere tutte le merci, ci sarà sempre una parte che rimane in magazzino, ma il prezzo di vendita è superiore a quello di acquisto, per cui, se il ricarico (l'aumento del prezzo rispetto a quello di acquisto) copre il costo delle merci invendute, l'impresa non avrà bisogno di ulteriori risorse finanziarie. Al contrario, dovrà chiedere un prestito oppure una ulteriore dilazione nel pagamento della differenza tra il valore delle merci acquistate e quello delle merci vendute.
+
+<script>
+		input("Sapendo che un'azienda ha acquistato merci il primo maggio pagandole 500 €, calcola quanto incasserà al momento del pagamento delle stesse concordato per il primo di luglio, data in cui ha venduto il 50 % delle merci. Il ricarico sulle merci vendute è pari al 45 %", "362.5#362,5#362.50#362,50");input("Sapendo che un'azienda ha acquistato merci il primo gennaio pagandole 100 €, calcola quanto incasserà al momento del pagamento delle stesse concordato per il primo di agosto, data in cui ha venduto il 60 % delle merci. Il ricarico sulle merci vendute è pari al 45 %", "87");input("A quanto ammonta il valore delle merci acquistate il primo gennaio al prezzo di 100 € delle quali il primo agosto si vende il 50 % applicando un ricarico del 45 %.", "72.5#72,5#72.50#72,50");input("Trova il valore delle merci acquistate il primo febbraio al prezzo di 200 € delle quali il primo luglio si vende il 70 % applicando un ricarico del 45 %.", "203");input("Trovare il valore delle merci acquistate il primo febbraio al prezzo di 900 € delle quali il primo ottobre si vende il 60 % applicando un ricarico del 25 %.", "675");input("Sapendo che un'azienda ha acquistato merci il primo marzo pagandole 400 €, calcola quanto incasserà al momento del pagamento delle stesse concordato per il primo di luglio, data in cui ha venduto il 50 % delle merci. Il ricarico sulle merci vendute è pari al 25 %", "250");input("Trova il valore delle merci acquistate il primo gennaio al prezzo di 200 € delle quali il primo ottobre si vende il 70 % applicando un ricarico del 25 %.", "175");input("Sapendo che un'azienda ha acquistato merci il primo aprile pagandole 200 €, calcola quanto incasserà al momento del pagamento delle stesse concordato per il primo di luglio, data in cui ha venduto il 60 % delle merci. Il ricarico sulle merci vendute è pari al 35 %", "162");input("Trova il valore delle merci acquistate il primo aprile al prezzo di 800 € delle quali il primo ottobre si vende il 50 % applicando un ricarico del 45 %.", "580");input("Sapendo che un'azienda ha acquistato merci il primo marzo pagandole 700 €, calcola quanto incasserà al momento del pagamento delle stesse concordato per il primo di giugno, data in cui ha venduto il 60 % delle merci. Il ricarico sulle merci vendute è pari al 25 %", "525");</script>

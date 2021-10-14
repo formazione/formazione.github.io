@@ -59,7 +59,7 @@ def printex():
 		case 2:
 			inp = """input("Sapendo che un'azienda ha acquistato merci il primo {mese_acquisto} pagandole {valore_merci} €, calcola quanto incasserà al momento del pagamento delle stesse concordato per il primo di {mese_pag}, data in cui ha venduto il {percentuale_vendite} % delle merci. Il ricarico sulle merci vendute è pari al {perc_ricarico} %", "{prezzo_venduto}");""".format(**s)
 
-	print(inp)
+
 	return inp
 
 
@@ -128,22 +128,17 @@ for (i of x){
 
 </script>
 <h1>Fabbisogno 1</h1>
-<script>
- function calcNumbers(result){
- form.displayResult.value=form.displayResult.value+result;
- 
- }
- </script>
+
+Il fabbisogno finanziario dipende anche dalle risorse finanziarie necessarie all'impresa per la gestione corrente. Controlliamo in questi esercizi se l'ammontare delle risorse derivanti dalle vendite sono sufficienti a far fronte ai debiti per gli acquisti. Di solito le imprese chiedono ai fornitori di poter pagare ad una certa data le merci acquistate, in modo da poter ottenere, nel frattempo, le risorse vendendo i prodotti acquistati. Probabilmente non riusciranno a vendere tutte le merci, ci sarà sempre una parte che rimane in magazzino, ma il prezzo di vendita è superiore a quello di acquisto, per cui, se il ricarico (l'aumento del prezzo rispetto a quello di acquisto) copre il costo delle merci invendute, l'impresa non avrà bisogno di ulteriori risorse finanziarie. Al contrario, dovrà chiedere un prestito oppure una ulteriore dilazione nel pagamento della differenza tra il valore delle merci acquistate e quello delle merci vendute.
 
 <script>
 		"""
-	print(html)
+
 	for x in range(10):
 		html += printex()
-	print("</script>")
 	html += "</script>"
-	with open("fabbisogno2.html", "w", encoding="utf-8") as file:
+	with open("fabbisogno1.html", "w", encoding="utf-8") as file:
 		file.write(html)
-	os.startfile("fabbisogno2.html")
+	os.startfile("fabbisogno1.html")
 
 show()
