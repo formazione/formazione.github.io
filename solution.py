@@ -1,14 +1,4 @@
-
 a = "3?2??"
-
-def count(lst):
-	num = 0
-	for i in lst:
-		if i=="?":
-			num += 1
-	return num
-
-x = count(a)
 
 pattern = "12"
 a = list(a)
@@ -24,3 +14,4 @@ for n, i in enumerate(a):
 
 a = "".join(a)
 print(a)
+
