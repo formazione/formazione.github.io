@@ -1,0 +1,42 @@
+<html>
+
+<head>
+<style>
+
+@import "button82.css"
+</style>
+
+
+</head>
+
+<body>
+<!-- HTML !-->
+
+
+<!-- HTML !-->
+<button class="button-82-pushable" role="button" onclick="button_clicked()">
+  <span class="button-82-shadow"></span>
+  <span class="button-82-edge"></span>
+  <span class="button-82-front text">
+    Button 82
+  </span>
+</button>
+
+<!-- debug -->
+<div id="inspect">...</div>
+<!-- code -->
+
+
+<script>
+
+function button_clicked(){
+	b1 = document.getElementById("b1")
+	b1.innerHTML = "You got me";
+	inspect = document.getElementById("inspect");
+	inspect.innerHTML = b1.innerHTML;
+}
+
+</script>
+</body>
+
+</html>

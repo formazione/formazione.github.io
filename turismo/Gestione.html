@@ -1,6 +1,5 @@
 
 	<style> 
-	@import "button82.css";
 		.fontbig {font-size: 1.5em; } 
 		body, html {
 			background: #ECEDEF;
@@ -29,15 +28,21 @@
 			var part1 = dom_h2 + "<br><i style='color:red'>Answer and press return</i><br><input id='casella' class='fontbig' type=text class='t1' placeholder='?...' onchange=\"if (check(this,'";
 			
 			part1 += giusta + "'));\" style='text-align:right'/></center></p></table><br>";
+			
 			document.write(part1);
-			}document.write('<h2>Fasi della gestione.</h2>');
-input("Fase in cui si acquisiscono<br>le risorse finanziarie", "finanziamenti#finanziamento");
+			}
+		</script>
+		
+		<h1>Le fasi della gestione</h1>
+		<script>
+				document.write('<h2>Fasi della gestione.</h2>');
+input("Acquisizione delle risorse finanziarie:", "finanziamenti#finanziamento");
 input("Acquisto dei beni e servizi", "investimenti#investimento");
 input("Realizzazione del prodotto", "produzione");
 input("Vendita del prodotto", "disinvestimenti#disinvestimento");
 document.write('<h2>Fonti di finanziamento</h2>');
 input("I soci conferiscono il capitale ...", "proprio");
-input("I prestiti alle imprese fatti <br>dalle banche confluiscono nel capitale di<br>[terzi,debito,proprio]", "terzi#debito");
+input("I prestiti alle imprese fatti dalle banche confluiscono nel capitale di", "terzi#debito");
 input("Le dilazioni dei fornitori sono debiti di f...", "fornitura");
 input("il compenso del Capitale proprio è detto", "utile#utili");
 input("il compenso del Capitale di terzi è dato dagli", "interessi");
@@ -46,12 +51,4 @@ document.write('<h2>La banca</h2>');
 input("<img src='https://contrattidirete.registroimprese.it/reti/immagini/lalegge01.png' width=200/><br>Chi sono i principali soggetti in disavanzo?", "imprese");
 input("<img src='https://www.lentepubblica.it/wp-content/uploads/2018/07/noipa-cedolino-speciale-rimborso-730.jpg' width=200/><br>La banca ha la sua principale attivita' nell'intermediazione ...c", "creditizia");
 input("<img src='https://alleanzacattolica.org/wp-content/uploads/2020/11/denaro.jpg' width=200/><br>La banca permette di utilizzare strumenti che sostituiscono il denaro come assegni, bonifici e carte di credito. Si tratta della funzione m....", "monetaria");
-
-			document.write(`<button class="button-82-pushable" role="button" onclick="button_clicked()">
-			  <span class="button-82-shadow"></span>
-			  <span class="button-82-edge"></span>
-			  <span class="button-82-front text">Invia le risposte</span>
-			</button>`);
-
-
-			</script><h1>Le fasi della gestione</h1><script></script>
+</script>

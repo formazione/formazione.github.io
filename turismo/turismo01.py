@@ -112,10 +112,8 @@ l3_monetaria = "https://alleanzacattolica.org/wp-content/uploads/2020/11/denaro.
 filename = "Gestione"
 title = "Le fasi della gestione"
 lista_domande = {
-
 	"Fasi della gestione." : [
-
-		[f"Fase in cui si acquisiscono\\le risorse finanziarie", "finanziamenti#finanziamento"],
+		[f"Acquisizione delle risorse finanziarie:", "finanziamenti#finanziamento"],
 		[f"Acquisto dei beni e servizi", "investimenti#investimento"],
 		[f"Realizzazione del prodotto", "produzione"],
 		[f"Vendita del prodotto", "disinvestimenti#disinvestimento"],

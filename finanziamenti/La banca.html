@@ -1,4 +1,4 @@
-
+<div id="content">Ciao</div>
 	<style> 
 	@import "button82.css";
 		.fontbig {font-size: 1.5em; } 
@@ -8,50 +8,76 @@
 			margin-right: 10%;
 			padding: 0; }
 	</style>
+	  
 		<script>
 		const rightcolor = 'yellow'
 		const wrongcolor = "red";
+		let answers = new Array();
 		function check(inp_text, giusta){
 			let lista_esatte = giusta.split("#"); // right answers
 			let user_input = inp_text.value.toString();       // user input
-			if (lista_esatte.includes(user_input.toLowerCase())){
+			if (lista_esatte.includes(user_input.toLowerCase()))
+				{
+				console.log("Giusto");
 				inp_text.style.background = rightcolor; // turns yellow if right
+				answers.push(inp_text.value.toString());
+				console.log(answers);
+				console.log(inp_text.value.toString());
 				return inp_text.value;
-			}
+				}
 			else{
 				inp_text.style.background = wrongcolor; // turn red if wrong
-		} } 
+				};
+			 } 
 		var countdom = 1;
-
+		let content = document.getElementById("content");
+		console.log(content);
 		function input(domanda, giusta){
 			var dom_h2 = "<table style='background:#fcab41;'><td><p class='fontbig' style='color: blue'>" + countdom++ + " " + domanda;
 
 			var part1 = dom_h2 + "<br><i style='color:red'>Answer and press return</i><br><input id='casella' class='fontbig' type=text class='t1' placeholder='?...' onchange=\"if (check(this,'";
 			
 			part1 += giusta + "'));\" style='text-align:right'/></center></p></table><br>";
-			document.write(part1);
-			}document.write('<h2>Fasi della gestione.</h2>');
-input("Fase in cui si acquisiscono<br>le risorse finanziarie", "finanziamenti#finanziamento");
-input("Acquisto dei beni e servizi", "investimenti#investimento");
-input("Realizzazione del prodotto", "produzione");
-input("Vendita del prodotto", "disinvestimenti#disinvestimento");
-document.write('<h2>Fonti di finanziamento</h2>');
-input("I soci conferiscono il capitale ...", "proprio");
-input("I prestiti alle imprese fatti <br>dalle banche confluiscono nel capitale di<br>[terzi,debito,proprio]", "terzi#debito");
-input("Le dilazioni dei fornitori sono debiti di f...", "fornitura");
-input("il compenso del Capitale proprio è detto", "utile#utili");
-input("il compenso del Capitale di terzi è dato dagli", "interessi");
-input("è più conveniente per l'impresa il Capitale", "proprio");
-document.write('<h2>La banca</h2>');
+			content.innerHTML += part1;
+			}document.write('<h2>La banca</h2>');
 input("<img src='https://contrattidirete.registroimprese.it/reti/immagini/lalegge01.png' width=200/><br>Chi sono i principali soggetti in disavanzo?", "imprese");
 input("<img src='https://www.lentepubblica.it/wp-content/uploads/2018/07/noipa-cedolino-speciale-rimborso-730.jpg' width=200/><br>La banca ha la sua principale attivita' nell'intermediazione ...c", "creditizia");
 input("<img src='https://alleanzacattolica.org/wp-content/uploads/2020/11/denaro.jpg' width=200/><br>La banca permette di utilizzare strumenti che sostituiscono il denaro come assegni, bonifici e carte di credito. Si tratta della funzione m....", "monetaria");
 
-			document.write(`<button class="button-82-pushable" role="button" onclick="button_clicked()">
+			document.write(`<button class="button-82-pushable" role="button" onclick="check()">
 			  <span class="button-82-shadow"></span>
 			  <span class="button-82-edge"></span>
-			  <span class="button-82-front text">Invia le risposte</span>
+			  <span class="button-82-front text">Controlla le risposte</span>
 			</button>`);
 
 
-			</script><h1>Le fasi della gestione</h1><script></script>
+
+			
+	document.write(`
+	<button id="cmd">generate PDF</button>`);
+	</script>
+    <script src="https://cpwebassets.codepen.io/assets/common/stopExecutionOnTimeout-1b93190375e9ccc259df3a57c1abc0e64599724ae30d7ea4c6877eb615f89387.js"></script>
+
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.2.61/jspdf.min.js'></script>
+      <script id="rendered-js" >
+var doc = new jsPDF();
+var specialElementHandlers = {
+  '#editor': function (element, renderer) {
+    return true;
+  } };
+
+
+$('#cmd').click(function () {
+  doc.fromHTML($('#content').html(), 15, 15, {
+    'width': 170,
+    'elementHandlers': specialElementHandlers });
+
+  doc.save('sample-file.pdf');
+});
+//# sourceURL=pen.js
+    </script>
+	`
+	)
+
+	</script><h1>banca</h1><script></script></div>

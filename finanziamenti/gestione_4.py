@@ -25,6 +25,8 @@ def add_questions(lista_domande):
 				# ===================== LINK IMG HTML CODE ===========
 				address = f"<img src='{address}' width=200/><br>"
 				d[0] = address + d[0]
+			if "\\" in d[0]:
+				d[0] = d[0].replace("\\", "<br>")
 			if "#" in d[0]:
 				question = d[0].split("#")[0]
 				possible = d[0].split("#")[1:]
@@ -40,6 +42,7 @@ def start():
 
 	style = """
 	<style> 
+	@import "button82.css";
 		.fontbig {font-size: 1.5em; } 
 		body, html {
 			background: #ECEDEF;
@@ -52,43 +55,92 @@ def start():
 	hidemenu = ""
 
 	check = hidemenu + """
+	  
 		<script>
 		const rightcolor = 'yellow'
 		const wrongcolor = "red";
+		let answers = new Array();
 		function check(inp_text, giusta){
 			let lista_esatte = giusta.split("#"); // right answers
 			let user_input = inp_text.value.toString();       // user input
-			if (lista_esatte.includes(user_input.toLowerCase())){
+			if (lista_esatte.includes(user_input.toLowerCase()))
+				{
+				console.log("Giusto");
 				inp_text.style.background = rightcolor; // turns yellow if right
+				answers.push(inp_text.value.toString());
+				console.log(answers);
+				console.log(inp_text.value.toString());
 				return inp_text.value;
-			}
+				}
 			else{
 				inp_text.style.background = wrongcolor; // turn red if wrong
-		} }"""
+				};
+			 }"""
 
 	inputs = """ 
 		var countdom = 1;
-
+		let content = document.getElementById("content");
+		console.log(content);
 		function input(domanda, giusta){
 			var dom_h2 = "<table style='background:#fcab41;'><td><p class='fontbig' style='color: blue'>" + countdom++ + " " + domanda;
 
 			var part1 = dom_h2 + "<br><i style='color:red'>Answer and press return</i><br><input id='casella' class='fontbig' type=text class='t1' placeholder='?...' onchange=\\"if (check(this,'";
 			
 			part1 += giusta + "'));\\" style='text-align:right'/></center></p></table><br>";
-			
-			document.write(part1);
-			}
-		</script>
+			content.innerHTML += part1;
+			}"""
 		
-		<h1>TITOLO</h1>
-		<script>
-				"""
-	html = style + check + inputs
+	buttonfinal = """
+			document.write(`<button class="button-82-pushable" role="button" onclick="check()">
+			  <span class="button-82-shadow"></span>
+			  <span class="button-82-edge"></span>
+			  <span class="button-82-front text">Controlla le risposte</span>
+			</button>`);
+
+
+
+			"""
+
+
+	pdf = """
+	document.write(`
+	<button id="cmd">generate PDF</button>`);
+	</script>
+    <script src="https://cpwebassets.codepen.io/assets/common/stopExecutionOnTimeout-1b93190375e9ccc259df3a57c1abc0e64599724ae30d7ea4c6877eb615f89387.js"></script>
+
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.2.61/jspdf.min.js'></script>
+      <script id="rendered-js" >
+var doc = new jsPDF();
+var specialElementHandlers = {
+  '#editor': function (element, renderer) {
+    return true;
+  } };
+
+
+$('#cmd').click(function () {
+  doc.fromHTML($('#content').html(), 15, 15, {
+    'width': 170,
+    'elementHandlers': specialElementHandlers });
+
+  doc.save('sample-file.pdf');
+});
+//# sourceURL=pen.js
+    </script>
+	`
+	)
+
+	""" 
+
+	end = "</script><h1>TITOLO</h1><script>"
+	html = "<div id=\"content\">Ciao</div>"
+	html += style + check + inputs
 
 	# creates all the input("question", "answer") string
 	html += add_questions(lista_domande)
 	# close the script tag
-	html += "</script>"
+	html += buttonfinal + pdf + end
+	html += "</script></div>"
 	html = html.replace("TITOLO", title)
 	with open(f"{filename}.html", "w", encoding="utf-8") as file:
 		file.write(html)
@@ -109,30 +161,9 @@ l1_imprese = "https://contrattidirete.registroimprese.it/reti/immagini/lalegge01
 l2_prestito = "https://www.lentepubblica.it/wp-content/uploads/2018/07/noipa-cedolino-speciale-rimborso-730.jpg"
 l3_monetaria = "https://alleanzacattolica.org/wp-content/uploads/2020/11/denaro.jpg"
 
-filename = "Gestione"
-title = "Le fasi della gestione"
+filename = "La banca"
+title = "banca"
 lista_domande = {
-
-	"Fasi della gestione." : [
-
-		[f"Fase in cui si acquisiscono\\le risorse finanziarie", "finanziamenti#finanziamento"],
-		[f"Acquisto dei beni e servizi", "investimenti#investimento"],
-		[f"Realizzazione del prodotto", "produzione"],
-		[f"Vendita del prodotto", "disinvestimenti#disinvestimento"],
-	], 
-
-		"Fonti di finanziamento":
-	[
-	["I soci conferiscono il capitale ...", "proprio"],
-	["I prestiti alle imprese fatti dalle banche confluiscono nel capitale di", "terzi#debito"],
-	["Le dilazioni dei fornitori sono debiti di f...", "fornitura"],
-	["il compenso del Capitale proprio è detto", "utile#utili"],
-	["il compenso del Capitale di terzi è dato dagli", "interessi"],
-	["è più conveniente per l'impresa il Capitale", "proprio"]
-	],
-
-
-
 
 	"La banca":
 	[

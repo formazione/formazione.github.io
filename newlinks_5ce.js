@@ -12,4 +12,5 @@ newlinks_5ce.innerHTML += "<a href='Programmi20192020/text_5ce/00_Modulo1_Es_1.h
                 newlinks_5ce.innerHTML += "<a href='Programmi20192020/text_5ce/00_Modulo1_Verifica2.html'>00_Modulo1_Verifica2</a><br>"
                 newlinks_5ce.innerHTML += "<a href='Programmi20192020/text_5ce/Esercizio_verifica_marketing_strategico.html'>Esercizio_verifica_marketing_strategico</a><br>"
                 newlinks_5ce.innerHTML += "<a href='Programmi20192020/text_5ce/Test_costituzione.html'>Test_costituzione</a><br>"
+                newlinks_5ce.innerHTML += "<a href='Programmi20192020/text_5ce/turismo 2021.html'>turismo 2021</a><br>"
                 
