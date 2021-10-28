@@ -58,6 +58,13 @@ Dalla sua dimensione e dalla struttura, dal tipo di attività svolta e dai fatto
 
 Gli interessi si calcolano in base al capitale, al tasso e al tempo. Il tasso di interesse rispetto ad un anno è una percentuale. Per calcolarlo si moltiplica per il tasso e si divide per 100 (moltiplicando per il numero degli anni). Se il tempo è espresso in mesi, si moltiplica il capitale per il tasso e i mesi e si divide per 1200 (12 mesi per 100). In giorni, gli interessi sono pari al capitale per il tasso per i giorni diviso 36.500 (se i giorni sono 365, 36.600 per gli anni bisestili e 36.000 per l'anno commerciale, con i mesi considerati tutti di 30 giorni).
 
+^Cos'è il Capitale proprio?
+
+È la somma del valore dei conferimenti in denaro o in beni dei soci che viene remunerato con l'utile e non ha scadenza. È più conveniente dei prestiti e deve essere sempre superiore al totale dei debiti (al massimo pari ai debiti, altrimenti la situazione finanziaria non è in equilibrio).
+
+^Cos'è il Capitale di terzi?
+Sono finanziamenti di persone estranee all'azienda (tipicamente banche). Questi vengono remunerati con l'interesse che è il compenso per chi concede un prestito (banche) e un costo per chi lo ottiene (le imprese). I finanziamenti possono essere a breve termine (per acquistare il capitale circolante) o a lungo termine (per acquistare il capitale fisso).
+
 ^Le azioni
 
 Sono una quota del capitale delle società per azioni (e delle Società in Accomandita per Azioni). Chi possiede un'azione è compropietario di una società, ha diritto a votare nelle assemblee e a ricevere un utile in proporzione al numero delle azioni possedute (dividendo).
@@ -134,6 +141,7 @@ l'impresa costruttrice cede il bene in locazione dietro pagamento di un canone d
 
 ^- Sale and lease back:
 in cui l'impresa utilizzatrice vende il bene alla banca, ma lo continua ad usare pagando un canone alla banca, così da ottenere liquidità.
+
 
 
 
