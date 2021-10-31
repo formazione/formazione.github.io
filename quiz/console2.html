@@ -101,13 +101,31 @@ var dbMandia = firebase.database().ref().child("5AE").child("Mandia");
 dbMandia.on("value", snap => risposta_mandia.innerText = snap.val());
 dbMandia.on("value", snap => n_mandia = snap.val())</script>
 <tr>
+<!-- alunno 1 template copia da alunno 1 -->
+
+        <!-- LISTA copia e cambia tutti i lista col nuovo nome -->
+<td>
+<button type="button" class="btn btn-warning btn-lg" onclick="dbReflistsa.set(--nlista)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbReflista.set(++nlista)"> + </button>lista<td>
+<!-- TESTO CHE MOSTRA LA RISPOSTA DI MANDIA E IL SUO PUNTEGGIO -->
+Risposta:<i id="risposta_lista"></i>
+Punti: <i id="h1alunnolista"></i></p>
+<!--               TASTI PER ASSEGNARE I PUNTI E VISUALIZZAZIONE RISPOSTA MANDIA -->
+<script>
+var h1alunnolista = document.getElementById("h1alunnolista");
+// VEDI IL PUNTEGGIO nel child Mandia di 5ae_2021_2022 (Punteggio assegnato da me)
+var dbReflista = firebase.database().ref().child("5ae_2021_2022").child("lista");
+dbReflista.on("value", snap => h1alunnolista.innerText = snap.val()); // mostra il valore di n1
+// AGGIORNA PUNTEGGIO
+dbReflista.on("value", snap => nlista = snap.val()) // Cambia il valore della variabile n1
+// VEDI IL PUNTEGGIO nel child Mandia di 5AE (sua risposta)
+var i_risposta_lista = document.getElementById("risposta_lista");
+var db_risposta_lista = firebase.database().ref().child("5AE").child("lista");
+db_risposta_lista.on("value", snap => i_risposta_lista.innerText = snap.val());
+db_risposta_lista.on("value", snap => n_mandia = snap.val())</script>
+<tr>
+<!-- fine lista -->
 
 
-
-
-
-
-        <!-- alunno 2 -->
 
 <td><button type="button" class="btn btn-warning btn-lg" onclick="dbRef2.set(--n2)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRef2.set(++n2)"> + </button>Battagliese<td><i id="h1alunno2"></i></p><script>
     var h1alunno2 = document.getElementById("h1alunno2");
