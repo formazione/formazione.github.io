@@ -153,5 +153,12 @@ os.startfile("copia_in_console.html")
 
 
 for alunni in classe:
-	address = "https:\\formazione.github.io\\quiz5ae" + alunni + ".hmtl"
-	print(f"<p><a href='{address}'>" + alunni + "</a></p>")
+	address = "https://formazione.github.io/quiz5ae/" + alunni + ".html"
+	print(address)
+	print()
+
+
+for alunni in classe:
+	address = "https://formazione.github.io/quiz5ae/" + alunni + ".html"
+	print("<a href='" + address + "'>" + alunni + "</a><br>")
+	print()

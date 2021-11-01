@@ -20,7 +20,7 @@
   var database = firebase.database()
 </script>
 
-<h1>musto - QUIZ CONSOLE</h1>
+<h1>Mandia Antonio - QUIZ CONSOLE</h1>
 Domanda:
 <i id="domanda_insegnante"></i>
 
@@ -30,48 +30,40 @@ Domanda:
 
 <!----------------- Alunno 1 ------------------->
 <td>
-Risposta scelta da musto
+Risposta scelta da Mandia
 <!-- [ - ] -->
 <td>
-<button type="button" class="btn btn-warning btn-lg" onclick="dbmusto.set(--n_musto)">[ - ]</button>
+<button type="button" class="btn btn-warning btn-lg" onclick="dbMandia.set(--n_mandia)">[ - ]</button>
 
 <!-- [ + ] -->
-<button type="button" class="btn btn-info btn-lg" onclick="dbmusto.set(++n_musto)">[ + ]</button>
+<button type="button" class="btn btn-info btn-lg" onclick="dbMandia.set(++n_mandia)">[ + ]</button>
 <br>
-<input type="text" class="inp1" onchange="dbmusto.set(this.value)">
+<input type="text" class="inp1" onchange="dbMandia.set(this.value)">
 <td>
-<i id="musto"></i>
+<i id="mandia"></i>
 
 <tr>
-
-<!-- 
-
-            Seleziona tutti i cognomi e sostituisci
-            col nuovo cognome e salva col nuovo cognome
-
- -->
-
   <td></td>
-  <td>Punteggio di musto</td>
-<td><i id="punteggio_musto"></i>
+  <td>Punteggio di Mandia</td>
+<td><i id="punteggio_mandia"></i>
 
 <script>
-// Mostra e aggiorna la risposta di musto
-var musto = document.getElementById("musto");
-var dbmusto = firebase.database().ref().child("5AE").child("musto");
-dbmusto.on("value", snap => musto.innerText = snap.val());
-dbmusto.on("value", snap => n_musto = snap.val())
+// Mostra e aggiorna la risposta di Mandia
+var mandia = document.getElementById("mandia");
+var dbMandia = firebase.database().ref().child("5AE").child("Mandia");
+dbMandia.on("value", snap => mandia.innerText = snap.val());
+dbMandia.on("value", snap => n_mandia = snap.val())
 
 // Mostra punteggio dell'alunno all'alunno nella sua console
-var punteggio_musto = document.getElementById("punteggio_musto");
-// VEDI IL PUNTEGGIO nel child musto di 5ae_2021_2022 (Punteggio assegnato da me)
-var dbRef1 = firebase.database().ref().child("5ae_2021_2022").child("musto");
-dbRef1.on("value", snap => punteggio_musto.innerText = snap.val()); // mostra il valore di n1
+var punteggio_mandia = document.getElementById("punteggio_mandia");
+// VEDI IL PUNTEGGIO nel child Mandia di 5ae_2021_2022 (Punteggio assegnato da me)
+var dbRef1 = firebase.database().ref().child("5ae_2021_2022").child("Mandia");
+dbRef1.on("value", snap => punteggio_mandia.innerText = snap.val()); // mostra il valore di n1
 
 
 // Mostra la domanda dell'insegnante in domanda_insegnante
 var domanda_insegnante = document.getElementById("domanda_insegnante");
-// VEDI IL PUNTEGGIO nel child musto di 5ae_2021_2022 (Punteggio assegnato da me)
+// VEDI IL PUNTEGGIO nel child Mandia di 5ae_2021_2022 (Punteggio assegnato da me)
 var dbRef1 = firebase.database().ref().child("domanda").child("insegnante");
 dbRef1.on("value", snap => domanda_insegnante.innerText = snap.val()); // mostra il valore di n1
 
