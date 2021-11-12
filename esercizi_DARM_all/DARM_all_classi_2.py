@@ -111,8 +111,8 @@ def create_html(classe, filename):
 	"
 	filetext = open_template(f"template.html")
 	filetext = replace_js_title(filetext, filename)
-	file_write(filename + ".html", filetext)
-	os.startfile(f"{os.getcwd()}/output/{filename}" + ".html")
+	file_write(f"{filename}{classe}" + ".html", filetext)
+	os.startfile(f"{os.getcwd()}/output/{filename}{classe}" + ".html")
 
 
 def open_template(filename):
@@ -150,6 +150,7 @@ def main():
 
 
 	classe = classchooser("3ce 4ce 4ae 5ae 5ce")
+	print(f"You choose {classe}")
 	fn = menu()
 	fn = fn.split("\\")[0]
 	print(fn)
