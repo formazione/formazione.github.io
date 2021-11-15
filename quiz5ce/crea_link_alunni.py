@@ -17,5 +17,5 @@ classe = [
 ]
 
 for n in classe:
-       print(f"<a href='https://formazione.github.io/quiz5ce/{n}.html'>{n}</a> ")
+       print(f"<h2><a href='https://formazione.github.io/quiz5ce/{n}.html'>{n}</a></h2>")
 
