@@ -67,14 +67,14 @@ Risposta scelta da Papa: "
 <script>
 // Mostra e aggiorna la risposta di Papa
 var Papa = document.getElementById("Papa");
-var dbPapa = firebase.database().ref().child("5AE").child("Papa");
+var dbPapa = firebase.database().ref().child("5CE").child("Papa");
 dbPapa.on("value", snap => Papa.innerText = snap.val());
 dbPapa.on("value", snap => n_Papa = snap.val())
 
 // Mostra punteggio dell'alunno all'alunno nella sua console
 var punteggio_Papa = document.getElementById("punteggio_Papa");
 // VEDI IL PUNTEGGIO nel child Papa di 5ae_2021_2022 (Punteggio assegnato da me)
-var dbRef1 = firebase.database().ref().child("5ae_2021_2022").child("Papa");
+var dbRef1 = firebase.database().ref().child("5ce_2021_2022").child("Papa");
 dbRef1.on("value", snap => punteggio_Papa.innerText = snap.val()); // mostra il valore di n1
 
 

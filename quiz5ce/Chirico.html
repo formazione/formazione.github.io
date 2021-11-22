@@ -67,14 +67,14 @@ Risposta scelta da Chirico: "
 <script>
 // Mostra e aggiorna la risposta di Chirico
 var Chirico = document.getElementById("Chirico");
-var dbChirico = firebase.database().ref().child("5AE").child("Chirico");
+var dbChirico = firebase.database().ref().child("5CE").child("Chirico");
 dbChirico.on("value", snap => Chirico.innerText = snap.val());
 dbChirico.on("value", snap => n_Chirico = snap.val())
 
 // Mostra punteggio dell'alunno all'alunno nella sua console
 var punteggio_Chirico = document.getElementById("punteggio_Chirico");
 // VEDI IL PUNTEGGIO nel child Chirico di 5ae_2021_2022 (Punteggio assegnato da me)
-var dbRef1 = firebase.database().ref().child("5ae_2021_2022").child("Chirico");
+var dbRef1 = firebase.database().ref().child("5ce_2021_2022").child("Chirico");
 dbRef1.on("value", snap => punteggio_Chirico.innerText = snap.val()); // mostra il valore di n1
 
 

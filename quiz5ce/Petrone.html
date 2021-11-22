@@ -67,14 +67,14 @@ Risposta scelta da Petrone: "
 <script>
 // Mostra e aggiorna la risposta di Petrone
 var Petrone = document.getElementById("Petrone");
-var dbPetrone = firebase.database().ref().child("5AE").child("Petrone");
+var dbPetrone = firebase.database().ref().child("5CE").child("Petrone");
 dbPetrone.on("value", snap => Petrone.innerText = snap.val());
 dbPetrone.on("value", snap => n_Petrone = snap.val())
 
 // Mostra punteggio dell'alunno all'alunno nella sua console
 var punteggio_Petrone = document.getElementById("punteggio_Petrone");
 // VEDI IL PUNTEGGIO nel child Petrone di 5ae_2021_2022 (Punteggio assegnato da me)
-var dbRef1 = firebase.database().ref().child("5ae_2021_2022").child("Petrone");
+var dbRef1 = firebase.database().ref().child("5ce_2021_2022").child("Petrone");
 dbRef1.on("value", snap => punteggio_Petrone.innerText = snap.val()); // mostra il valore di n1
 
 

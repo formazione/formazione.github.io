@@ -86,13 +86,13 @@ Punti: <i id="h1alunnoChirico"></i></p>
 <script>
 var h1alunnoChirico = document.getElementById("h1alunnoChirico");
 // VEDI IL PUNTEGGIO nel child Mandia di 5ae_2021_2022 (Punteggio assegnato da me)
-var dbRefChirico = firebase.database().ref().child("5ae_2021_2022").child("Chirico");
+var dbRefChirico = firebase.database().ref().child("5ce_2021_2022").child("Chirico");
 dbRefChirico.on("value", snap => h1alunnoChirico.innerText = snap.val()); // mostra il valore di n1
 // AGGIORNA PUNTEGGIO
 dbRefChirico.on("value", snap => nChirico = snap.val()) // Cambia il valore della variabile n1
 // VEDI IL PUNTEGGIO nel child Mandia di 5AE (sua risposta)
 var i_risposta_Chirico = document.getElementById("risposta_Chirico");
-var db_risposta_Chirico = firebase.database().ref().child("5AE").child("Chirico");
+var db_risposta_Chirico = firebase.database().ref().child("5CE").child("Chirico");
 db_risposta_Chirico.on("value", snap => i_risposta_Chirico.innerText = snap.val());
 db_risposta_Chirico.on("value", snap => n_Chirico = snap.val())</script>
 <tr>
@@ -109,13 +109,13 @@ Punti: <i id="h1alunnoCona"></i></p>
 <script>
 var h1alunnoCona = document.getElementById("h1alunnoCona");
 // VEDI IL PUNTEGGIO nel child Mandia di 5ae_2021_2022 (Punteggio assegnato da me)
-var dbRefCona = firebase.database().ref().child("5ae_2021_2022").child("Cona");
+var dbRefCona = firebase.database().ref().child("5ce_2021_2022").child("Cona");
 dbRefCona.on("value", snap => h1alunnoCona.innerText = snap.val()); // mostra il valore di n1
 // AGGIORNA PUNTEGGIO
 dbRefCona.on("value", snap => nCona = snap.val()) // Cambia il valore della variabile n1
 // VEDI IL PUNTEGGIO nel child Mandia di 5AE (sua risposta)
 var i_risposta_Cona = document.getElementById("risposta_Cona");
-var db_risposta_Cona = firebase.database().ref().child("5AE").child("Cona");
+var db_risposta_Cona = firebase.database().ref().child("5CE").child("Cona");
 db_risposta_Cona.on("value", snap => i_risposta_Cona.innerText = snap.val());
 db_risposta_Cona.on("value", snap => n_Cona = snap.val())</script>
 <tr>
@@ -132,13 +132,13 @@ Punti: <i id="h1alunnoDagosto"></i></p>
 <script>
 var h1alunnoDagosto = document.getElementById("h1alunnoDagosto");
 // VEDI IL PUNTEGGIO nel child Mandia di 5ae_2021_2022 (Punteggio assegnato da me)
-var dbRefDagosto = firebase.database().ref().child("5ae_2021_2022").child("Dagosto");
+var dbRefDagosto = firebase.database().ref().child("5ce_2021_2022").child("Dagosto");
 dbRefDagosto.on("value", snap => h1alunnoDagosto.innerText = snap.val()); // mostra il valore di n1
 // AGGIORNA PUNTEGGIO
 dbRefDagosto.on("value", snap => nDagosto = snap.val()) // Cambia il valore della variabile n1
 // VEDI IL PUNTEGGIO nel child Mandia di 5AE (sua risposta)
 var i_risposta_Dagosto = document.getElementById("risposta_Dagosto");
-var db_risposta_Dagosto = firebase.database().ref().child("5AE").child("Dagosto");
+var db_risposta_Dagosto = firebase.database().ref().child("5CE").child("Dagosto");
 db_risposta_Dagosto.on("value", snap => i_risposta_Dagosto.innerText = snap.val());
 db_risposta_Dagosto.on("value", snap => n_Dagosto = snap.val())</script>
 <tr>
@@ -155,13 +155,13 @@ Punti: <i id="h1alunnoDinola"></i></p>
 <script>
 var h1alunnoDinola = document.getElementById("h1alunnoDinola");
 // VEDI IL PUNTEGGIO nel child Mandia di 5ae_2021_2022 (Punteggio assegnato da me)
-var dbRefDinola = firebase.database().ref().child("5ae_2021_2022").child("Dinola");
+var dbRefDinola = firebase.database().ref().child("5ce_2021_2022").child("Dinola");
 dbRefDinola.on("value", snap => h1alunnoDinola.innerText = snap.val()); // mostra il valore di n1
 // AGGIORNA PUNTEGGIO
 dbRefDinola.on("value", snap => nDinola = snap.val()) // Cambia il valore della variabile n1
 // VEDI IL PUNTEGGIO nel child Mandia di 5AE (sua risposta)
 var i_risposta_Dinola = document.getElementById("risposta_Dinola");
-var db_risposta_Dinola = firebase.database().ref().child("5AE").child("Dinola");
+var db_risposta_Dinola = firebase.database().ref().child("5CE").child("Dinola");
 db_risposta_Dinola.on("value", snap => i_risposta_Dinola.innerText = snap.val());
 db_risposta_Dinola.on("value", snap => n_Dinola = snap.val())</script>
 <tr>
@@ -178,13 +178,13 @@ Punti: <i id="h1alunnoFilosa"></i></p>
 <script>
 var h1alunnoFilosa = document.getElementById("h1alunnoFilosa");
 // VEDI IL PUNTEGGIO nel child Mandia di 5ae_2021_2022 (Punteggio assegnato da me)
-var dbRefFilosa = firebase.database().ref().child("5ae_2021_2022").child("Filosa");
+var dbRefFilosa = firebase.database().ref().child("5ce_2021_2022").child("Filosa");
 dbRefFilosa.on("value", snap => h1alunnoFilosa.innerText = snap.val()); // mostra il valore di n1
 // AGGIORNA PUNTEGGIO
 dbRefFilosa.on("value", snap => nFilosa = snap.val()) // Cambia il valore della variabile n1
 // VEDI IL PUNTEGGIO nel child Mandia di 5AE (sua risposta)
 var i_risposta_Filosa = document.getElementById("risposta_Filosa");
-var db_risposta_Filosa = firebase.database().ref().child("5AE").child("Filosa");
+var db_risposta_Filosa = firebase.database().ref().child("5CE").child("Filosa");
 db_risposta_Filosa.on("value", snap => i_risposta_Filosa.innerText = snap.val());
 db_risposta_Filosa.on("value", snap => n_Filosa = snap.val())</script>
 <tr>
@@ -201,13 +201,13 @@ Punti: <i id="h1alunnoMariosa"></i></p>
 <script>
 var h1alunnoMariosa = document.getElementById("h1alunnoMariosa");
 // VEDI IL PUNTEGGIO nel child Mandia di 5ae_2021_2022 (Punteggio assegnato da me)
-var dbRefMariosa = firebase.database().ref().child("5ae_2021_2022").child("Mariosa");
+var dbRefMariosa = firebase.database().ref().child("5ce_2021_2022").child("Mariosa");
 dbRefMariosa.on("value", snap => h1alunnoMariosa.innerText = snap.val()); // mostra il valore di n1
 // AGGIORNA PUNTEGGIO
 dbRefMariosa.on("value", snap => nMariosa = snap.val()) // Cambia il valore della variabile n1
 // VEDI IL PUNTEGGIO nel child Mandia di 5AE (sua risposta)
 var i_risposta_Mariosa = document.getElementById("risposta_Mariosa");
-var db_risposta_Mariosa = firebase.database().ref().child("5AE").child("Mariosa");
+var db_risposta_Mariosa = firebase.database().ref().child("5CE").child("Mariosa");
 db_risposta_Mariosa.on("value", snap => i_risposta_Mariosa.innerText = snap.val());
 db_risposta_Mariosa.on("value", snap => n_Mariosa = snap.val())</script>
 <tr>
@@ -224,13 +224,13 @@ Punti: <i id="h1alunnoMazzeo"></i></p>
 <script>
 var h1alunnoMazzeo = document.getElementById("h1alunnoMazzeo");
 // VEDI IL PUNTEGGIO nel child Mandia di 5ae_2021_2022 (Punteggio assegnato da me)
-var dbRefMazzeo = firebase.database().ref().child("5ae_2021_2022").child("Mazzeo");
+var dbRefMazzeo = firebase.database().ref().child("5ce_2021_2022").child("Mazzeo");
 dbRefMazzeo.on("value", snap => h1alunnoMazzeo.innerText = snap.val()); // mostra il valore di n1
 // AGGIORNA PUNTEGGIO
 dbRefMazzeo.on("value", snap => nMazzeo = snap.val()) // Cambia il valore della variabile n1
 // VEDI IL PUNTEGGIO nel child Mandia di 5AE (sua risposta)
 var i_risposta_Mazzeo = document.getElementById("risposta_Mazzeo");
-var db_risposta_Mazzeo = firebase.database().ref().child("5AE").child("Mazzeo");
+var db_risposta_Mazzeo = firebase.database().ref().child("5CE").child("Mazzeo");
 db_risposta_Mazzeo.on("value", snap => i_risposta_Mazzeo.innerText = snap.val());
 db_risposta_Mazzeo.on("value", snap => n_Mazzeo = snap.val())</script>
 <tr>
@@ -247,13 +247,13 @@ Punti: <i id="h1alunnoMerola"></i></p>
 <script>
 var h1alunnoMerola = document.getElementById("h1alunnoMerola");
 // VEDI IL PUNTEGGIO nel child Mandia di 5ae_2021_2022 (Punteggio assegnato da me)
-var dbRefMerola = firebase.database().ref().child("5ae_2021_2022").child("Merola");
+var dbRefMerola = firebase.database().ref().child("5ce_2021_2022").child("Merola");
 dbRefMerola.on("value", snap => h1alunnoMerola.innerText = snap.val()); // mostra il valore di n1
 // AGGIORNA PUNTEGGIO
 dbRefMerola.on("value", snap => nMerola = snap.val()) // Cambia il valore della variabile n1
 // VEDI IL PUNTEGGIO nel child Mandia di 5AE (sua risposta)
 var i_risposta_Merola = document.getElementById("risposta_Merola");
-var db_risposta_Merola = firebase.database().ref().child("5AE").child("Merola");
+var db_risposta_Merola = firebase.database().ref().child("5CE").child("Merola");
 db_risposta_Merola.on("value", snap => i_risposta_Merola.innerText = snap.val());
 db_risposta_Merola.on("value", snap => n_Merola = snap.val())</script>
 <tr>
@@ -270,13 +270,13 @@ Punti: <i id="h1alunnoPandullo"></i></p>
 <script>
 var h1alunnoPandullo = document.getElementById("h1alunnoPandullo");
 // VEDI IL PUNTEGGIO nel child Mandia di 5ae_2021_2022 (Punteggio assegnato da me)
-var dbRefPandullo = firebase.database().ref().child("5ae_2021_2022").child("Pandullo");
+var dbRefPandullo = firebase.database().ref().child("5ce_2021_2022").child("Pandullo");
 dbRefPandullo.on("value", snap => h1alunnoPandullo.innerText = snap.val()); // mostra il valore di n1
 // AGGIORNA PUNTEGGIO
 dbRefPandullo.on("value", snap => nPandullo = snap.val()) // Cambia il valore della variabile n1
 // VEDI IL PUNTEGGIO nel child Mandia di 5AE (sua risposta)
 var i_risposta_Pandullo = document.getElementById("risposta_Pandullo");
-var db_risposta_Pandullo = firebase.database().ref().child("5AE").child("Pandullo");
+var db_risposta_Pandullo = firebase.database().ref().child("5CE").child("Pandullo");
 db_risposta_Pandullo.on("value", snap => i_risposta_Pandullo.innerText = snap.val());
 db_risposta_Pandullo.on("value", snap => n_Pandullo = snap.val())</script>
 <tr>
@@ -293,13 +293,13 @@ Punti: <i id="h1alunnoPaolino"></i></p>
 <script>
 var h1alunnoPaolino = document.getElementById("h1alunnoPaolino");
 // VEDI IL PUNTEGGIO nel child Mandia di 5ae_2021_2022 (Punteggio assegnato da me)
-var dbRefPaolino = firebase.database().ref().child("5ae_2021_2022").child("Paolino");
+var dbRefPaolino = firebase.database().ref().child("5ce_2021_2022").child("Paolino");
 dbRefPaolino.on("value", snap => h1alunnoPaolino.innerText = snap.val()); // mostra il valore di n1
 // AGGIORNA PUNTEGGIO
 dbRefPaolino.on("value", snap => nPaolino = snap.val()) // Cambia il valore della variabile n1
 // VEDI IL PUNTEGGIO nel child Mandia di 5AE (sua risposta)
 var i_risposta_Paolino = document.getElementById("risposta_Paolino");
-var db_risposta_Paolino = firebase.database().ref().child("5AE").child("Paolino");
+var db_risposta_Paolino = firebase.database().ref().child("5CE").child("Paolino");
 db_risposta_Paolino.on("value", snap => i_risposta_Paolino.innerText = snap.val());
 db_risposta_Paolino.on("value", snap => n_Paolino = snap.val())</script>
 <tr>
@@ -316,13 +316,13 @@ Punti: <i id="h1alunnoPapa"></i></p>
 <script>
 var h1alunnoPapa = document.getElementById("h1alunnoPapa");
 // VEDI IL PUNTEGGIO nel child Mandia di 5ae_2021_2022 (Punteggio assegnato da me)
-var dbRefPapa = firebase.database().ref().child("5ae_2021_2022").child("Papa");
+var dbRefPapa = firebase.database().ref().child("5ce_2021_2022").child("Papa");
 dbRefPapa.on("value", snap => h1alunnoPapa.innerText = snap.val()); // mostra il valore di n1
 // AGGIORNA PUNTEGGIO
 dbRefPapa.on("value", snap => nPapa = snap.val()) // Cambia il valore della variabile n1
 // VEDI IL PUNTEGGIO nel child Mandia di 5AE (sua risposta)
 var i_risposta_Papa = document.getElementById("risposta_Papa");
-var db_risposta_Papa = firebase.database().ref().child("5AE").child("Papa");
+var db_risposta_Papa = firebase.database().ref().child("5CE").child("Papa");
 db_risposta_Papa.on("value", snap => i_risposta_Papa.innerText = snap.val());
 db_risposta_Papa.on("value", snap => n_Papa = snap.val())</script>
 <tr>
@@ -339,13 +339,13 @@ Punti: <i id="h1alunnoPetrone"></i></p>
 <script>
 var h1alunnoPetrone = document.getElementById("h1alunnoPetrone");
 // VEDI IL PUNTEGGIO nel child Mandia di 5ae_2021_2022 (Punteggio assegnato da me)
-var dbRefPetrone = firebase.database().ref().child("5ae_2021_2022").child("Petrone");
+var dbRefPetrone = firebase.database().ref().child("5ce_2021_2022").child("Petrone");
 dbRefPetrone.on("value", snap => h1alunnoPetrone.innerText = snap.val()); // mostra il valore di n1
 // AGGIORNA PUNTEGGIO
 dbRefPetrone.on("value", snap => nPetrone = snap.val()) // Cambia il valore della variabile n1
 // VEDI IL PUNTEGGIO nel child Mandia di 5AE (sua risposta)
 var i_risposta_Petrone = document.getElementById("risposta_Petrone");
-var db_risposta_Petrone = firebase.database().ref().child("5AE").child("Petrone");
+var db_risposta_Petrone = firebase.database().ref().child("5CE").child("Petrone");
 db_risposta_Petrone.on("value", snap => i_risposta_Petrone.innerText = snap.val());
 db_risposta_Petrone.on("value", snap => n_Petrone = snap.val())</script>
 <tr>
@@ -362,13 +362,13 @@ Punti: <i id="h1alunnoRuggiero"></i></p>
 <script>
 var h1alunnoRuggiero = document.getElementById("h1alunnoRuggiero");
 // VEDI IL PUNTEGGIO nel child Mandia di 5ae_2021_2022 (Punteggio assegnato da me)
-var dbRefRuggiero = firebase.database().ref().child("5ae_2021_2022").child("Ruggiero");
+var dbRefRuggiero = firebase.database().ref().child("5ce_2021_2022").child("Ruggiero");
 dbRefRuggiero.on("value", snap => h1alunnoRuggiero.innerText = snap.val()); // mostra il valore di n1
 // AGGIORNA PUNTEGGIO
 dbRefRuggiero.on("value", snap => nRuggiero = snap.val()) // Cambia il valore della variabile n1
 // VEDI IL PUNTEGGIO nel child Mandia di 5AE (sua risposta)
 var i_risposta_Ruggiero = document.getElementById("risposta_Ruggiero");
-var db_risposta_Ruggiero = firebase.database().ref().child("5AE").child("Ruggiero");
+var db_risposta_Ruggiero = firebase.database().ref().child("5CE").child("Ruggiero");
 db_risposta_Ruggiero.on("value", snap => i_risposta_Ruggiero.innerText = snap.val());
 db_risposta_Ruggiero.on("value", snap => n_Ruggiero = snap.val())</script>
 <tr>
@@ -385,13 +385,13 @@ Punti: <i id="h1alunnoSavino"></i></p>
 <script>
 var h1alunnoSavino = document.getElementById("h1alunnoSavino");
 // VEDI IL PUNTEGGIO nel child Mandia di 5ae_2021_2022 (Punteggio assegnato da me)
-var dbRefSavino = firebase.database().ref().child("5ae_2021_2022").child("Savino");
+var dbRefSavino = firebase.database().ref().child("5ce_2021_2022").child("Savino");
 dbRefSavino.on("value", snap => h1alunnoSavino.innerText = snap.val()); // mostra il valore di n1
 // AGGIORNA PUNTEGGIO
 dbRefSavino.on("value", snap => nSavino = snap.val()) // Cambia il valore della variabile n1
 // VEDI IL PUNTEGGIO nel child Mandia di 5AE (sua risposta)
 var i_risposta_Savino = document.getElementById("risposta_Savino");
-var db_risposta_Savino = firebase.database().ref().child("5AE").child("Savino");
+var db_risposta_Savino = firebase.database().ref().child("5CE").child("Savino");
 db_risposta_Savino.on("value", snap => i_risposta_Savino.innerText = snap.val());
 db_risposta_Savino.on("value", snap => n_Savino = snap.val())</script>
 <tr>
@@ -408,13 +408,13 @@ Punti: <i id="h1alunnoVolpe"></i></p>
 <script>
 var h1alunnoVolpe = document.getElementById("h1alunnoVolpe");
 // VEDI IL PUNTEGGIO nel child Mandia di 5ae_2021_2022 (Punteggio assegnato da me)
-var dbRefVolpe = firebase.database().ref().child("5ae_2021_2022").child("Volpe");
+var dbRefVolpe = firebase.database().ref().child("5ce_2021_2022").child("Volpe");
 dbRefVolpe.on("value", snap => h1alunnoVolpe.innerText = snap.val()); // mostra il valore di n1
 // AGGIORNA PUNTEGGIO
 dbRefVolpe.on("value", snap => nVolpe = snap.val()) // Cambia il valore della variabile n1
 // VEDI IL PUNTEGGIO nel child Mandia di 5AE (sua risposta)
 var i_risposta_Volpe = document.getElementById("risposta_Volpe");
-var db_risposta_Volpe = firebase.database().ref().child("5AE").child("Volpe");
+var db_risposta_Volpe = firebase.database().ref().child("5CE").child("Volpe");
 db_risposta_Volpe.on("value", snap => i_risposta_Volpe.innerText = snap.val());
 db_risposta_Volpe.on("value", snap => n_Volpe = snap.val())</script>
 <tr>

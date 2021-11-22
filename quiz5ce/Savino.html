@@ -67,14 +67,14 @@ Risposta scelta da Savino: "
 <script>
 // Mostra e aggiorna la risposta di Savino
 var Savino = document.getElementById("Savino");
-var dbSavino = firebase.database().ref().child("5AE").child("Savino");
+var dbSavino = firebase.database().ref().child("5CE").child("Savino");
 dbSavino.on("value", snap => Savino.innerText = snap.val());
 dbSavino.on("value", snap => n_Savino = snap.val())
 
 // Mostra punteggio dell'alunno all'alunno nella sua console
 var punteggio_Savino = document.getElementById("punteggio_Savino");
 // VEDI IL PUNTEGGIO nel child Savino di 5ae_2021_2022 (Punteggio assegnato da me)
-var dbRef1 = firebase.database().ref().child("5ae_2021_2022").child("Savino");
+var dbRef1 = firebase.database().ref().child("5ce_2021_2022").child("Savino");
 dbRef1.on("value", snap => punteggio_Savino.innerText = snap.val()); // mostra il valore di n1
 
 

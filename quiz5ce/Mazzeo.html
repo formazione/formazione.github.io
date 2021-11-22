@@ -67,14 +67,14 @@ Risposta scelta da Mazzeo: "
 <script>
 // Mostra e aggiorna la risposta di Mazzeo
 var Mazzeo = document.getElementById("Mazzeo");
-var dbMazzeo = firebase.database().ref().child("5AE").child("Mazzeo");
+var dbMazzeo = firebase.database().ref().child("5CE").child("Mazzeo");
 dbMazzeo.on("value", snap => Mazzeo.innerText = snap.val());
 dbMazzeo.on("value", snap => n_Mazzeo = snap.val())
 
 // Mostra punteggio dell'alunno all'alunno nella sua console
 var punteggio_Mazzeo = document.getElementById("punteggio_Mazzeo");
 // VEDI IL PUNTEGGIO nel child Mazzeo di 5ae_2021_2022 (Punteggio assegnato da me)
-var dbRef1 = firebase.database().ref().child("5ae_2021_2022").child("Mazzeo");
+var dbRef1 = firebase.database().ref().child("5ce_2021_2022").child("Mazzeo");
 dbRef1.on("value", snap => punteggio_Mazzeo.innerText = snap.val()); // mostra il valore di n1
 
 

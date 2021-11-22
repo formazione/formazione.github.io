@@ -5,19 +5,25 @@ with open(filename) as file:
 	file = file.read()
 
 classe = [
-    "balbi",
-    "bertolini",
-    "cuda",
-    "divivo",
-    "iuliano",
-    "lapastina",
-    "lakrad",
-    "maffia",
-    "mercanti",
-    "nese",
-    "niglio",
-    "pica",
-    "spinelli"
+	"mandia",
+	"lista",
+	"musto",
+	"ruocco",
+	"cammarano",
+	"cammarano_n",
+	"grimaldi",
+	"scola_m",
+	"scola_v",
+	"del_verme",
+	"esposito",
+	"breglia",
+	"giordano",
+	"garofalo",
+	"costantini",
+	"merola",
+	"malzone",
+	"fontana",
+	"santoro"
 ]
 
 
@@ -125,15 +131,18 @@ db_risposta_musto.on("value", snap => n_musto = snap.val())</script>
 
 """
 
+nomeclasse = input("nome della classe")
 
 for alunno in classe:
-	# create file for single pupil
+	# FILE SINGLE STUDENTS
 	file1 = file.replace("musto", alunno)
+	file1 = file1.replace("5ae", nome della classe)
 	with open(alunno + ".html", "w") as newfile:
 		newfile.write(file1)
 
-	# create html for the console.html file
+	# FILE FOR TEACHER WATCHING EVERYBODY
 	console2 = console.replace("musto", alunno)
+	file1 = file1.replace("5ae", nome della classe)
 	print(alunno)
 	html += console2
 html += """
@@ -154,5 +163,5 @@ for alunni in classe:
 
 for alunni in classe:
 	address = "https://formazione.github.io/quiz5ae/" + alunni + ".html"
-	print("<a href='" + address + "'>" + alunni + "</a><br>")
+	print("<h2><a href='" + address + "'>" + alunni + "</a></h2>")
 	print()

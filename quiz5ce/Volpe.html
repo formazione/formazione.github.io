@@ -67,14 +67,14 @@ Risposta scelta da Volpe: "
 <script>
 // Mostra e aggiorna la risposta di Volpe
 var Volpe = document.getElementById("Volpe");
-var dbVolpe = firebase.database().ref().child("5AE").child("Volpe");
+var dbVolpe = firebase.database().ref().child("5CE").child("Volpe");
 dbVolpe.on("value", snap => Volpe.innerText = snap.val());
 dbVolpe.on("value", snap => n_Volpe = snap.val())
 
 // Mostra punteggio dell'alunno all'alunno nella sua console
 var punteggio_Volpe = document.getElementById("punteggio_Volpe");
 // VEDI IL PUNTEGGIO nel child Volpe di 5ae_2021_2022 (Punteggio assegnato da me)
-var dbRef1 = firebase.database().ref().child("5ae_2021_2022").child("Volpe");
+var dbRef1 = firebase.database().ref().child("5ce_2021_2022").child("Volpe");
 dbRef1.on("value", snap => punteggio_Volpe.innerText = snap.val()); // mostra il valore di n1
 
 

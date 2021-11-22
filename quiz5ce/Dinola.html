@@ -67,14 +67,14 @@ Risposta scelta da Dinola: "
 <script>
 // Mostra e aggiorna la risposta di Dinola
 var Dinola = document.getElementById("Dinola");
-var dbDinola = firebase.database().ref().child("5AE").child("Dinola");
+var dbDinola = firebase.database().ref().child("5CE").child("Dinola");
 dbDinola.on("value", snap => Dinola.innerText = snap.val());
 dbDinola.on("value", snap => n_Dinola = snap.val())
 
 // Mostra punteggio dell'alunno all'alunno nella sua console
 var punteggio_Dinola = document.getElementById("punteggio_Dinola");
 // VEDI IL PUNTEGGIO nel child Dinola di 5ae_2021_2022 (Punteggio assegnato da me)
-var dbRef1 = firebase.database().ref().child("5ae_2021_2022").child("Dinola");
+var dbRef1 = firebase.database().ref().child("5ce_2021_2022").child("Dinola");
 dbRef1.on("value", snap => punteggio_Dinola.innerText = snap.val()); // mostra il valore di n1
 
 

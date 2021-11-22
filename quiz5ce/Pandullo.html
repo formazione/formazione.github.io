@@ -67,14 +67,14 @@ Risposta scelta da Pandullo: "
 <script>
 // Mostra e aggiorna la risposta di Pandullo
 var Pandullo = document.getElementById("Pandullo");
-var dbPandullo = firebase.database().ref().child("5AE").child("Pandullo");
+var dbPandullo = firebase.database().ref().child("5CE").child("Pandullo");
 dbPandullo.on("value", snap => Pandullo.innerText = snap.val());
 dbPandullo.on("value", snap => n_Pandullo = snap.val())
 
 // Mostra punteggio dell'alunno all'alunno nella sua console
 var punteggio_Pandullo = document.getElementById("punteggio_Pandullo");
 // VEDI IL PUNTEGGIO nel child Pandullo di 5ae_2021_2022 (Punteggio assegnato da me)
-var dbRef1 = firebase.database().ref().child("5ae_2021_2022").child("Pandullo");
+var dbRef1 = firebase.database().ref().child("5ce_2021_2022").child("Pandullo");
 dbRef1.on("value", snap => punteggio_Pandullo.innerText = snap.val()); // mostra il valore di n1
 
 

@@ -20,7 +20,7 @@
   var database = firebase.database()
 </script>
 
-<h1>Mariosa - QUIZ CONSOLE</h1>
+<h1>lista - QUIZ CONSOLE</h1>
 Domanda:
 <i id="domanda_insegnante"></i>
 
@@ -32,23 +32,23 @@ Domanda:
 
 <!-- [ - ] -->
 <td>risposte multiple<br>
-<button type="button" class="btn btn-warning btn-lg" onclick="dbMariosa.set('1')">[ 1 ]</button>
-<button type="button" class="btn btn-warning btn-lg" onclick="dbMariosa.set('2')">[ 2 ]</button>
-<button type="button" class="btn btn-warning btn-lg" onclick="dbMariosa.set('3')">[ 3 ]</button>
-<button type="button" class="btn btn-warning btn-lg" onclick="dbMariosa.set('4')">[ 4 ]</button>
+<button type="button" class="btn btn-warning btn-lg" onclick="dblista.set('1')">[ 1 ]</button>
+<button type="button" class="btn btn-warning btn-lg" onclick="dblista.set('2')">[ 2 ]</button>
+<button type="button" class="btn btn-warning btn-lg" onclick="dblista.set('3')">[ 3 ]</button>
+<button type="button" class="btn btn-warning btn-lg" onclick="dblista.set('4')">[ 4 ]</button>
 <br>
 <!-- [ + ] -->
-<button type="button" class="btn btn-info btn-lg" onclick="let n_rucco=0;dbMariosa.set(--n_Mariosa)">[ - ]</button>
-<button type="button" class="btn btn-info btn-lg" onclick="let n_rucco=0;dbMariosa.set(++n_Mariosa)">[ + ]</button>
+<button type="button" class="btn btn-info btn-lg" onclick="let n_rucco=0;dblista.set(--n_lista)">[ - ]</button>
+<button type="button" class="btn btn-info btn-lg" onclick="let n_rucco=0;dblista.set(++n_lista)">[ + ]</button>
 
 </td>
 <br>Risposta aperta
-<input type="text" id="inp1" onchange="dbMariosa.set(this.value)"><br>
+<input type="text" id="inp1" onchange="dblista.set(this.value)"><br>
 <tr>
   <td>
     <br>
-Risposta scelta da Mariosa: "
-<i id="Mariosa" style="color:red;background: yellow;"></i> "
+Risposta scelta da lista: "
+<i id="lista" style="color:red;background: yellow;"></i> "
 
 <tr>
 
@@ -60,27 +60,27 @@ Risposta scelta da Mariosa: "
  -->
 
   <td></td>
-  <td>Punteggio di Mariosa</td>
+  <td>Punteggio di lista</td>
 
-<td><i id="punteggio_Mariosa"></i>
+<td><i id="punteggio_lista"></i>
 
 <script>
-// Mostra e aggiorna la risposta di Mariosa
-var Mariosa = document.getElementById("Mariosa");
-var dbMariosa = firebase.database().ref().child("5CE").child("Mariosa");
-dbMariosa.on("value", snap => Mariosa.innerText = snap.val());
-dbMariosa.on("value", snap => n_Mariosa = snap.val())
+// Mostra e aggiorna la risposta di lista
+var lista = document.getElementById("lista");
+var dblista = firebase.database().ref().child("5AE").child("lista");
+dblista.on("value", snap => lista.innerText = snap.val());
+dblista.on("value", snap => n_lista = snap.val())
 
 // Mostra punteggio dell'alunno all'alunno nella sua console
-var punteggio_Mariosa = document.getElementById("punteggio_Mariosa");
-// VEDI IL PUNTEGGIO nel child Mariosa di 5ae_2021_2022 (Punteggio assegnato da me)
-var dbRef1 = firebase.database().ref().child("5ce_2021_2022").child("Mariosa");
-dbRef1.on("value", snap => punteggio_Mariosa.innerText = snap.val()); // mostra il valore di n1
+var punteggio_lista = document.getElementById("punteggio_lista");
+// VEDI IL PUNTEGGIO nel child lista di _2021_2022 (Punteggio assegnato da me)
+var dbRef1 = firebase.database().ref().child("_2021_2022").child("lista");
+dbRef1.on("value", snap => punteggio_lista.innerText = snap.val()); // mostra il valore di n1
 
 
 // Mostra la domanda dell'insegnante in domanda_insegnante
 var domanda_insegnante = document.getElementById("domanda_insegnante");
-// VEDI IL PUNTEGGIO nel child Mariosa di 5ae_2021_2022 (Punteggio assegnato da me)
+// VEDI IL PUNTEGGIO nel child lista di _2021_2022 (Punteggio assegnato da me)
 var dbRef1 = firebase.database().ref().child("domanda").child("insegnante");
 dbRef1.on("value", snap => domanda_insegnante.innerText = snap.val()); // mostra il valore di n1
 

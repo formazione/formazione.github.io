@@ -67,14 +67,14 @@ Risposta scelta da Filosa: "
 <script>
 // Mostra e aggiorna la risposta di Filosa
 var Filosa = document.getElementById("Filosa");
-var dbFilosa = firebase.database().ref().child("5AE").child("Filosa");
+var dbFilosa = firebase.database().ref().child("5CE").child("Filosa");
 dbFilosa.on("value", snap => Filosa.innerText = snap.val());
 dbFilosa.on("value", snap => n_Filosa = snap.val())
 
 // Mostra punteggio dell'alunno all'alunno nella sua console
 var punteggio_Filosa = document.getElementById("punteggio_Filosa");
 // VEDI IL PUNTEGGIO nel child Filosa di 5ae_2021_2022 (Punteggio assegnato da me)
-var dbRef1 = firebase.database().ref().child("5ae_2021_2022").child("Filosa");
+var dbRef1 = firebase.database().ref().child("5ce_2021_2022").child("Filosa");
 dbRef1.on("value", snap => punteggio_Filosa.innerText = snap.val()); // mostra il valore di n1
 
 

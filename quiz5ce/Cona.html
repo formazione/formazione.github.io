@@ -67,14 +67,14 @@ Risposta scelta da Cona: "
 <script>
 // Mostra e aggiorna la risposta di Cona
 var Cona = document.getElementById("Cona");
-var dbCona = firebase.database().ref().child("5AE").child("Cona");
+var dbCona = firebase.database().ref().child("5CE").child("Cona");
 dbCona.on("value", snap => Cona.innerText = snap.val());
 dbCona.on("value", snap => n_Cona = snap.val())
 
 // Mostra punteggio dell'alunno all'alunno nella sua console
 var punteggio_Cona = document.getElementById("punteggio_Cona");
 // VEDI IL PUNTEGGIO nel child Cona di 5ae_2021_2022 (Punteggio assegnato da me)
-var dbRef1 = firebase.database().ref().child("5ae_2021_2022").child("Cona");
+var dbRef1 = firebase.database().ref().child("5ce_2021_2022").child("Cona");
 dbRef1.on("value", snap => punteggio_Cona.innerText = snap.val()); // mostra il valore di n1
 
 

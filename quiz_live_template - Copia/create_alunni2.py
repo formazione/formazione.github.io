@@ -5,21 +5,25 @@ with open(filename) as file:
 	file = file.read()
 
 classe = [
-       "Chirico",
-        "Cona",
-        "Dagosto",
-        "Dinola",
-        "Filosa",
-        "Mariosa",
-        "Mazzeo",
-        "Merola",
-        "Pandullo",
-        "Paolino",
-        "Papa",
-        "Petrone",
-        "Ruggiero",
-        "Savino",
-        "Volpe"
+	"mandia",
+	"lista",
+	"musto",
+	"ruocco",
+	"cammarano",
+	"cammarano_n",
+	"grimaldi",
+	"scola_m",
+	"scola_v",
+	"del_verme",
+	"esposito",
+	"breglia",
+	"giordano",
+	"garofalo",
+	"costantini",
+	"merola",
+	"malzone",
+	"fontana",
+	"santoro"
 ]
 
 
@@ -113,30 +117,47 @@ Punti: <i id="h1alunnomusto"></i></p>
 <script>
 var h1alunnomusto = document.getElementById("h1alunnomusto");
 // VEDI IL PUNTEGGIO nel child Mandia di 5ae_2021_2022 (Punteggio assegnato da me)
-var dbRefmusto = firebase.database().ref().child("5ce_2021_2022").child("musto");
+var dbRefmusto = firebase.database().ref().child("5ae_2021_2022").child("musto");
 dbRefmusto.on("value", snap => h1alunnomusto.innerText = snap.val()); // mostra il valore di n1
 // AGGIORNA PUNTEGGIO
 dbRefmusto.on("value", snap => nmusto = snap.val()) // Cambia il valore della variabile n1
 // VEDI IL PUNTEGGIO nel child Mandia di 5AE (sua risposta)
 var i_risposta_musto = document.getElementById("risposta_musto");
-var db_risposta_musto = firebase.database().ref().child("5CE").child("musto");
+var db_risposta_musto = firebase.database().ref().child("5AE").child("musto");
 db_risposta_musto.on("value", snap => i_risposta_musto.innerText = snap.val());
 db_risposta_musto.on("value", snap => n_musto = snap.val())</script>
 <tr>
 <!-- fine lista -->
 
 """
+def tkinput(text):
+	import tkinter as tk
 
+	root = tk.Tk()
+	classname = tk.StringVar()
+	tk.Label(root, text=text).pack()
+	e = tk.Entry(root)
+	e.pack()
+	e.focus()
+	nomeclasse = classname.get()
+	e.bind("<Return>", lambda event: root.destroy())
+	root.mainloop()
+	return nomeclasse
+
+nomeclasse = tkinput("Nome della classe")
 
 for alunno in classe:
-	# create file for single pupil
+	# FILE SINGLE STUDENTS
 	file1 = file.replace("musto", alunno)
-	
+	file1 = file1.replace("5ae", nomeclasse)
+	# file1 = file1.replace("5AE", nomeclasse)
 	with open(alunno + ".html", "w") as newfile:
 		newfile.write(file1)
 
-	# create html for the console.html file
+	# FILE FOR TEACHER WATCHING EVERYBODY
 	console2 = console.replace("musto", alunno)
+	console2 = console2.replace("5ae", nomeclasse)
+	# console2 = console2.replace("5AE", nomeclasse)
 	print(alunno)
 	html += console2
 html += """
@@ -150,12 +171,12 @@ os.startfile("copia_in_console.html")
 
 
 for alunni in classe:
-	address = "https://formazione.github.io/quiz5ce/" + alunni + ".html"
+	address = "https://formazione.github.io/quiz5ae/" + alunni + ".html"
 	print(address)
 	print()
 
 
 for alunni in classe:
-	address = "https://formazione.github.io/quiz5ce/" + alunni + ".html"
-	print("<a href='" + address + "'>" + alunni + "</a><br>")
+	address = "https://formazione.github.io/quiz5ae/" + alunni + ".html"
+	print("<h2><a href='" + address + "'>" + alunni + "</a></h2>")
 	print()

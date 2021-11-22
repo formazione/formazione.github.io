@@ -67,14 +67,14 @@ Risposta scelta da Dagosto: "
 <script>
 // Mostra e aggiorna la risposta di Dagosto
 var Dagosto = document.getElementById("Dagosto");
-var dbDagosto = firebase.database().ref().child("5AE").child("Dagosto");
+var dbDagosto = firebase.database().ref().child("5CE").child("Dagosto");
 dbDagosto.on("value", snap => Dagosto.innerText = snap.val());
 dbDagosto.on("value", snap => n_Dagosto = snap.val())
 
 // Mostra punteggio dell'alunno all'alunno nella sua console
 var punteggio_Dagosto = document.getElementById("punteggio_Dagosto");
 // VEDI IL PUNTEGGIO nel child Dagosto di 5ae_2021_2022 (Punteggio assegnato da me)
-var dbRef1 = firebase.database().ref().child("5ae_2021_2022").child("Dagosto");
+var dbRef1 = firebase.database().ref().child("5ce_2021_2022").child("Dagosto");
 dbRef1.on("value", snap => punteggio_Dagosto.innerText = snap.val()); // mostra il valore di n1
 
 

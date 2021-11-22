@@ -67,14 +67,14 @@ Risposta scelta da Ruggiero: "
 <script>
 // Mostra e aggiorna la risposta di Ruggiero
 var Ruggiero = document.getElementById("Ruggiero");
-var dbRuggiero = firebase.database().ref().child("5AE").child("Ruggiero");
+var dbRuggiero = firebase.database().ref().child("5CE").child("Ruggiero");
 dbRuggiero.on("value", snap => Ruggiero.innerText = snap.val());
 dbRuggiero.on("value", snap => n_Ruggiero = snap.val())
 
 // Mostra punteggio dell'alunno all'alunno nella sua console
 var punteggio_Ruggiero = document.getElementById("punteggio_Ruggiero");
 // VEDI IL PUNTEGGIO nel child Ruggiero di 5ae_2021_2022 (Punteggio assegnato da me)
-var dbRef1 = firebase.database().ref().child("5ae_2021_2022").child("Ruggiero");
+var dbRef1 = firebase.database().ref().child("5ce_2021_2022").child("Ruggiero");
 dbRef1.on("value", snap => punteggio_Ruggiero.innerText = snap.val()); // mostra il valore di n1
 
 

@@ -67,14 +67,14 @@ Risposta scelta da Paolino: "
 <script>
 // Mostra e aggiorna la risposta di Paolino
 var Paolino = document.getElementById("Paolino");
-var dbPaolino = firebase.database().ref().child("5AE").child("Paolino");
+var dbPaolino = firebase.database().ref().child("5CE").child("Paolino");
 dbPaolino.on("value", snap => Paolino.innerText = snap.val());
 dbPaolino.on("value", snap => n_Paolino = snap.val())
 
 // Mostra punteggio dell'alunno all'alunno nella sua console
 var punteggio_Paolino = document.getElementById("punteggio_Paolino");
 // VEDI IL PUNTEGGIO nel child Paolino di 5ae_2021_2022 (Punteggio assegnato da me)
-var dbRef1 = firebase.database().ref().child("5ae_2021_2022").child("Paolino");
+var dbRef1 = firebase.database().ref().child("5ce_2021_2022").child("Paolino");
 dbRef1.on("value", snap => punteggio_Paolino.innerText = snap.val()); // mostra il valore di n1
 
 

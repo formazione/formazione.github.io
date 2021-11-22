@@ -20,7 +20,7 @@
   var database = firebase.database()
 </script>
 
-<h1>nese - QUIZ CONSOLE</h1>
+<h1>fontana - QUIZ CONSOLE</h1>
 Domanda:
 <i id="domanda_insegnante"></i>
 
@@ -32,23 +32,23 @@ Domanda:
 
 <!-- [ - ] -->
 <td>risposte multiple<br>
-<button type="button" class="btn btn-warning btn-lg" onclick="dbnese.set('1')">[ 1 ]</button>
-<button type="button" class="btn btn-warning btn-lg" onclick="dbnese.set('2')">[ 2 ]</button>
-<button type="button" class="btn btn-warning btn-lg" onclick="dbnese.set('3')">[ 3 ]</button>
-<button type="button" class="btn btn-warning btn-lg" onclick="dbnese.set('4')">[ 4 ]</button>
+<button type="button" class="btn btn-warning btn-lg" onclick="dbfontana.set('1')">[ 1 ]</button>
+<button type="button" class="btn btn-warning btn-lg" onclick="dbfontana.set('2')">[ 2 ]</button>
+<button type="button" class="btn btn-warning btn-lg" onclick="dbfontana.set('3')">[ 3 ]</button>
+<button type="button" class="btn btn-warning btn-lg" onclick="dbfontana.set('4')">[ 4 ]</button>
 <br>
 <!-- [ + ] -->
-<button type="button" class="btn btn-info btn-lg" onclick="let n_rucco=0;dbnese.set(--n_nese)">[ - ]</button>
-<button type="button" class="btn btn-info btn-lg" onclick="let n_rucco=0;dbnese.set(++n_nese)">[ + ]</button>
+<button type="button" class="btn btn-info btn-lg" onclick="let n_rucco=0;dbfontana.set(--n_fontana)">[ - ]</button>
+<button type="button" class="btn btn-info btn-lg" onclick="let n_rucco=0;dbfontana.set(++n_fontana)">[ + ]</button>
 
 </td>
 <br>Risposta aperta
-<input type="text" id="inp1" onchange="dbnese.set(this.value)"><br>
+<input type="text" id="inp1" onchange="dbfontana.set(this.value)"><br>
 <tr>
   <td>
     <br>
-Risposta scelta da nese: "
-<i id="nese" style="color:red;background: yellow;"></i> "
+Risposta scelta da fontana: "
+<i id="fontana" style="color:red;background: yellow;"></i> "
 
 <tr>
 
@@ -60,27 +60,27 @@ Risposta scelta da nese: "
  -->
 
   <td></td>
-  <td>Punteggio di nese</td>
+  <td>Punteggio di fontana</td>
 
-<td><i id="punteggio_nese"></i>
+<td><i id="punteggio_fontana"></i>
 
 <script>
-// Mostra e aggiorna la risposta di nese
-var nese = document.getElementById("nese");
-var dbnese = firebase.database().ref().child("5AE").child("nese");
-dbnese.on("value", snap => nese.innerText = snap.val());
-dbnese.on("value", snap => n_nese = snap.val())
+// Mostra e aggiorna la risposta di fontana
+var fontana = document.getElementById("fontana");
+var dbfontana = firebase.database().ref().child("5AE").child("fontana");
+dbfontana.on("value", snap => fontana.innerText = snap.val());
+dbfontana.on("value", snap => n_fontana = snap.val())
 
 // Mostra punteggio dell'alunno all'alunno nella sua console
-var punteggio_nese = document.getElementById("punteggio_nese");
-// VEDI IL PUNTEGGIO nel child nese di 5ae_2021_2022 (Punteggio assegnato da me)
-var dbRef1 = firebase.database().ref().child("5ae_2021_2022").child("nese");
-dbRef1.on("value", snap => punteggio_nese.innerText = snap.val()); // mostra il valore di n1
+var punteggio_fontana = document.getElementById("punteggio_fontana");
+// VEDI IL PUNTEGGIO nel child fontana di _2021_2022 (Punteggio assegnato da me)
+var dbRef1 = firebase.database().ref().child("_2021_2022").child("fontana");
+dbRef1.on("value", snap => punteggio_fontana.innerText = snap.val()); // mostra il valore di n1
 
 
 // Mostra la domanda dell'insegnante in domanda_insegnante
 var domanda_insegnante = document.getElementById("domanda_insegnante");
-// VEDI IL PUNTEGGIO nel child nese di 5ae_2021_2022 (Punteggio assegnato da me)
+// VEDI IL PUNTEGGIO nel child fontana di _2021_2022 (Punteggio assegnato da me)
 var dbRef1 = firebase.database().ref().child("domanda").child("insegnante");
 dbRef1.on("value", snap => domanda_insegnante.innerText = snap.val()); // mostra il valore di n1
 

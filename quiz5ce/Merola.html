@@ -67,14 +67,14 @@ Risposta scelta da Merola: "
 <script>
 // Mostra e aggiorna la risposta di Merola
 var Merola = document.getElementById("Merola");
-var dbMerola = firebase.database().ref().child("5AE").child("Merola");
+var dbMerola = firebase.database().ref().child("5CE").child("Merola");
 dbMerola.on("value", snap => Merola.innerText = snap.val());
 dbMerola.on("value", snap => n_Merola = snap.val())
 
 // Mostra punteggio dell'alunno all'alunno nella sua console
 var punteggio_Merola = document.getElementById("punteggio_Merola");
 // VEDI IL PUNTEGGIO nel child Merola di 5ae_2021_2022 (Punteggio assegnato da me)
-var dbRef1 = firebase.database().ref().child("5ae_2021_2022").child("Merola");
+var dbRef1 = firebase.database().ref().child("5ce_2021_2022").child("Merola");
 dbRef1.on("value", snap => punteggio_Merola.innerText = snap.val()); // mostra il valore di n1
 
 

@@ -20,7 +20,7 @@
   var database = firebase.database()
 </script>
 
-<h1>balbi - QUIZ CONSOLE</h1>
+<h1>esposito - QUIZ CONSOLE</h1>
 Domanda:
 <i id="domanda_insegnante"></i>
 
@@ -32,23 +32,23 @@ Domanda:
 
 <!-- [ - ] -->
 <td>risposte multiple<br>
-<button type="button" class="btn btn-warning btn-lg" onclick="dbbalbi.set('1')">[ 1 ]</button>
-<button type="button" class="btn btn-warning btn-lg" onclick="dbbalbi.set('2')">[ 2 ]</button>
-<button type="button" class="btn btn-warning btn-lg" onclick="dbbalbi.set('3')">[ 3 ]</button>
-<button type="button" class="btn btn-warning btn-lg" onclick="dbbalbi.set('4')">[ 4 ]</button>
+<button type="button" class="btn btn-warning btn-lg" onclick="dbesposito.set('1')">[ 1 ]</button>
+<button type="button" class="btn btn-warning btn-lg" onclick="dbesposito.set('2')">[ 2 ]</button>
+<button type="button" class="btn btn-warning btn-lg" onclick="dbesposito.set('3')">[ 3 ]</button>
+<button type="button" class="btn btn-warning btn-lg" onclick="dbesposito.set('4')">[ 4 ]</button>
 <br>
 <!-- [ + ] -->
-<button type="button" class="btn btn-info btn-lg" onclick="let n_rucco=0;dbbalbi.set(--n_balbi)">[ - ]</button>
-<button type="button" class="btn btn-info btn-lg" onclick="let n_rucco=0;dbbalbi.set(++n_balbi)">[ + ]</button>
+<button type="button" class="btn btn-info btn-lg" onclick="let n_rucco=0;dbesposito.set(--n_esposito)">[ - ]</button>
+<button type="button" class="btn btn-info btn-lg" onclick="let n_rucco=0;dbesposito.set(++n_esposito)">[ + ]</button>
 
 </td>
 <br>Risposta aperta
-<input type="text" id="inp1" onchange="dbbalbi.set(this.value)"><br>
+<input type="text" id="inp1" onchange="dbesposito.set(this.value)"><br>
 <tr>
   <td>
     <br>
-Risposta scelta da balbi: "
-<i id="balbi" style="color:red;background: yellow;"></i> "
+Risposta scelta da esposito: "
+<i id="esposito" style="color:red;background: yellow;"></i> "
 
 <tr>
 
@@ -60,27 +60,27 @@ Risposta scelta da balbi: "
  -->
 
   <td></td>
-  <td>Punteggio di balbi</td>
+  <td>Punteggio di esposito</td>
 
-<td><i id="punteggio_balbi"></i>
+<td><i id="punteggio_esposito"></i>
 
 <script>
-// Mostra e aggiorna la risposta di balbi
-var balbi = document.getElementById("balbi");
-var dbbalbi = firebase.database().ref().child("5AE").child("balbi");
-dbbalbi.on("value", snap => balbi.innerText = snap.val());
-dbbalbi.on("value", snap => n_balbi = snap.val())
+// Mostra e aggiorna la risposta di esposito
+var esposito = document.getElementById("esposito");
+var dbesposito = firebase.database().ref().child("5AE").child("esposito");
+dbesposito.on("value", snap => esposito.innerText = snap.val());
+dbesposito.on("value", snap => n_esposito = snap.val())
 
 // Mostra punteggio dell'alunno all'alunno nella sua console
-var punteggio_balbi = document.getElementById("punteggio_balbi");
-// VEDI IL PUNTEGGIO nel child balbi di 5ae_2021_2022 (Punteggio assegnato da me)
-var dbRef1 = firebase.database().ref().child("5ae_2021_2022").child("balbi");
-dbRef1.on("value", snap => punteggio_balbi.innerText = snap.val()); // mostra il valore di n1
+var punteggio_esposito = document.getElementById("punteggio_esposito");
+// VEDI IL PUNTEGGIO nel child esposito di _2021_2022 (Punteggio assegnato da me)
+var dbRef1 = firebase.database().ref().child("_2021_2022").child("esposito");
+dbRef1.on("value", snap => punteggio_esposito.innerText = snap.val()); // mostra il valore di n1
 
 
 // Mostra la domanda dell'insegnante in domanda_insegnante
 var domanda_insegnante = document.getElementById("domanda_insegnante");
-// VEDI IL PUNTEGGIO nel child balbi di 5ae_2021_2022 (Punteggio assegnato da me)
+// VEDI IL PUNTEGGIO nel child esposito di _2021_2022 (Punteggio assegnato da me)
 var dbRef1 = firebase.database().ref().child("domanda").child("insegnante");
 dbRef1.on("value", snap => domanda_insegnante.innerText = snap.val()); // mostra il valore di n1
 
