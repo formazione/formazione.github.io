@@ -1,0 +1,65 @@
+<style>
+ body, table, button, input {color: white; background: #6fac8f;font-size: 2em; } .btn.btn-warning.btn-lg, #inp1 {background:pink; color:red; font-size:48;} .btn.btn-info.btn-lg {background:cyan; color:blue; } ul {font-size: 2em;} i {font-size : 2em;} p { font-size: 2em; } td {font-size: 1.5em;} table {border-collapse: collapse; width: 100%; } th, td {text-align: left; padding: 8px; } tr:nth-child(even){background-color: #f2f2f2}
+</style>
+
+
+<body>
+
+
+<script src="https://www.gstatic.com/firebasejs/4.10.1/firebase.js"></script>
+<script>
+  var config = {
+    apiKey: "AIzaSyDp-mWaWEI07pIdRUhi6vA-salEMRWz4hw",
+    authDomain: "quiz-e5e5a.firebaseapp.com",
+    databaseURL: "https://quiz-e5e5a.firebaseio.com/",
+    projectId: "quiz-e5e5a",
+    storageBucket: "quiz-e5e5a.appspot.com",
+    messagingSenderId: "901845403492"
+  };
+  firebase.initializeApp(config);
+  var database = firebase.database()
+</script>
+
+<h1>Ruocco : <b id="punteggio_Ruocco" style="background:navy"></b> punti</h1>
+<b style="background:yellow;color:red">
+Domanda:
+<b id="domanda_insegnante"></b>
+</b>
+<div class="w3-main" style="margin-left:0px">
+
+
+<br>Scrivi:
+<textarea id="inp1" onchange="dbRuocco.set(this.value)" rows=3 style="width:100%"></textarea><br><br>
+<button type="button" class="btn btn-info btn-lg" onclick="dbRuocco.set(inp1.value)">INVIA</button>
+<button type="button" class="btn btn-info btn-lg" onclick="dbRuocco.set('');inp1.value=''">Canc</button>
+    <br>
+Risposta inviata: <br>
+<i id="Ruocco" style="color:red;background: yellow;"></i>
+
+
+
+<script>
+// Mostra e aggiorna la risposta di Ruocco
+var Ruocco = document.getElementById("Ruocco");
+var dbRuocco = firebase.database().ref().child("4AE").child("Ruocco");
+dbRuocco.on("value", snap => Ruocco.innerText = snap.val());
+dbRuocco.on("value", snap => n_Ruocco = snap.val())
+
+// Mostra punteggio dell'alunno all'alunno nella sua console
+var punteggio_Ruocco = document.getElementById("punteggio_Ruocco");
+// VEDI IL PUNTEGGIO nel child Ruocco di 5ae_2021_2022 (Punteggio assegnato da me)
+var dbRef1 = firebase.database().ref().child("4ae_2021_2022").child("Ruocco");
+dbRef1.on("value", snap => punteggio_Ruocco.innerText = snap.val()); // mostra il valore di n1
+
+
+// Mostra la domanda dell'insegnante in domanda_insegnante
+var domanda_insegnante = document.getElementById("domanda_insegnante");
+// VEDI IL PUNTEGGIO nel child Ruocco di 5ae_2021_2022 (Punteggio assegnato da me)
+var dbRef1 = firebase.database().ref().child("domanda").child("insegnante");
+dbRef1.on("value", snap => domanda_insegnante.innerText = snap.val()); // mostra il valore di n1
+
+</script>
+<tr>
+
+</table>
+</div>
