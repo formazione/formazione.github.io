@@ -1,5 +1,5 @@
 <style>
- body, table, button, input {font-size: 2em; } .btn.btn-warning.btn-lg, #inp1 {background:pink; color:red; font-size:48;} .btn.btn-info.btn-lg {background:cyan; color:blue; } ul {font-size: 2em;} i {font-size : 2em;} p { font-size: 2em; } td {font-size: 1.5em;} table {border-collapse: collapse; width: 100%; } th, td {text-align: left; padding: 8px; } tr:nth-child(even){background-color: #f2f2f2}
+ body, table, button, input {color: white; background: #6fac8f;font-size: 2em; } .btn.btn-warning.btn-lg, #inp1 {background:pink; color:red; font-size:48;} .btn.btn-info.btn-lg {background:cyan; color:blue; } ul {font-size: 2em;} i {font-size : 2em;} p { font-size: 2em; } td {font-size: 1.5em;} table {border-collapse: collapse; width: 100%; } th, td {text-align: left; padding: 8px; } tr:nth-child(even){background-color: #f2f2f2}
 </style>
 
 
@@ -20,36 +20,23 @@
   var database = firebase.database()
 </script>
 
-<h1>iuliano</h1>
+<h1>iuliano : <b id="punteggio_iuliano" style="background:navy"></b> punti</h1>
 <b style="background:yellow;color:red">
 Domanda:
 <b id="domanda_insegnante"></b>
 </b>
 <div class="w3-main" style="margin-left:0px">
 
-<!----------------- Alunno 1 ------------------->
-
-<!-- [ - ] -->
-
-<!-- <button type="button" class="btn btn-warning btn-lg" onclick="dbiuliano.set('1')">[ 1 ]</button>
-<button type="button" class="btn btn-warning btn-lg" onclick="dbiuliano.set('2')">[ 2 ]</button>
-<button type="button" class="btn btn-warning btn-lg" onclick="dbiuliano.set('3')">[ 3 ]</button>
-<button type="button" class="btn btn-warning btn-lg" onclick="dbiuliano.set('4')">[ 4 ]</button>
-<br> 
-
-<button type="button" class="btn btn-info btn-lg" onclick="let n_rucco=0;dbiuliano.set(--n_iuliano)">[ - ]</button>
-<button type="button" class="btn btn-info btn-lg" onclick="let n_rucco=0;dbiuliano.set(++n_iuliano)">[ + ]</button> -->
-
 
 <br>Scrivi:
-<input type="text" id="inp1" onchange="dbiuliano.set(this.value)"><br><br>
+<textarea id="inp1" onchange="dbiuliano.set(this.value)" rows=3 style="width:100%"></textarea><br><br>
 <button type="button" class="btn btn-info btn-lg" onclick="dbiuliano.set(inp1.value)">INVIA</button>
 <button type="button" class="btn btn-info btn-lg" onclick="dbiuliano.set('');inp1.value=''">Canc</button>
     <br>
-Risposta inviata: <br>"
-<i id="iuliano" style="color:red;background: yellow;"></i> "
+Risposta inviata: <br>
+<i id="iuliano" style="color:red;background: yellow;"></i>
 
-  <br>Punteggio : <b id="punteggio_iuliano"></b>
+
 
 <script>
 // Mostra e aggiorna la risposta di iuliano
