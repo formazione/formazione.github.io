@@ -1,0 +1,78 @@
+<style>
+ body, table, button, input {font-size: 2em; } .btn.btn-warning.btn-lg, #inp1 {background:pink; color:red; font-size:48;} .btn.btn-info.btn-lg {background:cyan; color:blue; } ul {font-size: 2em;} i {font-size : 2em;} p { font-size: 2em; } td {font-size: 1.5em;} table {border-collapse: collapse; width: 100%; } th, td {text-align: left; padding: 8px; } tr:nth-child(even){background-color: #f2f2f2}
+</style>
+
+
+<body>
+
+
+<script src="https://www.gstatic.com/firebasejs/4.10.1/firebase.js"></script>
+<script>
+  var config = {
+    apiKey: "AIzaSyDp-mWaWEI07pIdRUhi6vA-salEMRWz4hw",
+    authDomain: "quiz-e5e5a.firebaseapp.com",
+    databaseURL: "https://quiz-e5e5a.firebaseio.com/",
+    projectId: "quiz-e5e5a",
+    storageBucket: "quiz-e5e5a.appspot.com",
+    messagingSenderId: "901845403492"
+  };
+  firebase.initializeApp(config);
+  var database = firebase.database()
+</script>
+
+<h1>niglio</h1>
+<b style="background:yellow;color:red">
+Domanda:
+<b id="domanda_insegnante"></b>
+</b>
+<div class="w3-main" style="margin-left:0px">
+
+<!----------------- Alunno 1 ------------------->
+
+<!-- [ - ] -->
+
+<!-- <button type="button" class="btn btn-warning btn-lg" onclick="dbniglio.set('1')">[ 1 ]</button>
+<button type="button" class="btn btn-warning btn-lg" onclick="dbniglio.set('2')">[ 2 ]</button>
+<button type="button" class="btn btn-warning btn-lg" onclick="dbniglio.set('3')">[ 3 ]</button>
+<button type="button" class="btn btn-warning btn-lg" onclick="dbniglio.set('4')">[ 4 ]</button>
+<br> 
+
+<button type="button" class="btn btn-info btn-lg" onclick="let n_rucco=0;dbniglio.set(--n_niglio)">[ - ]</button>
+<button type="button" class="btn btn-info btn-lg" onclick="let n_rucco=0;dbniglio.set(++n_niglio)">[ + ]</button> -->
+
+
+<br>Scrivi:
+<input type="text" id="inp1" onchange="dbniglio.set(this.value)"><br><br>
+<button type="button" class="btn btn-info btn-lg" onclick="dbniglio.set(inp1.value)">INVIA</button>
+<button type="button" class="btn btn-info btn-lg" onclick="dbniglio.set('');inp1.value=''">Canc</button>
+    <br>
+Risposta inviata: <br>"
+<i id="niglio" style="color:red;background: yellow;"></i> "
+
+  <br>Punteggio : <b id="punteggio_niglio"></b>
+
+<script>
+// Mostra e aggiorna la risposta di niglio
+var niglio = document.getElementById("niglio");
+var dbniglio = firebase.database().ref().child("4AE").child("niglio");
+dbniglio.on("value", snap => niglio.innerText = snap.val());
+dbniglio.on("value", snap => n_niglio = snap.val())
+
+// Mostra punteggio dell'alunno all'alunno nella sua console
+var punteggio_niglio = document.getElementById("punteggio_niglio");
+// VEDI IL PUNTEGGIO nel child niglio di 5ae_2021_2022 (Punteggio assegnato da me)
+var dbRef1 = firebase.database().ref().child("4ae_2021_2022").child("niglio");
+dbRef1.on("value", snap => punteggio_niglio.innerText = snap.val()); // mostra il valore di n1
+
+
+// Mostra la domanda dell'insegnante in domanda_insegnante
+var domanda_insegnante = document.getElementById("domanda_insegnante");
+// VEDI IL PUNTEGGIO nel child niglio di 5ae_2021_2022 (Punteggio assegnato da me)
+var dbRef1 = firebase.database().ref().child("domanda").child("insegnante");
+dbRef1.on("value", snap => domanda_insegnante.innerText = snap.val()); // mostra il valore di n1
+
+</script>
+<tr>
+
+</table>
+</div>

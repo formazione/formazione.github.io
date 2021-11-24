@@ -5,25 +5,19 @@ with open(filename) as file:
 	file = file.read()
 
 classe = [
-	"mandia",
-	"lista",
-	"musto",
-	"ruocco",
-	"cammarano",
-	"cammarano_n",
-	"grimaldi",
-	"scola_m",
-	"scola_v",
-	"del_verme",
-	"esposito",
-	"breglia",
-	"giordano",
-	"garofalo",
-	"costantini",
-	"merola",
-	"malzone",
-	"fontana",
-	"santoro"
+    "balbi",
+    "bertolini",
+    "cuda",
+    "divivo",
+    "iuliano",
+    "lapastina",
+    "lakrad",
+    "maffia",
+    "mercanti",
+    "nese",
+    "niglio",
+    "pica",
+    "spinelli"
 ]
 
 
@@ -117,13 +111,13 @@ Punti: <i id="h1alunnomusto"></i></p>
 <script>
 var h1alunnomusto = document.getElementById("h1alunnomusto");
 // VEDI IL PUNTEGGIO nel child Mandia di 5ae_2021_2022 (Punteggio assegnato da me)
-var dbRefmusto = firebase.database().ref().child("5ae_2021_2022").child("musto");
+var dbRefmusto = firebase.database().ref().child("4ae_2021_2022").child("musto");
 dbRefmusto.on("value", snap => h1alunnomusto.innerText = snap.val()); // mostra il valore di n1
 // AGGIORNA PUNTEGGIO
 dbRefmusto.on("value", snap => nmusto = snap.val()) // Cambia il valore della variabile n1
 // VEDI IL PUNTEGGIO nel child Mandia di 5AE (sua risposta)
 var i_risposta_musto = document.getElementById("risposta_musto");
-var db_risposta_musto = firebase.database().ref().child("5AE").child("musto");
+var db_risposta_musto = firebase.database().ref().child("4AE").child("musto");
 db_risposta_musto.on("value", snap => i_risposta_musto.innerText = snap.val());
 db_risposta_musto.on("value", snap => n_musto = snap.val())</script>
 <tr>
@@ -153,12 +147,12 @@ os.startfile("copia_in_console.html")
 
 
 for alunni in classe:
-	address = "https://formazione.github.io/quiz5ae/" + alunni + ".html"
+	address = "https://formazione.github.io/quiz4ae/" + alunni + ".html"
 	print(address)
 	print()
 
 
 for alunni in classe:
-	address = "https://formazione.github.io/quiz5ae/" + alunni + ".html"
+	address = "https://formazione.github.io/quiz4ae/" + alunni + ".html"
 	print("<a href='" + address + "'>" + alunni + "</a><br>")
 	print()
