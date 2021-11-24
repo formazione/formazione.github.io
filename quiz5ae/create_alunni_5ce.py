@@ -4,7 +4,23 @@ filename = "template.html"
 with open(filename) as file:
 	file = file.read()
 
-classe = [
+'''
+       "Chirico",
+        "Cona",
+        "Dagosto",
+        "Dinola",
+        "Filosa",
+        "Mariosa",
+        "Mazzeo",
+        "Merola",
+        "Pandullo",
+        "Paolino",
+        "Papa",
+        "Petrone",
+        "Ruggiero",
+        "Savino",
+        "Volpe"
+
     "balbi",
     "bertolini",
     "cuda",
@@ -18,6 +34,29 @@ classe = [
     "niglio",
     "pica",
     "spinelli"
+'''
+
+classe = [
+        "Breglia",
+        "Cammarano_D",
+        "Cammarano_N",
+        "Costantini",
+        "Del Verme,",
+        "Esposito",
+        "Fontana",
+        "Garofalo",
+        "Giordano",
+        "Grimaldi",
+        "Lista",
+        "Malzone",
+        "Mandia",
+        "Marchesani",
+        "Musto",
+        "Ruocco",
+        "Santoro",
+        "Scola_M",
+        "SCOLA_V",
+
 ]
 
 

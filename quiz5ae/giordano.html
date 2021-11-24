@@ -1,5 +1,5 @@
 <style>
- body, table, button, input {font-size: 1.5em; } .btn.btn-warning.btn-lg, #inp1 {background:pink; color:red; } .btn.btn-info.btn-lg {background:cyan; color:blue; } ul {font-size: 2em;} i {font-size : 2em;} p { font-size: 2em; } td {font-size: 1.5em;} table {border-collapse: collapse; width: 100%; } th, td {text-align: left; padding: 8px; } tr:nth-child(even){background-color: #f2f2f2}
+ body, table, button, input {color: white; background: #6fac8f;font-size: 2em; } .btn.btn-warning.btn-lg, #inp1 {background:pink; color:red; font-size:48;} .btn.btn-info.btn-lg {background:cyan; color:blue; } ul {font-size: 2em;} i {font-size : 2em;} p { font-size: 2em; } td {font-size: 1.5em;} table {border-collapse: collapse; width: 100%; } th, td {text-align: left; padding: 8px; } tr:nth-child(even){background-color: #f2f2f2}
 </style>
 
 
@@ -20,67 +20,41 @@
   var database = firebase.database()
 </script>
 
-<h1>giordano - QUIZ CONSOLE</h1>
+<h1>Giordano : <b id="punteggio_Giordano" style="background:navy"></b> punti</h1>
+<b style="background:yellow;color:red">
 Domanda:
-<i id="domanda_insegnante"></i>
+<b id="domanda_insegnante"></b>
+</b>
+<div class="w3-main" style="margin-left:0px">
 
-<div class="w3-main" style="margin-left:50px">
-<table class="table-bordered">
 
-
-<!----------------- Alunno 1 ------------------->
-
-<!-- [ - ] -->
-<td>risposte multiple<br>
-<button type="button" class="btn btn-warning btn-lg" onclick="dbgiordano.set('1')">[ 1 ]</button>
-<button type="button" class="btn btn-warning btn-lg" onclick="dbgiordano.set('2')">[ 2 ]</button>
-<button type="button" class="btn btn-warning btn-lg" onclick="dbgiordano.set('3')">[ 3 ]</button>
-<button type="button" class="btn btn-warning btn-lg" onclick="dbgiordano.set('4')">[ 4 ]</button>
-<br>
-<!-- [ + ] -->
-<button type="button" class="btn btn-info btn-lg" onclick="let n_rucco=0;dbgiordano.set(--n_giordano)">[ - ]</button>
-<button type="button" class="btn btn-info btn-lg" onclick="let n_rucco=0;dbgiordano.set(++n_giordano)">[ + ]</button>
-
-</td>
-<br>Risposta aperta
-<input type="text" id="inp1" onchange="dbgiordano.set(this.value)"><br>
-<tr>
-  <td>
+<br>Scrivi:
+<textarea id="inp1" onchange="dbGiordano.set(this.value)" rows=3 style="width:100%"></textarea><br><br>
+<button type="button" class="btn btn-info btn-lg" onclick="dbGiordano.set(inp1.value)">INVIA</button>
+<button type="button" class="btn btn-info btn-lg" onclick="dbGiordano.set('');inp1.value=''">Canc</button>
     <br>
-Risposta scelta da giordano: "
-<i id="giordano" style="color:red;background: yellow;"></i> "
+Risposta inviata: <br>
+<i id="Giordano" style="color:red;background: yellow;"></i>
 
-<tr>
 
-<!-- 
-
-            Seleziona tutti i cognomi e sostituisci
-            col nuovo cognome e salva col nuovo cognome
-
- -->
-
-  <td></td>
-  <td>Punteggio di giordano</td>
-
-<td><i id="punteggio_giordano"></i>
 
 <script>
-// Mostra e aggiorna la risposta di giordano
-var giordano = document.getElementById("giordano");
-var dbgiordano = firebase.database().ref().child("5AE").child("giordano");
-dbgiordano.on("value", snap => giordano.innerText = snap.val());
-dbgiordano.on("value", snap => n_giordano = snap.val())
+// Mostra e aggiorna la risposta di Giordano
+var Giordano = document.getElementById("Giordano");
+var dbGiordano = firebase.database().ref().child("4AE").child("Giordano");
+dbGiordano.on("value", snap => Giordano.innerText = snap.val());
+dbGiordano.on("value", snap => n_Giordano = snap.val())
 
 // Mostra punteggio dell'alunno all'alunno nella sua console
-var punteggio_giordano = document.getElementById("punteggio_giordano");
-// VEDI IL PUNTEGGIO nel child giordano di 5ae_2021_2022 (Punteggio assegnato da me)
-var dbRef1 = firebase.database().ref().child("5ae_2021_2022").child("giordano");
-dbRef1.on("value", snap => punteggio_giordano.innerText = snap.val()); // mostra il valore di n1
+var punteggio_Giordano = document.getElementById("punteggio_Giordano");
+// VEDI IL PUNTEGGIO nel child Giordano di 5ae_2021_2022 (Punteggio assegnato da me)
+var dbRef1 = firebase.database().ref().child("4ae_2021_2022").child("Giordano");
+dbRef1.on("value", snap => punteggio_Giordano.innerText = snap.val()); // mostra il valore di n1
 
 
 // Mostra la domanda dell'insegnante in domanda_insegnante
 var domanda_insegnante = document.getElementById("domanda_insegnante");
-// VEDI IL PUNTEGGIO nel child giordano di 5ae_2021_2022 (Punteggio assegnato da me)
+// VEDI IL PUNTEGGIO nel child Giordano di 5ae_2021_2022 (Punteggio assegnato da me)
 var dbRef1 = firebase.database().ref().child("domanda").child("insegnante");
 dbRef1.on("value", snap => domanda_insegnante.innerText = snap.val()); // mostra il valore di n1
 

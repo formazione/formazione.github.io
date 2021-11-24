@@ -1,5 +1,5 @@
 <style>
- body, table, button, input {font-size: 1.5em; } .btn.btn-warning.btn-lg, #inp1 {background:pink; color:red; } .btn.btn-info.btn-lg {background:cyan; color:blue; } ul {font-size: 2em;} i {font-size : 2em;} p { font-size: 2em; } td {font-size: 1.5em;} table {border-collapse: collapse; width: 100%; } th, td {text-align: left; padding: 8px; } tr:nth-child(even){background-color: #f2f2f2}
+ body, table, button, input {color: white; background: #6fac8f;font-size: 2em; } .btn.btn-warning.btn-lg, #inp1 {background:pink; color:red; font-size:48;} .btn.btn-info.btn-lg {background:cyan; color:blue; } ul {font-size: 2em;} i {font-size : 2em;} p { font-size: 2em; } td {font-size: 1.5em;} table {border-collapse: collapse; width: 100%; } th, td {text-align: left; padding: 8px; } tr:nth-child(even){background-color: #f2f2f2}
 </style>
 
 
@@ -20,67 +20,41 @@
   var database = firebase.database()
 </script>
 
-<h1>santoro - QUIZ CONSOLE</h1>
+<h1>Santoro : <b id="punteggio_Santoro" style="background:navy"></b> punti</h1>
+<b style="background:yellow;color:red">
 Domanda:
-<i id="domanda_insegnante"></i>
+<b id="domanda_insegnante"></b>
+</b>
+<div class="w3-main" style="margin-left:0px">
 
-<div class="w3-main" style="margin-left:50px">
-<table class="table-bordered">
 
-
-<!----------------- Alunno 1 ------------------->
-
-<!-- [ - ] -->
-<td>risposte multiple<br>
-<button type="button" class="btn btn-warning btn-lg" onclick="dbsantoro.set('1')">[ 1 ]</button>
-<button type="button" class="btn btn-warning btn-lg" onclick="dbsantoro.set('2')">[ 2 ]</button>
-<button type="button" class="btn btn-warning btn-lg" onclick="dbsantoro.set('3')">[ 3 ]</button>
-<button type="button" class="btn btn-warning btn-lg" onclick="dbsantoro.set('4')">[ 4 ]</button>
-<br>
-<!-- [ + ] -->
-<button type="button" class="btn btn-info btn-lg" onclick="let n_rucco=0;dbsantoro.set(--n_santoro)">[ - ]</button>
-<button type="button" class="btn btn-info btn-lg" onclick="let n_rucco=0;dbsantoro.set(++n_santoro)">[ + ]</button>
-
-</td>
-<br>Risposta aperta
-<input type="text" id="inp1" onchange="dbsantoro.set(this.value)"><br>
-<tr>
-  <td>
+<br>Scrivi:
+<textarea id="inp1" onchange="dbSantoro.set(this.value)" rows=3 style="width:100%"></textarea><br><br>
+<button type="button" class="btn btn-info btn-lg" onclick="dbSantoro.set(inp1.value)">INVIA</button>
+<button type="button" class="btn btn-info btn-lg" onclick="dbSantoro.set('');inp1.value=''">Canc</button>
     <br>
-Risposta scelta da santoro: "
-<i id="santoro" style="color:red;background: yellow;"></i> "
+Risposta inviata: <br>
+<i id="Santoro" style="color:red;background: yellow;"></i>
 
-<tr>
 
-<!-- 
-
-            Seleziona tutti i cognomi e sostituisci
-            col nuovo cognome e salva col nuovo cognome
-
- -->
-
-  <td></td>
-  <td>Punteggio di santoro</td>
-
-<td><i id="punteggio_santoro"></i>
 
 <script>
-// Mostra e aggiorna la risposta di santoro
-var santoro = document.getElementById("santoro");
-var dbsantoro = firebase.database().ref().child("5AE").child("santoro");
-dbsantoro.on("value", snap => santoro.innerText = snap.val());
-dbsantoro.on("value", snap => n_santoro = snap.val())
+// Mostra e aggiorna la risposta di Santoro
+var Santoro = document.getElementById("Santoro");
+var dbSantoro = firebase.database().ref().child("4AE").child("Santoro");
+dbSantoro.on("value", snap => Santoro.innerText = snap.val());
+dbSantoro.on("value", snap => n_Santoro = snap.val())
 
 // Mostra punteggio dell'alunno all'alunno nella sua console
-var punteggio_santoro = document.getElementById("punteggio_santoro");
-// VEDI IL PUNTEGGIO nel child santoro di 5ae_2021_2022 (Punteggio assegnato da me)
-var dbRef1 = firebase.database().ref().child("5ae_2021_2022").child("santoro");
-dbRef1.on("value", snap => punteggio_santoro.innerText = snap.val()); // mostra il valore di n1
+var punteggio_Santoro = document.getElementById("punteggio_Santoro");
+// VEDI IL PUNTEGGIO nel child Santoro di 5ae_2021_2022 (Punteggio assegnato da me)
+var dbRef1 = firebase.database().ref().child("4ae_2021_2022").child("Santoro");
+dbRef1.on("value", snap => punteggio_Santoro.innerText = snap.val()); // mostra il valore di n1
 
 
 // Mostra la domanda dell'insegnante in domanda_insegnante
 var domanda_insegnante = document.getElementById("domanda_insegnante");
-// VEDI IL PUNTEGGIO nel child santoro di 5ae_2021_2022 (Punteggio assegnato da me)
+// VEDI IL PUNTEGGIO nel child Santoro di 5ae_2021_2022 (Punteggio assegnato da me)
 var dbRef1 = firebase.database().ref().child("domanda").child("insegnante");
 dbRef1.on("value", snap => domanda_insegnante.innerText = snap.val()); // mostra il valore di n1
 

@@ -1,5 +1,5 @@
 <style>
- body, table, button, input {font-size: 1.5em; } .btn.btn-warning.btn-lg, #inp1 {background:pink; color:red; } .btn.btn-info.btn-lg {background:cyan; color:blue; } ul {font-size: 2em;} i {font-size : 2em;} p { font-size: 2em; } td {font-size: 1.5em;} table {border-collapse: collapse; width: 100%; } th, td {text-align: left; padding: 8px; } tr:nth-child(even){background-color: #f2f2f2}
+ body, table, button, input {color: white; background: #6fac8f;font-size: 2em; } .btn.btn-warning.btn-lg, #inp1 {background:pink; color:red; font-size:48;} .btn.btn-info.btn-lg {background:cyan; color:blue; } ul {font-size: 2em;} i {font-size : 2em;} p { font-size: 2em; } td {font-size: 1.5em;} table {border-collapse: collapse; width: 100%; } th, td {text-align: left; padding: 8px; } tr:nth-child(even){background-color: #f2f2f2}
 </style>
 
 
@@ -20,67 +20,41 @@
   var database = firebase.database()
 </script>
 
-<h1>scola_m - QUIZ CONSOLE</h1>
+<h1>Scola_M : <b id="punteggio_Scola_M" style="background:navy"></b> punti</h1>
+<b style="background:yellow;color:red">
 Domanda:
-<i id="domanda_insegnante"></i>
+<b id="domanda_insegnante"></b>
+</b>
+<div class="w3-main" style="margin-left:0px">
 
-<div class="w3-main" style="margin-left:50px">
-<table class="table-bordered">
 
-
-<!----------------- Alunno 1 ------------------->
-
-<!-- [ - ] -->
-<td>risposte multiple<br>
-<button type="button" class="btn btn-warning btn-lg" onclick="dbscola_m.set('1')">[ 1 ]</button>
-<button type="button" class="btn btn-warning btn-lg" onclick="dbscola_m.set('2')">[ 2 ]</button>
-<button type="button" class="btn btn-warning btn-lg" onclick="dbscola_m.set('3')">[ 3 ]</button>
-<button type="button" class="btn btn-warning btn-lg" onclick="dbscola_m.set('4')">[ 4 ]</button>
-<br>
-<!-- [ + ] -->
-<button type="button" class="btn btn-info btn-lg" onclick="let n_rucco=0;dbscola_m.set(--n_scola_m)">[ - ]</button>
-<button type="button" class="btn btn-info btn-lg" onclick="let n_rucco=0;dbscola_m.set(++n_scola_m)">[ + ]</button>
-
-</td>
-<br>Risposta aperta
-<input type="text" id="inp1" onchange="dbscola_m.set(this.value)"><br>
-<tr>
-  <td>
+<br>Scrivi:
+<textarea id="inp1" onchange="dbScola_M.set(this.value)" rows=3 style="width:100%"></textarea><br><br>
+<button type="button" class="btn btn-info btn-lg" onclick="dbScola_M.set(inp1.value)">INVIA</button>
+<button type="button" class="btn btn-info btn-lg" onclick="dbScola_M.set('');inp1.value=''">Canc</button>
     <br>
-Risposta scelta da scola_m: "
-<i id="scola_m" style="color:red;background: yellow;"></i> "
+Risposta inviata: <br>
+<i id="Scola_M" style="color:red;background: yellow;"></i>
 
-<tr>
 
-<!-- 
-
-            Seleziona tutti i cognomi e sostituisci
-            col nuovo cognome e salva col nuovo cognome
-
- -->
-
-  <td></td>
-  <td>Punteggio di scola_m</td>
-
-<td><i id="punteggio_scola_m"></i>
 
 <script>
-// Mostra e aggiorna la risposta di scola_m
-var scola_m = document.getElementById("scola_m");
-var dbscola_m = firebase.database().ref().child("5AE").child("scola_m");
-dbscola_m.on("value", snap => scola_m.innerText = snap.val());
-dbscola_m.on("value", snap => n_scola_m = snap.val())
+// Mostra e aggiorna la risposta di Scola_M
+var Scola_M = document.getElementById("Scola_M");
+var dbScola_M = firebase.database().ref().child("4AE").child("Scola_M");
+dbScola_M.on("value", snap => Scola_M.innerText = snap.val());
+dbScola_M.on("value", snap => n_Scola_M = snap.val())
 
 // Mostra punteggio dell'alunno all'alunno nella sua console
-var punteggio_scola_m = document.getElementById("punteggio_scola_m");
-// VEDI IL PUNTEGGIO nel child scola_m di 5ae_2021_2022 (Punteggio assegnato da me)
-var dbRef1 = firebase.database().ref().child("5ae_2021_2022").child("scola_m");
-dbRef1.on("value", snap => punteggio_scola_m.innerText = snap.val()); // mostra il valore di n1
+var punteggio_Scola_M = document.getElementById("punteggio_Scola_M");
+// VEDI IL PUNTEGGIO nel child Scola_M di 5ae_2021_2022 (Punteggio assegnato da me)
+var dbRef1 = firebase.database().ref().child("4ae_2021_2022").child("Scola_M");
+dbRef1.on("value", snap => punteggio_Scola_M.innerText = snap.val()); // mostra il valore di n1
 
 
 // Mostra la domanda dell'insegnante in domanda_insegnante
 var domanda_insegnante = document.getElementById("domanda_insegnante");
-// VEDI IL PUNTEGGIO nel child scola_m di 5ae_2021_2022 (Punteggio assegnato da me)
+// VEDI IL PUNTEGGIO nel child Scola_M di 5ae_2021_2022 (Punteggio assegnato da me)
 var dbRef1 = firebase.database().ref().child("domanda").child("insegnante");
 dbRef1.on("value", snap => domanda_insegnante.innerText = snap.val()); // mostra il valore di n1
 

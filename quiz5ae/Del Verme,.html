@@ -20,7 +20,7 @@
   var database = firebase.database()
 </script>
 
-<h1>maffia : <b id="punteggio_maffia" style="background:navy"></b> punti</h1>
+<h1>Del Verme, : <b id="punteggio_Del Verme," style="background:navy"></b> punti</h1>
 <b style="background:yellow;color:red">
 Domanda:
 <b id="domanda_insegnante"></b>
@@ -29,32 +29,32 @@ Domanda:
 
 
 <br>Scrivi:
-<textarea id="inp1" onchange="dbmaffia.set(this.value)" rows=3 style="width:100%"></textarea><br><br>
-<button type="button" class="btn btn-info btn-lg" onclick="dbmaffia.set(inp1.value)">INVIA</button>
-<button type="button" class="btn btn-info btn-lg" onclick="dbmaffia.set('');inp1.value=''">Canc</button>
+<textarea id="inp1" onchange="dbDel Verme,.set(this.value)" rows=3 style="width:100%"></textarea><br><br>
+<button type="button" class="btn btn-info btn-lg" onclick="dbDel Verme,.set(inp1.value)">INVIA</button>
+<button type="button" class="btn btn-info btn-lg" onclick="dbDel Verme,.set('');inp1.value=''">Canc</button>
     <br>
 Risposta inviata: <br>
-<i id="maffia" style="color:red;background: yellow;"></i>
+<i id="Del Verme," style="color:red;background: yellow;"></i>
 
 
 
 <script>
-// Mostra e aggiorna la risposta di maffia
-var maffia = document.getElementById("maffia");
-var dbmaffia = firebase.database().ref().child("4AE").child("maffia");
-dbmaffia.on("value", snap => maffia.innerText = snap.val());
-dbmaffia.on("value", snap => n_maffia = snap.val())
+// Mostra e aggiorna la risposta di Del Verme,
+var Del Verme, = document.getElementById("Del Verme,");
+var dbDel Verme, = firebase.database().ref().child("4AE").child("Del Verme,");
+dbDel Verme,.on("value", snap => Del Verme,.innerText = snap.val());
+dbDel Verme,.on("value", snap => n_Del Verme, = snap.val())
 
 // Mostra punteggio dell'alunno all'alunno nella sua console
-var punteggio_maffia = document.getElementById("punteggio_maffia");
-// VEDI IL PUNTEGGIO nel child maffia di 5ae_2021_2022 (Punteggio assegnato da me)
-var dbRef1 = firebase.database().ref().child("4ae_2021_2022").child("maffia");
-dbRef1.on("value", snap => punteggio_maffia.innerText = snap.val()); // mostra il valore di n1
+var punteggio_Del Verme, = document.getElementById("punteggio_Del Verme,");
+// VEDI IL PUNTEGGIO nel child Del Verme, di 5ae_2021_2022 (Punteggio assegnato da me)
+var dbRef1 = firebase.database().ref().child("4ae_2021_2022").child("Del Verme,");
+dbRef1.on("value", snap => punteggio_Del Verme,.innerText = snap.val()); // mostra il valore di n1
 
 
 // Mostra la domanda dell'insegnante in domanda_insegnante
 var domanda_insegnante = document.getElementById("domanda_insegnante");
-// VEDI IL PUNTEGGIO nel child maffia di 5ae_2021_2022 (Punteggio assegnato da me)
+// VEDI IL PUNTEGGIO nel child Del Verme, di 5ae_2021_2022 (Punteggio assegnato da me)
 var dbRef1 = firebase.database().ref().child("domanda").child("insegnante");
 dbRef1.on("value", snap => domanda_insegnante.innerText = snap.val()); // mostra il valore di n1
 
