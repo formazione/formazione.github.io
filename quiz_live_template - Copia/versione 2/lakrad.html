@@ -1,0 +1,75 @@
+<style>
+ body, table, button, input {color: white; background: #6fac8f;font-size: 2em; } .btn.btn-warning.btn-lg, #inp1 {background:pink; color:red; font-size:48;} .btn.btn-info.btn-lg {background:cyan; color:blue; } ul {font-size: 2em;} i {font-size : 2em;} p { font-size: 2em; } td {font-size: 1.5em;} table {border-collapse: collapse; width: 100%; } th, td {text-align: left; padding: 8px; } tr:nth-child(even){background-color: #f2f2f2}
+</style>
+
+
+<body>
+
+
+<script src="https://www.gstatic.com/firebasejs/4.10.1/firebase.js"></script>
+<script>
+  var config = {
+    apiKey: "AIzaSyDp-mWaWEI07pIdRUhi6vA-salEMRWz4hw",
+    authDomain: "quiz-e5e5a.firebaseapp.com",
+    databaseURL: "https://quiz-e5e5a.firebaseio.com/",
+    projectId: "quiz-e5e5a",
+    storageBucket: "quiz-e5e5a.appspot.com",
+    messagingSenderId: "901845403492"
+  };
+  firebase.initializeApp(config);
+  var database = firebase.database()
+</script>
+
+<h1>lakrad : <b id="punteggio_lakrad" style="background:navy"></b> punti</h1>
+<b style="background:yellow;color:red">
+Domanda:
+<b id="domanda_insegnante"></b>
+</b>
+<div class="w3-main" style="margin-left:0px">
+
+<script>
+  function get_time(){
+  var time = new Date().getHours() + "." + new Date().getMinutes() + "." + new Date().getSeconds();
+  return time}
+</script>
+<br>Scrivi:
+<textarea id="inp1" onchange="dblakrad.set(this.value)" rows=3 style="width:100%"></textarea><br><br>
+<script>
+let lakrad_arr = [];
+  </script>
+<button type="button" class="btn btn-info btn-lg" onclick="lakrad_arr.push('\n' + domanda_insegnante.innerText + ' - risposta:' + inp1.value + ' alle:(' + get_time() + ')\n');dblakrad.set(lakrad_arr);">INVIA</button>
+<button type="button" class="btn btn-info btn-lg" onclick="dblakrad.set('');inp1.value=''">Canc</button>
+    <br>
+Risposta inviata: <br>
+<i id="lakrad" style="color:red;background: yellow;"></i>
+
+
+
+<script>
+// RISPOSTA MUSTO
+var lakrad = document.getElementById("lakrad");
+// RECORD RISPOSTA MUSTA DOVE E' MEMORIZZATA
+var dblakrad = firebase.database().ref().child("4AE").child("lakrad");
+// TEMPO DELL'INVIO PER VEDERE CHI E' PIU' VELOCE
+var time = new Date().getHours() + "." + new Date().getMinutes() + "." + new Date().getSeconds();
+dblakrad.on("value", snap => lakrad.innerText = snap.val() + "\nInizio: " + time);
+// dblakrad.on("value", snap => n_lakrad = snap.val() + "\nInviato alle: " + time)
+
+// Mostra punteggio dell'alunno all'alunno nella sua console
+var punteggio_lakrad = document.getElementById("punteggio_lakrad");
+// VEDI IL PUNTEGGIO nel child lakrad di 5ae_2021_2022 (Punteggio assegnato da me)
+var dbRef1 = firebase.database().ref().child("4ae_2021_2022").child("lakrad");
+dbRef1.on("value", snap => punteggio_lakrad.innerText = snap.val()); // mostra il valore di n1
+
+
+// Mostra la domanda dell'insegnante in domanda_insegnante
+var domanda_insegnante = document.getElementById("domanda_insegnante");
+// VEDI IL PUNTEGGIO nel child lakrad di 5ae_2021_2022 (Punteggio assegnato da me)
+var dbRef1 = firebase.database().ref().child("domanda").child("insegnante");
+dbRef1.on("value", snap => domanda_insegnante.innerText = snap.val()); // mostra il valore di n1
+
+</script>
+<tr>
+
+</table>
+</div>
