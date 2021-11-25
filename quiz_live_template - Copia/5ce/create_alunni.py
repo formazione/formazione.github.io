@@ -68,32 +68,27 @@ classe = [
 # file e inviali di nuovo
 
 #                             1
-nomeclasse = "5ae" # cambia il nome della classe qui
+nomeclasse = "5ce" # cambia il nome della classe qui
 
 
 #                          2 cambia nomi alunni
 classe = [
-        "Breglia",
-        "Cammarano_D",
-        "Cammarano_N",
-        "Costantini",
-        "Del Verme,",
-        "Esposito",
-        "Fontana",
-        "Garofalo",
-        "Giordano",
-        "Grimaldi",
-        "Lista",
-        "Malzone",
-        "Mandia",
-        "Musto",
-        "Ruocco",
-        "Santoro",
-        "Scola_M",
-        "SCOLA_V",
-
+       "Chirico",
+        "Cona",
+        "Dagosto",
+        "Dinola",
+        "Filosa",
+        "Mariosa",
+        "Mazzeo",
+        "Merola",
+        "Pandullo",
+        "Paolino",
+        "Papa",
+        "Petrone",
+        "Ruggiero",
+        "Savino",
+        "Volpe"
 ]
-
 html = """
 <style>
 

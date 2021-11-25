@@ -252,7 +252,7 @@ os.startfile("copia_in_console.html")
 
 # ========== CREA FILE SINGOLI PER ALUNNI PER INSERIRE RISPOSTE
 for alunni in classe:
-	address = f"https://formazione.github.io/quiz{nomeclasse}/" + alunni + ".html"
+	address = f"https://formazione.github.io/quiz{nomeclasse}/{alunni}.html"
 	print(address)
 	print()
 
