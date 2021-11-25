@@ -5,22 +5,7 @@ with open(filename) as file:
 	file = file.read()
 
 '''
-       "Chirico",
-        "Cona",
-        "Dagosto",
-        "Dinola",
-        "Filosa",
-        "Mariosa",
-        "Mazzeo",
-        "Merola",
-        "Pandullo",
-        "Paolino",
-        "Papa",
-        "Petrone",
-        "Ruggiero",
-        "Savino",
-        "Volpe"
-
+classe = [
     "balbi",
     "bertolini",
     "cuda",
@@ -34,7 +19,7 @@ with open(filename) as file:
     "niglio",
     "pica",
     "spinelli"
-'''
+]
 
 classe = [
         "Breglia",
@@ -50,7 +35,47 @@ classe = [
         "Lista",
         "Malzone",
         "Mandia",
-        "Marchesani",
+        "Musto",
+        "Ruocco",
+        "Santoro",
+        "Scola_M",
+        "SCOLA_V",
+
+]
+
+classe = [
+       "Chirico",
+        "Cona",
+        "Dagosto",
+        "Dinola",
+        "Filosa",
+        "Mariosa",
+        "Mazzeo",
+        "Merola",
+        "Pandullo",
+        "Paolino",
+        "Papa",
+        "Petrone",
+        "Ruggiero",
+        "Savino",
+        "Volpe"
+]
+'''
+
+classe = [
+        "Breglia",
+        "Cammarano_D",
+        "Cammarano_N",
+        "Costantini",
+        "Del Verme",
+        "Esposito",
+        "Fontana",
+        "Garofalo",
+        "Giordano",
+        "Grimaldi",
+        "Lista",
+        "Malzone",
+        "Mandia",
         "Musto",
         "Ruocco",
         "Santoro",
@@ -122,6 +147,25 @@ domanda.insegnante c'è la mia domanda
   var database = firebase.database()
 </script>
 <h1>5AE 2021 202 Console Insegnante</h1>
+<!-- script per cancellare tutte le risposte inizio -->
+<script>
+var domanda_insegnante = document.getElementById("domanda_insegnante");
+var dbdomanda = firebase.database().ref().child("domanda").child("insegnante");
+dbdomanda.on("value", snap => domanda_insegnante.innerText = snap.val());
+dbdomanda.on("value", snap => inp1.value = snap.val())
+
+[classe]
+
+function cancellaRecord(record){
+  for (n of classe){
+    var db_r = firebase.database().ref().child(record).child(n);
+    db_r.set('');
+  }
+}
+
+</script>
+
+<!-- script per cancellare tutte le risposte fine -->
 
 Risposta:<i id="domanda_insegnante"></i>
 <!-- domanda insegnante -->
@@ -135,16 +179,23 @@ dbdomanda.on("value", snap => inp1.value = snap.val())
 </script>
 
 <div id="div1" class="w3-main" style="margin-left:50px">
+<textarea id="t1"></textarea>textarea<br>
 <table class="table-bordered">
+
+
+<!-- cancella tutte le risposte e i punti => vedi cancellaRecord() -->
+<button type="button" class="btn btn-info btn-lg" onclick="cancellaRecord('4AE')">
+Cancella tutte le risposte</button>
+<button type="button" class="btn btn-info btn-lg" onclick="cancellaRecord('4ae_2021_2022')">Cancella tutti i punti</button>
 
 """
 
 console = """
 <!-- musto copia e cambia tutti i musto col nuovo nome -->
 <td>
-<button type="button" class="btn btn-warning btn-lg" onclick="dbRefmusto.set(--nmusto)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRefmusto.set(++nmusto)"> + </button>musto<td>
+<button type="button" class="btn btn-warning btn-lg" onclick="dbRefmusto.set(--nmusto)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRefmusto.set(++nmusto)"> + </button><a href="musto.html" style="color:white">musto</a>
 <!-- TESTO CHE MOSTRA LA RISPOSTA DI MANDIA E IL SUO PUNTEGGIO -->
-Risposta:<i id="risposta_musto"></i>
+:<i id="risposta_musto"></i>
 Punti: <i id="h1alunnomusto"></i></p>
 <!--               TASTI PER ASSEGNARE I PUNTI E VISUALIZZAZIONE RISPOSTA MANDIA -->
 <script>
@@ -164,6 +215,8 @@ db_risposta_musto.on("value", snap => n_musto = snap.val())</script>
 
 """
 
+str_classe = "let classe =['" + "','".join(classe) + "'];"
+html = html.replace("[classe]", str_classe)
 
 for alunno in classe:
 	# create file for single pupil
@@ -179,19 +232,33 @@ html += """
 </table>
 </div>
 """
+
+
+# ================= CREA CONSOLE PER DOCENTE PER CONTROLLARE LE RISPOSTE
+#                     E ASSEGNARE I PUNTI
 with open("copia_in_console.html", "w") as newfileconsole:
 	newfileconsole.write(html)
-
 os.startfile("copia_in_console.html")
 
 
+# ========== CREA FILE SINGOLI PER ALUNNI PER INSERIRE RISPOSTE
 for alunni in classe:
-	address = "https://formazione.github.io/quiz4ae/" + alunni + ".html"
+	address = "https://formazione.github.io/quiz5ae/" + alunni + ".html"
 	print(address)
 	print()
 
 
-for alunni in classe:
-	address = "https://formazione.github.io/quiz4ae/" + alunni + ".html"
-	print("<a href='" + address + "'>" + alunni + "</a><br>")
-	print()
+# for alunni in classe:
+# 	address = "https://formazione.github.io/quiz5ae/" + alunni + ".html"
+# 	print("<a href='" + address + "'>" + alunni + "</a><br>")
+# 	print()
+
+# ========================== CREA ELENCO PER COLLEGARSI AI FILE ALUNNI ====
+path = "collegamenti.html"
+html = ""
+for n in classe:
+       html += f"<h2><a href='https://formazione.github.io/quiz5ae/{n}.html'>{n}</a></h2>"
+with open(path, "w") as file:
+       file.write(html)
+
+os.system(path)

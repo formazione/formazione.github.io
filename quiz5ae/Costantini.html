@@ -27,10 +27,14 @@ Domanda:
 </b>
 <div class="w3-main" style="margin-left:0px">
 
-
+<script>
+  function get_time(){
+  var time = new Date().getHours() + "." + new Date().getMinutes() + "." + new Date().getSeconds();
+  return time}
+</script>
 <br>Scrivi:
 <textarea id="inp1" onchange="dbCostantini.set(this.value)" rows=3 style="width:100%"></textarea><br><br>
-<button type="button" class="btn btn-info btn-lg" onclick="dbCostantini.set(inp1.value)">INVIA</button>
+<button type="button" class="btn btn-info btn-lg" onclick="dbCostantini.set(inp1.value + ' -> ' + get_time())">INVIA</button>
 <button type="button" class="btn btn-info btn-lg" onclick="dbCostantini.set('');inp1.value=''">Canc</button>
     <br>
 Risposta inviata: <br>
@@ -42,8 +46,10 @@ Risposta inviata: <br>
 // Mostra e aggiorna la risposta di Costantini
 var Costantini = document.getElementById("Costantini");
 var dbCostantini = firebase.database().ref().child("4AE").child("Costantini");
-dbCostantini.on("value", snap => Costantini.innerText = snap.val());
-dbCostantini.on("value", snap => n_Costantini = snap.val())
+// tempo dell'invio
+var time = new Date().getHours() + "." + new Date().getMinutes() + "." + new Date().getSeconds();
+dbCostantini.on("value", snap => Costantini.innerText = snap.val() + "\nInviato alle: " + time);
+dbCostantini.on("value", snap => n_Costantini = snap.val() + "\nInviato alle: " + time)
 
 // Mostra punteggio dell'alunno all'alunno nella sua console
 var punteggio_Costantini = document.getElementById("punteggio_Costantini");

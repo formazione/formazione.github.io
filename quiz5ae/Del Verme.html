@@ -20,7 +20,7 @@
   var database = firebase.database()
 </script>
 
-<h1>Cammarano_N : <b id="punteggio_Cammarano_N" style="background:navy"></b> punti</h1>
+<h1>Del Verme : <b id="punteggio_Del Verme" style="background:navy"></b> punti</h1>
 <b style="background:yellow;color:red">
 Domanda:
 <b id="domanda_insegnante"></b>
@@ -33,34 +33,34 @@ Domanda:
   return time}
 </script>
 <br>Scrivi:
-<textarea id="inp1" onchange="dbCammarano_N.set(this.value)" rows=3 style="width:100%"></textarea><br><br>
-<button type="button" class="btn btn-info btn-lg" onclick="dbCammarano_N.set(inp1.value + ' -> ' + get_time())">INVIA</button>
-<button type="button" class="btn btn-info btn-lg" onclick="dbCammarano_N.set('');inp1.value=''">Canc</button>
+<textarea id="inp1" onchange="dbDel Verme.set(this.value)" rows=3 style="width:100%"></textarea><br><br>
+<button type="button" class="btn btn-info btn-lg" onclick="dbDel Verme.set(inp1.value + ' -> ' + get_time())">INVIA</button>
+<button type="button" class="btn btn-info btn-lg" onclick="dbDel Verme.set('');inp1.value=''">Canc</button>
     <br>
 Risposta inviata: <br>
-<i id="Cammarano_N" style="color:red;background: yellow;"></i>
+<i id="Del Verme" style="color:red;background: yellow;"></i>
 
 
 
 <script>
-// Mostra e aggiorna la risposta di Cammarano_N
-var Cammarano_N = document.getElementById("Cammarano_N");
-var dbCammarano_N = firebase.database().ref().child("4AE").child("Cammarano_N");
+// Mostra e aggiorna la risposta di Del Verme
+var Del Verme = document.getElementById("Del Verme");
+var dbDel Verme = firebase.database().ref().child("4AE").child("Del Verme");
 // tempo dell'invio
 var time = new Date().getHours() + "." + new Date().getMinutes() + "." + new Date().getSeconds();
-dbCammarano_N.on("value", snap => Cammarano_N.innerText = snap.val() + "\nInviato alle: " + time);
-dbCammarano_N.on("value", snap => n_Cammarano_N = snap.val() + "\nInviato alle: " + time)
+dbDel Verme.on("value", snap => Del Verme.innerText = snap.val() + "\nInviato alle: " + time);
+dbDel Verme.on("value", snap => n_Del Verme = snap.val() + "\nInviato alle: " + time)
 
 // Mostra punteggio dell'alunno all'alunno nella sua console
-var punteggio_Cammarano_N = document.getElementById("punteggio_Cammarano_N");
-// VEDI IL PUNTEGGIO nel child Cammarano_N di 5ae_2021_2022 (Punteggio assegnato da me)
-var dbRef1 = firebase.database().ref().child("4ae_2021_2022").child("Cammarano_N");
-dbRef1.on("value", snap => punteggio_Cammarano_N.innerText = snap.val()); // mostra il valore di n1
+var punteggio_Del Verme = document.getElementById("punteggio_Del Verme");
+// VEDI IL PUNTEGGIO nel child Del Verme di 5ae_2021_2022 (Punteggio assegnato da me)
+var dbRef1 = firebase.database().ref().child("4ae_2021_2022").child("Del Verme");
+dbRef1.on("value", snap => punteggio_Del Verme.innerText = snap.val()); // mostra il valore di n1
 
 
 // Mostra la domanda dell'insegnante in domanda_insegnante
 var domanda_insegnante = document.getElementById("domanda_insegnante");
-// VEDI IL PUNTEGGIO nel child Cammarano_N di 5ae_2021_2022 (Punteggio assegnato da me)
+// VEDI IL PUNTEGGIO nel child Del Verme di 5ae_2021_2022 (Punteggio assegnato da me)
 var dbRef1 = firebase.database().ref().child("domanda").child("insegnante");
 dbRef1.on("value", snap => domanda_insegnante.innerText = snap.val()); // mostra il valore di n1
 

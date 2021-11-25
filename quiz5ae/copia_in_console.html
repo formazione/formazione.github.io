@@ -60,6 +60,25 @@ domanda.insegnante c'è la mia domanda
   var database = firebase.database()
 </script>
 <h1>5AE 2021 202 Console Insegnante</h1>
+<!-- script per cancellare tutte le risposte inizio -->
+<script>
+var domanda_insegnante = document.getElementById("domanda_insegnante");
+var dbdomanda = firebase.database().ref().child("domanda").child("insegnante");
+dbdomanda.on("value", snap => domanda_insegnante.innerText = snap.val());
+dbdomanda.on("value", snap => inp1.value = snap.val())
+
+let classe =['Breglia','Cammarano_D','Cammarano_N','Costantini','Del Verme','Esposito','Fontana','Garofalo','Giordano','Grimaldi','Lista','Malzone','Mandia','Musto','Ruocco','Santoro','Scola_M','SCOLA_V'];
+
+function cancellaRecord(record){
+  for (n of classe){
+    var db_r = firebase.database().ref().child(record).child(n);
+    db_r.set('');
+  }
+}
+
+</script>
+
+<!-- script per cancellare tutte le risposte fine -->
 
 Risposta:<i id="domanda_insegnante"></i>
 <!-- domanda insegnante -->
@@ -73,14 +92,21 @@ dbdomanda.on("value", snap => inp1.value = snap.val())
 </script>
 
 <div id="div1" class="w3-main" style="margin-left:50px">
+<textarea id="t1"></textarea>textarea<br>
 <table class="table-bordered">
+
+
+<!-- cancella tutte le risposte e i punti => vedi cancellaRecord() -->
+<button type="button" class="btn btn-info btn-lg" onclick="cancellaRecord('4AE')">
+Cancella tutte le risposte</button>
+<button type="button" class="btn btn-info btn-lg" onclick="cancellaRecord('4ae_2021_2022')">Cancella tutti i punti</button>
 
 
 <!-- Breglia copia e cambia tutti i Breglia col nuovo nome -->
 <td>
-<button type="button" class="btn btn-warning btn-lg" onclick="dbRefBreglia.set(--nBreglia)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRefBreglia.set(++nBreglia)"> + </button>Breglia<td>
+<button type="button" class="btn btn-warning btn-lg" onclick="dbRefBreglia.set(--nBreglia)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRefBreglia.set(++nBreglia)"> + </button><a href="Breglia.html" style="color:white">Breglia</a>
 <!-- TESTO CHE MOSTRA LA RISPOSTA DI MANDIA E IL SUO PUNTEGGIO -->
-Risposta:<i id="risposta_Breglia"></i>
+:<i id="risposta_Breglia"></i>
 Punti: <i id="h1alunnoBreglia"></i></p>
 <!--               TASTI PER ASSEGNARE I PUNTI E VISUALIZZAZIONE RISPOSTA MANDIA -->
 <script>
@@ -101,9 +127,9 @@ db_risposta_Breglia.on("value", snap => n_Breglia = snap.val())</script>
 
 <!-- Cammarano_D copia e cambia tutti i Cammarano_D col nuovo nome -->
 <td>
-<button type="button" class="btn btn-warning btn-lg" onclick="dbRefCammarano_D.set(--nCammarano_D)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRefCammarano_D.set(++nCammarano_D)"> + </button>Cammarano_D<td>
+<button type="button" class="btn btn-warning btn-lg" onclick="dbRefCammarano_D.set(--nCammarano_D)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRefCammarano_D.set(++nCammarano_D)"> + </button><a href="Cammarano_D.html" style="color:white">Cammarano_D</a>
 <!-- TESTO CHE MOSTRA LA RISPOSTA DI MANDIA E IL SUO PUNTEGGIO -->
-Risposta:<i id="risposta_Cammarano_D"></i>
+:<i id="risposta_Cammarano_D"></i>
 Punti: <i id="h1alunnoCammarano_D"></i></p>
 <!--               TASTI PER ASSEGNARE I PUNTI E VISUALIZZAZIONE RISPOSTA MANDIA -->
 <script>
@@ -124,9 +150,9 @@ db_risposta_Cammarano_D.on("value", snap => n_Cammarano_D = snap.val())</script>
 
 <!-- Cammarano_N copia e cambia tutti i Cammarano_N col nuovo nome -->
 <td>
-<button type="button" class="btn btn-warning btn-lg" onclick="dbRefCammarano_N.set(--nCammarano_N)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRefCammarano_N.set(++nCammarano_N)"> + </button>Cammarano_N<td>
+<button type="button" class="btn btn-warning btn-lg" onclick="dbRefCammarano_N.set(--nCammarano_N)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRefCammarano_N.set(++nCammarano_N)"> + </button><a href="Cammarano_N.html" style="color:white">Cammarano_N</a>
 <!-- TESTO CHE MOSTRA LA RISPOSTA DI MANDIA E IL SUO PUNTEGGIO -->
-Risposta:<i id="risposta_Cammarano_N"></i>
+:<i id="risposta_Cammarano_N"></i>
 Punti: <i id="h1alunnoCammarano_N"></i></p>
 <!--               TASTI PER ASSEGNARE I PUNTI E VISUALIZZAZIONE RISPOSTA MANDIA -->
 <script>
@@ -147,9 +173,9 @@ db_risposta_Cammarano_N.on("value", snap => n_Cammarano_N = snap.val())</script>
 
 <!-- Costantini copia e cambia tutti i Costantini col nuovo nome -->
 <td>
-<button type="button" class="btn btn-warning btn-lg" onclick="dbRefCostantini.set(--nCostantini)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRefCostantini.set(++nCostantini)"> + </button>Costantini<td>
+<button type="button" class="btn btn-warning btn-lg" onclick="dbRefCostantini.set(--nCostantini)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRefCostantini.set(++nCostantini)"> + </button><a href="Costantini.html" style="color:white">Costantini</a>
 <!-- TESTO CHE MOSTRA LA RISPOSTA DI MANDIA E IL SUO PUNTEGGIO -->
-Risposta:<i id="risposta_Costantini"></i>
+:<i id="risposta_Costantini"></i>
 Punti: <i id="h1alunnoCostantini"></i></p>
 <!--               TASTI PER ASSEGNARE I PUNTI E VISUALIZZAZIONE RISPOSTA MANDIA -->
 <script>
@@ -168,34 +194,34 @@ db_risposta_Costantini.on("value", snap => n_Costantini = snap.val())</script>
 <!-- fine lista -->
 
 
-<!-- Del Verme, copia e cambia tutti i Del Verme, col nuovo nome -->
+<!-- Del Verme copia e cambia tutti i Del Verme col nuovo nome -->
 <td>
-<button type="button" class="btn btn-warning btn-lg" onclick="dbRefDel Verme,.set(--nDel Verme,)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRefDel Verme,.set(++nDel Verme,)"> + </button>Del Verme,<td>
+<button type="button" class="btn btn-warning btn-lg" onclick="dbRefDel Verme.set(--nDel Verme)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRefDel Verme.set(++nDel Verme)"> + </button><a href="Del Verme.html" style="color:white">Del Verme</a>
 <!-- TESTO CHE MOSTRA LA RISPOSTA DI MANDIA E IL SUO PUNTEGGIO -->
-Risposta:<i id="risposta_Del Verme,"></i>
-Punti: <i id="h1alunnoDel Verme,"></i></p>
+:<i id="risposta_Del Verme"></i>
+Punti: <i id="h1alunnoDel Verme"></i></p>
 <!--               TASTI PER ASSEGNARE I PUNTI E VISUALIZZAZIONE RISPOSTA MANDIA -->
 <script>
-var h1alunnoDel Verme, = document.getElementById("h1alunnoDel Verme,");
+var h1alunnoDel Verme = document.getElementById("h1alunnoDel Verme");
 // VEDI IL PUNTEGGIO nel child Mandia di 5ae_2021_2022 (Punteggio assegnato da me)
-var dbRefDel Verme, = firebase.database().ref().child("4ae_2021_2022").child("Del Verme,");
-dbRefDel Verme,.on("value", snap => h1alunnoDel Verme,.innerText = snap.val()); // mostra il valore di n1
+var dbRefDel Verme = firebase.database().ref().child("4ae_2021_2022").child("Del Verme");
+dbRefDel Verme.on("value", snap => h1alunnoDel Verme.innerText = snap.val()); // mostra il valore di n1
 // AGGIORNA PUNTEGGIO
-dbRefDel Verme,.on("value", snap => nDel Verme, = snap.val()) // Cambia il valore della variabile n1
+dbRefDel Verme.on("value", snap => nDel Verme = snap.val()) // Cambia il valore della variabile n1
 // VEDI IL PUNTEGGIO nel child Mandia di 5AE (sua risposta)
-var i_risposta_Del Verme, = document.getElementById("risposta_Del Verme,");
-var db_risposta_Del Verme, = firebase.database().ref().child("4AE").child("Del Verme,");
-db_risposta_Del Verme,.on("value", snap => i_risposta_Del Verme,.innerText = snap.val());
-db_risposta_Del Verme,.on("value", snap => n_Del Verme, = snap.val())</script>
+var i_risposta_Del Verme = document.getElementById("risposta_Del Verme");
+var db_risposta_Del Verme = firebase.database().ref().child("4AE").child("Del Verme");
+db_risposta_Del Verme.on("value", snap => i_risposta_Del Verme.innerText = snap.val());
+db_risposta_Del Verme.on("value", snap => n_Del Verme = snap.val())</script>
 <tr>
 <!-- fine lista -->
 
 
 <!-- Esposito copia e cambia tutti i Esposito col nuovo nome -->
 <td>
-<button type="button" class="btn btn-warning btn-lg" onclick="dbRefEsposito.set(--nEsposito)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRefEsposito.set(++nEsposito)"> + </button>Esposito<td>
+<button type="button" class="btn btn-warning btn-lg" onclick="dbRefEsposito.set(--nEsposito)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRefEsposito.set(++nEsposito)"> + </button><a href="Esposito.html" style="color:white">Esposito</a>
 <!-- TESTO CHE MOSTRA LA RISPOSTA DI MANDIA E IL SUO PUNTEGGIO -->
-Risposta:<i id="risposta_Esposito"></i>
+:<i id="risposta_Esposito"></i>
 Punti: <i id="h1alunnoEsposito"></i></p>
 <!--               TASTI PER ASSEGNARE I PUNTI E VISUALIZZAZIONE RISPOSTA MANDIA -->
 <script>
@@ -216,9 +242,9 @@ db_risposta_Esposito.on("value", snap => n_Esposito = snap.val())</script>
 
 <!-- Fontana copia e cambia tutti i Fontana col nuovo nome -->
 <td>
-<button type="button" class="btn btn-warning btn-lg" onclick="dbRefFontana.set(--nFontana)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRefFontana.set(++nFontana)"> + </button>Fontana<td>
+<button type="button" class="btn btn-warning btn-lg" onclick="dbRefFontana.set(--nFontana)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRefFontana.set(++nFontana)"> + </button><a href="Fontana.html" style="color:white">Fontana</a>
 <!-- TESTO CHE MOSTRA LA RISPOSTA DI MANDIA E IL SUO PUNTEGGIO -->
-Risposta:<i id="risposta_Fontana"></i>
+:<i id="risposta_Fontana"></i>
 Punti: <i id="h1alunnoFontana"></i></p>
 <!--               TASTI PER ASSEGNARE I PUNTI E VISUALIZZAZIONE RISPOSTA MANDIA -->
 <script>
@@ -239,9 +265,9 @@ db_risposta_Fontana.on("value", snap => n_Fontana = snap.val())</script>
 
 <!-- Garofalo copia e cambia tutti i Garofalo col nuovo nome -->
 <td>
-<button type="button" class="btn btn-warning btn-lg" onclick="dbRefGarofalo.set(--nGarofalo)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRefGarofalo.set(++nGarofalo)"> + </button>Garofalo<td>
+<button type="button" class="btn btn-warning btn-lg" onclick="dbRefGarofalo.set(--nGarofalo)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRefGarofalo.set(++nGarofalo)"> + </button><a href="Garofalo.html" style="color:white">Garofalo</a>
 <!-- TESTO CHE MOSTRA LA RISPOSTA DI MANDIA E IL SUO PUNTEGGIO -->
-Risposta:<i id="risposta_Garofalo"></i>
+:<i id="risposta_Garofalo"></i>
 Punti: <i id="h1alunnoGarofalo"></i></p>
 <!--               TASTI PER ASSEGNARE I PUNTI E VISUALIZZAZIONE RISPOSTA MANDIA -->
 <script>
@@ -262,9 +288,9 @@ db_risposta_Garofalo.on("value", snap => n_Garofalo = snap.val())</script>
 
 <!-- Giordano copia e cambia tutti i Giordano col nuovo nome -->
 <td>
-<button type="button" class="btn btn-warning btn-lg" onclick="dbRefGiordano.set(--nGiordano)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRefGiordano.set(++nGiordano)"> + </button>Giordano<td>
+<button type="button" class="btn btn-warning btn-lg" onclick="dbRefGiordano.set(--nGiordano)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRefGiordano.set(++nGiordano)"> + </button><a href="Giordano.html" style="color:white">Giordano</a>
 <!-- TESTO CHE MOSTRA LA RISPOSTA DI MANDIA E IL SUO PUNTEGGIO -->
-Risposta:<i id="risposta_Giordano"></i>
+:<i id="risposta_Giordano"></i>
 Punti: <i id="h1alunnoGiordano"></i></p>
 <!--               TASTI PER ASSEGNARE I PUNTI E VISUALIZZAZIONE RISPOSTA MANDIA -->
 <script>
@@ -285,9 +311,9 @@ db_risposta_Giordano.on("value", snap => n_Giordano = snap.val())</script>
 
 <!-- Grimaldi copia e cambia tutti i Grimaldi col nuovo nome -->
 <td>
-<button type="button" class="btn btn-warning btn-lg" onclick="dbRefGrimaldi.set(--nGrimaldi)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRefGrimaldi.set(++nGrimaldi)"> + </button>Grimaldi<td>
+<button type="button" class="btn btn-warning btn-lg" onclick="dbRefGrimaldi.set(--nGrimaldi)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRefGrimaldi.set(++nGrimaldi)"> + </button><a href="Grimaldi.html" style="color:white">Grimaldi</a>
 <!-- TESTO CHE MOSTRA LA RISPOSTA DI MANDIA E IL SUO PUNTEGGIO -->
-Risposta:<i id="risposta_Grimaldi"></i>
+:<i id="risposta_Grimaldi"></i>
 Punti: <i id="h1alunnoGrimaldi"></i></p>
 <!--               TASTI PER ASSEGNARE I PUNTI E VISUALIZZAZIONE RISPOSTA MANDIA -->
 <script>
@@ -308,9 +334,9 @@ db_risposta_Grimaldi.on("value", snap => n_Grimaldi = snap.val())</script>
 
 <!-- Lista copia e cambia tutti i Lista col nuovo nome -->
 <td>
-<button type="button" class="btn btn-warning btn-lg" onclick="dbRefLista.set(--nLista)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRefLista.set(++nLista)"> + </button>Lista<td>
+<button type="button" class="btn btn-warning btn-lg" onclick="dbRefLista.set(--nLista)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRefLista.set(++nLista)"> + </button><a href="Lista.html" style="color:white">Lista</a>
 <!-- TESTO CHE MOSTRA LA RISPOSTA DI MANDIA E IL SUO PUNTEGGIO -->
-Risposta:<i id="risposta_Lista"></i>
+:<i id="risposta_Lista"></i>
 Punti: <i id="h1alunnoLista"></i></p>
 <!--               TASTI PER ASSEGNARE I PUNTI E VISUALIZZAZIONE RISPOSTA MANDIA -->
 <script>
@@ -331,9 +357,9 @@ db_risposta_Lista.on("value", snap => n_Lista = snap.val())</script>
 
 <!-- Malzone copia e cambia tutti i Malzone col nuovo nome -->
 <td>
-<button type="button" class="btn btn-warning btn-lg" onclick="dbRefMalzone.set(--nMalzone)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRefMalzone.set(++nMalzone)"> + </button>Malzone<td>
+<button type="button" class="btn btn-warning btn-lg" onclick="dbRefMalzone.set(--nMalzone)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRefMalzone.set(++nMalzone)"> + </button><a href="Malzone.html" style="color:white">Malzone</a>
 <!-- TESTO CHE MOSTRA LA RISPOSTA DI MANDIA E IL SUO PUNTEGGIO -->
-Risposta:<i id="risposta_Malzone"></i>
+:<i id="risposta_Malzone"></i>
 Punti: <i id="h1alunnoMalzone"></i></p>
 <!--               TASTI PER ASSEGNARE I PUNTI E VISUALIZZAZIONE RISPOSTA MANDIA -->
 <script>
@@ -354,9 +380,9 @@ db_risposta_Malzone.on("value", snap => n_Malzone = snap.val())</script>
 
 <!-- Mandia copia e cambia tutti i Mandia col nuovo nome -->
 <td>
-<button type="button" class="btn btn-warning btn-lg" onclick="dbRefMandia.set(--nMandia)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRefMandia.set(++nMandia)"> + </button>Mandia<td>
+<button type="button" class="btn btn-warning btn-lg" onclick="dbRefMandia.set(--nMandia)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRefMandia.set(++nMandia)"> + </button><a href="Mandia.html" style="color:white">Mandia</a>
 <!-- TESTO CHE MOSTRA LA RISPOSTA DI MANDIA E IL SUO PUNTEGGIO -->
-Risposta:<i id="risposta_Mandia"></i>
+:<i id="risposta_Mandia"></i>
 Punti: <i id="h1alunnoMandia"></i></p>
 <!--               TASTI PER ASSEGNARE I PUNTI E VISUALIZZAZIONE RISPOSTA MANDIA -->
 <script>
@@ -375,34 +401,11 @@ db_risposta_Mandia.on("value", snap => n_Mandia = snap.val())</script>
 <!-- fine lista -->
 
 
-<!-- Marchesani copia e cambia tutti i Marchesani col nuovo nome -->
-<td>
-<button type="button" class="btn btn-warning btn-lg" onclick="dbRefMarchesani.set(--nMarchesani)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRefMarchesani.set(++nMarchesani)"> + </button>Marchesani<td>
-<!-- TESTO CHE MOSTRA LA RISPOSTA DI MANDIA E IL SUO PUNTEGGIO -->
-Risposta:<i id="risposta_Marchesani"></i>
-Punti: <i id="h1alunnoMarchesani"></i></p>
-<!--               TASTI PER ASSEGNARE I PUNTI E VISUALIZZAZIONE RISPOSTA MANDIA -->
-<script>
-var h1alunnoMarchesani = document.getElementById("h1alunnoMarchesani");
-// VEDI IL PUNTEGGIO nel child Mandia di 5ae_2021_2022 (Punteggio assegnato da me)
-var dbRefMarchesani = firebase.database().ref().child("4ae_2021_2022").child("Marchesani");
-dbRefMarchesani.on("value", snap => h1alunnoMarchesani.innerText = snap.val()); // mostra il valore di n1
-// AGGIORNA PUNTEGGIO
-dbRefMarchesani.on("value", snap => nMarchesani = snap.val()) // Cambia il valore della variabile n1
-// VEDI IL PUNTEGGIO nel child Mandia di 5AE (sua risposta)
-var i_risposta_Marchesani = document.getElementById("risposta_Marchesani");
-var db_risposta_Marchesani = firebase.database().ref().child("4AE").child("Marchesani");
-db_risposta_Marchesani.on("value", snap => i_risposta_Marchesani.innerText = snap.val());
-db_risposta_Marchesani.on("value", snap => n_Marchesani = snap.val())</script>
-<tr>
-<!-- fine lista -->
-
-
 <!-- Musto copia e cambia tutti i Musto col nuovo nome -->
 <td>
-<button type="button" class="btn btn-warning btn-lg" onclick="dbRefMusto.set(--nMusto)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRefMusto.set(++nMusto)"> + </button>Musto<td>
+<button type="button" class="btn btn-warning btn-lg" onclick="dbRefMusto.set(--nMusto)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRefMusto.set(++nMusto)"> + </button><a href="Musto.html" style="color:white">Musto</a>
 <!-- TESTO CHE MOSTRA LA RISPOSTA DI MANDIA E IL SUO PUNTEGGIO -->
-Risposta:<i id="risposta_Musto"></i>
+:<i id="risposta_Musto"></i>
 Punti: <i id="h1alunnoMusto"></i></p>
 <!--               TASTI PER ASSEGNARE I PUNTI E VISUALIZZAZIONE RISPOSTA MANDIA -->
 <script>
@@ -423,9 +426,9 @@ db_risposta_Musto.on("value", snap => n_Musto = snap.val())</script>
 
 <!-- Ruocco copia e cambia tutti i Ruocco col nuovo nome -->
 <td>
-<button type="button" class="btn btn-warning btn-lg" onclick="dbRefRuocco.set(--nRuocco)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRefRuocco.set(++nRuocco)"> + </button>Ruocco<td>
+<button type="button" class="btn btn-warning btn-lg" onclick="dbRefRuocco.set(--nRuocco)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRefRuocco.set(++nRuocco)"> + </button><a href="Ruocco.html" style="color:white">Ruocco</a>
 <!-- TESTO CHE MOSTRA LA RISPOSTA DI MANDIA E IL SUO PUNTEGGIO -->
-Risposta:<i id="risposta_Ruocco"></i>
+:<i id="risposta_Ruocco"></i>
 Punti: <i id="h1alunnoRuocco"></i></p>
 <!--               TASTI PER ASSEGNARE I PUNTI E VISUALIZZAZIONE RISPOSTA MANDIA -->
 <script>
@@ -446,9 +449,9 @@ db_risposta_Ruocco.on("value", snap => n_Ruocco = snap.val())</script>
 
 <!-- Santoro copia e cambia tutti i Santoro col nuovo nome -->
 <td>
-<button type="button" class="btn btn-warning btn-lg" onclick="dbRefSantoro.set(--nSantoro)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRefSantoro.set(++nSantoro)"> + </button>Santoro<td>
+<button type="button" class="btn btn-warning btn-lg" onclick="dbRefSantoro.set(--nSantoro)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRefSantoro.set(++nSantoro)"> + </button><a href="Santoro.html" style="color:white">Santoro</a>
 <!-- TESTO CHE MOSTRA LA RISPOSTA DI MANDIA E IL SUO PUNTEGGIO -->
-Risposta:<i id="risposta_Santoro"></i>
+:<i id="risposta_Santoro"></i>
 Punti: <i id="h1alunnoSantoro"></i></p>
 <!--               TASTI PER ASSEGNARE I PUNTI E VISUALIZZAZIONE RISPOSTA MANDIA -->
 <script>
@@ -469,9 +472,9 @@ db_risposta_Santoro.on("value", snap => n_Santoro = snap.val())</script>
 
 <!-- Scola_M copia e cambia tutti i Scola_M col nuovo nome -->
 <td>
-<button type="button" class="btn btn-warning btn-lg" onclick="dbRefScola_M.set(--nScola_M)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRefScola_M.set(++nScola_M)"> + </button>Scola_M<td>
+<button type="button" class="btn btn-warning btn-lg" onclick="dbRefScola_M.set(--nScola_M)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRefScola_M.set(++nScola_M)"> + </button><a href="Scola_M.html" style="color:white">Scola_M</a>
 <!-- TESTO CHE MOSTRA LA RISPOSTA DI MANDIA E IL SUO PUNTEGGIO -->
-Risposta:<i id="risposta_Scola_M"></i>
+:<i id="risposta_Scola_M"></i>
 Punti: <i id="h1alunnoScola_M"></i></p>
 <!--               TASTI PER ASSEGNARE I PUNTI E VISUALIZZAZIONE RISPOSTA MANDIA -->
 <script>
@@ -492,9 +495,9 @@ db_risposta_Scola_M.on("value", snap => n_Scola_M = snap.val())</script>
 
 <!-- SCOLA_V copia e cambia tutti i SCOLA_V col nuovo nome -->
 <td>
-<button type="button" class="btn btn-warning btn-lg" onclick="dbRefSCOLA_V.set(--nSCOLA_V)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRefSCOLA_V.set(++nSCOLA_V)"> + </button>SCOLA_V<td>
+<button type="button" class="btn btn-warning btn-lg" onclick="dbRefSCOLA_V.set(--nSCOLA_V)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRefSCOLA_V.set(++nSCOLA_V)"> + </button><a href="SCOLA_V.html" style="color:white">SCOLA_V</a>
 <!-- TESTO CHE MOSTRA LA RISPOSTA DI MANDIA E IL SUO PUNTEGGIO -->
-Risposta:<i id="risposta_SCOLA_V"></i>
+:<i id="risposta_SCOLA_V"></i>
 Punti: <i id="h1alunnoSCOLA_V"></i></p>
 <!--               TASTI PER ASSEGNARE I PUNTI E VISUALIZZAZIONE RISPOSTA MANDIA -->
 <script>
