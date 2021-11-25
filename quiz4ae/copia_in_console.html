@@ -60,6 +60,25 @@ domanda.insegnante c'è la mia domanda
   var database = firebase.database()
 </script>
 <h1>5AE 2021 202 Console Insegnante</h1>
+<!-- script per cancellare tutte le risposte inizio -->
+<script>
+var domanda_insegnante = document.getElementById("domanda_insegnante");
+var dbdomanda = firebase.database().ref().child("domanda").child("insegnante");
+dbdomanda.on("value", snap => domanda_insegnante.innerText = snap.val());
+dbdomanda.on("value", snap => inp1.value = snap.val())
+
+let classe =['balbi','bertolini','cuda','divivo','iuliano','lapastina','lakrad','maffia','mercanti','nese','niglio','pica','spinelli'];
+
+function cancellaRecord(record){
+  for (n of classe){
+    var db_r = firebase.database().ref().child(record).child(n);
+    db_r.set('');
+  }
+}
+
+</script>
+
+<!-- script per cancellare tutte le risposte fine -->
 
 Risposta:<i id="domanda_insegnante"></i>
 <!-- domanda insegnante -->
@@ -76,11 +95,17 @@ dbdomanda.on("value", snap => inp1.value = snap.val())
 <table class="table-bordered">
 
 
+<!-- cancella tutte le risposte e i punti => vedi cancellaRecord() -->
+<button type="button" class="btn btn-info btn-lg" onclick="cancellaRecord('4AE')">
+Cancella tutte le risposte</button>
+<button type="button" class="btn btn-info btn-lg" onclick="cancellaRecord('4ae_2021_2022')">Cancella tutti i punti</button>
+
+
 <!-- balbi copia e cambia tutti i balbi col nuovo nome -->
 <td>
-<button type="button" class="btn btn-warning btn-lg" onclick="dbRefbalbi.set(--nbalbi)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRefbalbi.set(++nbalbi)"> + </button>balbi<td>
+<button type="button" class="btn btn-warning btn-lg" onclick="dbRefbalbi.set(--nbalbi)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRefbalbi.set(++nbalbi)"> + </button><a href="balbi.html" style="color:white">balbi</a>
 <!-- TESTO CHE MOSTRA LA RISPOSTA DI MANDIA E IL SUO PUNTEGGIO -->
-Risposta:<i id="risposta_balbi"></i>
+:<i id="risposta_balbi"></i>
 Punti: <i id="h1alunnobalbi"></i></p>
 <!--               TASTI PER ASSEGNARE I PUNTI E VISUALIZZAZIONE RISPOSTA MANDIA -->
 <script>
@@ -101,9 +126,9 @@ db_risposta_balbi.on("value", snap => n_balbi = snap.val())</script>
 
 <!-- bertolini copia e cambia tutti i bertolini col nuovo nome -->
 <td>
-<button type="button" class="btn btn-warning btn-lg" onclick="dbRefbertolini.set(--nbertolini)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRefbertolini.set(++nbertolini)"> + </button>bertolini<td>
+<button type="button" class="btn btn-warning btn-lg" onclick="dbRefbertolini.set(--nbertolini)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRefbertolini.set(++nbertolini)"> + </button><a href="bertolini.html" style="color:white">bertolini</a>
 <!-- TESTO CHE MOSTRA LA RISPOSTA DI MANDIA E IL SUO PUNTEGGIO -->
-Risposta:<i id="risposta_bertolini"></i>
+:<i id="risposta_bertolini"></i>
 Punti: <i id="h1alunnobertolini"></i></p>
 <!--               TASTI PER ASSEGNARE I PUNTI E VISUALIZZAZIONE RISPOSTA MANDIA -->
 <script>
@@ -124,9 +149,9 @@ db_risposta_bertolini.on("value", snap => n_bertolini = snap.val())</script>
 
 <!-- cuda copia e cambia tutti i cuda col nuovo nome -->
 <td>
-<button type="button" class="btn btn-warning btn-lg" onclick="dbRefcuda.set(--ncuda)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRefcuda.set(++ncuda)"> + </button>cuda<td>
+<button type="button" class="btn btn-warning btn-lg" onclick="dbRefcuda.set(--ncuda)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRefcuda.set(++ncuda)"> + </button><a href="cuda.html" style="color:white">cuda</a>
 <!-- TESTO CHE MOSTRA LA RISPOSTA DI MANDIA E IL SUO PUNTEGGIO -->
-Risposta:<i id="risposta_cuda"></i>
+:<i id="risposta_cuda"></i>
 Punti: <i id="h1alunnocuda"></i></p>
 <!--               TASTI PER ASSEGNARE I PUNTI E VISUALIZZAZIONE RISPOSTA MANDIA -->
 <script>
@@ -147,9 +172,9 @@ db_risposta_cuda.on("value", snap => n_cuda = snap.val())</script>
 
 <!-- divivo copia e cambia tutti i divivo col nuovo nome -->
 <td>
-<button type="button" class="btn btn-warning btn-lg" onclick="dbRefdivivo.set(--ndivivo)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRefdivivo.set(++ndivivo)"> + </button>divivo<td>
+<button type="button" class="btn btn-warning btn-lg" onclick="dbRefdivivo.set(--ndivivo)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRefdivivo.set(++ndivivo)"> + </button><a href="divivo.html" style="color:white">divivo</a>
 <!-- TESTO CHE MOSTRA LA RISPOSTA DI MANDIA E IL SUO PUNTEGGIO -->
-Risposta:<i id="risposta_divivo"></i>
+:<i id="risposta_divivo"></i>
 Punti: <i id="h1alunnodivivo"></i></p>
 <!--               TASTI PER ASSEGNARE I PUNTI E VISUALIZZAZIONE RISPOSTA MANDIA -->
 <script>
@@ -170,9 +195,9 @@ db_risposta_divivo.on("value", snap => n_divivo = snap.val())</script>
 
 <!-- iuliano copia e cambia tutti i iuliano col nuovo nome -->
 <td>
-<button type="button" class="btn btn-warning btn-lg" onclick="dbRefiuliano.set(--niuliano)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRefiuliano.set(++niuliano)"> + </button>iuliano<td>
+<button type="button" class="btn btn-warning btn-lg" onclick="dbRefiuliano.set(--niuliano)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRefiuliano.set(++niuliano)"> + </button><a href="iuliano.html" style="color:white">iuliano</a>
 <!-- TESTO CHE MOSTRA LA RISPOSTA DI MANDIA E IL SUO PUNTEGGIO -->
-Risposta:<i id="risposta_iuliano"></i>
+:<i id="risposta_iuliano"></i>
 Punti: <i id="h1alunnoiuliano"></i></p>
 <!--               TASTI PER ASSEGNARE I PUNTI E VISUALIZZAZIONE RISPOSTA MANDIA -->
 <script>
@@ -193,9 +218,9 @@ db_risposta_iuliano.on("value", snap => n_iuliano = snap.val())</script>
 
 <!-- lapastina copia e cambia tutti i lapastina col nuovo nome -->
 <td>
-<button type="button" class="btn btn-warning btn-lg" onclick="dbReflapastina.set(--nlapastina)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbReflapastina.set(++nlapastina)"> + </button>lapastina<td>
+<button type="button" class="btn btn-warning btn-lg" onclick="dbReflapastina.set(--nlapastina)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbReflapastina.set(++nlapastina)"> + </button><a href="lapastina.html" style="color:white">lapastina</a>
 <!-- TESTO CHE MOSTRA LA RISPOSTA DI MANDIA E IL SUO PUNTEGGIO -->
-Risposta:<i id="risposta_lapastina"></i>
+:<i id="risposta_lapastina"></i>
 Punti: <i id="h1alunnolapastina"></i></p>
 <!--               TASTI PER ASSEGNARE I PUNTI E VISUALIZZAZIONE RISPOSTA MANDIA -->
 <script>
@@ -216,9 +241,9 @@ db_risposta_lapastina.on("value", snap => n_lapastina = snap.val())</script>
 
 <!-- lakrad copia e cambia tutti i lakrad col nuovo nome -->
 <td>
-<button type="button" class="btn btn-warning btn-lg" onclick="dbReflakrad.set(--nlakrad)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbReflakrad.set(++nlakrad)"> + </button>lakrad<td>
+<button type="button" class="btn btn-warning btn-lg" onclick="dbReflakrad.set(--nlakrad)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbReflakrad.set(++nlakrad)"> + </button><a href="lakrad.html" style="color:white">lakrad</a>
 <!-- TESTO CHE MOSTRA LA RISPOSTA DI MANDIA E IL SUO PUNTEGGIO -->
-Risposta:<i id="risposta_lakrad"></i>
+:<i id="risposta_lakrad"></i>
 Punti: <i id="h1alunnolakrad"></i></p>
 <!--               TASTI PER ASSEGNARE I PUNTI E VISUALIZZAZIONE RISPOSTA MANDIA -->
 <script>
@@ -239,9 +264,9 @@ db_risposta_lakrad.on("value", snap => n_lakrad = snap.val())</script>
 
 <!-- maffia copia e cambia tutti i maffia col nuovo nome -->
 <td>
-<button type="button" class="btn btn-warning btn-lg" onclick="dbRefmaffia.set(--nmaffia)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRefmaffia.set(++nmaffia)"> + </button>maffia<td>
+<button type="button" class="btn btn-warning btn-lg" onclick="dbRefmaffia.set(--nmaffia)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRefmaffia.set(++nmaffia)"> + </button><a href="maffia.html" style="color:white">maffia</a>
 <!-- TESTO CHE MOSTRA LA RISPOSTA DI MANDIA E IL SUO PUNTEGGIO -->
-Risposta:<i id="risposta_maffia"></i>
+:<i id="risposta_maffia"></i>
 Punti: <i id="h1alunnomaffia"></i></p>
 <!--               TASTI PER ASSEGNARE I PUNTI E VISUALIZZAZIONE RISPOSTA MANDIA -->
 <script>
@@ -262,9 +287,9 @@ db_risposta_maffia.on("value", snap => n_maffia = snap.val())</script>
 
 <!-- mercanti copia e cambia tutti i mercanti col nuovo nome -->
 <td>
-<button type="button" class="btn btn-warning btn-lg" onclick="dbRefmercanti.set(--nmercanti)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRefmercanti.set(++nmercanti)"> + </button>mercanti<td>
+<button type="button" class="btn btn-warning btn-lg" onclick="dbRefmercanti.set(--nmercanti)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRefmercanti.set(++nmercanti)"> + </button><a href="mercanti.html" style="color:white">mercanti</a>
 <!-- TESTO CHE MOSTRA LA RISPOSTA DI MANDIA E IL SUO PUNTEGGIO -->
-Risposta:<i id="risposta_mercanti"></i>
+:<i id="risposta_mercanti"></i>
 Punti: <i id="h1alunnomercanti"></i></p>
 <!--               TASTI PER ASSEGNARE I PUNTI E VISUALIZZAZIONE RISPOSTA MANDIA -->
 <script>
@@ -285,9 +310,9 @@ db_risposta_mercanti.on("value", snap => n_mercanti = snap.val())</script>
 
 <!-- nese copia e cambia tutti i nese col nuovo nome -->
 <td>
-<button type="button" class="btn btn-warning btn-lg" onclick="dbRefnese.set(--nnese)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRefnese.set(++nnese)"> + </button>nese<td>
+<button type="button" class="btn btn-warning btn-lg" onclick="dbRefnese.set(--nnese)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRefnese.set(++nnese)"> + </button><a href="nese.html" style="color:white">nese</a>
 <!-- TESTO CHE MOSTRA LA RISPOSTA DI MANDIA E IL SUO PUNTEGGIO -->
-Risposta:<i id="risposta_nese"></i>
+:<i id="risposta_nese"></i>
 Punti: <i id="h1alunnonese"></i></p>
 <!--               TASTI PER ASSEGNARE I PUNTI E VISUALIZZAZIONE RISPOSTA MANDIA -->
 <script>
@@ -308,9 +333,9 @@ db_risposta_nese.on("value", snap => n_nese = snap.val())</script>
 
 <!-- niglio copia e cambia tutti i niglio col nuovo nome -->
 <td>
-<button type="button" class="btn btn-warning btn-lg" onclick="dbRefniglio.set(--nniglio)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRefniglio.set(++nniglio)"> + </button>niglio<td>
+<button type="button" class="btn btn-warning btn-lg" onclick="dbRefniglio.set(--nniglio)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRefniglio.set(++nniglio)"> + </button><a href="niglio.html" style="color:white">niglio</a>
 <!-- TESTO CHE MOSTRA LA RISPOSTA DI MANDIA E IL SUO PUNTEGGIO -->
-Risposta:<i id="risposta_niglio"></i>
+:<i id="risposta_niglio"></i>
 Punti: <i id="h1alunnoniglio"></i></p>
 <!--               TASTI PER ASSEGNARE I PUNTI E VISUALIZZAZIONE RISPOSTA MANDIA -->
 <script>
@@ -331,9 +356,9 @@ db_risposta_niglio.on("value", snap => n_niglio = snap.val())</script>
 
 <!-- pica copia e cambia tutti i pica col nuovo nome -->
 <td>
-<button type="button" class="btn btn-warning btn-lg" onclick="dbRefpica.set(--npica)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRefpica.set(++npica)"> + </button>pica<td>
+<button type="button" class="btn btn-warning btn-lg" onclick="dbRefpica.set(--npica)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRefpica.set(++npica)"> + </button><a href="pica.html" style="color:white">pica</a>
 <!-- TESTO CHE MOSTRA LA RISPOSTA DI MANDIA E IL SUO PUNTEGGIO -->
-Risposta:<i id="risposta_pica"></i>
+:<i id="risposta_pica"></i>
 Punti: <i id="h1alunnopica"></i></p>
 <!--               TASTI PER ASSEGNARE I PUNTI E VISUALIZZAZIONE RISPOSTA MANDIA -->
 <script>
@@ -354,9 +379,9 @@ db_risposta_pica.on("value", snap => n_pica = snap.val())</script>
 
 <!-- spinelli copia e cambia tutti i spinelli col nuovo nome -->
 <td>
-<button type="button" class="btn btn-warning btn-lg" onclick="dbRefspinelli.set(--nspinelli)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRefspinelli.set(++nspinelli)"> + </button>spinelli<td>
+<button type="button" class="btn btn-warning btn-lg" onclick="dbRefspinelli.set(--nspinelli)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRefspinelli.set(++nspinelli)"> + </button><a href="spinelli.html" style="color:white">spinelli</a>
 <!-- TESTO CHE MOSTRA LA RISPOSTA DI MANDIA E IL SUO PUNTEGGIO -->
-Risposta:<i id="risposta_spinelli"></i>
+:<i id="risposta_spinelli"></i>
 Punti: <i id="h1alunnospinelli"></i></p>
 <!--               TASTI PER ASSEGNARE I PUNTI E VISUALIZZAZIONE RISPOSTA MANDIA -->
 <script>

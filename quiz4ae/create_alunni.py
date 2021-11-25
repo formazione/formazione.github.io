@@ -115,6 +115,25 @@ domanda.insegnante c'è la mia domanda
   var database = firebase.database()
 </script>
 <h1>5AE 2021 202 Console Insegnante</h1>
+<!-- script per cancellare tutte le risposte inizio -->
+<script>
+var domanda_insegnante = document.getElementById("domanda_insegnante");
+var dbdomanda = firebase.database().ref().child("domanda").child("insegnante");
+dbdomanda.on("value", snap => domanda_insegnante.innerText = snap.val());
+dbdomanda.on("value", snap => inp1.value = snap.val())
+
+[classe]
+
+function cancellaRecord(record){
+  for (n of classe){
+    var db_r = firebase.database().ref().child(record).child(n);
+    db_r.set('');
+  }
+}
+
+</script>
+
+<!-- script per cancellare tutte le risposte fine -->
 
 Risposta:<i id="domanda_insegnante"></i>
 <!-- domanda insegnante -->
@@ -130,14 +149,20 @@ dbdomanda.on("value", snap => inp1.value = snap.val())
 <div id="div1" class="w3-main" style="margin-left:50px">
 <table class="table-bordered">
 
+
+<!-- cancella tutte le risposte e i punti => vedi cancellaRecord() -->
+<button type="button" class="btn btn-info btn-lg" onclick="cancellaRecord('4AE')">
+Cancella tutte le risposte</button>
+<button type="button" class="btn btn-info btn-lg" onclick="cancellaRecord('4ae_2021_2022')">Cancella tutti i punti</button>
+
 """
 
 console = """
 <!-- musto copia e cambia tutti i musto col nuovo nome -->
 <td>
-<button type="button" class="btn btn-warning btn-lg" onclick="dbRefmusto.set(--nmusto)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRefmusto.set(++nmusto)"> + </button>musto<td>
+<button type="button" class="btn btn-warning btn-lg" onclick="dbRefmusto.set(--nmusto)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRefmusto.set(++nmusto)"> + </button><a href="musto.html" style="color:white">musto</a>
 <!-- TESTO CHE MOSTRA LA RISPOSTA DI MANDIA E IL SUO PUNTEGGIO -->
-Risposta:<i id="risposta_musto"></i>
+:<i id="risposta_musto"></i>
 Punti: <i id="h1alunnomusto"></i></p>
 <!--               TASTI PER ASSEGNARE I PUNTI E VISUALIZZAZIONE RISPOSTA MANDIA -->
 <script>
@@ -157,6 +182,8 @@ db_risposta_musto.on("value", snap => n_musto = snap.val())</script>
 
 """
 
+str_classe = "let classe =['" + "','".join(classe) + "'];"
+html = html.replace("[classe]", str_classe)
 
 for alunno in classe:
 	# create file for single pupil
