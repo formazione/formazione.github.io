@@ -34,7 +34,10 @@ Domanda:
 </script>
 <br>Scrivi:
 <textarea id="inp1" onchange="dbnese.set(this.value)" rows=3 style="width:100%"></textarea><br><br>
-<button type="button" class="btn btn-info btn-lg" onclick="dbnese.set(inp1.value + ' -> ' + get_time())">INVIA</button>
+<script>
+let nese_arr = [];
+  </script>
+<button type="button" class="btn btn-info btn-lg" onclick="nese_arr.push('\n' + domanda_insegnante.innerText + ' - risposta:' + inp1.value + ' alle:(' + get_time() + ')\n');dbnese.set(nese_arr);">INVIA</button>
 <button type="button" class="btn btn-info btn-lg" onclick="dbnese.set('');inp1.value=''">Canc</button>
     <br>
 Risposta inviata: <br>
@@ -43,13 +46,14 @@ Risposta inviata: <br>
 
 
 <script>
-// Mostra e aggiorna la risposta di nese
+// RISPOSTA MUSTO
 var nese = document.getElementById("nese");
+// RECORD RISPOSTA MUSTA DOVE E' MEMORIZZATA
 var dbnese = firebase.database().ref().child("4AE").child("nese");
-// tempo dell'invio
+// TEMPO DELL'INVIO PER VEDERE CHI E' PIU' VELOCE
 var time = new Date().getHours() + "." + new Date().getMinutes() + "." + new Date().getSeconds();
-dbnese.on("value", snap => nese.innerText = snap.val() + "\nInviato alle: " + time);
-dbnese.on("value", snap => n_nese = snap.val() + "\nInviato alle: " + time)
+dbnese.on("value", snap => nese.innerText = snap.val() + "\nInizio: " + time);
+// dbnese.on("value", snap => n_nese = snap.val() + "\nInviato alle: " + time)
 
 // Mostra punteggio dell'alunno all'alunno nella sua console
 var punteggio_nese = document.getElementById("punteggio_nese");

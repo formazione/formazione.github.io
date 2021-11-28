@@ -34,7 +34,10 @@ Domanda:
 </script>
 <br>Scrivi:
 <textarea id="inp1" onchange="dbcuda.set(this.value)" rows=3 style="width:100%"></textarea><br><br>
-<button type="button" class="btn btn-info btn-lg" onclick="dbcuda.set(inp1.value + ' -> ' + get_time())">INVIA</button>
+<script>
+let cuda_arr = [];
+  </script>
+<button type="button" class="btn btn-info btn-lg" onclick="cuda_arr.push('\n' + domanda_insegnante.innerText + ' - risposta:' + inp1.value + ' alle:(' + get_time() + ')\n');dbcuda.set(cuda_arr);">INVIA</button>
 <button type="button" class="btn btn-info btn-lg" onclick="dbcuda.set('');inp1.value=''">Canc</button>
     <br>
 Risposta inviata: <br>
@@ -43,13 +46,14 @@ Risposta inviata: <br>
 
 
 <script>
-// Mostra e aggiorna la risposta di cuda
+// RISPOSTA MUSTO
 var cuda = document.getElementById("cuda");
+// RECORD RISPOSTA MUSTA DOVE E' MEMORIZZATA
 var dbcuda = firebase.database().ref().child("4AE").child("cuda");
-// tempo dell'invio
+// TEMPO DELL'INVIO PER VEDERE CHI E' PIU' VELOCE
 var time = new Date().getHours() + "." + new Date().getMinutes() + "." + new Date().getSeconds();
-dbcuda.on("value", snap => cuda.innerText = snap.val() + "\nInviato alle: " + time);
-dbcuda.on("value", snap => n_cuda = snap.val() + "\nInviato alle: " + time)
+dbcuda.on("value", snap => cuda.innerText = snap.val() + "\nInizio: " + time);
+// dbcuda.on("value", snap => n_cuda = snap.val() + "\nInviato alle: " + time)
 
 // Mostra punteggio dell'alunno all'alunno nella sua console
 var punteggio_cuda = document.getElementById("punteggio_cuda");

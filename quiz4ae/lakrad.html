@@ -34,7 +34,10 @@ Domanda:
 </script>
 <br>Scrivi:
 <textarea id="inp1" onchange="dblakrad.set(this.value)" rows=3 style="width:100%"></textarea><br><br>
-<button type="button" class="btn btn-info btn-lg" onclick="dblakrad.set(inp1.value + ' -> ' + get_time())">INVIA</button>
+<script>
+let lakrad_arr = [];
+  </script>
+<button type="button" class="btn btn-info btn-lg" onclick="lakrad_arr.push('\n' + domanda_insegnante.innerText + ' - risposta:' + inp1.value + ' alle:(' + get_time() + ')\n');dblakrad.set(lakrad_arr);">INVIA</button>
 <button type="button" class="btn btn-info btn-lg" onclick="dblakrad.set('');inp1.value=''">Canc</button>
     <br>
 Risposta inviata: <br>
@@ -43,13 +46,14 @@ Risposta inviata: <br>
 
 
 <script>
-// Mostra e aggiorna la risposta di lakrad
+// RISPOSTA MUSTO
 var lakrad = document.getElementById("lakrad");
+// RECORD RISPOSTA MUSTA DOVE E' MEMORIZZATA
 var dblakrad = firebase.database().ref().child("4AE").child("lakrad");
-// tempo dell'invio
+// TEMPO DELL'INVIO PER VEDERE CHI E' PIU' VELOCE
 var time = new Date().getHours() + "." + new Date().getMinutes() + "." + new Date().getSeconds();
-dblakrad.on("value", snap => lakrad.innerText = snap.val() + "\nInviato alle: " + time);
-dblakrad.on("value", snap => n_lakrad = snap.val() + "\nInviato alle: " + time)
+dblakrad.on("value", snap => lakrad.innerText = snap.val() + "\nInizio: " + time);
+// dblakrad.on("value", snap => n_lakrad = snap.val() + "\nInviato alle: " + time)
 
 // Mostra punteggio dell'alunno all'alunno nella sua console
 var punteggio_lakrad = document.getElementById("punteggio_lakrad");

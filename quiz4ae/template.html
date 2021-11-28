@@ -34,7 +34,10 @@ Domanda:
 </script>
 <br>Scrivi:
 <textarea id="inp1" onchange="dbmusto.set(this.value)" rows=3 style="width:100%"></textarea><br><br>
-<button type="button" class="btn btn-info btn-lg" onclick="dbmusto.set(inp1.value + ' -> ' + get_time())">INVIA</button>
+<script>
+let musto_arr = [];
+  </script>
+<button type="button" class="btn btn-info btn-lg" onclick="musto_arr.push('\n' + domanda_insegnante.innerText + ' - risposta:' + inp1.value + ' alle:(' + get_time() + ')\n');dbmusto.set(musto_arr);">INVIA</button>
 <button type="button" class="btn btn-info btn-lg" onclick="dbmusto.set('');inp1.value=''">Canc</button>
     <br>
 Risposta inviata: <br>
@@ -43,13 +46,14 @@ Risposta inviata: <br>
 
 
 <script>
-// Mostra e aggiorna la risposta di musto
+// RISPOSTA MUSTO
 var musto = document.getElementById("musto");
+// RECORD RISPOSTA MUSTA DOVE E' MEMORIZZATA
 var dbmusto = firebase.database().ref().child("4AE").child("musto");
-// tempo dell'invio
+// TEMPO DELL'INVIO PER VEDERE CHI E' PIU' VELOCE
 var time = new Date().getHours() + "." + new Date().getMinutes() + "." + new Date().getSeconds();
-dbmusto.on("value", snap => musto.innerText = snap.val() + "\nInviato alle: " + time);
-dbmusto.on("value", snap => n_musto = snap.val() + "\nInviato alle: " + time)
+dbmusto.on("value", snap => musto.innerText = snap.val() + "\nInizio: " + time);
+// dbmusto.on("value", snap => n_musto = snap.val() + "\nInviato alle: " + time)
 
 // Mostra punteggio dell'alunno all'alunno nella sua console
 var punteggio_musto = document.getElementById("punteggio_musto");

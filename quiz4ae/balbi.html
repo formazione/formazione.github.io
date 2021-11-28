@@ -34,7 +34,10 @@ Domanda:
 </script>
 <br>Scrivi:
 <textarea id="inp1" onchange="dbbalbi.set(this.value)" rows=3 style="width:100%"></textarea><br><br>
-<button type="button" class="btn btn-info btn-lg" onclick="dbbalbi.set(inp1.value + ' -> ' + get_time())">INVIA</button>
+<script>
+let balbi_arr = [];
+  </script>
+<button type="button" class="btn btn-info btn-lg" onclick="balbi_arr.push('\n' + domanda_insegnante.innerText + ' - risposta:' + inp1.value + ' alle:(' + get_time() + ')\n');dbbalbi.set(balbi_arr);">INVIA</button>
 <button type="button" class="btn btn-info btn-lg" onclick="dbbalbi.set('');inp1.value=''">Canc</button>
     <br>
 Risposta inviata: <br>
@@ -43,13 +46,14 @@ Risposta inviata: <br>
 
 
 <script>
-// Mostra e aggiorna la risposta di balbi
+// RISPOSTA MUSTO
 var balbi = document.getElementById("balbi");
+// RECORD RISPOSTA MUSTA DOVE E' MEMORIZZATA
 var dbbalbi = firebase.database().ref().child("4AE").child("balbi");
-// tempo dell'invio
+// TEMPO DELL'INVIO PER VEDERE CHI E' PIU' VELOCE
 var time = new Date().getHours() + "." + new Date().getMinutes() + "." + new Date().getSeconds();
-dbbalbi.on("value", snap => balbi.innerText = snap.val() + "\nInviato alle: " + time);
-dbbalbi.on("value", snap => n_balbi = snap.val() + "\nInviato alle: " + time)
+dbbalbi.on("value", snap => balbi.innerText = snap.val() + "\nInizio: " + time);
+// dbbalbi.on("value", snap => n_balbi = snap.val() + "\nInviato alle: " + time)
 
 // Mostra punteggio dell'alunno all'alunno nella sua console
 var punteggio_balbi = document.getElementById("punteggio_balbi");

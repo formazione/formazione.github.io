@@ -34,7 +34,10 @@ Domanda:
 </script>
 <br>Scrivi:
 <textarea id="inp1" onchange="dbniglio.set(this.value)" rows=3 style="width:100%"></textarea><br><br>
-<button type="button" class="btn btn-info btn-lg" onclick="dbniglio.set(inp1.value + ' -> ' + get_time())">INVIA</button>
+<script>
+let niglio_arr = [];
+  </script>
+<button type="button" class="btn btn-info btn-lg" onclick="niglio_arr.push('\n' + domanda_insegnante.innerText + ' - risposta:' + inp1.value + ' alle:(' + get_time() + ')\n');dbniglio.set(niglio_arr);">INVIA</button>
 <button type="button" class="btn btn-info btn-lg" onclick="dbniglio.set('');inp1.value=''">Canc</button>
     <br>
 Risposta inviata: <br>
@@ -43,13 +46,14 @@ Risposta inviata: <br>
 
 
 <script>
-// Mostra e aggiorna la risposta di niglio
+// RISPOSTA MUSTO
 var niglio = document.getElementById("niglio");
+// RECORD RISPOSTA MUSTA DOVE E' MEMORIZZATA
 var dbniglio = firebase.database().ref().child("4AE").child("niglio");
-// tempo dell'invio
+// TEMPO DELL'INVIO PER VEDERE CHI E' PIU' VELOCE
 var time = new Date().getHours() + "." + new Date().getMinutes() + "." + new Date().getSeconds();
-dbniglio.on("value", snap => niglio.innerText = snap.val() + "\nInviato alle: " + time);
-dbniglio.on("value", snap => n_niglio = snap.val() + "\nInviato alle: " + time)
+dbniglio.on("value", snap => niglio.innerText = snap.val() + "\nInizio: " + time);
+// dbniglio.on("value", snap => n_niglio = snap.val() + "\nInviato alle: " + time)
 
 // Mostra punteggio dell'alunno all'alunno nella sua console
 var punteggio_niglio = document.getElementById("punteggio_niglio");
