@@ -78,25 +78,54 @@ function cancellaRecord(record){
 
 </script>
 
-<!-- script per cancellare tutte le risposte fine -->
+<!---------------------- DOVE INSERISCI LA DOMANDA  ------------------>
 
-Risposta:<i id="domanda_insegnante"></i>
-<!-- domanda insegnante -->
-<input type="text" class="inp1" onchange="dbdomanda.set(this.value)">
+<textarea id="inp1"></textarea><br>
+<button type="button" class="btn btn-info btn-lg" onclick="dbdomanda.set(inp1.value)">
+INVIA DOMANDA AGLI ALUNNI</button><br>
 <script>
 var domanda_insegnante = document.getElementById("domanda_insegnante");
+var inp1 = document.getElementById("inp1")
 var dbdomanda = firebase.database().ref().child("domanda").child("insegnante");
-dbdomanda.on("value", snap => domanda_insegnante.innerText = snap.val());
+// dbdomanda.on("value", snap => domanda_insegnante.innerText = snap.val());
+dbdomanda.on("value", snap => inp1.value = snap.val())
+
+
+
+<script>
+var domanda_insegnante = document.getElementById("domanda_insegnante");
+var inp1 = document.getElementById("inp1")
+var dbdomanda = firebase.database().ref().child("domanda").child("insegnante");
+// dbdomanda.on("value", snap => domanda_insegnante.innerText = snap.val());
 dbdomanda.on("value", snap => inp1.value = snap.val())
 
 </script>
 
+
+<!--------------------------- TEXTAREA X MEMO ------------------------>
+
+<textarea id="t1"></textarea><br>
+<!-- <i id="t1show"></i><br> -->
+
 <div id="div1" class="w3-main" style="margin-left:50px">
-<textarea id="t1"></textarea>textarea<br>
 <table class="table-bordered">
+<!-- codice per la textarea con i memo -->
+  <script>
+var t1 = document.getElementById("t1")
+// var t1show = document.getElementById("t1show")
+var dbmemo = firebase.database().ref().child("domanda").child("memo");
+// dbmemo.on("value", snap => t1show.innerText = snap.val());
+dbmemo.on("value", snap => t1.value = snap.val())
+  </script>
+<button type="button" class="btn btn-info btn-lg" onclick="dbmemo.set(t1.value)">
+Memorizza memo nella Textarea</button><br>
 
 
-<!-- cancella tutte le risposte e i punti => vedi cancellaRecord() -->
+
+
+<!-- CANCELLA DOMANDE E PUNTI -->
+
+
 <button type="button" class="btn btn-info btn-lg" onclick="cancellaRecord('4AE')">
 Cancella tutte le risposte</button>
 <button type="button" class="btn btn-info btn-lg" onclick="cancellaRecord('4ae_2021_2022')">Cancella tutti i punti</button>

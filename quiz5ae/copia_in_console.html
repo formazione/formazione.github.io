@@ -62,7 +62,7 @@ domanda.insegnante c'è la mia domanda
 <h1>5AE 2021 202 Console Insegnante</h1>
 <!-- script per cancellare tutte le risposte inizio -->
 <script>
-var domanda_insegnante = document.getElementById("domanda_insegnante");
+// var domanda_insegnante = document.getElementById("domanda_insegnante");
 var dbdomanda = firebase.database().ref().child("domanda").child("insegnante");
 dbdomanda.on("value", snap => domanda_insegnante.innerText = snap.val());
 dbdomanda.on("value", snap => inp1.value = snap.val())
@@ -81,8 +81,8 @@ function cancellaRecord(record){
 <!-- script per cancellare tutte le risposte fine -->
 
 Risposta:<i id="domanda_insegnante"></i>
-<!-- domanda insegnante -->
-<input type="text" class="inp1" onchange="dbdomanda.set(this.value)">
+<!-- domanda insegnante --><br>
+<input type="text" id="inp1" onchange="dbdomanda.set(this.value)" size=150>
 <script>
 var domanda_insegnante = document.getElementById("domanda_insegnante");
 var dbdomanda = firebase.database().ref().child("domanda").child("insegnante");
@@ -92,7 +92,7 @@ dbdomanda.on("value", snap => inp1.value = snap.val())
 </script>
 
 <div id="div1" class="w3-main" style="margin-left:50px">
-<textarea id="t1"></textarea>textarea<br>
+<textarea id="t1" cols=150></textarea>textarea<br>
 <table class="table-bordered">
 
 

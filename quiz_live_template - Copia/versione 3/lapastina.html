@@ -1,5 +1,5 @@
 <style>
- body, table, button, input {color: white; background: #6fac8f;font-size: 2em; } .btn.btn-warning.btn-lg, #inp1 {background:pink; color:red; font-size:48;} .btn.btn-info.btn-lg {background:cyan; color:blue; } ul {font-size: 2em;} i {font-size : 2em;} p { font-size: 2em; } td {font-size: 1.5em;} table {border-collapse: collapse; width: 100%; } th, td {text-align: left; padding: 8px; } tr:nth-child(even){background-color: #f2f2f2}
+ body, table, button, input {color: white; background: #6fac8f;font-size: 1.5em; } .btn.btn-warning.btn-lg, #inp1 {background:pink; color:red; font-size:48;} .btn.btn-info.btn-lg {background:cyan; color:blue; } ul {font-size: 2em;} i {font-size : 2em;} p { font-size: 2em; } td {font-size: 1.5em;} table {border-collapse: collapse; width: 100%; } th, td {text-align: left; padding: 8px; } tr:nth-child(even){background-color: #f2f2f2}
 </style>
 
 
@@ -20,11 +20,11 @@
   var database = firebase.database()
 </script>
 
-<h1>lapastina : <b id="punteggio_lapastina" style="background:navy"></b> punti</h1>
+<b>lapastina : <b id="punteggio_lapastina" style="background:navy"></b> punti</b>
 <b style="background:yellow;color:red">
-Domanda:
+
 <b id="domanda_insegnante"></b>
-</b>
+
 <div class="w3-main" style="margin-left:0px">
 
 <script>
@@ -37,9 +37,8 @@ Domanda:
 <script>
 let lapastina_arr = [];
   </script>
-<button type="button" class="btn btn-info btn-lg" onclick="lapastina_arr.push('\n' + domanda_insegnante.innerText + ' - risposta:' + inp1.value + ' alle:(' + get_time() + ')\n');dblapastina.set(lapastina_arr);">INVIA</button>
+<button type="button" class="btn btn-info btn-lg" onclick="lapastina_arr.push('\n' + domanda_insegnante.innerText + '\nrisposta:' + inp1.value + '\nora:(' + get_time() + ')\n');dblapastina.set(lapastina_arr);">INVIA</button>
 <button type="button" class="btn btn-info btn-lg" onclick="dblapastina.set('');inp1.value=''">Canc</button>
-    <br>
 Risposta inviata: <br>
 <i id="lapastina" style="color:red;background: yellow;"></i>
 
