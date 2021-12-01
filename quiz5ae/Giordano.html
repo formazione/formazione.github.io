@@ -22,7 +22,7 @@
 
 <b>Giordano : <b id="punteggio_Giordano" style="background:navy"></b> punti</b>
 <b style="background:yellow;color:red">
-
+<br>
 <b id="domanda_insegnante"></b>
 
 <div class="w3-main" style="margin-left:0px">
@@ -65,7 +65,7 @@ dbRef1.on("value", snap => punteggio_Giordano.innerText = snap.val()); // mostra
 var domanda_insegnante = document.getElementById("domanda_insegnante");
 // VEDI IL PUNTEGGIO nel child Giordano di 5ae_2021_2022 (Punteggio assegnato da me)
 var dbRef1 = firebase.database().ref().child("domanda").child("insegnante");
-dbRef1.on("value", snap => domanda_insegnante.innerText = snap.val()); // mostra il valore di n1
+dbRef1.on("value", snap => domanda_insegnante.innerHTML = snap.val()); // mostra il valore di n1
 
 </script>
 <tr>
