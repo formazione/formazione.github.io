@@ -1,0 +1,74 @@
+<style>
+ body, table, button, input {color: white; background: #6fac8f;font-size: 1.5em; } .btn.btn-warning.btn-lg, #inp1 {background:pink; color:red; font-size:48;} .btn.btn-info.btn-lg {background:cyan; color:blue; } ul {font-size: 2em;} i {font-size : 2em;} p { font-size: 2em; } td {font-size: 1.5em;} table {border-collapse: collapse; width: 100%; } th, td {text-align: left; padding: 8px; } tr:nth-child(even){background-color: #f2f2f2}
+</style>
+
+
+<body>
+
+
+<script src="https://www.gstatic.com/firebasejs/4.10.1/firebase.js"></script>
+<script>
+  var config = {
+    apiKey: "AIzaSyDp-mWaWEI07pIdRUhi6vA-salEMRWz4hw",
+    authDomain: "quiz-e5e5a.firebaseapp.com",
+    databaseURL: "https://quiz-e5e5a.firebaseio.com/",
+    projectId: "quiz-e5e5a",
+    storageBucket: "quiz-e5e5a.appspot.com",
+    messagingSenderId: "901845403492"
+  };
+  firebase.initializeApp(config);
+  var database = firebase.database()
+</script>
+
+<b>Cammarano_N : <b id="punteggio_Cammarano_N" style="background:navy"></b> punti</b>
+<b style="background:yellow;color:red">
+<br>
+<b id="domanda_insegnante"></b>
+
+<div class="w3-main" style="margin-left:0px">
+
+<script>
+  function get_time(){
+  var time = new Date().getHours() + "." + new Date().getMinutes() + "." + new Date().getSeconds();
+  return time}
+</script>
+<br>Scrivi:
+<textarea id="inp1" onchange="dbCammarano_N.set(this.value)" rows=3 style="width:100%"></textarea><br><br>
+<script>
+let Cammarano_N_arr = [];
+  </script>
+<button type="button" class="btn btn-info btn-lg" onclick="Cammarano_N_arr.push('\n' + domanda_insegnante.innerText + '\nrisposta:' + inp1.value + '\nora:(' + get_time() + ')\n');dbCammarano_N.set(Cammarano_N_arr);">INVIA</button>
+<button type="button" class="btn btn-info btn-lg" onclick="dbCammarano_N.set('');inp1.value=''">Canc</button>
+Risposta inviata: <br>
+<i id="Cammarano_N" style="color:red;background: yellow;"></i>
+
+
+
+<script>
+// RISPOSTA MUSTO
+var Cammarano_N = document.getElementById("Cammarano_N");
+// RECORD RISPOSTA MUSTA DOVE E' MEMORIZZATA
+var dbCammarano_N = firebase.database().ref().child("4AE").child("Cammarano_N");
+// TEMPO DELL'INVIO PER VEDERE CHI E' PIU' VELOCE
+var time = new Date().getHours() + "." + new Date().getMinutes() + "." + new Date().getSeconds();
+dbCammarano_N.on("value", snap => Cammarano_N.innerText = snap.val() + "\nInizio: " + time);
+// dbCammarano_N.on("value", snap => n_Cammarano_N = snap.val() + "\nInviato alle: " + time)
+
+// Mostra punteggio dell'alunno all'alunno nella sua console
+var punteggio_Cammarano_N = document.getElementById("punteggio_Cammarano_N");
+// VEDI IL PUNTEGGIO nel child Cammarano_N di 5ae_2021_2022 (Punteggio assegnato da me)
+var dbRef1 = firebase.database().ref().child("4ae_2021_2022").child("Cammarano_N");
+dbRef1.on("value", snap => punteggio_Cammarano_N.innerText = snap.val()); // mostra il valore di n1
+
+
+// Mostra la domanda dell'insegnante in domanda_insegnante
+var domanda_insegnante = document.getElementById("domanda_insegnante");
+// VEDI IL PUNTEGGIO nel child Cammarano_N di 5ae_2021_2022 (Punteggio assegnato da me)
+var dbRef1 = firebase.database().ref().child("domanda").child("insegnante");
+dbRef1.on("value", snap => domanda_insegnante.innerHTML = snap.val()); // mostra il valore di n1
+
+</script>
+<tr>
+
+</table>
+</div>
