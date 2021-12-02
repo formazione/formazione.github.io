@@ -159,7 +159,7 @@ domanda.insegnante c'è la mia domanda
 <script>
 var domanda_insegnante = document.getElementById("domanda_insegnante");
 var dbdomanda = firebase.database().ref().child("domanda").child("insegnante");
-dbdomanda.on("value", snap => domanda_insegnante.innerText = snap.val());
+dbdomanda.on("value", snap => domanda_insegnante.innerHTML = snap.val());
 dbdomanda.on("value", snap => inp1.value = snap.val())
 
 [classe]
@@ -182,7 +182,7 @@ INVIA DOMANDA AGLI ALUNNI</button><br>
 var domanda_insegnante = document.getElementById("domanda_insegnante");
 var inp1 = document.getElementById("inp1")
 var dbdomanda = firebase.database().ref().child("domanda").child("insegnante");
-// dbdomanda.on("value", snap => domanda_insegnante.innerText = snap.val());
+// dbdomanda.on("value", snap => domanda_insegnante.innerHTML = snap.val());
 dbdomanda.on("value", snap => inp1.value = snap.val())
 
 
@@ -191,7 +191,7 @@ dbdomanda.on("value", snap => inp1.value = snap.val())
 var domanda_insegnante = document.getElementById("domanda_insegnante");
 var inp1 = document.getElementById("inp1")
 var dbdomanda = firebase.database().ref().child("domanda").child("insegnante");
-// dbdomanda.on("value", snap => domanda_insegnante.innerText = snap.val());
+// dbdomanda.on("value", snap => domanda_insegnante.innerHTML = snap.val());
 dbdomanda.on("value", snap => inp1.value = snap.val())
 
 </script>
@@ -209,7 +209,7 @@ dbdomanda.on("value", snap => inp1.value = snap.val())
 var t1 = document.getElementById("t1")
 // var t1show = document.getElementById("t1show")
 var dbmemo = firebase.database().ref().child("domanda").child("memo");
-// dbmemo.on("value", snap => t1show.innerText = snap.val());
+// dbmemo.on("value", snap => t1show.innerHTML = snap.val());
 dbmemo.on("value", snap => t1.value = snap.val())
   </script>
 <button type="button" class="btn btn-info btn-lg" onclick="dbmemo.set(t1.value)">
@@ -231,40 +231,56 @@ console = """
 <!-- musto copia e cambia tutti i musto col nuovo nome -->
 <td>
 <button type="button" class="btn btn-warning btn-lg" onclick="dbRefmusto.set(--nmusto)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRefmusto.set(++nmusto)"> + </button><a href="musto.html" style="color:white">musto</a>
-<!-- TESTO CHE MOSTRA LA RISPOSTA DI MANDIA E IL SUO PUNTEGGIO -->
+<!-- TESTO CHE MOSTRA LA RISPOSTA DI musto E IL SUO PUNTEGGIO -->
 :<i id="risposta_musto"></i>
 Punti: <i id="h1alunnomusto"></i></p>
-<!--               TASTI PER ASSEGNARE I PUNTI E VISUALIZZAZIONE RISPOSTA MANDIA -->
+<!--               TASTI PER ASSEGNARE I PUNTI E VISUALIZZAZIONE RISPOSTA musto -->
 <script>
 var h1alunnomusto = document.getElementById("h1alunnomusto");
-// VEDI IL PUNTEGGIO nel child Mandia di 5ae_2021_2022 (Punteggio assegnato da me)
+// VEDI IL PUNTEGGIO nel child musto di 5ae_2021_2022 (Punteggio assegnato da me)
 var dbRefmusto = firebase.database().ref().child("4ae_2021_2022").child("musto");
-dbRefmusto.on("value", snap => h1alunnomusto.innerText = snap.val()); // mostra il valore di n1
+dbRefmusto.on("value", snap => h1alunnomusto.innerHTML = snap.val()); // mostra il valore di n1
 // AGGIORNA PUNTEGGIO
 dbRefmusto.on("value", snap => nmusto = snap.val()) // Cambia il valore della variabile n1
-// VEDI IL PUNTEGGIO nel child Mandia di 5AE (sua risposta)
+// VEDI IL PUNTEGGIO nel child musto di 5AE (sua risposta)
 var i_risposta_musto = document.getElementById("risposta_musto");
 var db_risposta_musto = firebase.database().ref().child("4AE").child("musto");
-db_risposta_musto.on("value", snap => i_risposta_musto.innerText = snap.val());
+db_risposta_musto.on("value", snap => i_risposta_musto.innerHTML = snap.val());
 db_risposta_musto.on("value", snap => n_musto = snap.val())</script>
 <tr>
 <!-- fine lista -->
 
 """
 
+# INDICE = CREA FILE ALUNNI, CONSOLE E FILE DI COLLEGAMENTO.HTML
+
+# CONVERTE DELLA LISTA PYTHON IN JS
+# RIMPIAZZA [CLASSE] CON LA LISTA JS DELLA CLASSE
+# CREA I FILE DEGLI ALUNNI
+# AGGIUNGE ALLA CONSOLE DEL DOCENTE I NOMI DEGLI ALUNNI
+# CREA ELENCO PER COLLEGARSI AI FILE ALUNNI
+
+# CONVERTE DELLA LISTA PYTHON IN JS
 str_classe = "let classe =['" + "','".join(classe) + "'];"
+
+
+# RIMPIAZZA [CLASSE] CON LA LISTA JS DELLA CLASSE
 html = html.replace("[classe]", str_classe)
 
+# CREA I FILE DEGLI ALUNNI
 for alunno in classe:
 	# create file for single pupil
 	file1 = file.replace("musto", alunno)
 	with open(alunno + ".html", "w") as newfile:
 		newfile.write(file1)
 
+# AGGIUNGE ALLA CONSOLE DEL DOCENTE I NOMI DEGLI ALUNNI
 	# create html for the console.html file
 	console2 = console.replace("musto", alunno)
 	print(alunno)
 	html += console2
+
+# CREA LA TABELLA CON I NOMI DEGLI ALUNNI, PULSANTI E RISPOSTE
 html += """
 </table>
 </div>
@@ -279,10 +295,10 @@ os.startfile("copia_in_console.html")
 
 
 # ========== CREA FILE SINGOLI PER ALUNNI PER INSERIRE RISPOSTE
-for alunni in classe:
-	address = f"https://formazione.github.io/quiz{nomeclasse}/" + alunni + ".html"
-	print(address)
-	print()
+# for alunni in classe:
+# 	address = f"https://formazione.github.io/quiz{nomeclasse}/" + alunni + ".html"
+# 	print(address)
+# 	print()
 
 
 # for alunni in classe:
@@ -290,7 +306,7 @@ for alunni in classe:
 # 	print("<a href='" + address + "'>" + alunni + "</a><br>")
 # 	print()
 
-# ========================== CREA ELENCO PER COLLEGARSI AI FILE ALUNNI ====
+# CREA ELENCO PER COLLEGARSI AI FILE ALUNNI
 path = "collegamenti.html"
 html = ""
 for n in classe:

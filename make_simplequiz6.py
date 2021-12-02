@@ -11,7 +11,7 @@ def quest(domanda_p1, domanda_p2, r1, r2, r3, r4):
     lista_risposte = [r1, r2, r3, r4]
     shuffle(lista_risposte)
     r1, r2, r3, r4 = lista_risposte
-    return """<h1>""" + domanda_p1 + """ <u><span id='a""" + n + """'>______</span></u> """ + domanda_p2 + """</h1><br>
+    testo += """<h1>""" + domanda_p1 + """ <u><span id='a""" + n + """'>______</span></u> """ + domanda_p2 + """</h1><br>
 <form id="d""" + n + """">
 <input type="radio" name="choice" value='""" + r1 + """'> """ + r1 + """
 <input type="radio" name="choice" value='""" + r2 + """'> """ + r2 + """
@@ -50,7 +50,7 @@ with open("prova_quiz6.html", "w", encoding="utf-8") as file:
         for x in range(0, len(content), 4):
             print(content[x])
             line = content[x]
-            testo += quest(line, "", "", "", "", "")
+            quest(line, "", "", "", "", "")
 
     testo += code
     file.write(testo)
