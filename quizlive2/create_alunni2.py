@@ -225,10 +225,12 @@ def create_files(nomeclasse):
 
   """
 
-
+  # get the template for the students
   filename = "template.html"
   with open(filename) as file:
     file = file.read()
+
+  # use the right list of students for the classname
   match nomeclasse:
     case "4ae":
       classe = classe4ae
@@ -237,13 +239,14 @@ def create_files(nomeclasse):
     case "5ce":
       classe = classe5ce
 
+  # convert to javascript
   str_classe = "let classe =['" + "','".join(classe) + "'];"
 
 
-  # RIMPIAZZA [CLASSE] CON LA LISTA JS DELLA CLASSE
+  # incorporate into the html code the right list of students (converted in js)
   html = html.replace("[classe]", str_classe)
 
-  # CREA I FILE DEGLI ALUNNI
+  # create a file for every students with his record in the database
   for alunno in classe:
     # create file for single pupil
     file1 = file.replace("musto", alunno)
@@ -251,44 +254,30 @@ def create_files(nomeclasse):
     with open(alunno + ".html", "w") as newfile:
       newfile.write(file1)
 
-  # AGGIUNGE ALLA CONSOLE DEL DOCENTE I NOMI DEGLI ALUNNI
-    # create html for the console.html file
+    # in the file for the teacher changes the name
     console2 = console.replace("musto", alunno)
+    # replace the class to store in the right database child
     console2 = console2.replace("4ae", nomeclasse)
-    print(alunno)
-    html += console2
+    print(alunno) # to check that everything goes on
+    html += console2 # add at the end of the code html
 
-  # CREA LA TABELLA CON I NOMI DEGLI ALUNNI, PULSANTI E RISPOSTE
+  # close the table and div at the end
   html += """
   </table>
   </div>
   """
 
 
-  # ================= CREA CONSOLE PER DOCENTE PER CONTROLLARE LE RISPOSTE
-  #                     E ASSEGNARE I PUNTI
+  # ======= save the file console4ae.html or 5ae 5ce... with html variable
   with open(f"console{nomeclasse}.html", "w") as newfileconsole:
     newfileconsole.write(html)
   os.startfile(f"console{nomeclasse}.html")
 
-
-  # ========== CREA FILE SINGOLI PER ALUNNI PER INSERIRE RISPOSTE
-  # for alunni in classe:
-  #   address = f"https://formazione.github.io/quiz{nomeclasse}/" + alunni + ".html"
-  #   print(address)
-  #   print()
-
-
-  # for alunni in classe:
-  #   address = "https://formazione.github.io/quiz5ae/" + alunni + ".html"
-  #   print("<a href='" + address + "'>" + alunni + "</a><br>")
-  #   print()
-
-  # CREA ELENCO PER COLLEGARSI AI FILE ALUNNI
+  # create the file with the link for every student
   path = f"collegamenti{nomeclasse}.html"
   html = ""
   for n in classe:
-         html += f"<h2><a href='https://formazione.github.io/quizlilve2/{n}.html'>{n}</a></h2>"
+         html += f"<h2><a href='https://formazione.github.io/quizlive2/{n}.html'>{n}</a></h2>"
   with open(path, "w") as file:
          file.write(html)
 
