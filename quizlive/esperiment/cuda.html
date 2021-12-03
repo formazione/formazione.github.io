@@ -1,0 +1,61 @@
+<style>
+ body, table, button, input {color: white; background: #6fac8f;font-size: 1.5em; } .btn.btn-warning.btn-lg, #inp1 {background:pink; color:red; font-size:48;} .btn.btn-info.btn-lg {background:cyan; color:blue; } ul {font-size: 2em;} i {font-size : 2em;} p { font-size: 2em; } td {font-size: 1.5em;} table {border-collapse: collapse; width: 100%; } th, td {text-align: left; padding: 8px; } tr:nth-child(even){background-color: #f2f2f2}
+</style>
+
+
+<body>
+<script src="https://www.gstatic.com/firebasejs/4.10.1/firebase.js"></script>
+<script src="config.js"></script>
+
+<b>cuda : <b id="punteggio_cuda" style="background:navy"></b> punti</b>
+<b style="background:yellow;color:red">
+<br>
+<b id="domanda_insegnante4ae"></b>
+
+<div class="w3-main" style="margin-left:0px">
+
+<script>
+  function get_time(){
+  var time = new Date().getHours() + "." + new Date().getMinutes() + "." + new Date().getSeconds();
+  return time}
+</script>
+<br>Scrivi:
+<textarea id="inp1" onchange="dbcuda.set(this.value)" rows=3 style="width:100%"></textarea><br><br>
+<script>
+let cuda_arr = [];
+  </script>
+<button type="button" class="btn btn-info btn-lg" onclick="cuda_arr.push('\n' + domanda_insegnante4ae.innerHTML + '\nrisposta:' + inp1.value + '\nora:(' + get_time() + ')\n');dbcuda.set(cuda_arr);">INVIA</button>
+<button type="button" class="btn btn-info btn-lg" onclick="dbcuda.set('');inp1.value=''">Canc</button>
+Risposta inviata: <br>
+<i id="cuda" style="color:red;background: yellow;"></i>
+
+
+
+<script>
+// RISPOSTA MUSTO
+var cuda = document.getElementById("cuda");
+// RECORD RISPOSTA MUSTA DOVE E' MEMORIZZATA
+var dbcuda = firebase.database().ref().child("4ae").child("cuda");
+// TEMPO DELL'INVIO PER VEDERE CHI E' PIU' VELOCE
+var time = new Date().getHours() + "." + new Date().getMinutes() + "." + new Date().getSeconds();
+dbcuda.on("value", snap => cuda.innerHTML = snap.val() + "\nInizio: " + time);
+// dbcuda.on("value", snap => n_cuda = snap.val() + "\nInviato alle: " + time)
+
+// Mostra punteggio dell'alunno all'alunno nella sua console
+var punteggio_cuda = document.getElementById("punteggio_cuda");
+// VEDI IL PUNTEGGIO nel child cuda di 5ae_2021_2022 (Punteggio assegnato da me)
+var dbRef1 = firebase.database().ref().child("4ae_2021_2022").child("cuda");
+dbRef1.on("value", snap => punteggio_cuda.innerHTML = snap.val()); // mostra il valore di n1
+
+
+// Mostra la domanda dell'insegnante4ae in domanda_insegnante4ae
+var domanda_insegnante4ae = document.getElementById("domanda_insegnante4ae");
+// VEDI IL PUNTEGGIO nel child cuda di 5ae_2021_2022 (Punteggio assegnato da me)
+var dbRef1 = firebase.database().ref().child("domanda").child("insegnante4ae");
+dbRef1.on("value", snap => domanda_insegnante4ae.innerHTML = snap.val()); // mostra il valore di n1
+
+</script>
+<tr>
+
+</table>
+</div>

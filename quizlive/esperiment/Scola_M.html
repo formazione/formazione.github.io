@@ -1,0 +1,61 @@
+<style>
+ body, table, button, input {color: white; background: #6fac8f;font-size: 1.5em; } .btn.btn-warning.btn-lg, #inp1 {background:pink; color:red; font-size:48;} .btn.btn-info.btn-lg {background:cyan; color:blue; } ul {font-size: 2em;} i {font-size : 2em;} p { font-size: 2em; } td {font-size: 1.5em;} table {border-collapse: collapse; width: 100%; } th, td {text-align: left; padding: 8px; } tr:nth-child(even){background-color: #f2f2f2}
+</style>
+
+
+<body>
+<script src="https://www.gstatic.com/firebasejs/4.10.1/firebase.js"></script>
+<script src="config.js"></script>
+
+<b>Scola_M : <b id="punteggio_Scola_M" style="background:navy"></b> punti</b>
+<b style="background:yellow;color:red">
+<br>
+<b id="domanda_insegnante5ae"></b>
+
+<div class="w3-main" style="margin-left:0px">
+
+<script>
+  function get_time(){
+  var time = new Date().getHours() + "." + new Date().getMinutes() + "." + new Date().getSeconds();
+  return time}
+</script>
+<br>Scrivi:
+<textarea id="inp1" onchange="dbScola_M.set(this.value)" rows=3 style="width:100%"></textarea><br><br>
+<script>
+let Scola_M_arr = [];
+  </script>
+<button type="button" class="btn btn-info btn-lg" onclick="Scola_M_arr.push('\n' + domanda_insegnante5ae.innerHTML + '\nrisposta:' + inp1.value + '\nora:(' + get_time() + ')\n');dbScola_M.set(Scola_M_arr);">INVIA</button>
+<button type="button" class="btn btn-info btn-lg" onclick="dbScola_M.set('');inp1.value=''">Canc</button>
+Risposta inviata: <br>
+<i id="Scola_M" style="color:red;background: yellow;"></i>
+
+
+
+<script>
+// RISPOSTA MUSTO
+var Scola_M = document.getElementById("Scola_M");
+// RECORD RISPOSTA MUSTA DOVE E' MEMORIZZATA
+var dbScola_M = firebase.database().ref().child("5ae").child("Scola_M");
+// TEMPO DELL'INVIO PER VEDERE CHI E' PIU' VELOCE
+var time = new Date().getHours() + "." + new Date().getMinutes() + "." + new Date().getSeconds();
+dbScola_M.on("value", snap => Scola_M.innerHTML = snap.val() + "\nInizio: " + time);
+// dbScola_M.on("value", snap => n_Scola_M = snap.val() + "\nInviato alle: " + time)
+
+// Mostra punteggio dell'alunno all'alunno nella sua console
+var punteggio_Scola_M = document.getElementById("punteggio_Scola_M");
+// VEDI IL PUNTEGGIO nel child Scola_M di 5ae_2021_2022 (Punteggio assegnato da me)
+var dbRef1 = firebase.database().ref().child("5ae_2021_2022").child("Scola_M");
+dbRef1.on("value", snap => punteggio_Scola_M.innerHTML = snap.val()); // mostra il valore di n1
+
+
+// Mostra la domanda dell'insegnante5ae in domanda_insegnante5ae
+var domanda_insegnante5ae = document.getElementById("domanda_insegnante5ae");
+// VEDI IL PUNTEGGIO nel child Scola_M di 5ae_2021_2022 (Punteggio assegnato da me)
+var dbRef1 = firebase.database().ref().child("domanda").child("insegnante5ae");
+dbRef1.on("value", snap => domanda_insegnante5ae.innerHTML = snap.val()); // mostra il valore di n1
+
+</script>
+<tr>
+
+</table>
+</div>

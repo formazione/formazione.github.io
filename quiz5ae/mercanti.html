@@ -20,7 +20,7 @@
   var database = firebase.database()
 </script>
 
-<b>mercanti : <b id="punteggio_mercanti" style="background:navy"></b> punti</b>
+<b>Chirico : <b id="punteggio_Chirico" style="background:navy"></b> punti</b>
 <b style="background:yellow;color:red">
 <br>
 <b id="domanda_insegnante"></b>
@@ -33,37 +33,37 @@
   return time}
 </script>
 <br>Scrivi:
-<textarea id="inp1" onchange="dbmercanti.set(this.value)" rows=3 style="width:100%"></textarea><br><br>
+<textarea id="inp1" onchange="dbChirico.set(this.value)" rows=3 style="width:100%"></textarea><br><br>
 <script>
-let mercanti_arr = [];
+let Chirico_arr = [];
   </script>
-<button type="button" class="btn btn-info btn-lg" onclick="mercanti_arr.push('\n' + domanda_insegnante.innerHTML + '\nrisposta:' + inp1.value + '\nora:(' + get_time() + ')\n');dbmercanti.set(mercanti_arr);">INVIA</button>
-<button type="button" class="btn btn-info btn-lg" onclick="dbmercanti.set('');inp1.value=''">Canc</button>
+<button type="button" class="btn btn-info btn-lg" onclick="Chirico_arr.push('\n' + domanda_insegnante.innerHTML + '\nrisposta:' + inp1.value + '\nora:(' + get_time() + ')\n');dbChirico.set(Chirico_arr);">INVIA</button>
+<button type="button" class="btn btn-info btn-lg" onclick="dbChirico.set('');inp1.value=''">Canc</button>
 Risposta inviata: <br>
-<i id="mercanti" style="color:red;background: yellow;"></i>
+<i id="Chirico" style="color:red;background: yellow;"></i>
 
 
 
 <script>
 // RISPOSTA MUSTO
-var mercanti = document.getElementById("mercanti");
+var Chirico = document.getElementById("Chirico");
 // RECORD RISPOSTA MUSTA DOVE E' MEMORIZZATA
-var dbmercanti = firebase.database().ref().child("4AE").child("mercanti");
+var dbChirico = firebase.database().ref().child("4AE").child("Chirico");
 // TEMPO DELL'INVIO PER VEDERE CHI E' PIU' VELOCE
 var time = new Date().getHours() + "." + new Date().getMinutes() + "." + new Date().getSeconds();
-dbmercanti.on("value", snap => mercanti.innerHTML = snap.val() + "\nInizio: " + time);
-// dbmercanti.on("value", snap => n_mercanti = snap.val() + "\nInviato alle: " + time)
+dbChirico.on("value", snap => Chirico.innerHTML = snap.val() + "\nInizio: " + time);
+// dbChirico.on("value", snap => n_Chirico = snap.val() + "\nInviato alle: " + time)
 
 // Mostra punteggio dell'alunno all'alunno nella sua console
-var punteggio_mercanti = document.getElementById("punteggio_mercanti");
-// VEDI IL PUNTEGGIO nel child mercanti di 5ae_2021_2022 (Punteggio assegnato da me)
-var dbRef1 = firebase.database().ref().child("4ae_2021_2022").child("mercanti");
-dbRef1.on("value", snap => punteggio_mercanti.innerHTML = snap.val()); // mostra il valore di n1
+var punteggio_Chirico = document.getElementById("punteggio_Chirico");
+// VEDI IL PUNTEGGIO nel child Chirico di 5ae_2021_2022 (Punteggio assegnato da me)
+var dbRef1 = firebase.database().ref().child("4ae_2021_2022").child("Chirico");
+dbRef1.on("value", snap => punteggio_Chirico.innerHTML = snap.val()); // mostra il valore di n1
 
 
 // Mostra la domanda dell'insegnante in domanda_insegnante
 var domanda_insegnante = document.getElementById("domanda_insegnante");
-// VEDI IL PUNTEGGIO nel child mercanti di 5ae_2021_2022 (Punteggio assegnato da me)
+// VEDI IL PUNTEGGIO nel child Chirico di 5ae_2021_2022 (Punteggio assegnato da me)
 var dbRef1 = firebase.database().ref().child("domanda").child("insegnante");
 dbRef1.on("value", snap => domanda_insegnante.innerHTML = snap.val()); // mostra il valore di n1
 

@@ -1,0 +1,61 @@
+<style>
+ body, table, button, input {color: white; background: #6fac8f;font-size: 1.5em; } .btn.btn-warning.btn-lg, #inp1 {background:pink; color:red; font-size:48;} .btn.btn-info.btn-lg {background:cyan; color:blue; } ul {font-size: 2em;} i {font-size : 2em;} p { font-size: 2em; } td {font-size: 1.5em;} table {border-collapse: collapse; width: 100%; } th, td {text-align: left; padding: 8px; } tr:nth-child(even){background-color: #f2f2f2}
+</style>
+
+
+<body>
+<script src="https://www.gstatic.com/firebasejs/4.10.1/firebase.js"></script>
+<script src="config.js"></script>
+
+<b>Breglia : <b id="punteggio_Breglia" style="background:navy"></b> punti</b>
+<b style="background:yellow;color:red">
+<br>
+<b id="domanda_insegnante5ae"></b>
+
+<div class="w3-main" style="margin-left:0px">
+
+<script>
+  function get_time(){
+  var time = new Date().getHours() + "." + new Date().getMinutes() + "." + new Date().getSeconds();
+  return time}
+</script>
+<br>Scrivi:
+<textarea id="inp1" onchange="dbBreglia.set(this.value)" rows=3 style="width:100%"></textarea><br><br>
+<script>
+let Breglia_arr = [];
+  </script>
+<button type="button" class="btn btn-info btn-lg" onclick="Breglia_arr.push('\n' + domanda_insegnante5ae.innerHTML + '\nrisposta:' + inp1.value + '\nora:(' + get_time() + ')\n');dbBreglia.set(Breglia_arr);">INVIA</button>
+<button type="button" class="btn btn-info btn-lg" onclick="dbBreglia.set('');inp1.value=''">Canc</button>
+Risposta inviata: <br>
+<i id="Breglia" style="color:red;background: yellow;"></i>
+
+
+
+<script>
+// RISPOSTA MUSTO
+var Breglia = document.getElementById("Breglia");
+// RECORD RISPOSTA MUSTA DOVE E' MEMORIZZATA
+var dbBreglia = firebase.database().ref().child("5ae").child("Breglia");
+// TEMPO DELL'INVIO PER VEDERE CHI E' PIU' VELOCE
+var time = new Date().getHours() + "." + new Date().getMinutes() + "." + new Date().getSeconds();
+dbBreglia.on("value", snap => Breglia.innerHTML = snap.val() + "\nInizio: " + time);
+// dbBreglia.on("value", snap => n_Breglia = snap.val() + "\nInviato alle: " + time)
+
+// Mostra punteggio dell'alunno all'alunno nella sua console
+var punteggio_Breglia = document.getElementById("punteggio_Breglia");
+// VEDI IL PUNTEGGIO nel child Breglia di 5ae_2021_2022 (Punteggio assegnato da me)
+var dbRef1 = firebase.database().ref().child("5ae_2021_2022").child("Breglia");
+dbRef1.on("value", snap => punteggio_Breglia.innerHTML = snap.val()); // mostra il valore di n1
+
+
+// Mostra la domanda dell'insegnante5ae in domanda_insegnante5ae
+var domanda_insegnante5ae = document.getElementById("domanda_insegnante5ae");
+// VEDI IL PUNTEGGIO nel child Breglia di 5ae_2021_2022 (Punteggio assegnato da me)
+var dbRef1 = firebase.database().ref().child("domanda").child("insegnante5ae");
+dbRef1.on("value", snap => domanda_insegnante5ae.innerHTML = snap.val()); // mostra il valore di n1
+
+</script>
+<tr>
+
+</table>
+</div>
