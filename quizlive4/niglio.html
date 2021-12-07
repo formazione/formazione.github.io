@@ -1,0 +1,70 @@
+<style>
+ body, table, button, input {color: white; background: #6fac8f;font-size: 1.5em; } .btn.btn-warning.btn-lg, #inp1 {background:pink; color:red; font-size:48;} .btn.btn-info.btn-lg {background:cyan; color:blue; } ul {font-size: 2em;} i {font-size : 2em;} p { font-size: 2em; } td {font-size: 1.5em;} table {border-collapse: collapse; width: 100%; } th, td {text-align: left; padding: 8px; } tr:nth-child(even){background-color: #f2f2f2}
+</style>
+
+
+<body>
+<script src="https://www.gstatic.com/firebasejs/4.10.1/firebase.js"></script>
+<script src="config.js"></script>
+
+<b>niglio : <b id="punteggio_niglio" style="background:navy"></b> punti</b>
+<b style="background:yellow;color:red">
+<br>
+<b id="domanda_insegnante4ae"></b>
+
+<div class="w3-main" style="margin-left:0px">
+
+<script>
+  function get_time(){
+  var time = new Date().getHours() + "." + new Date().getMinutes() + "." + new Date().getSeconds();
+  return time}
+</script>
+<br>Scrivi:
+
+<!-- ============== TEXAREA DOVE L'ALUNNO SCRIVE ============== -->
+<textarea id="inp1" onchange="dbniglio.set(this.value)" rows=3 style="width:100%"></textarea>
+<!-- =============== PULSANTE INVIO ============== -->
+  <!-- <button type="button" class="btn btn-info btn-lg" onclick="var invio=get_time();niglio_arr.push('\n' + '\n' + inp1.value + ' <i style=\'font-size:18\'>Invio:=' + invio + '</i>');dbniglio.set(niglio_arr.toString());"> -->
+  <button type="button" class="btn btn-info btn-lg" onclick="var invio=get_time();niglio_arr = '\n' + '\n' + inp1.value + ' <i style=\'font-size:18\'>Invio:=' + invio + '</i>';dbniglio.set(niglio_arr.toString());">
+
+INVIA</button>
+<!-- ====================== Pulsante Cancella risposta ================ -->
+  <button type="button" class="btn btn-info btn-lg" onclick="dbniglio.set('');inp1.value=''">
+
+Canc</button>
+<!-- =============== DOVE VIENE STAMPATA LA RISPOSTA INVIATA ================ -->
+  <br>
+Risposta inviata: <br><i id="niglio" style="color:red;background: yellow;"></i>
+  <script>
+
+let niglio_arr = "";
+
+// RISPOSTA MUSTO
+var niglio = document.getElementById("niglio");
+// DOVE VIENE REGISTRATA LA RISPOSTA DELL'ALUNNO
+var dbniglio = firebase.database().ref().child("4AE").child("niglio");
+// ============== QUANDO L'ALUNNO VEDE LA DOMANDA ==========
+// var time = get_time();
+dbniglio.on("value", snap => niglio.innerHTML = snap.val());
+// dbniglio.on("value", snap => niglio.innerHTML = snap.val() + "\nInizio: " + time);
+
+
+// dbniglio.on("value", snap => n_niglio = snap.val() + "\nInviato alle: " + time)
+
+// PUNTEGGIO DELL'ALUNNO
+var punteggio_niglio = document.getElementById("punteggio_niglio");
+var dbRef1 = firebase.database().ref().child("4ae_2021_2022").child("niglio");
+dbRef1.on("value", snap => punteggio_niglio.innerHTML = snap.val()); // mostra il valore di n1
+
+
+// PESCA LA DOMANDA DAL DATABASE
+var domanda_insegnante4ae = document.getElementById("domanda_insegnante4ae");
+// VEDI IL PUNTEGGIO nel child niglio di 5ae_2021_2022 (Punteggio assegnato da me)
+var dbRef1 = firebase.database().ref().child("domanda").child("insegnante4ae");
+dbRef1.on("value", snap => domanda_insegnante4ae.innerHTML = snap.val()); // mostra il valore di n1
+
+</script>
+<tr>
+
+</table>
+</div>

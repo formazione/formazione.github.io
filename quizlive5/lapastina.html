@@ -1,0 +1,129 @@
+<style>
+ body, table {
+  background:black;
+  color: white; 
+  font-size: 1.5em; } 
+
+  button {color: white; 
+    background:navy;
+    font-size: 1.5em; }
+  input {color: white; 
+    background:red;
+    font-size: 1.5em; }
+  .btn.btn-warning.btn-lg, #inp1 {
+    background:navy; 
+    color:white; 
+    font-size:48;} 
+  .btn.btn-info.btn-lg {
+    background:cyan;
+    color:blue; } 
+  ul {font-size: 2em;} 
+  p { font-size: 2em; } 
+  td {font-size: 1.5em;} 
+  table {border-collapse: collapse;
+    width: 100%; } 
+  th, td {text-align: left;
+    padding: 8px; }
+
+  i {font-size:36}
+
+</style>
+
+
+<body>
+<script src="https://www.gstatic.com/firebasejs/4.10.1/firebase.js"></script>
+<script src="config.js"></script>
+
+<b>lapastina : <b id="punteggio_lapastina" style="background:orange"></b> punti</b>
+<b style="background:yellow;color:red">
+<br>
+<b id="domanda_insegnante4ae"></b>
+
+<div class="w3-main" style="margin-left:0px">
+
+<script>
+  function get_time(){
+  var time = new Date().getHours() + "." + new Date().getMinutes() + "." + new Date().getSeconds();
+  return time}
+</script>
+<br>Scrivi:
+
+<!-- ============== TEXAREA DOVE L'ALUNNO SCRIVE ============== -->
+<textarea id="inp1" onchange="dblapastina.set(this.value)" rows=3 style="width:100%"></textarea>
+<!-- =============== PULSANTE INVIO ============== -->
+  <!-- <button type="button" class="btn btn-info btn-lg" onclick="var invio=get_time();lapastina_arr.push('\n' + '\n' + inp1.value + ' <i style=\'font-size:18\'>Invio:=' + invio + '</i>');dblapastina.set(lapastina_arr.toString());"> -->
+  <button type="button" class="btn btn-info btn-lg" onclick="var invio=get_time();lapastina_arr = '\n' + '\n' + inp1.value + ' <i style=\'font-size:18\'>Invio:=' + invio + '</i>';dblapastina.set(lapastina_arr.toString());">
+
+INVIA</button>
+<!-- ====================== Pulsante Cancella risposta ================ -->
+  <button type="button" class="btn btn-info btn-lg" onclick="dblapastina.set('');inp1.value=''">
+
+Canc</button>
+<!-- =============== DOVE VIENE STAMPATA LA RISPOSTA INVIATA ================ -->
+  <br>
+Risposta inviata: <br><i id="lapastina" style="color:red;background: yellow;"></i>
+  <script>
+
+let lapastina_arr = "";
+
+// RISPOSTA MUSTO
+var lapastina = document.getElementById("lapastina");
+// DOVE VIENE REGISTRATA LA RISPOSTA DELL'ALUNNO
+var dblapastina = firebase.database().ref().child("4AE").child("lapastina");
+// ============== QUANDO L'ALUNNO VEDE LA DOMANDA ==========
+// var time = get_time();
+dblapastina.on("value", snap => lapastina.innerHTML = snap.val());
+// dblapastina.on("value", snap => lapastina.innerHTML = snap.val() + "\nInizio: " + time);
+
+
+// dblapastina.on("value", snap => n_lapastina = snap.val() + "\nInviato alle: " + time)
+
+// PUNTEGGIO DELL'ALUNNO
+var punteggio_lapastina = document.getElementById("punteggio_lapastina");
+var dbRef1 = firebase.database().ref().child("4ae_2021_2022").child("lapastina");
+dbRef1.on("value", snap => punteggio_lapastina.innerHTML = snap.val()); // mostra il valore di n1
+
+
+// PESCA LA DOMANDA DAL DATABASE
+var domanda_insegnante4ae = document.getElementById("domanda_insegnante4ae");
+// VEDI IL PUNTEGGIO nel child lapastina di 5ae_2021_2022 (Punteggio assegnato da me)
+var dbRef1 = firebase.database().ref().child("domanda").child("insegnante4ae");
+dbRef1.on("value", snap => domanda_insegnante4ae.innerHTML = snap.val()); // mostra il valore di n1
+
+
+// ========================= Funzioni controllo risposte ========
+
+  function get_radio_sol(nameoptions, div1, start, end){
+    options1=document.getElementsByName(nameoptions);
+  for(x of options1){
+    if(x.checked==true){
+      div1.innerHTML= start;
+      div1.innerHTML += " [";
+      div1.innerHTML += x.value;
+      div1.innerHTML += "] ";
+      div1.innerHTML += end;
+      }
+    }
+  }
+
+
+
+function butt(img, d1, r1, r2){
+  const newDiv = document.createElement("div");
+  const newContent = `
+  <img src="`+img+`" width=50%>
+  <h1 style="color:white">`+d1+`</h1>
+  <button onclick="dom1.value='A'">A</button><i>`+r1+`</i><br>
+  <button onclick="dom1.value='B'">B</button><i>`+r2+`</i><br>
+  <input id="dom1" type="text"><hr>
+  `;
+  newDiv.innerHTML = newContent;
+  const currentDiv = document.getElementById("div1");
+  document.body.insertBefore(newDiv, currentDiv);
+}
+
+</script>
+<tr>
+
+</table>
+</div>

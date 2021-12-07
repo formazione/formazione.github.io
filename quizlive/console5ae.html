@@ -1,7 +1,7 @@
 
   <style>
 
-  	
+    
 
   body, table, button {
 
@@ -34,13 +34,13 @@
   tr:nth-child(even){background-color: coral; color: white;}
   tr:nth-child(odd){background-color: navy; color: white;}
 
-  	
+    
   </style>
 
 
   <body>
   <!-- 
-  domanda.insegnante c'è la mia domanda
+  domanda.insegnante5ae c'è la mia domanda
   5AE ci sono le risposte degli alunni
   5ae_2020_2021 ci sono i punteggi degli alunni
 
@@ -62,12 +62,12 @@
   <h1>5AE 2021 202 Console Insegnante</h1>
   <!-- script per cancellare tutte le risposte inizio -->
   <script>
-  var domanda_insegnante = document.getElementById("domanda_insegnante");
-  var dbdomanda = firebase.database().ref().child("domanda").child("insegnante");
-  dbdomanda.on("value", snap => domanda_insegnante.innerHTML = snap.val());
+  var domanda_insegnante5ae = document.getElementById("domanda_insegnante5ae");
+  var dbdomanda = firebase.database().ref().child("domanda").child("insegnante5ae");
+  dbdomanda.on("value", snap => domanda_insegnante5ae.innerHTML = snap.val());
   dbdomanda.on("value", snap => inp1.value = snap.val())
 
-  let classe =['Breglia','Cammarano_D','Cammarano_N','Costantini','Del Verme,','Esposito','Fontana','Garofalo','Giordano','Grimaldi','Lista','Malzone','Mandia','Musto','Ruocco','Santoro','Scola_M','SCOLA_V'];
+  let classe =['Breglia','Cammarano_D','Cammarano_N','Costantini','Del Verme','Esposito','Fontana','Garofalo','Giordano','Grimaldi','Lista','Malzone','Mandia','Musto','Ruocco','Santoro','Scola_M','SCOLA_V'];
 
   function cancellaRecord(record){
     for (n of classe){
@@ -84,19 +84,19 @@
   <button type="button" class="btn btn-info btn-lg" onclick="dbdomanda.set(inp1.value)">
   INVIA DOMANDA AGLI ALUNNI</button><br>
   <script>
-  var domanda_insegnante = document.getElementById("domanda_insegnante");
+  var domanda_insegnante5ae = document.getElementById("domanda_insegnante5ae");
   var inp1 = document.getElementById("inp1")
-  var dbdomanda = firebase.database().ref().child("domanda").child("insegnante");
-  // dbdomanda.on("value", snap => domanda_insegnante.innerHTML = snap.val());
+  var dbdomanda = firebase.database().ref().child("domanda").child("insegnante5ae");
+  // dbdomanda.on("value", snap => domanda_insegnante5ae.innerHTML = snap.val());
   dbdomanda.on("value", snap => inp1.value = snap.val())
 
 
 
   <script>
-  var domanda_insegnante = document.getElementById("domanda_insegnante");
+  var domanda_insegnante5ae = document.getElementById("domanda_insegnante5ae");
   var inp1 = document.getElementById("inp1")
-  var dbdomanda = firebase.database().ref().child("domanda").child("insegnante");
-  // dbdomanda.on("value", snap => domanda_insegnante.innerHTML = snap.val());
+  var dbdomanda = firebase.database().ref().child("domanda").child("insegnante5ae");
+  // dbdomanda.on("value", snap => domanda_insegnante5ae.innerHTML = snap.val());
   dbdomanda.on("value", snap => inp1.value = snap.val())
 
   </script>
@@ -223,25 +223,25 @@
   <!-- fine lista -->
 
   
-  <!-- Del Verme, copia e cambia tutti i Del Verme, col nuovo nome -->
+  <!-- Del Verme copia e cambia tutti i Del Verme col nuovo nome -->
   <td>
-  <button type="button" class="btn btn-warning btn-lg" onclick="dbRefDel Verme,.set(--nDel Verme,)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRefDel Verme,.set(++nDel Verme,)"> + </button><a href="Del Verme,.html" style="color:white">Del Verme,</a>
-  <!-- TESTO CHE MOSTRA LA RISPOSTA DI Del Verme, E IL SUO PUNTEGGIO -->
-  :<i id="risposta_Del Verme,"></i>
-  Punti: <i id="h1alunnoDel Verme,"></i></p>
-  <!--               TASTI PER ASSEGNARE I PUNTI E VISUALIZZAZIONE RISPOSTA Del Verme, -->
+  <button type="button" class="btn btn-warning btn-lg" onclick="dbRefDel Verme.set(--nDel Verme)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRefDel Verme.set(++nDel Verme)"> + </button><a href="Del Verme.html" style="color:white">Del Verme</a>
+  <!-- TESTO CHE MOSTRA LA RISPOSTA DI Del Verme E IL SUO PUNTEGGIO -->
+  :<i id="risposta_Del Verme"></i>
+  Punti: <i id="h1alunnoDel Verme"></i></p>
+  <!--               TASTI PER ASSEGNARE I PUNTI E VISUALIZZAZIONE RISPOSTA Del Verme -->
   <script>
-  var h1alunnoDel Verme, = document.getElementById("h1alunnoDel Verme,");
-  // VEDI IL PUNTEGGIO nel child Del Verme, di 5ae_2021_2022 (Punteggio assegnato da me)
-  var dbRefDel Verme, = firebase.database().ref().child("4ae_2021_2022").child("Del Verme,");
-  dbRefDel Verme,.on("value", snap => h1alunnoDel Verme,.innerHTML = snap.val()); // mostra il valore di n1
+  var h1alunnoDel Verme = document.getElementById("h1alunnoDel Verme");
+  // VEDI IL PUNTEGGIO nel child Del Verme di 5ae_2021_2022 (Punteggio assegnato da me)
+  var dbRefDel Verme = firebase.database().ref().child("4ae_2021_2022").child("Del Verme");
+  dbRefDel Verme.on("value", snap => h1alunnoDel Verme.innerHTML = snap.val()); // mostra il valore di n1
   // AGGIORNA PUNTEGGIO
-  dbRefDel Verme,.on("value", snap => nDel Verme, = snap.val()) // Cambia il valore della variabile n1
-  // VEDI IL PUNTEGGIO nel child Del Verme, di 5AE (sua risposta)
-  var i_risposta_Del Verme, = document.getElementById("risposta_Del Verme,");
-  var db_risposta_Del Verme, = firebase.database().ref().child("4AE").child("Del Verme,");
-  db_risposta_Del Verme,.on("value", snap => i_risposta_Del Verme,.innerHTML = snap.val());
-  db_risposta_Del Verme,.on("value", snap => n_Del Verme, = snap.val())</script>
+  dbRefDel Verme.on("value", snap => nDel Verme = snap.val()) // Cambia il valore della variabile n1
+  // VEDI IL PUNTEGGIO nel child Del Verme di 5AE (sua risposta)
+  var i_risposta_Del Verme = document.getElementById("risposta_Del Verme");
+  var db_risposta_Del Verme = firebase.database().ref().child("4AE").child("Del Verme");
+  db_risposta_Del Verme.on("value", snap => i_risposta_Del Verme.innerHTML = snap.val());
+  db_risposta_Del Verme.on("value", snap => n_Del Verme = snap.val())</script>
   <tr>
   <!-- fine lista -->
 

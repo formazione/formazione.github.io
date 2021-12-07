@@ -1,0 +1,129 @@
+<style>
+ body, table {
+  background:black;
+  color: white; 
+  font-size: 1.5em; } 
+
+  button {color: white; 
+    background:navy;
+    font-size: 1.5em; }
+  input {color: white; 
+    background:red;
+    font-size: 1.5em; }
+  .btn.btn-warning.btn-lg, #inp1 {
+    background:navy; 
+    color:white; 
+    font-size:48;} 
+  .btn.btn-info.btn-lg {
+    background:cyan;
+    color:blue; } 
+  ul {font-size: 2em;} 
+  p { font-size: 2em; } 
+  td {font-size: 1.5em;} 
+  table {border-collapse: collapse;
+    width: 100%; } 
+  th, td {text-align: left;
+    padding: 8px; }
+
+  i {font-size:36}
+
+</style>
+
+
+<body>
+<script src="https://www.gstatic.com/firebasejs/4.10.1/firebase.js"></script>
+<script src="config.js"></script>
+
+<b>musto : <b id="punteggio_musto" style="background:orange"></b> punti</b>
+<b style="background:yellow;color:red">
+<br>
+<b id="domanda_insegnante"></b>
+
+<div class="w3-main" style="margin-left:0px">
+
+<script>
+  function get_time(){
+  var time = new Date().getHours() + "." + new Date().getMinutes() + "." + new Date().getSeconds();
+  return time}
+</script>
+<br>Scrivi:
+
+<!-- ============== TEXAREA DOVE L'ALUNNO SCRIVE ============== -->
+<textarea id="inp1" onchange="dbmusto.set(this.value)" rows=3 style="width:100%"></textarea>
+<!-- =============== PULSANTE INVIO ============== -->
+  <!-- <button type="button" class="btn btn-info btn-lg" onclick="var invio=get_time();musto_arr.push('\n' + '\n' + inp1.value + ' <i style=\'font-size:18\'>Invio:=' + invio + '</i>');dbmusto.set(musto_arr.toString());"> -->
+  <button type="button" class="btn btn-info btn-lg" onclick="var invio=get_time();musto_arr = '\n' + '\n' + inp1.value + ' <i style=\'font-size:18\'>Invio:=' + invio + '</i>';dbmusto.set(musto_arr.toString());">
+
+INVIA</button>
+<!-- ====================== Pulsante Cancella risposta ================ -->
+  <button type="button" class="btn btn-info btn-lg" onclick="dbmusto.set('');inp1.value=''">
+
+Canc</button>
+<!-- =============== DOVE VIENE STAMPATA LA RISPOSTA INVIATA ================ -->
+  <br>
+Risposta inviata: <br><i id="musto" style="color:red;background: yellow;"></i>
+  <script>
+
+let musto_arr = "";
+
+// RISPOSTA MUSTO
+var musto = document.getElementById("musto");
+// DOVE VIENE REGISTRATA LA RISPOSTA DELL'ALUNNO
+var dbmusto = firebase.database().ref().child("4AE").child("musto");
+// ============== QUANDO L'ALUNNO VEDE LA DOMANDA ==========
+// var time = get_time();
+dbmusto.on("value", snap => musto.innerHTML = snap.val());
+// dbmusto.on("value", snap => musto.innerHTML = snap.val() + "\nInizio: " + time);
+
+
+// dbmusto.on("value", snap => n_musto = snap.val() + "\nInviato alle: " + time)
+
+// PUNTEGGIO DELL'ALUNNO
+var punteggio_musto = document.getElementById("punteggio_musto");
+var dbRef1 = firebase.database().ref().child("4ae_2021_2022").child("musto");
+dbRef1.on("value", snap => punteggio_musto.innerHTML = snap.val()); // mostra il valore di n1
+
+
+// PESCA LA DOMANDA DAL DATABASE
+var domanda_insegnante = document.getElementById("domanda_insegnante");
+// VEDI IL PUNTEGGIO nel child musto di 5ae_2021_2022 (Punteggio assegnato da me)
+var dbRef1 = firebase.database().ref().child("domanda").child("insegnante");
+dbRef1.on("value", snap => domanda_insegnante.innerHTML = snap.val()); // mostra il valore di n1
+
+
+// ========================= Funzioni controllo risposte ========
+
+  function get_radio_sol(nameoptions, div1, start, end){
+    options1=document.getElementsByName(nameoptions);
+  for(x of options1){
+    if(x.checked==true){
+      div1.innerHTML= start;
+      div1.innerHTML += " [";
+      div1.innerHTML += x.value;
+      div1.innerHTML += "] ";
+      div1.innerHTML += end;
+      }
+    }
+  }
+
+
+
+function butt(img, d1, r1, r2){
+  const newDiv = document.createElement("div");
+  const newContent = `
+  <img src="`+img+`" width=50%>
+  <h1 style="color:white">`+d1+`</h1>
+  <button onclick="dom1.value='A'">A</button><i>`+r1+`</i><br>
+  <button onclick="dom1.value='B'">B</button><i>`+r2+`</i><br>
+  <input id="dom1" type="text"><hr>
+  `;
+  newDiv.innerHTML = newContent;
+  const currentDiv = document.getElementById("div1");
+  document.body.insertBefore(newDiv, currentDiv);
+}
+
+</script>
+<tr>
+
+</table>
+</div>

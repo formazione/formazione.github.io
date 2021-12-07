@@ -1,0 +1,31 @@
+============== DOMANDE RADIO BUTTON ============
+<script>
+  function get_radio_sol(nameoptions, div1, start, end){
+    options1=document.getElementsByName(nameoptions);
+  for(x of options1){
+    if(x.checked==true){
+      div1.innerHTML= start;
+      div1.innerHTML += " [";
+      div1.innerHTML += x.value;
+      div1.innerHTML += "] ";
+      div1.innerHTML += end;
+      }
+    }
+  }
+</script>
+
+<style>
+body{background:black;color:white}
+</style>
+<div style="background-color:lightblue"><h1 id='domanda'>Le immobilizzazioni vanno nello <u><span id='a0'>______</span></u> patrimoniale</h1><br>
+
+<input type="radio" id="r1" name="choice" value='conto'> conto
+<input type="radio" id="r2" name="choice" value='non lo so'> non lo so
+<input type="radio" id="r3" name="choice" value='relazione'> relazione
+<input type="radio" id="r4" name="choice" value='stato'> stato
+<br>
+<button value="submit" onclick="get_radio_sol('choice',ris1, 'Le immobilizzazioni vanno nel/nello', 'patrimoniale')">Invia nuovo</button>
+
+<!-- <button value="submit" onclick="choices=document.getElementsByName('choice');for(x of choices){if(x.checked==true){ris1.innerHTML='Le immobilizzazioni vanno nel/lo [' + x.value + '] patrimoniale'}}">Invia</button> -->
+</div>
+<div id="ris1"></div>

@@ -1,7 +1,7 @@
 
   <style>
 
-  	
+    
 
   body, table, button {
 
@@ -34,13 +34,13 @@
   tr:nth-child(even){background-color: coral; color: white;}
   tr:nth-child(odd){background-color: navy; color: white;}
 
-  	
+    
   </style>
 
 
   <body>
   <!-- 
-  domanda.insegnante c'è la mia domanda
+  domanda.insegnante4ae c'è la mia domanda
   5AE ci sono le risposte degli alunni
   5ae_2020_2021 ci sono i punteggi degli alunni
 
@@ -62,9 +62,9 @@
   <h1>5AE 2021 202 Console Insegnante</h1>
   <!-- script per cancellare tutte le risposte inizio -->
   <script>
-  var domanda_insegnante = document.getElementById("domanda_insegnante");
-  var dbdomanda = firebase.database().ref().child("domanda").child("insegnante");
-  dbdomanda.on("value", snap => domanda_insegnante.innerHTML = snap.val());
+  var domanda_insegnante4ae = document.getElementById("domanda_insegnante4ae");
+  var dbdomanda = firebase.database().ref().child("domanda").child("insegnante4ae");
+  dbdomanda.on("value", snap => domanda_insegnante4ae.innerHTML = snap.val());
   dbdomanda.on("value", snap => inp1.value = snap.val())
 
   let classe =['balbi','bertolini','cuda','divivo','iuliano','lapastina','lakrad','maffia','mercanti','nese','niglio','pica','spinelli'];
@@ -84,19 +84,19 @@
   <button type="button" class="btn btn-info btn-lg" onclick="dbdomanda.set(inp1.value)">
   INVIA DOMANDA AGLI ALUNNI</button><br>
   <script>
-  var domanda_insegnante = document.getElementById("domanda_insegnante");
+  var domanda_insegnante4ae = document.getElementById("domanda_insegnante4ae");
   var inp1 = document.getElementById("inp1")
-  var dbdomanda = firebase.database().ref().child("domanda").child("insegnante");
-  // dbdomanda.on("value", snap => domanda_insegnante.innerHTML = snap.val());
+  var dbdomanda = firebase.database().ref().child("domanda").child("insegnante4ae");
+  // dbdomanda.on("value", snap => domanda_insegnante4ae.innerHTML = snap.val());
   dbdomanda.on("value", snap => inp1.value = snap.val())
 
 
 
   <script>
-  var domanda_insegnante = document.getElementById("domanda_insegnante");
+  var domanda_insegnante4ae = document.getElementById("domanda_insegnante4ae");
   var inp1 = document.getElementById("inp1")
-  var dbdomanda = firebase.database().ref().child("domanda").child("insegnante");
-  // dbdomanda.on("value", snap => domanda_insegnante.innerHTML = snap.val());
+  var dbdomanda = firebase.database().ref().child("domanda").child("insegnante4ae");
+  // dbdomanda.on("value", snap => domanda_insegnante4ae.innerHTML = snap.val());
   dbdomanda.on("value", snap => inp1.value = snap.val())
 
   </script>

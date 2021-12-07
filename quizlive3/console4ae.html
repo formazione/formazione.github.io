@@ -1,0 +1,427 @@
+
+  <style>
+
+    
+
+  body, table, button {
+
+    font-size: 1em;
+  }
+
+  .btn.btn-warning.btn-lg {
+    background:pink;
+    color:red;
+  }
+  .btn.btn-info.btn-lg {
+    background:cyan;
+    color:blue;
+  }
+
+  ul {font-size: 1em;}
+  i {font-size : 1em;}
+  p { font-size: 1em; }
+  td {font-size: 1.5em;}
+  table {
+      border-collapse: collapse;
+      width: 50%;
+  }
+
+  th, td {
+      text-align: left;
+      padding: 8px;
+  }
+
+  tr:nth-child(even){background-color: coral; color: white;}
+  tr:nth-child(odd){background-color: navy; color: white;}
+
+    
+  </style>
+
+
+  <body>
+  <!-- 
+  domanda.insegnante4ae c'è la mia domanda
+  5AE ci sono le risposte degli alunni
+  5ae_2020_2021 ci sono i punteggi degli alunni
+
+   -->
+
+  <script src="https://www.gstatic.com/firebasejs/4.10.1/firebase.js"></script>
+  <script>
+    var config = {
+      apiKey: "AIzaSyDp-mWaWEI07pIdRUhi6vA-salEMRWz4hw",
+      authDomain: "quiz-e5e5a.firebaseapp.com",
+      databaseURL: "https://quiz-e5e5a.firebaseio.com/",
+      projectId: "quiz-e5e5a",
+      storageBucket: "quiz-e5e5a.appspot.com",
+      messagingSenderId: "901845403492"
+    };
+    firebase.initializeApp(config);
+    var database = firebase.database()
+  </script>
+  <h1>5AE 2021 202 Console Insegnante</h1>
+  <!-- script per cancellare tutte le risposte inizio -->
+  <script>
+  var domanda_insegnante4ae = document.getElementById("domanda_insegnante4ae");
+  var dbdomanda = firebase.database().ref().child("domanda").child("insegnante4ae");
+  dbdomanda.on("value", snap => domanda_insegnante4ae.innerHTML = snap.val());
+  dbdomanda.on("value", snap => inp1.value = snap.val())
+
+  let classe =['balbi','bertolini','cuda','divivo','iuliano','lapastina','lakrad','maffia','mercanti','nese','niglio','pica','spinelli'];
+
+  function cancellaRecord(record){
+    for (n of classe){
+      var db_r = firebase.database().ref().child(record).child(n);
+      db_r.set('');
+    }
+  }
+
+  </script>
+
+  <!---------------------- DOVE INSERISCI LA DOMANDA  ------------------>
+
+  <textarea id="inp1"></textarea><br>
+  <button type="button" class="btn btn-info btn-lg" onclick="dbdomanda.set(inp1.value)">
+  INVIA DOMANDA AGLI ALUNNI</button><br>
+  <script>
+  var domanda_insegnante4ae = document.getElementById("domanda_insegnante4ae");
+  var inp1 = document.getElementById("inp1")
+  var dbdomanda = firebase.database().ref().child("domanda").child("insegnante4ae");
+  // dbdomanda.on("value", snap => domanda_insegnante4ae.innerHTML = snap.val());
+  dbdomanda.on("value", snap => inp1.value = snap.val())
+
+
+  </script>
+
+
+  <!--------------------------- TEXTAREA X MEMO ------------------------>
+
+  <textarea id="t1"></textarea><br>
+  <!-- <i id="t1show"></i><br> -->
+
+  <div id="div1" class="w3-main" style="margin-left:50px">
+  <table class="table-bordered">
+  <!-- codice per la textarea con i memo -->
+    <script>
+  var t1 = document.getElementById("t1")
+  // var t1show = document.getElementById("t1show")
+  var dbmemo = firebase.database().ref().child("domanda").child("memo");
+  // dbmemo.on("value", snap => t1show.innerHTML = snap.val());
+  dbmemo.on("value", snap => t1.value = snap.val())
+    </script>
+  <button type="button" class="btn btn-info btn-lg" onclick="dbmemo.set(t1.value)">
+  Memorizza memo nella Textarea</button><br>
+
+
+
+
+  <!-- CANCELLA DOMANDE E PUNTI -->
+
+
+  <button type="button" class="btn btn-info btn-lg" onclick="cancellaRecord('4AE')">
+  Cancella tutte le risposte</button>
+  <button type="button" class="btn btn-info btn-lg" onclick="cancellaRecord('4ae_2021_2022')">Cancella tutti i punti</button>
+
+  
+  <!-- balbi copia e cambia tutti i balbi col nuovo nome -->
+  <td>
+  <button type="button" class="btn btn-warning btn-lg" onclick="dbRefbalbi.set(--nbalbi)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRefbalbi.set(++nbalbi)"> + </button><a href="balbi.html" style="color:white">balbi</a>
+  <!-- TESTO CHE MOSTRA LA RISPOSTA DI balbi E IL SUO PUNTEGGIO -->
+  :<i id="risposta_balbi"></i>
+  Punti: <i id="h1alunnobalbi"></i></p>
+  <!--               TASTI PER ASSEGNARE I PUNTI E VISUALIZZAZIONE RISPOSTA balbi -->
+  <script>
+  var h1alunnobalbi = document.getElementById("h1alunnobalbi");
+  // VEDI IL PUNTEGGIO nel child balbi di 5ae_2021_2022 (Punteggio assegnato da me)
+  var dbRefbalbi = firebase.database().ref().child("4ae_2021_2022").child("balbi");
+  dbRefbalbi.on("value", snap => h1alunnobalbi.innerHTML = snap.val()); // mostra il valore di n1
+  // AGGIORNA PUNTEGGIO
+  dbRefbalbi.on("value", snap => nbalbi = snap.val()) // Cambia il valore della variabile n1
+  // VEDI IL PUNTEGGIO nel child balbi di 5AE (sua risposta)
+  var i_risposta_balbi = document.getElementById("risposta_balbi");
+  var db_risposta_balbi = firebase.database().ref().child("4AE").child("balbi");
+  db_risposta_balbi.on("value", snap => i_risposta_balbi.innerHTML = snap.val());
+  db_risposta_balbi.on("value", snap => n_balbi = snap.val())</script>
+  <tr>
+  <!-- fine lista -->
+
+  
+  <!-- bertolini copia e cambia tutti i bertolini col nuovo nome -->
+  <td>
+  <button type="button" class="btn btn-warning btn-lg" onclick="dbRefbertolini.set(--nbertolini)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRefbertolini.set(++nbertolini)"> + </button><a href="bertolini.html" style="color:white">bertolini</a>
+  <!-- TESTO CHE MOSTRA LA RISPOSTA DI bertolini E IL SUO PUNTEGGIO -->
+  :<i id="risposta_bertolini"></i>
+  Punti: <i id="h1alunnobertolini"></i></p>
+  <!--               TASTI PER ASSEGNARE I PUNTI E VISUALIZZAZIONE RISPOSTA bertolini -->
+  <script>
+  var h1alunnobertolini = document.getElementById("h1alunnobertolini");
+  // VEDI IL PUNTEGGIO nel child bertolini di 5ae_2021_2022 (Punteggio assegnato da me)
+  var dbRefbertolini = firebase.database().ref().child("4ae_2021_2022").child("bertolini");
+  dbRefbertolini.on("value", snap => h1alunnobertolini.innerHTML = snap.val()); // mostra il valore di n1
+  // AGGIORNA PUNTEGGIO
+  dbRefbertolini.on("value", snap => nbertolini = snap.val()) // Cambia il valore della variabile n1
+  // VEDI IL PUNTEGGIO nel child bertolini di 5AE (sua risposta)
+  var i_risposta_bertolini = document.getElementById("risposta_bertolini");
+  var db_risposta_bertolini = firebase.database().ref().child("4AE").child("bertolini");
+  db_risposta_bertolini.on("value", snap => i_risposta_bertolini.innerHTML = snap.val());
+  db_risposta_bertolini.on("value", snap => n_bertolini = snap.val())</script>
+  <tr>
+  <!-- fine lista -->
+
+  
+  <!-- cuda copia e cambia tutti i cuda col nuovo nome -->
+  <td>
+  <button type="button" class="btn btn-warning btn-lg" onclick="dbRefcuda.set(--ncuda)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRefcuda.set(++ncuda)"> + </button><a href="cuda.html" style="color:white">cuda</a>
+  <!-- TESTO CHE MOSTRA LA RISPOSTA DI cuda E IL SUO PUNTEGGIO -->
+  :<i id="risposta_cuda"></i>
+  Punti: <i id="h1alunnocuda"></i></p>
+  <!--               TASTI PER ASSEGNARE I PUNTI E VISUALIZZAZIONE RISPOSTA cuda -->
+  <script>
+  var h1alunnocuda = document.getElementById("h1alunnocuda");
+  // VEDI IL PUNTEGGIO nel child cuda di 5ae_2021_2022 (Punteggio assegnato da me)
+  var dbRefcuda = firebase.database().ref().child("4ae_2021_2022").child("cuda");
+  dbRefcuda.on("value", snap => h1alunnocuda.innerHTML = snap.val()); // mostra il valore di n1
+  // AGGIORNA PUNTEGGIO
+  dbRefcuda.on("value", snap => ncuda = snap.val()) // Cambia il valore della variabile n1
+  // VEDI IL PUNTEGGIO nel child cuda di 5AE (sua risposta)
+  var i_risposta_cuda = document.getElementById("risposta_cuda");
+  var db_risposta_cuda = firebase.database().ref().child("4AE").child("cuda");
+  db_risposta_cuda.on("value", snap => i_risposta_cuda.innerHTML = snap.val());
+  db_risposta_cuda.on("value", snap => n_cuda = snap.val())</script>
+  <tr>
+  <!-- fine lista -->
+
+  
+  <!-- divivo copia e cambia tutti i divivo col nuovo nome -->
+  <td>
+  <button type="button" class="btn btn-warning btn-lg" onclick="dbRefdivivo.set(--ndivivo)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRefdivivo.set(++ndivivo)"> + </button><a href="divivo.html" style="color:white">divivo</a>
+  <!-- TESTO CHE MOSTRA LA RISPOSTA DI divivo E IL SUO PUNTEGGIO -->
+  :<i id="risposta_divivo"></i>
+  Punti: <i id="h1alunnodivivo"></i></p>
+  <!--               TASTI PER ASSEGNARE I PUNTI E VISUALIZZAZIONE RISPOSTA divivo -->
+  <script>
+  var h1alunnodivivo = document.getElementById("h1alunnodivivo");
+  // VEDI IL PUNTEGGIO nel child divivo di 5ae_2021_2022 (Punteggio assegnato da me)
+  var dbRefdivivo = firebase.database().ref().child("4ae_2021_2022").child("divivo");
+  dbRefdivivo.on("value", snap => h1alunnodivivo.innerHTML = snap.val()); // mostra il valore di n1
+  // AGGIORNA PUNTEGGIO
+  dbRefdivivo.on("value", snap => ndivivo = snap.val()) // Cambia il valore della variabile n1
+  // VEDI IL PUNTEGGIO nel child divivo di 5AE (sua risposta)
+  var i_risposta_divivo = document.getElementById("risposta_divivo");
+  var db_risposta_divivo = firebase.database().ref().child("4AE").child("divivo");
+  db_risposta_divivo.on("value", snap => i_risposta_divivo.innerHTML = snap.val());
+  db_risposta_divivo.on("value", snap => n_divivo = snap.val())</script>
+  <tr>
+  <!-- fine lista -->
+
+  
+  <!-- iuliano copia e cambia tutti i iuliano col nuovo nome -->
+  <td>
+  <button type="button" class="btn btn-warning btn-lg" onclick="dbRefiuliano.set(--niuliano)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRefiuliano.set(++niuliano)"> + </button><a href="iuliano.html" style="color:white">iuliano</a>
+  <!-- TESTO CHE MOSTRA LA RISPOSTA DI iuliano E IL SUO PUNTEGGIO -->
+  :<i id="risposta_iuliano"></i>
+  Punti: <i id="h1alunnoiuliano"></i></p>
+  <!--               TASTI PER ASSEGNARE I PUNTI E VISUALIZZAZIONE RISPOSTA iuliano -->
+  <script>
+  var h1alunnoiuliano = document.getElementById("h1alunnoiuliano");
+  // VEDI IL PUNTEGGIO nel child iuliano di 5ae_2021_2022 (Punteggio assegnato da me)
+  var dbRefiuliano = firebase.database().ref().child("4ae_2021_2022").child("iuliano");
+  dbRefiuliano.on("value", snap => h1alunnoiuliano.innerHTML = snap.val()); // mostra il valore di n1
+  // AGGIORNA PUNTEGGIO
+  dbRefiuliano.on("value", snap => niuliano = snap.val()) // Cambia il valore della variabile n1
+  // VEDI IL PUNTEGGIO nel child iuliano di 5AE (sua risposta)
+  var i_risposta_iuliano = document.getElementById("risposta_iuliano");
+  var db_risposta_iuliano = firebase.database().ref().child("4AE").child("iuliano");
+  db_risposta_iuliano.on("value", snap => i_risposta_iuliano.innerHTML = snap.val());
+  db_risposta_iuliano.on("value", snap => n_iuliano = snap.val())</script>
+  <tr>
+  <!-- fine lista -->
+
+  
+  <!-- lapastina copia e cambia tutti i lapastina col nuovo nome -->
+  <td>
+  <button type="button" class="btn btn-warning btn-lg" onclick="dbReflapastina.set(--nlapastina)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbReflapastina.set(++nlapastina)"> + </button><a href="lapastina.html" style="color:white">lapastina</a>
+  <!-- TESTO CHE MOSTRA LA RISPOSTA DI lapastina E IL SUO PUNTEGGIO -->
+  :<i id="risposta_lapastina"></i>
+  Punti: <i id="h1alunnolapastina"></i></p>
+  <!--               TASTI PER ASSEGNARE I PUNTI E VISUALIZZAZIONE RISPOSTA lapastina -->
+  <script>
+  var h1alunnolapastina = document.getElementById("h1alunnolapastina");
+  // VEDI IL PUNTEGGIO nel child lapastina di 5ae_2021_2022 (Punteggio assegnato da me)
+  var dbReflapastina = firebase.database().ref().child("4ae_2021_2022").child("lapastina");
+  dbReflapastina.on("value", snap => h1alunnolapastina.innerHTML = snap.val()); // mostra il valore di n1
+  // AGGIORNA PUNTEGGIO
+  dbReflapastina.on("value", snap => nlapastina = snap.val()) // Cambia il valore della variabile n1
+  // VEDI IL PUNTEGGIO nel child lapastina di 5AE (sua risposta)
+  var i_risposta_lapastina = document.getElementById("risposta_lapastina");
+  var db_risposta_lapastina = firebase.database().ref().child("4AE").child("lapastina");
+  db_risposta_lapastina.on("value", snap => i_risposta_lapastina.innerHTML = snap.val());
+  db_risposta_lapastina.on("value", snap => n_lapastina = snap.val())</script>
+  <tr>
+  <!-- fine lista -->
+
+  
+  <!-- lakrad copia e cambia tutti i lakrad col nuovo nome -->
+  <td>
+  <button type="button" class="btn btn-warning btn-lg" onclick="dbReflakrad.set(--nlakrad)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbReflakrad.set(++nlakrad)"> + </button><a href="lakrad.html" style="color:white">lakrad</a>
+  <!-- TESTO CHE MOSTRA LA RISPOSTA DI lakrad E IL SUO PUNTEGGIO -->
+  :<i id="risposta_lakrad"></i>
+  Punti: <i id="h1alunnolakrad"></i></p>
+  <!--               TASTI PER ASSEGNARE I PUNTI E VISUALIZZAZIONE RISPOSTA lakrad -->
+  <script>
+  var h1alunnolakrad = document.getElementById("h1alunnolakrad");
+  // VEDI IL PUNTEGGIO nel child lakrad di 5ae_2021_2022 (Punteggio assegnato da me)
+  var dbReflakrad = firebase.database().ref().child("4ae_2021_2022").child("lakrad");
+  dbReflakrad.on("value", snap => h1alunnolakrad.innerHTML = snap.val()); // mostra il valore di n1
+  // AGGIORNA PUNTEGGIO
+  dbReflakrad.on("value", snap => nlakrad = snap.val()) // Cambia il valore della variabile n1
+  // VEDI IL PUNTEGGIO nel child lakrad di 5AE (sua risposta)
+  var i_risposta_lakrad = document.getElementById("risposta_lakrad");
+  var db_risposta_lakrad = firebase.database().ref().child("4AE").child("lakrad");
+  db_risposta_lakrad.on("value", snap => i_risposta_lakrad.innerHTML = snap.val());
+  db_risposta_lakrad.on("value", snap => n_lakrad = snap.val())</script>
+  <tr>
+  <!-- fine lista -->
+
+  
+  <!-- maffia copia e cambia tutti i maffia col nuovo nome -->
+  <td>
+  <button type="button" class="btn btn-warning btn-lg" onclick="dbRefmaffia.set(--nmaffia)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRefmaffia.set(++nmaffia)"> + </button><a href="maffia.html" style="color:white">maffia</a>
+  <!-- TESTO CHE MOSTRA LA RISPOSTA DI maffia E IL SUO PUNTEGGIO -->
+  :<i id="risposta_maffia"></i>
+  Punti: <i id="h1alunnomaffia"></i></p>
+  <!--               TASTI PER ASSEGNARE I PUNTI E VISUALIZZAZIONE RISPOSTA maffia -->
+  <script>
+  var h1alunnomaffia = document.getElementById("h1alunnomaffia");
+  // VEDI IL PUNTEGGIO nel child maffia di 5ae_2021_2022 (Punteggio assegnato da me)
+  var dbRefmaffia = firebase.database().ref().child("4ae_2021_2022").child("maffia");
+  dbRefmaffia.on("value", snap => h1alunnomaffia.innerHTML = snap.val()); // mostra il valore di n1
+  // AGGIORNA PUNTEGGIO
+  dbRefmaffia.on("value", snap => nmaffia = snap.val()) // Cambia il valore della variabile n1
+  // VEDI IL PUNTEGGIO nel child maffia di 5AE (sua risposta)
+  var i_risposta_maffia = document.getElementById("risposta_maffia");
+  var db_risposta_maffia = firebase.database().ref().child("4AE").child("maffia");
+  db_risposta_maffia.on("value", snap => i_risposta_maffia.innerHTML = snap.val());
+  db_risposta_maffia.on("value", snap => n_maffia = snap.val())</script>
+  <tr>
+  <!-- fine lista -->
+
+  
+  <!-- mercanti copia e cambia tutti i mercanti col nuovo nome -->
+  <td>
+  <button type="button" class="btn btn-warning btn-lg" onclick="dbRefmercanti.set(--nmercanti)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRefmercanti.set(++nmercanti)"> + </button><a href="mercanti.html" style="color:white">mercanti</a>
+  <!-- TESTO CHE MOSTRA LA RISPOSTA DI mercanti E IL SUO PUNTEGGIO -->
+  :<i id="risposta_mercanti"></i>
+  Punti: <i id="h1alunnomercanti"></i></p>
+  <!--               TASTI PER ASSEGNARE I PUNTI E VISUALIZZAZIONE RISPOSTA mercanti -->
+  <script>
+  var h1alunnomercanti = document.getElementById("h1alunnomercanti");
+  // VEDI IL PUNTEGGIO nel child mercanti di 5ae_2021_2022 (Punteggio assegnato da me)
+  var dbRefmercanti = firebase.database().ref().child("4ae_2021_2022").child("mercanti");
+  dbRefmercanti.on("value", snap => h1alunnomercanti.innerHTML = snap.val()); // mostra il valore di n1
+  // AGGIORNA PUNTEGGIO
+  dbRefmercanti.on("value", snap => nmercanti = snap.val()) // Cambia il valore della variabile n1
+  // VEDI IL PUNTEGGIO nel child mercanti di 5AE (sua risposta)
+  var i_risposta_mercanti = document.getElementById("risposta_mercanti");
+  var db_risposta_mercanti = firebase.database().ref().child("4AE").child("mercanti");
+  db_risposta_mercanti.on("value", snap => i_risposta_mercanti.innerHTML = snap.val());
+  db_risposta_mercanti.on("value", snap => n_mercanti = snap.val())</script>
+  <tr>
+  <!-- fine lista -->
+
+  
+  <!-- nese copia e cambia tutti i nese col nuovo nome -->
+  <td>
+  <button type="button" class="btn btn-warning btn-lg" onclick="dbRefnese.set(--nnese)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRefnese.set(++nnese)"> + </button><a href="nese.html" style="color:white">nese</a>
+  <!-- TESTO CHE MOSTRA LA RISPOSTA DI nese E IL SUO PUNTEGGIO -->
+  :<i id="risposta_nese"></i>
+  Punti: <i id="h1alunnonese"></i></p>
+  <!--               TASTI PER ASSEGNARE I PUNTI E VISUALIZZAZIONE RISPOSTA nese -->
+  <script>
+  var h1alunnonese = document.getElementById("h1alunnonese");
+  // VEDI IL PUNTEGGIO nel child nese di 5ae_2021_2022 (Punteggio assegnato da me)
+  var dbRefnese = firebase.database().ref().child("4ae_2021_2022").child("nese");
+  dbRefnese.on("value", snap => h1alunnonese.innerHTML = snap.val()); // mostra il valore di n1
+  // AGGIORNA PUNTEGGIO
+  dbRefnese.on("value", snap => nnese = snap.val()) // Cambia il valore della variabile n1
+  // VEDI IL PUNTEGGIO nel child nese di 5AE (sua risposta)
+  var i_risposta_nese = document.getElementById("risposta_nese");
+  var db_risposta_nese = firebase.database().ref().child("4AE").child("nese");
+  db_risposta_nese.on("value", snap => i_risposta_nese.innerHTML = snap.val());
+  db_risposta_nese.on("value", snap => n_nese = snap.val())</script>
+  <tr>
+  <!-- fine lista -->
+
+  
+  <!-- niglio copia e cambia tutti i niglio col nuovo nome -->
+  <td>
+  <button type="button" class="btn btn-warning btn-lg" onclick="dbRefniglio.set(--nniglio)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRefniglio.set(++nniglio)"> + </button><a href="niglio.html" style="color:white">niglio</a>
+  <!-- TESTO CHE MOSTRA LA RISPOSTA DI niglio E IL SUO PUNTEGGIO -->
+  :<i id="risposta_niglio"></i>
+  Punti: <i id="h1alunnoniglio"></i></p>
+  <!--               TASTI PER ASSEGNARE I PUNTI E VISUALIZZAZIONE RISPOSTA niglio -->
+  <script>
+  var h1alunnoniglio = document.getElementById("h1alunnoniglio");
+  // VEDI IL PUNTEGGIO nel child niglio di 5ae_2021_2022 (Punteggio assegnato da me)
+  var dbRefniglio = firebase.database().ref().child("4ae_2021_2022").child("niglio");
+  dbRefniglio.on("value", snap => h1alunnoniglio.innerHTML = snap.val()); // mostra il valore di n1
+  // AGGIORNA PUNTEGGIO
+  dbRefniglio.on("value", snap => nniglio = snap.val()) // Cambia il valore della variabile n1
+  // VEDI IL PUNTEGGIO nel child niglio di 5AE (sua risposta)
+  var i_risposta_niglio = document.getElementById("risposta_niglio");
+  var db_risposta_niglio = firebase.database().ref().child("4AE").child("niglio");
+  db_risposta_niglio.on("value", snap => i_risposta_niglio.innerHTML = snap.val());
+  db_risposta_niglio.on("value", snap => n_niglio = snap.val())</script>
+  <tr>
+  <!-- fine lista -->
+
+  
+  <!-- pica copia e cambia tutti i pica col nuovo nome -->
+  <td>
+  <button type="button" class="btn btn-warning btn-lg" onclick="dbRefpica.set(--npica)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRefpica.set(++npica)"> + </button><a href="pica.html" style="color:white">pica</a>
+  <!-- TESTO CHE MOSTRA LA RISPOSTA DI pica E IL SUO PUNTEGGIO -->
+  :<i id="risposta_pica"></i>
+  Punti: <i id="h1alunnopica"></i></p>
+  <!--               TASTI PER ASSEGNARE I PUNTI E VISUALIZZAZIONE RISPOSTA pica -->
+  <script>
+  var h1alunnopica = document.getElementById("h1alunnopica");
+  // VEDI IL PUNTEGGIO nel child pica di 5ae_2021_2022 (Punteggio assegnato da me)
+  var dbRefpica = firebase.database().ref().child("4ae_2021_2022").child("pica");
+  dbRefpica.on("value", snap => h1alunnopica.innerHTML = snap.val()); // mostra il valore di n1
+  // AGGIORNA PUNTEGGIO
+  dbRefpica.on("value", snap => npica = snap.val()) // Cambia il valore della variabile n1
+  // VEDI IL PUNTEGGIO nel child pica di 5AE (sua risposta)
+  var i_risposta_pica = document.getElementById("risposta_pica");
+  var db_risposta_pica = firebase.database().ref().child("4AE").child("pica");
+  db_risposta_pica.on("value", snap => i_risposta_pica.innerHTML = snap.val());
+  db_risposta_pica.on("value", snap => n_pica = snap.val())</script>
+  <tr>
+  <!-- fine lista -->
+
+  
+  <!-- spinelli copia e cambia tutti i spinelli col nuovo nome -->
+  <td>
+  <button type="button" class="btn btn-warning btn-lg" onclick="dbRefspinelli.set(--nspinelli)"> - </button><button type="button" class="btn btn-info btn-lg" onclick="dbRefspinelli.set(++nspinelli)"> + </button><a href="spinelli.html" style="color:white">spinelli</a>
+  <!-- TESTO CHE MOSTRA LA RISPOSTA DI spinelli E IL SUO PUNTEGGIO -->
+  :<i id="risposta_spinelli"></i>
+  Punti: <i id="h1alunnospinelli"></i></p>
+  <!--               TASTI PER ASSEGNARE I PUNTI E VISUALIZZAZIONE RISPOSTA spinelli -->
+  <script>
+  var h1alunnospinelli = document.getElementById("h1alunnospinelli");
+  // VEDI IL PUNTEGGIO nel child spinelli di 5ae_2021_2022 (Punteggio assegnato da me)
+  var dbRefspinelli = firebase.database().ref().child("4ae_2021_2022").child("spinelli");
+  dbRefspinelli.on("value", snap => h1alunnospinelli.innerHTML = snap.val()); // mostra il valore di n1
+  // AGGIORNA PUNTEGGIO
+  dbRefspinelli.on("value", snap => nspinelli = snap.val()) // Cambia il valore della variabile n1
+  // VEDI IL PUNTEGGIO nel child spinelli di 5AE (sua risposta)
+  var i_risposta_spinelli = document.getElementById("risposta_spinelli");
+  var db_risposta_spinelli = firebase.database().ref().child("4AE").child("spinelli");
+  db_risposta_spinelli.on("value", snap => i_risposta_spinelli.innerHTML = snap.val());
+  db_risposta_spinelli.on("value", snap => n_spinelli = snap.val())</script>
+  <tr>
+  <!-- fine lista -->
+
+  
+  </table>
+  </div>
+  

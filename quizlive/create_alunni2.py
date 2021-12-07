@@ -36,7 +36,7 @@ def create_files(nomeclasse):
           "Cammarano_D",
           "Cammarano_N",
           "Costantini",
-          "Del Verme,",
+          "Del Verme",
           "Esposito",
           "Fontana",
           "Garofalo",
@@ -78,7 +78,7 @@ def create_files(nomeclasse):
   html = """
   <style>
 
-  	
+    
 
   body, table, button {
 
@@ -111,7 +111,7 @@ def create_files(nomeclasse):
   tr:nth-child(even){background-color: coral; color: white;}
   tr:nth-child(odd){background-color: navy; color: white;}
 
-  	
+    
   </style>
 
 
@@ -234,7 +234,7 @@ def create_files(nomeclasse):
 
   """
 
-
+  # FILE DEGLI ALUNNI (file)
   filename = "template.html"
   with open(filename) as file:
     file = file.read()
@@ -248,22 +248,23 @@ def create_files(nomeclasse):
 
   str_classe = "let classe =['" + "','".join(classe) + "'];"
 
-
+  # FILE DEL DOCENTE
   # RIMPIAZZA [CLASSE] CON LA LISTA JS DELLA CLASSE
-  html = html.replace("[classe]", str_classe)
-
+  html1 = html.replace("[classe]", str_classe)
+  html1 = html1.replace("insegnante", "insegnante" + nomeclasse)
+  html = html1
+  
   # CREA I FILE DEGLI ALUNNI
   for alunno in classe:
-  	# create file for single pupil
-  	file1 = file.replace("musto", alunno)
-  	with open(alunno + ".html", "w") as newfile:
-  		newfile.write(file1)
-
-  # AGGIUNGE ALLA CONSOLE DEL DOCENTE I NOMI DEGLI ALUNNI
-  	# create html for the console.html file
-  	console2 = console.replace("musto", alunno)
-  	print(alunno)
-  	html += console2
+    # SALVA FILE SINGOLI ALUNNI
+    file1 = file.replace("musto", alunno)
+    file1 = file1.replace("insegnante", "insegnante" + nomeclasse)
+    with open(alunno + ".html", "w") as newfile:
+      newfile.write(file1)
+    # CREA CODICE LISTA ALUNNI DELLA CONSOLE DEL DOCENTE (SALVA ALLA FINE)
+    console2 = console.replace("musto", alunno)
+    print(alunno)
+    html += console2
 
   # CREA LA TABELLA CON I NOMI DEGLI ALUNNI, PULSANTI E RISPOSTE
   html += """
@@ -271,25 +272,24 @@ def create_files(nomeclasse):
   </div>
   """
 
-
-  # ================= CREA CONSOLE PER DOCENTE PER CONTROLLARE LE RISPOSTE
-  #                     E ASSEGNARE I PUNTI
+  # ====== SALVA LA CONSOLE DOCENTE DOPO AVER CREATO IL CODICE PER VEDERE I
+  # RISULTATI DEGLI ALUNNI PRIMA
   with open(f"console{nomeclasse}.html", "w") as newfileconsole:
-  	newfileconsole.write(html)
+    newfileconsole.write(html)
   os.startfile(f"console{nomeclasse}.html")
 
 
   # ========== CREA FILE SINGOLI PER ALUNNI PER INSERIRE RISPOSTE
   # for alunni in classe:
-  # 	address = f"https://formazione.github.io/quiz{nomeclasse}/" + alunni + ".html"
-  # 	print(address)
-  # 	print()
+  #   address = f"https://formazione.github.io/quiz{nomeclasse}/" + alunni + ".html"
+  #   print(address)
+  #   print()
 
 
   # for alunni in classe:
-  # 	address = "https://formazione.github.io/quiz5ae/" + alunni + ".html"
-  # 	print("<a href='" + address + "'>" + alunni + "</a><br>")
-  # 	print()
+  #   address = "https://formazione.github.io/quiz5ae/" + alunni + ".html"
+  #   print("<a href='" + address + "'>" + alunni + "</a><br>")
+  #   print()
 
   # CREA ELENCO PER COLLEGARSI AI FILE ALUNNI
   path = f"collegamenti{nomeclasse}.html"

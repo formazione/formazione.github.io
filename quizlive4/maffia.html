@@ -1,0 +1,70 @@
+<style>
+ body, table, button, input {color: white; background: #6fac8f;font-size: 1.5em; } .btn.btn-warning.btn-lg, #inp1 {background:pink; color:red; font-size:48;} .btn.btn-info.btn-lg {background:cyan; color:blue; } ul {font-size: 2em;} i {font-size : 2em;} p { font-size: 2em; } td {font-size: 1.5em;} table {border-collapse: collapse; width: 100%; } th, td {text-align: left; padding: 8px; } tr:nth-child(even){background-color: #f2f2f2}
+</style>
+
+
+<body>
+<script src="https://www.gstatic.com/firebasejs/4.10.1/firebase.js"></script>
+<script src="config.js"></script>
+
+<b>maffia : <b id="punteggio_maffia" style="background:navy"></b> punti</b>
+<b style="background:yellow;color:red">
+<br>
+<b id="domanda_insegnante4ae"></b>
+
+<div class="w3-main" style="margin-left:0px">
+
+<script>
+  function get_time(){
+  var time = new Date().getHours() + "." + new Date().getMinutes() + "." + new Date().getSeconds();
+  return time}
+</script>
+<br>Scrivi:
+
+<!-- ============== TEXAREA DOVE L'ALUNNO SCRIVE ============== -->
+<textarea id="inp1" onchange="dbmaffia.set(this.value)" rows=3 style="width:100%"></textarea>
+<!-- =============== PULSANTE INVIO ============== -->
+  <!-- <button type="button" class="btn btn-info btn-lg" onclick="var invio=get_time();maffia_arr.push('\n' + '\n' + inp1.value + ' <i style=\'font-size:18\'>Invio:=' + invio + '</i>');dbmaffia.set(maffia_arr.toString());"> -->
+  <button type="button" class="btn btn-info btn-lg" onclick="var invio=get_time();maffia_arr = '\n' + '\n' + inp1.value + ' <i style=\'font-size:18\'>Invio:=' + invio + '</i>';dbmaffia.set(maffia_arr.toString());">
+
+INVIA</button>
+<!-- ====================== Pulsante Cancella risposta ================ -->
+  <button type="button" class="btn btn-info btn-lg" onclick="dbmaffia.set('');inp1.value=''">
+
+Canc</button>
+<!-- =============== DOVE VIENE STAMPATA LA RISPOSTA INVIATA ================ -->
+  <br>
+Risposta inviata: <br><i id="maffia" style="color:red;background: yellow;"></i>
+  <script>
+
+let maffia_arr = "";
+
+// RISPOSTA MUSTO
+var maffia = document.getElementById("maffia");
+// DOVE VIENE REGISTRATA LA RISPOSTA DELL'ALUNNO
+var dbmaffia = firebase.database().ref().child("4AE").child("maffia");
+// ============== QUANDO L'ALUNNO VEDE LA DOMANDA ==========
+// var time = get_time();
+dbmaffia.on("value", snap => maffia.innerHTML = snap.val());
+// dbmaffia.on("value", snap => maffia.innerHTML = snap.val() + "\nInizio: " + time);
+
+
+// dbmaffia.on("value", snap => n_maffia = snap.val() + "\nInviato alle: " + time)
+
+// PUNTEGGIO DELL'ALUNNO
+var punteggio_maffia = document.getElementById("punteggio_maffia");
+var dbRef1 = firebase.database().ref().child("4ae_2021_2022").child("maffia");
+dbRef1.on("value", snap => punteggio_maffia.innerHTML = snap.val()); // mostra il valore di n1
+
+
+// PESCA LA DOMANDA DAL DATABASE
+var domanda_insegnante4ae = document.getElementById("domanda_insegnante4ae");
+// VEDI IL PUNTEGGIO nel child maffia di 5ae_2021_2022 (Punteggio assegnato da me)
+var dbRef1 = firebase.database().ref().child("domanda").child("insegnante4ae");
+dbRef1.on("value", snap => domanda_insegnante4ae.innerHTML = snap.val()); // mostra il valore di n1
+
+</script>
+<tr>
+
+</table>
+</div>

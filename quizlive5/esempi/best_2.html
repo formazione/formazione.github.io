@@ -1,0 +1,28 @@
+<style>body{background: black}i{color:gold}p{color:white;}h3{color:gray}
+</style><hr>
+<h3>Scritture in Partita doppia</h3><hr><center>
+<!---------------------------DOMANDA 1----------------->
+<h3>Domanda 1</h3>
+<script>
+function butt(img, d1, r1, r2){
+	const newDiv = document.createElement("div");
+	const newContent = `
+	<img src="`+img+`" width=50%>
+	<h1 style="color:white">`+d1+`</h1>
+	<button onclick="dom1.value='A'">A</button><i>`+r1+`</i><br>
+	<button onclick="dom1.value='B'">B</button><i>`+r2+`</i><br>
+	<input id="dom1" type="text"><hr>
+	`;
+	newDiv.innerHTML = newContent;
+	const currentDiv = document.getElementById("div1");
+	document.body.insertBefore(newDiv, currentDiv);
+}
+</script>
+
+<script>
+// butt("https://images-cdn.kahoot.it/decf7162-f24b-464b-b2e7-2cca47ae0b42?auto=webp", "qual è la scrittura giusta?", "opzione 1", "opzione 2"
+// 	);
+
+</script>
+<button onclick="butt('https://images-cdn.kahoot.it/decf7162-f24b-464b-b2e7-2cca47ae0b42?auto=webp', 'qual è la scrittura giusta?', 'opzione 1', 'opzione 2'
+	);">Domanda 1</button>
