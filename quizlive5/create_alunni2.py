@@ -293,7 +293,7 @@ def create_files(nomeclasse):
   path = f"collegamenti{nomeclasse}.html"
   html = ""
   for n in classe:
-         html += f"<h2><a href='https://formazione.github.io/quizclassi/{n}.html'>{n}</a></h2>"
+         html += f"<h2><a href='https://formazione.github.io/quizlive5/{n}.html'>{n}</a></h2>"
   with open(path, "w") as file:
          file.write(html)
 

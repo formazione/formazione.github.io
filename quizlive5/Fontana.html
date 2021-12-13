@@ -2,14 +2,14 @@
  body, table {
   background:black;
   color: white; 
-  font-size: 1.5em; } 
+  font-size: 1em; } 
 
   button {color: white; 
     background:navy;
-    font-size: 1.5em; }
-  input {color: white; 
-    background:red;
-    font-size: 1.5em; }
+    font-size: 1em; }
+  input {color: darkred; 
+    background:white;
+    font-size: 1em; }
   .btn.btn-warning.btn-lg, #inp1 {
     background:navy; 
     color:white; 
@@ -17,9 +17,9 @@
   .btn.btn-info.btn-lg {
     background:cyan;
     color:blue; } 
-  ul {font-size: 2em;} 
-  p { font-size: 2em; } 
-  td {font-size: 1.5em;} 
+  ul {font-size: 1em;} 
+  p { font-size: 1em; } 
+  td {font-size: 1em;} 
   table {border-collapse: collapse;
     width: 100%; } 
   th, td {text-align: left;
@@ -34,8 +34,8 @@
 <script src="https://www.gstatic.com/firebasejs/4.10.1/firebase.js"></script>
 <script src="config.js"></script>
 
-<b>Fontana : <b id="punteggio_Fontana" style="background:orange"></b> punti</b>
-<b style="background:yellow;color:red">
+<b>Fontana : <b id="punteggio_Fontana" style="background:black"></b> punti</b>
+<b style="background:black;color:white">
 <br>
 <b id="domanda_insegnante5ae"></b>
 
@@ -61,7 +61,7 @@ INVIA</button>
 Canc</button>
 <!-- =============== DOVE VIENE STAMPATA LA RISPOSTA INVIATA ================ -->
   <br>
-Risposta inviata: <br><i id="Fontana" style="color:red;background: yellow;"></i>
+Risposta inviata: <br><i id="Fontana" style="color:white;background: black;"></i>
   <script>
 
 let Fontana_arr = "";
