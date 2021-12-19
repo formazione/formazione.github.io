@@ -1,0 +1,46 @@
+<!--- Esercizio 1 -->
+  <div style="color:yellow">
+
+<!-- Traccia -->
+Ricevuta fattura per 100 € + iva 10% per acquisto merci dalla ditta Rossi.</div>
+
+
+<!-- Merci c/acquisti -->
+  <table border=1 style="width:300">
+  <td colspan=2><center>
+
+Merci c/acquisti</center><tr>
+
+  <td  style="width:150">
+<input type="text" id="i1" style="width:150" value=0></td><td style="width:150">
+<input type="text" id="i2" style="width:150" value=0></td>
+  </table><br><br> <!-- Fine conto Merci c/acquisti-->
+
+
+<!-- Conto IVA a Credito -->
+  <table border=1 style="width:300">
+  <td colspan=2><center>
+
+IVA a credito v/Stato</center><tr>
+
+  <td  style="width:150">
+<input type="text" id="i3" style="width:150" value=0></td><td style="width:150">
+<input type="text" id="i4" style="width:150" value=0></td>
+  </table><br><br> <!-- Fine conto Iva a credito-->
+
+<!-- Debiti v/fornitori-->
+  <table border=1 style="width:300">
+  <td colspan=2><center>
+
+Debiti v/fornitori</center><tr>
+
+  <td  style="width:150">
+<input type="text" id="i5" style="width:150" value=0></td><td style="width:150">
+<input type="text" id="i6" style="width:150" value=0></td>
+  </table><br><br> <!-- Fine conto Iva a credito-->
+
+
+
+
+<br><br> <!--      PULSANTE PER INVIO DELLE RISPOSTE --->
+<button id="c1" onclick="inp1.value='Merci c/acquisti: ' + i1.value+' avere:' + i2.value + '\nIva a credito: dare: ' + i3.value + ' avere:' + i4.value + '\nDebiti v/fornitori dare: ' + i5.value + ' avere: ' + i6.value">Invia risposte del test</button>

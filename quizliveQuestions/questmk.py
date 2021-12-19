@@ -48,13 +48,17 @@ Tool for quizlive5
 <input type="text" id="inp1">"""
 
 
-questions = """Costituzione
-L'art
-della costituzione stabilisce che l'Italia è una
-democratica fondata sul
-. La sovranità appartiene al
-che la esercita nelle forme e nei
-della
+questions = """Partita
+Secondo la partita doppia dare e avere devono sempre essere ....
+I conti finanziari si devono valutare?
+In dare dei conti finanziari vanno (entrate o uscite)
+In avere dei conti finanziari vanno
+In dare dei conti economici vanno (costi o ricavi) ...
+Il conto merci c/acquisti è economico o finanziario?
+Il cassa  è economico o finanziario?
+Il banca  è economico o finanziario?
+Il automezzi è economico o finanziario?
+Il crediti v/clienti è economico o finanziario?
 """.splitlines()
 
 # Put 1 if you want ommissis words without breaks
