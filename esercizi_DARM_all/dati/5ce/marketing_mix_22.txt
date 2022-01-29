@@ -88,6 +88,12 @@ I punti di forza dipendono:
 dall'azienda
 dall'ambiente esterno all'azienda
 
+Costi diretti=2 €| indiretti=3  €| mark-up=20% costi diretti| Prezzo?
+6
+5
+4
+3
+
 Dipendono dall'impresa
 punti di forza e debolezza
 opportunità e rischi
@@ -143,6 +149,12 @@ Nel direct marketing l'impresa
 comunica direttamente col cliente
 non ha contatti con il cliente
 
+Fattore 2,5| costi diretti=4 €| Prezzo
+10
+11
+8
+15
+
 consiste nell'offrire un vantaggio al cliente
 promozione
 pubblicità
@@ -182,32 +194,20 @@ copia circoscritta
 conto corrente
 conto conoscenza
 
-Non sono visibli i destinatari nelle email nel campo
-CCN
-CC
-A
-FROM
-
 Fattore = 3| costi diretti = 6 €| Prezzo?
 18
 15
 6
 30
 
-Fattore 2,5| costi diretti=4 €| Prezzo
-10
-11
-8
-15
+Non sono visibli i destinatari nelle email nel campo
+CCN
+CC
+A
+FROM
 
 Costi diretti=1,5 € 33% del prezzo| Prezzo?
 4,5
 5
 6
 7,5
-
-Costi diretti=2 €| indiretti=3  €| mark-up=20% costi diretti| Prezzo?
-6
-5
-4
-3
