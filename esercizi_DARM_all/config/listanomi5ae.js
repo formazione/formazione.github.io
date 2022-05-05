@@ -20,3 +20,5 @@ listanomi = [
         "Scola_M",
         "SCOLA_V",
             ];
+
+// https://replit.com/@GattoGiovanni/verifica#main.py

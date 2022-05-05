@@ -47,23 +47,30 @@ def makeQ(q, ch):
 
 
 qdic = {}
-def mklist(filename):
-	"Return a dictionary and a list of questions and aswers in a txt file where there is a question and answers for each line separated by an empty line for every group of question and answers"
+def mklist(filename) -> dict:
+	""" -------------------------------------------------
+	---------------------- mklist ------------------------
+	Return a dictionary and a list of questions and aswers in a txt file where there is a question and answers for each line separated by an empty line for every group of question and answers ------------------------------------------
+	-------------------------o---------------------------
+	  -------------------------------------------------
+	"""
 	global qdic, classe
 	flist = []
+	# opens the file relative to a class and split it
+	# into a LIST of lists of questions/answers into
 	with open(f"{os.getcwd()}/dati/{classe}/{filename}", 'r', encoding='utf-8') as file:
 		file = file.read()
 		file = file.split("\n\n")
+	# Append a list with question and answers for each string
 	for eachstring in file:
 		flist.append(eachstring.split("\n"))
+	# get rid of empty line
 	for eachsublist in flist:
 		for e in eachsublist:
-		
 		# avoid empty lines at the end
 			if e == '':
 				eachsublist.pop(eachsublist.index(e))
 		# avoid empty lines at the end
-		
 		question = eachsublist[0]
 		eachsublist.pop(0)
 		qdic[question] = eachsublist
@@ -71,9 +78,9 @@ def mklist(filename):
 
 
 def menu():
+	"""a menu to choose a file in the directory 'dati'"""
 	global classe
 
-	"a menu to choose a file in the directory 'dati'"
 	print("File di testo nella cartella: dati")
 	print("------------------------------------")
 	for number,eachfile in enumerate(glob.glob(f"dati\\{classe}/*.txt")):
@@ -105,10 +112,10 @@ def replace_js_title(filetext, filename):
 	return filetext
 
 def create_html(classe, filename):
-	"Substitute something in template3_3ce and create as new file with new name\
+	"""Substitute something in template3_3ce and create as new file with new name\
      .js contains the questions\
      .html contains the html code\
-	"
+	"""
 	filetext = open_template(f"template.html")
 	filetext = replace_js_title(filetext, filename)
 	file_write(f"{filename}{classe}" + ".html", filetext)
