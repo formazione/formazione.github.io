@@ -10,7 +10,11 @@ import sys
 print(sys.version)
 </py-script>
 <py-script>
-pyscript.write("label", "REPL")
+
+def label(id, text):
+  pyscript.write(id, text)
+
+label("label", "Hello World")
 
 </py-script>
 <py-repl id="my-repl" auto-generate="true"> </py-repl>
