@@ -1,6 +1,6 @@
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
@@ -24,12 +24,16 @@
 /**
 *Let's create the randomization of the questions!
 */
-function speak(x) {
+function speak(x, language="it") {
   synth = speechSynthesis
   utt = new SpeechSynthesisUtterance(x);
+  utt.lang=language;
   synth.speak(utt);
   is_on = 1;
 }
+
+
+
 function shuffle(array) {
   var currentIndex = array.length, temporaryValue, randomIndex;
 
@@ -300,7 +304,9 @@ jQuery(document).ready(function($){
             .css({'font-weight':'bold', 'border-color':'#f93939', 'color':'#fff'});
       $('#explanation')
         .html('<span class="incorrect">INESATTO!</span> ' + (quiz[currentquestion]['explanation']));
-        speak("No! è " + quiz[currentquestion]['correct']);
+        speak("No! è")
+        // francese
+        speak(quiz[currentquestion]['correct'], LINGUA_RISPOSTA); // RISPOSTA ERRATA IN LINGUA FRANCESE
             }
         count_speak = 0;
         currentquestion++;
@@ -362,7 +368,7 @@ jQuery(document).ready(function($){
 
        
   
-	
+	let LINGUA_RISPOSTA = "fr"; // cambia la lingua della risposta quando le lingue sono diverse
   
   function setupButtons(){
       //speak(quiz[currentquestion]['question'])
@@ -372,6 +378,13 @@ jQuery(document).ready(function($){
         is_on = 0;
 
 				picked = $(this).attr('data-index');
+
+				// CHANGED 3/16/2023
+
+				speak(quiz[currentquestion]['choices'][picked], LINGUA_RISPOSTA);
+
+				// risposte in francese
+
 				$('.choice').removeAttr('style').off('mouseout mouseover');
 				$(this).css({'font-weight':'900', 'border-color':'#51a351', 'color':'#51a351', 'background' : 'gold'});
 				if(submt){
