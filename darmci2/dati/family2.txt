@@ -1,0 +1,59 @@
+Who is your mother's brother?
+Uncle
+Aunt
+Cousin
+Nephew
+
+Who is your father's sister?
+Aunt
+Uncle
+Cousin
+Niece
+
+Who is your brother's daughter?
+Niece
+Cousin
+Aunt
+Sister
+
+Who is your sister's son?
+Nephew
+Cousin
+Uncle
+Brother
+
+Who is your mother's mother?
+Grandmother
+Grandfather
+Aunt
+Uncle
+
+Who is your father's father?
+Grandfather
+Grandmother
+Uncle
+Aunt
+
+Who is your aunt's daughter?
+Cousin
+Niece
+Sister
+Aunt
+
+Who is your uncle's son?
+Cousin
+Nephew
+Brother
+Uncle
+
+Who is your cousin's mother?
+Aunt
+Sister
+Niece
+Grandmother
+
+Who is your nephew's sister?
+Niece
+Cousin
+Aunt
+Sister
