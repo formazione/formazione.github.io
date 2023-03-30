@@ -109,10 +109,17 @@ def show_exercize(num_es):
 	root.destroy()
 
 
+def assign_e():
+	global e, entry2
+
+	e = entry2.get()
+	print(e)
+
+
 root = tk.Tk() # create the window
 def menu():
 	"a menu to choose a file in the directory 'dati'"
-	global e
+	global e, entry2
 
 	root.geometry("400x700")
 
@@ -148,6 +155,7 @@ def menu():
 	lab2.pack()
 	entry2 = tk.Entry(root)
 	entry2.insert(tk.END, "it")
+	entry2.bind("<Return>", lambda x: assign_e())
 	print(entry2.get())
 	e = entry2.get()
 	entry2.pack()

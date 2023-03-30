@@ -1,5 +1,5 @@
 Portata di un fiume#fiume
-è il volume di acqua che scorre in un determinato punto del fiume in un'unità di tempo, solitamente espressa in metri cubi al secondo (m³/s
+volume di acqua che scorre in un determinato punto del fiume in un'unità di tempo (metri cubi al secondo)
 
 qual è la differenza tra torrente e fiume?#torrente
 il torrente è un corso d'acqua temporaneo, mentre il fiume è permanente e ha una portata d'acqua costante o graduale

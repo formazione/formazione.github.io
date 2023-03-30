@@ -1,48 +1,62 @@
 #question generator
 from random import choice, sample
 italian = """
-il nonno
-la nonna
-papà
-mamma
-figlio
-figlia
-zio
-zia
-cugino
-cugina
-nipote
-fratello
-fratelli
-sorella
-sorelle
-fratellastro
-sorellastra
-patrigno
-matrigna
+casa
+tavolo
+cucina
+salotto
+strada
+auto
+bicicletta
+pallone
+calcio
+libro
+quaderno
+penna
+matita
+pennarello
+tavolo
+sedia
+scarpa
+pantaloni
+camicia
+cappello
+berretto
+orologio
+telefonino
+cintura
+letto
+armadio
 """.splitlines()
 
 
 french = """
-grand-père
-grand-mère
-père
-maman
-fils
-Fille
-Oncle
-tante
-cousin
-cousine
-Petit enfant
-Frère
-frères
-sœur
-sœurs
-beau-frère
-demi-soeur
-beau-père
-belle-mère
+home
+table
+Kitchen
+living room
+street
+car
+bicycle
+ball
+soccer
+book
+notebook
+pen
+pencil
+marker
+table
+chair
+shoe
+trousers
+Shirt
+hat
+cap
+clock
+mobile phone
+belt
+Bed
+Wardrobe
 """.splitlines()
 
 names = []
