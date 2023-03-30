@@ -1,0 +1,28 @@
+L'aqua dolce è indispensabile per l'uomo?#acqua
+SI
+NO
+
+Vanno in secca#torrenti
+Torrenti
+Fiumi
+
+Dove finisce il fiume?#fiume
+foce
+affluente
+immissario
+sorgente
+
+Terreno in cui scorre il fiume#fiume
+alveo
+argine
+foce
+tetto
+
+Cos'è la portata?#river
+volume d'acqua di una sezione
+sorgente del fiume
+
+Aree che riversano l'acqua nel fiume#bacino
+bacino idrografico
+foce
+delta

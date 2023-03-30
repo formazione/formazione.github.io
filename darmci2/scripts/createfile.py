@@ -35,5 +35,5 @@ def append_to_file(filename, content):
 		print("You must use an argument for the filename ('prova.html') and another for the content ('<b>Hello</b> World')")
 
 if __name__ == "__main__":
-	creafile("filediprova.html", "<b>Hello</b>World")
+	createfile("filediprova.html", "<b>Hello</b>World")
 

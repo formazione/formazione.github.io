@@ -20,18 +20,42 @@
               </td>
           </table>
 
-
-<h2>Memo</h2>
-<div id="scribe"></div>
+<h3>INDICE:</h3>
+<div id='scribe'></div>
 <script type="text/javascript">
+  /*                            ISTRUZIONI
+  ESEMPIO                              SIGNIFICATO
+  ["titolo"],                          Solo un item = Titolo
+  ["p", "questo è un paragrafo"]       "p" = paragrafo, secondo item=contenuto del par.
+  ["testo", "link cui indirizza"]      in tutti gli altri casi, testo=quello che appare, 2° item=address
+
+     //IN CASO DI ERRORI: controlla che ci siano le VIRGOLE tra i dati
   
+  */
 
   // HERE PUT THE TEXT AND THE ADDRESS OF THE LINKS YOU WANT TO PUT ON THE WEB PAGE
   let data = [
-    ["memo fogli","https://docs.google.com/spreadsheets/d/17JS1AlrDbCS_LFzSgrzvmMCi8BylB08bFvDYNKy4uOg/edit?usp=sharing"],
+
+    // ----------------------------------------------------------------------------
+    // COLLEGAMENTO AL MEMO SU FOGLI DI GOOGLE E ALLA TIMELINE SU GOOGLE SHEETS
+
+    // COMPITI
+
+    ["Compiti"],
+    ["p", "I fiumi (sabato)"],
+    ["Fiumi.pdf","https://online.scuola.zanichelli.it/klein-files/chimica-terra/powerpoint/Klein_ppt_69987_c7.pdf"],
+    ["p", "I prodotti alimentari (sabato)"],
+
+
+
+    // ---------------------------- ORGANIZER
+    ["Organizer"],
+    ["Notebook sheet","https://docs.google.com/spreadsheets/d/17JS1AlrDbCS_LFzSgrzvmMCi8BylB08bFvDYNKy4uOg/edit?usp=sharing"],
     ["Timeline",
       "https://docs.google.com/spreadsheets/d/1N-Imk4JdXLDjkO_xQeFsLijqSta8SVvkcpyj3eexjYY/edit?usp=sharing"],
 
+    // ---------------------------------------------------------------
+    // DOMANDA DI TRASFERIMENTO
 
     ["Domanda di trasferimento"], // TITOLO (UN SOLO DATO)
     ["pensionamenti","https://docs.google.com/spreadsheets/d/1BlS1fRH0Dt-uW8Icx-nLjny7ost2qv6EwOM7xCcYl7M/edit?usp=sharing"],
@@ -46,7 +70,9 @@
      ["Allegati domanda trasferimento", "E:\\trasferimento 2023\\allegati 2023\\"],
 
 
-     // controlla che ci siano le VIRGOLE tra i dati
+     // ---------------------------------------------------------------------
+     // DOMANDA SOPRANNUMERARI (MAIORI)
+
       ["Soprannumerari"],
   
       // if you put a "p" as first element, you will get a <p></p> with the following text inside the paragraph style
@@ -54,10 +80,15 @@
       ["Circolare","https://www.iisancelkeys.edu.it/wp-content/uploads/2023/03/timbro_circolare-compilazione-schede-di-soprannumerarieta-docenti-e-ata-a.s.-23.24.pdf"],
   
 
+
+  // -------------------------------FRAGILITA'--------------------------------------
+
 ["Fragilità"],
 ["Risposte","https://docs.google.com/spreadsheets/d/1w89MNO5bpASK6u83p1f0T0KNurj7b86S5h35yIp8fyk/edit#gid=835939742&fvid=1197465089"],
 ["Report","https://docs.google.com/spreadsheets/d/1zYFdN1fSyys0d0StqPeUl8zho4rEatCVvGJ_z19-MXY/edit#gid=981383771"],
 
+
+//---------------------------SOSTEGNO------------------------------------------
 
   ["Sostegno"],
   ["GLO","https://www.ic2lavello.edu.it/index.php/didattica/gruppo-di-lavoro-operativo-glo-per-l-inclusione"]
@@ -67,10 +98,23 @@
 ] // ultima parentesi quadra chiusa
 
 
+// ---------------------- INDICE ---------------------
+
+for (let n in data){
+  // VERIFICA SE E' UN TITOLO (SE HA UN SOLO DATO):
+
+  if (data[n].length == 1){
+    scribe.innerHTML += "<li><b style='color:red'>" + data[n] + "</b></li>";
+  }}
+
+
+// -------------------- DOPO INDICE --------------------
+
 // HERE THE BUTTONS WITH THE LINKS ARE SHOWN
 for (let n in data){
   // VERIFICA SE E' UN TITOLO (SE HA UN SOLO DATO):
   if (data[n].length == 1){
+    scribe.innerHTML += "<hr>"
     scribe.innerHTML += "<h2>" + data[n] + "</h2>";
   }
 
@@ -84,6 +128,7 @@ for (let n in data){
 
 }
 } 
+scribe.innerHTML += "<hr>"
 
 </script>
 
