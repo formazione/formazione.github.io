@@ -3,8 +3,8 @@
 import glob
 from random import choice
 from scripts.createfile import createfile
-from scripts.darm_start import *
-from scripts.darm_end import *
+# from scripts.darm_start import *
+# from scripts.darm_end import *
 import tkinter as tk
 import requests
 from bs4 import BeautifulSoup
@@ -19,6 +19,17 @@ example
 Qual è la capitale d'Italia? #colosseo
 
 '''
+with open("scripts/start.html") as file:
+	startpage = file.read()
+
+with open("scripts/start.js") as file:
+	startpage += file.read()
+
+with open("scripts/end.js") as file:
+	endpage = file.read()
+
+with open("scripts/end.html") as file:
+	endpage += file.read()
 
 def imglink(word):
     ''' lnk to first img in google src '''
@@ -180,21 +191,23 @@ def menu():
 
 def createDarm():
 	''' incolla htmlpage, le domande e endpage sostituendo lingua risposte '''
-	global htmlpage, e, endpage
+	global startpage, endpage, e
 
 
 	for d in qdic:
 		if "#" in d:
 			print(d)
 			dom,im = d.split("#")
-			htmlpage += makeQ2(dom,qdic[d],im)
+			startpage += makeQ2(dom,qdic[d],im)
 		else:
 			print(d)
-			htmlpage += makeQ(d,qdic[d])
+			startpage += makeQ(d,qdic[d])
 	# SOSTITUZIONE DELLA LINGUA DELLE RISPOSTE QUI (da 146)
 	endpage = endpage.replace("fr", e)
-	htmlpage += endpage
-	createfile("paste_in_darm.html",htmlpage)
+	endpage = endpage.replace("quiz = shuffle(quiz); // mescola l'ordine delle domande",
+		"// quiz = shuffle(quiz); // mescola l'ordine delle domande")
+	startpage += endpage
+	createfile("paste_in_darm.html",startpage)
 
 menu()
 createDarm()

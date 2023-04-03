@@ -1,4 +1,3 @@
-endpage = """
 ];
 
 quiz.forEach(q => q.choices.scramble()); // Mescola l'ordine delle risposte
@@ -69,24 +68,24 @@ jQuery(document).ready(function($){
       }
            // parla solo una volta ======|||||||||=====>>>
     
-			jQuery(document).ready(function($){
-				$("#question").html(function(){
-					var text= $(this).text().trim().split(" ");
-					var first = text.shift();
-					return (text.length > 0 ? "<span class='number'>"+ first +"</span> " : first) + text.join(" ");
-				});
+			// jQuery(document).ready(function($){
+			// 	$("#question").html(function(){
+			// 		var text= $(this).text().trim().split(" ");
+			// 		var first = text.shift();
+			// 		return (text.length > 0 ? "<span class='number'>"+ first +"</span> " : first) + text.join(" ");
+			// 	});
 				
-				$('p.pager').each(function(){
-					var text = $(this).text().split(' ');
-					if(text.length < 2)
-						return;
+			// 	$('p.pager').each(function(){
+			// 		var text = $(this).text().split(' ');
+			// 		if(text.length < 2)
+			// 			return;
 					
-					text[1] = '<span class="qnumber">'+text[1]+'</span>';
-					$(this).html(
-						text.join(' ')
-					);
-				});
-			});
+			// 		text[1] = '<span class="qnumber">'+text[1]+'</span>';
+			// 		$(this).html(
+			// 			text.join(' ')
+			// 		);
+			// 	});
+			// });
 				
 			
         } // function nextQuestion
@@ -104,7 +103,7 @@ jQuery(document).ready(function($){
           .css({'font-size':'36px', 'font-weight':'bold', 'border-color':'#51a351', 'color':'#fff'});
 				$('#explanation')
           .html('<span class="correct">ESATTO!</span> ' + (quiz[currentquestion]['explanation']));
-              let ff = ["sì","ok","bene","bravo","yes","corretto","esatto","perfetto","eh sì","ma sì","certo","giusto","sìì"].sort(function(){return 0.5 - Math.random()})[0];
+              let ff = ["sì","ok","bene","sicuro","corretto","esatto","perfetto","certo","giusto",].sort(function(){return 0.5 - Math.random()})[0];
         speak(ff);
 				      score++;
               count_speak = 0;
@@ -137,7 +136,7 @@ jQuery(document).ready(function($){
           .addClass('btn-info')
           .css({'border-color':'#3a87ad', 'color':'#fff'})
           .on('click', function(){
-					    $(this).text('HAI COMPLETATO, CLICCA QUI')
+					    $(this).text('GET QUIZ RESULTS')
                 .on('click');
 					endQuiz();
 				})
@@ -147,14 +146,14 @@ jQuery(document).ready(function($){
       else if (currentquestion < quiz.length){ 
       // SE CI SONO ANCORA DOMANDE, RIMETTE IL PULSANTE CONTROLLA LA RISPOSTA
         
-				$('#submitbutton').html('CLICCA SUL TESTO SOPRA')
+				$('#submitbutton').html('VAI ALLA PROSSIMA DOMANDA &raquo;')
           .removeClass('btn-success')
           .addClass('btn-warning')
           .css({'font-weight':'bold', 'border-color':'#faa732', 'color':'#fff'})
           .on('click', function(){
           
           
-        $(this).text(' CLICCA PRIMA SUL TESTO SOPRA ')
+        $(this).text(' CLICCA PRIMA SUL PULSANTE QUI SOPRA ')
           .removeClass('btn-warning')
           .addClass('btn-success')
           .css({'font-weight':'bold', 'border-color':'#51a351', 'color':'#fff'})
@@ -171,7 +170,7 @@ jQuery(document).ready(function($){
 			} 
     
     else {
-				$('#submitbutton').html('AVANTI &raquo;').on('click', function(){
+				$('#submitbutton').html('VAI ALLA PROSSIMA DOMANDA &raquo;').on('click', function(){
 				$(this).text('- CONTROLLA LA RISPOSTA -').css({'color':'inherit'}).on('click');
 				})
 			}
@@ -196,7 +195,7 @@ jQuery(document).ready(function($){
 				// CHANGED 3/16/2023
 
 				speak(quiz[currentquestion]['choices'][picked], LINGUA_RISPOSTA);
-				$('#submitbutton').html('AVANTI &raquo;');
+
 				// risposte in francese
 
 				$('.choice').removeAttr('style').off('mouseout mouseover');
@@ -271,143 +270,28 @@ jQuery(document).ready(function($){
 	
 	});
 		
-	jQuery(document).ready(function($){			
-		$("#question").html(function(){
-		var text= $(this).text().trim().split(" ");
-		var first = text.shift();
-			return (text.length > 0 ? "<span class='number'>"+ first +"</span> " : first) + text.join(" ");
-		});
+	// jQuery(document).ready(function($){			
+	// 	$("#question").html(function(){
+	// 	var text= $(this).text().trim().split(" ");
+	// 	var first = text.shift();
+	// 		return (text.length > 0 ? "<span class='number'>"+ first +"</span> " : first) + text.join(" ");
+	// 	});
 		
-		$('p.pager').each(function(){
-			var text = $(this).text().split(' ');
-			if(text.length < 2)
-				return;
+	// 	$('p.pager').each(function(){
+	// 		var text = $(this).text().split(' ');
+	// 		if(text.length < 2)
+	// 			return;
 			
-			text[1] = '<span class="qnumber">'+text[1]+'</span>';
-			$(this).html(
-				text.join(' ')
-			);
-		});
+	// 		text[1] = '<span class="qnumber">'+text[1]+'</span>';
+	// 		$(this).html(
+	// 			text.join(' ')
+	// 		);
+	// 	});
 
-	});	
+	// });	
 
 		function copyText() {
 			var output = document.getElementById("frame").innerHTML;
 			document.getElementById("placecontent").value = output;
 		}
 	    
-    </script>
-    <style type="text/css" media="all">
-      
-      .btn:hover, .btn:active {
-        color: blue;
-        font-weight: 800;
-      background-image: url("http://www.myiconfinder.com/uploads/iconsets/65192ff2984e9928d32fd577bc743ea5.png");
-        background-size: 100%;
-  
-      }
-
-      /*        BODY                 */
-body {
-    margin: 0;
-    font-family: "Consolas",Helvetica,Arial,sans-serif;
-    font-size: 24px;
-    line-height: 20px;
-    color: #ffffff;
-    background-color: #21517ee8;
-}
-    h3.question {
-    font-family: "Consolas",Helvetica,Arial,sans-serif;
-    font-weight: normal;
-    margin: 20px 0;
-    padding: 0;
-    font-style: italic;
-    display: block;
-    color: whitesmoke;
-    
-}  
-      
-		input 	
-      
-      { height:30px !important; }
-      
-		input[type=checkbox]
-      
-      { height:30px !important; margin-top:-3px !important; 
-        margin-right:5px !important; box-shadow:none; background-color:#ffffff;
-        position:relative !important; }
-      
-		textarea												
-      { width: 90%; margin: 0 auto; display: block; }
-      
-		input[type=radio]								
-      { height:30px !important; margin-top:-3px !important; margin-right:5px !important; box-shadow:none; background-color:#ffffff; position:relative !important; }
-      
-		.form-group input, .form-group select 					{ height:30px; padding: 0px 12px; }
-		.form-horizontal .form-group							{ margin:10px; }
-		.formContainer .formControlLabel 						{ width:auto !important; min-width:150px; margin:0; padding:0; }
-		.formControls											{ width:100%; padding:0; margin: 10px 0 20px auto; }
-		.radio 													{ padding-top:0 !important; padding-left:8px !important; }
-		.radio-inline											{ margin-right:10px; padding-top:0 !important; display:inline; }
-		.bold													{ font-weight:bold; }
-		.italic 												{ font-style:italic; }
-		.clear					 								{ width:100%; margin:0 !important; }
-		.rsform-block-submit 									{ display:none; }
-		.show 													{ display: block !important; }
-		#submit													{ margin:0 auto; display:block; }
-
-		/* QUIZ STYLES */
-      li.choice-block {font-size: 28px};
-		ol,ul 													{ list-style:none; font-size: 48}
-		strong 													{ font-weight:700; }
-		#frame 													{ width:auto; max-width: 800px; background:transparent; margin:3px auto; padding:10px;     color: #f94a4a !important; }
-		div#frame h2 ul li											{ color: white; width:auto; border-bottom:1px solid #bdbdbd; padding:0 0 5px 0; font-size:32px; }
-		h3.question 											{ font-weight:normal; margin:20px 0; padding:0; font-style:italic; display:block; }
-		p.pager 												{ margin:5px 0 5px; color:#999; text-align:right; }
-		.qnumber 												{ font-size:25px; font-weight:bold; font-style:italic; vertical-align:bottom; }
-		.number 												{ font-family: "Consolas",Helvetica,Arial,sans-serif;font-size:24px; font-weight:bold; font-style:normal; vertical-align:inherit; padding-right:10px; }
-		.score 													{ width:100%; display:inline-block; margin:30px 0; font-size:100px; text-align:center; }
-		img.question-image 										{ width:25%; height:auto; display:block; max-width:150px; margin:10px auto; border:1px solid #ccc; }
-		#choice-block 											{ display:block; list-style:none; margin:0; padding:0; cursor: pointer; }
-	/*	#submitbutton 											{ cursor:pointer; -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px; } */
-	/*	#submitbutton:hover 									{ background:#7b8da6; } */
-		#explanation 											{ width:auto; min-height:0px; margin:0 auto; padding:0px 0; text-align:center;}
-		#explanation span 										{ font-weight:bold; padding-right:8px; }
-		.choice-box 											{ width:100%;  display:block;  text-align:center;  margin:5px auto !important; padding:10px 0 !important; border:1px solid #bdbdbd; }
-      .choice-box.btn {font-size: 28px;}
-		.correct 												{ color:#51a351; font-size: 32px; display: block; margin-bottom: 5px; border-bottom: 1px #51a351 solid; padding-bottom: 5px; }
-		.incorrect 												{ color:#f93939; font-size: 32px; display: block; margin-bottom: 5px; border-bottom: 1px #f93939 solid; padding-bottom: 5px; }
-    
-#body{
-width:100vw;
-height:100vh;
-}
- 
-    </style>
-
-</head>
-
-<body>
-  
-
-  <!-- home button -->
-  <div id="menuDiv">
-<script src="https://quarta.glitch.me/dropdownclassi.js"></script>
-</div>
-
-
-  
-
-<div class="form-group rsform-block rsform-block-framecontent"><div id="frame" role="content"></div>
-
-</div>
-<script>
-  
-  
-  </script>
-			
-
-</body>
-</html>
-
-"""
