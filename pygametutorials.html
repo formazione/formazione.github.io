@@ -42,20 +42,36 @@ let data = [
 
 ]
 
-// ---------------------- INDICE ---------------------
+
+// ------------------- INDICE -------------------
+
+function changecolor(element){
+  element.style.color = "gold";
+  element.style.background = "red";
+}
+function gobacktocolor(element){
+  element.style.color = "red";
+  element.style.background = "gold";
+}
+
 for (let n in data){
   // VERIFICA SE E' UN TITOLO (SE HA UN SOLO DATO):
   if (data[n].length == 1){
-    scribe.innerHTML += "<li><b style='color:red'>" + data[n] + "</b></li>";
+    scribe.innerHTML += "<li>[ <a href='#" + data[n] + "'><b style='color:red;background-color:gold' onmouseover='changecolor(this)' onmouseout='gobacktocolor(this)'>" + data[n] + "</b></a> ]  ";
   }}
+
+
+
+
 // -------------------- DOPO INDICE --------------------
 // HERE THE BUTTONS WITH THE LINKS ARE SHOWN
 for (let n in data){
   
   // TITOLO
   if (data[n].length == 1){
-    scribe.innerHTML += "<hr>"
-    scribe.innerHTML += "<h2>" + data[n] + "</h2>";}
+    // scribe.innerHTML += "<hr>"
+    scribe.innerHTML += "<br><center><h2 style='color:navy;background-color:gold'><a name='"+data[n]+"'>" + data[n] + "</a></h2></center>";}
+
 
   // PARAGRAGO o link con immagini o senza
   else{
@@ -79,7 +95,7 @@ for (let n in data){
         "</a><img src='" + data[n][2]  + "' width=30>' </p>";}
 }} 
 
-scribe.innerHTML += "<hr>" // Linea dopo gruppo di link
+// scribe.innerHTML += "<hr>" // Linea dopo gruppo di link
 
 </script>
     </div>

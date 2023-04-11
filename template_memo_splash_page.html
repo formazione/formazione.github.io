@@ -33,6 +33,13 @@
 // put addresses down here, read the instructions above
 let data = [
 
+  ["Titolo1"],
+  ["p","Paragrafo di esempio"],
+  ["Pulsante link a Google di esempio","http://google.com"],
+  ["Pulsante link a Google di esempio com immagine",
+    "http://google.com",
+    "https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"],
+    ["p","Puoi anche inserire del codice html nei paragrafi, comunque <img src='https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg'>"]
 
 ]
 // do not delete this square parenthesis up here
@@ -63,18 +70,30 @@ for (let n in data){
     // scribe.innerHTML += "<hr>"
     scribe.innerHTML += "<br><center><h2 style='color:navy;background-color:gold'><a name='"+data[n]+"'>" + data[n] + "</a></h2></center>";
   }
-  // IF THE N.LENGTH IS >1... IT'S A LINK
-  else {
-    if (data[n][0]== "p"){scribe.innerHTML += "<p>" + data[n][1] + "</p>"}
-      else {
-    scribe.innerHTML += "<a class='btn btn-warning' href='" + data[n][1] +
-    "' role='button'>" + data[n][0] + 
-    "</a> </p>";}
+
+   // PARAGRAGO o link con immagini o senza
+  else{
+
+    // PARAGRAFO
+    if (data[n][0]== "p"){
+      scribe.innerHTML += "<p>" + data[n][1] + "</p>"}
+  
+    // LILNK SENZA IMMAGINI
+    else if (data[n].length == 2) {
+      scribe.innerHTML += 
+        "<a class='btn btn-warning' href='" + data[n][1] +
+        "' role='button'>" + data[n][0] + 
+        "</a> </p>";}
+
+    // LINK CON IMMAGINE SUCCESSIVA AL PULSANTE PICCOLA
+    else if (data[n].length==3){
+      scribe.innerHTML +=
+        "<a class='btn btn-warning' href='" + data[n][1] +
+        "' role='button'>" + data[n][0] + 
+        "</a><img src='" + data[n][2]  + "' width=30>' </p>";}
 }} 
+
 // scribe.innerHTML += "<hr>" // Linea dopo gruppo di link
 
 </script>
-
-
     </div>
-      </div>
