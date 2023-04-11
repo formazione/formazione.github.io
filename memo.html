@@ -118,40 +118,62 @@
 ] // ultima parentesi quadra chiusa
 
 
-// ---------------------- INDICE ---------------------
+// ------------------- INDICE -------------------
+
+function changecolor(element){
+  element.style.color = "gold";
+  element.style.background = "red";
+}
+function gobacktocolor(element){
+  element.style.color = "red";
+  element.style.background = "gold";
+}
 
 for (let n in data){
   // VERIFICA SE E' UN TITOLO (SE HA UN SOLO DATO):
-
   if (data[n].length == 1){
-    scribe.innerHTML += "<li><b style='color:red'>" + data[n] + "</b></li>";
+    scribe.innerHTML += "<li>[ <a href='#" + data[n] + "'><b style='color:red;background-color:gold' onmouseover='changecolor(this)' onmouseout='gobacktocolor(this)'>" + data[n] + "</b></a> ]  ";
   }}
 
 
-// -------------------- DOPO INDICE --------------------
 
+
+// -------------------- DOPO INDICE --------------------
 // HERE THE BUTTONS WITH THE LINKS ARE SHOWN
 for (let n in data){
-  // VERIFICA SE E' UN TITOLO (SE HA UN SOLO DATO):
+  
+  // TITOLO
   if (data[n].length == 1){
-    scribe.innerHTML += "<hr>"
-    scribe.innerHTML += "<h2>" + data[n] + "</h2>";
-  }
+    // scribe.innerHTML += "<hr>"
+    scribe.innerHTML += "<br><center><h2 style='color:navy;background-color:gold'><a name='"+data[n]+"'>" + data[n] + "</a></h2></center>";}
 
-  // IF THE N.LENGTH IS >1... IT'S A LINK
-  else {
-    if (data[n][0]== "p"){scribe.innerHTML += "<p>" + data[n][1] + "</p>"}
-      else {
-    scribe.innerHTML += "<a class='btn btn-warning' href='" + data[n][1] +
-    "' role='button'>" + data[n][0] + 
-    "</a> </p>";}
 
-}
-} 
-scribe.innerHTML += "<hr>"
+  // PARAGRAGO o link con immagini o senza
+  else{
+
+    // PARAGRAFO
+    if (data[n][0]== "p"){
+      scribe.innerHTML += "<p>" + data[n][1] + "</p>"}
+  
+    // LILNK SENZA IMMAGINI
+    else if (data[n].length == 2) {
+      scribe.innerHTML += 
+        "<a class='btn btn-warning' href='" + data[n][1] +
+        "' role='button'>" + data[n][0] + 
+        "</a> </p>";}
+
+    // LINK CON IMMAGINI
+    else if (data[n].length==3){
+      scribe.innerHTML +=
+        "<a class='btn btn-warning' href='" + data[n][1] +
+        "' role='button'>" + data[n][0] + 
+        "</a><img src='" + data[n][2]  + "' width=30>' </p>";}
+}} 
+
+// scribe.innerHTML += "<hr>" // Linea dopo gruppo di link
 
 </script>
-
-
     </div>
+
+    <!-- copy until here to put this in script and styles in the blog -->
       </div>
