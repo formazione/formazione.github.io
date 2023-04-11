@@ -1,0 +1,98 @@
+</head>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+
+
+
+</head>
+
+
+<body>
+
+
+      <div class="jumbotron">
+        <div class="container">
+
+          <table>
+              <td>
+              <center><img src="aklogo.png"></center><br>
+              </td>
+              
+              <td>
+              <h1 class="display-3">MEMO</h1>
+              </td>
+          </table>
+
+<h3>INDICE:</h3>
+<div id='scribe'></div>
+<script type="text/javascript">
+
+/*                            ISTRUZIONI: come si usa
+["titolo"],                          Solo un item = Titolo
+["p", "questo è un paragrafo"]       "p" = paragrafo, secondo item=contenuto del par.
+["testo", "link cui indirizza"]      in tutti gli altri casi, testo=quello che appare, 2° item=address
+*/
+
+// put addresses down here, read the instructions above
+let data = [
+
+  ["Open a file and read it"],
+  ["Get the name of the sheet","E:\\openpyxl\\driscoll_1.py"],
+  
+]
+// do not delete this square parenthesis up here
+
+// ------------------- INDICE -------------------
+
+function changecolor(element){
+  element.style.color = "gold";
+  element.style.background = "red";
+}
+function gobacktocolor(element){
+  element.style.color = "red";
+  element.style.background = "gold";
+}
+
+for (let n in data){
+  // VERIFICA SE E' UN TITOLO (SE HA UN SOLO DATO):
+  if (data[n].length == 1){
+    scribe.innerHTML += "<li>[ <a href='#" + data[n] + "'><b style='color:red;background-color:gold' onmouseover='changecolor(this)' onmouseout='gobacktocolor(this)'>" + data[n] + "</b></a> ]  ";
+  }}
+
+
+// -------------------- DOPO INDICE --------------------
+// HERE THE BUTTONS WITH THE LINKS ARE SHOWN
+for (let n in data){
+  // VERIFICA SE E' UN TITOLO (SE HA UN SOLO DATO):
+  if (data[n].length == 1){
+    // scribe.innerHTML += "<hr>"
+    scribe.innerHTML += "<br><center><h2 style='color:navy;background-color:gold'><a name='"+data[n]+"'>" + data[n] + "</a></h2></center>";
+  }
+
+   // PARAGRAGO o link con immagini o senza
+  else{
+
+    // PARAGRAFO
+    if (data[n][0]== "p"){
+      scribe.innerHTML += "<p>" + data[n][1] + "</p>"}
+  
+    // LILNK SENZA IMMAGINI
+    else if (data[n].length == 2) {
+      scribe.innerHTML += 
+        "<a class='btn btn-warning' href='" + data[n][1] +
+        "' role='button'>" + data[n][0] + 
+        "</a> </p>";}
+
+    // LINK CON IMMAGINE SUCCESSIVA AL PULSANTE PICCOLA
+    else if (data[n].length==3){
+      scribe.innerHTML +=
+        "<a class='btn btn-warning' href='" + data[n][1] +
+        "' role='button'>" + data[n][0] + 
+        "</a><img src='" + data[n][2]  + "' width=30>' </p>";}
+}} 
+
+// scribe.innerHTML += "<hr>" // Linea dopo gruppo di link
+
+</script>
+    </div>
