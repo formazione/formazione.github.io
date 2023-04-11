@@ -10,18 +10,68 @@
     <!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>-->
 	<script src="https://code.jquery.com/jquery-1.11.1.min.js" integrity="sha256-VAvG3sHdS5LqTT+5A/aeq/bZGa/Uj04xKxY8KM/w9EE=" crossorigin="anonymous"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-    <script>
-    var quiztitle = "Pianificazione e programmazione";
+    <script>let quiz = [{
+	        "question"      :   "Che cos'è un hotel?",
+	        "image"         :   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSbYVst99yCiaTRXVqA24ZVgZvPLm_H1VCjuKBq6AStWLFCCmfBPDS5XiYF9Q&s",
+	        "choices"       :   ['Un hotel è un tipo di struttura ricettiva che offre sistemazioni per i viaggiatori, generalmente con servizi come ristorante, bar e altri servizi accessori.'],
+	        "correct"       :   "Un hotel è un tipo di struttura ricettiva che offre sistemazioni per i viaggiatori, generalmente con servizi come ristorante, bar e altri servizi accessori.",
+	        "explanation"   :   "",
+	    },{
+	        "question"      :   "Quali sono i servizi di base che si possono trovare in un hotel?",
+	        "image"         :   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhj4Ww1sQL5CIv6fMVFmr774HfYxDXTOZYdmiDfmFSXFK5hy_UWSQ6w-XWeik&s",
+	        "choices"       :   ['I servizi di base di un hotel includono solitamente la reception, le camere, la pulizia, il servizio di ristorazione e le aree comuni come la hall o la sala per le conferenze.'],
+	        "correct"       :   "I servizi di base di un hotel includono solitamente la reception, le camere, la pulizia, il servizio di ristorazione e le aree comuni come la hall o la sala per le conferenze.",
+	        "explanation"   :   "",
+	    },{
+	        "question"      :   "Quali sono i differenti tipi di camere che si possono trovare in un hotel?",
+	        "image"         :   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSfEP4IZilqG4pg2ZB7bCl_rC98-UCd7rLIP6bG821S-mmVqrjM6EOksyAtxA&s",
+	        "choices"       :   ["Le camere in un hotel possono variare in base al numero di letti, alle dimensioni e alla presenza di servizi come il bagno privato, la TV, il frigorifero, l'aria condizionata e il servizio in camera."],
+	        "correct"       :   "Le camere in un hotel possono variare in base al numero di letti, alle dimensioni e alla presenza di servizi come il bagno privato, la TV, il frigorifero, l'aria condizionata e il servizio in camera.",
+	        "explanation"   :   "",
+	    },{
+	        "question"      :   "Cosa significa check-in?",
+	        "image"         :   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSjB9zqVSMq6RJE6uGgH1N6oA_Xv5Olu_XO1YOZArUfkooQr8kk7uXYTc8eEWg&s",
+	        "choices"       :   ['Il check-in è il processo in cui il cliente arriva in hotel, si registra alla reception e riceve le chiavi della propria camera.'],
+	        "correct"       :   "Il check-in è il processo in cui il cliente arriva in hotel, si registra alla reception e riceve le chiavi della propria camera.",
+	        "explanation"   :   "",
+	    },{
+	        "question"      :   "Cosa significa check-out?",
+	        "image"         :   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQVr7K9lrs9X8DMisNuz2RJU-9AHDUaq6x8BIuMmy9nS5K66DFFfTsKl691lek&s",
+	        "choices"       :   ["Il check-out è il processo in cui il cliente lascia l'hotel, restituisce le chiavi alla reception e paga eventuali spese aggiuntive."],
+	        "correct"       :   "Il check-out è il processo in cui il cliente lascia l'hotel, restituisce le chiavi alla reception e paga eventuali spese aggiuntive.",
+	        "explanation"   :   "",
+	    },{
+	        "question"      :   "Quali sono i vantaggi di prenotare una camera in anticipo?",
+	        "image"         :   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSoS5JVFEYK2lzjbi4Whw94vqnOsKN1JW45ZkBzLN6_tn0Rgna6YK__4GctZ6c&s",
+	        "choices"       :   ["La prenotazione in anticipo garantisce che il cliente abbia una camera disponibile al momento dell'arrivo e potrebbe anche garantire tariffe migliori."],
+	        "correct"       :   "La prenotazione in anticipo garantisce che il cliente abbia una camera disponibile al momento dell'arrivo e potrebbe anche garantire tariffe migliori.",
+	        "explanation"   :   "",
+	    },{
+	        "question"      :   "Cosa significa overbooking?",
+	        "image"         :   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTuavmkp7jy3UPM0JdcBk2-DGS2sNPLAbsPDSdkchzWhb2Q-ZiuXDGXt-UF2BU&s",
+	        "choices"       :   ["Overbooking è quando un hotel accetta più prenotazioni rispetto alla capacità effettiva dell'hotel, nella speranza che alcuni clienti non si presentino o annullino la prenotazione."],
+	        "correct"       :   "Overbooking è quando un hotel accetta più prenotazioni rispetto alla capacità effettiva dell'hotel, nella speranza che alcuni clienti non si presentino o annullino la prenotazione.",
+	        "explanation"   :   "",
+	    },{
+	        "question"      :   "Cosa significa servizio in camera?",
+	        "image"         :   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZfu2nmvIgyshK8CD-qwTybOesFmtnqZ16hK9YjvBCzNgLv45s1KzsxhFGskg&s",
+	        "choices"       :   ["Il servizio in camera è un servizio in cui il cliente può ordinare cibo e bevande dal ristorante dell'hotel e farlo consegnare direttamente nella propria camera."],
+	        "correct"       :   "Il servizio in camera è un servizio in cui il cliente può ordinare cibo e bevande dal ristorante dell'hotel e farlo consegnare direttamente nella propria camera.",
+	        "explanation"   :   "",
+	    },{
+	        "question"      :   "Cosa significa concierge?",
+	        "image"         :   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQjlN5rgy58p-1eMJl-1Kt0q4536MTD2VTDhna0o3Cs6Br3XUzanPmEQrjJxfM&s",
+	        "choices"       :   ["Il concierge è una persona che lavora in hotel e fornisce assistenza ai clienti per organizzare attività e prenotazioni fuori dall'hotel."],
+	        "correct"       :   "Il concierge è una persona che lavora in hotel e fornisce assistenza ai clienti per organizzare attività e prenotazioni fuori dall'hotel.",
+	        "explanation"   :   "",
+	    },{
+	        "question"      :   "Quali sono le norme di comportamento da seguire in un hotel?",
+	        "image"         :   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTzBl7ux6THoi3v3HsBC2P9nbrcdZQhhT1wWRqWZkKGGWw03lb74cI-zrLznU8&s",
+	        "choices"       :   ["I clienti dovrebbero rispettare le norme di comportamento dell'hotel, come non fumare in camere non fumatori, non disturbare gli altri ospiti, non danneggiare la proprietà dell'hotel e rispettare gli orari di check-in e check-out."],
+	        "correct"       :   "I clienti dovrebbero rispettare le norme di comportamento dell'hotel, come non fumare in camere non fumatori, non disturbare gli altri ospiti, non danneggiare la proprietà dell'hotel e rispettare gli orari di check-in e check-out.",
+	        "explanation"   :   "",
+	    },];var quiztitle = "Hotel";
 
-    /**
-    * Set the information about your questions here. The correct answer string needs to match
-    * the correct choice exactly, as it does string matching. (case sensitive)
-    *
-    */
-
-/**
-*Let's create the randomization of the questions!
-*/
 function speak(x, language="it") {
   synth = speechSynthesis
   utt = new SpeechSynthesisUtterance(x);
@@ -31,23 +81,18 @@ function speak(x, language="it") {
 }
 
 
-
 function shuffle(array) {
   var currentIndex = array.length, temporaryValue, randomIndex;
-
   // While there remain elements to shuffle...
   while (0 !== currentIndex) {
-
     // Pick a remaining element...
     randomIndex = Math.floor(Math.random() * currentIndex);
     currentIndex -= 1;
-
     // And swap it with the current element.
     temporaryValue = array[currentIndex];
     array[currentIndex] = array[randomIndex];
     array[randomIndex] = temporaryValue;
   }
-
   return array;
 }
 	    
@@ -66,412 +111,226 @@ if (!("scramble" in Array.prototype)) {
     }
   });
 }		
-	    
-let quiz = [{
-	        "question"      :   "Gli alimenti",
-	        "image"         :   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqvrXWb-mNDRf8aJ70aHjBO6oY0CQXFm8ojxR1OdeEBabDN1UFg8n1j_b5kjA&s",
-	        "choices"       :   ["materia di origine vegetale o animale che fornisce, dopo i processi digestivi, energia e princìpi nutritivi all'uomo"],
-	        "correct"       :   "materia di origine vegetale o animale che fornisce, dopo i processi digestivi, energia e princìpi nutritivi all'uomo",
-	        "explanation"   :   "",
-	    },{
-	        "question"      :   "Sono sostanze nutritive essenziali",
-	        "image"         :   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRPKzPAEutv6zjQvfdkRFzHRiPTtCreEkpYiVKpst-U0A2JiY0wGvqxJWB69g&s",
-	        "choices"       :   ['quei composti che l’uomo non riesce a produrre da sé'],
-	        "correct"       :   "quei composti che l’uomo non riesce a produrre da sé",
-	        "explanation"   :   "",
-	    },{
-	        "question"      :   "I principi nutritivi sono",
-	        "image"         :   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSzABtwj3ow-TzJ8rmT_c1o6q4NAmJS6_E3ZCUXUKtKiObCuvFgkAhZ4hvrfA&s",
-	        "choices"       :   ['proteine, lipidi, glucidi, vitamine, minerali, acqua'],
-	        "correct"       :   "proteine, lipidi, glucidi, vitamine, minerali, acqua",
-	        "explanation"   :   "",
-	    },{
-	        "question"      :   "derrata alimentare",
-	        "image"         :   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqvrXWb-mNDRf8aJ70aHjBO6oY0CQXFm8ojxR1OdeEBabDN1UFg8n1j_b5kjA&s",
-	        "choices"       :   ["ogni sostanza destinata all'alimentazione umana,"],
-	        "correct"       :   "ogni sostanza destinata all'alimentazione umana,",
-	        "explanation"   :   "",
-	    },{
-	        "question"      :   "alimento",
-	        "image"         :   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqvrXWb-mNDRf8aJ70aHjBO6oY0CQXFm8ojxR1OdeEBabDN1UFg8n1j_b5kjA&s",
-	        "choices"       :   ["materia prima per l'accrescimento ed il mantenimento dell'essere umano."],
-	        "correct"       :   "materia prima per l'accrescimento ed il mantenimento dell'essere umano.",
-	        "explanation"   :   "",
-	    },{
-	        "question"      :   "Necessità diverse per età",
-	        "image"         :   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSk-Mi7F_ndaUldcTg03AQvqOnbKdTbnxfXl8e33OlfNhd7dJdR_sVHXGhIqlE&s",
-	        "choices"       :   ['Ad ogni stadio, di vita vi sono necessità alimentari differenti.'],
-	        "correct"       :   "Ad ogni stadio, di vita vi sono necessità alimentari differenti.",
-	        "explanation"   :   "",
-	    },{
-	        "question"      :   "Come si mangia oggi?",
-	        "image"         :   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREO7JkE4XvZNZHf-nPL2kVij6AtDfShw4nFa8FTZcqAO1dJiiyVY_mtxcGT4U&s",
-	        "choices"       :   ['Si mangia troppo ed anche male'],
-	        "correct"       :   "Si mangia troppo ed anche male",
-	        "explanation"   :   "",
-	    },{
-	        "question"      :   "In sintesi, gli alimenti, per essere considerati tali devono:",
-	        "image"         :   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1MLywV4tKE5qIGHf3Zr0qi7SI25r1DWZmSD1owflH9nJOmlFZiDgvtvHT03c&s",
-	        "choices"       :   ['contenere almeno un principio nutritivo; essere commestibili; non essere tossici'],
-	        "correct"       :   "contenere almeno un principio nutritivo; essere commestibili; non essere tossici",
-	        "explanation"   :   "",
-	    },{
-	        "question"      :   "Gli alimenti si distinguono sotto l'aspetto nutrizionale in:",
-	        "image"         :   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRyiTshk-4knXo8yUIdgsDDaj_D3fczrrnvRgiY3SX9r6UZYSNn0Cwbh7G9PA&s",
-	        "choices"       :   ['primari (necessari come i legumi) e accessori (come i dolci)'],
-	        "correct"       :   "primari (necessari come i legumi) e accessori (come i dolci)",
-	        "explanation"   :   "",
-	    },{
-	        "question"      :   "Gli alimenti sotto l'aspetto merceologico possono essere di origine:",
-	        "image"         :   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQqDAqmIYueo-kvqTXEOShZ0cDOOGJzkDZFHMGi6e2hn23lVQ8MRFQDIROQEuA&s",
-	        "choices"       :   ['vegetale (frutta e verdura), animale (carne,pesce,uova,latte) o minerale(sale,acqua)'],
-	        "correct"       :   "vegetale (frutta e verdura), animale (carne,pesce,uova,latte) o minerale(sale,acqua)",
-	        "explanation"   :   "",
-	    },{
-	        "question"      :   "sotto l'aspetto tecnico-produttivo abbiamo prodotti alimentari:",
-	        "image"         :   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBzePJfYRH14LD_hdAifSnSpxJFftA_w-AOtfKmtsfoB8_q6VEh06fBHqQA0I&s",
-	        "choices"       :   ['naturali (frutta), conservati (surgelati), trasformati (formaggi)'],
-	        "correct"       :   "naturali (frutta), conservati (surgelati), trasformati (formaggi)",
-	        "explanation"   :   "",
-	    },{
-	        "question"      :   "La prima gamma",
-	        "image"         :   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRvQMfG3H1O0BcPcoUNQieflur14UK9FoEdbur62WWG_7IalMImjj7pj7Mh4mg&s",
-	        "choices"       :   ['prodotti freschi di mercato', 'semilavorati', 'pronti da cucinare', 'pronti da mangiare', 'pronti da riscaldare'],
-	        "correct"       :   "prodotti freschi di mercato",
-	        "explanation"   :   "",
-	    },{
-	        "question"      :   "La seconda gamma",
-	        "image"         :   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRbvaGOzFkyFRdVftrQ2ehMV75f1GF9vas3gek7s3p6h3iNdMB0UgtasgA1mA&s",
-	        "choices"       :   ['semilavorati', 'prodotti freschi di mercato', 'pronti da cucinare', 'pronti da mangiare', 'pronti da riscaldare'],
-	        "correct"       :   "semilavorati",
-	        "explanation"   :   "",
-	    },{
-	        "question"      :   "La terza gamma",
-	        "image"         :   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQet1BnsVLPCIidmHY1TkUgVZFo8Dsy-ZtLVhyJzCgL41u87CuOeDjeZJRKyw&s",
-	        "choices"       :   ['pronti da cucinare', 'prodotti freschi di mercato', 'semilavorati', 'pronti da mangiare', 'pronti da riscaldare'],
-	        "correct"       :   "pronti da cucinare",
-	        "explanation"   :   "",
-	    },{
-	        "question"      :   "La quarta gamma",
-	        "image"         :   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4xvX1E7CCEwb-JcOy6QIM4xjWFrXinVx7bQ-8NH-slMyMUf_Qju-b0cRixA&s",
-	        "choices"       :   ['pronti da mangiare', 'prodotti freschi di mercato', 'semilavorati', 'pronti da cucinare', 'pronti da riscaldare'],
-	        "correct"       :   "pronti da mangiare",
-	        "explanation"   :   "",
-	    },{
-	        "question"      :   "La quinta gamma",
-	        "image"         :   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQqkHijgs3MhlCfjQ1MaP3X02iUWcPI66GEy_rZQr8tODpl1NkdkbqkcNCdSb0&s",
-	        "choices"       :   ['pronti da riscaldare', 'prodotti freschi di mercato', 'semilavorati', 'pronti da cucinare', 'pronti da mangiare'],
-	        "correct"       :   "pronti da riscaldare",
-	        "explanation"   :   "",
-	    },{
-	        "question"      :   "qual è il terzo gruppo degli alimenti secondo la suddivisione dell'IRNAN?",
-	        "image"         :   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqvrXWb-mNDRf8aJ70aHjBO6oY0CQXFm8ojxR1OdeEBabDN1UFg8n1j_b5kjA&s",
-	        "choices"       :   ['latte e derivati', 'cereali', 'frutta e verdura', 'carne, pesce e uova, legumi secchi', 'grassi da condimento'],
-	        "correct"       :   "latte e derivati",
-	        "explanation"   :   "",
-	    },{
-	        "question"      :   "l’Istituto Nazionale di Ricerca per gli Alimenti e la Nutrizione (INRAN)",
-	        "image"         :   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTu-wQZvhnAmlamwvf7NLt0Hbg-9zyO-lLgsc2K4f5Onc6TkP-XiEJWtR_la_U&s",
-	        "choices"       :   ['indica delle “Linee guida per una sana alimentazione italiana”,'],
-	        "correct"       :   "indica delle “Linee guida per una sana alimentazione italiana”,",
-	        "explanation"   :   "",
-	    },];
+
 
 quiz.forEach(q => q.choices.scramble()); // Mescola l'ordine delle risposte
-quiz = shuffle(quiz);
+// quiz = shuffle(quiz); // mescola l'ordine delle domande
 var currentquestion = 0, score = 0, submt=true, picked;
 let count_speak = 0;
 jQuery(document).ready(function($){
 
   
-  
-  
-  
-	function addChoices(choices){
-			if(typeof choices !== "undefined" && $.type(choices) == "array"){
-				$('#choice-block').empty();
-				for(var i=0;i<choices.length; i++){
-          // added .css({'font-size':'36px'}) il 2 marzo 2019
-				$(document
-          .createElement('li'))
-          .addClass('choice choice-box btn')
-          .attr('data-index', i)
-          .text(choices[i])
-          .appendTo('#choice-block')
-          .css({'font-size':'28px'});		//  Aggiunge risposte
-        }
-			}
-        
+function addChoices(choices){
+		if(typeof choices !== "undefined" && $.type(choices) == "array"){
+			$('#choice-block').empty();
+			for(var i=0;i<choices.length; i++){
+        // added .css({'font-size':'36px'}) il 2 marzo 2019
+			$(document
+        .createElement('li'))
+        .addClass('choice choice-box btn')
+        .attr('data-index', i)
+        .text(choices[i])
+        .appendTo('#choice-block')
+        .css({'font-size':'28px'});		//  Aggiunge risposte
+      }
 		}
+      
+	}
         
 
-  
-  
-  function nextQuestion(){
-     
-			submt = true;
-			$('#explanation').empty(); // svuota spiegazione
-			$('#question').text(quiz[currentquestion]['question']); // domanda attuale
-      // domanda n. di ... totale domande
-			$('#pager').text('Domanda' + Number(currentquestion + 1) + ' di ' + quiz.length);
-      // Immagine... ?
-			if(quiz[currentquestion].hasOwnProperty('image') && quiz[currentquestion]['image'] != ""){
-				if($('#question-image').length == 0){
-					$(document.createElement('img'))
-            .addClass('question-image')
-            .attr('id', 'question-image')
-            .attr('src', quiz[currentquestion]['image'])
-            .attr('alt', (quiz[currentquestion]['question']))
-            .insert('#question');
-				} else {
-					$('#question-image')
-            .attr('src', quiz[currentquestion]['image'])
-            .attr('alt', (quiz[currentquestion]['question']));
-				}
+function nextQuestion(){
+   
+		submt = true;
+		$('#explanation').empty(); // svuota spiegazione
+		$('#question').text(quiz[currentquestion]['question']); // domanda attuale
+    // domanda n. di ... totale domande
+		$('#pager').text('Domanda' + Number(currentquestion + 1) + ' di ' + quiz.length);
+    // Immagine... ?
+		if(quiz[currentquestion].hasOwnProperty('image') && quiz[currentquestion]['image'] != ""){
+			if($('#question-image').length == 0){
+				$(document.createElement('img'))
+          .addClass('question-image')
+          .attr('id', 'question-image')
+          .attr('src', quiz[currentquestion]['image'])
+          .attr('alt', (quiz[currentquestion]['question']))
+          .insert('#question');
 			} else {
 				$('#question-image')
-          .remove();
+          .attr('src', quiz[currentquestion]['image'])
+          .attr('alt', (quiz[currentquestion]['question']));
 			}
-
-    
-			addChoices(quiz[currentquestion]['choices']);
-      
-			setupButtons();
-
-			// parla solo una volta ======|||||||||=====>>>
-            if (count_speak==0 && is_on==1){
-        speak(quiz[currentquestion]['question']);
-        count_speak = 1;
-      }
-           // parla solo una volta ======|||||||||=====>>>
-    
-			// jQuery(document).ready(function($){
-			// 	$("#question").html(function(){
-			// 		var text= $(this).text().trim().split(" ");
-			// 		var first = text.shift();
-			// 		return (text.length > 0 ? "<span class='number'>"+ first +"</span> " : first) + text.join(" ");
-			// 	});
-				
-			// 	$('p.pager').each(function(){
-			// 		var text = $(this).text().split(' ');
-			// 		if(text.length < 2)
-			// 			return;
-					
-			// 		text[1] = '<span class="qnumber">'+text[1]+'</span>';
-			// 		$(this).html(
-			// 			text.join(' ')
-			// 		);
-			// 	});
-			// });
-				
-			
-        } // function nextQuestion
+		} else {
+			$('#question-image')
+        .remove();
+		}
+		addChoices(quiz[currentquestion]['choices']);
+		setupButtons();
+		// parla solo una volta ======|||||||||=====>>>
+          if (count_speak==0 && is_on==1){
+      speak(quiz[currentquestion]['question']);
+      count_speak = 1;
+    }
+      } // function nextQuestion
 
 
-  function processQuestion(choice){
+function processQuestion(choice){
+  
+  // ===========   Risposta ESATTA!  ==============================
+  if(quiz[currentquestion]['choices'][choice] == quiz[currentquestion]['correct'])
+    {
+			$('.choice')
+        .eq(choice)
+        .addClass('btn-success')
+        .css({'font-size':'36px', 'font-weight':'bold', 'border-color':'#51a351', 'color':'#fff'});
+			$('#explanation')
+        .html('<span class="correct">ESATTO!</span> ' + (quiz[currentquestion]['explanation']));
+            let ff = ["sÃ¬","ok","bene","sicuro","corretto","esatto","perfetto","certo","giusto",].sort(function(){return 0.5 - Math.random()})[0];
+      speak(ff);
+			      score++;
+            count_speak = 0;
+		} 
     
-    
-    // ===========   Risposta ESATTA!  ==============================
-    if(quiz[currentquestion]['choices'][choice] == quiz[currentquestion]['correct'])
-      {
-				$('.choice')
+  else {
+    $('.choice')
           .eq(choice)
-          .addClass('btn-success')
-          .css({'font-size':'36px', 'font-weight':'bold', 'border-color':'#51a351', 'color':'#fff'});
-				$('#explanation')
-          .html('<span class="correct">ESATTO!</span> ' + (quiz[currentquestion]['explanation']));
-              let ff = ["sÃ¬","ok","bene","sicuro","corretto","esatto","perfetto","certo","giusto",].sort(function(){return 0.5 - Math.random()})[0];
-        speak(ff);
-				      score++;
-              count_speak = 0;
-			} 
-      
+          .addClass('btn-danger')
+          .css({'font-weight':'bold', 'border-color':'#f93939', 'color':'#fff'});
+    $('#explanation')
+      .html('<span class="incorrect">INESATTO!</span> ' + (quiz[currentquestion]['explanation']));
+      speak("No! Ã¨")
+      // itancese
+      speak(quiz[currentquestion]['correct'], LINGUA_RISPOSTA); // RISPOSTA ERRATA IN LINGUA FRANCESE
+          }
+      count_speak = 0;
+      currentquestion++;
+  // ========================= qui Ã¨ stata aggiunta da 322
+  if (currentquestion < quiz.length)  nextQuestion();
+  // =========================
+
+
+    // SONO FINITE LE DOMANDE... MOSTRA I RISULTATI
+	if(currentquestion == quiz.length){
+		$('#submitbutton')
+      .html('GET QUIZ RESULTS') // nuovo testo
+      .removeClass('btn-success') // nuovo stile
+      .addClass('btn-info')
+      .css({'border-color':'#3a87ad', 'color':'#fff'})
+      .on('click', function(){$(this).text('GET QUIZ RESULTS').on('click');
+			endQuiz();
+		})
+		
+	}
     
-    else {
-      $('.choice')
-            .eq(choice)
-            .addClass('btn-danger')
-            .css({'font-weight':'bold', 'border-color':'#f93939', 'color':'#fff'});
-      $('#explanation')
-        .html('<span class="incorrect">INESATTO!</span> ' + (quiz[currentquestion]['explanation']));
-        speak("No! Ã¨")
-        // itancese
-        speak(quiz[currentquestion]['correct'], LINGUA_RISPOSTA); // RISPOSTA ERRATA IN LINGUA FRANCESE
-            }
-        count_speak = 0;
-        currentquestion++;
-    // ========================= qui Ã¨ stata aggiunta da 322
-    if (currentquestion < quiz.length)  nextQuestion();
-    // =========================
-  
-
-      // SONO FINITE LE DOMANDE... MOSTRA I RISULTATI
-			if(currentquestion == quiz.length){
-				$('#submitbutton')
-          .html('GET QUIZ RESULTS')
-          .removeClass('btn-success')
-          .addClass('btn-info')
-          .css({'border-color':'#3a87ad', 'color':'#fff'})
-          .on('click', function(){
-					    $(this).text('GET QUIZ RESULTS')
-                .on('click');
-					endQuiz();
-				})
-				
-			}
+    else if (currentquestion < quiz.length)
+    {} 
+    // SE CI SONO ANCORA DOMANDE, RIMETTE IL PULSANTE CONTROLLA LA RISPOSTA
       
-      else if (currentquestion < quiz.length){ 
-      // SE CI SONO ANCORA DOMANDE, RIMETTE IL PULSANTE CONTROLLA LA RISPOSTA
-        
-				$('#submitbutton').html('VAI ALLA PROSSIMA DOMANDA &raquo;')
-          .removeClass('btn-success')
-          .addClass('btn-warning')
-          .css({'font-weight':'bold', 'border-color':'#faa732', 'color':'#fff'})
-          .on('click', function(){
-          
-          
-        $(this).text(' CONTROLLA LA RISPOSTA ')
-          .removeClass('btn-warning')
-          .addClass('btn-success')
-          .css({'font-weight':'bold', 'border-color':'#51a351', 'color':'#fff'})
-          .on('click');
-				  
-         ///////////////////////////////////////////////////////////////////////////////////////////////
-         ////////////////////////////////// nextQuestion(); // VA ALLA PROSSIMA DOMANDA
-         //////////////////////////////////////////////////////////////////////////////////////////////
-          
-          
+			// $('#submitbutton').html('VAI ALLA PROSSIMA DOMANDA &raquo;')
+      //   .removeClass('btn-success')
+      //   .addClass('btn-warning')
+      //   .css({'font-weight':'bold', 'border-color':'#faa732', 'color':'#fff'})
+      //   .on('click', function(){
+			// 	        $(this).text(' CLICCA PRIMA SUL PULSANTE QUI SOPRA ')
+			//           .removeClass('btn-warning')
+			//           .addClass('btn-success')
+			//           .css({'font-weight':'bold', 'border-color':'#51a351', 'color':'#fff'})
+			//           .on('click');
+			// 	        nextQuestion();})
+      // }
+		
+	}
 
-				})
-  			
-			} 
-    
-    else {
-				$('#submitbutton').html('VAI ALLA PROSSIMA DOMANDA &raquo;').on('click', function(){
-				$(this).text('- CONTROLLA LA RISPOSTA -').css({'color':'inherit'}).on('click');
-				})
-			}
+     
 
-          
-			
-		}
+let LINGUA_RISPOSTA = "it"; // cambia la lingua della risposta quando le lingue sono diverse
 
-       
-  
-	let LINGUA_RISPOSTA = "it"; // cambia la lingua della risposta quando le lingue sono diverse
-  
-  function setupButtons(){
-      //speak(quiz[currentquestion]['question'])
-			$('.choice').on('click', function(){
-
+function setupButtons(){
+    //speak(quiz[currentquestion]['question'])
+		$('.choice').on('click', function(){
 		synth.cancel();
-        is_on = 0;
-
-				picked = $(this).attr('data-index');
-
-				// CHANGED 3/16/2023
-
-				speak(quiz[currentquestion]['choices'][picked], LINGUA_RISPOSTA);
-
-				// risposte in itancese
-
-				$('.choice').removeAttr('style').off('mouseout mouseover');
-				$(this).css({'font-weight':'900', 'border-color':'#51a351', 'color':'#51a351', 'background' : 'gold'});
-				if(submt){
-					submt=false;
-					$('#submitbutton').css({'color':'#fff','cursor':'pointer'}).on('click', function(){
-						$('.choice').off('click');
-						$(this).off('click');
-						processQuestion(picked);
-            //
-					});
-				}
-			})
-		}
-        
-        
-  
-  
-	function endQuiz(){
-			$('#explanation').empty();
-			$('#question').empty();
-			$('#choice-block').empty();
-			$('#submitbutton').remove();
-			$('.rsform-block-submit').addClass('show');
-			$('#question').text("You got " + score + " out of " + quiz.length + " correct.");
-			$(document.createElement('h4')).addClass('score').text(Math.round(score/quiz.length * 100) + '%').insertAfter('#question');			
-		}
-
-        /**
-         * Runs the first time and creates all of the elements for the quiz
-         */
-		function init(){
-      speak(quiz[currentquestion]['question'])
-			//add title
-      /*
-			if(typeof quiztitle !== "undefined" && $.type(quiztitle) === "string"){
-				$(document.createElement('h2')).text(quiztitle).appendTo('#itame');
-			} else {
-				$(document.createElement('h2')).text("Quiz").appendTo('#itame');
+    is_on = 0;
+		picked = $(this).attr('data-index');
+		speak(quiz[currentquestion]['choices'][picked], LINGUA_RISPOSTA);
+		show_button();
+		// risposte in itancese
+		$('.choice').removeAttr('style').off('mouseout mouseover');
+		$(this).css({'font-weight':'900', 'border-color':'#51a351', 'color':'#51a351', 'background' : 'gold'});
+		if(submt){
+				submt=false;
+				$('#submitbutton').css({'color':'#fff','cursor':'pointer'}).on('click', function(){
+				$('.choice').off('click');
+				$(this).off('click');
+				processQuestion(picked);
+          //
+				});
 			}
-      I removed the title to leave more space */
-			
-			//add pager and questions
-			if(typeof quiz !== "undefined" && $.type(quiz) === "array"){
-				//add pager
-        
-				$(document.createElement('p')).addClass('pager').attr('id','pager').text('Domanda 1 di ' + quiz.length).appendTo('#itame');
-				//add first question
-				$(document.createElement('h3')).addClass('question').attr('id', 'question').text(quiz[0]['question']).appendTo('#itame');
-				//add image if present
-				if(quiz[0].hasOwnProperty('image') && quiz[0]['image'] != ""){
-					$(document.createElement('img')).addClass('question-image').attr('width','100px').attr('id', 'question-image').attr('src', quiz[0]['image']).attr('alt', (quiz[0]['question'])).appendTo('#itame');
-				}
-				
-				$(document.createElement('p')).addClass('explanation').attr('id','explanation').html('').appendTo('#question');
-				
-				//questions holder
-				$(document.createElement('ul')).attr('id', 'choice-block').appendTo('#itame');
-				
-				//add choices
-				addChoices(quiz[0]['choices']);
-				
-				//add submit button
-				$(document.createElement('div')).addClass('btn-success choice-box').attr('id', 'submitbutton').text('- CONTROLLA LA RISPOSTA -').css({'font-weight':'bold', 'color':'#fff','padding':'30px 0', 'border-radius':'10px'}).appendTo('#itame');
-				
-				setupButtons();
+		})
+	}
+      
+      
+function endQuiz(){
+		$('#explanation').empty();
+		$('#question').empty();
+		$('#choice-block').empty();
+		$('#submitbutton').remove();
+		$('.rsform-block-submit').addClass('show');
+		$('#question').text("You got " + score + " out of " + quiz.length + " correct.");
+		$(document.createElement('h4')).addClass('score').text(Math.round(score/quiz.length * 100) + '%').insertAfter('#question');			
+	}
+
+      /**
+       * Runs the first time and creates all of the elements for the quiz
+       */
+	function init(){
+    speak(quiz[currentquestion]['question'])
+		//add title
+ 
+		if(typeof quiztitle !== "undefined" && $.type(quiztitle) === "string"){
+			$(document.createElement('h2')).text(quiztitle).appendTo('#itame');
+		} else {
+			$(document.createElement('h2')).text("Quiz").appendTo('#itame');
+		}
+ 
+		
+		//add pager and questions
+		if(typeof quiz !== "undefined" && $.type(quiz) === "array"){
+			//add pager
+      
+			$(document.createElement('p')).addClass('pager').attr('id','pager').text('Domanda 1 di ' + quiz.length).appendTo('#itame');
+			//add first question
+			$(document.createElement('h3')).addClass('question').attr('id', 'question').text(quiz[0]['question']).appendTo('#itame');
+			//add image if present
+			if(quiz[0].hasOwnProperty('image') && quiz[0]['image'] != ""){
+				$(document.createElement('img')).addClass('question-image').attr('width','100px').attr('id', 'question-image').attr('src', quiz[0]['image']).attr('alt', (quiz[0]['question'])).appendTo('#itame');
 			}
-		}
-	
-		init();
-	
-	});
-		
-	// jQuery(document).ready(function($){			
-	// 	$("#question").html(function(){
-	// 	var text= $(this).text().trim().split(" ");
-	// 	var first = text.shift();
-	// 		return (text.length > 0 ? "<span class='number'>"+ first +"</span> " : first) + text.join(" ");
-	// 	});
-		
-	// 	$('p.pager').each(function(){
-	// 		var text = $(this).text().split(' ');
-	// 		if(text.length < 2)
-	// 			return;
 			
-	// 		text[1] = '<span class="qnumber">'+text[1]+'</span>';
-	// 		$(this).html(
-	// 			text.join(' ')
-	// 		);
-	// 	});
-
-	// });	
-
-		function copyText() {
-			var output = document.getElementById("itame").innerHTML;
-			document.getElementById("placecontent").value = output;
+			$(document.createElement('p')).addClass('explanation').attr('id','explanation').html('').appendTo('#question');
+			
+			//questions holder
+			$(document.createElement('ul')).attr('id', 'choice-block').appendTo('#itame');
+			
+			//add choices
+			addChoices(quiz[0]['choices']);
+			
+			
+			setupButtons();
 		}
-	    </script>
+	}
+
+function show_button(){
+			//add submit button
+			$(document.createElement('div')).addClass('btn-success choice-box').attr('id', 'submitbutton').text('- CONTROLLA LA RISPOSTA -').css({'font-weight':'bold', 'color':'#fff','padding':'30px 0', 'border-radius':'10px'}).appendTo('#itame').on('click');
+}
+
+	init();
+
+});
+		
+// function copyText() {
+// 	var output = document.getElementById("itame").innerHTML;
+// 	document.getElementById("placecontent").value = output;
+// }
+</script>
     <style type="text/css" media="all">
       
       .btn:hover, .btn:active {
