@@ -44,7 +44,7 @@
 
 
     ["Verbali collegio"],
-    ["p","rivedi n. 1 e 5, finisci il 6"],
+    ["p","rivedi n. 1 e 5, finisci il 6 <img src='https://www.nsar.co.uk/wp-content/uploads/2022/02/Alert.jpg' width=200>.<br>Il collegio è il 19 aprile."],
 
     ["Verbali cdi"],
     ["verbale 6 cdi","https://docs.google.com/document/d/17EMdNcWGft76fVoGn7IRLwwuARDHwpmr4_oZPKchniI/edit?usp=sharing"],
@@ -52,7 +52,8 @@
 
     ["Verbali 1E"],
     ["3","https://docs.google.com/document/d/1MkBI2TI12N9yjoKCsyMHfTLlme-79ch78z8iZ49Ja3k/edit?usp=sharing"],
-    ["4","https://docs.google.com/document/d/1nTkCmxFwyIb1qqIsIsYattCakY-TxXnA2ERZGFTkhv4/edit?usp=sharing"],
+    ["4","https://docs.google.com/document/d/1nTkCmxFwyIb1qqIsIsYattCakY-TxXnA2ERZGFTkhv4/edit?usp=sharing",
+      "https://www.sinonimi-contrari.it/includes/images/sharers/sinonimi-di-finito.png","100"],
 
 
     ["Verbali GLO"],
@@ -133,6 +134,7 @@
   ["successione", ""],
 
   ["pagamenti"],
+  ["p","La bolletta scade il 27 aprile e si dovrebbe pagare in automatico con paypal. Controlla che sia pagata per il 27 aprile, altrimenti non si paga in automatico con paypal. Non so se funziona, è la prima volta."],
   ["servizio elettrico","https://www.servizioelettriconazionale.it/it-IT/clienti/SEN/servizi/Areaclienti/HomePage/homepage.jsp"],
 
   ["PNRR"],
@@ -188,15 +190,21 @@ for (let n in data){
     else if (data[n].length == 2) {
       scribe.innerHTML += 
         "<a class='btn btn-warning' href='" + data[n][1] +
-        "' role='button'>" + data[n][0] + 
-        "</a> </p>";}
+        "' role='button'><b style='font-size:20'>" + data[n][0] + 
+        "</b></a> </p>";}
 
     // LINK CON IMMAGINI
     else if (data[n].length==3){
       scribe.innerHTML +=
         "<a class='btn btn-warning' href='" + data[n][1] +
-        "' role='button'>" + data[n][0] + 
-        "</a><img src='" + data[n][2]  + "' width=30>' </p>";}
+        "' role='button'><b style='font-size:20'>" + data[n][0] + 
+        "</b> <img src='" + data[n][2]  + "' width=30></a> </p>";}
+    // bigger image if you want
+    else if (data[n].length==4){
+      scribe.innerHTML +=
+        "<a class='btn btn-warning' href='" + data[n][1] +
+        "' role='button'><b style='font-size:20'>" + data[n][0] + 
+        "</b> <img src='" + data[n][2]  + "' width="+data[n][3]+"></a></p>";}
 }} 
 
 // scribe.innerHTML += "<hr>" // Linea dopo gruppo di link
