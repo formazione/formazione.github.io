@@ -43,8 +43,19 @@
 ["acqua asis on line","https://mail.google.com/mail/u/0/#all/WhctKKXwtmszqFMjdwxHVbkDLhRRgmPTvvmlrxKxQMKlWhqnTnwGjVqqZpchrnXwBhzkZjQ"],
 
 
+["Piano annuale"],
+["Piano annuale","E:\\piano annuale 2022 2023\\PIANO-ANNUALE-ATTIVITA-2022-2023.pdf"],
+
     ["Verbali collegio"],
     ["p","rivedi n. 1 e 5, finisci il 6 <img src='https://www.nsar.co.uk/wp-content/uploads/2022/02/Alert.jpg' width=200>.<br>Il collegio è il 19 aprile."],
+    
+    ["verbale 1 GIOVEDI 01/09/2022",""],
+    ["verbale 2 GIOVEDI’ 08/09/2022",""],
+    ["verbale 3 29 ottobre",""],
+    ["verbale 4 17 dicembre",""],
+    ["Verbale 5 9 febbraio","https://docs.google.com/document/d/1sRGMWF62cpD6VmrHPuMi0zZnVH_1aax8pULsXaAFuC0/edit?usp=sharing"],
+    ["verbake 5 19 aprile",""],
+
 
     ["Verbali cdi"],
     ["verbale 6 cdi","https://docs.google.com/document/d/17EMdNcWGft76fVoGn7IRLwwuARDHwpmr4_oZPKchniI/edit?usp=sharing"],
@@ -188,10 +199,22 @@ for (let n in data){
   
     // LILNK SENZA IMMAGINI
     else if (data[n].length == 2) {
-      scribe.innerHTML += 
-        "<a class='btn btn-warning' href='" + data[n][1] +
-        "' role='button'><b style='font-size:20'>" + data[n][0] + 
-        "</b></a> </p>";}
+      if (data[n][1] !=""){
+        scribe.innerHTML += 
+          "<a class='btn btn-warning' href='" + data[n][1] +
+          "' role='button'><b style='font-size:20'>" + data[n][0] + 
+          "</b></a> </p>";
+        }
+      else{
+        console.log("Sono passato di qui");
+        scribe.innerHTML += 
+          "<a class='btn btn-secondary' href='" + data[n][1] +
+          "' role='button'><b style='font-size:20'>" + data[n][0] + 
+          "</b></a> </p>";
+
+      }
+
+      }
 
     // LINK CON IMMAGINI
     else if (data[n].length==3){
@@ -214,3 +237,18 @@ for (let n in data){
 
     <!-- copy until here to put this in script and styles in the blog -->
       </div>
+
+<!--
+
+<button type="button" class="btn">Basic</button>
+<button type="button" class="btn btn-primary">Primary</button>
+<button type="button" class="btn btn-secondary">Secondary</button>
+<button type="button" class="btn btn-success">Success</button>
+<button type="button" class="btn btn-info">Info</button>
+<button type="button" class="btn btn-warning">Warning</button>
+<button type="button" class="btn btn-danger">Danger</button>
+<button type="button" class="btn btn-dark">Dark</button>
+<button type="button" class="btn btn-light">Light</button>
+<button type="button" class="btn btn-link">Link</button>
+
+  -->
