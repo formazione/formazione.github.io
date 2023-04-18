@@ -1,6 +1,12 @@
 </head>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+<!-- pyscript stuff in the header -->
+        <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
+        <link rel="stylesheet" href="./assets/css/examples.css" />
+        <script defer src="https://pyscript.net/latest/pyscript.js"></script>
+
 </head>
 
 
@@ -20,6 +26,18 @@
               </td>
           </table>
 
+        <py-script>
+            from datetime import datetime
+            now = datetime.now()
+            data = [
+            ("19.4.2023","collegio"),
+            ("20.4.2024","cdi")
+            ]
+            display("Today is " + now.strftime("%d/%m/%Y"))
+            display("Appuntamenti:")
+            for d,y in data:
+                display(d + " " + y)
+        </py-script>
 <h3>INDICE:</h3>
 <div id='scribe'></div>
 <script type="text/javascript">
@@ -38,9 +56,17 @@
 
     // ----------------------------------------------------------------------------
     // COLLEGAMENTO AL MEMO SU FOGLI DI GOOGLE E ALLA TIMELINE SU GOOGLE SHEETS
+["RAV - SITO per tutti"],
+["formazione.github.io","https:\\formazione.github.io"],
+
 
 ["bollette"],
-["acqua asis on line","https://mail.google.com/mail/u/0/#all/WhctKKXwtmszqFMjdwxHVbkDLhRRgmPTvvmlrxKxQMKlWhqnTnwGjVqqZpchrnXwBhzkZjQ"],
+  ["Acqua"],
+  ["acqua asis on line","https://mail.google.com/mail/u/0/#all/WhctKKXwtmszqFMjdwxHVbkDLhRRgmPTvvmlrxKxQMKlWhqnTnwGjVqqZpchrnXwBhzkZjQ"],
+["Enel"],
+  ["p","La bolletta scade il 27 aprile e si dovrebbe pagare in automatico con paypal. Controlla che sia pagata per il 27 aprile, altrimenti non si paga in automatico con paypal. Non so se funziona, è la prima volta."],
+  ["servizio elettrico","https://www.servizioelettriconazionale.it/it-IT/clienti/SEN/servizi/Areaclienti/HomePage/homepage.jsp"],
+
 
 
 ["Piano annuale"],
@@ -76,7 +102,8 @@
     ["PFI"],
 
 
-
+["Prove parallele"],
+["PP 1° quad.","https://docs.google.com/spreadsheets/d/1PmZ2UJGFf0rdgQY5mAWZdkKhyYVwn6Mwn0Suo_xoRTU/edit?usp=sharing"],
 
 
 
@@ -144,9 +171,6 @@
   ["python posts database","https://docs.google.com/spreadsheets/d/1zwVzOCfPLAQrzz6c1eFXuoBPbukw9MXXp2s-cBF0avg/edit?usp=sharing"],
   ["successione", ""],
 
-  ["pagamenti"],
-  ["p","La bolletta scade il 27 aprile e si dovrebbe pagare in automatico con paypal. Controlla che sia pagata per il 27 aprile, altrimenti non si paga in automatico con paypal. Non so se funziona, è la prima volta."],
-  ["servizio elettrico","https://www.servizioelettriconazionale.it/it-IT/clienti/SEN/servizi/Areaclienti/HomePage/homepage.jsp"],
 
   ["PNRR"],
   ["150 milioni tutor", "file:///C:/Users/giova/Downloads/m_pi.AOOGABMI.Registro%20Decreti(R).0000063.05-04-2023.pdf"],
@@ -155,7 +179,8 @@
   ["Invia a kindle pdf ecc.","https://www.amazon.it/sendtokindle?ref_=pe_1825130_692203110"],
 
   ["python"],
-  ["pygame","https://formazione.github.io/pygametutorials.html"]
+  ["pygame","https://formazione.github.io/pygametutorials.html"],
+  ["tts to speech 18.4.23", "E:\\functions\\speak_tts.py"]
 
 ] // ultima parentesi quadra chiusa
 
