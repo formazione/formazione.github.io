@@ -1,0 +1,207 @@
+</head>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+<!-- pyscript stuff in the header -->
+    <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
+    <link rel="stylesheet" href="./assets/css/examples.css" />
+    <script defer src="https://pyscript.net/latest/pyscript.js"></script>
+
+</head>
+<body>
+      <div class="jumbotron">
+        <div class="container">
+          <table>
+<!--      PUT AN IMAGE ON TOP OF THE PAGE IF YOU NEED IT        
+ <td><center><img src="aklogo.png"></center><br></td> -->
+              
+<!-- TITLE YOU SEE IN THE PAGE -->
+          <td><h1 class="display-3">MEMO</h1></td>
+          </table>
+
+<!-- FINALLY SOME PYTHON CODE IN A WEB PAGE, THANKS TO PYSCRIPT -->
+<py-script>
+    from datetime import datetime
+    now = datetime.now()
+    data = """
+    --------------
+    19.4.2023 - collegio
+    20.4.2024 - cdi
+    4/22/2023 - Disdetto Now
+    --------------
+    """.splitlines()
+    
+    display("Today is " + now.strftime("%d/%m/%Y"))
+    display("Appuntamenti:")
+    for d in data:
+        display(d)
+
+
+    def show(txt, div):
+        display(txt, target=div)
+</py-script>
+
+<!-- THEN COMES THE INDEX, IN THIS DIV, WITH LINKS TO INNER URLS -->
+<!-- DO NOT DELETE THIS DIV, IT'S USED BY THE JS CODE AT THE BOTTOM OF THE PAGE -->
+<h3>INDICE:</h3><div id='scribe'></div>
+<!-- <div id='helloDiv'></div> -->
+<script type="text/javascript">
+
+  // ----------------------------------------------------------------------------------
+  //                               DOCUMENTATION
+  // ----------------------------------------------------------------------------------
+  /* ************* EXAMPLES OF THE WAY YOU PUT THE LINKS AND DATA IN let data = [...]
+  ESEMPIO                              SIGNIFICATO
+  ["titolo"],                          Solo un item = Titolo
+  ["p", "questo è un paragrafo"]       "p" = paragrafo, secondo item=contenuto del par.
+  ["testo", "link cui indirizza"]      in tutti gli altri casi, testo=quello che appare
+  ["testo", "link", "immagine nel link"]
+  ["pb-Show cool","This is so cool"],
+  
+
+
+  beta
+  ************************** using a button with pyscript **************
+  you got to create a function like display_hello to put in <py-script>
+
+  <pyscript>
+      def display_hello():
+        display("ciao", target='helloDiv') # target = name of the div (below)
+  </pyscript>
+
+  and then link this button below to the script you want to execute
+
+  ["Example using a function with pyscript"],
+  ["p","<button id='my-button' py-onClick=\"display_hello('This is a great idea','helloDiv')\">Click to see hello</button><div id='helloDiv'></div>"],
+
+  ["Example using a function with pyscript with 'tag'"],
+["pb-Show cool","This is so cool"],
+  ***********************************************************************
+
+     //IN CASO DI ERRORI: controlla che ci siano le VIRGOLE tra i dati
+  -------------------------------------------------------------------------------------*/
+
+
+
+
+
+// ----------------------------------------------------------------------------
+// *********************** PUT YOUR DATA HERE AS YOU SEE IN THE
+// *********************** EXAMPLES ABOVE **********************************
+  
+  let data = [
+
+// if an error occur, see if you put all the commas after the square
+["25.4.2023"],
+["p","<h2>ffmp4</h2> nella cartella video c'è una cartella delete silence con uno script per togliere le pause col silenzio dai video."]
+
+
+
+// ----------------------- END OF DATA 'INPUT' ----------------------!!!!!
+
+] // ultima parentesi quadra chiusa
+
+// ********************** don't touch this code, please *******************
+// ********************** if you don't know what to do *******************
+// ********************** or everything will mess up *******************
+
+
+// ------------------- INDICE -------------------
+
+
+function changecolor(element){
+  element.style.color = "gold";
+  element.style.background = "red";
+}
+function gobacktocolor(element){
+  element.style.color = "red";
+  element.style.background = "gold";
+}
+
+for (let n in data){
+  // VERIFICA SE E' UN TITOLO (SE HA UN SOLO DATO):
+  if (data[n].length == 1){
+    scribe.innerHTML += "<li>[ <a href='#" + data[n] + "'><b style='color:red;background-color:gold' onmouseover='changecolor(this)' onmouseout='gobacktocolor(this)'>" + data[n] + "</b></a> ]  ";
+  }}
+
+
+
+
+// -------------------- DOPO INDICE --------------------
+// HERE THE BUTTONS WITH THE LINKS ARE SHOWN
+divcount = 0
+for (let n in data){
+  
+  // TITOLO
+  if (data[n].length == 1){
+    // scribe.innerHTML += "<hr>"
+    scribe.innerHTML += "<br><center><h2 style='color:navy;background-color:gold'><a name='"+data[n]+"'>" + data[n] + "</a></h2></center>";}
+
+
+  // PARAGRAGO o link con immagini o senza
+  else{
+
+    // PARAGRAFO
+    if (data[n][0]== "p"){
+      scribe.innerHTML += "<p>" + data[n][1] + "</p>"}
+  
+    else if (data[n][0].slice(0,2) == "pb"){
+      divcount += 1;
+      scribe.innerHTML += "<button id='my-button"+divcount+"' py-onClick=\"show('"+data[n][1]+"','helloDiv"+divcount+"')\">"+data[n][0].slice(3,data[n][0].length)+"</button><div id='helloDiv"+divcount+"'></div>"
+    }
+
+    // LILNK SENZA IMMAGINI
+    else if (data[n].length == 2) {
+      if (data[n][1] !=""){
+        scribe.innerHTML += 
+          "<a class='btn btn-warning' href='" + data[n][1] +
+          "' role='button'><b style='font-size:20'>" + data[n][0] + 
+          "</b></a> </p>";
+        }
+      else{
+        console.log("Sono passato di qui");
+        scribe.innerHTML += 
+          "<a class='btn btn-secondary' href='" + data[n][1] +
+          "' role='button'><b style='font-size:20'>" + data[n][0] + 
+          "</b></a> </p>";
+
+      }
+
+      }
+
+    // LINK CON IMMAGINI
+    else if (data[n].length==3){
+      scribe.innerHTML +=
+        "<a class='btn btn-warning' href='" + data[n][1] +
+        "' role='button'><b style='font-size:20'>" + data[n][0] + 
+        "</b> <img src='" + data[n][2]  + "' width=30></a> </p>";}
+    // bigger image if you want
+    else if (data[n].length==4){
+      scribe.innerHTML +=
+        "<a class='btn btn-warning' href='" + data[n][1] +
+        "' role='button'><b style='font-size:20'>" + data[n][0] + 
+        "</b> <img src='" + data[n][2]  + "' width="+data[n][3]+"></a></p>";}
+}} 
+
+// scribe.innerHTML += "<hr>" // Linea dopo gruppo di link
+
+</script>
+    </div>
+
+    <!-- copy until here to put this in script and styles in the blog -->
+      </div>
+
+<!-- EXAMPLES OF TYPE OF BUTTONS YOU CAN USE WITH BOOTSTRAP
+
+<button type="button" class="btn">Basic</button>
+<button type="button" class="btn btn-primary">Primary</button>
+<button type="button" class="btn btn-secondary">Secondary</button>
+<button type="button" class="btn btn-success">Success</button>
+<button type="button" class="btn btn-info">Info</button>
+<button type="button" class="btn btn-warning">Warning</button>
+<button type="button" class="btn btn-danger">Danger</button>
+<button type="button" class="btn btn-dark">Dark</button>
+<button type="button" class="btn btn-light">Light</button>
+<button type="button" class="btn btn-link">Link</button>
+
+  -->

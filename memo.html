@@ -4,65 +4,101 @@
 
 <!-- pyscript stuff in the header -->
         <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
-        <link rel="stylesheet" href="./assets/css/examples.css" />
         <script defer src="https://pyscript.net/latest/pyscript.js"></script>
 
 </head>
-
-
 <body>
-
-
       <div class="jumbotron">
         <div class="container">
-
           <table>
-<!--               <td>
-              <center><img src="aklogo.png"></center><br>
-              </td> -->
+<!--      PUT AN IMAGE ON TOP OF THE PAGE IF YOU NEED IT        
+ <td><center><img src="aklogo.png"></center><br></td> -->
               
-              <td>
-              <h1 class="display-3">MEMO</h1>
-              </td>
+<!-- TITLE YOU SEE IN THE PAGE -->
+          <td><h1 class="display-3">MEMO</h1></td>
           </table>
 
+<!-- FINALLY SOME PYTHON CODE IN A WEB PAGE, THANKS TO PYSCRIPT -->
         <py-script>
             from datetime import datetime
+            import os
+
             now = datetime.now()
-            data = [
-            "19.4.2023 - collegio",
-            "20.4.2024 - cdi",
-            "4/22/2023 - Disdetto Now"
-            ]
+            data = """
+            ---------------------
+            giovedì 27 dipartimento
+            ---------------------
+            finire l'ultima parte del verbale del collegio
+            pdp e pfi
+            ----------------------
+            """.splitlines()
             display("Today is " + now.strftime("%d/%m/%Y"))
             display("Appuntamenti:")
             for d in data:
                 display(d)
 
+            def show(text, div):
+              display(text, target=div)
+              
+
         </py-script>
-<h3>INDICE:</h3>
-<div id='scribe'></div>
+
+<!-- THEN COMES THE INDEX, IN THIS DIV, WITH LINKS TO INNER URLS -->
+<!-- DO NOT DELETE THIS DIV, IT'S USED BY THE JS CODE AT THE BOTTOM OF THE PAGE -->
+<h3>INDICE:</h3><div id='scribe'></div>
+
 <script type="text/javascript">
-  /*                            ISTRUZIONI
+
+  // ----------------------------------------------------------------------------------
+  //                               DOCUMENTATION
+  // ----------------------------------------------------------------------------------
+  /* ************* EXAMPLES OF THE WAY YOU PUT THE LINKS AND DATA IN let data = [...]
   ESEMPIO                              SIGNIFICATO
   ["titolo"],                          Solo un item = Titolo
   ["p", "questo è un paragrafo"]       "p" = paragrafo, secondo item=contenuto del par.
   ["testo", "link cui indirizza"]      in tutti gli altri casi, testo=quello che appare, 2° item=address
-
      //IN CASO DI ERRORI: controlla che ci siano le VIRGOLE tra i dati
+
+  Button that shows some hidden text
+     ["pb-Click here",
+  "hello"]
+  -------------------------------------------------------------------------------------*/
+
+
+
+
+
+// ----------------------------------------------------------------------------
+// *********************** PUT YOUR DATA HERE AS YOU SEE IN THE
+// *********************** EXAMPLES ABOVE **********************************
   
-  */
-
-  // HERE PUT THE TEXT AND THE ADDRESS OF THE LINKS YOU WANT TO PUT ON THE WEB PAGE
   let data = [
+["pb-See some text","This is totally random"],
 
-    // ----------------------------------------------------------------------------
-    // COLLEGAMENTO AL MEMO SU FOGLI DI GOOGLE E ALLA TIMELINE SU GOOGLE SHEETS
+["AI"],
+["Chat everywhere", "https://chateverywhere.app/"],
+["p",`How to procrastinate less: Procrastination is a common challenge that many people face, and overcoming it requires some intentional strategies. Here are a few tips that can help you procrastinate less:
+
+1. Break tasks into smaller pieces: When we have large or complex tasks looming over us, it's easy to feel overwhelmed and put them off. Try breaking these tasks into smaller, more manageable pieces. This can make them feel less daunting and help you get started.
+
+2. Set deadlines: Create deadlines for yourself, even if they are self-imposed. This can help you stay accountable and motivate you to take action.
+
+3. Minimize distractions: If you find yourself constantly distracted by social media or other distractions, try setting aside specific times of the day for those activities so that they don't interfere with your work. You can also look into apps or tools that can block distracting websites or apps.
+
+4. Use a timer: Set a timer for a specific amount of time and work on a task until the timer goes off. This can help you stay focused and break up your work into manageable chunks.
+
+5. Focus on the benefits: Think about the benefits of completing a task, rather than the effort involved in doing it. This can help you stay motivated and on task.
+
+Remember, overcoming procrastination takes time and effort. Start small and be patient with yourself as you develop new habits and strategies.`],
+
+
 ["RAV - SITO per tutti"],
 ["formazione.github.io","https:\\formazione.github.io"],
 
 ["Tarassaco"],
 ["p","Tarassaco <img src='https:\\www.piantinedaorto.it\\img_prodotti/big/8673.jpg'>"],
+
+
 
 
 ["bollette"],
@@ -189,12 +225,27 @@
   ["tts to speech 18.4.23", "E:\\functions\\speak_tts.py"],
   ["buttons","https://pythonprogramming.altervista.org/wp-admin/post.php?post=7225&action=edit"],
 
-  ["games"],
-  ["pairs","E:\\matchpair\\v_1_9_c\\tut9c.py"]
+  ["games and apps"],
+  ["pairs","E:\\matchpair\\v_1_9_c\\tut9c.py"],
+
+["my apps","https://docs.google.com/spreadsheets/d/1twU9ZlTIAVwaQ9VkJbW3iMaMn1Ek3IoLmvqCSZs-mK0/edit?usp=sharing"],
+["pb-Click here",
+  "hello"]
+
+
+
+
+// ----------------------- END OF DATA 'INPUT' ----------------------!!!!!
+
 ] // ultima parentesi quadra chiusa
+
+// ********************** don't touch this code, please *******************
+// ********************** if you don't know what to do *******************
+// ********************** or everything will mess up *******************
 
 
 // ------------------- INDICE -------------------
+
 
 function changecolor(element){
   element.style.color = "gold";
@@ -216,6 +267,7 @@ for (let n in data){
 
 // -------------------- DOPO INDICE --------------------
 // HERE THE BUTTONS WITH THE LINKS ARE SHOWN
+  divcount=0;
 for (let n in data){
   
   // TITOLO
@@ -230,7 +282,11 @@ for (let n in data){
     // PARAGRAFO
     if (data[n][0]== "p"){
       scribe.innerHTML += "<p>" + data[n][1] + "</p>"}
-  
+
+    else if (data[n][0].slice(0,2) == "pb"){
+      divcount += 1;
+      scribe.innerHTML += "<button id='my-button"+divcount+"' py-onClick=\"show('"+data[n][1]+"','helloDiv"+divcount+"')\">"+data[n][0].slice(3,data[n][0].length)+"</button><div id='helloDiv"+divcount+"'></div>"
+    }
     // LILNK SENZA IMMAGINI
     else if (data[n].length == 2) {
       if (data[n][1] !=""){
@@ -272,7 +328,7 @@ for (let n in data){
     <!-- copy until here to put this in script and styles in the blog -->
       </div>
 
-<!--
+<!-- EXAMPLES OF TYPE OF BUTTONS YOU CAN USE WITH BOOTSTRAP
 
 <button type="button" class="btn">Basic</button>
 <button type="button" class="btn btn-primary">Primary</button>
