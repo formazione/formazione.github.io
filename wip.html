@@ -25,11 +25,11 @@
 
             now = datetime.now()
             data = """
-            ----------------------
-            PFI Venosa
-            Prove parallele statistiche
-
-
+            ---------------------
+            giovedì 27 dipartimento
+            ---------------------
+            finire l'ultima parte del verbale del collegio
+            pdp e pfi
             ----------------------
             """.splitlines()
             display("Today is " + now.strftime("%d/%m/%Y"))
@@ -39,6 +39,10 @@
 
             def show(text, div):
               display(text, target=div)
+
+            def start(command):
+              print("il comando funziona?")
+              os.system(command)
               
 
         </py-script>
@@ -73,6 +77,12 @@
 // *********************** EXAMPLES ABOVE **********************************
   
   let data = [
+["WIP"],
+["pb-Dir","Ciao"],
+
+
+["ffmpeg guida","H:\\ffmpeg\\Ffmpeg guida.txt"],
+
 ["pb-See some text","This is totally random"],
 
 ["AI"],
@@ -316,10 +326,21 @@ for (let n in data){
     if (data[n][0]== "p"){
       scribe.innerHTML += "<p>" + data[n][1] + "</p>"}
 
+    // pulsante per scrivere un testo
     else if (data[n][0].slice(0,2) == "pb"){
       divcount += 1;
       scribe.innerHTML += "<button id='my-button"+divcount+"' py-onClick=\"show('"+data[n][1]+"','helloDiv"+divcount+"')\">"+data[n][0].slice(3,data[n][0].length)+"</button><div id='helloDiv"+divcount+"'></div>"
     }
+
+    // pulsante che avvia un programma
+    else if (data[n][0].slice(0,3) == "cmd"){
+      divcount += 1;
+      scribe.innerHTML += "<button id='my-button" + divcount + "' py-onClick=\"start(\'"+data[n][1]+"\')\">"+data[n][0].slice(3,data[n][0].length)+"</button><div id='helloDiv"+divcount+"'></div>"
+    }
+
+
+
+
     // LILNK SENZA IMMAGINI
     else if (data[n].length == 2) {
       if (data[n][1] !=""){
