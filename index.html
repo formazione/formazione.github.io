@@ -67,8 +67,14 @@ role="button">Esempi prove invalsi di seconda di Matematica (zanichelli)</a>
 <a class="btn btn-warning" 
 href="https://www.invalsiopen.it/prove_statiche/G10/ITA/2019/ITA_10_EX1/index.html" 
 role="button">Prove di Italiano(clicca in basso il pulsante "successivo")</a> 
-
   </li>
+<li>
+<a class="btn btn-warning" 
+href="https://www.invalsiopen.it/mettiti-alla-prova-con-le-domande-di-grado-10/?utm_source=newsletter&utm_medium=email&utm_campaign=maggio-2023#:~:text=Due%20esempi%20di%20domanda%20di%20Italiano" 
+role="button">2 esempi di prove per le seconde</a> 
+</li>
+
+
   <li>
 <a class="btn btn-warning" 
 href="https://www.invalsiopen.it/percorsi-strumenti-invalsi/italiano/mettiamoci-alla-prova/" 
@@ -106,7 +112,7 @@ role="button">CALENDARIO PROVE RECUPERO INVALSI CLASSI QUINTE</a>
 </p>
 `],
 
-
+["Calendario prove recupero invalsi quinte (marzo)","https://docs.google.com/document/d/1IdicYBj0IX5E3hX7_Ai2G6482v6j9l6O/edit?usp=sharing","btn btn-secondary"],
 
 
 
@@ -151,14 +157,14 @@ role="button">NUOVI ESEMPI DI ESERCITAZIONI SULLE PROVE INVALSI</a>
 
 
 
-["Prove parallele"],             //                PROVE PARALLELE 
+["Prove parallele 2023"],             //                PROVE PARALLELE 
 
 ["p","Inserite i risultati delle prove parallele entro il 7 febbraio, grazie.<br><img src='https://proveparallele.files.wordpress.com/2018/10/cropped-download.jpg?w=169'"],
-["PROVE PARALLELE: DATI PRIMO QUADRIMESTRE", 
+["PROVE PARALLELE: DATI PRIMO QUADRIMESTRE 2023", 
 "https://docs.google.com/spreadsheets/d/1PmZ2UJGFf0rdgQY5mAWZdkKhyYVwn6Mwn0Suo_xoRTU/edit?usp=sharing",],
 
-
-["p","Prove parallele dell'anno scorso 2021 2022"],
+["Prove parallele 2022"],
+["p","Analisi dei dati delle rove parallele dell'anno scorso 2021 2022"],
 ["Primo quadrimestre","https://drive.google.com/file/d/1u67N-cf5mXA8Z2vj4PpozSsNZORpTs6I/view?usp=sharing"],
 ["Secondo quadrimestre","https://docs.google.com/spreadsheets/d/1fYeyyM-BS4VpcHn4mRzPk9xR623kkNXB47gLsXhhbHc/edit?usp=sharing"],
 
@@ -229,11 +235,20 @@ for (let n in data){
 
     // LINK CON IMMAGINE SUCCESSIVA AL PULSANTE PICCOLA
     else if (data[n].length==3){
+      if (data[n][2].substring(0,3) == "btn"){
+              scribe.innerHTML +=
+        "<a class='"+data[n][2]+"' href='" + data[n][1] +
+        "' role='button'>" + data[n][0] + 
+        "</a></p>";}
+      }
+      else {
+
       scribe.innerHTML +=
         "<a class='btn btn-warning' href='" + data[n][1] +
         "' role='button'>" + data[n][0] + 
         "</a><img src='" + data[n][2]  + "' width=30>' </p>";}
-}} 
+      }
+} 
 
 // scribe.innerHTML += "<hr>" // Linea dopo gruppo di link
 

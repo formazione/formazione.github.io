@@ -1,6 +1,4 @@
 
-<!DOCTYPE html>
-<html lang="en">
 <head>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
@@ -21,35 +19,39 @@
     *
     */
 
-/**
-*Let's create the randomization of the questions!
-*/
-function speak(x, language="it") {
-  synth = speechSynthesis
-  utt = new SpeechSynthesisUtterance(x);
-  utt.lang=language;
+// ========================== Nuova funzione speak ===========
+// function speak(x) {
+//   synth = speechSynthesis
+//   utt = new SpeechSynthesisUtterance(x);
+//   synth.speak(utt);
+//   is_on = 1;
+// }
+
+function speak(x, language="it-IT") {
+  synth = speechSynthesis;
+  var utt = new SpeechSynthesisUtterance();
+  var voices = speechSynthesis.getVoices();
+  // 9 francese
+  utt.volume = 10;
+  utt.pitch = .5;
+  utt.voice = voices[12]; // italiano
+  // for (v in voices){console.log(v)};
+  console.log(x);
+  utt.text = x;
+  utt.lang="it-IT";
   synth.speak(utt);
   is_on = 1;
 }
-
-
-
+      
 function shuffle(array) {
   var currentIndex = array.length, temporaryValue, randomIndex;
-
-  // While there remain elements to shuffle...
   while (0 !== currentIndex) {
-
-    // Pick a remaining element...
     randomIndex = Math.floor(Math.random() * currentIndex);
     currentIndex -= 1;
-
-    // And swap it with the current element.
     temporaryValue = array[currentIndex];
     array[currentIndex] = array[randomIndex];
     array[randomIndex] = temporaryValue;
   }
-
   return array;
 }
 	    
@@ -68,140 +70,115 @@ if (!("scramble" in Array.prototype)) {
     }
   });
 }		
-	    
-let quiz = [
-{
-	        "question"      :   "Gli alimenti",
-	        "image"         :   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqvrXWb-mNDRf8aJ70aHjBO6oY0CQXFm8ojxR1OdeEBabDN1UFg8n1j_b5kjA&s",
-	        "choices"       :   ["materia di origine vegetale o animale che fornisce, dopo i processi digestivi, energia e princìpi nutritivi all'uomo"],
-	        "correct"       :   "materia di origine vegetale o animale che fornisce, dopo i processi digestivi, energia e princìpi nutritivi all'uomo",
-	        "explanation"   :   "",
-	    },{
-	        "question"      :   "Sono sostanze nutritive essenziali",
-	        "image"         :   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRPKzPAEutv6zjQvfdkRFzHRiPTtCreEkpYiVKpst-U0A2JiY0wGvqxJWB69g&s",
-	        "choices"       :   ['quei composti che l’uomo non riesce a produrre da sé'],
-	        "correct"       :   "quei composti che l’uomo non riesce a produrre da sé",
-	        "explanation"   :   "",
-	    },{
-	        "question"      :   "I principi nutritivi sono",
-	        "image"         :   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ5fKZVXtVOnwqJkkJCvvCn4pMrdK43rbvKxxPf_ZwYefEn0JbGTpVYgeE6BYU&s",
-	        "choices"       :   ['proteine, lipidi, glucidi, vitamine, minerali, acqua'],
-	        "correct"       :   "proteine, lipidi, glucidi, vitamine, minerali, acqua",
-	        "explanation"   :   "",
-	    },{
-	        "question"      :   "derrata alimentare",
-	        "image"         :   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRPcDGE7mffbF69M_KDY5fwNybBJlUjHCDQ_GE5bxRHn12BO5LjSsW8H0rZT34&s",
-	        "choices"       :   ["ogni sostanza destinata all'alimentazione umana,"],
-	        "correct"       :   "ogni sostanza destinata all'alimentazione umana,",
-	        "explanation"   :   "",
-	    },{
-	        "question"      :   "alimento",
-	        "image"         :   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqvrXWb-mNDRf8aJ70aHjBO6oY0CQXFm8ojxR1OdeEBabDN1UFg8n1j_b5kjA&s",
-	        "choices"       :   ["materia prima per l'accrescimento ed il mantenimento dell'essere umano."],
-	        "correct"       :   "materia prima per l'accrescimento ed il mantenimento dell'essere umano.",
-	        "explanation"   :   "",
-	    },{
-	        "question"      :   "Necessità diverse per età",
-	        "image"         :   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTtnRql-dK_jKaY3cwVu5boh0J4Y1WdpSU0teU30Oelse-q80hxyBI8_cb1Rw&s",
-	        "choices"       :   ['Ad ogni stadio, di vita vi sono necessità alimentari differenti.'],
-	        "correct"       :   "Ad ogni stadio, di vita vi sono necessità alimentari differenti.",
-	        "explanation"   :   "",
-	    },{
-	        "question"      :   "Come si mangia oggi?",
-	        "image"         :   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSOxJvRwuUy-GAy01eBO8sc3Xyar6hoLYdMnNIcvna7aB5ZQvQTlCHwOpLJcnE&s",
-	        "choices"       :   ['Si mangia troppo ed anche male'],
-	        "correct"       :   "Si mangia troppo ed anche male",
-	        "explanation"   :   "",
-	    },{
-	        "question"      :   "In sintesi, gli alimenti, per essere considerati tali devono:",
-	        "image"         :   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcROAngBoQz6DhXvOKyO6YSVzBZMfpr8duyBrvKNdjyNkD2277F85BDZL7dgl_A&s",
-	        "choices"       :   ['contenere almeno un principio nutritivo; essere commestibili; non essere tossici'],
-	        "correct"       :   "contenere almeno un principio nutritivo; essere commestibili; non essere tossici",
-	        "explanation"   :   "",
-	    },{
-	        "question"      :   "Gli alimenti si distinguono sotto l'aspetto nutrizionale in:",
-	        "image"         :   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQvkPRGvmFm4mbkIcYFTp-MdL0TDuN2tJtcEFTyB-ORvu6yDStb4YtnMzVIdw&s",
-	        "choices"       :   ['primari (necessari come i legumi) e accessori (come i dolci)'],
-	        "correct"       :   "primari (necessari come i legumi) e accessori (come i dolci)",
-	        "explanation"   :   "",
-	    },{
-	        "question"      :   "Gli alimenti sotto l'aspetto merceologico possono essere di origine:",
-	        "image"         :   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ9NSvqykHnDusmlTIUYGq4s23GIeVzX1A_4kIZxSIK1kZIwAY9LHOYIW683g&s",
-	        "choices"       :   ['vegetale (frutta e verduta), animale (carne,pesce,uova,latte) o minerale(sale,acqua)'],
-	        "correct"       :   "vegetale (frutta e verduta), animale (carne,pesce,uova,latte) o minerale(sale,acqua)",
-	        "explanation"   :   "",
-	    },{
-	        "question"      :   "sotto l'aspetto tecnico-produttivo abbiamo prodotti alimentari:",
-	        "image"         :   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSpTuXEpwfpNEt4otMold887J6XNev_5ZhwypQjT3lSoIcicsA-gHECMDoEe0s&s",
-	        "choices"       :   ['naturali (frutta), conservati (surgelati), trasformati (formaggi)'],
-	        "correct"       :   "naturali (frutta), conservati (surgelati), trasformati (formaggi)",
-	        "explanation"   :   "",
-	    },{
-	        "question"      :   "La prima gamma",
-	        "image"         :   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhqVY6qv24b16mfXVx4jximF7l4S4hp-UDN_CINa-jC7l2UjhOyaisgQqefS0&s",
-	        "choices"       :   ['prodotti freschi di mercato', 'semilavorati', 'pronti da cucinare', 'pronti da mangiare', 'pronti da riscaldare'],
-	        "correct"       :   "prodotti freschi di mercato",
-	        "explanation"   :   "",
-	    },{
-	        "question"      :   "La seconda gamma",
-	        "image"         :   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcROO4H8SoVa50y8T3QeEtyGaMTUEtxcj1S14-ZtzFYYS_dwsDaz9cginEu9k2E&s",
-	        "choices"       :   ['semilavorati', 'prodotti freschi di mercato', 'pronti da cucinare', 'pronti da mangiare', 'pronti da riscaldare'],
-	        "correct"       :   "semilavorati",
-	        "explanation"   :   "",
-	    },{
-	        "question"      :   "La terza gamma",
-	        "image"         :   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQVsYCfZFsZ0qf8JEhjalZEjbHSdM28A5P0_Dlon4ZM_bUmgWzGYY-rymfBDLc&s",
-	        "choices"       :   ['pronti da cucinare', 'prodotti freschi di mercato', 'semilavorati', 'pronti da mangiare', 'pronti da riscaldare'],
-	        "correct"       :   "pronti da cucinare",
-	        "explanation"   :   "",
-	    },{
-	        "question"      :   "La quarta gamma",
-	        "image"         :   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSyk1YM8Hxl9XQwR_B8AxeEu3Jh99IQcQnQ4qnAwM1-zqQ3Tcav2P4lyyD32w&s",
-	        "choices"       :   ['pronti da mangiare', 'prodotti freschi di mercato', 'semilavorati', 'pronti da cucinare', 'pronti da riscaldare'],
-	        "correct"       :   "pronti da mangiare",
-	        "explanation"   :   "",
-	    },{
-	        "question"      :   "La quinta gamma",
-	        "image"         :   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSRSOaOcEwynKda2NjrpmDtmzXHP4bPjS-AQHICNOS8CtPhcy45uaiowClk-g&s",
-	        "choices"       :   ['pronti da riscaldare', 'prodotti freschi di mercato', 'semilavorati', 'pronti da cucinare', 'pronti da mangiare'],
-	        "correct"       :   "pronti da riscaldare",
-	        "explanation"   :   "",
-	    },{
-	        "question"      :   "qual è il terzo gruppo degli alimenti secondo la suddivisione dell'IRNAN?",
-	        "image"         :   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQyCR29slxmbKhh5-4QSUBSUM7xiHCGP64bDQ16L4GJggAcsCarR8IMF6xmTw&s",
-	        "choices"       :   ['cereali', 'frutta e verdura', 'latte e derivati', 'carne, pesce e uova, legumi secchi', 'grassi da condimento'],
-	        "correct"       :   "cereali",
-	        "explanation"   :   "",
-	    },
-];
 
-quiz.forEach(q => q.choices.scramble()); // Mescola l'ordine delle risposte
-quiz = shuffle(quiz);
+      
+let mydom = `Il bilancio è obbligatorio___per tutte le imprese___per le società di persone___per le imprese individuali___per le società di capitali
+Il bilancio viene redatto___alla fine dell'esercizio___a metà anno___ogni 3 mesi
+Il bilancio un documento solo interno___per le imprese individuali e le società di persone___per le società di persone___per le società di capitali___per le imprese individuali
+Il bilancio delle società di capitali va approvato___entro 120 giorni dalla fine dell'esercizio___entro 60 giorni dalla fine dell'esercizio___entro 30 giorni  dalla fine dell'esercizio
+Il bilancio socio-ambientale si rivolge___alla collettività___agli investitori___ai soci
+Il bilancio socio-ambientale riguarda l'impatto___sia ambientale che economico sulla collettività___economico della società sulla collettività___ambientale della società sulla collettività
+L'aspetto finanziario è rappresentato___nello Stato patrimoniale___nel Conto economico
+Versati 100 euro in cassa___dare___avere
+Prelevati 1000 euro dal c/c bancario___avere___dare
+Registra Crediti verso clienti per 200 euro___dare___avere
+Ricevuta ft. per 1000 euro___costo=1000 iva a credito=220 debito=1220___costo=1000 iva a debito=220 debito=1220___ricavo=1000 iva a credito=220 debito=1220
+Le entrate vanno in___dare___avere
+I costi vanno in___dare___avere
+I ricavi vanno in___avere___dare
+Le uscite vanno in___avere___dare
+I crediti vanno in___dare___avere
+Il pagamento di un debito da parte dell'impresa va in___dare___avere
+aumento di capitale proprio___avere___dare
+Ricevuto un bonifico sul c/c___dare___avere
+La pianificazione copre un periodo di tempo___lungo___breve
+La differenza tra ricavi e costi è detta___utile___interesse___fatturato
+Verifica la convenienza di una nuova impresa___Business plan___Bilancio___Conto economico
+L'analisi aziendale rileva___punti di forza e debolezza dell'impresa___opportunità e minacce dell'ambiente esterno
+Evidenzia le immobilizzazioni necessarie all'impresa___piano degli investimenti___piano economico___piano finanziario
+Indica la composizione futura delle attività e passività___Il piano patrimoniale___Il piano economico___Il budget degli investimenti
+IL business plan contiene___l'idea imprenditoriale___la fattibilità___il piano economico finanziario___l'idea imprenditoriale, la fattibilità e il piano economico finanziario
+L'ammortamento è___il minor valore di una immobilizzazione per usura/obsolescenza___il valore delle scorte di magazzino
+Il budget è un documento___preventivo___consuntivo
+Il bilancio viene redatto___alla fine dell'esercizio___a metà anno___ogni 3 mesi
+Il Bilancio è un documento utilizzato solo internamente___per le imprese individuali e le società di persone___per le società di persone___per le società di capitali___per le imprese individuali
+Il bilancio delle società di capitali va approvato___entro 120 giorni dalla fine dell'esercizio___entro 60 giorni dalla fine dell'esercizio___rnyto 30 giorni  dalla fine dell'esercizio
+Il business plan o studio di ...___fattibilità___fattore___merito___programmi
+Il business plan valuta la .... dell'idea di busines___convenienza___capacità___dimensione___caratteristica___politica
+riguarda gli aspetti caratterizzanti la futura impresa:___l'idea di business___la fattibilità___il piano economico finanziario
+l'utile è___la differenza tra ricavi e costi di esercizio___la differenza tra entrate e uscite___la somma di ricavi ed entrate
+il ricavo è___l'utile lordo___l'utile dell'impresa___l'utile netto dell'impresa
+Il piano degli investimenti___quantifica le immobilizzazioni necessarie___riguarda costi di esercizio e ricavi
+La quota di ammortamento è___costo storico : periodo di ammortamento___costo storico x periodo di ammortamento
+Il fabbisogno finanziario___immobilizzazioni + attivo circolante___immobilizzazioni - attivo circolante___immobilizzazioni x attivo circolante : 100
+Indica la composizione di attività, passività e patrimonio netto___piano patrimoniale___piano economico___piano degli investimenti
+La programmazione operativa deve:___predisporre i budget___definire le scelte di fondo___definire le scelte operative di lungo periodo
+L'analisi ambientale si occupa di:___sviluppo tecnologico del mercato___flessibilità dell'impresa___disponibilità di mezzi propri___potenziale del prodotto dell'impresa
+Se l'impresa vuole svilupparsi in nuovi mercati, segue strategie di___espansione___consolidamento___di periodo___operativa
+Il piano finanziario indica___il fabbisogno finanziario___gli investimenti necessari___i costi degli esercizi futuri___la convenienza economica dell'impresa
+Il budget economico prevede___i ricavi e i costi del futuro esercizio___il fabbisogno finanziario del futuro esercizio___entrate ed uscite future___investimenti futuri
+Si prevedono 1500 menu a 30 euro ciascuno a marzo, il ricavo sarà___45.000 euro___4.500 euro___3.000 euro___35.000 euro
+Si prevedono 1500 menu a marzo, ogni menu costa 20 euro, i costi per menu saranno___30.000 euro___15.000 euro___3.000 euro___1.500 euro`;
+
+      
+  // -------- substitute this -----------------    
+function createQuiz(){
+  // returns a list with data in {} for each question
+  let quiz = [];
+  mydom = mydom.split("\n");
+  console.log(mydom);
+  // mescola le domande
+  mydom.sort(function() {return .5 - Math.random();});
+  for (d in mydom){
+      let darr = mydom[d].split("___");
+    domanda = darr[0];
+    corretta = darr[1];
+    console.log(darr);
+      let dnew = darr.reverse();
+      dnew.pop();
+      dnew.sort(function() {return .5 - Math.random();});
+      // ------------- quiz.push ---------------------
+      quiz.push({
+          "question": domanda,
+          "image":  "https://organizzazioneaziendale.net/wp-content/uploads/2012/04/Pianificazione-e-Controllo-della-Produzione1.jpg",
+          "choices": dnew,
+          "correct": corretta,
+          "explanation": ""
+        })
+      // ---------------------------------------------
+  }
+  return quiz;
+}
+      
+let quiz = createQuiz(); // returns a list with data in {} for each question
+ 
+
+      
+
+      
 var currentquestion = 0, score = 0, submt=true, picked;
 let count_speak = 0;
+      
+      
 jQuery(document).ready(function($){
-
   
-  
-  
-  
-	function addChoices(choices){
-			if(typeof choices !== "undefined" && $.type(choices) == "array"){
-				$('#choice-block').empty();
-				for(var i=0;i<choices.length; i++){
+  function addChoices(choices){
+      if(typeof choices !== "undefined" && $.type(choices) == "array"){
+        $('#choice-block').empty();
+        for(var i=0;i<choices.length; i++){
           // added .css({'font-size':'36px'}) il 2 marzo 2019
-				$(document
+        $(document
           .createElement('li'))
           .addClass('choice choice-box btn')
           .attr('data-index', i)
           .text(choices[i])
           .appendTo('#choice-block')
           .css({'font-size':'28px'});		//  Aggiunge risposte
-        }
-			}
-        
-		}
-        
+      }
+    }
+
+  }
+                 
 
   
   
@@ -220,7 +197,7 @@ jQuery(document).ready(function($){
             .attr('id', 'question-image')
             .attr('src', quiz[currentquestion]['image'])
             .attr('alt', (quiz[currentquestion]['question']))
-            .insert('#question');
+            .insertAfter('#question');
 				} else {
 					$('#question-image')
             .attr('src', quiz[currentquestion]['image'])
@@ -231,17 +208,14 @@ jQuery(document).ready(function($){
           .remove();
 			}
 
-    
 			addChoices(quiz[currentquestion]['choices']);
-      
 			setupButtons();
-
-			// parla solo una volta ======|||||||||=====>>>
-            if (count_speak==0 && is_on==1){
-        speak(quiz[currentquestion]['question']);
+      // parla solo una volta ======|||||||||=====>>>
+      if (count_speak==0 && is_on==1){
+        speak(quiz[currentquestion]['question'],"it");
         count_speak = 1;
       }
-           // parla solo una volta ======|||||||||=====>>>
+    // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  parla solo una volta ======|||||||||=====>>>
     
 			jQuery(document).ready(function($){
 				$("#question").html(function(){
@@ -266,10 +240,8 @@ jQuery(document).ready(function($){
         } // function nextQuestion
 
 
-  function processQuestion(choice){
-    
-    
-    // ===========   Risposta ESATTA!  ==============================
+function processQuestion(choice){  
+    // ===========   Risposta ESATTA!  ============================== //
     if(quiz[currentquestion]['choices'][choice] == quiz[currentquestion]['correct'])
       {
 				$('.choice')
@@ -278,13 +250,48 @@ jQuery(document).ready(function($){
           .css({'font-size':'36px', 'font-weight':'bold', 'border-color':'#51a351', 'color':'#fff'});
 				$('#explanation')
           .html('<span class="correct">ESATTO!</span> ' + (quiz[currentquestion]['explanation']));
-              let ff = ["sì","ok","bene","bravo","yes","corretto","esatto","perfetto","eh sì","ma sì","certo","giusto","sìì"].sort(function(){return 0.5 - Math.random()})[0];
+        
+        let ff = ["che bravura",
+                  "bene",
+                  "benissimo",
+                  "bravo o brava",
+                  "bravo",
+                  "certo!",
+                  "ci siamo",
+                  "complimenti per la risposta",
+                  "congratulazioni",
+                  "continua così",
+                  "corretto",
+                  "eh sì",
+                  "eccezionale",
+                  "esatto",
+                  "fantastico",
+                  "favoloso",
+                  "geniale",
+                  "giusto",
+                  "giusto",
+                  "grande",
+                  "hai risposto bene",
+                  "mamma mia",
+                  "meraviglia",
+                  "ok",
+                  "ottimo",
+                  "ottimo risultato",
+                  "perfetto",
+                  "proprio così",
+                  "risposta esatta",
+                  "stai andando bene",
+                  "sei grande",
+                  "senza dubbio",
+                  "sì",
+                  "ti stai impegnando, bene",
+                  "ies",].sort(function(){return 0.5 - Math.random()})[0];
         speak(ff);
-				      score++;
-              count_speak = 0;
+        score++;
+        count_speak = 0;
 			} 
       
-    
+    // ================================ |  Risposta sbagliata  | ======================== //
     else {
       $('.choice')
             .eq(choice)
@@ -292,9 +299,7 @@ jQuery(document).ready(function($){
             .css({'font-weight':'bold', 'border-color':'#f93939', 'color':'#fff'});
       $('#explanation')
         .html('<span class="incorrect">INESATTO!</span> ' + (quiz[currentquestion]['explanation']));
-        speak("No! è")
-        // itancese
-        speak(quiz[currentquestion]['correct'], LINGUA_RISPOSTA); // RISPOSTA ERRATA IN LINGUA FRANCESE
+        speak("No! è " + quiz[currentquestion]['correct']);
             }
         count_speak = 0;
         currentquestion++;
@@ -311,6 +316,7 @@ jQuery(document).ready(function($){
           .addClass('btn-info')
           .css({'border-color':'#3a87ad', 'color':'#fff'})
           .on('click', function(){
+          
 					    $(this).text('GET QUIZ RESULTS')
                 .on('click');
 					endQuiz();
@@ -321,25 +327,18 @@ jQuery(document).ready(function($){
       else if (currentquestion < quiz.length){ 
       // SE CI SONO ANCORA DOMANDE, RIMETTE IL PULSANTE CONTROLLA LA RISPOSTA
         
-				$('#submitbutton').html('VAI ALLA PROSSIMA DOMANDA &raquo;')
+				$('#submitbutton').html(' VERIFICA >>> ')
           .removeClass('btn-success')
           .addClass('btn-warning')
           .css({'font-weight':'bold', 'border-color':'#faa732', 'color':'#fff'})
-          .on('click', function(){
+          .off('click', function(){
           
-          
-        $(this).text(' CONTROLLA LA RISPOSTA ')
+        $(this).text('VERIFICA')
           .removeClass('btn-warning')
           .addClass('btn-success')
           .css({'font-weight':'bold', 'border-color':'#51a351', 'color':'#fff'})
           .on('click');
-				  
-         ///////////////////////////////////////////////////////////////////////////////////////////////
-         ////////////////////////////////// nextQuestion(); // VA ALLA PROSSIMA DOMANDA
-         //////////////////////////////////////////////////////////////////////////////////////////////
           
-          
-
 				})
   			
 			} 
@@ -355,24 +354,26 @@ jQuery(document).ready(function($){
 		}
 
        
-  
-	let LINGUA_RISPOSTA = "it"; // cambia la lingua della risposta quando le lingue sono diverse
+                                  /*
+                                  
+                                  Qui sotto c'è il codice che segue
+                                  la scelta di una opzione
+                                                |
+                                                |
+                                               \/
+                                  */
+	
   
   function setupButtons(){
-      //speak(quiz[currentquestion]['question'])
 			$('.choice').on('click', function(){
-
-		synth.cancel();
+      //speak(quiz[currentquestion]['choice'])
+    // Ogni volta che clicco un pulsante
+      
+        synth.cancel();
         is_on = 0;
-
+    
+            
 				picked = $(this).attr('data-index');
-
-				// CHANGED 3/16/2023
-
-				speak(quiz[currentquestion]['choices'][picked], LINGUA_RISPOSTA);
-
-				// risposte in itancese
-
 				$('.choice').removeAttr('style').off('mouseout mouseover');
 				$(this).css({'font-weight':'900', 'border-color':'#51a351', 'color':'#51a351', 'background' : 'gold'});
 				if(submt){
@@ -396,7 +397,16 @@ jQuery(document).ready(function($){
 			$('#choice-block').empty();
 			$('#submitbutton').remove();
 			$('.rsform-block-submit').addClass('show');
-			$('#question').text("You got " + score + " out of " + quiz.length + " correct.");
+			$('#question').text("Hai risposto bene a " + score + " domande su " + quiz.length + " complessive.");
+      speak("hai risposto in modo corretto a " + score + " domande su " + quiz.length + " complessive");
+      
+      let percent = Math.round(score/quiz.length * 100);
+      if (percent == 100) speak("Hai ottenuto il massimo punteggio! Ottimo!");
+      else if (percent < 100 && percent >80) speak("Bel risultato, complimenti");
+      else if (percent < 80 && percent >70) speak("Hai risposto in modo discreto, bravo.");
+      else if (percent < 70 && percent >60) speak("HAi risposto in modo sufficientemente corretto.");
+      else speak("Devi impegnarti di più. Riprova");
+    
 			$(document.createElement('h4')).addClass('score').text(Math.round(score/quiz.length * 100) + '%').insertAfter('#question');			
 		}
 
@@ -408,9 +418,9 @@ jQuery(document).ready(function($){
 			//add title
       /*
 			if(typeof quiztitle !== "undefined" && $.type(quiztitle) === "string"){
-				$(document.createElement('h2')).text(quiztitle).appendTo('#itame');
+				$(document.createElement('h2')).text(quiztitle).appendTo('#frame');
 			} else {
-				$(document.createElement('h2')).text("Quiz").appendTo('#itame');
+				$(document.createElement('h2')).text("Quiz").appendTo('#frame');
 			}
       I removed the title to leave more space */
 			
@@ -418,24 +428,24 @@ jQuery(document).ready(function($){
 			if(typeof quiz !== "undefined" && $.type(quiz) === "array"){
 				//add pager
         
-				$(document.createElement('p')).addClass('pager').attr('id','pager').text('Domanda 1 di ' + quiz.length).appendTo('#itame');
+				$(document.createElement('p')).addClass('pager').attr('id','pager').text('Domanda 1 di ' + quiz.length).appendTo('#frame');
 				//add first question
-				$(document.createElement('h3')).addClass('question').attr('id', 'question').text(quiz[0]['question']).appendTo('#itame');
+				$(document.createElement('h3')).addClass('question').attr('id', 'question').text(quiz[0]['question']).appendTo('#frame');
 				//add image if present
 				if(quiz[0].hasOwnProperty('image') && quiz[0]['image'] != ""){
-					$(document.createElement('img')).addClass('question-image').attr('width','100px').attr('id', 'question-image').attr('src', quiz[0]['image']).attr('alt', (quiz[0]['question'])).appendTo('#itame');
+					$(document.createElement('img')).addClass('question-image').attr('width','100px').attr('id', 'question-image').attr('src', quiz[0]['image']).attr('alt', (quiz[0]['question'])).appendTo('#frame');
 				}
 				
 				$(document.createElement('p')).addClass('explanation').attr('id','explanation').html('').appendTo('#question');
 				
 				//questions holder
-				$(document.createElement('ul')).attr('id', 'choice-block').appendTo('#itame');
+				$(document.createElement('ul')).attr('id', 'choice-block').appendTo('#frame');
 				
 				//add choices
 				addChoices(quiz[0]['choices']);
 				
 				//add submit button
-				$(document.createElement('div')).addClass('btn-success choice-box').attr('id', 'submitbutton').text('- CONTROLLA LA RISPOSTA -').css({'font-weight':'bold', 'color':'#fff','padding':'30px 0', 'border-radius':'10px'}).appendTo('#itame');
+				$(document.createElement('div')).addClass('btn-warning choice-box').attr('id', 'submitbutton').text('VERIFICA >>>').css({'font-weight':'bold', 'color':'#fff','padding':'30px 0', 'border-radius':'10px'}).appendTo('#frame');
 				
 				setupButtons();
 			}
@@ -466,7 +476,7 @@ jQuery(document).ready(function($){
 	});	
 
 		function copyText() {
-			var output = document.getElementById("itame").innerHTML;
+			var output = document.getElementById("frame").innerHTML;
 			document.getElementById("placecontent").value = output;
 		}
 	    
@@ -534,8 +544,8 @@ body {
       li.choice-block {font-size: 28px};
 		ol,ul 													{ list-style:none; font-size: 48}
 		strong 													{ font-weight:700; }
-		#itame 													{ width:auto; max-width: 800px; background:transparent; margin:3px auto; padding:10px;     color: #f94a4a !important; }
-		div#itame h2 ul li											{ color: white; width:auto; border-bottom:1px solid #bdbdbd; padding:0 0 5px 0; font-size:32px; }
+		#frame 													{ width:auto; max-width: 800px; background:transparent; margin:3px auto; padding:10px;     color: #f94a4a !important; }
+		div#frame h2 ul li											{ color: white; width:auto; border-bottom:1px solid #bdbdbd; padding:0 0 5px 0; font-size:32px; }
 		h3.question 											{ font-weight:normal; margin:20px 0; padding:0; font-style:italic; display:block; }
 		p.pager 												{ margin:5px 0 5px; color:#999; text-align:right; }
 		.qnumber 												{ font-size:25px; font-weight:bold; font-style:italic; vertical-align:bottom; }
@@ -561,26 +571,17 @@ height:100vh;
 
 </head>
 
+  
+
 <body>
-  
-
-  <!-- home button -->
-  <div id="menuDiv">
-<script src="https://quarta.glitch.me/dropdownclassi.js"></script>
-</div>
 
 
-  
 
-<div class="form-group rsform-block rsform-block-itamecontent"><div id="itame" role="content"></div>
+
+<div class="form-group rsform-block rsform-block-framecontent"><div id="frame" role="content"></div>
 
 </div>
-<script>
-  
-  
-  </script>
+
 			
 
-</body>
-</html>
 

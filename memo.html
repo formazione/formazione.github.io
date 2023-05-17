@@ -22,24 +22,40 @@
         <py-script>
             from datetime import datetime
             import os
+            from pyscript import Element
 
             now = datetime.now()
             data = """
             ----------------------
-            PFI Venosa
-            Prove parallele statistiche
+            METTI QUI I TUOI PROMEMORIA RAPIDI
 
 
             ----------------------
             """.splitlines()
+
+
             display("Today is " + now.strftime("%d/%m/%Y"))
             display("Appuntamenti:")
             for d in data:
                 display(d)
 
-            def show(text, div):
+
+
+            def directory(div):
+              divtarget = Element(div)
+              text = ""
+              for v in dir(divtarget):
+                text += v + v.__doc__
               display(text, target=div)
-              
+
+            def show(text, div):
+              divtarget = Element(div)
+              if divtarget.innerHtml == "":
+                divtarget.write("Il campo è vuoto")
+                divtarget.write(text)
+                # directory(div)
+              else:
+                divtarget.write("")
 
         </py-script>
 
@@ -73,7 +89,16 @@
 // *********************** EXAMPLES ABOVE **********************************
   
   let data = [
-["pb-See some text","This is totally random"],
+["Altri memo"],
+
+["pb-Leggi scolastiche","In cerca di leggi e note ministeriali sulla valuzione della prima"],
+["Leggi scolastiche","E:\\leggi scolastiche\\scuola.html"],
+
+
+["Valuzione"],
+["valutazione UDA","https://docs.google.com/spreadsheets/d/1MWflAEKJXW0q7iskrV8IhEsbGdCLPK_y/edit?usp=sharing&ouid=109902383764133052806&rtpof=true&sd=true"],
+
+
 
 ["AI"],
 ["Chat everywhere", "https://chateverywhere.app/"],
