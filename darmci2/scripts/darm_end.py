@@ -222,7 +222,7 @@ jQuery(document).ready(function($){
 			$('#choice-block').empty();
 			$('#submitbutton').remove();
 			$('.rsform-block-submit').addClass('show');
-			$('#question').text("You got " + score + " out of " + quiz.length + " correct.");
+			$('#question').text("Hai risposto a " + score + " su " + quiz.length + " correttamente.");
 			$(document.createElement('h4')).addClass('score').text(Math.round(score/quiz.length * 100) + '%').insertAfter('#question');			
 		}
 
@@ -244,9 +244,16 @@ jQuery(document).ready(function($){
 			if(typeof quiz !== "undefined" && $.type(quiz) === "array"){
 				//add pager
         
-				$(document.createElement('p')).addClass('pager').attr('id','pager').text('Domanda 1 di ' + quiz.length).appendTo('#frame');
+				$(document.createElement('p')).addClass('pager').attr('id','pager').text('Domanda 1 di ' + quiz.length).appendTo('#frame').append('<center>');
 				//add first question
-				$(document.createElement('h3')).addClass('question').attr('id', 'question').text(quiz[0]['question']).appendTo('#frame');
+
+				// TRYING TO CENTER THE QUESTION... 
+				//$(document.createElement('center')).addClass('question').attr('id', 'question').css('color','white').css({'font-size': '36px'}).text(quiz[0]['question']).appendTo('#frame');
+				
+				$(document.createElement('center')).css('color','white').css({'font-size': '48px'}).addClass('question').attr('id', 'question').text(quiz[0]['question']).appendTo('#frame');
+				
+	$(document.createElement('center')).css('color','white').css({'font-size': '12px'}).addClass('question').attr('id', 'question').html("<br>scegli una delle seguenti risposte<br>").appendTo('#frame');
+
 				//add image if present
 				if(quiz[0].hasOwnProperty('image') && quiz[0]['image'] != ""){
 					$(document.createElement('img')).addClass('question-image').attr('width','100px').attr('id', 'question-image').attr('src', quiz[0]['image']).attr('alt', (quiz[0]['question'])).appendTo('#frame');
