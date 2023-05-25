@@ -1,6 +1,22 @@
 </head>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+
+<script type="text/javascript">
+function button(btext, address){
+  text = `<p><a class="btn btn-warning" href="address" role="button">titolo</a></p>`
+  text = text.replace("titolo", btext)
+  text = text.replace("address", address);
+  page.innerHTML += text
+}
+
+
+
+</script>
+
+
+
 </head>
 
 
@@ -21,76 +37,30 @@
           </table>
 
 
-<h2>Inglese</h2>
-<p>
-Quiz sulla lingua inglese
-<p>
-<a class="btn btn-warning" 
-href="https://formazione.github.io/inglese/english1.html" 
-role="button">English 1</a> 
-</p>
-<p>
-  <a class="btn btn-warning" 
-href="https://formazione.github.io/inglese/english1b.html" 
-role="button">English 1 (con immagini)</a>
-</p>
 
-<p>
-  <a class="btn btn-warning" 
-href="https://formazione.github.io/inglese/animals.html" 
-role="button">Animals</a>
-</p>
+<div id="page"></div></div></div>
+<script type="text/javascript">
+links = [
 
-<p>
-  <a class="btn btn-warning" 
-href="https://formazione.github.io/inglese/animals2.html" 
-role="button">Animals 2</a>
-</p>
+  "English 1 - https://formazione.github.io/darmci2/english_family1.html",
+  "English 2 - https://formazione.github.io/darmci2/words_25.html", 
+  "English words 1 - https://formazione.github.io/darmci2/words_1.html",
+  "Animals 1 - https://formazione.github.io/inglese/animals.html",
+  "Animals 2 - https://formazione.github.io/inglese/animals2.html",
+  "Les grands parents - https://formazione.github.io/francese/les_grands_parents.html",
+  "Les grands parents 2 -https://formazione.github.io/francese/les_grands_parents2.html",
+  "I fiumi (sc. della terra) - https://formazione.github.io/darmci2/fiumi.html",
+  "Cucina 1 - https://formazione.github.io/presenter/cucina1.html",
+  "Tabellina del 2 - https://formazione.github.io/darmci2/tabellina2.html"
+  ]
 
-<p>
-  <a class="btn btn-warning" 
-href="https://formazione.github.io/francese/les_grands_parents.html" 
-role="button">Les parents</a>
-</p>
+ for (l in links){
+  testo = links[l].split("-")[0];
+  lnk = links[l].split("-")[1];
+  console.log(testo, lnk);
+  button(testo, lnk);
+ }
 
-<p>
-  <a class="btn btn-warning" 
-href="https://formazione.github.io/francese/les_grands_parents2.html" 
-role="button">Les parents 2</a>
-</p>
+  // button("Tabellina del 2","https:\\www.google.com");
 
-
-
-<p>
-  <a class="btn btn-warning" 
-href="https://formazione.github.io/darmci2/fiumi.html" 
-role="button">I fiumi (Scienze della Terra)</a>
-</p>
-
-<p>
-  <a class="btn btn-warning" 
-href="https://formazione.github.io/darmci2/words1.html" 
-role="button">English words 1</a>
-</p>
-
-
-<p>
-  <a class="btn btn-warning" 
-href="https://formazione.github.io/presenter/cucina1.html" 
-role="button">Cucina 1</a>
-</p>
-
-<p>
-  <a class="btn btn-warning" 
-href="E:\formazione.github.io\darmci2\tabellina2.html" 
-role="button">Tabellina del 2</a>
-</p>
-
-
-
-
-
-
-
-    </div>
-      </div>
+</script>
