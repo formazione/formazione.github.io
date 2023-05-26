@@ -126,7 +126,7 @@ def assign_e():
 root = tk.Tk() # create the window
 def menu():
 	"a menu to choose a file in the directory 'dati'"
-	global e, e3, entry2, entry3
+	global e, e3, entry, entry2, entry3
 
 	root.geometry("400x700")
 
@@ -214,7 +214,7 @@ def createDarm():
 	endpage = endpage.replace("fr", e)
 	endpage = endpage.replace("it", e3)
 	htmlpage += endpage
-	createfile("paste_in_darm.html",htmlpage)
+	createfile("cambia_nome.html",htmlpage)
 
 menu()
 createDarm()
