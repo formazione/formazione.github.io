@@ -17,7 +17,7 @@ def gen_tabelline(x: int):
 		# print(f"{adata} x {data} = {adata*data}")
 		tabellina += f"{adata} x {data} = {adata*data}\n"
 
-gen_tabelline(3) # call function that generates strings with tabelline
+gen_tabelline(4) # call function that generates strings with tabelline
 # use genex to generate this
 names = tabellina.splitlines()
 
