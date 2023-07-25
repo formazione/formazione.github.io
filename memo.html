@@ -25,25 +25,22 @@
             from pyscript import Element
 
             now = datetime.now()
-            data = """
-            ----------------------
-            Accedi qui con cmd digitando "memo"
-            ----------------------
-            VERBALE COLLEGIO 7 - VIDEO IN USER/GIOVA/VIDEO
-            VERBALE CDI
 
-            ASCIUGA PANNI
-            LAVA 4 CAMICIE E POLO NUOVE
+            def bacheca():
+              ''' prime cose mostrate nella pagina '''
+              data = """
 
-            2 LUGLIO MESSA
-            ----------------------
-            """.splitlines()
+              luglio patronato
+              luglio banca
+              agosto ?
+              settembre monaco
+              Dicembre vai all'ufficio tributi per IMU nuova
+              """.splitlines()
+              display("Today is " + now.strftime("%d/%m/%Y"))
+              display("Appuntamenti:")
+              for d in data:
+                  display(d)
 
-
-            display("Today is " + now.strftime("%d/%m/%Y"))
-            display("Appuntamenti:")
-            for d in data:
-                display(d)
 
 
 
@@ -54,6 +51,7 @@
                 text += v + v.__doc__
               display(text, target=div)
 
+
             def show(text, div):
               divtarget = Element(div)
               if divtarget.innerHtml == "":
@@ -63,6 +61,8 @@
               else:
                 divtarget.write("")
 
+            bacheca()
+            
         </py-script>
 
 <!-- THEN COMES THE INDEX, IN THIS DIV, WITH LINKS TO INNER URLS -->
