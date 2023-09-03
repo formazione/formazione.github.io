@@ -19,50 +19,56 @@
           </table>
 
 <!-- FINALLY SOME PYTHON CODE IN A WEB PAGE, THANKS TO PYSCRIPT -->
+<!-- To make it work
+      cmd: py -m http.server
+      chrome: localhost:8000/memo.html 
+    and you will see the page with the script loaded
+    (I prefer so to see the syntax highlight)
+-->
         <py-script>
-            from datetime import datetime
-            import os
-            from pyscript import Element
+from datetime import datetime
+import os
+from pyscript import Element
 
-            now = datetime.now()
+now = datetime.now()
+data = """
 
-            def bacheca():
-              ''' prime cose mostrate nella pagina '''
-              data = """
+=================
+=================
 
-              luglio patronato
-              luglio banca
-              agosto ?
-              settembre monaco
-              Dicembre vai all'ufficio tributi per IMU nuova
-              """.splitlines()
-              display("Today is " + now.strftime("%d/%m/%Y"))
-              display("Appuntamenti:")
-              for d in data:
-                  display(d)
+- D:\\python\\apps\\buttons from links in txt\\buttonlinktxt.py
+    "create fast link to github repositories"
+- D:\\github\\pygamezero
+- D:\\github\\tkinter_tutorial
 
+=================
+=================
+
+""".splitlines()
 
 
-
-            def directory(div):
-              divtarget = Element(div)
-              text = ""
-              for v in dir(divtarget):
-                text += v + v.__doc__
-              display(text, target=div)
+display("Today is " + now.strftime("%d/%m/%Y"))
+display("Appuntamenti:")
+for d in data:
+    display(d)
 
 
-            def show(text, div):
-              divtarget = Element(div)
-              if divtarget.innerHtml == "":
-                divtarget.write("Il campo è vuoto")
-                divtarget.write(text)
-                # directory(div)
-              else:
-                divtarget.write("")
 
-            bacheca()
-            
+def directory(div):
+  divtarget = Element(div)
+  text = ""
+  for v in dir(divtarget):
+    text += v + v.__doc__
+  display(text, target=div)
+
+def show(text, div):
+  divtarget = Element(div)
+  if divtarget.innerHtml == "":
+    divtarget.write("Il campo è vuoto")
+    divtarget.write(text)
+    # directory(div)
+  else:
+    divtarget.write("")
         </py-script>
 
 <!-- THEN COMES THE INDEX, IN THIS DIV, WITH LINKS TO INNER URLS -->
@@ -97,13 +103,8 @@
   
   let data = [
 ["MEMO APPUNTAMENTI"],
-["pb-VERBALE COLLEGIO", "N.7 da finire"],
-["pb-VERBALE CDI", "N.7 da finire"],
-["pb-glo 6 giugno","6 giugno, invia invito, prepara verbale"],
-["pb-relazione PEI, INVALSI, ED. CIVICA, COORDinatore","preparare quanto prima"],
-["pb-consiglio 1e 13 giugno ","vedi per venosa..."],
-["pb-collegio 16 giugno", "prepara 8"],
-["pb-Messa 2 luglio","Prenota"],
+["pb-Futura", "finire il corso"],
+
 
 ["Fragilità"],
     ["Segnalazione fragilità","https://docs.google.com/forms/d/140TV6-x9IYaJ7c3YIwE-yOwGTBfwQohPGD7881Np1ao/edit"],
@@ -392,7 +393,7 @@ for (let n in data){
 
     else if (data[n][0].slice(0,2) == "pb"){
       divcount += 1;
-      scribe.innerHTML += "<button id='my-button"+divcount+"' py-onClick=\"show('"+data[n][1]+"','helloDiv"+divcount+"')\">"+data[n][0].slice(3,data[n][0].length)+"</button><div id='helloDiv"+divcount+"'></div>"
+      scribe.innerHTML += "<button id='my-button"+divcount+"' py-click=\"show('"+data[n][1]+"','helloDiv"+divcount+"')\">"+data[n][0].slice(3,data[n][0].length)+"</button><div id='helloDiv"+divcount+"'></div>"
     }
     // LILNK SENZA IMMAGINI
     else if (data[n].length == 2) {
