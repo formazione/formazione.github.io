@@ -16,7 +16,7 @@
 
           <table>
               <td>
-              <center><img src="aklogo.png"></center><br>
+              <center><img src="https://invalsi-areaprove.cineca.it/immagini/logo.jpg"></center><br>
               </td>
               
               <td>
@@ -181,7 +181,12 @@ for (let n in data){
   // VERIFICA SE E' UN TITOLO (SE HA UN SOLO DATO):
   if (data[n].length == 1){
     // scribe.innerHTML += "<hr>"
-    scribe.innerHTML += "<br><center><h2 style='color:navy;background-color:gold'><a name='"+data[n]+"'>" + data[n] + "</a></h2></center>";
+    scribe.innerHTML += "<br><center><h2 style='color:navy;background-color:gold'><a name='"+data[n]+"'>" + data[n] + "</a></h2></center>";}
+
+    // IMMAGINE
+
+  if ("img".search(data[n][0])) {
+    scribe.innerHTML += "<li>[ <a href='#" + data[n][1] + "'><b style='color:red;background-color:gold' onmouseover='changecolor(this)' onmouseout='gobacktocolor(this)'>" + data[n][1] + "</b></a> ]  ";
   }
 
    // PARAGRAGO o link con immagini o senza
