@@ -54,15 +54,20 @@ body, html {
 <title>Flash Card Interattiva</title>
 <link rel="stylesheet" href="styles.css">
 
-<!--   <script>
+
+<div id="div1"></div>div>
+
+  <script>
     // script.js
 document.querySelector('.card').addEventListener('click', function() {
   // it changes class to flipped, front and back are on the same space
   this.classList.toggle('flipped');
 });
 
-  </script> -->
 
+function flashcard(divnum){
+  divnum =document.getElementByID(divnum)
+  document.write = `
 <div class="card-container">
     
     <div class="card" onclick="this.classList.toggle('flipped')">
@@ -75,6 +80,13 @@ document.querySelector('.card').addEventListener('click', function() {
         <p>La membrana plasmatica </p></center> <!-- carta di dietro -->
       </div>
 
-    </div> <!-- close card div -->
+  </div> <!-- close card div -->
 
 </div> <!-- close card-container div -->
+  `
+}
+
+flashcard("div1")
+  </script>
+
+
