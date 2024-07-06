@@ -13,21 +13,11 @@
         .btn-lg {
             font-size: 1.5rem;
         }
-        .hidden {
-            display: none;
-        }
-        .progress {
-            height: 2rem;
-            font-size: 1rem;
-        }
     </style>
 </head>
 <body class="text-center">
     <div class="container">
-        <h1 class="my-4">Test di Matematica - Livello <span id="level">1</span></h1>
-        <div class="progress mb-4">
-            <div id="progress-bar" class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0/10</div>
-        </div>
+        <h1 class="my-4">Test di Matematica</h1>
         <div id="question-container" class="mb-4"></div>
         <div id="answer-buttons" class="btn-group-vertical mb-4"></div>
         <p id="result" class="lead"></p>
@@ -47,7 +37,7 @@
             const answer = num1 + num2;
             const options = [answer];
             while (options.length < 4) {
-                const option = Math.floor(Math.random() * (max * 2)) + 1;
+                const option = Math.floor(Math.random() * max * 2) + 1;
                 if (!options.includes(option)) {
                     options.push(option);
                 }
@@ -73,27 +63,23 @@
                     const button = document.createElement('button');
                     button.className = 'btn btn-outline-primary btn-lg mb-2';
                     button.innerText = option;
-                    button.onclick = () => checkAnswer(option, button);
+                    button.onclick = () => checkAnswer(option);
                     answerButtons.appendChild(button);
                 });
                 document.getElementById('next-button').classList.add('hidden');
-                updateProgressBar();
             } else {
                 showFinalResult();
             }
         }
 
-        function checkAnswer(selectedAnswer, button) {
+        function checkAnswer(selectedAnswer) {
             const correctAnswer = questions[currentQuestionIndex].answer;
             if (selectedAnswer === correctAnswer) {
                 score++;
-                button.className = 'btn btn-success btn-lg mb-2';
                 document.getElementById('result').textContent = 'Corretto!';
             } else {
-                button.className = 'btn btn-danger btn-lg mb-2';
                 document.getElementById('result').textContent = `Sbagliato! La risposta corretta è ${correctAnswer}.`;
             }
-            document.querySelectorAll('#answer-buttons button').forEach(btn => btn.disabled = true);
             currentQuestionIndex++;
             document.getElementById('next-button').classList.remove('hidden');
         }
@@ -124,16 +110,7 @@
             document.getElementById('result').textContent = '';
             document.getElementById('restart-button').classList.add('hidden');
             questions = Array.from({ length: 10 }, () => generateQuestion(level));
-            document.getElementById('level').textContent = level;
             loadQuestion();
-        }
-
-        function updateProgressBar() {
-            const progressBar = document.getElementById('progress-bar');
-            const progress = ((currentQuestionIndex) / questions.length) * 100;
-            progressBar.style.width = `${progress}%`;
-            progressBar.setAttribute('aria-valuenow', progress);
-            progressBar.textContent = `${currentQuestionIndex}/10`;
         }
 
         window.onload = startTest;

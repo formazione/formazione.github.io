@@ -44,17 +44,17 @@
             const max = level * 10;
             const num1 = Math.floor(Math.random() * max) + 1;
             const num2 = Math.floor(Math.random() * max) + 1;
-            const answer = num1 + num2;
+            const answer = num1 * num2;
             const options = [answer];
             while (options.length < 4) {
-                const option = Math.floor(Math.random() * (max * 2)) + 1;
+                const option = Math.floor(Math.random() * (max * max)) + 1;
                 if (!options.includes(option)) {
                     options.push(option);
                 }
             }
             options.sort(() => Math.random() - 0.5);
             return {
-                question: `${num1} + ${num2} = ?`,
+                question: `${num1} × ${num2} = ?`,
                 options: options,
                 answer: answer
             };

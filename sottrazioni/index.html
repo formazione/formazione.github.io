@@ -43,18 +43,18 @@
         function generateQuestion(level) {
             const max = level * 10;
             const num1 = Math.floor(Math.random() * max) + 1;
-            const num2 = Math.floor(Math.random() * max) + 1;
-            const answer = num1 + num2;
+            const num2 = Math.floor(Math.random() * num1) + 1;  // Ensure num1 >= num2
+            const answer = num1 - num2;
             const options = [answer];
             while (options.length < 4) {
-                const option = Math.floor(Math.random() * (max * 2)) + 1;
-                if (!options.includes(option)) {
+                const option = Math.floor(Math.random() * (max * 2)) - (max - 1); // Allow negative numbers
+                if (!options.includes(option) && option >= 0) {
                     options.push(option);
                 }
             }
             options.sort(() => Math.random() - 0.5);
             return {
-                question: `${num1} + ${num2} = ?`,
+                question: `${num1} - ${num2} = ?`,
                 options: options,
                 answer: answer
             };
