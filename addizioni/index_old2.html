@@ -24,12 +24,12 @@
 </head>
 <body class="text-center">
     <div class="container">
-        <h4 class="my-4">Somme - Livello <span id="level">1</span></h4>
+        <h4 class="my-4">Somme - Livello <span id="level">1</span></h1>
         <div class="progress mb-4">
             <div id="progress-bar" class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0/10</div>
         </div>
         <div id="question-container" class="mb-4"></div>
-        <div id="answer-buttons" class="btn-group mb-4"></div>
+        <div id="answer-buttons" class="btn-group-vertical mb-4"></div>
         <p id="result" class="lead"></p>
         <button id="next-button" onclick="nextQuestion()" class="btn btn-primary btn-lg hidden">Prossima Domanda</button>
         <button id="restart-button" onclick="startTest()" class="btn btn-secondary btn-lg hidden">Ripeti Test</button>
@@ -71,7 +71,7 @@
                 answerButtons.innerHTML = '';
                 question.options.forEach(option => {
                     const button = document.createElement('button');
-                    button.className = 'btn btn-outline-primary btn-lg mr-2';
+                    button.className = 'btn btn-outline-primary btn-lg mb-2';
                     button.innerText = option;
                     button.onclick = () => checkAnswer(option, button);
                     answerButtons.appendChild(button);
@@ -87,10 +87,10 @@
             const correctAnswer = questions[currentQuestionIndex].answer;
             if (selectedAnswer === correctAnswer) {
                 score++;
-                button.className = 'btn btn-success btn-lg mr-2';
+                button.className = 'btn btn-success btn-lg mb-2';
                 document.getElementById('result').textContent = 'Corretto!';
             } else {
-                button.className = 'btn btn-danger btn-lg mr-2';
+                button.className = 'btn btn-danger btn-lg mb-2';
                 document.getElementById('result').textContent = `Sbagliato! La risposta corretta è ${correctAnswer}.`;
             }
             document.querySelectorAll('#answer-buttons button').forEach(btn => btn.disabled = true);
