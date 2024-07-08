@@ -20,17 +20,25 @@
             height: 2rem;
             font-size: 1rem;
         }
+        .progress-bar-striped {
+      background-color: orange !important;
+}
     </style>
 </head>
 <body class="text-center">
     <div class="container">
-        <h4 class="my-4">Somme (livello base) - Livello <span id="level">1</span></h4>
-        <div class="progress mb-4">
+        <span id="result">Clicca sulla soluzione</span>
+        <p style='font-size:12px'>Corrette</p>
+<div class="progress mb-4">
             <div id="progress-bar" class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0/10</div>
-        </div>
+</div><p style='font-size:12px'>Errori</p>
+<div class="progress mb-6">
+            
+            <div id="progress-bar2" class="progress-bar progress-bar-striped" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+</div>
         <div id="question-container" class="mb-4"></div>
         <div id="answer-buttons" class="btn-group mb-4"></div>
-        <p id="result" class="lead"></p>
+        <br>
         <button id="next-button" onclick="nextQuestion()" class="btn btn-primary btn-lg hidden">Prossima Domanda</button>
         <button id="restart-button" onclick="startTest()" class="btn btn-secondary btn-lg hidden">Ripeti Test</button>
     </div>
@@ -38,6 +46,7 @@
     <script>
         let currentQuestionIndex = 0;
         let score = 0;
+        let error = 0;
         let level = 1;
 
         function generateQuestion(level) {
@@ -93,16 +102,19 @@
                 button.className = 'btn btn-success btn-lg mr-2';
                 document.getElementById('result').textContent = 'Corretto!';
             } else {
+                error += 1;
                 button.className = 'btn btn-danger btn-lg mr-2';
                 document.getElementById('result').textContent = `Sbagliato! La risposta corretta è ${correctAnswer}.`;
             }
             document.querySelectorAll('#answer-buttons button').forEach(btn => btn.disabled = true);
             currentQuestionIndex++;
             document.getElementById('next-button').classList.remove('hidden');
+
+            nextQuestion()
         }
 
         function nextQuestion() {
-            document.getElementById('result').textContent = '';
+            document.getElementById('result').textContent = "Livello: " + level;
             loadQuestion();
         }
 
@@ -113,8 +125,9 @@
             const resultMessage = `Hai risposto correttamente a ${score} domande su 10.`;
             document.getElementById('result').textContent = resultMessage;
             document.getElementById('restart-button').classList.remove('hidden');
-            if (score > 7) {
+            if (score >= 7) {
                 level++;
+                errori = 0;
                 document.getElementById('result').textContent += ' Ottimo lavoro! Il prossimo test sarà più difficile.';
             } else {
                 level = 1;
@@ -127,16 +140,23 @@
             document.getElementById('result').textContent = '';
             document.getElementById('restart-button').classList.add('hidden');
             questions = Array.from({ length: 10 }, () => generateQuestion(level));
-            document.getElementById('level').textContent = level;
+            document.getElementById('result').textContent = level;
             loadQuestion();
         }
 
         function updateProgressBar() {
             const progressBar = document.getElementById('progress-bar');
-            const progress = ((currentQuestionIndex) / questions.length) * 100;
+            const progressBar2 = document.getElementById('progress-bar2');
+            // const progress = ((currentQuestionIndex) / questions.length) * 100;
+            const progress = (score/10) * 100;
+            const progress2 = (error/10) * 100;
             progressBar.style.width = `${progress}%`;
+            progressBar2.style.width = `${progress2}%`;
             progressBar.setAttribute('aria-valuenow', progress);
-            progressBar.textContent = `${currentQuestionIndex}/10`;
+            
+            progressBar.textContent = `${score}`;
+            progressBar2.textContent = `${error}`;
+            
         }
 
         window.onload = startTest;
