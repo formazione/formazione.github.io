@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Quiz Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .dark-mode {
+            background-color: #121212;
+            color: #ffffff;
+        }
+        .container {
+            text-align: center;
+            background-color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            max-width: 600px;
+            width: 100%;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .dark-mode .container {
+            background-color: #333333;
+            box-shadow: 0 0 10px rgba(255,255,255,0.1);
+        }
+        button, input {
+            margin: 0.5rem;
+            padding: 0.5rem 1rem;
+            font-size: 1rem;
+        }
+        button {
+            cursor: pointer;
+        }
+        #questionContainer, #resultContainer {
+            margin-top: 1rem;
+        }
+        .feedback {
+            margin-top: 1rem;
+            font-style: italic;
+        }
+        .correct {
+            color: green;
+            font-weight: bold;
+        }
+        .incorrect {
+            color: red;
+            text-decoration: line-through;
+        }
+        .dark-mode .correct {
+            color: lightgreen;
+        }
+        .dark-mode .incorrect {
+            color: #ff6666;
+        }
+        @media print {
+            body {
+                background-color: white;
+            }
+            .container {
+                box-shadow: none;
+            }
+            #savePdfButton {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <button id="toggleDarkMode">Toggle Dark Mode</button>
+        <div id="nameInput">
+            <input type="text" id="userName" placeholder="Enter your name">
+            <button id="startButton">Start Quiz</button>
+        </div>
+        <div id="questionContainer" style="display: none;"></div>
+        <div id="resultContainer" style="display: none;"></div>
+    </div>
+
+    <script>
+        const questions = `
+"What is the capital of Italy, known for its ancient ruins?",Rome,Venice,Naples,"Rome is the capital and largest city of Italy, famous for landmarks like the Colosseum."
+"What is the largest planet in our solar system, often called the 'Gas Giant'?",Jupiter,Saturn,Mars,"Jupiter is the largest planet, with a mass more than two and a half times that of all the other planets combined."
+"Which element, essential for life, has the chemical symbol 'O'?",Oxygen,Gold,Silver,"Oxygen is represented by the chemical symbol 'O' on the periodic table, and is crucial for respiration."
+`;
+
+        function parseCSV(csv) {
+            const lines = csv.trim().split('\n');
+            return lines.map(line => {
+                const regex = /(".*?"|[^",\s]+)(?=\s*,|\s*$)/g;
+                let matches = line.match(regex);
+                matches = matches.map(m => m.replace(/^"|"$/g, ''));
+                const [question, correctAnswer, ...wrongAnswers] = matches;
+                const feedback = wrongAnswers.pop();
+                return { question, correctAnswer, wrongAnswers, feedback };
+            });
+        }
+
+        const parsedQuestions = parseCSV(questions);
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let userName = '';
+        let startTime;
+        let userAnswers = [];
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        function showQuestion() {
+            const questionData = parsedQuestions[currentQuestionIndex];
+            const questionContainer = document.getElementById('questionContainer');
+            questionContainer.innerHTML = '';
+
+            const questionElement = document.createElement('p');
+            questionElement.textContent = questionData.question;
+            questionContainer.appendChild(questionElement);
+
+            const shuffledAnswers = [questionData.correctAnswer, ...questionData.wrongAnswers];
+            shuffleArray(shuffledAnswers);
+
+            shuffledAnswers.forEach(answer => {
+                const button = document.createElement('button');
+                button.textContent = answer;
+                button.addEventListener('click', () => checkAnswer(answer, questionData));
+                questionContainer.appendChild(button);
+            });
+
+            questionContainer.style.display = 'block';
+        }
+
+        function checkAnswer(selectedAnswer, questionData) {
+            const isCorrect = selectedAnswer === questionData.correctAnswer;
+            if (isCorrect) {
+                score++;
+            }
+            userAnswers.push({
+                question: questionData.question,
+                userAnswer: selectedAnswer,
+                correctAnswer: questionData.correctAnswer,
+                isCorrect: isCorrect
+            });
+
+            currentQuestionIndex++;
+            if (currentQuestionIndex < parsedQuestions.length) {
+                showQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            const resultContainer = document.getElementById('resultContainer');
+            resultContainer.innerHTML = '';
+            document.getElementById('questionContainer').style.display = 'none';
+
+            const scoreElement = document.createElement('h2');
+            scoreElement.textContent = `${userName}'s Score: ${score} out of ${parsedQuestions.length}`;
+            resultContainer.appendChild(scoreElement);
+
+            userAnswers.forEach((answer, index) => {
+                const answerElement = document.createElement('div');
+                answerElement.innerHTML = `
+                    <p><strong>Question ${index + 1}:</strong> ${answer.question}</p>
+                    <p>Your answer: <span class="${answer.isCorrect ? 'correct' : 'incorrect'}">${answer.userAnswer}</span></p>
+                    ${!answer.isCorrect ? `<p>Correct answer: <span class="correct">${answer.correctAnswer}</span></p>` : ''}
+                    ${!answer.isCorrect ? `<p class="feedback">${parsedQuestions[index].feedback}</p>` : ''}
+                `;
+                resultContainer.appendChild(answerElement);
+            });
+
+            const endTime = new Date();
+            const timeTaken = (endTime - startTime) / 1000; // in seconds
+
+            const timeElement = document.createElement('p');
+            timeElement.textContent = `Time taken: ${timeTaken.toFixed(2)} seconds`;
+            resultContainer.appendChild(timeElement);
+
+            const savePdfButton = document.createElement('button');
+            savePdfButton.textContent = 'Save as PDF';
+            savePdfButton.id = 'savePdfButton';
+            savePdfButton.addEventListener('click', savePDF);
+            resultContainer.appendChild(savePdfButton);
+
+            resultContainer.style.display = 'block';
+        }
+
+        function savePDF() {
+            const originalTitle = document.title;
+            document.title = `${userName}'s Quiz Results`;
+            window.print();
+            document.title = originalTitle;
+        }
+
+        document.getElementById('startButton').addEventListener('click', function() {
+            userName = document.getElementById('userName').value.trim();
+            if (!userName) {
+                alert('Please enter your name before starting the quiz.');
+                return;
+            }
+            document.getElementById('nameInput').style.display = 'none';
+            startTime = new Date();
+            showQuestion();
+        });
+
+        document.getElementById('toggleDarkMode').addEventListener('click', function() {
+            document.body.classList.toggle('dark-mode');
+        });
+    </script>
+</body>
+</html>
