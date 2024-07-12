@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Game</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            overflow: hidden;
+        }
+        #gameCanvas {
+            border: 2px solid #000;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="gameCanvas" width="400" height="600"></canvas>
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        const answers = [];
+        const speed = 2;
+        let question = generateQuestion();
+
+        function generateQuestion() {
+            const num1 = Math.floor(Math.random() * 10);
+            const num2 = Math.floor(Math.random() * 10);
+            const correctAnswer = num1 + num2;
+            generateAnswers(correctAnswer);
+            return `${num1} + ${num2}`;
+        }
+
+        function generateAnswers(correctAnswer) {
+            answers.length = 0;
+            const positions = [100, 200, 300];
+            const correctPosition = positions.splice(Math.floor(Math.random() * positions.length), 1)[0];
+            answers.push({ value: correctAnswer, x: correctPosition, y: 0, isCorrect: true });
+            positions.forEach(pos => {
+                answers.push({ value: Math.floor(Math.random() * 20), x: pos, y: 0, isCorrect: false });
+            });
+        }
+
+        function drawQuestion() {
+            ctx.font = '24px Arial';
+            ctx.fillStyle = '#000';
+            ctx.fillText(question, 150, 50);
+        }
+
+        function drawAnswers() {
+            answers.forEach(answer => {
+                ctx.beginPath();
+                ctx.arc(answer.x, answer.y, 20, 0, Math.PI * 2);
+                ctx.fillStyle = '#00f';
+                ctx.fill();
+                ctx.fillStyle = '#fff';
+                ctx.fillText(answer.value, answer.x - 10, answer.y + 5);
+            });
+        }
+
+        function updateAnswers() {
+            answers.forEach(answer => {
+                answer.y += speed;
+                if (answer.y > canvas.height) {
+                    resetGame();
+                }
+            });
+        }
+
+        function resetGame() {
+            question = generateQuestion();
+        }
+
+        canvas.addEventListener('click', (event) => {
+            const x = event.clientX - canvas.offsetLeft;
+            const y = event.clientY - canvas.offsetTop;
+            answers.forEach(answer => {
+                const distance = Math.sqrt((x - answer.x) ** 2 + (y - answer.y) ** 2);
+                if (distance < 20 && answer.isCorrect) {
+                    alert('Correct!');
+                    resetGame();
+                } else if (distance < 20 && !answer.isCorrect) {
+                    alert('Wrong answer, try again!');
+                }
+            });
+        });
+
+        function gameLoop() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawQuestion();
+            drawAnswers();
+            updateAnswers();
+            requestAnimationFrame(gameLoop);
+        }
+
+        gameLoop();
+    </script>
+</body>
+</html>
