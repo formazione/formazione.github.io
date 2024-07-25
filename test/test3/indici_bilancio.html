@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz sul Bilancio d'Impresa</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { padding-top: 50px; }
+        .quiz-container { max-width: 800px; margin: auto; }
+        .feedback { display: none; margin-top: 20px; }
+        .correct-answer { background-color: #d4edda; }
+        .wrong-answer { background-color: #f8d7da; }
+    </style>
+</head>
+<body>
+    <div class="container quiz-container">
+        <h1 class="text-center mb-4">Quiz sul Bilancio d'Impresa</h1>
+        <div class="progress mb-4">
+            <div class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
+        </div>
+        <div id="quiz-content">
+            <h3 id="question"></h3>
+            <div id="answers" class="mt-3"></div>
+            <button id="submit" class="btn btn-primary mt-3">Invia Risposta</button>
+        </div>
+        <div id="results" style="display: none;">
+            <h2>Risultati del Quiz</h2>
+            <p>Punteggio: <span id="score"></span>/10</p>
+            <div id="feedback"></div>
+            <button id="restart" class="btn btn-secondary mt-3">Ricomincia il Quiz</button>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                question: "Quale dei seguenti documenti NON è incluso nel bilancio di un'impresa?",
+                answers: [
+                    "a) Stato Patrimoniale",
+                    "b) Conto Economico",
+                    "c) Prospetto informativo",
+                    "d) Nota Integrativa"
+                ],
+                correct: 2,
+                feedback: "Il bilancio di un'impresa è composto da Stato Patrimoniale, Conto Economico e Nota Integrativa."
+            },
+            {
+                question: "Quale delle seguenti voci NON è una componente dell'attivo corrente nello Stato Patrimoniale riclassificato?",
+                answers: [
+                    "a) Disponibilità liquide",
+                    "b) Disponibilità finanziarie",
+                    "c) Rimanenze",
+                    "d) Immobilizzazioni materiali"
+                ],
+                correct: 3,
+                feedback: "Le immobilizzazioni materiali fanno parte dell'attivo immobilizzato."
+            },
+            {
+                question: "Quale delle seguenti voci rappresenta una fonte di finanziamento a lungo termine per un'impresa?",
+                answers: [
+                    "a) Debiti a breve termine",
+                    "b) Patrimonio netto",
+                    "c) Ratei e risconti passivi",
+                    "d) Crediti verso soci"
+                ],
+                correct: 1,
+                feedback: "Il patrimonio netto rappresenta i finanziamenti forniti dai soci dell'impresa e non ha una scadenza."
+            },
+            {
+                question: "Cosa indica un indice di autocopertura delle immobilizzazioni superiore a 1?",
+                answers: [
+                    "a) La società ha un alto livello di indebitamento.",
+                    "b) La società è in grado di coprire i propri investimenti a lungo termine con il capitale proprio.",
+                    "c) La società ha una struttura finanziaria squilibrata.",
+                    "d) La società ha un basso livello di liquidità."
+                ],
+                correct: 1,
+                feedback: "Un indice di autocopertura maggiore di 1 indica una solida struttura finanziaria."
+            },
+            {
+                question: "Cosa misura l'indice di liquidità secondaria (quick ratio)?",
+                answers: [
+                    "a) La capacità dell'impresa di generare profitto dalle vendite",
+                    "b) La capacità dell'impresa di far fronte ai propri debiti a breve termine utilizzando le attività liquide più facilmente convertibili in denaro",
+                    "c) La redditività degli investimenti dell'impresa",
+                    "d) Il livello di indebitamento dell'impresa"
+                ],
+                correct: 1,
+                feedback: "Il quick ratio esclude le rimanenze dal calcolo perché sono considerate meno liquide."
+            },
+            {
+                question: "Come viene calcolato il ROI (Return on Investment)?",
+                answers: [
+                    "a) Reddito operativo / Totale impieghi",
+                    "b) Utile netto d'esercizio / Capitale proprio",
+                    "c) Attivo corrente / Passività correnti",
+                    "d) Capitale permanente / Attivo immobilizzato"
+                ],
+                correct: 0,
+                feedback: "Il ROI misura la redditività della gestione caratteristica dell'impresa."
+            },
+            {
+                question: "Quale delle seguenti voci NON è inclusa nel calcolo del Valore Aggiunto?",
+                answers: [
+                    "a) Costi per materie prime",
+                    "b) Costi del personale",
+                    "c) Costi per servizi",
+                    "d) Ammortamenti"
+                ],
+                correct: 3,
+                feedback: "Gli ammortamenti sono considerati nel calcolo del Margine Operativo Lordo (MOL), non del Valore Aggiunto."
+            },
+            {
+                question: "Nella riclassificazione dello Stato Patrimoniale, dove vengono inseriti i ratei e risconti attivi?",
+                answers: [
+                    "a) Disponibilità finanziarie o rimanenze",
+                    "b) Immobilizzazioni immateriali",
+                    "c) Debiti a breve termine",
+                    "d) Patrimonio netto"
+                ],
+                correct: 0,
+                feedback: "La scelta dipende dalla durata del risconto; in mancanza di informazioni, vengono inseriti tra le rimanenze."
+            },
+            {
+                question: "Quale delle seguenti affermazioni è vera riguardo al Conto Economico a Valore Aggiunto?",
+                answers: [
+                    "a) È un documento obbligatorio per legge.",
+                    "b) Evidenzia la capacità dell'impresa di generare valore attraverso la propria attività produttiva.",
+                    "c) Sostituisce il Conto Economico tradizionale.",
+                    "d) Viene utilizzato per calcolare il patrimonio netto dell'impresa."
+                ],
+                correct: 1,
+                feedback: "Il Conto Economico a Valore Aggiunto mostra come il valore viene creato e distribuito all'interno dell'impresa."
+            },
+            {
+                question: "Quale dei seguenti indici NON viene utilizzato per valutare la solidità di un'impresa?",
+                answers: [
+                    "a) Indice di disponibilità (current ratio)",
+                    "b) Autocopertura delle immobilizzazioni",
+                    "c) Copertura delle immobilizzazioni",
+                    "d) ROE (Return on Equity)"
+                ],
+                correct: 0,
+                feedback: "L'indice di disponibilità è utilizzato per valutare la liquidità, non la solidità dell'impresa."
+            }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+        let userAnswers = [];
+        const questionEl = document.getElementById('question');
+        const answersEl = document.getElementById('answers');
+        const submitBtn = document.getElementById('submit');
+        const quizContent = document.getElementById('quiz-content');
+        const results = document.getElementById('results');
+        const scoreEl = document.getElementById('score');
+        const feedbackEl = document.getElementById('feedback');
+        const restartBtn = document.getElementById('restart');
+        const progressBar = document.querySelector('.progress-bar');
+
+        function loadQuestion() {
+            const question = questions[currentQuestion];
+            questionEl.textContent = `${currentQuestion + 1}. ${question.question}`;
+            answersEl.innerHTML = '';
+            question.answers.forEach((answer, index) => {
+                answersEl.innerHTML += `
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="answer" id="answer${index}" value="${index}">
+                        <label class="form-check-label" for="answer${index}">${answer}</label>
+                    </div>
+                `;
+            });
+            updateProgress();
+        }
+
+        function updateProgress() {
+            const progress = ((currentQuestion + 1) / questions.length) * 100;
+            progressBar.style.width = `${progress}%`;
+            progressBar.textContent = `${Math.round(progress)}%`;
+        }
+
+        function checkAnswer() {
+            const selectedAnswer = document.querySelector('input[name="answer"]:checked');
+            if (selectedAnswer) {
+                const answerIndex = parseInt(selectedAnswer.value);
+                userAnswers.push(answerIndex);
+                if (answerIndex === questions[currentQuestion].correct) {
+                    score++;
+                }
+                currentQuestion++;
+                if (currentQuestion < questions.length) {
+                    loadQuestion();
+                } else {
+                    showResults();
+                }
+            }
+        }
+
+        function showResults() {
+            quizContent.style.display = 'none';
+            results.style.display = 'block';
+            scoreEl.textContent = score;
+            feedbackEl.innerHTML = questions.map((q, i) => {
+                const userAnswer = userAnswers[i];
+                const isCorrect = userAnswer === q.correct;
+                return `
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h5 class="card-title">Domanda ${i + 1}</h5>
+                            <p class="card-text">${q.question}</p>
+                            <p class="card-text ${isCorrect ? 'correct-answer' : 'wrong-answer'}">
+                                <strong>La tua risposta:</strong> ${q.answers[userAnswer]}
+                            </p>
+                            ${!isCorrect ? `
+                                <p class="card-text correct-answer">
+                                    <strong>Risposta corretta:</strong> ${q.answers[q.correct]}
+                                </p>
+                            ` : ''}
+                            <p class="card-text"><strong>Feedback:</strong> ${q.feedback}</p>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            
+            if (score > 5) {
+                feedbackEl.innerHTML = '<div class="alert alert-success">Congratulazioni!</div>' + feedbackEl.innerHTML;
+            }
+        }
+
+        function restartQuiz() {
+            currentQuestion = 0;
+            score = 0;
+            userAnswers = [];
+            quizContent.style.display = 'block';
+            results.style.display = 'none';
+            loadQuestion();
+        }
+
+        submitBtn.addEventListener('click', checkAnswer);
+        restartBtn.addEventListener('click', restartQuiz);
+
+        loadQuestion();
+    </script>
+</body>
+</html>
