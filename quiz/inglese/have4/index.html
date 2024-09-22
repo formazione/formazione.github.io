@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz: Verb 'to have' in Simple Present</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .quiz-container {
+            max-width: 600px;
+            margin: 2rem auto;
+        }
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1rem;
+        }
+        .emoji {
+            font-size: 3rem;
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: none;
+        }
+        @keyframes jump {
+            0%, 100% { transform: translateY(0) translateX(-50%); }
+            50% { transform: translateY(-20px) translateX(-50%); }
+        }
+        .jumping {
+            display: inline-block;
+            animation: jump 0.5s ease infinite;
+        }
+    </style>
+</head>
+<body>
+    <div class="container quiz-container">
+        <div class="card shadow">
+            <div class="card-body">
+                <h1 class="card-title text-center mb-4">Quiz: Verb 'to have' in Simple Present</h1>
+                <div id="quiz-area">
+                    <p id="question" class="lead text-center"></p>
+                    <div class="button-container">
+                        <button onclick="checkAnswer(false)" class="btn btn-outline-danger btn-lg"><i class="bi bi-hand-thumbs-down-fill"></i></button>
+                        <button onclick="checkAnswer(true)" class="btn btn-outline-success btn-lg"><i class="bi bi-hand-thumbs-up-fill"></i></button>
+                    </div>
+                </div>
+                <p id="score" class="text-center mt-3">Score: 0</p>
+            </div>
+        </div>
+    </div>
+    <div id="emoji" class="emoji">😊</div>
+
+    <script>
+        const allQuestions = [
+            { question: "I have a cat.", answer: true, correct: "I have a cat." },
+            { question: "You has a dog.", answer: false, correct: "You have a dog." },
+            { question: "He have a car.", answer: false, correct: "He has a car." },
+            { question: "She has a book.", answer: true, correct: "She has a book." },
+            { question: "It have a tail.", answer: false, correct: "It has a tail." },
+            { question: "We has a house.", answer: false, correct: "We have a house." },
+            { question: "They have bikes.", answer: true, correct: "They have bikes." },
+            { question: "I has a computer.", answer: false, correct: "I have a computer." },
+            { question: "You have a phone.", answer: true, correct: "You have a phone." },
+            { question: "He has friends.", answer: true, correct: "He has friends." },
+            { question: "She have a job.", answer: false, correct: "She has a job." },
+            { question: "It has wings.", answer: true, correct: "It has wings." },
+            { question: "We have a plan.", answer: true, correct: "We have a plan." },
+            { question: "They has a meeting.", answer: false, correct: "They have a meeting." },
+            { question: "I have an idea.", answer: true, correct: "I have an idea." },
+            { question: "You has a ticket.", answer: false, correct: "You have a ticket." },
+            { question: "He have a sister.", answer: false, correct: "He has a sister." },
+            { question: "She has a brother.", answer: true, correct: "She has a brother." },
+            { question: "It have leaves.", answer: false, correct: "It has leaves." },
+            { question: "We has a problem.", answer: false, correct: "We have a problem." },
+            { question: "They have a solution.", answer: true, correct: "They have a solution." },
+            { question: "I has an appointment.", answer: false, correct: "I have an appointment." },
+            { question: "You have a question.", answer: true, correct: "You have a question." },
+            { question: "He has an answer.", answer: true, correct: "He has an answer." },
+            { question: "She have a hobby.", answer: false, correct: "She has a hobby." },
+            { question: "It has a purpose.", answer: true, correct: "It has a purpose." },
+            { question: "We have a goal.", answer: true, correct: "We have a goal." },
+            { question: "They has a team.", answer: false, correct: "They have a team." },
+            { question: "I have experience.", answer: true, correct: "I have experience." },
+            { question: "You has knowledge.", answer: false, correct: "You have knowledge." },
+            { question: "He have skills.", answer: false, correct: "He has skills." },
+            { question: "She has talent.", answer: true, correct: "She has talent." },
+            { question: "It have a function.", answer: false, correct: "It has a function." },
+            { question: "We has a vision.", answer: false, correct: "We have a vision." },
+            { question: "They have a mission.", answer: true, correct: "They have a mission." },
+            { question: "I has a dream.", answer: false, correct: "I have a dream." },
+            { question: "You have potential.", answer: true, correct: "You have potential." },
+            { question: "He has ambition.", answer: true, correct: "He has ambition." },
+            { question: "She have determination.", answer: false, correct: "She has determination." },
+            { question: "It has a feature.", answer: true, correct: "It has a feature." },
+            { question: "We have resources.", answer: true, correct: "We have resources." },
+            { question: "They has opportunities.", answer: false, correct: "They have opportunities." },
+            { question: "I have responsibilities.", answer: true, correct: "I have responsibilities." },
+            { question: "You has duties.", answer: false, correct: "You have duties." },
+            { question: "He have rights.", answer: false, correct: "He has rights." },
+            { question: "She has obligations.", answer: true, correct: "She has obligations." },
+            { question: "It have a purpose.", answer: false, correct: "It has a purpose." },
+            { question: "We has a strategy.", answer: false, correct: "We have a strategy." },
+            { question: "They have tactics.", answer: true, correct: "They have tactics." },
+            { question: "I has a routine.", answer: false, correct: "I have a routine." },
+            { question: "You have habits.", answer: true, correct: "You have habits." },
+            { question: "He has hobbies.", answer: true, correct: "He has hobbies." },
+            { question: "She have interests.", answer: false, correct: "She has interests." },
+            { question: "It has characteristics.", answer: true, correct: "It has characteristics." },
+            { question: "We have traits.", answer: true, correct: "We have traits." },
+            { question: "They has qualities.", answer: false, correct: "They have qualities." },
+            { question: "I have a schedule.", answer: true, correct: "I have a schedule." },
+            { question: "You has an agenda.", answer: false, correct: "You have an agenda." },
+            { question: "He have a plan.", answer: false, correct: "He has a plan." },
+            { question: "She has a goal.", answer: true, correct: "She has a goal." },
+            { question: "It have an objective.", answer: false, correct: "It has an objective." },
+            { question: "We has a target.", answer: false, correct: "We have a target." },
+            { question: "They have a deadline.", answer: true, correct: "They have a deadline." },
+            { question: "I has a project.", answer: false, correct: "I have a project." },
+            { question: "You have a task.", answer: true, correct: "You have a task." },
+            { question: "He has an assignment.", answer: true, correct: "He has an assignment." },
+            { question: "She have a responsibility.", answer: false, correct: "She has a responsibility." },
+            { question: "It has a role.", answer: true, correct: "It has a role." },
+            { question: "We have a function.", answer: true, correct: "We have a function." },
+            { question: "They has a purpose.", answer: false, correct: "They have a purpose." },
+            { question: "I have a reason.", answer: true, correct: "I have a reason." },
+            { question: "You has a motive.", answer: false, correct: "You have a motive." },
+            { question: "He have an intention.", answer: false, correct: "He has an intention." },
+            { question: "She has a desire.", answer: true, correct: "She has a desire." },
+            { question: "It have a need.", answer: false, correct: "It has a need." },
+            { question: "We has a want.", answer: false, correct: "We have a want." },
+            { question: "They have a wish.", answer: true, correct: "They have a wish." },
+            { question: "I has an aspiration.", answer: false, correct: "I have an aspiration." },
+            { question: "You have a goal.", answer: true, correct: "You have a goal." },
+            { question: "He has a dream.", answer: true, correct: "He has a dream." },
+            { question: "She have a vision.", answer: false, correct: "She has a vision." },
+            { question: "It has a purpose.", answer: true, correct: "It has a purpose." },
+            { question: "We have a mission.", answer: true, correct: "We have a mission." },
+            { question: "They has an objective.", answer: false, correct: "They have an objective." },
+            { question: "I have a target.", answer: true, correct: "I have a target." },
+            { question: "You has an aim.", answer: false, correct: "You have an aim." },
+            { question: "He have a plan.", answer: false, correct: "He has a plan." },
+            { question: "She has a strategy.", answer: true, correct: "She has a strategy." },
+            { question: "It have a tactic.", answer: false, correct: "It has a tactic." },
+            { question: "We has a method.", answer: false, correct: "We have a method." },
+            { question: "They have a system.", answer: true, correct: "They have a system." },
+            { question: "I has a process.", answer: false, correct: "I have a process." },
+            { question: "You have a procedure.", answer: true, correct: "You have a procedure." },
+            { question: "He has a routine.", answer: true, correct: "He has a routine." },
+            { question: "She have a habit.", answer: false, correct: "She has a habit." },
+            { question: "It has a pattern.", answer: true, correct: "It has a pattern." },
+            { question: "We have a structure.", answer: true, correct: "We have a structure." },
+            { question: "They has a framework.", answer: false, correct: "They have a framework." },
+            { question: "I have a model.", answer: true, correct: "I have a model." },
+            { question: "You has a template.", answer: false, correct: "You have a template." },
+            { question: "He have a format.", answer: false, correct: "He has a format." },
+            { question: "She has a design.", answer: true, correct: "She has a design." }
+        ];
+
+        const positiveResponses = [
+            "Great job!",
+            "Excellent!",
+            "Well done!",
+            "You got it!",
+            "Perfect!",
+            "Awesome!",
+            "Fantastic!",
+            "Brilliant!",
+            "You're a star!",
+            "Keep it up!"
+        ];
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let selectedQuestions = [];
+
+        function selectRandomQuestions() {
+            selectedQuestions = [];
+            const shuffled = allQuestions.sort(() => 0.5 - Math.random());
+            selectedQuestions = shuffled.slice(0, 10);
+        }
+
+        function displayQuestion() {
+            document.getElementById('question').textContent = selectedQuestions[currentQuestionIndex].question;
+        }
+
+        function speak(text) {
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'en-US';
+            utterance.rate = 0.8;
+            speechSynthesis.speak(utterance);
+        }
+
+        function checkAnswer(userAnswer) {
+            const correctAnswer = selectedQuestions[currentQuestionIndex].answer;
+            if (userAnswer === correctAnswer) {
+                score++;
+                const response = positiveResponses[Math.floor(Math.random() * positiveResponses.length)];
+                speak(response);
+                showJumpingEmoji();
+            } else {
+                speak("Incorrect");
+            }
+
+            currentQuestionIndex++;
+            if (currentQuestionIndex < selectedQuestions.length) {
+                displayQuestion();
+            } else {
+                endGame();
+            }
+
+            document.getElementById('score').textContent = `Score: ${score}`;
+        }
+
+        function showJumpingEmoji() {
+            const emoji = document.getElementById('emoji');
+            emoji.classList.add('jumping');
+            setTimeout(() => {
+                emoji.classList.remove('jumping');
+            }, 1000);
+        }
+
+        function endGame() {
+            let quizArea = document.getElementById('quiz-area');
+            quizArea.innerHTML = `
+                <h2 class="text-center mb-4">Quiz completed!</h2>
+                <p class="lead text-center">Your final score is ${score} out of ${selectedQuestions.length}.</p>
+                <h3 class="text-center mt-4 mb-3">Correct Sentences:</h3>
+                <ul class="list-group">
+                    ${selectedQuestions.map(q => `<li class="list-group-item">${q.correct}</li>`).join('')}
+                </ul>
+                <button onclick="restartQuiz()" class="btn btn-primary mt-3">Restart Quiz</button>
+            `;
+            speak(`Your final score is ${score} out of ${selectedQuestions.length}. Well done!`);
+        }
+
+        function restartQuiz() {
+            currentQuestionIndex = 0;
+            score = 0;
+            selectRandomQuestions();
+            displayQuestion();
+            document.getElementById('score').textContent = 'Score: 0';
+        }
+
+        selectRandomQuestions();
+        displayQuestion();
+    </script>
+</body>
+</html>
