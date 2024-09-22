@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz: Verb 'to be' in Present Simple</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        .quiz-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        button {
+            margin: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        #score {
+            font-weight: bold;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <h1>Quiz: Verb 'to be' in Present Simple</h1>
+        <p id="question"></p>
+        <button onclick="checkAnswer(true)">True</button>
+        <button onclick="checkAnswer(false)">False</button>
+        <p id="score">Score: 0</p>
+    </div>
+
+    <script>
+        const questions = [
+            { question: "I am happy.", answer: true },
+            { question: "You is a student.", answer: false },
+            { question: "He are tall.", answer: false },
+            { question: "She is beautiful.", answer: true },
+            { question: "It are cold today.", answer: false },
+            { question: "We is friends.", answer: false },
+            { question: "They are busy.", answer: true },
+            { question: "I is tired.", answer: false },
+            { question: "You are kind.", answer: true },
+            { question: "He am a doctor.", answer: false }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+
+        function displayQuestion() {
+            document.getElementById('question').textContent = questions[currentQuestion].question;
+        }
+
+        function speak(text) {
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'en-US'; // Set language to US English
+            utterance.rate = 0.8; // Slightly slower rate for clarity
+            speechSynthesis.speak(utterance);
+        }
+
+        function checkAnswer(userAnswer) {
+            const correctAnswer = questions[currentQuestion].answer;
+            if (userAnswer === correctAnswer) {
+                score++;
+                speak("Correct");
+            } else {
+                speak("Incorrect");
+            }
+
+            currentQuestion++;
+            if (currentQuestion < questions.length) {
+                displayQuestion();
+            } else {
+                endGame();
+            }
+
+            document.getElementById('score').textContent = `Score: ${score}`;
+        }
+
+        function endGame() {
+            document.getElementById('question').textContent = "Quiz completed!";
+            document.querySelector('.quiz-container').innerHTML += `<p>Final score: ${score} out of ${questions.length}</p>`;
+            speak(`Your final score is ${score} out of ${questions.length}. Well done!`);
+        }
+
+        displayQuestion();
+    </script>
+</body>
+</html>
