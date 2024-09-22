@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz: Le verbe 'être' au présent</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .quiz-container {
+            max-width: 600px;
+            margin: 2rem auto;
+        }
+        .verb-buttons {
+            display: inline-flex;
+            gap: 10px;
+        }
+        .emoji {
+            font-size: 3rem;
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: none;
+        }
+        @keyframes jump {
+            0%, 100% { transform: translateY(0) translateX(-50%); }
+            50% { transform: translateY(-20px) translateX(-50%); }
+        }
+        .jumping {
+            display: inline-block;
+            animation: jump 0.5s ease infinite;
+        }
+    </style>
+</head>
+<body>
+    <div class="container quiz-container">
+        <div class="card shadow">
+            <div class="card-body">
+                <h1 class="card-title text-center mb-4">Quiz: Le verbe 'être' au présent</h1>
+                <div id="quiz-area">
+                    <p id="question" class="lead text-center"></p>
+                </div>
+                <p id="score" class="text-center mt-3">Score: 0</p>
+            </div>
+        </div>
+    </div>
+    <div id="emoji" class="emoji">😊</div>
+
+    <script>
+        const allQuestions = [
+            { subject: "Je", correct: "suis", incorrect: ["es", "est", "sommes", "êtes", "sont"], complement: "heureux" },
+            { subject: "Tu", correct: "es", incorrect: ["suis", "est", "sommes", "êtes", "sont"], complement: "intelligent" },
+            { subject: "Il", correct: "est", incorrect: ["suis", "es", "sommes", "êtes", "sont"], complement: "grand" },
+            { subject: "Elle", correct: "est", incorrect: ["suis", "es", "sommes", "êtes", "sont"], complement: "gentille" },
+            { subject: "On", correct: "est", incorrect: ["suis", "es", "sommes", "êtes", "sont"], complement: "prêt" },
+            { subject: "Nous", correct: "sommes", incorrect: ["suis", "es", "est", "êtes", "sont"], complement: "amis" },
+            { subject: "Vous", correct: "êtes", incorrect: ["suis", "es", "est", "sommes", "sont"], complement: "occupés" },
+            { subject: "Ils", correct: "sont", incorrect: ["suis", "es", "est", "sommes", "êtes"], complement: "contents" },
+            { subject: "Elles", correct: "sont", incorrect: ["suis", "es", "est", "sommes", "êtes"], complement: "belles" },
+            { subject: "Le chat", correct: "est", incorrect: ["suis", "es", "sommes", "êtes", "sont"], complement: "joueur" },
+            { subject: "Mes parents", correct: "sont", incorrect: ["suis", "es", "est", "sommes", "êtes"], complement: "gentils" },
+            { subject: "Le temps", correct: "est", incorrect: ["suis", "es", "sommes", "êtes", "sont"], complement: "agréable aujourd'hui" },
+            { subject: "Ces livres", correct: "sont", incorrect: ["suis", "es", "est", "sommes", "êtes"], complement: "intéressants" },
+            { subject: "Le film", correct: "est", incorrect: ["suis", "es", "sommes", "êtes", "sont"], complement: "passionnant" },
+            { subject: "Notre équipe", correct: "est", incorrect: ["suis", "es", "sommes", "êtes", "sont"], complement: "la meilleure" },
+            { subject: "Les enfants", correct: "sont", incorrect: ["suis", "es", "est", "sommes", "êtes"], complement: "en train de jouer dehors" },
+            { subject: "Ce café", correct: "est", incorrect: ["suis", "es", "sommes", "êtes", "sont"], complement: "délicieux" },
+            { subject: "Ces voitures", correct: "sont", incorrect: ["suis", "es", "est", "sommes", "êtes"], complement: "chères" },
+            { subject: "Le professeur", correct: "est", incorrect: ["suis", "es", "sommes", "êtes", "sont"], complement: "très compétent" },
+            { subject: "Mon ami et moi", correct: "sommes", incorrect: ["suis", "es", "est", "êtes", "sont"], complement: "en route pour la fête" },
+            { subject: "La réunion", correct: "est", incorrect: ["suis", "es", "sommes", "êtes", "sont"], complement: "à 14h" },
+            { subject: "Ces fleurs", correct: "sont", incorrect: ["suis", "es", "est", "sommes", "êtes"], complement: "magnifiques" },
+            { subject: "La nouvelle", correct: "est", incorrect: ["suis", "es", "sommes", "êtes", "sont"], complement: "choquante" },
+            { subject: "Vos idées", correct: "sont", incorrect: ["suis", "es", "est", "sommes", "êtes"], complement: "créatives" },
+            { subject: "Cette solution", correct: "est", incorrect: ["suis", "es", "sommes", "êtes", "sont"], complement: "parfaite" }
+        ];
+
+        const positiveResponses = [
+            "Très bien !",
+            "Excellent !",
+            "Bravo !",
+            "C'est ça !",
+            "Parfait !",
+            "Génial !",
+            "Fantastique !",
+            "Brillant !",
+            "Tu es une star !",
+            "Continue comme ça !"
+        ];
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let selectedQuestions = [];
+
+        function selectRandomQuestions() {
+            selectedQuestions = [];
+            const shuffled = [...allQuestions].sort(() => 0.5 - Math.random());
+            selectedQuestions = shuffled.slice(0, 10);
+        }
+
+        function displayQuestion() {
+            const question = selectedQuestions[currentQuestionIndex];
+            const questionElement = document.getElementById('question');
+            questionElement.innerHTML = `${question.subject} <span class="verb-buttons"></span> ${question.complement}.`;
+            
+            const verbButtons = questionElement.querySelector('.verb-buttons');
+            const buttons = [
+                { text: question.correct, correct: true },
+                { text: question.incorrect[Math.floor(Math.random() * question.incorrect.length)], correct: false }
+            ].sort(() => Math.random() - 0.5);
+
+            buttons.forEach(button => {
+                const btn = document.createElement('button');
+                btn.textContent = button.text;
+                btn.className = 'btn btn-primary btn-sm';
+                btn.onclick = () => checkAnswer(button.correct);
+                verbButtons.appendChild(btn);
+            });
+        }
+
+        function speak(text) {
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'fr-FR';
+            utterance.rate = 0.8;
+            speechSynthesis.speak(utterance);
+        }
+
+        function checkAnswer(isCorrect) {
+            if (isCorrect) {
+                score++;
+                const response = positiveResponses[Math.floor(Math.random() * positiveResponses.length)];
+                speak(response);
+                showJumpingEmoji();
+            } else {
+                speak("Incorrect");
+            }
+
+            currentQuestionIndex++;
+            if (currentQuestionIndex < selectedQuestions.length) {
+                displayQuestion();
+            } else {
+                endGame();
+            }
+
+            document.getElementById('score').textContent = `Score: ${score}`;
+        }
+
+        function showJumpingEmoji() {
+            const emoji = document.getElementById('emoji');
+            emoji.classList.add('jumping');
+            setTimeout(() => {
+                emoji.classList.remove('jumping');
+            }, 1000);
+        }
+
+        function endGame() {
+            let quizArea = document.getElementById('quiz-area');
+            quizArea.innerHTML = `
+                <h2 class="text-center mb-4">Quiz terminé !</h2>
+                <p class="lead text-center">Votre score final est de ${score} sur ${selectedQuestions.length}.</p>
+                <h3 class="text-center mt-4 mb-3">Phrases correctes :</h3>
+                <ul class="list-group">
+                    ${selectedQuestions.map(q => `<li class="list-group-item">${q.subject} ${q.correct} ${q.complement}.</li>`).join('')}
+                </ul>
+                <button onclick="restartQuiz()" class="btn btn-primary mt-3">Recommencer le quiz</button>
+            `;
+            speak(`Votre score final est de ${score} sur ${selectedQuestions.length}. Bien joué !`);
+        }
+
+        function restartQuiz() {
+            currentQuestionIndex = 0;
+            score = 0;
+            selectRandomQuestions();
+            displayQuestion();
+            document.getElementById('score').textContent = 'Score: 0';
+        }
+
+        selectRandomQuestions();
+        displayQuestion();
+    </script>
+</body>
+</html>
