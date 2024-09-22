@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz sul linguaggio non verbale</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .emoji {
+            font-size: 2rem;
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="mb-4">Quiz sul linguaggio non verbale nelle diverse culture</h1>
+        <div id="quiz-container">
+            <div id="question-container" class="mb-4"></div>
+            <div id="options-container" class="mb-4"></div>
+            <div class="progress mb-4">
+                <div id="progress-bar" class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+            <button id="next-button" class="btn btn-primary" style="display: none;">Prossima domanda</button>
+            <div id="emoji-container" class="text-center emoji"></div>
+        </div>
+        <div id="results-container" style="display: none;">
+            <h2>Risultati del Quiz</h2>
+            <p>Hai risposto correttamente a <span id="correct-answers"></span> domande su 10.</p>
+            <div id="feedback-container"></div>
+            <button id="retry-button" class="btn btn-primary mt-3">Riprova</button>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                question: "In quale regione il contatto visivo prolungato può essere considerato irrispettoso o aggressivo?",
+                options: ["Europa occidentale", "Nord America", "Asia orientale", "America Latina"],
+                correctAnswer: 2,
+                explanation: "In Asia orientale, specialmente in paesi come Giappone e Cina, mantenere un contatto visivo prolungato può essere considerato irrispettoso o aggressivo. In queste culture, è comune abbassare lo sguardo in segno di deferenza."
+            },
+            {
+                question: "Dove il gesto del 'pollice in su' potrebbe essere considerato offensivo?",
+                options: ["Italia", "Giappone", "Stati Uniti", "Medio Oriente"],
+                correctAnswer: 3,
+                explanation: "In alcune parti del Medio Oriente, il gesto del 'pollice in su', che in molte culture occidentali è considerato positivo, può essere offensivo. È importante essere consapevoli di queste differenze culturali nei gesti."
+            },
+            {
+                question: "In quale cultura un leggero cenno laterale con la testa può significare 'sì', 'forse' o 'sto ascoltando'?",
+                options: ["Grecia", "India", "Francia", "Svezia"],
+                correctAnswer: 1,
+                explanation: "In India, un leggero cenno laterale con la testa può avere diversi significati come 'sì', 'forse' o 'sto ascoltando', a seconda del contesto. Questo gesto può essere confuso con un 'no' in altre culture."
+            },
+            {
+                question: "Dove le persone tendono a mantenere una maggiore distanza personale durante le conversazioni?",
+                options: ["America Latina", "Paesi mediterranei", "Nord Europa", "Medio Oriente"],
+                correctAnswer: 2,
+                explanation: "Nel Nord Europa, in paesi come Germania, Svezia e Norvegia, le persone tendono a mantenere una maggiore distanza personale durante le conversazioni. Il contatto fisico è anche meno frequente nelle interazioni quotidiane rispetto ad altre culture."
+            },
+            {
+                question: "Quale tipo di saluto è comune in Francia?",
+                options: ["Stretta di mano", "Inchino", "Baci sulla guancia", "Abbraccio"],
+                correctAnswer: 2,
+                explanation: "In Francia, è comune salutarsi con due o tre baci sulla guancia, a seconda della regione. Questo tipo di saluto è chiamato 'la bise' ed è una parte importante dell'etichetta sociale francese."
+            },
+            {
+                question: "In quale paese il saluto più comune è l'inchino?",
+                options: ["Stati Uniti", "Italia", "Giappone", "Germania"],
+                correctAnswer: 2,
+                explanation: "In Giappone, l'inchino è il saluto più comune. La profondità e la durata dell'inchino variano a seconda della formalità della situazione e del rispetto che si vuole mostrare."
+            },
+            {
+                question: "Dove i gesti con le mani sono una parte molto importante della comunicazione quotidiana?",
+                options: ["Giappone e Cina", "Germania e Svezia", "Stati Uniti e Canada", "Italia e Grecia"],
+                correctAnswer: 3,
+                explanation: "In Italia e Grecia, i gesti con le mani sono una parte molto importante della comunicazione quotidiana. Molti gesti hanno significati specifici e possono esprimere emozioni o enfatizzare una frase."
+            },
+            {
+                question: "In quale regione il contatto fisico leggero è più comune e accettabile durante le conversazioni?",
+                options: ["Nord Europa", "Asia orientale", "America Latina e paesi mediterranei", "Nord America"],
+                correctAnswer: 2,
+                explanation: "In America Latina e nei paesi mediterranei, il contatto fisico leggero è più comune e accettabile durante le conversazioni. Le persone tendono a stare più vicine e il tocco leggero è considerato una normale parte dell'interazione sociale."
+            },
+            {
+                question: "Quale gesto è comunemente interpretato come segno di rispetto e attenzione in Occidente?",
+                options: ["Evitare il contatto visivo", "Mantenere il contatto visivo", "Inchinarsi", "Alzare le sopracciglia"],
+                correctAnswer: 1,
+                explanation: "In Occidente, mantenere il contatto visivo è comunemente interpretato come segno di rispetto e attenzione. Tuttavia, è importante notare che un contatto visivo eccessivo può essere percepito come una sfida o un'invadenza."
+            },
+            {
+                question: "Qual è il saluto più comune negli Stati Uniti?",
+                options: ["Baci sulla guancia", "Inchino", "Abbraccio", "Stretta di mano"],
+                correctAnswer: 3,
+                explanation: "Negli Stati Uniti, la stretta di mano è il saluto più comune, spesso accompagnata da un sorriso. Questo gesto è considerato professionale e appropriato in molte situazioni sociali e lavorative."
+            }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+        let answered = false;
+
+        function loadQuestion() {
+            const questionContainer = document.getElementById('question-container');
+            const optionsContainer = document.getElementById('options-container');
+            const currentQ = questions[currentQuestion];
+
+            questionContainer.innerHTML = `<h2>${currentQ.question}</h2>`;
+            optionsContainer.innerHTML = '';
+
+            currentQ.options.forEach((option, index) => {
+                const button = document.createElement('button');
+                button.className = 'btn btn-outline-primary w-100 mb-2';
+                button.innerText = option;
+                button.onclick = () => selectAnswer(index);
+                optionsContainer.appendChild(button);
+            });
+
+            document.getElementById('next-button').style.display = 'none';
+            document.getElementById('emoji-container').innerHTML = '';
+            answered = false;
+
+            updateProgressBar();
+        }
+
+        function selectAnswer(index) {
+            if (answered) return;
+
+            const buttons = document.querySelectorAll('#options-container button');
+            const currentQ = questions[currentQuestion];
+
+            buttons[index].classList.remove('btn-outline-primary');
+            if (index === currentQ.correctAnswer) {
+                buttons[index].classList.add('btn-success');
+                score++;
+                document.getElementById('emoji-container').innerHTML = '😃';
+            } else {
+                buttons[index].classList.add('btn-danger');
+                buttons[currentQ.correctAnswer].classList.remove('btn-outline-primary');
+                buttons[currentQ.correctAnswer].classList.add('btn-success');
+                document.getElementById('emoji-container').innerHTML = '😢';
+            }
+
+            answered = true;
+            document.getElementById('next-button').style.display = 'block';
+        }
+
+        function nextQuestion() {
+            currentQuestion++;
+            if (currentQuestion < questions.length) {
+                loadQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function updateProgressBar() {
+            const progressBar = document.getElementById('progress-bar');
+            const progress = ((currentQuestion + 1) / questions.length) * 100;
+            progressBar.style.width = `${progress}%`;
+            progressBar.setAttribute('aria-valuenow', progress);
+        }
+
+        function showResults() {
+            document.getElementById('quiz-container').style.display = 'none';
+            document.getElementById('results-container').style.display = 'block';
+            document.getElementById('correct-answers').innerText = score;
+
+            const feedbackContainer = document.getElementById('feedback-container');
+            feedbackContainer.innerHTML = '';
+
+            questions.forEach((q, index) => {
+                const feedbackItem = document.createElement('div');
+                feedbackItem.className = 'mb-3';
+                feedbackItem.innerHTML = `
+                    <h4>Domanda ${index + 1}</h4>
+                    <p><strong>Domanda:</strong> ${q.question}</p>
+                    <p><strong>Risposta corretta:</strong> ${q.options[q.correctAnswer]}</p>
+                    <p><strong>Spiegazione:</strong> ${q.explanation}</p>
+                `;
+                feedbackContainer.appendChild(feedbackItem);
+            });
+        }
+
+        function retryQuiz() {
+            currentQuestion = 0;
+            score = 0;
+            document.getElementById('quiz-container').style.display = 'block';
+            document.getElementById('results-container').style.display = 'none';
+            loadQuestion();
+        }
+
+        document.getElementById('next-button').addEventListener('click', nextQuestion);
+        document.getElementById('retry-button').addEventListener('click', retryQuiz);
+
+        loadQuestion();
+    </script>
+</body>
+</html>
