@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>French Verb Conjugation App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        select, button {
+            padding: 10px;
+            margin: 10px 0;
+            width: 100%;
+        }
+        #conjugationDisplay button {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 10px 15px;
+            text-align: left;
+            text-decoration: none;
+            display: block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 4px;
+            width: 100%;
+        }
+        #conjugationDisplay button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>French Verb Conjugation App</h1>
+        <select id="verbSelect">
+            <option value="parler">parler (to speak)</option>
+            <option value="finir">finir (to finish)</option>
+            <option value="aller">aller (to go)</option>
+            <option value="être">être (to be)</option>
+            <option value="avoir">avoir (to have)</option>
+        </select>
+        <select id="modeSelect">
+            <option value="indicative">Indicative</option>
+            <option value="conditional">Conditional</option>
+            <option value="subjunctive">Subjunctive</option>
+        </select>
+        <select id="tenseSelect">
+            <option value="present">Present</option>
+            <option value="imparfait">Imparfait</option>
+            <option value="futur">Future Simple</option>
+            <option value="passeCompose">Passé Composé</option>
+        </select>
+        <button onclick="conjugateVerb()">Conjugate</button>
+        <div id="conjugationDisplay"></div>
+    </div>
+
+    <script>
+        const conjugations = {
+            parler: {
+                indicative: {
+                    present: ["je parle", "tu parles", "il/elle parle", "nous parlons", "vous parlez", "ils/elles parlent"],
+                    imparfait: ["je parlais", "tu parlais", "il/elle parlait", "nous parlions", "vous parliez", "ils/elles parlaient"],
+                    futur: ["je parlerai", "tu parleras", "il/elle parlera", "nous parlerons", "vous parlerez", "ils/elles parleront"],
+                    passeCompose: ["j'ai parlé", "tu as parlé", "il/elle a parlé", "nous avons parlé", "vous avez parlé", "ils/elles ont parlé"]
+                },
+                // Add conditional and subjunctive modes here
+            },
+            finir: {
+                indicative: {
+                    present: ["je finis", "tu finis", "il/elle finit", "nous finissons", "vous finissez", "ils/elles finissent"],
+                    imparfait: ["je finissais", "tu finissais", "il/elle finissait", "nous finissions", "vous finissiez", "ils/elles finissaient"],
+                    futur: ["je finirai", "tu finiras", "il/elle finira", "nous finirons", "vous finirez", "ils/elles finiront"],
+                    passeCompose: ["j'ai fini", "tu as fini", "il/elle a fini", "nous avons fini", "vous avez fini", "ils/elles ont fini"]
+                },
+                // Add conditional and subjunctive modes here
+            },
+            // Add more verbs here
+        };
+
+        function conjugateVerb() {
+            const verb = document.getElementById('verbSelect').value;
+            const mode = document.getElementById('modeSelect').value;
+            const tense = document.getElementById('tenseSelect').value;
+            const display = document.getElementById('conjugationDisplay');
+            display.innerHTML = '';
+
+            if (conjugations[verb] && conjugations[verb][mode] && conjugations[verb][mode][tense]) {
+                conjugations[verb][mode][tense].forEach(form => {
+                    const button = document.createElement('button');
+                    button.textContent = form;
+                    button.onclick = () => speak(form);
+                    display.appendChild(button);
+                });
+            } else {
+                display.innerHTML = 'Conjugation not available.';
+            }
+        }
+
+        function speak(text) {
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'fr-FR';
+            window.speechSynthesis.speak(utterance);
+        }
+    </script>
+</body>
+</html>

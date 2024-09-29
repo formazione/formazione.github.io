@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interest Calculation Exercise</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; margin: 0; padding: 20px; }
+        .container { max-width: 600px; margin: 0 auto; background: #f4f4f4; padding: 20px; border-radius: 5px; }
+        h1 { color: #333; }
+        label { display: block; margin-bottom: 5px; }
+        input { width: 100%; padding: 8px; margin-bottom: 10px; }
+        button { background: #333; color: #fff; padding: 10px 15px; border: none; cursor: pointer; }
+        button:hover { background: #444; }
+        #result { margin-top: 20px; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Interest Calculation Exercise</h1>
+        <p id="problem-text"></p>
+        <div>
+            <label for="capital">Capital (€):</label>
+            <input type="number" id="capital" step="0.01">
+        </div>
+        <div>
+            <label for="rate">Interest Rate (%):</label>
+            <input type="number" id="rate" step="0.01">
+        </div>
+        <div>
+            <label for="days">Number of Days:</label>
+            <input type="number" id="days">
+        </div>
+        <button onclick="calculateInterest()">Calculate</button>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        // Generate random values
+        const randomCapital = Math.floor(Math.random() * 10000) + 1000;
+        const randomRate = (Math.random() * 10 + 1).toFixed(2);
+        const randomDays = Math.floor(Math.random() * 180) + 30;
+
+        // Set random values to inputs
+        document.getElementById('capital').value = randomCapital;
+        document.getElementById('rate').value = randomRate;
+        document.getElementById('days').value = randomDays;
+
+        // Generate problem text
+        const problemText = `On March ${Math.floor(Math.random() * 28) + 1}, the owner of "Sunshine B&B" obtains a payment extension from a supplier until ${Math.floor(Math.random() * 28) + 1} ${['May', 'June', 'July'][Math.floor(Math.random() * 3)]} for a debt of €${randomCapital}. Calculate the interest and the total amount, knowing that an interest rate of ${randomRate}% has been applied for ${randomDays} days.`;
+        document.getElementById('problem-text').textContent = problemText;
+
+        function calculateInterest() {
+            const capital = parseFloat(document.getElementById('capital').value);
+            const rate = parseFloat(document.getElementById('rate').value);
+            const days = parseInt(document.getElementById('days').value);
+
+            const interest = (capital * rate * days) / 36500;
+            const totalAmount = capital + interest;
+
+            document.getElementById('result').innerHTML = `
+                Interest: €${interest.toFixed(2)}<br>
+                Total Amount: €${totalAmount.toFixed(2)}
+            `;
+        }
+    </script>
+</body>
+</html>

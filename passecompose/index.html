@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>French Verb Conjugations and Example Sentences</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .section {
+            background-color: white;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        h2 {
+            color: #333;
+        }
+        button {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 10px 15px;
+            text-align: left;
+            text-decoration: none;
+            display: block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 4px;
+            width: 100%;
+            max-width: 500px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h1>French Verb Conjugations and Example Sentences</h1>
+
+    <!-- Previous sections remain unchanged -->
+
+    <div class="section">
+        <h2>Nouvelles phrases au passé composé:</h2>
+        <button onclick="speak(this.textContent)">1. J'ai réagi rapidement à la situation d'urgence.</button>
+        <button onclick="speak(this.textContent)">2. Elle a grandi dans une petite ville au bord de la mer.</button>
+        <button onclick="speak(this.textContent)">3. Nous avons été pris par surprise lors de la fête.</button>
+        <button onclick="speak(this.textContent)">4. Ils ont fait un excellent travail sur ce projet.</button>
+        <button onclick="speak(this.textContent)">5. Le gouvernement a garanti le remboursement des dépôts bancaires.</button>
+    </div>
+
+    <script>
+        function speak(text) {
+            let utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'fr-FR';
+            window.speechSynthesis.speak(utterance);
+        }
+    </script>
+</body>
+</html>
