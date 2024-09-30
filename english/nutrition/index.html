@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nutrition Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        select, button {
+            font-size: 16px;
+            padding: 5px 10px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .result {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        .correct {
+            color: green;
+        }
+        .incorrect {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <h1>Nutrition Quiz</h1>
+    <div id="quizContainer"></div>
+
+    <script>
+        const options = [
+            "apples", "biscuits", "bread", "cheese", "chocolate",
+            "meat", "oil", "rice", "salmon", "strawberries",
+            "tuna", "yoghurt"
+        ];
+
+        // Quiz questions and answers
+        const questions = [
+            {
+                text: "A tomato is a fruit. A fruit comes from a flower and it has seeds. Other examples of fruit are apples, grapes and _______.",
+                correctAnswers: [["strawberries", "apples"]]
+            },
+            {
+                text: "No, eggs aren't dairy products. Dairy products come from milk. _______ and _______ are common dairy products.",
+                correctAnswers: [["cheese", "yoghurt"], ["yoghurt", "cheese"]]
+            },
+            {
+                text: "Some fat is bad for you. But fat from vegetables - for example, olive oil and some types of fish - for example, _______ and _______- is usually good for you.",
+                correctAnswers: [["salmon", "tuna"], ["tuna", "salmon"]]
+            },
+            {
+                text: "No, a vegetarian does not eat any _______ or fish",
+                correctAnswers: [["meat"]]
+            },
+            {
+                text: "Yes, carbohydrates are important because they give us energy. Try to have some carbohydrates with every meal - for example, _______, pasta and _______",
+                correctAnswers: [["bread", "rice"], ["rice", "bread"]]
+            },
+            {
+                text: "We often add sugar to processed food - for example, sweets _______ and _______ . But does food contain any natural sugar? Yes, some food does - for example, fruit and milk.",
+                correctAnswers: [["chocolate", "biscuits"], ["biscuits", "chocolate"]]
+            }
+        ];
+
+        function createQuiz() {
+            const quizContainer = document.getElementById('quizContainer');
+            questions.forEach((question, index) => {
+                const questionHtml = `
+                    <div class="question">
+                        <h2>Question ${index + 1}</h2>
+                        <p>${question.text.replace(/______+/g, (match, i) => `
+                            <select class="answer-select" data-question="${index}" data-answer="${i}">
+                                <option value="">Select an option</option>
+                                ${options.map(option => `<option value="${option}">${option}</option>`).join('')}
+                            </select>
+                        `)}</p>
+                        <p class="result" id="result${index}"></p>
+                    </div>
+                `;
+                quizContainer.innerHTML += questionHtml;
+            });
+            quizContainer.innerHTML += '<button onclick="submitQuiz()">Submit Quiz</button>';
+            quizContainer.innerHTML += '<div id="scoreDisplay"></div>';
+        }
+
+        function submitQuiz() {
+            let score = 0;
+            questions.forEach((question, index) => {
+                const answerElements = document.querySelectorAll(`.answer-select[data-question="${index}"]`);
+                const selectedAnswers = Array.from(answerElements).map(el => el.value);
+                const resultElement = document.getElementById(`result${index}`);
+
+                const isCorrect = question.correctAnswers.some(correctAnswer => 
+                    correctAnswer.length === selectedAnswers.length &&
+                    correctAnswer.every((answer, i) => answer === selectedAnswers[i])
+                );
+
+                if (isCorrect) {
+                    resultElement.textContent = "Correct!";
+                    resultElement.className = "result correct";
+                    score++;
+                } else {
+                    const allCorrectAnswers = question.correctAnswers.map(answers => answers.join(", ")).join(" or ");
+                    resultElement.textContent = `Incorrect. Correct answer(s): ${allCorrectAnswers}`;
+                    resultElement.className = "result incorrect";
+                }
+            });
+
+            const scoreDisplay = document.getElementById('scoreDisplay');
+            scoreDisplay.innerHTML = `<h2>Your Score: ${score}/${questions.length}</h2>`;
+        }
+
+        createQuiz();
+    </script>
+</body>
+</html>
