@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Le Passé Composé</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background-color: black;
+            color: white;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+        }
+
+        #presentation-container {
+            position: relative;
+            width: 1200px;
+            height: 800px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #circle {
+            position: absolute;
+            width: 320px;
+            height: 320px;
+            border-radius: 50%;
+            background-color: red;
+            z-index: 1;
+            transition: transform 0.3s ease;
+        }
+
+        #text-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            padding: 20px;
+            font-size: 24px;
+            max-width: 80%;
+            white-space: pre-line;
+        }
+
+        .button-container {
+            position: absolute;
+            bottom: 20px;
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            z-index: 2;
+        }
+
+        .audio-controls {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+            z-index: 3;
+        }
+
+        .voice-selector {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 3;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        select {
+            padding: 8px;
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+            cursor: pointer;
+        }
+
+        select option {
+            background: black;
+            color: white;
+        }
+
+        button {
+            padding: 10px 30px;
+            font-size: 20px;
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: rgba(128, 128, 128, 0.3);
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .audio-button {
+            padding: 8px 16px;
+            font-size: 16px;
+        }
+
+        #status-message {
+            position: absolute;
+            top: 60px;
+            right: 20px;
+            color: #ffffff;
+            font-size: 14px;
+            z-index: 3;
+        }
+    </style>
+</head>
+<body>
+    <div id="presentation-container">
+        <div class="voice-selector">
+            <select id="voiceSelect">
+                <option value="">Loading voices...</option>
+            </select>
+        </div>
+        <div class="audio-controls">
+            <button id="playAudio" class="audio-button">🔊 Play Audio</button>
+            <button id="stopAudio" class="audio-button">🔇 Stop Audio</button>
+        </div>
+        <div id="status-message"></div>
+        <div id="circle"></div>
+        <div id="text-content"></div>
+        <div class="button-container">
+            <button id="prevBtn">Previous</button>
+            <button id="nextBtn">Next</button>
+        </div>
+    </div>
+
+    <script>
+        const slides = [
+            "Le Passé Composé",
+            "1. Le passé composé est utilisé pour parler d'actions terminées dans le passé",
+            "2. Il se forme avec: AVOIR/ÊTRE (au présent) + participe passé",
+            "3. La plupart des verbes utilisent AVOIR\nExemple: J'ai mangé, Tu as parlé",
+            "4. Certains verbes utilisent ÊTRE\nExemple: Je suis allé(e), Tu es venu(e)",
+            "5. Les verbes avec ÊTRE s'accordent en genre et nombre\nExemple: Elle est allée, Ils sont venus",
+            "6. Participe passé:\n-er verbes: -é\n-ir verbes: -i\n-re verbes: -u",
+            "7. Verbes irréguliers ont des participes passés spéciaux\nExemple: faire → fait, voir → vu"
+        ];
+
+        let currentSlide = 0;
+        let isAnimating = false;
+        let isSpeaking = false;
+        let voices = [];
+
+        const circle = document.getElementById('circle');
+        const textContent = document.getElementById('text-content');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const playAudioBtn = document.getElementById('playAudio');
+        const stopAudioBtn = document.getElementById('stopAudio');
+        const statusMessage = document.getElementById('status-message');
+        const voiceSelect = document.getElementById('voiceSelect');
+
+        // Initialize speech synthesis
+        if ('speechSynthesis' in window) {
+            // Wait for voices to be loaded
+            speechSynthesis.addEventListener('voiceschanged', () => {
+                voices = speechSynthesis.getVoices();
+                // Filter for French voices
+                const frenchVoices = voices.filter(voice => voice.lang.includes('fr'));
+                
+                // Clear existing options
+                voiceSelect.innerHTML = '';
+                
+                // Add French voices to select element
+                frenchVoices.forEach(voice => {
+                    const option = document.createElement('option');
+                    option.value = voice.name;
+                    option.textContent = `${voice.name} (${voice.lang})`;
+                    voiceSelect.appendChild(option);
+                });
+
+                if (frenchVoices.length === 0) {
+                    const option = document.createElement('option');
+                    option.value = '';
+                    option.textContent = 'No French voices available';
+                    voiceSelect.appendChild(option);
+                    playAudioBtn.disabled = true;
+                    statusMessage.textContent = "Please install French language pack in your system";
+                }
+            });
+        } else {
+            statusMessage.textContent = "Speech synthesis not supported in this browser";
+            playAudioBtn.disabled = true;
+            stopAudioBtn.disabled = true;
+        }
+
+        function updateButtons() {
+            prevBtn.disabled = currentSlide === 0;
+            nextBtn.disabled = currentSlide === slides.length - 1;
+        }
+
+        function animateCircle() {
+            if (isAnimating) return;
+            isAnimating = true;
+
+            circle.style.transform = 'scale(1.2)';
+            circle.style.backgroundColor = 'blue';
+
+            setTimeout(() => {
+                circle.style.transform = 'scale(1)';
+                circle.style.backgroundColor = 'red';
+                isAnimating = false;
+            }, 300);
+        }
+
+        function updateSlide() {
+            textContent.textContent = slides[currentSlide];
+            updateButtons();
+            stopAudio();
+        }
+
+        function playAudio() {
+            if (isSpeaking) {
+                stopAudio();
+                return;
+            }
+
+            const selectedVoice = voices.find(voice => voice.name === voiceSelect.value);
+            if (!selectedVoice) {
+                statusMessage.textContent = "Please select a voice";
+                return;
+            }
+
+            const utterance = new SpeechSynthesisUtterance(slides[currentSlide]);
+            utterance.voice = selectedVoice;
+            utterance.lang = 'fr-FR';
+            utterance.rate = 0.9; // Slightly slower for better clarity
+            utterance.pitch = 1;
+
+            utterance.onstart = () => {
+                isSpeaking = true;
+                statusMessage.textContent = "Speaking...";
+                playAudioBtn.innerHTML = "🔇 Stop";
+            };
+
+            utterance.onend = () => {
+                isSpeaking = false;
+                statusMessage.textContent = "";
+                playAudioBtn.innerHTML = "🔊 Play Audio";
+            };
+
+            utterance.onerror = (event) => {
+                console.error('Speech synthesis error:', event);
+                isSpeaking = false;
+                statusMessage.textContent = "Error playing audio";
+                playAudioBtn.innerHTML = "🔊 Play Audio";
+            };
+
+            speechSynthesis.speak(utterance);
+        }
+
+        function stopAudio() {
+            if (speechSynthesis) {
+                speechSynthesis.cancel();
+                isSpeaking = false;
+                statusMessage.textContent = "";
+                playAudioBtn.innerHTML = "🔊 Play Audio";
+            }
+        }
+
+        function nextSlide() {
+            if (currentSlide < slides.length - 1 && !isAnimating) {
+                currentSlide++;
+                animateCircle();
+                updateSlide();
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlide > 0 && !isAnimating) {
+                currentSlide--;
+                animateCircle();
+                updateSlide();
+            }
+        }
+
+        // Event listeners
+        nextBtn.addEventListener('click', nextSlide);
+        prevBtn.addEventListener('click', prevSlide);
+        playAudioBtn.addEventListener('click', playAudio);
+        stopAudioBtn.addEventListener('click', stopAudio);
+
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'ArrowRight') nextSlide();
+            if (event.key === 'ArrowLeft') prevSlide();
+        });
+
+        // Initialize first slide
+        updateSlide();
+    </script>
+</body>
+</html>
