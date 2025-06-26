@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz: Verb 'to have' in Simple Present</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .quiz-container {
+            max-width: 600px;
+            margin: 2rem auto;
+        }
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 1rem;
+        }
+        .emoji {
+            font-size: 3rem;
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: none;
+        }
+        @keyframes jump {
+            0%, 100% { transform: translateY(0) translateX(-50%); }
+            50% { transform: translateY(-20px) translateX(-50%); }
+        }
+        .jumping {
+            display: inline-block;
+            animation: jump 0.5s ease infinite;
+        }
+    </style>
+</head>
+<body>
+    <div class="container quiz-container">
+        <div class="card shadow">
+            <div class="card-body">
+                <h1 class="card-title text-center mb-4">Quiz: Verb 'to have' in Simple Present</h1>
+                <div id="quiz-area">
+                    <p id="question" class="lead text-center"></p>
+                    <div id="button-container" class="button-container">
+                    </div>
+                </div>
+                <p id="score" class="text-center mt-3">Score: 0</p>
+            </div>
+        </div>
+    </div>
+    <div id="emoji" class="emoji">😊</div>
+
+    <script>
+        const allQuestions = [
+            { correct: "I have a cat.", incorrect: "I has a cat." },
+            { correct: "You have a dog.", incorrect: "You has a dog." },
+            { correct: "He has a car.", incorrect: "He have a car." },
+            { correct: "She has a book.", incorrect: "She have a book." },
+            { correct: "It has a tail.", incorrect: "It have a tail." },
+            { correct: "We have a house.", incorrect: "We has a house." },
+            { correct: "They have bikes.", incorrect: "They has bikes." },
+            { correct: "I have a computer.", incorrect: "I has a computer." },
+            { correct: "You have a phone.", incorrect: "You has a phone." },
+            { correct: "He has friends.", incorrect: "He have friends." },
+            { correct: "She has a job.", incorrect: "She have a job." },
+            { correct: "It has wings.", incorrect: "It have wings." },
+            { correct: "We have a plan.", incorrect: "We has a plan." },
+            { correct: "They have a meeting.", incorrect: "They has a meeting." },
+            { correct: "I have an idea.", incorrect: "I has an idea." },
+            { correct: "You have a ticket.", incorrect: "You has a ticket." },
+            { correct: "He has a sister.", incorrect: "He have a sister." },
+            { correct: "She has a brother.", incorrect: "She have a brother." },
+            { correct: "It has leaves.", incorrect: "It have leaves." },
+            { correct: "We have a problem.", incorrect: "We has a problem." },
+            { correct: "They have a solution.", incorrect: "They has a solution." },
+            { correct: "I have an appointment.", incorrect: "I has an appointment." },
+            { correct: "You have a question.", incorrect: "You has a question." },
+            { correct: "He has an answer.", incorrect: "He have an answer." },
+            { correct: "She has a hobby.", incorrect: "She have a hobby." },
+            { correct: "It has a purpose.", incorrect: "It have a purpose." },
+            { correct: "We have a goal.", incorrect: "We has a goal." },
+            { correct: "They have a team.", incorrect: "They has a team." },
+            { correct: "I have experience.", incorrect: "I has experience." },
+            { correct: "You have knowledge.", incorrect: "You has knowledge." },
+            { correct: "He has skills.", incorrect: "He have skills." },
+            { correct: "She has talent.", incorrect: "She have talent." },
+            { correct: "It has a function.", incorrect: "It have a function." },
+            { correct: "We have a vision.", incorrect: "We has a vision." },
+            { correct: "They have a mission.", incorrect: "They has a mission." },
+            { correct: "I have a dream.", incorrect: "I has a dream." },
+            { correct: "You have potential.", incorrect: "You has potential." },
+            { correct: "He has ambition.", incorrect: "He have ambition." },
+            { correct: "She has determination.", incorrect: "She have determination." },
+            { correct: "It has a feature.", incorrect: "It have a feature." },
+            { correct: "We have resources.", incorrect: "We has resources." },
+            { correct: "They have opportunities.", incorrect: "They has opportunities." },
+            { correct: "I have responsibilities.", incorrect: "I has responsibilities." },
+            { correct: "You have duties.", incorrect: "You has duties." },
+            { correct: "He has rights.", incorrect: "He have rights." },
+            { correct: "She has obligations.", incorrect: "She have obligations." },
+            { correct: "It has a purpose.", incorrect: "It have a purpose." },
+            { correct: "We have a strategy.", incorrect: "We has a strategy." },
+            { correct: "They have tactics.", incorrect: "They has tactics." },
+            { correct: "I have a routine.", incorrect: "I has a routine." },
+            { correct: "You have habits.", incorrect: "You has habits." },
+            { correct: "He has hobbies.", incorrect: "He have hobbies." },
+            { correct: "She has interests.", incorrect: "She have interests." },
+            { correct: "It has characteristics.", incorrect: "It have characteristics." },
+            { correct: "We have traits.", incorrect: "We has traits." },
+            { correct: "They have qualities.", incorrect: "They has qualities." },
+            { correct: "I have a schedule.", incorrect: "I has a schedule." },
+            { correct: "You have an agenda.", incorrect: "You has an agenda." },
+            { correct: "He has a plan.", incorrect: "He have a plan." },
+            { correct: "She has a goal.", incorrect: "She have a goal." },
+            { correct: "It has an objective.", incorrect: "It have an objective." },
+            { correct: "We have a target.", incorrect: "We has a target." },
+            { correct: "They have a deadline.", incorrect: "They has a deadline." },
+            { correct: "I have a project.", incorrect: "I has a project." },
+            { correct: "You have a task.", incorrect: "You has a task." },
+            { correct: "He has an assignment.", incorrect: "He have an assignment." },
+            { correct: "She has a responsibility.", incorrect: "She have a responsibility." },
+            { correct: "It has a role.", incorrect: "It have a role." },
+            { correct: "We have a function.", incorrect: "We has a function." },
+            { correct: "They have a purpose.", incorrect: "They has a purpose." },
+            { correct: "I have a reason.", incorrect: "I has a reason." },
+            { correct: "You have a motive.", incorrect: "You has a motive." },
+            { correct: "He has an intention.", incorrect: "He have an intention." },
+            { correct: "She has a desire.", incorrect: "She have a desire." },
+            { correct: "It has a need.", incorrect: "It have a need." },
+            { correct: "We have a want.", incorrect: "We has a want." },
+            { correct: "They have a wish.", incorrect: "They has a wish." },
+            { correct: "I have an aspiration.", incorrect: "I has an aspiration." },
+            { correct: "You have a goal.", incorrect: "You has a goal." },
+            { correct: "He has a dream.", incorrect: "He have a dream." },
+            { correct: "She has a vision.", incorrect: "She have a vision." },
+            { correct: "It has a purpose.", incorrect: "It have a purpose." },
+            { correct: "We have a mission.", incorrect: "We has a mission." },
+            { correct: "They have an objective.", incorrect: "They has an objective." },
+            { correct: "I have a target.", incorrect: "I has a target." },
+            { correct: "You have an aim.", incorrect: "You has an aim." },
+            { correct: "He has a plan.", incorrect: "He have a plan." },
+            { correct: "She has a strategy.", incorrect: "She have a strategy." },
+            { correct: "It has a tactic.", incorrect: "It have a tactic." },
+            { correct: "We have a method.", incorrect: "We has a method." },
+            { correct: "They have a system.", incorrect: "They has a system." },
+            { correct: "I have a process.", incorrect: "I has a process." },
+            { correct: "You have a procedure.", incorrect: "You has a procedure." },
+            { correct: "He has a routine.", incorrect: "He have a routine." },
+            { correct: "She has a habit.", incorrect: "She have a habit." },
+            { correct: "It has a pattern.", incorrect: "It have a pattern." },
+            { correct: "We have a structure.", incorrect: "We has a structure." },
+            { correct: "They have a framework.", incorrect: "They has a framework." },
+            { correct: "I have a model.", incorrect: "I has a model." },
+            { correct: "You have a template.", incorrect: "You has a template." },
+            { correct: "He has a format.", incorrect: "He have a format." },
+            { correct: "She has a design.", incorrect: "She have a design." }
+        ];
+
+        const positiveResponses = [
+            "Great job!",
+            "Excellent!",
+            "Well done!",
+            "You got it!",
+            "Perfect!",
+            "Awesome!",
+            "Fantastic!",
+            "Brilliant!",
+            "You're a star!",
+            "Keep it up!"
+        ];
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let selectedQuestions = [];
+
+        function selectRandomQuestions() {
+            selectedQuestions = [];
+            const shuffled = allQuestions.sort(() => 0.5 - Math.random());
+            selectedQuestions = shuffled.slice(0, 10);
+        }
+
+        function displayQuestion() {
+            const question = selectedQuestions[currentQuestionIndex];
+            document.getElementById('question').textContent = "Choose the correct form:";
+            const buttonContainer = document.getElementById('button-container');
+            buttonContainer.innerHTML = '';
+
+            const buttons = [
+                { text: question.correct, correct: true },
+                { text: question.incorrect, correct: false }
+            ].sort(() => Math.random() - 0.5);
+
+            buttons.forEach(button => {
+                const btn = document.createElement('button');
+                btn.textContent = button.text;
+                btn.className = 'btn btn-primary';
+                btn.onclick = () => checkAnswer(button.correct);
+                buttonContainer.appendChild(btn);
+            });
+        }
+
+        function speak(text) {
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'en-US';
+            utterance.rate = 0.8;
+            speechSynthesis.speak(utterance);
+        }
+
+        function checkAnswer(isCorrect) {
+            if (isCorrect) {
+                score++;
+                const response = positiveResponses[Math.floor(Math.random() * positiveResponses.length)];
+                speak(response);
+                showJumpingEmoji();
+            } else {
+                speak("Incorrect");
+            }
+
+            currentQuestionIndex++;
+            if (currentQuestionIndex < selectedQuestions.length) {
+                displayQuestion();
+            } else {
+                endGame();
+            }
+
+            document.getElementById('score').textContent = `Score: ${score}`;
+        }
+
+        function showJumpingEmoji() {
+            const emoji = document.getElementById('emoji');
+            emoji.classList.add('jumping');
+            setTimeout(() => {
+                emoji.classList.remove('jumping');
+            }, 1000);
+        }
+
+        function endGame() {
+            let quizArea = document.getElementById('quiz-area');
+            quizArea.innerHTML = `
+                <h2 class="text-center mb-4">Quiz completed!</h2>
+                <p class="lead text-center">Your final score is ${score} out of ${selectedQuestions.length}.</p>
+                <h3 class="text-center mt-4 mb-3">Correct Sentences:</h3>
+                <ul class="list-group">
+                    ${selectedQuestions.map(q => `<li class="list-group-item">${q.correct}</li>`).join('')}
+                </ul>
+                <button onclick="restartQuiz()" class="btn btn-primary mt-3">Restart Quiz</button>
+            `;
+            speak(`Your final score is ${score} out of ${selectedQuestions.length}. Well done!`);
+        }
+
+        function restartQuiz() {
+            currentQuestionIndex = 0;
+            score = 0;
+            selectRandomQuestions();
+            displayQuestion();
+            document.getElementById('score').textContent = 'Score: 0';
+        }
+
+        selectRandomQuestions();
+        displayQuestion();
+    </script>
+</body>
+</html>

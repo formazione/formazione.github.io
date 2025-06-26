@@ -1,0 +1,7 @@
+wip_________progetti in lavorazione e recenti
+bat_________apre notepad in D:\bat per creare batch files
+comandi_____elenco di comandi come questo
+new_________nuovo post python
+az__________apre wp-admin azienda
+pyt_________wp python
+rec_________registra video in D:\video

@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Scrolling Retro Platformer</title>
+    <style>
+        canvas {
+            border: 1px solid black;
+            display: block;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="gameCanvas" width="800" height="600"></canvas>
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // Game variables
+        let player = { x: 50, y: 300, width: 32, height: 48, dy: 0, jumpPower: -15, isJumping: false };
+        let platforms = [];
+        let coins = [];
+        let enemies = [];
+        let score = 0;
+        let level = 1;
+        let lives = 3;
+        let gameOver = false;
+        let levelStartTime = Date.now();
+        let flag = null;
+        let cameraX = 0;
+
+        const gravity = 0.5;
+        const scrollSpeed = 2;
+        const viewportWidth = 800;
+        const levelWidth = 10000;
+        const groundY = 550;
+
+        // Input handling
+        let keys = {};
+        document.addEventListener('keydown', (e) => { keys[e.code] = true; });
+        document.addEventListener('keyup', (e) => { keys[e.code] = false; });
+
+        function generateLevel() {
+            platforms = [];
+            coins = [];
+            enemies = [];
+
+            // Generate ground
+            for (let x = 0; x < levelWidth; x += 800) {
+                platforms.push({ x, y: groundY, width: 800, height: 50 });
+            }
+
+            // Generate platforms
+            let lastPlatformX = 0;
+            let lastPlatformY = groundY;
+            while (lastPlatformX < levelWidth) {
+                let width = Math.random() * 100 + 50;
+                let gap = Math.random() * 200 + 100;
+                
+                // Determine platform height
+                let maxJumpHeight = (player.jumpPower * player.jumpPower) / (2 * gravity);
+                let minY = Math.max(100, lastPlatformY - maxJumpHeight);
+                let maxY = Math.min(groundY - 100, lastPlatformY + maxJumpHeight);
+                let y = Math.random() * (maxY - minY) + minY;
+
+                // Occasionally create a higher platform
+                if (Math.random() < 0.2) {
+                    y = Math.max(100, y - maxJumpHeight);
+                }
+
+                platforms.push({
+                    x: lastPlatformX + gap,
+                    y,
+                    width,
+                    height: 20
+                });
+
+                // Add coins above the platform
+                for (let coinX = lastPlatformX + gap; coinX < lastPlatformX + gap + width; coinX += 30) {
+                    coins.push({
+                        x: coinX,
+                        y: y - 40,
+                        radius: 10
+                    });
+                }
+
+                lastPlatformX += gap + width;
+                lastPlatformY = y;
+            }
+
+            levelStartTime = Date.now();
+            flag = { x: levelWidth - 50, y: groundY - 60, width: 20, height: 60 };
+        }
+
+        function createEnemy() {
+            let enemyTypes = [
+                { shape: 'triangle', color: '#0000FF', width: 32, height: 32, canJump: false },
+                { shape: 'rectangle', color: '#800080', width: 32, height: 32, canJump: true },
+                { shape: 'circle', color: '#008000', radius: 16, canJump: false }
+            ];
+            let type = enemyTypes[Math.floor(Math.random() * enemyTypes.length)];
+            return {
+                x: cameraX + viewportWidth,
+                y: groundY - (type.height || type.radius * 2),
+                ...type,
+                speed: Math.random() * 2 + 1,
+                jumpTimer: 0,
+                isJumping: false,
+                dy: 0
+            };
+        }
+
+        function update() {
+            if (gameOver) return;
+
+            // Scrolling
+            cameraX += scrollSpeed;
+            player.x += scrollSpeed;
+
+            // Player movement
+            if (keys['ArrowLeft']) player.x -= 5;
+            if (keys['ArrowRight']) player.x += 5;
+            if (keys['ArrowUp'] && !player.isJumping) {
+                player.dy = player.jumpPower;
+                player.isJumping = true;
+            }
+
+            // Apply gravity to player
+            player.dy += gravity;
+            player.y += player.dy;
+
+            // Collision detection for player
+            player.isJumping = true;
+            platforms.forEach(platform => {
+                if (player.y + player.height > platform.y &&
+                    player.y < platform.y + platform.height &&
+                    player.x + player.width > platform.x &&
+                    player.x < platform.x + platform.width) {
+                    player.y = platform.y - player.height;
+                    player.dy = 0;
+                    player.isJumping = false;
+                }
+            });
+
+            // Coin collection
+            coins = coins.filter(coin => {
+                if (Math.hypot(coin.x - player.x - player.width/2, coin.y - player.y - player.height/2) < player.width/2 + coin.radius) {
+                    score += 10;
+                    return false;
+                }
+                return true;
+            });
+
+            // Enemy movement and collision
+            enemies.forEach(enemy => {
+                enemy.x -= enemy.speed;
+
+                // Enemy jumping
+                if (enemy.canJump) {
+                    if (!enemy.isJumping) {
+                        enemy.jumpTimer++;
+                        if (enemy.jumpTimer > 120 && Math.random() < 0.02) {
+                            enemy.dy = -10;
+                            enemy.isJumping = true;
+                            enemy.jumpTimer = 0;
+                        }
+                    }
+
+                    enemy.dy += gravity;
+                    enemy.y += enemy.dy;
+
+                    // Ground collision for enemy
+                    if (enemy.y + (enemy.height || enemy.radius * 2) > groundY) {
+                        enemy.y = groundY - (enemy.height || enemy.radius * 2);
+                        enemy.dy = 0;
+                        enemy.isJumping = false;
+                    }
+                }
+
+                // Collision with player
+                if (player.x < enemy.x + (enemy.width || enemy.radius*2) &&
+                    player.x + player.width > enemy.x &&
+                    player.y < enemy.y + (enemy.height || enemy.radius*2) &&
+                    player.y + player.height > enemy.y) {
+                    if (player.dy > 0 && player.y + player.height < enemy.y + (enemy.height || enemy.radius)) {
+                        // Player jumped on enemy
+                        score += 20;
+                        enemy.defeated = true;
+                    } else {
+                        // Player hit by enemy
+                        lives--;
+                        if (lives <= 0) {
+                            gameOver = true;
+                        } else {
+                            player.x = cameraX + 50;
+                            player.y = 300;
+                        }
+                    }
+                }
+            });
+            enemies = enemies.filter(enemy => !enemy.defeated && enemy.x > cameraX - 100);
+
+            // Spawn new enemies
+            if (Math.random() < 0.01 + (level * 0.002)) {
+                enemies.push(createEnemy());
+            }
+
+            // Level completion
+            if (player.x + player.width > flag.x) {
+                level++;
+                generateLevel();
+                player.x = 50;
+                player.y = 300;
+                cameraX = 0;
+            }
+
+            // Keep player in bounds
+            player.x = Math.max(cameraX, Math.min(player.x, cameraX + viewportWidth - player.width));
+            player.y = Math.min(player.y, canvas.height - player.height);
+
+            // Falling off the bottom
+            if (player.y + player.height > canvas.height) {
+                lives--;
+                if (lives <= 0) {
+                    gameOver = true;
+                } else {
+                    player.x = cameraX + 50;
+                    player.y = 300;
+                }
+            }
+        }
+
+        function draw() {
+            // Clear canvas
+            ctx.fillStyle = '#87CEEB';  // Sky blue
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.save();
+            ctx.translate(-cameraX, 0);
+
+            // Draw platforms
+            ctx.fillStyle = '#00FF00';  // Green
+            platforms.forEach(platform => {
+                if (platform.x + platform.width > cameraX && platform.x < cameraX + viewportWidth) {
+                    ctx.fillRect(platform.x, platform.y, platform.width, platform.height);
+                }
+            });
+
+            // Draw player
+            ctx.fillStyle = '#FF0000';  // Red
+            ctx.fillRect(player.x, player.y, player.width, player.height);
+
+            // Draw coins
+            ctx.fillStyle = '#FFD700';  // Gold
+            coins.forEach(coin => {
+                if (coin.x + coin.radius > cameraX && coin.x - coin.radius < cameraX + viewportWidth) {
+                    ctx.beginPath();
+                    ctx.arc(coin.x, coin.y, coin.radius, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+            });
+
+            // Draw enemies
+            enemies.forEach(enemy => {
+                ctx.fillStyle = enemy.color;
+                if (enemy.shape === 'triangle') {
+                    ctx.beginPath();
+                    ctx.moveTo(enemy.x, enemy.y + enemy.height);
+                    ctx.lineTo(enemy.x + enemy.width/2, enemy.y);
+                    ctx.lineTo(enemy.x + enemy.width, enemy.y + enemy.height);
+                    ctx.closePath();
+                    ctx.fill();
+                } else if (enemy.shape === 'rectangle') {
+                    ctx.fillRect(enemy.x, enemy.y, enemy.width, enemy.height);
+                } else if (enemy.shape === 'circle') {
+                    ctx.beginPath();
+                    ctx.arc(enemy.x + enemy.radius, enemy.y + enemy.radius, enemy.radius, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+            });
+
+            // Draw flag
+            if (flag) {
+                ctx.fillStyle = '#FFFF00';  // Yellow
+                ctx.fillRect(flag.x, flag.y, flag.width, flag.height);
+            }
+
+            ctx.restore();
+
+            // Draw UI
+            ctx.fillStyle = '#000000';
+            ctx.font = '24px Arial';
+            ctx.fillText(`Score: ${score}`, 10, 30);
+            ctx.fillText(`Level: ${level}`, 10, 60);
+            ctx.fillText(`Lives: ${lives}`, 10, 90);
+
+            if (gameOver) {
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                ctx.fillStyle = '#FFFFFF';
+                ctx.font = '48px Arial';
+                ctx.fillText('Game Over', canvas.width/2 - 100, canvas.height/2 - 50);
+                ctx.font = '24px Arial';
+                ctx.fillText(`Final Score: ${score}`, canvas.width/2 - 70, canvas.height/2 + 10);
+                ctx.fillText('Click to Restart', canvas.width/2 - 70, canvas.height/2 + 50);
+            }
+        }
+
+        function gameLoop() {
+            update();
+            draw();
+            requestAnimationFrame(gameLoop);
+        }
+
+        canvas.addEventListener('click', () => {
+            if (gameOver) {
+                gameOver = false;
+                score = 0;
+                level = 1;
+                lives = 3;
+                player.x = 50;
+                player.y = 300;
+                cameraX = 0;
+                generateLevel();
+            }
+        });
+
+        generateLevel();
+        gameLoop();
+    </script>
+</body>
+</html>

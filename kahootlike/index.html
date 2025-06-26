@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Multiplayer</title>
+    <style>
+        /* ... [previous styles remain the same] ... */
+        .score-board {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .score-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .score-item:last-child {
+            border-bottom: none;
+        }
+
+        .score-name {
+            font-weight: bold;
+        }
+
+        .score-value {
+            color: #1a73e8;
+        }
+
+        .answer-status {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            margin: 2px;
+            background: #f0f0f0;
+        }
+
+        .answer-status.answered {
+            background: #34a853;
+            color: white;
+        }
+
+        .timer-bar {
+            height: 4px;
+            background: #1a73e8;
+            margin-bottom: 10px;
+            transition: width 1s linear;
+        }
+
+        .current-question {
+            font-size: 0.9em;
+            color: #666;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <!-- ... [previous HTML structure remains the same] ... -->
+
+    <script>
+        // Quiz Data
+        const quizData = {
+            code: "QUIZ123",
+            questions: [
+                {
+                    question: "Qual è la capitale dell'Italia?",
+                    options: ["Milano", "Roma", "Firenze", "Napoli"],
+                    correct: 1
+                },
+                {
+                    question: "Chi ha scritto la Divina Commedia?",
+                    options: ["Petrarca", "Dante Alighieri", "Boccaccio", "Leopardi"],
+                    correct: 1
+                },
+                {
+                    question: "Quanto fa 7 x 8?",
+                    options: ["54", "56", "58", "60"],
+                    correct: 1
+                }
+            ]
+        };
+
+        // Game State structure
+        const initialGameState = {
+            players: [],
+            readyPlayers: [],
+            answers: {},
+            scores: {},
+            currentQuestion: 0,
+            timer: 20,
+            gameStarted: false,
+            lastUpdate: Date.now()
+        };
+
+        let gameState = { ...initialGameState };
+        let currentPlayer = '';
+        let updateInterval;
+
+        // Initialize localStorage if needed
+        if (!localStorage.getItem('quizGameState')) {
+            localStorage.setItem('quizGameState', JSON.stringify(gameState));
+        }
+
+        // Sync function to update game state
+        function syncGameState(updateFn) {
+            const currentState = JSON.parse(localStorage.getItem('quizGameState'));
+            const newState = updateFn(currentState);
+            newState.lastUpdate = Date.now();
+            localStorage.setItem('quizGameState', JSON.stringify(newState));
+            gameState = newState;
+            updateUI();
+        }
+
+        // Start periodic state check
+        function startStateSync() {
+            updateInterval = setInterval(() => {
+                const storedState = JSON.parse(localStorage.getItem('quizGameState'));
+                if (storedState.lastUpdate > gameState.lastUpdate) {
+                    gameState = storedState;
+                    updateUI();
+                }
+            }, 1000);
+        }
+
+        function login() {
+            const name = document.getElementById('nameInput').value.trim();
+            const code = document.getElementById('codeInput').value.trim();
+
+            if (name && code === quizData.code) {
+                currentPlayer = name;
+                syncGameState(state => {
+                    if (!state.players.includes(name)) {
+                        state.players.push(name);
+                        state.scores[name] = 0;
+                        state.answers[name] = [];
+                    }
+                    return state;
+                });
+                
+                showWaitingRoom();
+                startStateSync();
+            } else {
+                alert('Nome o codice non valido!');
+            }
+        }
+
+        function updateUI() {
+            updatePlayersList();
+            updateScoreBoard();
+            updateQuizStatus();
+            checkGameProgress();
+        }
+
+        function updateScoreBoard() {
+            const scoreBoard = document.createElement('div');
+            scoreBoard.className = 'score-board';
+            scoreBoard.innerHTML = '<h3>Punteggi:</h3>';
+
+            Object.entries(gameState.scores)
+                .sort(([,a], [,b]) => b - a)
+                .forEach(([player, score]) => {
+                    const scoreItem = document.createElement('div');
+                    scoreItem.className = 'score-item';
+                    scoreItem.innerHTML = `
+                        <span class="score-name">${player}</span>
+                        <span class="score-value">${score} punti</span>
+                    `;
+                    scoreBoard.appendChild(scoreItem);
+                });
+
+            // Insert score board in both waiting and quiz sections
+            ['waitingSection', 'quizSection'].forEach(sectionId => {
+                const section = document.getElementById(sectionId);
+                const existingBoard = section.querySelector('.score-board');
+                if (existingBoard) {
+                    existingBoard.replaceWith(scoreBoard.cloneNode(true));
+                } else {
+                    section.insertBefore(scoreBoard.cloneNode(true), section.firstChild);
+                }
+            });
+        }
+
+        function toggleReady() {
+            syncGameState(state => {
+                if (state.readyPlayers.includes(currentPlayer)) {
+                    state.readyPlayers = state.readyPlayers.filter(p => p !== currentPlayer);
+                } else {
+                    state.readyPlayers.push(currentPlayer);
+                }
+                return state;
+            });
+        }
+
+        function checkGameProgress() {
+            if (gameState.players.length === gameState.readyPlayers.length && 
+                gameState.players.length > 0 && 
+                !gameState.gameStarted) {
+                syncGameState(state => {
+                    state.gameStarted = true;
+                    return state;
+                });
+                startQuiz();
+            }
+        }
+
+        function submitAnswer(answerIndex) {
+            if (!gameState.answers[currentPlayer][gameState.currentQuestion]) {
+                syncGameState(state => {
+                    state.answers[currentPlayer][gameState.currentQuestion] = answerIndex;
+                    if (answerIndex === quizData.questions[state.currentQuestion].correct) {
+                        state.scores[currentPlayer]++;
+                    }
+                    return state;
+                });
+            }
+        }
+
+        function updateQuizStatus() {
+            if (gameState.gameStarted) {
+                const allAnswered = gameState.players.every(player => 
+                    gameState.answers[player][gameState.currentQuestion] !== undefined
+                );
+
+                if (allAnswered && gameState.currentQuestion < quizData.questions.length - 1) {
+                    syncGameState(state => {
+                        state.currentQuestion++;
+                        return state;
+                    });
+                    showQuestion();
+                } else if (allAnswered && gameState.currentQuestion === quizData.questions.length - 1) {
+                    showResults();
+                }
+            }
+        }
+
+        function showQuestion() {
+            document.getElementById('waitingSection').classList.add('hidden');
+            document.getElementById('quizSection').classList.remove('hidden');
+
+            const questionData = quizData.questions[gameState.currentQuestion];
+            
+            // Show current question number
+            const questionHeader = document.createElement('div');
+            questionHeader.className = 'current-question';
+            questionHeader.textContent = `Domanda ${gameState.currentQuestion + 1} di ${quizData.questions.length}`;
+            
+            document.getElementById('question').textContent = questionData.question;
+            const optionsContainer = document.getElementById('options');
+            optionsContainer.innerHTML = '';
+
+            questionData.options.forEach((option, index) => {
+                const button = document.createElement('button');
+                button.className = 'option';
+                button.textContent = option;
+                button.onclick = () => submitAnswer(index);
+                
+                // Disable if already answered
+                if (gameState.answers[currentPlayer][gameState.currentQuestion] !== undefined) {
+                    button.disabled = true;
+                }
+                
+                optionsContainer.appendChild(button);
+            });
+
+            updateAnswersStatus();
+        }
+
+        function updateAnswersStatus() {
+            const statusContainer = document.getElementById('answersStatus');
+            statusContainer.innerHTML = '<h3>Stato risposte:</h3>';
+            
+            gameState.players.forEach(player => {
+                const hasAnswered = gameState.answers[player][gameState.currentQuestion] !== undefined;
+                const status = document.createElement('div');
+                status.className = `answer-status ${hasAnswered ? 'answered' : ''}`;
+                status.textContent = `${player}: ${hasAnswered ? '✓' : '...'}`;
+                statusContainer.appendChild(status);
+            });
+        }
+
+        // Start the app
+        window.onload = () => {
+            // Clear localStorage when the first player loads the page
+            if (document.cookie.indexOf('quizInitialized') === -1) {
+                localStorage.clear();
+                localStorage.setItem('quizGameState', JSON.stringify(initialGameState));
+                document.cookie = 'quizInitialized=true';
+            }
+        };
+
+        // Cleanup on window close
+        window.onbeforeunload = () => {
+            if (currentPlayer) {
+                syncGameState(state => {
+                    state.players = state.players.filter(p => p !== currentPlayer);
+                    state.readyPlayers = state.readyPlayers.filter(p => p !== currentPlayer);
+                    delete state.scores[currentPlayer];
+                    delete state.answers[currentPlayer];
+                    return state;
+                });
+            }
+            clearInterval(updateInterval);
+        };
+    </script>
+</body>
+</html>

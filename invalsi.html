@@ -1,0 +1,229 @@
+</head>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+
+
+
+</head>
+
+
+<body>
+
+
+      <div class="jumbotron">
+        <div class="container">
+
+          <table>
+              <td>
+              <center><img src="https://invalsi-areaprove.cineca.it/immagini/logo.jpg"></center><br>
+              </td>
+              
+              <td>
+              <h1 class="display-3">INVALSI</h1>
+              </td>
+          </table>
+
+<h3>INDICE:</h3>
+<div id='scribe'></div>
+<script type="text/javascript">
+
+/*                            ISTRUZIONI: come si usa
+["titolo"],                          Solo un item = Titolo
+["p", "questo è un paragrafo"]       "p" = paragrafo, secondo item=contenuto del par.
+["testo", "link cui indirizza"]      in tutti gli altri casi, testo=quello che appare, 2° item=address
+*/
+
+// put addresses down here, read the instructions above
+let data = [
+    ["HOME", "index.html"],
+
+
+["Esempi di prove invalsi per le seconde"],
+  
+["p",`<h3>Matematica</h3>
+  <ul>
+    <li>
+<a class="btn btn-warning" 
+href="https://www.invalsiopen.it/prove_statiche/G10/MAT/2019/Esempi_domande_MAT_10.pdf" 
+role="button">Esempi prove invalsi di Matematica per le seconde</a> 
+</li>
+<li>
+<a class="btn btn-warning" 
+href="https://www.invalsiopen.it/percorsi-strumenti-invalsi/matematica/mettiamoci-alla-prova/" 
+role="button">Nuove prove di Matematica (grado 10)</a> 
+
+  </li>
+
+    <li>
+<a class="btn btn-warning" 
+href="https://online.scuola.zanichelli.it/invalsi/seconda-superiore/seconda-superiore-matematica/" 
+role="button">Esempi prove invalsi di seconda di Matematica (zanichelli)</a> 
+</li>
+</ul>
+
+<h3>Italiano</h3>
+<ul>
+<li>
+<a class="btn btn-warning" 
+href="https://www.invalsiopen.it/prove_statiche/G10/ITA/2019/ITA_10_EX1/index.html" 
+role="button">Prove di Italiano(clicca in basso il pulsante "successivo")</a> 
+  </li>
+<li>
+<a class="btn btn-warning" 
+href="https://www.invalsiopen.it/mettiti-alla-prova-con-le-domande-di-grado-10/?utm_source=newsletter&utm_medium=email&utm_campaign=maggio-2023#:~:text=Due%20esempi%20di%20domanda%20di%20Italiano" 
+role="button">2 esempi di prove per le seconde</a> 
+</li>
+
+
+  <li>
+<a class="btn btn-warning" 
+href="https://www.invalsiopen.it/percorsi-strumenti-invalsi/italiano/mettiamoci-alla-prova/" 
+role="button">Nuove prove di italiano</a> 
+
+  </li>
+  <li>
+<a class="btn btn-warning" 
+href="https://online.scuola.zanichelli.it/invalsi/seconda-superiore/seconda-superiore-italiano/" 
+role="button">Prove di italiano (zanichelli)</a> 
+  </li>
+</ul>
+</p>`],
+
+["Come svolgere le esercitazioni sulle prove invalsi"],
+
+["p",`<p>
+  Portare gli alunni di seconda un paio di volte a svolgere le esercitazioni sulle prove Invalsi presso i laboratori. In alternativa, i test possono essere svolti anche in classe, prendendo a prestito dei tablet o dei pc, oppure svolgendo gli esercizi sul telefonino. Potete far andare gli alunni su https://formazione.github.io e far cliccare sui pulsanti che riguardano i collegamenti alle esercitazioni. Si può anche generare il QR code della pagina alla quale devono collegarsi, cliccando con il tasto destro dentro la pagina del browser (usare Chrome). Vedrete comparire il menu contestuale in cui una delle voci riguarda la generazione del QR CODE della pagina. A quel punto gli alunni che hanno un Iphone dovranno semplicemente inquadrare con la fotocamera il QR CODE, mentre per gli alunni che hanno un telefonino Android, basterà aprire (o scaricare e aprire) l'app gratuita Google Lens e inquadrare con quella il QR CODE.<br>
+  <img src="https://media.borsainside.com/app/uploads/2023/03/15125716/google-lens.jpg" width=200><br>
+  <img src="https://i0.wp.com/www.softwarert.com/wp-content/uploads/2020/09/convert-url-links-qr-code-chrome-web-browser-windows.jpg?fit=700%2C488&ssl=1"><br>
+Il calendario verrà definito prossimamente.
+  </p>
+<a class="btn btn-danger" 
+href="https://docs.google.com/document/d/1ey1W1_WHUtFwvzUXDF8Mpf9eXropmhh1/edit?usp=sharing&ouid=109902383764133052806&rtpof=true&sd=true" 
+role="button">CALENDARIO PROSSIME PROVE INVALSI CLASSI SECONDE</a> 
+</p>`],
+
+
+
+
+
+
+
+
+
+["REGISTRO ESERCITAZIONI PROVE INVALSI DI QUINTA"],
+//<!-- <img src="https://www.miur.gov.it/web/guest/"> -->
+["p",`<p>
+Inserite le date del giorno in cui si effettuano le esercitazioni sulle prove INVALSI.
+Nel PDM sono state indicate le priorità per la nostra scuola che consistono nel migliorare (o almento consolidare) i risultati degli alunni nelle prove INVALSI. Per questo è necessario far esercitare gli alunni su queste tipologie dei prove standardizzate, portandoli nei laboratori o assegnado le esercitazioni da svolgere autonomamente a casa.
+  </p>
+<a class="btn btn-warning" 
+href="https://docs.google.com/document/d/1b_fTzsUXXzqJG3f6UYsAecPabudtsbI9bTcjLbHz5v8/edit?usp=sharing" 
+role="button">REGISTRO ESERCITAZIONI PROVE INVALSI</a> 
+<br><br>
+
+<a class="btn btn-warning" 
+href="https://www.invalsiopen.it/domande-invalsi-interattive-grado-13/" 
+role="button">NUOVI ESEMPI DI ESERCITAZIONI SULLE PROVE INVALSI</a> 
+<br><br>
+`],
+
+
+
+["PROVE PARALLELE 2023"],             //                PROVE PARALLELE 
+["I QUADRIMESTRE", 
+  "https://docs.google.com/spreadsheets/d/1PmZ2UJGFf0rdgQY5mAWZdkKhyYVwn6Mwn0Suo_xoRTU/edit?usp=sharing",],
+["II QUADRIMESTRE",
+  "https://docs.google.com/spreadsheets/d/1ZIxjHSIlmiHYCDEfbHeRKUPkTj8RIxi7eqkqhQJcJgA/edit?usp=sharing"],
+
+["PROVE PARALLELE 2022"],
+["I QUADRIMESTRE",
+  "https://drive.google.com/file/d/1u67N-cf5mXA8Z2vj4PpozSsNZORpTs6I/view?usp=sharing"],
+["II QUADRIMESTRE",
+  "https://docs.google.com/spreadsheets/d/1fYeyyM-BS4VpcHn4mRzPk9xR623kkNXB47gLsXhhbHc/edit?usp=sharing"],
+
+["Educazione civica programmi a.s. 2022 - 2023","https://formazione.github.io/edciv_home.html"],
+
+["Quiz"],
+["p",`<p>
+Quiz vari
+<p>
+<a class="btn btn-warning" 
+href="https://formazione.github.io/quiz.html" 
+role="button">Quiz</a> 
+
+`]
+]
+// do not delete this square parenthesis up here
+
+
+// ------------------- INDICE -------------------
+
+function changecolor(element){
+  element.style.color = "gold";
+  element.style.background = "red";
+}
+function gobacktocolor(element){
+  element.style.color = "red";
+  element.style.background = "gold";
+}
+
+for (let n in data){
+  // VERIFICA SE E' UN TITOLO (SE HA UN SOLO DATO):
+  if (data[n].length == 1){
+    scribe.innerHTML += "<li>[ <a href='#" + data[n] + "'><b style='color:red;background-color:gold' onmouseover='changecolor(this)' onmouseout='gobacktocolor(this)'>" + data[n] + "</b></a> ]  ";
+  }}
+
+
+// -------------------- DOPO INDICE --------------------
+// HERE THE BUTTONS WITH THE LINKS ARE SHOWN
+for (let n in data){
+  // VERIFICA SE E' UN TITOLO (SE HA UN SOLO DATO):
+  if (data[n].length == 1){
+    // scribe.innerHTML += "<hr>"
+    scribe.innerHTML += "<br><center><h2 style='color:navy;background-color:gold'><a name='"+data[n]+"'>" + data[n] + "</a></h2></center>";}
+
+    // IMMAGINE
+
+  if ("img".search(data[n][0])) {
+    scribe.innerHTML += "<li>[ <a href='#" + data[n][1] + "'><b style='color:red;background-color:gold' onmouseover='changecolor(this)' onmouseout='gobacktocolor(this)'>" + data[n][1] + "</b></a> ]  ";
+  }
+
+   // PARAGRAGO o link con immagini o senza
+  else{
+
+    // PARAGRAFO
+    if (data[n][0]== "p"){
+      scribe.innerHTML += "<p>" + data[n][1] + "</p>"}
+  
+    // LILNK SENZA IMMAGINI
+    else if (data[n].length == 2) {
+      scribe.innerHTML += 
+        "<a class='btn btn-warning' href='" + data[n][1] +
+        "' role='button'>" + data[n][0] + 
+        "</a> </p>";}
+
+    // LINK CON IMMAGINE SUCCESSIVA AL PULSANTE PICCOLA
+    else if (data[n].length==3){
+      if (data[n][2].substring(0,3) == "btn"){
+              scribe.innerHTML +=
+        "<a class='"+data[n][2]+"' href='" + data[n][1] +
+        "' role='button'>" + data[n][0] + 
+        "</a></p>";}
+      }
+      else {
+
+      scribe.innerHTML +=
+        "<a class='btn btn-warning' href='" + data[n][1] +
+        "' role='button'>" + data[n][0] + 
+        "</a><img src='" + data[n][2]  + "' width=30>' </p>";}
+      }
+} 
+
+// scribe.innerHTML += "<hr>" // Linea dopo gruppo di link
+
+</script>
+    </div>
+
+    <!-- copy until here to put this in script and styles in the blog -->
+      </div>

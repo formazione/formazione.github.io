@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz: Verb 'to have' in Simple Present</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .quiz-container {
+            max-width: 600px;
+            margin: 2rem auto;
+        }
+        .verb-buttons {
+            display: inline-flex;
+            gap: 10px;
+        }
+        .emoji {
+            font-size: 3rem;
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: none;
+        }
+        @keyframes jump {
+            0%, 100% { transform: translateY(0) translateX(-50%); }
+            50% { transform: translateY(-20px) translateX(-50%); }
+        }
+        .jumping {
+            display: inline-block;
+            animation: jump 0.5s ease infinite;
+        }
+    </style>
+</head>
+<body>
+    <div class="container quiz-container">
+        <div class="card shadow">
+            <div class="card-body">
+                <h1 class="card-title text-center mb-4">Quiz: Verb 'to have' in Simple Present</h1>
+                <div id="quiz-area">
+                    <p id="question" class="lead text-center"></p>
+                </div>
+                <p id="score" class="text-center mt-3">Score: 0</p>
+            </div>
+        </div>
+    </div>
+    <div id="emoji" class="emoji">😊</div>
+
+    <script>
+        const allQuestions = [
+            { subject: "I", correct: "have", incorrect: "has", object: "a cat" },
+            { subject: "You", correct: "have", incorrect: "has", object: "a dog" },
+            { subject: "He", correct: "has", incorrect: "have", object: "a car" },
+            { subject: "She", correct: "has", incorrect: "have", object: "a book" },
+            { subject: "It", correct: "has", incorrect: "have", object: "a tail" },
+            { subject: "We", correct: "have", incorrect: "has", object: "a house" },
+            { subject: "They", correct: "have", incorrect: "has", object: "bikes" },
+            { subject: "I", correct: "have", incorrect: "has", object: "a computer" },
+            { subject: "You", correct: "have", incorrect: "has", object: "a phone" },
+            { subject: "He", correct: "has", incorrect: "have", object: "friends" },
+            { subject: "She", correct: "has", incorrect: "have", object: "a job" },
+            { subject: "It", correct: "has", incorrect: "have", object: "wings" },
+            { subject: "We", correct: "have", incorrect: "has", object: "a plan" },
+            { subject: "They", correct: "have", incorrect: "has", object: "a meeting" },
+            { subject: "I", correct: "have", incorrect: "has", object: "an idea" },
+            { subject: "You", correct: "have", incorrect: "has", object: "a ticket" },
+            { subject: "He", correct: "has", incorrect: "have", object: "a sister" },
+            { subject: "She", correct: "has", incorrect: "have", object: "a brother" },
+            { subject: "It", correct: "has", incorrect: "have", object: "leaves" },
+            { subject: "We", correct: "have", incorrect: "has", object: "a problem" },
+            { subject: "They", correct: "have", incorrect: "has", object: "a solution" },
+            { subject: "I", correct: "have", incorrect: "has", object: "an appointment" },
+            { subject: "You", correct: "have", incorrect: "has", object: "a question" },
+            { subject: "He", correct: "has", incorrect: "have", object: "an answer" },
+            { subject: "She", correct: "has", incorrect: "have", object: "a hobby" },
+            { subject: "It", correct: "has", incorrect: "have", object: "a purpose" },
+            { subject: "We", correct: "have", incorrect: "has", object: "a goal" },
+            { subject: "They", correct: "have", incorrect: "has", object: "a team" },
+            { subject: "I", correct: "have", incorrect: "has", object: "experience" },
+            { subject: "You", correct: "have", incorrect: "has", object: "knowledge" },
+            { subject: "He", correct: "has", incorrect: "have", object: "skills" },
+            { subject: "She", correct: "has", incorrect: "have", object: "talent" },
+            { subject: "It", correct: "has", incorrect: "have", object: "a function" },
+            { subject: "We", correct: "have", incorrect: "has", object: "a vision" },
+            { subject: "They", correct: "have", incorrect: "has", object: "a mission" },
+            { subject: "I", correct: "have", incorrect: "has", object: "a dream" },
+            { subject: "You", correct: "have", incorrect: "has", object: "potential" },
+            { subject: "He", correct: "has", incorrect: "have", object: "ambition" },
+            { subject: "She", correct: "has", incorrect: "have", object: "determination" },
+            { subject: "It", correct: "has", incorrect: "have", object: "a feature" },
+            { subject: "We", correct: "have", incorrect: "has", object: "resources" },
+            { subject: "They", correct: "have", incorrect: "has", object: "opportunities" },
+            { subject: "I", correct: "have", incorrect: "has", object: "responsibilities" },
+            { subject: "You", correct: "have", incorrect: "has", object: "duties" },
+            { subject: "He", correct: "has", incorrect: "have", object: "rights" },
+            { subject: "She", correct: "has", incorrect: "have", object: "obligations" },
+            { subject: "It", correct: "has", incorrect: "have", object: "a purpose" },
+            { subject: "We", correct: "have", incorrect: "has", object: "a strategy" },
+            { subject: "They", correct: "have", incorrect: "has", object: "tactics" },
+            { subject: "I", correct: "have", incorrect: "has", object: "a routine" }
+        ];
+
+        const positiveResponses = [
+            "Great job!",
+            "Excellent!",
+            "Well done!",
+            "You got it!",
+            "Perfect!",
+            "Awesome!",
+            "Fantastic!",
+            "Brilliant!",
+            "You're a star!",
+            "Keep it up!"
+        ];
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let selectedQuestions = [];
+
+        function selectRandomQuestions() {
+            selectedQuestions = [];
+            const shuffled = [...allQuestions].sort(() => 0.5 - Math.random());
+            selectedQuestions = shuffled.slice(0, 10);
+        }
+
+        function displayQuestion() {
+            const question = selectedQuestions[currentQuestionIndex];
+            const questionElement = document.getElementById('question');
+            questionElement.innerHTML = `${question.subject} <span class="verb-buttons"></span> ${question.object}.`;
+            
+            const verbButtons = questionElement.querySelector('.verb-buttons');
+            const buttons = [
+                { text: question.correct, correct: true },
+                { text: question.incorrect, correct: false }
+            ].sort(() => Math.random() - 0.5);
+
+            buttons.forEach(button => {
+                const btn = document.createElement('button');
+                btn.textContent = button.text;
+                btn.className = 'btn btn-primary btn-sm';
+                btn.onclick = () => checkAnswer(button.correct);
+                verbButtons.appendChild(btn);
+            });
+        }
+
+        function speak(text) {
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'en-US';
+            utterance.rate = 0.8;
+            speechSynthesis.speak(utterance);
+        }
+
+        function checkAnswer(isCorrect) {
+            if (isCorrect) {
+                score++;
+                const response = positiveResponses[Math.floor(Math.random() * positiveResponses.length)];
+                speak(response);
+                showJumpingEmoji();
+            } else {
+                speak("Incorrect");
+            }
+
+            currentQuestionIndex++;
+            if (currentQuestionIndex < selectedQuestions.length) {
+                displayQuestion();
+            } else {
+                endGame();
+            }
+
+            document.getElementById('score').textContent = `Score: ${score}`;
+        }
+
+        function showJumpingEmoji() {
+            const emoji = document.getElementById('emoji');
+            emoji.classList.add('jumping');
+            setTimeout(() => {
+                emoji.classList.remove('jumping');
+            }, 1000);
+        }
+
+        function endGame() {
+            let quizArea = document.getElementById('quiz-area');
+            quizArea.innerHTML = `
+                <h2 class="text-center mb-4">Quiz completed!</h2>
+                <p class="lead text-center">Your final score is ${score} out of ${selectedQuestions.length}.</p>
+                <h3 class="text-center mt-4 mb-3">Correct Sentences:</h3>
+                <ul class="list-group">
+                    ${selectedQuestions.map(q => `<li class="list-group-item">${q.subject} ${q.correct} ${q.object}.</li>`).join('')}
+                </ul>
+                <button onclick="restartQuiz()" class="btn btn-primary mt-3">Restart Quiz</button>
+            `;
+            speak(`Your final score is ${score} out of ${selectedQuestions.length}. Well done!`);
+        }
+
+        function restartQuiz() {
+            currentQuestionIndex = 0;
+            score = 0;
+            selectRandomQuestions();
+            displayQuestion();
+            document.getElementById('score').textContent = 'Score: 0';
+        }
+
+        selectRandomQuestions();
+        displayQuestion();
+    </script>
+</body>
+</html>

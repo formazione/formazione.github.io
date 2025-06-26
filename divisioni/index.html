@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test di Matematica</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-size: 1.5rem;
+            margin: 20px;
+        }
+        .btn-lg {
+            font-size: 1.5rem;
+        }
+        .hidden {
+            display: none;
+        }
+        .progress {
+            height: 2rem;
+            font-size: 1rem;
+        }
+    </style>
+</head>
+<body class="text-center">
+    <div class="container">
+        <h1 class="my-4">Test di Matematica - Livello <span id="level">1</span></h1>
+        <div class="progress mb-4">
+            <div id="progress-bar" class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0/10</div>
+        </div>
+        <div id="question-container" class="mb-4"></div>
+        <div id="answer-buttons" class="btn-group-vertical mb-4"></div>
+        <p id="result" class="lead"></p>
+        <button id="next-button" onclick="nextQuestion()" class="btn btn-primary btn-lg hidden">Prossima Domanda</button>
+        <button id="restart-button" onclick="startTest()" class="btn btn-secondary btn-lg hidden">Ripeti Test</button>
+    </div>
+
+    <script>
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let level = 1;
+
+        function generateQuestion(level) {
+            const max = level * 10;
+            const num1 = Math.floor(Math.random() * max) + 1;
+            const num2 = Math.floor(Math.random() * max) + 1;
+            const product = num1 * num2;  // Ensure we have whole number answers
+            const answer = num1;
+            const options = [answer];
+            while (options.length < 4) {
+                const option = Math.floor(Math.random() * max) + 1;
+                if (!options.includes(option)) {
+                    options.push(option);
+                }
+            }
+            options.sort(() => Math.random() - 0.5);
+            return {
+                question: `${product} ÷ ${num2} = ?`,
+                options: options,
+                answer: answer
+            };
+        }
+
+        let questions = Array.from({ length: 10 }, () => generateQuestion(level));
+
+        function loadQuestion() {
+            if (currentQuestionIndex < questions.length) {
+                const questionContainer = document.getElementById('question-container');
+                const answerButtons = document.getElementById('answer-buttons');
+                const question = questions[currentQuestionIndex];
+                questionContainer.innerHTML = `<p>${question.question}</p>`;
+                answerButtons.innerHTML = '';
+                question.options.forEach(option => {
+                    const button = document.createElement('button');
+                    button.className = 'btn btn-outline-primary btn-lg mb-2';
+                    button.innerText = option;
+                    button.onclick = () => checkAnswer(option, button);
+                    answerButtons.appendChild(button);
+                });
+                document.getElementById('next-button').classList.add('hidden');
+                updateProgressBar();
+            } else {
+                showFinalResult();
+            }
+        }
+
+        function checkAnswer(selectedAnswer, button) {
+            const correctAnswer = questions[currentQuestionIndex].answer;
+            if (selectedAnswer === correctAnswer) {
+                score++;
+                button.className = 'btn btn-success btn-lg mb-2';
+                document.getElementById('result').textContent = 'Corretto!';
+            } else {
+                button.className = 'btn btn-danger btn-lg mb-2';
+                document.getElementById('result').textContent = `Sbagliato! La risposta corretta è ${correctAnswer}.`;
+            }
+            document.querySelectorAll('#answer-buttons button').forEach(btn => btn.disabled = true);
+            currentQuestionIndex++;
+            document.getElementById('next-button').classList.remove('hidden');
+        }
+
+        function nextQuestion() {
+            document.getElementById('result').textContent = '';
+            loadQuestion();
+        }
+
+        function showFinalResult() {
+            document.getElementById('question-container').innerHTML = '';
+            document.getElementById('answer-buttons').innerHTML = '';
+            document.getElementById('next-button').classList.add('hidden');
+            const resultMessage = `Hai risposto correttamente a ${score} domande su 10.`;
+            document.getElementById('result').textContent = resultMessage;
+            document.getElementById('restart-button').classList.remove('hidden');
+            if (score > 7) {
+                level++;
+                document.getElementById('result').textContent += ' Ottimo lavoro! Il prossimo test sarà più difficile.';
+            } else {
+                level = 1;
+            }
+        }
+
+        function startTest() {
+            currentQuestionIndex = 0;
+            score = 0;
+            document.getElementById('result').textContent = '';
+            document.getElementById('restart-button').classList.add('hidden');
+            questions = Array.from({ length: 10 }, () => generateQuestion(level));
+            document.getElementById('level').textContent = level;
+            loadQuestion();
+        }
+
+        function updateProgressBar() {
+            const progressBar = document.getElementById('progress-bar');
+            const progress = ((currentQuestionIndex) / questions.length) * 100;
+            progressBar.style.width = `${progress}%`;
+            progressBar.setAttribute('aria-valuenow', progress);
+            progressBar.textContent = `${currentQuestionIndex}/10`;
+        }
+
+        window.onload = startTest;
+    </script>
+</body>
+</html>

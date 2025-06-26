@@ -1,0 +1,16 @@
+
+2d platform game
+https://youtu.be/8b1Tfxr4pBU
+https://pythonprogramming.altervista.org/a-2d-platform-game-in-minutes-with-claude/
+
+Memory game
+https://youtu.be/XXCnaCwJAhg
+
+Presentation with Claude
+https://youtu.be/dFxk9YShlRs
+
+2d shooters? Why not
+https://youtu.be/nOhjPO9njxU
+
+2d maze game
+https://youtu.be/2KfeZ0OmbhE

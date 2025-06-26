@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz: Verb 'to be' in Present Simple</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .quiz-container {
+            max-width: 600px;
+            margin: 2rem auto;
+        }
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1rem;
+        }
+        .emoji {
+            font-size: 3rem;
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: none;
+        }
+        @keyframes jump {
+            0%, 100% { transform: translateY(0) translateX(-50%); }
+            50% { transform: translateY(-20px) translateX(-50%); }
+        }
+        .jumping {
+            display: inline-block;
+            animation: jump 0.5s ease infinite;
+        }
+    </style>
+</head>
+<body>
+    <div class="container quiz-container">
+        <div class="card shadow">
+            <div class="card-body">
+                <h1 class="card-title text-center mb-4">Quiz: Verb 'to be' in Present Simple</h1>
+                <div id="quiz-area">
+                    <p id="question" class="lead text-center"></p>
+                    <div class="button-container">
+                        <button onclick="checkAnswer(false)" class="btn btn-outline-danger btn-lg"><i class="bi bi-hand-thumbs-down-fill"></i></button>
+                        <button onclick="checkAnswer(true)" class="btn btn-outline-success btn-lg"><i class="bi bi-hand-thumbs-up-fill"></i></button>
+                    </div>
+                </div>
+                <p id="score" class="text-center mt-3">Score: 0</p>
+            </div>
+        </div>
+    </div>
+    <div id="emoji" class="emoji">😊</div>
+
+    <script>
+        const allQuestions = [
+            { question: "I am happy.", answer: true, correct: "I am happy." },
+            { question: "You is a student.", answer: false, correct: "You are a student." },
+            { question: "He are tall.", answer: false, correct: "He is tall." },
+            { question: "She is beautiful.", answer: true, correct: "She is beautiful." },
+            { question: "It are cold today.", answer: false, correct: "It is cold today." },
+            { question: "We is friends.", answer: false, correct: "We are friends." },
+            { question: "They are busy.", answer: true, correct: "They are busy." },
+            { question: "I is tired.", answer: false, correct: "I am tired." },
+            { question: "You are kind.", answer: true, correct: "You are kind." },
+            { question: "He am a doctor.", answer: false, correct: "He is a doctor." },
+            { question: "She are an engineer.", answer: false, correct: "She is an engineer." },
+            { question: "It is raining.", answer: true, correct: "It is raining." },
+            { question: "We am excited.", answer: false, correct: "We are excited." },
+            { question: "They is late.", answer: false, correct: "They are late." },
+            { question: "I are a teacher.", answer: false, correct: "I am a teacher." },
+            { question: "You is clever.", answer: false, correct: "You are clever." },
+            { question: "He is funny.", answer: true, correct: "He is funny." },
+            { question: "She am tall.", answer: false, correct: "She is tall." },
+            { question: "It are sunny today.", answer: false, correct: "It is sunny today." },
+            { question: "We are happy.", answer: true, correct: "We are happy." },
+            { question: "They am students.", answer: false, correct: "They are students." },
+            { question: "I am sleepy.", answer: true, correct: "I am sleepy." },
+            { question: "You are smart.", answer: true, correct: "You are smart." },
+            { question: "He are busy.", answer: false, correct: "He is busy." },
+            { question: "She is kind.", answer: true, correct: "She is kind." },
+            { question: "It is hot.", answer: true, correct: "It is hot." },
+            { question: "We is tired.", answer: false, correct: "We are tired." },
+            { question: "They are friendly.", answer: true, correct: "They are friendly." },
+            { question: "I is hungry.", answer: false, correct: "I am hungry." },
+            { question: "You am tall.", answer: false, correct: "You are tall." },
+            { question: "He is handsome.", answer: true, correct: "He is handsome." },
+            { question: "She are smart.", answer: false, correct: "She is smart." },
+            { question: "It am cold.", answer: false, correct: "It is cold." },
+            { question: "We are excited.", answer: true, correct: "We are excited." },
+            { question: "They is happy.", answer: false, correct: "They are happy." },
+            { question: "I are a doctor.", answer: false, correct: "I am a doctor." },
+            { question: "You is funny.", answer: false, correct: "You are funny." },
+            { question: "He am tall.", answer: false, correct: "He is tall." },
+            { question: "She is an artist.", answer: true, correct: "She is an artist." },
+            { question: "It are interesting.", answer: false, correct: "It is interesting." },
+            { question: "We am friends.", answer: false, correct: "We are friends." },
+            { question: "They are late.", answer: true, correct: "They are late." },
+            { question: "I am an engineer.", answer: true, correct: "I am an engineer." },
+            { question: "You are funny.", answer: true, correct: "You are funny." },
+            { question: "He is busy.", answer: true, correct: "He is busy." },
+            { question: "She am kind.", answer: false, correct: "She is kind." },
+            { question: "It is interesting.", answer: true, correct: "It is interesting." },
+            { question: "We are excited.", answer: true, correct: "We are excited." },
+            { question: "They is students.", answer: false, correct: "They are students." },
+            { question: "I is happy.", answer: false, correct: "I am happy." },
+            { question: "You am clever.", answer: false, correct: "You are clever." },
+            { question: "He are funny.", answer: false, correct: "He is funny." },
+            { question: "She is tall.", answer: true, correct: "She is tall." },
+            { question: "It am sunny today.", answer: false, correct: "It is sunny today." },
+            { question: "We is happy.", answer: false, correct: "We are happy." },
+            { question: "They are students.", answer: true, correct: "They are students." },
+            { question: "I am tired.", answer: true, correct: "I am tired." },
+            { question: "You is smart.", answer: false, correct: "You are smart." },
+            { question: "He is busy.", answer: true, correct: "He is busy." },
+            { question: "She are kind.", answer: false, correct: "She is kind." },
+            { question: "It is cold.", answer: true, correct: "It is cold." },
+            { question: "We are tired.", answer: true, correct: "We are tired." },
+            { question: "They is friendly.", answer: false, correct: "They are friendly." },
+            { question: "I am hungry.", answer: true, correct: "I am hungry." },
+            { question: "You are tall.", answer: true, correct: "You are tall." },
+            { question: "He am handsome.", answer: false, correct: "He is handsome." },
+            { question: "She is smart.", answer: true, correct: "She is smart." },
+            { question: "It is cold.", answer: true, correct: "It is cold." },
+            { question: "We is excited.", answer: false, correct: "We are excited." },
+            { question: "They are happy.", answer: true, correct: "They are happy." },
+            { question: "I am a teacher.", answer: true, correct: "I am a teacher." },
+            { question: "You are funny.", answer: true, correct: "You are funny." },
+            { question: "He is tall.", answer: true, correct: "He is tall." },
+            { question: "She am an artist.", answer: false, correct: "She is an artist." },
+            { question: "It is interesting.", answer: true, correct: "It is interesting." },
+            { question: "We are friends.", answer: true, correct: "We are friends." },
+            { question: "They am late.", answer: false, correct: "They are late." },
+            { question: "I is an engineer.", answer: false, correct: "I am an engineer." },
+            { question: "You am funny.", answer: false, correct: "You are funny." },
+            { question: "He are busy.", answer: false, correct: "He is busy." },
+            { question: "She is kind.", answer: true, correct: "She is kind." },
+            { question: "It are interesting.", answer: false, correct: "It is interesting." },
+            { question: "We am excited.", answer: false, correct: "We are excited." },
+            { question: "They are students.", answer: true, correct: "They are students." },
+            { question: "I am happy.", answer: true, correct: "I am happy." },
+            { question: "You are clever.", answer: true, correct: "You are clever." },
+            { question: "He is funny.", answer: true, correct: "He is funny." },
+            { question: "She is tall.", answer: true, correct: "She is tall." },
+            { question: "It is sunny today.", answer: true, correct: "It is sunny today." },
+            { question: "We are happy.", answer: true, correct: "We are happy." },
+            { question: "They is students.", answer: false, correct: "They are students." },
+            { question: "I are tired.", answer: false, correct: "I am tired." },
+            { question: "You are smart.", answer: true, correct: "You are smart." },
+            { question: "He is busy.", answer: true, correct: "He is busy." },
+            { question: "She is kind.", answer: true, correct: "She is kind." },
+            { question: "It are cold.", answer: false, correct: "It is cold." },
+            { question: "We are tired.", answer: true, correct: "We are tired." },
+            { question: "They are friendly.", answer: true, correct: "They are friendly." },
+            { question: "I am hungry.", answer: true, correct: "I am hungry." },
+            { question: "You is tall.", answer: false, correct: "You are tall." },
+            { question: "He is handsome.", answer: true, correct: "He is handsome." },
+            { question: "She is smart.", answer: true, correct: "She is smart." }
+        ];
+
+        const positiveResponses = [
+            "Great job!",
+            "Excellent!",
+            "Well done!",
+            "You got it!",
+            "Perfect!",
+            "Awesome!",
+            "Fantastic!",
+            "Brilliant!",
+            "You're a star!",
+            "Keep it up!"
+        ];
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let selectedQuestions = [];
+
+        function selectRandomQuestions() {
+            selectedQuestions = [];
+            const shuffled = allQuestions.sort(() => 0.5 - Math.random());
+            selectedQuestions = shuffled.slice(0, 10);
+        }
+
+        function displayQuestion() {
+            document.getElementById('question').textContent = selectedQuestions[currentQuestionIndex].question;
+        }
+
+        function speak(text) {
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'en-US';
+            utterance.rate = 0.8;
+            speechSynthesis.speak(utterance);
+        }
+
+        function checkAnswer(userAnswer) {
+            const correctAnswer = selectedQuestions[currentQuestionIndex].answer;
+            if (userAnswer === correctAnswer) {
+                score++;
+                const response = positiveResponses[Math.floor(Math.random() * positiveResponses.length)];
+                speak(response);
+                showJumpingEmoji();
+            } else {
+                speak("Incorrect");
+            }
+
+            currentQuestionIndex++;
+            if (currentQuestionIndex < selectedQuestions.length) {
+                displayQuestion();
+            } else {
+                endGame();
+            }
+
+            document.getElementById('score').textContent = `Score: ${score}`;
+        }
+
+        function showJumpingEmoji() {
+            const emoji = document.getElementById('emoji');
+            emoji.classList.add('jumping');
+            setTimeout(() => {
+                emoji.classList.remove('jumping');
+            }, 1000);
+        }
+
+        function endGame() {
+            let quizArea = document.getElementById('quiz-area');
+            quizArea.innerHTML = `
+                <h2 class="text-center mb-4">Quiz completed!</h2>
+                <p class="lead text-center">Your final score is ${score} out of ${selectedQuestions.length}.</p>
+                <h3 class="text-center mt-4 mb-3">Correct Sentences:</h3>
+                <ul class="list-group">
+                    ${selectedQuestions.map(q => `<li class="list-group-item">${q.correct}</li>`).join('')}
+                </ul>
+                <button onclick="restartQuiz()" class="btn btn-primary mt-3">Restart Quiz</button>
+            `;
+            speak(`Your final score is ${score} out of ${selectedQuestions.length}. Well done!`);
+        }
+
+        function restartQuiz() {
+            currentQuestionIndex = 0;
+            score = 0;
+            selectRandomQuestions();
+            displayQuestion();
+            document.getElementById('score').textContent = 'Score: 0';
+        }
+
+        selectRandomQuestions();
+        displayQuestion();
+    </script>
+</body>
+</html>

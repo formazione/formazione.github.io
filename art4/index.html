@@ -1,0 +1,186 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Investing Presentation</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        body {
+            transition: background-color 0.3s, color 0.3s;
+        }
+        body.dark-mode {
+            background-color: #121212;
+            color: #ffffff;
+        }
+        .dark-mode .card {
+            background-color: #1e1e1e;
+            color: #ffffff;
+        }
+        .dark-mode .btn-primary {
+            background-color: #0d6efd;
+            border-color: #0d6efd;
+        }
+        .dark-mode .btn-primary:hover {
+            background-color: #0b5ed7;
+            border-color: #0a58ca;
+        }
+    </style>
+</head>
+<body class="d-flex flex-column justify-content-center align-items-center min-vh-100 py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <h1 id="title" class="card-title h3"></h1>
+                            <button id="darkModeToggle" class="btn btn-outline-secondary btn-sm">
+                                <i class="bi bi-moon"></i>
+                            </button>
+                        </div>
+                        <p id="content" class="card-text mb-4"></p>
+                        <img id="image" class="img-fluid rounded mb-4" src="" alt="">
+                        <div class="d-flex justify-content-between">
+                            <button id="prevBtn" class="btn btn-primary">
+                                <i class="bi bi-arrow-left-circle"></i> Previous
+                            </button>
+                            <button id="nextBtn" class="btn btn-primary">
+                                Next <i class="bi bi-arrow-right-circle"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+function getBaseUrl() {
+  // Get the full URL
+  let fullUrl = window.location.href;
+  
+  // Remove protocol (http:// or https://)
+  let withoutProtocol = fullUrl.split('//')[1];
+  
+  // Split the remaining string by '/'
+  let parts = withoutProtocol.split('/');
+  
+  // Remove the last part if it's not empty (handles cases with or without trailing slash)
+  if (parts[parts.length - 1] !== "") {
+    parts.pop();
+  }
+  
+  // Join the parts back together
+  let baseUrl = parts.join('/');
+  
+  // Add the protocol back
+  return window.location.protocol + '//' + baseUrl;
+}
+
+// Usage
+console.log(getBaseUrl());
+
+
+        loc = getBaseUrl() + "/"
+        
+        
+    	n=0;
+    	 const images = [loc + "im1.png",
+loc + "im2.png",
+loc + "im3.png",
+loc + "im4.png",
+loc + "im5.png",
+loc + "im6.png",
+loc + "im1.png",
+    ];
+        const slides = [
+            {
+                title: "Introduction to Stock Investing",
+                content: "Investing in stocks can be a great way to grow your wealth over time. This presentation will guide you through the basics and introduce you to trusted apps for investing, available in Italy.",
+                image: images[n++]
+            },
+            {
+                title: "Why Invest in Stocks?",
+                content: "Stocks offer the potential for high returns, beat inflation, and provide an opportunity to own a part of successful companies. However, they also come with risks, so it's important to invest wisely.",
+                image: images[n++]
+            },
+            {
+                title: "Getting Started: Research",
+                content: "Before investing, educate yourself about the stock market, different sectors, and individual companies. Use reliable sources like financial news websites and company annual reports.",
+                image: images[n++]
+            },
+            {
+                title: "Trusted Apps for Stock Investing in Italy",
+                content: "Some popular and trusted apps for stock investing available in Italy include eToro, Degiro, and Trade Republic. These platforms offer user-friendly interfaces and access to international markets.",
+                image: images[n++]
+            },
+            {
+                title: "Diversification is Key",
+                content: "Don't put all your eggs in one basket. Spread your investments across different sectors and companies to minimize risk. Consider index funds or ETFs for instant diversification.",
+                image: images[n++]
+            },
+            {
+                title: "Long-term Perspective",
+                content: "Successful investing often requires patience. Focus on long-term growth rather than short-term fluctuations. Regular, consistent investing (dollar-cost averaging) can help smooth out market volatility.",
+                image: images[n++]
+            },
+            {
+                title: "Stay Informed and Review",
+                content: "Keep up with market news and regularly review your portfolio. Rebalance when necessary to maintain your desired asset allocation. Consider seeking advice from a financial professional.",
+                image: images[n++]
+            }
+        ];
+
+        let currentSlide = 0;
+
+        const titleEl = document.getElementById('title');
+        const contentEl = document.getElementById('content');
+        const imageEl = document.getElementById('image');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const darkModeToggle = document.getElementById('darkModeToggle');
+
+        function updateSlide() {
+            titleEl.textContent = slides[currentSlide].title;
+            contentEl.textContent = slides[currentSlide].content;
+            imageEl.src = slides[currentSlide].image;
+            imageEl.alt = slides[currentSlide].title;
+
+            prevBtn.disabled = currentSlide === 0;
+            nextBtn.disabled = currentSlide === slides.length - 1;
+        }
+
+        prevBtn.addEventListener('click', () => {
+            if (currentSlide > 0) {
+                currentSlide--;
+                updateSlide();
+            }
+        });
+
+        nextBtn.addEventListener('click', () => {
+            if (currentSlide < slides.length - 1) {
+                currentSlide++;
+                updateSlide();
+            }
+        });
+
+        darkModeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            const icon = darkModeToggle.querySelector('i');
+            if (document.body.classList.contains('dark-mode')) {
+                icon.classList.remove('bi-moon');
+                icon.classList.add('bi-sun');
+            } else {
+                icon.classList.remove('bi-sun');
+                icon.classList.add('bi-moon');
+            }
+        });
+
+        updateSlide();
+    </script>
+</body>
+</html>
