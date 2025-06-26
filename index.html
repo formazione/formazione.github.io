@@ -1,263 +1,406 @@
-</head>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-</head>
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prof. Marco Rossi - Esercizi & Lezioni</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
 
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+            animation: fadeInDown 1s ease-out;
+        }
+
+        .profile-img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #ff6b6b, #feca57);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 50px;
+            color: white;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            animation: bounce 2s infinite;
+        }
+
+        .main-title {
+            color: white;
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .subtitle {
+            color: rgba(255,255,255,0.9);
+            font-size: 1.3em;
+            margin-bottom: 30px;
+        }
+
+        .subjects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+
+        .subject-card {
+            background: rgba(255,255,255,0.95);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+
+        .subject-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+        }
+
+        .subject-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.5s;
+        }
+
+        .subject-card:hover::before {
+            left: 100%;
+        }
+
+        .subject-icon {
+            font-size: 4em;
+            margin-bottom: 15px;
+            animation: pulse 2s infinite;
+        }
+
+        .math { background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%); }
+        .science { background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); }
+        .history { background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%); }
+        .literature { background: linear-gradient(135deg, #c3cfe2 0%, #c3cfe2 100%); }
+        .geography { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .art { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
+
+        .subject-title {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .subject-description {
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .exercise-count {
+            background: rgba(0,0,0,0.1);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            color: #555;
+            display: inline-block;
+        }
+
+        .floating-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .floating-shape {
+            position: absolute;
+            opacity: 0.1;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .shape-1 {
+            top: 20%;
+            left: 10%;
+            font-size: 3em;
+            animation-delay: 0s;
+        }
+
+        .shape-2 {
+            top: 60%;
+            right: 15%;
+            font-size: 2.5em;
+            animation-delay: 2s;
+        }
+
+        .shape-3 {
+            bottom: 20%;
+            left: 20%;
+            font-size: 4em;
+            animation-delay: 4s;
+        }
+
+        .footer {
+            text-align: center;
+            color: rgba(255,255,255,0.8);
+            margin-top: 50px;
+        }
+
+        .contact-info {
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            display: inline-block;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-10px);
+            }
+            60% {
+                transform: translateY(-5px);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+            33% {
+                transform: translateY(-20px) rotate(120deg);
+            }
+            66% {
+                transform: translateY(10px) rotate(240deg);
+            }
+        }
+
+        .subject-card {
+            animation: slideInUp 0.6s ease-out forwards;
+            opacity: 0;
+        }
+
+        .subject-card:nth-child(1) { animation-delay: 0.1s; }
+        .subject-card:nth-child(2) { animation-delay: 0.2s; }
+        .subject-card:nth-child(3) { animation-delay: 0.3s; }
+        .subject-card:nth-child(4) { animation-delay: 0.4s; }
+        .subject-card:nth-child(5) { animation-delay: 0.5s; }
+        .subject-card:nth-child(6) { animation-delay: 0.6s; }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-title {
+                font-size: 2em;
+            }
+            
+            .subjects-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .subject-card {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
 <body>
-
-
-      <div class="jumbotron">
-        <div class="container">
-
-          <table>
-              <td>
-              <center><img src="aklogo.png"></center><br>
-              </td>
-              
-              <td>
-              <h1 class="display-3">RAV, INVALSI, ED.CIVICA</h1>
-              </td>
-          </table>
-
-<h3>INDICE:</h3>
-<div id='scribe'></div>
-<script type="text/javascript">
-
-/*                            ISTRUZIONI: come si usa
-["titolo"],                          Solo un item = Titolo
-["p", "questo è un paragrafo"]       "p" = paragrafo, secondo item=contenuto del par.
-["testo", "link cui indirizza"]      in tutti gli altri casi, testo=quello che appare, 2° item=address
-*/
-
-// put addresses down here, read the instructions above
-let data = [
-  ["Prove invalsi"],
-["p", "<img src='https://it.pearson.com/content/dam/region-core/italy/pearson-italy/images/italiano-insegnare-italiano/in-attesa-delle-prove-invalsi-studenti.jpg' width=200>"],
-
-["p",
-"Le prove Invalsi per le seconde si volgeranno a maggio (11 e 12 maggio). Quelle per le quinte del serale si svolgeranno dal 22 di maggio."],
-
-["Esempi di prove invalsi per le seconde"],
-  
-["p",`<h3>Matematica</h3>
-  <ul>
-    <li>
-<a class="btn btn-warning" 
-href="https://www.invalsiopen.it/prove_statiche/G10/MAT/2019/Esempi_domande_MAT_10.pdf" 
-role="button">Esempi prove invalsi di Matematica per le seconde</a> 
-</li>
-<li>
-<a class="btn btn-warning" 
-href="https://www.invalsiopen.it/percorsi-strumenti-invalsi/matematica/mettiamoci-alla-prova/" 
-role="button">Nuove prove di Matematica (grado 10)</a> 
-
-  </li>
-
-    <li>
-<a class="btn btn-warning" 
-href="https://online.scuola.zanichelli.it/invalsi/seconda-superiore/seconda-superiore-matematica/" 
-role="button">Esempi prove invalsi di seconda di Matematica (zanichelli)</a> 
-</li>
-</ul>
-
-<h3>Italiano</h3>
-<ul>
-<li>
-<a class="btn btn-warning" 
-href="https://www.invalsiopen.it/prove_statiche/G10/ITA/2019/ITA_10_EX1/index.html" 
-role="button">Prove di Italiano(clicca in basso il pulsante "successivo")</a> 
-  </li>
-<li>
-<a class="btn btn-warning" 
-href="https://www.invalsiopen.it/mettiti-alla-prova-con-le-domande-di-grado-10/?utm_source=newsletter&utm_medium=email&utm_campaign=maggio-2023#:~:text=Due%20esempi%20di%20domanda%20di%20Italiano" 
-role="button">2 esempi di prove per le seconde</a> 
-</li>
-
-
-  <li>
-<a class="btn btn-warning" 
-href="https://www.invalsiopen.it/percorsi-strumenti-invalsi/italiano/mettiamoci-alla-prova/" 
-role="button">Nuove prove di italiano</a> 
-
-  </li>
-  <li>
-<a class="btn btn-warning" 
-href="https://online.scuola.zanichelli.it/invalsi/seconda-superiore/seconda-superiore-italiano/" 
-role="button">Prove di italiano (zanichelli)</a> 
-  </li>
-</ul>
-</p>`],
-
-["Come svolgere le esercitazioni sulle prove invalsi"],
-
-["p",`<p>
-  Portare gli alunni di seconda un paio di volte a svolgere le esercitazioni sulle prove Invalsi presso i laboratori. In alternativa, i test possono essere svolti anche in classe, prendendo a prestito dei tablet o dei pc, oppure svolgendo gli esercizi sul telefonino. Potete far andare gli alunni su https://formazione.github.io e far cliccare sui pulsanti che riguardano i collegamenti alle esercitazioni. Si può anche generare il QR code della pagina alla quale devono collegarsi, cliccando con il tasto destro dentro la pagina del browser (usare Chrome). Vedrete comparire il menu contestuale in cui una delle voci riguarda la generazione del QR CODE della pagina. A quel punto gli alunni che hanno un Iphone dovranno semplicemente inquadrare con la fotocamera il QR CODE, mentre per gli alunni che hanno un telefonino Android, basterà aprire (o scaricare e aprire) l'app gratuita Google Lens e inquadrare con quella il QR CODE.<br>
-  <img src="https://media.borsainside.com/app/uploads/2023/03/15125716/google-lens.jpg" width=200><br>
-  <img src="https://i0.wp.com/www.softwarert.com/wp-content/uploads/2020/09/convert-url-links-qr-code-chrome-web-browser-windows.jpg?fit=700%2C488&ssl=1"><br>
-Il calendario verrà definito prossimamente.
-  </p>
-<a class="btn btn-danger" 
-href="https://docs.google.com/document/d/1ey1W1_WHUtFwvzUXDF8Mpf9eXropmhh1/edit?usp=sharing&ouid=109902383764133052806&rtpof=true&sd=true" 
-role="button">CALENDARIO PROSSIME PROVE INVALSI CLASSI SECONDE</a> 
-</p>`],
-
-["p",`
-<p>
-Date stabilite per le prove invalsi di quinta.
-  </p>
-<a class="btn btn-secondary" 
-href="https://docs.google.com/document/d/1IdicYBj0IX5E3hX7_Ai2G6482v6j9l6O/edit?usp=sharing&ouid=109902383764133052806&rtpof=true&sd=true" 
-role="button">CALENDARIO PROVE RECUPERO INVALSI CLASSI QUINTE</a> 
-</p>
-`],
-
-["Calendario prove recupero invalsi quinte (marzo)","https://docs.google.com/document/d/1IdicYBj0IX5E3hX7_Ai2G6482v6j9l6O/edit?usp=sharing","btn btn-secondary"],
-
-
-
-["Segnalazione alunni fragili"],
-["p",`
-Segnalare gli alunni a rischio dispersione scolastica che potrebbero usufruire del mentoring.
-</p>
-<p>
-<a class="btn btn-warning" 
-href="https://docs.google.com/forms/d/e/1FAIpQLSfFcKEGxFRyG4zMqzRJZa3xm1tr3ejX-jGwZICalHNRU0Cz-A/viewform" 
-role="button">Modulo da compilare</a> 
-</p>
-`],
-
-
-
-["Programmi UDA"],
-["p", `<p>
-<a class="btn btn-warning" 
-href="https://formazione.github.io/uda.html" 
-role="button">UDA delle classi</a> 
-</p>`],
-
-
-
-["REGISTRO ESERCITAZIONI PROVE INVALSI DI QUINTA"],
-//<!-- <img src="https://www.miur.gov.it/web/guest/"> -->
-["p",`<p>
-Inserite le date del giorno in cui si effettuano le esercitazioni sulle prove INVALSI.
-Nel PDM sono state indicate le priorità per la nostra scuola che consistono nel migliorare (o almento consolidare) i risultati degli alunni nelle prove INVALSI. Per questo è necessario far esercitare gli alunni su queste tipologie dei prove standardizzate, portandoli nei laboratori o assegnado le esercitazioni da svolgere autonomamente a casa.
-  </p>
-<a class="btn btn-warning" 
-href="https://docs.google.com/document/d/1b_fTzsUXXzqJG3f6UYsAecPabudtsbI9bTcjLbHz5v8/edit?usp=sharing" 
-role="button">REGISTRO ESERCITAZIONI PROVE INVALSI</a> 
-<br><br>
-
-<a class="btn btn-warning" 
-href="https://www.invalsiopen.it/domande-invalsi-interattive-grado-13/" 
-role="button">NUOVI ESEMPI DI ESERCITAZIONI SULLE PROVE INVALSI</a> 
-<br><br>
-`],
-
-
-
-["Prove parallele 2023"],             //                PROVE PARALLELE 
-
-["p","<b style='color:red'>(new)</b>"],
-["Inserimento dati Prove parallele II quadrimestre 2023",
-  "https://docs.google.com/spreadsheets/d/1ZIxjHSIlmiHYCDEfbHeRKUPkTj8RIxi7eqkqhQJcJgA/edit?usp=sharing"],
-
-
-["PROVE PARALLELE: DATI PRIMO QUADRIMESTRE 2023", 
-"https://docs.google.com/spreadsheets/d/1PmZ2UJGFf0rdgQY5mAWZdkKhyYVwn6Mwn0Suo_xoRTU/edit?usp=sharing",],
-
-["Prove parallele 2022"],
-["p","Analisi dei dati delle rove parallele dell'anno scorso 2021 2022"],
-["Primo quadrimestre","https://drive.google.com/file/d/1u67N-cf5mXA8Z2vj4PpozSsNZORpTs6I/view?usp=sharing"],
-["Secondo quadrimestre","https://docs.google.com/spreadsheets/d/1fYeyyM-BS4VpcHn4mRzPk9xR623kkNXB47gLsXhhbHc/edit?usp=sharing"],
-
-
-
-["Educazione civica"],["p",`
-<p>
-Chi non ha svolto le ore di educazione civica indicate per il primo quadrimestre, le recupererà nel secondo (modificare anche l'indicazione nel programma). Il voto relativo a tali materie verrà inserito nel secondo quadrimestre. Per il voto finale, verranno presi in considerazione tutti i voti.
-<p>
-<a class="btn btn-warning" 
-href="https://formazione.github.io/edciv_home.html" 
-role="button">PROGRAMMI DI EDUCAZIONE CIVICA</a> 
-`],
-
-["Quiz"],
-["p",`<p>
-Quiz vari
-<p>
-<a class="btn btn-warning" 
-href="https://formazione.github.io/quiz.html" 
-role="button">Quiz</a> 
-
-`]
-]
-// do not delete this square parenthesis up here
-
-
-// ------------------- INDICE -------------------
-
-function changecolor(element){
-  element.style.color = "gold";
-  element.style.background = "red";
-}
-function gobacktocolor(element){
-  element.style.color = "red";
-  element.style.background = "gold";
-}
-
-for (let n in data){
-  // VERIFICA SE E' UN TITOLO (SE HA UN SOLO DATO):
-  if (data[n].length == 1){
-    scribe.innerHTML += "<li>[ <a href='#" + data[n] + "'><b style='color:red;background-color:gold' onmouseover='changecolor(this)' onmouseout='gobacktocolor(this)'>" + data[n] + "</b></a> ]  ";
-  }}
-
-
-// -------------------- DOPO INDICE --------------------
-// HERE THE BUTTONS WITH THE LINKS ARE SHOWN
-for (let n in data){
-  // VERIFICA SE E' UN TITOLO (SE HA UN SOLO DATO):
-  if (data[n].length == 1){
-    // scribe.innerHTML += "<hr>"
-    scribe.innerHTML += "<br><center><h2 style='color:navy;background-color:gold'><a name='"+data[n]+"'>" + data[n] + "</a></h2></center>";
-  }
-
-   // PARAGRAGO o link con immagini o senza
-  else{
-
-    // PARAGRAFO
-    if (data[n][0]== "p"){
-      scribe.innerHTML += "<p>" + data[n][1] + "</p>"}
-  
-    // LILNK SENZA IMMAGINI
-    else if (data[n].length == 2) {
-      scribe.innerHTML += 
-        "<a class='btn btn-warning' href='" + data[n][1] +
-        "' role='button'>" + data[n][0] + 
-        "</a> </p>";}
-
-    // LINK CON IMMAGINE SUCCESSIVA AL PULSANTE PICCOLA
-    else if (data[n].length==3){
-      if (data[n][2].substring(0,3) == "btn"){
-              scribe.innerHTML +=
-        "<a class='"+data[n][2]+"' href='" + data[n][1] +
-        "' role='button'>" + data[n][0] + 
-        "</a></p>";}
-      }
-      else {
-
-      scribe.innerHTML +=
-        "<a class='btn btn-warning' href='" + data[n][1] +
-        "' role='button'>" + data[n][0] + 
-        "</a><img src='" + data[n][2]  + "' width=30>' </p>";}
-      }
-} 
-
-// scribe.innerHTML += "<hr>" // Linea dopo gruppo di link
-
-</script>
+    <div class="floating-elements">
+        <div class="floating-shape shape-1">📚</div>
+        <div class="floating-shape shape-2">🎯</div>
+        <div class="floating-shape shape-3">⭐</div>
     </div>
 
-    <!-- copy until here to put this in script and styles in the blog -->
-      </div>
+    <div class="container">
+        <div class="header">
+            <div class="profile-img">👨‍🏫</div>
+            <h1 class="main-title">Prof. Marco Rossi</h1>
+            <p class="subtitle">Benvenuti nella mia aula virtuale! 🎓</p>
+        </div>
+
+        <div class="subjects-grid">
+            <div class="subject-card math" onclick="openSubject('matematica')">
+                <div class="subject-icon">🔢</div>
+                <h3 class="subject-title">Matematica</h3>
+                <p class="subject-description">Esercizi di algebra, geometria e analisi matematica per tutti i livelli</p>
+                <span class="exercise-count">124 esercizi disponibili</span>
+            </div>
+
+            <div class="subject-card science" onclick="openSubject('scienze')">
+                <div class="subject-icon">🧪</div>
+                <h3 class="subject-title">Scienze</h3>
+                <p class="subject-description">Esperimenti, teoria e quiz di fisica, chimica e biologia</p>
+                <span class="exercise-count">89 esperimenti</span>
+            </div>
+
+            <div class="subject-card history" onclick="openSubject('storia')">
+                <div class="subject-icon">🏛️</div>
+                <h3 class="subject-title">Storia</h3>
+                <p class="subject-description">Viaggia nel tempo attraverso eventi, personaggi e civiltà</p>
+                <span class="exercise-count">156 timeline</span>
+            </div>
+
+            <div class="subject-card literature" onclick="openSubject('letteratura')">
+                <div class="subject-icon">📖</div>
+                <h3 class="subject-title">Letteratura</h3>
+                <p class="subject-description">Analisi di testi, poesie e opere dei grandi autori</p>
+                <span class="exercise-count">78 analisi testuali</span>
+            </div>
+
+            <div class="subject-card geography" onclick="openSubject('geografia')">
+                <div class="subject-icon">🌍</div>
+                <h3 class="subject-title">Geografia</h3>
+                <p class="subject-description">Esplora il mondo attraverso mappe, climi e culture</p>
+                <span class="exercise-count">92 mappe interattive</span>
+            </div>
+
+            <div class="subject-card art" onclick="openSubject('arte')">
+                <div class="subject-icon">🎨</div>
+                <h3 class="subject-title">Arte</h3>
+                <p class="subject-description">Scopri capolavori, tecniche artistiche e storia dell'arte</p>
+                <span class="exercise-count">67 opere d'arte</span>
+            </div>
+        </div>
+
+        <div class="footer">
+            <div class="contact-info">
+                <p>📧 marco.rossi@scuola.edu.it | ☎️ 02-1234567</p>
+                <p>🕒 Ricevimento: Martedì e Giovedì 14:00-16:00</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openSubject(subject) {
+            // Simulazione apertura pagina materia
+            const messages = {
+                'matematica': '🔢 Accesso agli esercizi di Matematica...',
+                'scienze': '🧪 Apertura laboratorio di Scienze...',
+                'storia': '🏛️ Viaggio nel tempo con la Storia...',
+                'letteratura': '📖 Benvenuto nella biblioteca digitale...',
+                'geografia': '🌍 Esploriamo il mondo insieme...',
+                'arte': '🎨 Galleria d\'arte in apertura...'
+            };
+
+            alert(messages[subject] || 'Apertura sezione...');
+            
+            // Qui potresti reindirizzare a pagine specifiche
+            // window.location.href = subject + '.html';
+        }
+
+        // Effetto particelle che seguono il mouse
+        document.addEventListener('mousemove', function(e) {
+            if (Math.random() > 0.9) {
+                createSparkle(e.clientX, e.clientY);
+            }
+        });
+
+        function createSparkle(x, y) {
+            const sparkle = document.createElement('div');
+            sparkle.style.cssText = `
+                position: fixed;
+                left: ${x}px;
+                top: ${y}px;
+                width: 4px;
+                height: 4px;
+                background: white;
+                border-radius: 50%;
+                pointer-events: none;
+                z-index: 1000;
+                animation: sparkleAnimation 1s ease-out forwards;
+            `;
+            
+            document.body.appendChild(sparkle);
+            
+            setTimeout(() => sparkle.remove(), 1000);
+        }
+
+        // Aggiungi CSS per l'animazione delle scintille
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes sparkleAnimation {
+                0% {
+                    transform: scale(0) rotate(0deg);
+                    opacity: 1;
+                }
+                100% {
+                    transform: scale(1) rotate(180deg);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Animazione delle carte al caricamento
+        window.addEventListener('load', function() {
+            const cards = document.querySelectorAll('.subject-card');
+            cards.forEach((card, index) => {
+                setTimeout(() => {
+                    card.style.animationPlayState = 'running';
+                }, index * 100);
+            });
+        });
+    </script>
+</body>
+</html>
