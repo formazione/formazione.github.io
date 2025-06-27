@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Esercizi di Matematica - Prof. Marco Rossi</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+        .back-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .back-btn:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateX(-5px);
+        }
+
+        .main-title {
+            color: white;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .subtitle {
+            color: rgba(255,255,255,0.9);
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
+
+        .progress-bar {
+            background: rgba(255,255,255,0.2);
+            height: 8px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);
+            height: 100%;
+            width: 0%;
+            transition: width 0.5s ease;
+            border-radius: 10px;
+        }
+
+        .exercise-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 25px;
+        }
+
+        .exercise-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .exercise-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+
+        .exercise-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .exercise-number {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 15px;
+        }
+
+        .exercise-title {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .difficulty {
+            margin-left: auto;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.8em;
+            font-weight: bold;
+        }
+
+        .facile { background: #d4edda; color: #155724; }
+        .medio { background: #fff3cd; color: #856404; }
+        .difficile { background: #f8d7da; color: #721c24; }
+
+        .exercise-question {
+            font-size: 1.1em;
+            margin-bottom: 20px;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .math-expression {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 1.2em;
+            margin: 15px 0;
+            text-align: center;
+            border-left: 4px solid #007bff;
+        }
+
+        .answer-section {
+            margin-top: 20px;
+        }
+
+        .answer-input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1em;
+            transition: all 0.3s ease;
+            margin-bottom: 15px;
+        }
+
+        .answer-input:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 10px rgba(0,123,255,0.2);
+        }
+
+        .check-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: all 0.3s ease;
+            margin-right: 10px;
+        }
+
+        .check-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .hint-btn {
+            background: transparent;
+            color: #007bff;
+            border: 2px solid #007bff;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: all 0.3s ease;
+        }
+
+        .hint-btn:hover {
+            background: #007bff;
+            color: white;
+        }
+
+        .feedback {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 10px;
+            font-weight: bold;
+            text-align: center;
+            display: none;
+        }
+
+        .correct {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .incorrect {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .hint {
+            background: #cce7ff;
+            color: #004085;
+            border: 1px solid #b3d7ff;
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .stats {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-around;
+            text-align: center;
+        }
+
+        .stat-item {
+            color: white;
+        }
+
+        .stat-number {
+            font-size: 2em;
+            font-weight: bold;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.9em;
+            opacity: 0.8;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .exercise-card {
+            animation: slideInUp 0.6s ease-out forwards;
+        }
+
+        .exercise-card:nth-child(odd) {
+            animation-delay: 0.1s;
+        }
+
+        .exercise-card:nth-child(even) {
+            animation-delay: 0.2s;
+        }
+
+        @media (max-width: 768px) {
+            .exercise-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .main-title {
+                font-size: 2em;
+            }
+            
+            .stats {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="back-btn" onclick="goBack()">← Torna alla Home</button>
+
+    <div class="container">
+        <div class="header">
+            <h1 class="main-title">🔢 Esercizi di Matematica</h1>
+            <p class="subtitle">Metti alla prova le tue competenze matematiche!</p>
+        </div>
+
+        <div class="stats">
+            <div class="stat-item">
+                <span class="stat-number" id="completed">0</span>
+                <span class="stat-label">Completati</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number" id="correct">0</span>
+                <span class="stat-label">Corretti</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number" id="percentage">0%</span>
+                <span class="stat-label">Precisione</span>
+            </div>
+        </div>
+
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+
+        <div class="exercise-grid" id="exerciseGrid">
+            <!-- Gli esercizi verranno generati dinamicamente -->
+        </div>
+    </div>
+
+    <script>
+        const exercises = [
+            {
+                id: 1,
+                title: "Equazione Lineare",
+                difficulty: "facile",
+                question: "Risolvi l'equazione:",
+                expression: "3x + 7 = 22",
+                answer: "5",
+                hint: "Sottrai 7 da entrambi i lati, poi dividi per 3"
+            },
+            {
+                id: 2,
+                title: "Area del Triangolo",
+                difficulty: "facile",
+                question: "Calcola l'area di un triangolo con base 8 cm e altezza 6 cm:",
+                expression: "A = (b × h) / 2",
+                answer: "24",
+                hint: "Formula: Area = (base × altezza) / 2"
+            },
+            {
+                id: 3,
+                title: "Sistema di Equazioni",
+                difficulty: "medio",
+                question: "Trova il valore di x nel sistema:",
+                expression: "2x + y = 10\nx - y = 2",
+                answer: "4",
+                hint: "Prova il metodo di sostituzione o eliminazione"
+            },
+            {
+                id: 4,
+                title: "Percentuali",
+                difficulty: "facile",
+                question: "Quanto è il 25% di 80?",
+                expression: "25% × 80 = ?",
+                answer: "20",
+                hint: "25% = 25/100 = 0.25"
+            },
+            {
+                id: 5,
+                title: "Equazione Quadratica",
+                difficulty: "difficile",
+                question: "Trova una soluzione dell'equazione (solo la positiva):",
+                expression: "x² - 5x + 6 = 0",
+                answer: "3",
+                hint: "Prova a fattorizzare o usa la formula quadratica"
+            },
+            {
+                id: 6,
+                title: "Circonferenza",
+                difficulty: "medio",
+                question: "Calcola la circonferenza di un cerchio con raggio 7 cm (usa π ≈ 3.14):",
+                expression: "C = 2πr",
+                answer: "43.96",
+                hint: "C = 2 × π × raggio"
+            },
+            {
+                id: 7,
+                title: "Frazione",
+                difficulty: "facile",
+                question: "Semplifica la frazione:",
+                expression: "12/18 = ?",
+                answer: "2/3",
+                hint: "Trova il massimo comune divisore di 12 e 18"
+            },
+            {
+                id: 8,
+                title: "Potenze",
+                difficulty: "medio",
+                question: "Calcola:",
+                expression: "2⁴ + 3² = ?",
+                answer: "25",
+                hint: "2⁴ = 2×2×2×2 e 3² = 3×3"
+            },
+            {
+                id: 9,
+                title: "Proporzioni",
+                difficulty: "medio",
+                question: "Trova x nella proporzione:",
+                expression: "x : 12 = 5 : 4",
+                answer: "15",
+                hint: "x × 4 = 12 × 5"
+            },
+            {
+                id: 10,
+                title: "Volume del Cubo",
+                difficulty: "facile",
+                question: "Calcola il volume di un cubo con lato 4 cm:",
+                expression: "V = l³",
+                answer: "64",
+                hint: "Volume = lato × lato × lato"
+            }
+        ];
+
+        let stats = {
+            completed: 0,
+            correct: 0,
+            answered: new Set()
+        };
+
+        function renderExercises() {
+            const grid = document.getElementById('exerciseGrid');
+            
+            exercises.forEach(exercise => {
+                const card = document.createElement('div');
+                card.className = 'exercise-card';
+                card.innerHTML = `
+                    <div class="exercise-header">
+                        <div class="exercise-number">${exercise.id}</div>
+                        <div class="exercise-title">${exercise.title}</div>
+                        <div class="difficulty ${exercise.difficulty}">${exercise.difficulty}</div>
+                    </div>
+                    
+                    <div class="exercise-question">${exercise.question}</div>
+                    
+                    <div class="math-expression">${exercise.expression}</div>
+                    
+                    <div class="answer-section">
+                        <input type="text" class="answer-input" id="answer-${exercise.id}" 
+                               placeholder="Inserisci la tua risposta...">
+                        
+                        <div>
+                            <button class="check-btn" onclick="checkAnswer(${exercise.id})">
+                                Verifica
+                            </button>
+                            <button class="hint-btn" onclick="showHint(${exercise.id})">
+                                💡 Suggerimento
+                            </button>
+                        </div>
+                        
+                        <div class="feedback" id="feedback-${exercise.id}"></div>
+                        <div class="hint" id="hint-${exercise.id}">${exercise.hint}</div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function checkAnswer(exerciseId) {
+            const exercise = exercises.find(ex => ex.id === exerciseId);
+            const userAnswer = document.getElementById(`answer-${exerciseId}`).value.trim();
+            const feedback = document.getElementById(`feedback-${exerciseId}`);
+            
+            if (!userAnswer) {
+                feedback.className = 'feedback incorrect';
+                feedback.textContent = 'Inserisci una risposta!';
+                feedback.style.display = 'block';
+                return;
+            }
+
+            const isCorrect = userAnswer.toLowerCase() === exercise.answer.toLowerCase();
+            
+            if (!stats.answered.has(exerciseId)) {
+                stats.completed++;
+                stats.answered.add(exerciseId);
+                
+                if (isCorrect) {
+                    stats.correct++;
+                }
+            }
+
+            feedback.style.display = 'block';
+            
+            if (isCorrect) {
+                feedback.className = 'feedback correct';
+                feedback.innerHTML = '🎉 Corretto! Ottimo lavoro!';
+            } else {
+                feedback.className = 'feedback incorrect';
+                feedback.innerHTML = `❌ Non corretto. La risposta giusta è: <strong>${exercise.answer}</strong>`;
+            }
+
+            updateStats();
+        }
+
+        function showHint(exerciseId) {
+            const hint = document.getElementById(`hint-${exerciseId}`);
+            hint.style.display = hint.style.display === 'block' ? 'none' : 'block';
+        }
+
+        function updateStats() {
+            document.getElementById('completed').textContent = stats.completed;
+            document.getElementById('correct').textContent = stats.correct;
+            
+            const percentage = stats.completed > 0 ? Math.round((stats.correct / stats.completed) * 100) : 0;
+            document.getElementById('percentage').textContent = percentage + '%';
+            
+            const progress = (stats.completed / exercises.length) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+        }
+
+        function goBack() {
+            // Simulazione ritorno alla home
+            alert('🏠 Ritorno alla pagina principale...');
+            // window.history.back(); // Uncomment per tornare indietro
+        }
+
+        // Inizializza la pagina
+        document.addEventListener('DOMContentLoaded', function() {
+            renderExercises();
+            
+            // Permetti invio con Enter
+            document.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter' && e.target.classList.contains('answer-input')) {
+                    const exerciseId = parseInt(e.target.id.split('-')[1]);
+                    checkAnswer(exerciseId);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
