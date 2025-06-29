@@ -1,0 +1,812 @@
+
+Fai un test interattivo su una pagina web, con una domanda alla volta, grafica molto fluida, su questo tipo di test, fai una serie di domande che cambiano in maniera casuale, fai un centinaio di frasi con il verbo essere, proponile una frase alla volta con sotto tutti i verbi possibili (am, is, are) e dai un punteggio che si vede con pupazzetti che gioiscono quando vince e si rattristano quando perde. Dai tre vite, ad ogni errore si perde la vita, segna i punteggi in una classifica che mostri quando si perdono le tre vite. Permetti di ricominciare il gioco, senza perdere il punteggio.
+
+Modifica
+Ti creo un test interattivo completo sul verbo "essere" in inglese! Sarà un gioco coinvolgente con grafica fluida, animazioni e un sistema di punteggio dinamico.
+
+
+Test Interattivo - Verbo Essere (To Be)
+Contenuto interattivo 
+Ho creato un test interattivo completo sul verbo "essere" in inglese! Ecco le caratteristiche principali:
+
+🎮 Funzionalità del Gioco:
+100 frasi diverse con il verbo essere che cambiano casualmente
+Sistema a 3 vite con cuoricini animati
+Punteggio dinamico (+10 punti per risposta corretta)
+Pupazzetti emotivi che gioiscono (🎉) o si rattristano (😢)
+Effetti particellari quando si risponde correttamente
+Barra di progresso animata
+🎨 Grafica e Animazioni:
+Design moderno con gradienti colorati e glassmorphism
+Animazioni fluide per cuori, mascotte e particelle
+Effetti hover sui pulsanti con ombre dinamiche
+Transizioni smooth per tutti gli elementi
+🏆 Sistema di Punteggio:
+Classifica permanente che salva i top 10 punteggi
+Data e ora di ogni partita registrata
+Possibilità di ricominciare senza perdere i punteggi precedenti
+Visualizzazione del punteggio finale con mascotte triste
+📚 Contenuto Educativo:
+Frasi varie che coprono tutti i contesti (I am, you are, he/she/it is, we/they are)
+Feedback immediato con la risposta corretta in caso di errore
+Domande che non si ripetono fino al completamento del set
+Il gioco è completamente funzionale e pronto per essere utilizzato. Ogni partita è diversa grazie alla randomizzazione delle domande, e il sistema di vite rende l'esperienza coinvolgente senza essere troppo punitiva!
+
+
+
+
+Non funziona quando ricominci, fai apparire la soluzione sopra e metti un pulsante per andare avanti
+
+Modifica
+
+Test Interattivo - Verbo Essere (To Be)
+Contenuto interattivo ∙ Versione 2 
+
+Test Interattivo - Verbo Essere (To Be)
+Contenuto interattivo ∙ Versione 3 
+
+Test Interattivo - Verbo Essere (To Be)
+Contenuto interattivo ∙ Versione 4 
+
+Test Interattivo - Verbo Essere (To Be)
+Contenuto interattivo ∙ Versione 5 
+
+Test Interattivo - Verbo Essere (To Be)
+Contenuto interattivo ∙ Versione 6 
+
+Test Interattivo - Verbo Essere (To Be)
+Contenuto interattivo ∙ Versione 7 
+
+Test Interattivo - Verbo Essere (To Be)
+Contenuto interattivo ∙ Versione 8 
+Perfect! Ho risolto i problemi del gioco:
+
+🔧 Correzioni Applicate:
+Problema del riavvio risolto:
+Ora il punteggio si resetta correttamente a 0 quando ricominci
+Tutti gli elementi UI vengono resettati (mascotte, feedback, pulsanti)
+Soluzione sempre visibile:
+Aggiunta una sezione che mostra sempre la risposta corretta dopo ogni domanda
+Per risposte corrette: ✅ con conferma
+Per risposte sbagliate: ❌ mostra sia la tua scelta che quella corretta
+Pulsante "Continua":
+Nuovo pulsante verde che appare dopo ogni risposta
+Permette di andare avanti quando sei pronto
+Non più avanzamento automatico con timer
+🎮 Nuovo Flusso di Gioco:
+Leggi la domanda
+Scegli la risposta (am/is/are)
+Vedi subito il feedback e la soluzione
+Clicca "Continua ➡️" per la prossima domanda
+Quando finisci le vite, il pulsante diventa "Fine Partita 🎮"
+Ora il gioco è molto più user-friendly e funziona perfettamente sia per giocare che per riavviare nuove partite!
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Verbo Essere - To Be</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            max-width: 600px;
+            width: 90%;
+            text-align: center;
+            position: relative;
+            backdrop-filter: blur(10px);
+        }
+        
+        .header {
+            margin-bottom: 30px;
+        }
+        
+        .title {
+            color: #4a5568;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .stats {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            border-radius: 15px;
+            color: white;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+        
+        .lives {
+            display: flex;
+            gap: 5px;
+        }
+        
+        .heart {
+            width: 30px;
+            height: 30px;
+            background: #ff6b6b;
+            transform: rotate(-45deg);
+            position: relative;
+            animation: heartbeat 1.5s ease-in-out infinite;
+        }
+        
+        .heart:before,
+        .heart:after {
+            content: '';
+            width: 30px;
+            height: 30px;
+            position: absolute;
+            left: 15px;
+            top: 0;
+            background: #ff6b6b;
+            border-radius: 15px;
+            transform: rotate(-45deg);
+            transform-origin: 0 100%;
+        }
+        
+        .heart:after {
+            left: 0;
+            transform: rotate(45deg);
+            transform-origin: 100% 100%;
+        }
+        
+        .heart.lost {
+            background: #ccc;
+            animation: none;
+        }
+        
+        .heart.lost:before,
+        .heart.lost:after {
+            background: #ccc;
+        }
+        
+        @keyframes heartbeat {
+            0%, 100% { transform: rotate(-45deg) scale(1); }
+            50% { transform: rotate(-45deg) scale(1.1); }
+        }
+        
+        .question-container {
+            background: #f7fafc;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            border: 3px solid #e2e8f0;
+            min-height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .question {
+            font-size: 1.4em;
+            color: #2d3748;
+            line-height: 1.5;
+        }
+        
+        .blank {
+            background: #ffd93d;
+            padding: 5px 15px;
+            border-radius: 8px;
+            font-weight: bold;
+            margin: 0 5px;
+        }
+        
+        .options {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+        
+        .option-btn {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.3em;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            min-width: 80px;
+            box-shadow: 0 5px 15px rgba(79, 172, 254, 0.4);
+        }
+        
+        .option-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(79, 172, 254, 0.6);
+        }
+        
+        .option-btn:active {
+            transform: translateY(0);
+        }
+        
+        .mascot {
+            font-size: 6em;
+            margin: 20px 0;
+            transition: all 0.5s ease;
+        }
+        
+        .mascot.happy {
+            animation: bounce 0.8s ease;
+        }
+        
+        .mascot.sad {
+            animation: shake 0.8s ease;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-30px); }
+            60% { transform: translateY(-15px); }
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+        
+        .feedback {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin: 15px 0;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+        
+        .feedback.show {
+            opacity: 1;
+        }
+        
+        .feedback.correct {
+            color: #48bb78;
+        }
+        
+        .feedback.incorrect {
+            color: #f56565;
+        }
+        
+        .game-over {
+            display: none;
+            text-align: center;
+        }
+        
+        .game-over.show {
+            display: block;
+        }
+        
+        .game-over h2 {
+            color: #e53e3e;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+        
+        .leaderboard {
+            background: #f7fafc;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            border: 2px solid #e2e8f0;
+        }
+        
+        .leaderboard h3 {
+            color: #4a5568;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        
+        .score-entry {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .score-entry:last-child {
+            border-bottom: none;
+        }
+        
+        .restart-btn {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.2em;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(250, 112, 154, 0.4);
+        }
+        
+        .restart-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(250, 112, 154, 0.6);
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background: #e2e8f0;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4facfe, #00f2fe);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        
+        .solution {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            font-size: 1.3em;
+            font-weight: bold;
+            display: none;
+        }
+        
+        .solution.show {
+            display: block;
+        }
+        
+        .next-btn {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 1.1em;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            margin-top: 10px;
+            display: none;
+            box-shadow: 0 5px 15px rgba(17, 153, 142, 0.4);
+        }
+        
+        .next-btn.show {
+            display: inline-block;
+        }
+        
+        .particle {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #ffd93d;
+            border-radius: 50%;
+            pointer-events: none;
+            animation: particle-float 2s ease-out forwards;
+        }
+        
+        @keyframes particle-float {
+            0% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-100px) scale(0.5);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 class="title">🎯 Test Verbo ESSERE</h1>
+        </div>
+        
+        <div id="gameArea">
+            <div class="stats">
+                <div>Punteggio: <span id="score">0</span></div>
+                <div>Domanda: <span id="questionNum">1</span></div>
+                <div class="lives" id="lives">
+                    <div class="heart"></div>
+                    <div class="heart"></div>
+                    <div class="heart"></div>
+                </div>
+            </div>
+            
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            
+            <div class="question-container">
+                <div class="question" id="question"></div>
+            </div>
+            
+            <div class="options" id="options">
+                <button class="option-btn" onclick="selectAnswer('am')">am</button>
+                <button class="option-btn" onclick="selectAnswer('is')">is</button>
+                <button class="option-btn" onclick="selectAnswer('are')">are</button>
+            </div>
+            
+            <div class="mascot" id="mascot">😊</div>
+            <div class="feedback" id="feedback"></div>
+            <div class="solution" id="solution"></div>
+            <button class="next-btn" id="nextBtn" onclick="nextQuestion()">Continua ➡️</button>
+        </div>
+        
+        <div class="game-over" id="gameOver">
+            <h2>🎮 Game Over!</h2>
+            <div class="mascot">😢</div>
+            <p>Hai totalizzato <span id="finalScore">0</span> punti!</p>
+            
+            <div class="leaderboard">
+                <h3>🏆 Classifica</h3>
+                <div id="leaderboardList"></div>
+            </div>
+            
+            <button class="restart-btn" onclick="restartGame()">🔄 Gioca Ancora</button>
+        </div>
+    </div>
+
+    <script>
+        const sentences = [
+            { text: "I ___ happy today", answer: "am" },
+            { text: "She ___ a teacher", answer: "is" },
+            { text: "They ___ students", answer: "are" },
+            { text: "You ___ my friend", answer: "are" },
+            { text: "He ___ tall", answer: "is" },
+            { text: "We ___ ready", answer: "are" },
+            { text: "It ___ sunny", answer: "is" },
+            { text: "I ___ tired", answer: "am" },
+            { text: "The cat ___ sleeping", answer: "is" },
+            { text: "Dogs ___ loyal", answer: "are" },
+            { text: "You ___ welcome", answer: "are" },
+            { text: "The book ___ interesting", answer: "is" },
+            { text: "We ___ late", answer: "are" },
+            { text: "I ___ hungry", answer: "am" },
+            { text: "She ___ beautiful", answer: "is" },
+            { text: "They ___ from Italy", answer: "are" },
+            { text: "The weather ___ nice", answer: "is" },
+            { text: "You ___ smart", answer: "are" },
+            { text: "I ___ confused", answer: "am" },
+            { text: "He ___ a doctor", answer: "is" },
+            { text: "The flowers ___ colorful", answer: "are" },
+            { text: "We ___ excited", answer: "are" },
+            { text: "The movie ___ boring", answer: "is" },
+            { text: "I ___ nervous", answer: "am" },
+            { text: "She ___ kind", answer: "is" },
+            { text: "The children ___ playing", answer: "are" },
+            { text: "You ___ right", answer: "are" },
+            { text: "The food ___ delicious", answer: "is" },
+            { text: "I ___ ready", answer: "am" },
+            { text: "They ___ busy", answer: "are" },
+            { text: "The car ___ fast", answer: "is" },
+            { text: "We ___ friends", answer: "are" },
+            { text: "She ___ angry", answer: "is" },
+            { text: "I ___ cold", answer: "am" },
+            { text: "The dogs ___ barking", answer: "are" },
+            { text: "You ___ funny", answer: "are" },
+            { text: "He ___ sick", answer: "is" },
+            { text: "The house ___ big", answer: "is" },
+            { text: "We ___ happy", answer: "are" },
+            { text: "I ___ lost", answer: "am" },
+            { text: "She ___ worried", answer: "is" },
+            { text: "The birds ___ singing", answer: "are" },
+            { text: "You ___ brave", answer: "are" },
+            { text: "The water ___ cold", answer: "is" },
+            { text: "I ___ proud", answer: "am" },
+            { text: "They ___ neighbors", answer: "are" },
+            { text: "The game ___ fun", answer: "is" },
+            { text: "We ___ team", answer: "are" },
+            { text: "She ___ clever", answer: "is" },
+            { text: "I ___ sleepy", answer: "am" },
+            { text: "The stars ___ bright", answer: "are" },
+            { text: "You ___ creative", answer: "are" },
+            { text: "He ___ honest", answer: "is" },
+            { text: "The pizza ___ hot", answer: "is" },
+            { text: "We ___ cousins", answer: "are" },
+            { text: "I ___ amazed", answer: "am" },
+            { text: "She ___ patient", answer: "is" },
+            { text: "The cookies ___ sweet", answer: "are" },
+            { text: "You ___ generous", answer: "are" },
+            { text: "The baby ___ crying", answer: "is" },
+            { text: "I ___ grateful", answer: "am" },
+            { text: "They ___ twins", answer: "are" },
+            { text: "The mountain ___ high", answer: "is" },
+            { text: "We ___ classmates", answer: "are" },
+            { text: "She ___ polite", answer: "is" },
+            { text: "I ___ curious", answer: "am" },
+            { text: "The apples ___ red", answer: "are" },
+            { text: "You ___ helpful", answer: "are" },
+            { text: "He ___ lucky", answer: "is" },
+            { text: "The ocean ___ deep", answer: "is" },
+            { text: "We ___ winners", answer: "are" },
+            { text: "I ___ surprised", answer: "am" },
+            { text: "She ___ talented", answer: "is" },
+            { text: "The shoes ___ comfortable", answer: "are" },
+            { text: "You ___ special", answer: "are" },
+            { text: "The sun ___ shining", answer: "is" },
+            { text: "I ___ excited", answer: "am" },
+            { text: "They ___ siblings", answer: "are" },
+            { text: "The cake ___ chocolate", answer: "is" },
+            { text: "We ___ partners", answer: "are" },
+            { text: "She ___ responsible", answer: "is" },
+            { text: "I ___ careful", answer: "am" },
+            { text: "The lights ___ bright", answer: "are" },
+            { text: "You ___ important", answer: "are" },
+            { text: "He ___ confident", answer: "is" },
+            { text: "The forest ___ green", answer: "is" },
+            { text: "We ___ musicians", answer: "are" },
+            { text: "I ___ relaxed", answer: "am" },
+            { text: "She ___ independent", answer: "is" },
+            { text: "The pencils ___ sharp", answer: "are" },
+            { text: "You ___ amazing", answer: "are" },
+            { text: "The door ___ open", answer: "is" },
+            { text: "I ___ optimistic", answer: "am" },
+            { text: "They ___ athletes", answer: "are" },
+            { text: "The computer ___ new", answer: "is" },
+            { text: "We ___ travelers", answer: "are" },
+            { text: "She ___ ambitious", answer: "is" },
+            { text: "I ___ determined", answer: "am" },
+            { text: "The glasses ___ clean", answer: "are" },
+            { text: "You ___ wonderful", answer: "are" },
+            { text: "He ___ enthusiastic", answer: "is" },
+            { text: "The bridge ___ long", answer: "is" },
+            { text: "We ___ explorers", answer: "are" },
+            { text: "I ___ adventurous", answer: "am" }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+        let lives = 3;
+        let usedQuestions = [];
+        let gameActive = true;
+        let leaderboard = JSON.parse(localStorage.getItem('leaderboard')) || [];
+
+        function getRandomQuestion() {
+            let availableQuestions = sentences.filter((_, index) => !usedQuestions.includes(index));
+            if (availableQuestions.length === 0) {
+                usedQuestions = [];
+                availableQuestions = sentences;
+            }
+            
+            const randomIndex = Math.floor(Math.random() * availableQuestions.length);
+            const selectedQuestion = availableQuestions[randomIndex];
+            const originalIndex = sentences.indexOf(selectedQuestion);
+            usedQuestions.push(originalIndex);
+            
+            return selectedQuestion;
+        }
+
+        function displayQuestion() {
+            if (!gameActive) return;
+            
+            const questionData = getRandomQuestion();
+            const questionElement = document.getElementById('question');
+            
+            questionElement.innerHTML = questionData.text.replace('___', '<span class="blank">____</span>');
+            
+            document.getElementById('questionNum').textContent = currentQuestion + 1;
+            updateProgressBar();
+            
+            // Store correct answer
+            questionElement.dataset.answer = questionData.answer;
+        }
+
+        function updateProgressBar() {
+            const progress = ((currentQuestion) / 20) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+        }
+
+        function selectAnswer(selectedAnswer) {
+            if (!gameActive) return;
+            
+            const correctAnswer = document.getElementById('question').dataset.answer;
+            const mascot = document.getElementById('mascot');
+            const feedback = document.getElementById('feedback');
+            const solution = document.getElementById('solution');
+            const nextBtn = document.getElementById('nextBtn');
+            
+            // Disable buttons temporarily
+            const buttons = document.querySelectorAll('.option-btn');
+            buttons.forEach(btn => btn.disabled = true);
+            
+            if (selectedAnswer === correctAnswer) {
+                score += 10;
+                mascot.textContent = '🎉';
+                mascot.className = 'mascot happy';
+                feedback.textContent = 'Corretto! Bravo!';
+                feedback.className = 'feedback correct show';
+                solution.innerHTML = `✅ Risposta corretta: "<strong>${correctAnswer}</strong>"`;
+                solution.className = 'solution show';
+                createParticles();
+            } else {
+                lives--;
+                mascot.textContent = '😢';
+                mascot.className = 'mascot sad';
+                feedback.textContent = `Sbagliato!`;
+                feedback.className = 'feedback incorrect show';
+                solution.innerHTML = `❌ Hai scelto: "<strong>${selectedAnswer}</strong>" - Risposta corretta: "<strong>${correctAnswer}</strong>"`;
+                solution.className = 'solution show';
+                updateLives();
+            }
+            
+            document.getElementById('score').textContent = score;
+            nextBtn.className = 'next-btn show';
+            
+            if (lives <= 0) {
+                nextBtn.textContent = 'Fine Partita 🎮';
+                nextBtn.onclick = endGame;
+            }
+        }
+
+        function createParticles() {
+            const container = document.querySelector('.container');
+            for (let i = 0; i < 10; i++) {
+                setTimeout(() => {
+                    const particle = document.createElement('div');
+                    particle.className = 'particle';
+                    particle.style.left = Math.random() * 100 + '%';
+                    particle.style.top = Math.random() * 100 + '%';
+                    container.appendChild(particle);
+                    
+                    setTimeout(() => {
+                        particle.remove();
+                    }, 2000);
+                }, i * 100);
+            }
+        }
+
+        function updateLives() {
+            const hearts = document.querySelectorAll('.heart');
+            hearts.forEach((heart, index) => {
+                if (index >= lives) {
+                    heart.classList.add('lost');
+                }
+            });
+        }
+
+        function nextQuestion() {
+            if (lives <= 0) {
+                endGame();
+                return;
+            }
+            
+            currentQuestion++;
+            
+            const mascot = document.getElementById('mascot');
+            const feedback = document.getElementById('feedback');
+            const solution = document.getElementById('solution');
+            const nextBtn = document.getElementById('nextBtn');
+            const buttons = document.querySelectorAll('.option-btn');
+            
+            mascot.textContent = '😊';
+            mascot.className = 'mascot';
+            feedback.className = 'feedback';
+            solution.className = 'solution';
+            nextBtn.className = 'next-btn';
+            nextBtn.textContent = 'Continua ➡️';
+            nextBtn.onclick = nextQuestion;
+            
+            buttons.forEach(btn => btn.disabled = false);
+            
+            displayQuestion();
+        }
+
+        function endGame() {
+            gameActive = false;
+            
+            // Add to leaderboard
+            const now = new Date();
+            const gameData = {
+                score: score,
+                date: now.toLocaleDateString('it-IT'),
+                time: now.toLocaleTimeString('it-IT', { hour: '2-digit', minute: '2-digit' })
+            };
+            
+            leaderboard.push(gameData);
+            leaderboard.sort((a, b) => b.score - a.score);
+            leaderboard = leaderboard.slice(0, 10); // Keep top 10
+            
+            localStorage.setItem('leaderboard', JSON.stringify(leaderboard));
+            
+            document.getElementById('gameArea').style.display = 'none';
+            document.getElementById('gameOver').classList.add('show');
+            document.getElementById('finalScore').textContent = score;
+            
+            displayLeaderboard();
+        }
+
+        function displayLeaderboard() {
+            const leaderboardList = document.getElementById('leaderboardList');
+            leaderboardList.innerHTML = '';
+            
+            if (leaderboard.length === 0) {
+                leaderboardList.innerHTML = '<p>Nessun punteggio registrato</p>';
+                return;
+            }
+            
+            leaderboard.forEach((entry, index) => {
+                const scoreEntry = document.createElement('div');
+                scoreEntry.className = 'score-entry';
+                scoreEntry.innerHTML = `
+                    <span>${index + 1}. ${entry.date} ${entry.time}</span>
+                    <span>${entry.score} punti</span>
+                `;
+                leaderboardList.appendChild(scoreEntry);
+            });
+        }
+
+        function restartGame() {
+            // Reset game state but keep leaderboard
+            currentQuestion = 0;
+            score = 0; // Reset score for new game
+            lives = 3;
+            usedQuestions = [];
+            gameActive = true;
+            
+            // Reset UI
+            document.getElementById('gameArea').style.display = 'block';
+            document.getElementById('gameOver').classList.remove('show');
+            
+            const hearts = document.querySelectorAll('.heart');
+            hearts.forEach(heart => heart.classList.remove('lost'));
+            
+            document.getElementById('score').textContent = score;
+            document.getElementById('progressFill').style.width = '0%';
+            
+            // Reset mascot and feedback
+            const mascot = document.getElementById('mascot');
+            const feedback = document.getElementById('feedback');
+            const solution = document.getElementById('solution');
+            const nextBtn = document.getElementById('nextBtn');
+            
+            mascot.textContent = '😊';
+            mascot.className = 'mascot';
+            feedback.className = 'feedback';
+            solution.className = 'solution';
+            nextBtn.className = 'next-btn';
+            nextBtn.textContent = 'Continua ➡️';
+            nextBtn.onclick = nextQuestion;
+            
+            // Re-enable buttons
+            const buttons = document.querySelectorAll('.option-btn');
+            buttons.forEach(btn => btn.disabled = false);
+            
+            displayQuestion();
+        }
+
+        // Initialize game
+        displayQuestion();
+    </script>
+</body>
+</html>
