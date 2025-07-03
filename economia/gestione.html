@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="it" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Gestione d'Impresa: Una Guida Interattiva</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chosen Palette: Warm Neutrals -->
+    <!-- Application Structure Plan: The application uses a single-page, multi-section layout with top navigation for easy access. The structure is thematic: 1) Introduction for the core concept, 2) Interactive cards for the three foundational phases, 3) A clickable flowchart to visualize the operational cycle, and 4) A final section for the key concept of coordination. This structure transforms the linear text into an engaging, explorable experience, allowing users to dive into specific areas of interest rather than just reading top-to-bottom. -->
+    <!-- Visualization & Content Choices: 1. Core Definition (Intro): Goal=Inform, Method=Text Block, Interaction=None, Justification=Clear initial statement. 2. Three Phases (Le Fasi): Goal=Organize, Method=Interactive HTML Cards, Interaction=Click to reveal details, Justification=Breaks up a long list into digestible, user-controlled chunks. 3. Operational Cycle (Il Ciclo): Goal=Show Relationships, Method=HTML/CSS Flowchart, Interaction=Click step to see description, Justification=Visually represents the process flow described in the text, making it easier to understand. 4. Coordination Concept: Goal=Inform, Method=Text + HTML/CSS visual metaphor, Interaction=Hover effect, Justification=Reinforces the abstract concept with a simple visual aid. No charts are needed as the source is purely qualitative. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .active-nav {
+            font-weight: 600;
+            color: #A16207; /* amber-700 */
+            border-bottom: 2px solid #A16207;
+        }
+        .phase-card.active-phase {
+            border-color: #A16207;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+        .cycle-step.active-step {
+             background-color: #FEF3C7; /* amber-100 */
+             border-color: #FBBF24; /* amber-400 */
+             color: #A16207; /* amber-700 */
+        }
+        .cycle-step.active-step .cycle-icon {
+            transform: scale(1.1);
+            color: #A16207; /* amber-700 */
+        }
+    </style>
+     <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="bg-stone-50 text-stone-800">
+
+    <header class="bg-white/80 backdrop-blur-md sticky top-0 z-50 shadow-sm">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <h1 class="text-xl md:text-2xl font-bold text-stone-700">Gestione d'Impresa</h1>
+            <div class="hidden md:flex space-x-8">
+                <a href="#introduzione" class="nav-link text-stone-600 hover:text-amber-700 transition-colors duration-300 pb-1">Introduzione</a>
+                <a href="#fasi" class="nav-link text-stone-600 hover:text-amber-700 transition-colors duration-300 pb-1">Le Fasi</a>
+                <a href="#ciclo" class="nav-link text-stone-600 hover:text-amber-700 transition-colors duration-300 pb-1">Il Ciclo Operativo</a>
+                <a href="#coordinazione" class="nav-link text-stone-600 hover:text-amber-700 transition-colors duration-300 pb-1">Concetto Chiave</a>
+            </div>
+             <button id="mobile-menu-button" class="md:hidden text-stone-600 focus:outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+            </button>
+        </nav>
+        <div id="mobile-menu" class="hidden md:hidden bg-white px-6 pb-4">
+            <a href="#introduzione" class="block py-2 text-stone-600 hover:text-amber-700">Introduzione</a>
+            <a href="#fasi" class="block py-2 text-stone-600 hover:text-amber-700">Le Fasi</a>
+            <a href="#ciclo" class="block py-2 text-stone-600 hover:text-amber-700">Il Ciclo Operativo</a>
+            <a href="#coordinazione" class="block py-2 text-stone-600 hover:text-amber-700">Concetto Chiave</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-6 py-8 md:py-16">
+
+        <section id="introduzione" class="text-center min-h-[60vh] flex flex-col justify-center items-center">
+            <h2 class="text-3xl md:text-5xl font-bold text-amber-800 mb-4">Che cos'è la Gestione d'Impresa?</h2>
+            <p class="max-w-3xl text-lg md:text-xl text-stone-600 leading-relaxed">
+                Questa sezione introduce il concetto fondamentale di gestione d'impresa. Scoprirai la definizione principale e l'obiettivo ultimo di ogni attività aziendale: la creazione di valore economico.
+            </p>
+            <div class="mt-8 p-8 bg-white rounded-2xl shadow-lg border border-stone-200">
+                <p class="text-lg text-stone-700">La <strong>gestione d'impresa</strong> è l'insieme delle operazioni che l'azienda compie in modo coordinato allo scopo di creare nuovo valore economico, cioè fare in modo che, al termine del periodo di riferimento, i <strong>ricavi</strong> siano superiori ai <strong>costi</strong>.</p>
+            </div>
+        </section>
+
+        <section id="fasi" class="py-16 md:py-24">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-stone-800">Le Fasi Fondamentali</h2>
+                <p class="max-w-2xl mx-auto mt-4 text-stone-600">
+                   Ogni impresa, per nascere e operare, attraversa tre fasi cruciali. Questa sezione le esplora in dettaglio. Clicca su ciascuna fase per scoprire gli elementi che la compongono e comprendere il percorso logico che porta un'idea a diventare un'attività funzionante.
+                </p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div id="fase-1" class="phase-card bg-white p-6 rounded-2xl shadow-md border-2 border-transparent hover:border-amber-600 cursor-pointer transition-all duration-300">
+                    <h3 class="text-xl font-semibold text-amber-800 mb-3 flex items-center"><span class="text-2xl mr-3">1️⃣</span>Fase Preliminare</h3>
+                    <p class="text-stone-600">Le fondamenta su cui si costruisce l'intera attività aziendale.</p>
+                    <div class="phase-details hidden mt-4 pl-4 border-l-2 border-amber-200 text-stone-600">
+                        <ul class="space-y-2 list-inside">
+                            <li>Costituzione legale</li>
+                            <li>Scelta di beni/servizi</li>
+                            <li>Selezione forma giuridica</li>
+                            <li>Definizione struttura organizzativa</li>
+                            <li>Individuazione della sede</li>
+                        </ul>
+                    </div>
+                </div>
+                <div id="fase-2" class="phase-card bg-white p-6 rounded-2xl shadow-md border-2 border-transparent hover:border-amber-600 cursor-pointer transition-all duration-300">
+                    <h3 class="text-xl font-semibold text-amber-800 mb-3 flex items-center"><span class="text-2xl mr-3">2️⃣</span>Reperimento dei Mezzi</h3>
+                    <p class="text-stone-600">Procurarsi le risorse necessarie per avviare le operazioni.</p>
+                    <div class="phase-details hidden mt-4 pl-4 border-l-2 border-amber-200 text-stone-600">
+                       <p>La prima esigenza è quella di procurarsi i mezzi finanziari per acquistare i <strong>fattori produttivi</strong> necessari. Un ristorante, per esempio, necessita di:</p>
+                        <ul class="space-y-2 list-inside mt-2">
+                           <li>Locale e cucina</li>
+                           <li>Tavoli e sedie</li>
+                           <li>Arredamento</li>
+                           <li>Personale addestrato</li>
+                        </ul>
+                    </div>
+                </div>
+                <div id="fase-3" class="phase-card bg-white p-6 rounded-2xl shadow-md border-2 border-transparent hover:border-amber-600 cursor-pointer transition-all duration-300">
+                    <h3 class="text-xl font-semibold text-amber-800 mb-3 flex items-center"><span class="text-2xl mr-3">3️⃣</span>Svolgimento Attività</h3>
+                    <p class="text-stone-600">L'insieme delle operazioni che costituiscono il cuore pulsante dell'impresa.</p>
+                     <div class="phase-details hidden mt-4 pl-4 border-l-2 border-amber-200 text-stone-600">
+                       <p>Acquisiti i fattori produttivi, l'impresa inizia a compiere una serie di operazioni tipiche dell'attività svolta, che verranno esplorate nel dettaglio nella prossima sezione.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="ciclo" class="py-16 md:py-24 bg-amber-50 rounded-3xl">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-stone-800">Il Ciclo Operativo di Gestione</h2>
+                <p class="max-w-3xl mx-auto mt-4 text-stone-600">
+                    Questa sezione visualizza il flusso delle operazioni quotidiane che l'impresa compie per trasformare gli input in valore. Clicca su ciascun passo del ciclo per vederne una descrizione dettagliata e capire come ogni azione si collega alla successiva per generare ricavi.
+                </p>
+            </div>
+            <div class="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-0">
+                <div id="step-acquisto" data-title="Acquisto" data-desc="L'impresa si procura le materie prime e i servizi necessari per la sua attività. Per un ristorante, questo significa comprare ingredienti freschi, bevande e materiali di consumo." class="cycle-step w-full md:w-auto">
+                    <div class="cycle-icon">🛒</div>
+                    <div class="cycle-text">Acquisto</div>
+                </div>
+                <div class="text-2xl text-amber-500 font-bold transform rotate-90 md:rotate-0">→</div>
+                <div id="step-produzione" data-title="Produzione / Trasformazione" data-desc="Le materie prime vengono trasformate nel prodotto o servizio finale. Il ristorante, ad esempio, procede alla preparazione e cottura dei cibi." class="cycle-step w-full md:w-auto">
+                    <div class="cycle-icon">🍳</div>
+                    <div class="cycle-text">Produzione</div>
+                </div>
+                <div class="text-2xl text-amber-500 font-bold transform rotate-90 md:rotate-0">→</div>
+                <div id="step-vendita" data-title="Vendita" data-desc="Il prodotto o servizio viene offerto e venduto ai clienti. Nel nostro esempio, corrisponde alla somministrazione dei pasti ai clienti." class="cycle-step w-full md:w-auto">
+                     <div class="cycle-icon">🍽️</div>
+                    <div class="cycle-text">Vendita</div>
+                </div>
+                <div class="text-2xl text-amber-500 font-bold transform rotate-90 md:rotate-0">→</div>
+                <div id="step-finanza" data-title="Operazioni Finanziarie" data-desc="Questa fase chiude il ciclo con la gestione dei flussi di denaro: la riscossione dei corrispettivi dai clienti e il pagamento dei costi (stipendi, fornitori, affitti, ecc.)." class="cycle-step w-full md:w-auto">
+                    <div class="cycle-icon">💰</div>
+                    <div class="cycle-text">Finanza</div>
+                </div>
+            </div>
+            <div id="cycle-description" class="mt-12 mx-auto max-w-2xl bg-white p-6 rounded-2xl shadow-md border border-stone-200 min-h-[150px] flex flex-col justify-center">
+                <h3 id="cycle-title" class="text-xl font-semibold text-amber-800 mb-2">Clicca un passo del ciclo</h3>
+                <p id="cycle-text" class="text-stone-600">Seleziona un'icona qui sopra per scoprire i dettagli di quella fase operativa.</p>
+            </div>
+        </section>
+
+        <section id="coordinazione" class="py-16 md:py-24">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-stone-800">Il Concetto Chiave: Coordinazione</h2>
+                <p class="max-w-2xl mx-auto mt-4 text-stone-600">
+                    Nessuna operazione aziendale è un'isola. Questa sezione finale esplora il concetto più importante della gestione: la coordinazione. Scoprirai perché le operazioni devono essere considerate come un sistema interconnesso per garantire il successo dell'impresa.
+                </p>
+            </div>
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="space-y-4">
+                    <p class="text-lg text-stone-700 leading-relaxed">
+                        Le operazioni di gestione devono essere considerate nel loro insieme, in quanto <strong>ciascuna dipende dalle precedenti e influisce sulle successive</strong>.
+                    </p>
+                    <p class="text-stone-600">
+                        Per esempio, l'ammontare delle vendite di un ristorante dipende anche dalle campagne pubblicitarie effettuate in precedenza. Allo stesso modo, il numero delle camere che un albergo può affittare dipende dalle dimensioni della struttura precedentemente acquisita. Ogni decisione ha un effetto a catena.
+                    </p>
+                </div>
+                <div class="flex justify-center items-center space-x-[-20px]">
+                    <div class="w-32 h-32 bg-amber-200 rounded-full flex items-center justify-center text-amber-800 font-bold shadow-lg border-4 border-white transition-transform duration-300 hover:scale-105">Acquisti</div>
+                    <div class="w-40 h-40 bg-amber-300 rounded-full flex items-center justify-center text-amber-900 font-bold shadow-lg border-4 border-white transition-transform duration-300 hover:scale-105 z-10">Produzione</div>
+                    <div class="w-32 h-32 bg-amber-200 rounded-full flex items-center justify-center text-amber-800 font-bold shadow-lg border-4 border-white transition-transform duration-300 hover:scale-105">Vendite</div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-stone-800 text-white">
+        <div class="container mx-auto px-6 py-8 text-center text-stone-400">
+            <p>&copy; 2025 Guida Interattiva alla Gestione d'Impresa.</p>
+            <p class="text-sm mt-2">Realizzato per trasformare concetti complessi in conoscenza accessibile.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+            
+            const phaseCards = document.querySelectorAll('.phase-card');
+            phaseCards.forEach(card => {
+                card.addEventListener('click', () => {
+                    const details = card.querySelector('.phase-details');
+                    
+                    const isAlreadyActive = card.classList.contains('active-phase');
+                    
+                    phaseCards.forEach(c => {
+                        c.classList.remove('active-phase');
+                        c.querySelector('.phase-details').classList.add('hidden');
+                    });
+                    
+                    if (!isAlreadyActive) {
+                        card.classList.add('active-phase');
+                        details.classList.remove('hidden');
+                    }
+                });
+            });
+
+            const cycleSteps = document.querySelectorAll('.cycle-step');
+            const cycleTitle = document.getElementById('cycle-title');
+            const cycleText = document.getElementById('cycle-text');
+            cycleSteps.forEach(step => {
+                step.addEventListener('click', () => {
+                    cycleSteps.forEach(s => s.classList.remove('active-step'));
+                    step.classList.add('active-step');
+                    
+                    cycleTitle.textContent = step.dataset.title;
+                    cycleText.textContent = step.dataset.desc;
+                });
+            });
+
+            const navLinks = document.querySelectorAll('.nav-link');
+            const sections = document.querySelectorAll('main section');
+
+            const options = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.5
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        navLinks.forEach(link => {
+                            link.classList.remove('active-nav');
+                            if (link.getAttribute('href').substring(1) === entry.target.id) {
+                                link.classList.add('active-nav');
+                            }
+                        });
+                    }
+                });
+            }, options);
+
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+            
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    if (mobileMenu.contains(e.target)) {
+                        mobileMenu.classList.add('hidden');
+                    }
+                });
+            });
+        });
+
+        const style = document.createElement('style');
+        style.textContent = `
+            .cycle-step {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                width: 120px;
+                height: 120px;
+                background-color: white;
+                border-radius: 9999px;
+                cursor: pointer;
+                transition: all 0.3s ease-in-out;
+                border: 2px solid transparent;
+                padding: 8px;
+                text-align: center;
+                box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            }
+             @media (max-width: 768px) {
+                .cycle-step {
+                    flex-direction: row;
+                    width: 100%;
+                    height: auto;
+                    border-radius: 1rem;
+                    padding: 1rem;
+                    justify-content: flex-start;
+                }
+                .cycle-icon { margin-right: 1rem; }
+            }
+            .cycle-step:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+                border-color: #FBBF24; /* amber-400 */
+            }
+            .cycle-icon {
+                font-size: 2.5rem;
+                transition: transform 0.3s ease;
+            }
+            .cycle-text {
+                font-weight: 600;
+                color: #44403C; /* stone-700 */
+                margin-top: 8px;
+            }
+             @media (max-width: 768px) {
+                .cycle-text { margin-top: 0; }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
