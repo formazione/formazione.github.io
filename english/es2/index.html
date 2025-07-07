@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Esercizio di Ascolto Inglese #2</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 0 15px;
+            background-color: #f4f4f4;
+        }
+        h1, h2, h3 {
+            color: #0056b3;
+        }
+        h2 {
+            border-bottom: 2px solid #0056b3;
+            padding-bottom: 5px;
+            margin-top: 30px;
+        }
+        .exercise {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+        }
+        ol {
+            list-style-type: decimal;
+            padding-left: 20px;
+        }
+        li {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        input[type="text"] {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            flex-grow: 1;
+            margin-left: 10px;
+            min-width: 250px;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .speak-btn {
+            background-color: transparent;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 0 10px 0 0;
+            margin-top: 0;
+            color: #007bff;
+        }
+        .speak-btn:hover {
+            color: #0056b3;
+        }
+        .feedback {
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 5px;
+            border-style: solid;
+            border-width: 1px;
+        }
+        .correct {
+            background-color: #d4edda;
+            color: #155724;
+            border-color: #c3e6cb;
+        }
+        .incorrect {
+            background-color: #f8d7da;
+            color: #721c24;
+            border-color: #f5c6cb;
+        }
+        /* Stili per il Quadro dei Risultati */
+        .results-board-container {
+            background-color: #f0f8ff;
+            border: 2px solid #0056b3;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 8px;
+        }
+        #results-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        #results-table th, #results-table td {
+            border: 1px solid #cce;
+            padding: 12px;
+            text-align: left;
+        }
+        #results-table th {
+            background-color: #007bff;
+            color: white;
+        }
+        #results-table tfoot {
+            font-weight: bold;
+            color: #0056b3;
+        }
+        #email-btn {
+            background-color: #28a745;
+        }
+        #email-btn:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Esercizio di Ascolto #2</h1>
+    <p>Ascolta le frasi cliccando sul pulsante 🔊 e scrivile nello spazio corrispondente. Questo è un nuovo set di frasi.</p>
+
+    <!-- Quadro dei Risultati -->
+    <div class="results-board-container">
+        <h2>📊 Quadro dei Risultati</h2>
+        <table id="results-table">
+            <thead>
+                <tr>
+                    <th>Esercizio</th>
+                    <th>Punteggio</th>
+                </tr>
+            </thead>
+            <tbody id="results-table-body">
+                 <tr><td colspan="2">Completa l'esercizio per vedere i tuoi risultati qui!</td></tr>
+            </tbody>
+            <tfoot id="results-table-footer">
+            </tfoot>
+        </table>
+        <button id="email-btn" onclick="sendEmail()">Invia Risultati via Email</button>
+    </div>
+
+    <hr>
+
+    <div class="exercise">
+        <h3>Esercizio: Scrivi quello che senti</h3>
+        <ol id="sentence-list">
+            <!-- Le frasi verranno generate qui dal JavaScript -->
+        </ol>
+        <button onclick="checkListeningAnswers()">Controlla Risposte</button>
+        <div id="feedback_listening" class="feedback" style="display: none;"></div>
+    </div>
+
+    <script>
+        // NUOVO SET DI FRASI
+        const sentences = [
+            "Where is the nearest train station?",
+            "I am going to visit my grandparents this weekend.",
+            "You should drink more water every day.",
+            "It's cold and windy outside.",
+            "My favorite food is pasta with tomato sauce.",
+            "He always wakes up early in the morning.",
+            "She can speak three languages fluently.",
+            "The library is closed on Sundays.",
+            "They haven't finished their homework yet.",
+            "We are planning a trip to the mountains."
+        ];
+
+        // Genera gli elementi dell'esercizio
+        const sentenceList = document.getElementById('sentence-list');
+        sentences.forEach((sentence, index) => {
+            const listItem = document.createElement('li');
+            listItem.innerHTML = `
+                <button class="speak-btn" onclick="speakSentence(${index})">🔊</button>
+                <input type="text" id="listen_q_${index + 1}" placeholder="Scrivi la frase che hai sentito...">
+            `;
+            sentenceList.appendChild(listItem);
+        });
+
+        function speakSentence(index) {
+            if ('speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance(sentences[index]);
+                utterance.lang = 'en-US';
+                utterance.rate = 0.9;
+                window.speechSynthesis.speak(utterance);
+            } else {
+                alert("Spiacenti, il tuo browser non supporta la sintesi vocale.");
+            }
+        }
+
+        function checkListeningAnswers() {
+            const exerciseId = 'listening_2'; // ID univoco per questo test
+            let correctCount = 0;
+            const totalQuestions = sentences.length;
+            const feedbackDiv = document.getElementById('feedback_listening');
+            let feedbackHtml = '';
+
+            for (let i = 0; i < totalQuestions; i++) {
+                const inputElement = document.getElementById(`listen_q_${i + 1}`);
+                // Pulisce l'input dell'utente e la risposta corretta per un confronto più tollerante
+                const userAnswer = inputElement.value.trim().toLowerCase().replace(/[.,?']/g, ''); // Rimuove anche l'apostrofo
+                const correctAnswer = sentences[i].trim().toLowerCase().replace(/[.,?']/g, '');
+
+                if (userAnswer === correctAnswer) {
+                    correctCount++;
+                    inputElement.style.borderColor = 'green';
+                    inputElement.style.backgroundColor = '#e6ffe6';
+                } else {
+                    inputElement.style.borderColor = 'red';
+                    inputElement.style.backgroundColor = '#ffe6e6';
+                    feedbackHtml += `<p style="color: red;">✘ Frase ${i + 1}: La risposta corretta era "<strong>${sentences[i]}</strong>".</p>`;
+                }
+            }
+
+            if (correctCount === totalQuestions) {
+                feedbackDiv.innerHTML = '<p class="correct">🎉 Complimenti! Tutte le risposte sono corrette!</p>';
+                feedbackDiv.className = 'feedback correct';
+            } else {
+                feedbackDiv.innerHTML = `<p class="incorrect">Ops! Hai risposto correttamente a ${correctCount} su ${totalQuestions}. Controlla le risposte in rosso.</p>${feedbackHtml}`;
+                feedbackDiv.className = 'feedback incorrect';
+            }
+            feedbackDiv.style.display = 'block';
+
+            saveResults(exerciseId, correctCount, totalQuestions);
+            updateResultsBoard();
+        }
+
+        function saveResults(exerciseId, correct, total) {
+            // Usiamo lo stesso storage per tenere traccia di tutti i test
+            const results = JSON.parse(localStorage.getItem('allExerciseResults')) || {};
+            results[exerciseId] = { correct, total, name: "Esercizio di Ascolto #2" };
+            localStorage.setItem('allExerciseResults', JSON.stringify(results));
+        }
+
+        function updateResultsBoard() {
+            const results = JSON.parse(localStorage.getItem('allExerciseResults')) || {};
+            const boardBody = document.getElementById('results-table-body');
+            boardBody.innerHTML = ''; // Pulisce il corpo della tabella
+
+            let totalCorrect = 0;
+            let totalQuestions = 0;
+            let hasResults = false;
+
+            for(const id in results) {
+                hasResults = true;
+                const result = results[id];
+                totalCorrect += result.correct;
+                totalQuestions += result.total;
+
+                const row = document.createElement('tr');
+                row.innerHTML = `<td>${result.name}</td><td>${result.correct} / ${result.total}</td>`;
+                boardBody.appendChild(row);
+            }
+            
+            if (!hasResults) {
+                boardBody.innerHTML = `<tr><td colspan="2">Completa un esercizio per vedere i risultati!</td></tr>`;
+            }
+
+            const boardFooter = document.getElementById('results-table-footer');
+            if (totalQuestions > 0) {
+                boardFooter.innerHTML = `<tr><td><strong>Totale Complessivo</strong></td><td><strong>${totalCorrect} / ${totalQuestions}</strong></td></tr>`;
+            } else {
+                boardFooter.innerHTML = '';
+            }
+        }
+
+        function sendEmail() {
+            const results = JSON.parse(localStorage.getItem('allExerciseResults')) || {};
+            const listeningResult = results['listening_2'];
+
+            if (!listeningResult) {
+                alert("Devi prima completare questo esercizio prima di inviare i risultati!");
+                return;
+            }
+
+            const score = `${listeningResult.correct} / ${listeningResult.total}`;
+            const subject = "Risultati Esercizio di Ascolto Inglese #2";
+            
+            let body = `Ciao,\n\nEcco i miei risultati per l'esercizio di ascolto #2:\n\nPunteggio: ${score}\n\n`;
+            body += "--------------------------------------\n";
+            body += "Le mie risposte:\n";
+            
+            for (let i = 0; i < sentences.length; i++) {
+                const inputElement = document.getElementById(`listen_q_${i + 1}`);
+                body += `${i + 1}. ${inputElement.value || "(nessuna risposta)"}\n`;
+            }
+            
+            body += "--------------------------------------\n\n";
+            body += "Riepilogo di tutti i test completati:\n";
+
+            for (const id in results) {
+                 body += `- ${results[id].name}: ${results[id].correct} / ${results[id].total}\n`;
+            }
+
+
+            const mailtoLink = `mailto:gatto.gio@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+            
+            window.location.href = mailtoLink;
+        }
+
+        // Carica i risultati quando la pagina viene aperta
+        document.addEventListener('DOMContentLoaded', updateResultsBoard);
+    </script>
+
+</body>
+</html>
