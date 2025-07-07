@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Esercizi di Inglese Interattivi con Quadro Risultati</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 0 15px;
+            background-color: #f4f4f4;
+        }
+        h1, h2, h3 {
+            color: #0056b3;
+        }
+        h2 {
+            border-bottom: 2px solid #0056b3;
+            padding-bottom: 5px;
+            margin-top: 30px;
+        }
+        h3 {
+            color: #007bff;
+        }
+        .rule-box {
+            background-color: #e6f7ff;
+            border-left: 5px solid #007bff;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+        .example {
+            font-style: italic;
+            color: #555;
+            margin-left: 20px;
+        }
+        .exercise {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+        ol {
+            list-style-type: decimal;
+            padding-left: 20px;
+        }
+        ul {
+            list-style-type: disc;
+            padding-left: 20px;
+        }
+        li {
+            margin-bottom: 15px;
+        }
+        input[type="text"] {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            width: 150px;
+            margin-left: 5px;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .feedback {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .correct {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .incorrect {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .tip-box {
+            background-color: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 15px;
+            margin-top: 30px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+        /* Stili per il Quadro dei Risultati */
+        .results-board-container {
+            background-color: #f0f8ff;
+            border: 2px solid #0056b3;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 8px;
+        }
+        #results-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        #results-table th, #results-table td {
+            border: 1px solid #cce;
+            padding: 12px;
+            text-align: left;
+        }
+        #results-table th {
+            background-color: #007bff;
+            color: white;
+        }
+        #results-table tfoot {
+            font-weight: bold;
+            color: #0056b3;
+        }
+        #results-table td {
+            background-color: #fff;
+        }
+        .results-board-container button {
+            background-color: #dc3545;
+        }
+        .results-board-container button:hover {
+            background-color: #c82333;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Esercizi di Inglese Interattivi (con Regole)</h1>
+    <p>Ciao! Ecco alcuni esercizi di inglese pensati per te. Puoi scrivere le tue risposte e poi controllare se sono corrette! I tuoi risultati verranno salvati in un quadro qui sotto. Divertiti!</p>
+
+    <div class="results-board-container">
+        <h2>📊 Quadro dei Risultati</h2>
+        <p>I tuoi punteggi vengono salvati qui. Puoi tornare in qualsiasi momento per vedere i tuoi progressi.</p>
+        <table id="results-table">
+            <thead>
+                <tr>
+                    <th>Esercizio</th>
+                    <th>Punteggio</th>
+                </tr>
+            </thead>
+            <tbody id="results-table-body">
+                </tbody>
+            <tfoot id="results-table-footer">
+                </tfoot>
+        </table>
+        <button onclick="clearResults()">Cancella Risultati</button>
+    </div>
+
+    <hr>
+
+    <h2>1. Present Simple: Routine e Abitudini</h2>
+    <div class="rule-box">
+        <h3>Regole:</h3>
+        <p>Il <strong>Present Simple</strong> si usa per azioni che accadono regolarmente, abitudini, fatti e verità generali.</p>
+        <ul>
+            <li>Per la maggior parte dei verbi, usi la **forma base** (es. *play*, *eat*, *work*).</li>
+            <li>Per **he, she, it**, e nomi singolari, aggiungi **-s** o **-es** al verbo (es. *plays*, *eats*, *works*, *goes*, *washes*).</li>
+        </ul>
+    </div>
+    <div class="exercise">
+        <h3>Esercizio 1: Completa le Frasi (Present Simple)</h3>
+        <p>Completa gli spazi vuoti con la forma corretta del verbo tra parentesi.</p>
+        <ol>
+            <li>Maria <input type="text" id="q1_1" placeholder="La tua risposta"> (wake up) at 7 AM every day.</li>
+            <li>My parents <input type="text" id="q1_2" placeholder="La tua risposta"> (watch) TV in the evening.</li>
+            <li>He <input type="text" id="q1_3" placeholder="La tua risposta"> (study) English at school.</li>
+            <li>We <input type="text" id="q1_4" placeholder="La tua risposta"> (not, eat) meat.</li>
+            <li>The sun <input type="text" id="q1_5" placeholder="La tua risposta"> (rise) in the east.</li>
+            <li>My cat <input type="text" id="q1_6" placeholder="La tua risposta"> (sleep) a lot.</li>
+        </ol>
+        <button onclick="checkAnswers('q1')">Controlla Risposte</button>
+        <div id="feedback_q1" class="feedback"></div>
+    </div>
+
+    <hr>
+
+    <h2>2. Present Continuous: Azioni che Accadono Ora</h2>
+    <div class="rule-box">
+        <h3>Regole:</h3>
+        <p>Il <strong>Present Continuous</strong> si usa per azioni che accadono **in questo momento**.</p>
+        <ul>
+            <li>Si forma con il **verbo "to be" (am/is/are)** + **verbo-ing**.</li>
+        </ul>
+    </div>
+    <div class="exercise">
+        <h3>Esercizio 2: Descrivi Cosa Sta Succedendo (Present Continuous)</h3>
+        <p>Descrivi cosa sta facendo la persona/le persone in questo momento.</p>
+        <ol>
+            <li>Una ragazza sta correndo nel parco. <input type="text" id="q2_1" placeholder="La tua risposta"></li>
+            <li>Due amici stanno parlando. <input type="text" id="q2_2" placeholder="La tua risposta"></li>
+            <li>Un cane sta dormendo. <input type="text" id="q2_3" placeholder="La tua risposta"></li>
+            <li>Una mamma sta cucinando la cena. <input type="text" id="q2_4" placeholder="La tua risposta"></li>
+        </ol>
+        <button onclick="checkAnswers('q2')">Controlla Risposte</button>
+        <div id="feedback_q2" class="feedback"></div>
+    </div>
+
+    <hr>
+
+    <h2>3. Past Simple: Azioni Concluse</h2>
+     <div class="rule-box">
+        <h3>Regole:</h3>
+        <p>Il <strong>Past Simple</strong> si usa per azioni che sono iniziate e finite nel passato.</p>
+        <ul>
+            <li>Per i **verbi regolari**, aggiungi **-ed** (es. *walked*, *played*).</li>
+            <li>Per i **verbi irregolari**, la forma cambia (es. *go* -> *went*, *eat* -> *ate*).</li>
+        </ul>
+    </div>
+    <div class="exercise">
+        <h3>Esercizio 3: Completa le Frasi (Past Simple)</h3>
+        <p>Completa gli spazi vuoti con la forma corretta al past simple del verbo.</p>
+        <ol>
+            <li>Yesterday, I <input type="text" id="q3_1" placeholder="La tua risposta"> (visit) my aunt.</li>
+            <li>Last summer, we <input type="text" id="q3_2" placeholder="La tua risposta"> (go) to the beach.</li>
+            <li>She <input type="text" id="q3_3" placeholder="La tua risposta"> (not, finish) her homework.</li>
+            <li>They <input type="text" id="q3_4" placeholder="La tua risposta"> (buy) a new car last month.</li>
+            <li>I <input type="text" id="q3_5" placeholder="La tua risposta"> (wake up) late this morning.</li>
+        </ol>
+        <button onclick="checkAnswers('q3')">Controlla Risposte</button>
+        <div id="feedback_q3" class="feedback"></div>
+    </div>
+
+    <hr>
+
+     <h2>4. Aggettivi: Descrivere i Nomi</h2>
+    <div class="rule-box">
+        <h3>Regole:</h3>
+        <p>Gli <strong>Aggettivi</strong> descrivono i nomi e di solito vengono **prima** del nome.</p>
+        <ul>
+            <li>Es. *a **big** house*, *a **red** car*.</li>
+            <li>Non cambiano al plurale (es. *two **big** houses*).</li>
+        </ul>
+    </div>
+    <div class="exercise">
+        <h3>Esercizio 4: Scegli l'Aggettivo Migliore</h3>
+        <p>Scegli l'aggettivo migliore dal riquadro per completare ogni frase: (happy, tall, blue, delicious, fast, difficult)</p>
+        <ol>
+            <li>The sky is <input type="text" id="q4_1" placeholder="La tua risposta">.</li>
+            <li>The cake was very <input type="text" id="q4_2" placeholder="La tua risposta">.</li>
+            <li>My friend is a very <input type="text" id="q4_3" placeholder="La tua risposta"> runner.</li>
+            <li>He is a <input type="text" id="q4_4" placeholder="La tua risposta"> boy.</li>
+            <li>This math problem is <input type="text" id="q4_5" placeholder="La tua risposta">.</li>
+            <li>My brother is very <input type="text" id="q4_6" placeholder="La tua risposta">.</li>
+        </ol>
+        <button onclick="checkAnswers('q4')">Controlla Risposte</button>
+        <div id="feedback_q4" class="feedback"></div>
+    </div>
+
+    <hr>
+
+    <h2>5. Preposizioni di Luogo: Dove Sono le Cose</h2>
+    <div class="rule-box">
+        <h3>Regole:</h3>
+        <p>Le <strong>Preposizioni di Luogo</strong> ci dicono dove si trova qualcosa (in, on, under, next to, etc.).</p>
+    </div>
+    <div class="exercise">
+        <h3>Esercizio 5: Completa gli Spazi Vuoti con le Preposizioni</h3>
+        <p>Scegli la preposizione di luogo corretta (in, on, under, next to).</p>
+        <ol>
+            <li>The cat is <input type="text" id="q5_1" placeholder="La tua risposta"> the bed.</li>
+            <li>The picture is <input type="text" id="q5_2" placeholder="La tua risposta"> the wall.</li>
+            <li>The toys are <input type="text" id="q5_3" placeholder="La tua risposta"> the box.</li>
+            <li>My pencil is <input type="text" id="q5_4" placeholder="La tua risposta"> the book.</li>
+            <li>The apples are <input type="text" id="q5_5" placeholder="La tua risposta"> the table.</li>
+        </ol>
+        <button onclick="checkAnswers('q5')">Controlla Risposte</button>
+        <div id="feedback_q5" class="feedback"></div>
+    </div>
+
+    <hr>
+
+    <div class="tip-box">
+        <h2>Suggerimenti Utili per l'Apprendimento:</h2>
+        <ul>
+            <li><strong>Ripetizione:</strong> La ripetizione è fondamentale. Rileggi le regole e fai gli esercizi più volte.</li>
+            <li><strong>Pazienza:</strong> L'apprendimento richiede tempo. Sii paziente con te stessa e celebra ogni piccolo progresso!</li>
+        </ul>
+    </div>
+
+    <script>
+        const answers = {
+            'q1': { 'q1_1': 'wakes up', 'q1_2': 'watch', 'q1_3': 'studies', 'q1_4': 'don\'t eat', 'q1_5': 'rises', 'q1_6': 'sleeps' },
+            'q2': { 'q2_1': 'she is running in the park.', 'q2_2': 'they are talking.', 'q2_3': 'it is sleeping.', 'q2_4': 'she is cooking dinner.' },
+            'q3': { 'q3_1': 'visited', 'q3_2': 'went', 'q3_3': 'didn\'t finish', 'q3_4': 'bought', 'q3_5': 'woke up' },
+            'q4': { 'q4_1': 'blue', 'q4_2': 'delicious', 'q4_3': 'fast', 'q4_4': 'happy', 'q4_5': 'difficult', 'q4_6': 'tall' },
+            'q5': { 'q5_1': 'under', 'q5_2': 'on', 'q5_3': 'in', 'q5_4': 'next to', 'q5_5': 'on' }
+        };
+
+        const exerciseNames = {
+            'q1': '1. Present Simple',
+            'q2': '2. Present Continuous',
+            'q3': '3. Past Simple',
+            'q4': '4. Aggettivi',
+            'q5': '5. Preposizioni di Luogo'
+        };
+
+        function checkAnswers(exerciseId) {
+            const exerciseAnswers = answers[exerciseId];
+            const feedbackDiv = document.getElementById(`feedback_${exerciseId}`);
+            let correctCount = 0;
+            let totalQuestions = 0;
+            let resultsHtml = '';
+
+            for (const key in exerciseAnswers) {
+                totalQuestions++;
+                const inputElement = document.getElementById(key);
+                if (inputElement) {
+                    const userAnswer = inputElement.value.trim().toLowerCase().replace(/\.$/, ""); // Rimuove il punto finale per flessibilità
+                    const correctAnsw = exerciseAnswers[key].toLowerCase().replace(/\.$/, "");
+                    
+                    let isCorrect = (userAnswer === correctAnsw);
+
+                    // Gestione risposte alternative
+                     if (exerciseId === 'q5' && key === 'q5_4' && (userAnswer === 'beside')) {
+                        isCorrect = true;
+                    }
+                     if (exerciseId === 'q2' && key === 'q2_3' && (userAnswer === 'the dog is sleeping.')) {
+                        isCorrect = true;
+                    }
+
+                    if (isCorrect) {
+                        correctCount++;
+                        inputElement.style.borderColor = 'green';
+                        inputElement.style.backgroundColor = '#e6ffe6';
+                    } else {
+                        inputElement.style.borderColor = 'red';
+                        inputElement.style.backgroundColor = '#ffe6e6';
+                        resultsHtml += `<p style="color: red;">✘ La risposta alla domanda "${inputElement.parentElement.innerText.split('(')[0].trim()}" dovrebbe essere "<strong>${exerciseAnswers[key]}</strong>".</p>`;
+                    }
+                }
+            }
+
+            if (correctCount === totalQuestions) {
+                feedbackDiv.innerHTML = '<p class="correct">🎉 Complimenti! Tutte le risposte sono corrette!</p>';
+                feedbackDiv.className = 'feedback correct';
+            } else {
+                feedbackDiv.innerHTML = `<p class="incorrect">Ops! Hai risposto correttamente a ${correctCount} su ${totalQuestions}. Controlla le risposte in rosso.</p>` + resultsHtml;
+                feedbackDiv.className = 'feedback incorrect';
+            }
+
+            saveResults(exerciseId, correctCount, totalQuestions);
+            updateResultsBoard();
+        }
+
+        function saveResults(exerciseId, correct, total) {
+            const results = JSON.parse(localStorage.getItem('exerciseResults')) || {};
+            results[exerciseId] = { correct, total };
+            localStorage.setItem('exerciseResults', JSON.stringify(results));
+        }
+
+        function updateResultsBoard() {
+            const results = JSON.parse(localStorage.getItem('exerciseResults')) || {};
+            const boardBody = document.getElementById('results-table-body');
+            const boardFooter = document.getElementById('results-table-footer');
+            boardBody.innerHTML = '';
+            boardFooter.innerHTML = '';
+
+            let totalCorrect = 0;
+            let totalQuestions = 0;
+
+            // Itera sui nomi degli esercizi per mantenere l'ordine
+            for(const id in exerciseNames) {
+                if(results[id]) {
+                    const result = results[id];
+                    const name = exerciseNames[id];
+                    totalCorrect += result.correct;
+                    totalQuestions += result.total;
+
+                    const row = document.createElement('tr');
+                    row.innerHTML = `<td>${name}</td><td>${result.correct} / ${result.total}</td>`;
+                    boardBody.appendChild(row);
+                }
+            }
+            
+            if (totalQuestions > 0) {
+                const footerRow = document.createElement('tr');
+                footerRow.innerHTML = `<td><strong>Totale</strong></td><td><strong>${totalCorrect} / ${totalQuestions}</strong></td>`;
+                boardFooter.appendChild(footerRow);
+            } else {
+                 const row = document.createElement('tr');
+                 row.innerHTML = `<td colspan="2">Completa un esercizio per vedere i tuoi risultati qui!</td>`;
+                 boardBody.appendChild(row);
+            }
+        }
+
+        function clearResults() {
+            if (confirm("Sei sicuro di voler cancellare tutti i tuoi risultati?")) {
+                localStorage.removeItem('exerciseResults');
+                // Resetta anche lo stile degli input
+                const inputs = document.querySelectorAll('input[type="text"]');
+                inputs.forEach(input => {
+                    input.style.borderColor = '#ccc';
+                    input.style.backgroundColor = '#fff';
+                    input.value = '';
+                });
+                const feedbacks = document.querySelectorAll('.feedback');
+                feedbacks.forEach(fb => {
+                    fb.innerHTML = '';
+                    fb.className = 'feedback';
+                });
+                updateResultsBoard();
+            }
+        }
+
+        // Carica i risultati quando la pagina viene aperta
+        document.addEventListener('DOMContentLoaded', updateResultsBoard);
+
+    </script>
+
+</body>
+</html>
