@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Esercizio di Ascolto Potenziato con AI</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 0 15px;
+            background-color: #f4f4f4;
+        }
+        h1, h2, h3 {
+            color: #0056b3;
+        }
+        h2 {
+            border-bottom: 2px solid #0056b3;
+            padding-bottom: 5px;
+            margin-top: 30px;
+        }
+        .exercise {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            position: relative;
+        }
+        .sentence-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+        .words-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            margin-left: 10px;
+        }
+        .word {
+            display: flex;
+            margin-right: 15px;
+            margin-bottom: 10px;
+        }
+        .letter-box {
+            width: 35px;
+            height: 35px;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            text-transform: uppercase;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            margin-right: 4px;
+            padding: 0;
+            transition: border-color 0.3s, background-color 0.3s;
+        }
+        .letter-box:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .speak-btn {
+            background-color: transparent;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 0;
+            margin: 0;
+            color: #007bff;
+        }
+        .feedback {
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 5px;
+            border-style: solid;
+            border-width: 1px;
+        }
+        .correct-feedback { background-color: #d4edda; color: #155724; border-color: #c3e6cb; }
+        .incorrect-feedback { background-color: #f8d7da; color: #721c24; border-color: #f5c6cb; }
+        .results-board-container { background-color: #f0f8ff; border: 2px solid #0056b3; padding: 20px; margin-bottom: 30px; border-radius: 8px; }
+        #results-table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        #results-table th, #results-table td { border: 1px solid #cce; padding: 12px; text-align: left; }
+        #results-table th { background-color: #007bff; color: white; }
+        #results-table tfoot { font-weight: bold; color: #0056b3; }
+        #email-btn { background-color: #28a745; }
+        #email-btn:hover { background-color: #218838; }
+        
+        /* Gemini Feature Styles */
+        #gemini-btn-container { display: flex; gap: 10px; margin-bottom: 15px; }
+        .gemini-btn { background-color: #6f42c1; }
+        .gemini-btn:hover { background-color: #5a349b; }
+        .explain-btn { font-size: 12px; padding: 5px 10px; margin-left: 15px; background-color: #ffc107; color: #212529; }
+        .explain-btn:hover { background-color: #e0a800; }
+        .explanation-box {
+            font-size: 14px;
+            background-color: #fff3cd;
+            border: 1px solid #ffeeba;
+            border-radius: 5px;
+            padding: 10px;
+            margin-top: 10px;
+            margin-left: 40px; /* Align with inputs */
+        }
+        
+        /* Loading Spinner */
+        .loader {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 50px;
+            height: 50px;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #6f42c1;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            z-index: 10;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .loading-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(255, 255, 255, 0.7);
+            z-index: 9;
+        }
+
+    </style>
+</head>
+<body>
+
+    <h1>Esercizio di Ascolto Potenziato con AI</h1>
+    <p>Ascolta la frase, poi scrivi ogni lettera nella casella. Usa i pulsanti ✨ per generare nuove frasi o per capire i tuoi errori.</p>
+
+    <div class="results-board-container">
+        <h2>📊 Quadro dei Risultati</h2>
+        <table id="results-table">
+            <thead><tr><th>Esercizio</th><th>Punteggio</th></tr></thead>
+            <tbody id="results-table-body"><tr><td colspan="2">Completa un esercizio per vedere i risultati!</td></tr></tbody>
+            <tfoot id="results-table-footer"></tfoot>
+        </table>
+        <button id="email-btn" onclick="sendEmail()">Invia Risultati via Email</button>
+    </div>
+
+    <hr>
+
+    <div class="exercise" id="exercise-container">
+        <div id="gemini-btn-container">
+            <button id="generate-btn" class="gemini-btn" onclick="generateNewSentences()">✨ Genera Nuove Frasi</button>
+        </div>
+        <h3>Esercizio: Scrivi quello che senti</h3>
+        <button onclick="checkLetterAnswers()">Controlla Risposte</button>
+        <div id="feedback_letters" class="feedback" style="display: none;"></div>
+        <div id="loader-container" style="display: none;">
+             <div class="loading-overlay"></div>
+             <div class="loader"></div>
+        </div>
+    </div>
+
+    <script>
+        let sentences = [
+            "The sun is hot",
+            "My dog is big",
+            "I can run fast",
+            "She has a red car",
+            "We like to play"
+        ];
+
+        // --- Gemini API Helper ---
+        async function callGemini(prompt, isJson = false) {
+            const loaderContainer = document.getElementById('loader-container');
+            loaderContainer.style.display = 'block';
+
+            const apiKey = ""; // Leave empty, handled by the environment
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+            
+            const payload = {
+                contents: [{ role: "user", parts: [{ text: prompt }] }]
+            };
+
+            if (isJson) {
+                payload.generationConfig = {
+                    responseMimeType: "application/json",
+                    responseSchema: {
+                        type: "ARRAY",
+                        items: { type: "STRING" }
+                    }
+                };
+            }
+
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!response.ok) {
+                    throw new Error(`API call failed with status: ${response.status}`);
+                }
+
+                const result = await response.json();
+                if (result.candidates && result.candidates.length > 0) {
+                    const text = result.candidates[0].content.parts[0].text;
+                    return text;
+                } else {
+                    throw new Error("Invalid response structure from API.");
+                }
+            } catch (error) {
+                console.error("Gemini API Error:", error);
+                alert("Si è verificato un errore nel contattare l'IA. Riprova più tardi.");
+                return null;
+            } finally {
+                loaderContainer.style.display = 'none';
+            }
+        }
+
+        // --- New Gemini Features ---
+        async function generateNewSentences() {
+            const prompt = "Generate 5 new, very simple English sentences for a beginner learner. The sentences should be 3 to 5 words long. Only use common words. Return them as a valid JSON array of strings, for example: [\"The cat is black\", \"I see a bird\"]";
+            const newSentencesJson = await callGemini(prompt, true);
+            
+            if (newSentencesJson) {
+                try {
+                    const newSentences = JSON.parse(newSentencesJson);
+                    if (Array.isArray(newSentences) && newSentences.length > 0) {
+                        sentences = newSentences;
+                        clearExercise();
+                        generateExercise();
+                    } else {
+                         throw new Error("Parsed JSON is not a valid array.");
+                    }
+                } catch(e) {
+                    console.error("Failed to parse new sentences:", e);
+                    alert("L'IA ha restituito una risposta non valida. Riprova.");
+                }
+            }
+        }
+
+        async function getExplanation(sentenceIndex, userSentence) {
+            const correctSentence = sentences[sentenceIndex];
+            const prompt = `For an Italian beginner learning English: The correct sentence was "${correctSentence}". The user wrote "${userSentence}". Please explain the mistake in 1-2 simple sentences in Italian.`;
+            
+            const explanationText = await callGemini(prompt);
+            
+            if (explanationText) {
+                const explanationBox = document.getElementById(`explanation_${sentenceIndex}`);
+                explanationBox.innerHTML = explanationText;
+                explanationBox.style.display = 'block';
+            }
+        }
+
+        // --- Core Application Logic ---
+        function clearExercise() {
+            const container = document.getElementById('exercise-container');
+            const sentenceContainers = container.querySelectorAll('.sentence-container');
+            sentenceContainers.forEach(sc => sc.remove());
+            const feedbackDiv = document.getElementById('feedback_letters');
+            feedbackDiv.style.display = 'none';
+            feedbackDiv.innerHTML = '';
+        }
+
+        function generateExercise() {
+            const container = document.getElementById('exercise-container');
+            
+            sentences.forEach((sentence, sentenceIndex) => {
+                const sentenceContainer = document.createElement('div');
+                sentenceContainer.className = 'sentence-container';
+                sentenceContainer.id = `s_${sentenceIndex}`;
+
+                const speakBtn = document.createElement('button');
+                speakBtn.className = 'speak-btn';
+                speakBtn.innerHTML = '🔊';
+                speakBtn.onclick = () => speakSentence(sentence);
+                sentenceContainer.appendChild(speakBtn);
+
+                const wordsWrapper = document.createElement('div');
+                wordsWrapper.className = 'words-wrapper';
+
+                const words = sentence.split(' ');
+                words.forEach((word, wordIndex) => {
+                    const wordDiv = document.createElement('div');
+                    wordDiv.className = 'word';
+                    word.split('').forEach((letter, letterIndex) => {
+                        const letterInput = document.createElement('input');
+                        letterInput.type = 'text';
+                        letterInput.maxLength = 1;
+                        letterInput.className = 'letter-box';
+                        letterInput.dataset.sentence = sentenceIndex;
+                        letterInput.dataset.word = wordIndex;
+                        letterInput.dataset.letter = letterIndex;
+                        wordDiv.appendChild(letterInput);
+                    });
+                    wordsWrapper.appendChild(wordDiv);
+                });
+                sentenceContainer.appendChild(wordsWrapper);
+                container.insertBefore(sentenceContainer, container.querySelector('button[onclick="checkLetterAnswers()"]'));
+            });
+            addInputListeners();
+        }
+
+        function addInputListeners() {
+            const inputs = document.querySelectorAll('.letter-box');
+            inputs.forEach((input, index) => {
+                input.addEventListener('input', () => {
+                    if (input.value && index < inputs.length - 1) {
+                        inputs[index + 1].focus();
+                    }
+                });
+                input.addEventListener('keydown', (e) => {
+                    if (e.key === 'Backspace' && !input.value && index > 0) {
+                        inputs[index - 1].focus();
+                    }
+                });
+            });
+        }
+
+        function speakSentence(sentence) {
+            if ('speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance(sentence);
+                utterance.lang = 'en-US';
+                utterance.rate = 0.8;
+                window.speechSynthesis.speak(utterance);
+            } else {
+                alert("Spiacenti, il tuo browser non supporta la sintesi vocale.");
+            }
+        }
+
+        function checkLetterAnswers() {
+            let totalCorrectLetters = 0;
+            let totalLetters = 0;
+
+            // Clear previous explanations
+            document.querySelectorAll('.explanation-box, .explain-btn').forEach(el => el.remove());
+
+            sentences.forEach((sentence, sentenceIndex) => {
+                const words = sentence.split(' ');
+                let userSentenceArr = [];
+                let sentenceIsCorrect = true;
+
+                words.forEach((word, wordIndex) => {
+                    let userWord = '';
+                    word.split('').forEach((correctLetter, letterIndex) => {
+                        totalLetters++;
+                        const input = document.querySelector(`[data-sentence='${sentenceIndex}'][data-word='${wordIndex}'][data-letter='${letterIndex}']`);
+                        const userAnswer = input.value.toLowerCase();
+                        userWord += userAnswer;
+                        if (userAnswer === correctLetter.toLowerCase()) {
+                            totalCorrectLetters++;
+                            input.style.borderColor = 'green';
+                            input.style.backgroundColor = '#e6ffe6';
+                        } else {
+                            sentenceIsCorrect = false;
+                            input.style.borderColor = 'red';
+                            input.style.backgroundColor = '#ffe6e6';
+                        }
+                    });
+                    userSentenceArr.push(userWord);
+                });
+
+                if (!sentenceIsCorrect) {
+                    const sentenceContainer = document.getElementById(`s_${sentenceIndex}`);
+                    const userSentenceStr = userSentenceArr.join(' ');
+                    const explainBtn = document.createElement('button');
+                    explainBtn.className = 'explain-btn gemini-btn';
+                    explainBtn.innerHTML = "✨ Spiegami l'errore";
+                    explainBtn.onclick = () => getExplanation(sentenceIndex, userSentenceStr);
+                    sentenceContainer.appendChild(explainBtn);
+                    
+                    const explanationBox = document.createElement('div');
+                    explanationBox.className = 'explanation-box';
+                    explanationBox.id = `explanation_${sentenceIndex}`;
+                    explanationBox.style.display = 'none';
+                    sentenceContainer.insertAdjacentElement('afterend', explanationBox);
+                }
+            });
+
+            const feedbackDiv = document.getElementById('feedback_letters');
+            const score = `${totalCorrectLetters} / ${totalLetters}`;
+            if (totalCorrectLetters === totalLetters) {
+                feedbackDiv.innerHTML = `<p>🎉 Complimenti! Hai indovinato tutte le lettere! Punteggio: ${score}</p>`;
+                feedbackDiv.className = 'feedback correct-feedback';
+            } else {
+                feedbackDiv.innerHTML = `<p>Ops! Hai indovinato ${totalCorrectLetters} lettere su ${totalLetters}. Controlla le caselle in rosso.</p>`;
+                feedbackDiv.className = 'feedback incorrect-feedback';
+            }
+            feedbackDiv.style.display = 'block';
+
+            saveResults('listening_letters_ai', totalCorrectLetters, totalLetters);
+            updateResultsBoard();
+        }
+
+        function saveResults(exerciseId, correct, total) {
+            const results = JSON.parse(localStorage.getItem('allExerciseResults')) || {};
+            results[exerciseId] = { correct, total, name: "Ascolto AI (Lettera per Lettera)" };
+            localStorage.setItem('allExerciseResults', JSON.stringify(results));
+        }
+
+        function updateResultsBoard() {
+            const results = JSON.parse(localStorage.getItem('allExerciseResults')) || {};
+            const boardBody = document.getElementById('results-table-body');
+            boardBody.innerHTML = '';
+
+            let totalCorrect = 0;
+            let totalQuestions = 0;
+            let hasResults = false;
+
+            for(const id in results) {
+                hasResults = true;
+                const result = results[id];
+                totalCorrect += result.correct;
+                totalQuestions += result.total;
+                const row = document.createElement('tr');
+                row.innerHTML = `<td>${result.name}</td><td>${result.correct} / ${result.total}</td>`;
+                boardBody.appendChild(row);
+            }
+            
+            if (!hasResults) {
+                boardBody.innerHTML = `<tr><td colspan="2">Completa un esercizio per vedere i risultati!</td></tr>`;
+            }
+
+            const boardFooter = document.getElementById('results-table-footer');
+            if (totalQuestions > 0) {
+                boardFooter.innerHTML = `<tr><td><strong>Totale Complessivo</strong></td><td><strong>${totalCorrect} / ${totalQuestions}</strong></td></tr>`;
+            } else {
+                boardFooter.innerHTML = '';
+            }
+        }
+
+        function sendEmail() {
+            const results = JSON.parse(localStorage.getItem('allExerciseResults')) || {};
+            const thisResult = results['listening_letters_ai'];
+
+            if (!thisResult) {
+                alert("Devi prima completare questo esercizio per inviare i risultati!");
+                return;
+            }
+
+            const score = `${thisResult.correct} / ${thisResult.total}`;
+            const subject = "Risultati Esercizio di Ascolto (Lettera per Lettera)";
+            
+            let body = `Ciao,\n\nEcco i miei risultati per l'esercizio "Lettera per Lettera":\n\nPunteggio: ${score} lettere corrette\n\n`;
+            body += "--------------------------------------\n";
+            body += "Le mie risposte:\n";
+
+            sentences.forEach((sentence, sentenceIndex) => {
+                let userAnswer = [];
+                sentence.split(' ').forEach((word, wordIndex) => {
+                    let userWord = '';
+                     word.split('').forEach((letter, letterIndex) => {
+                         const input = document.querySelector(`[data-sentence='${sentenceIndex}'][data-word='${wordIndex}'][data-letter='${letterIndex}']`);
+                         userWord += input.value || '_';
+                     });
+                     userAnswer.push(userWord);
+                });
+                 body += `${sentenceIndex + 1}. ${userAnswer.join(' ')}\n`;
+            });
+            
+            body += "--------------------------------------\n\n";
+            body += "Riepilogo di tutti i test completati:\n";
+            for (const id in results) {
+                 body += `- ${results[id].name}: ${results[id].correct} / ${results[id].total}\n`;
+            }
+
+            const mailtoLink = `mailto:gatto.gio@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+            window.location.href = mailtoLink;
+        }
+
+        document.addEventListener('DOMContentLoaded', generateExercise);
+        document.addEventListener('DOMContentLoaded', updateResultsBoard);
+    </script>
+
+</body>
+</html>
