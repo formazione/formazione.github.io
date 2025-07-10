@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Esercizio di Ascolto Interattivo (Focalizzato)</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 0 15px;
+            background-color: #f4f4f4;
+        }
+        h1, h2, h3 {
+            color: #0056b3;
+        }
+        h2 {
+            border-bottom: 2px solid #0056b3;
+            padding-bottom: 5px;
+            margin-top: 30px;
+        }
+        h3#progress-indicator {
+            text-align: center;
+            color: #555;
+            font-weight: normal;
+        }
+        .exercise {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            position: relative;
+            min-height: 150px;
+        }
+        .sentence-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            padding: 10px;
+            border-radius: 8px;
+            transition: background-color 0.5s ease;
+        }
+        .words-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            margin-left: 10px;
+        }
+        .word {
+            display: flex;
+            margin-right: 15px;
+            margin-bottom: 10px;
+        }
+        .letter-box {
+            width: 35px;
+            height: 35px;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            text-transform: uppercase;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            margin-right: 4px;
+            padding: 0;
+            transition: border-color 0.3s, background-color 0.3s, transform 0.2s;
+        }
+        .letter-box:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+        }
+        .letter-box.correct {
+            background-color: #d4edda !important;
+            border-color: #c3e6cb !important;
+            transform: scale(1.05);
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .speak-btn {
+            background-color: transparent;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 0;
+            margin: 0;
+            color: #007bff;
+        }
+        .results-board-container { background-color: #f0f8ff; border: 2px solid #0056b3; padding: 20px; margin-bottom: 30px; border-radius: 8px; }
+        #results-table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        #results-table th, #results-table td { border: 1px solid #cce; padding: 12px; text-align: left; }
+        #results-table th { background-color: #007bff; color: white; }
+        #results-table tfoot { font-weight: bold; color: #0056b3; }
+        #email-btn { background-color: #28a745; }
+        #email-btn:hover { background-color: #218838; }
+        #gemini-btn-container { display: flex; gap: 10px; margin-bottom: 15px; }
+        .gemini-btn { background-color: #6f42c1; }
+        .gemini-btn:hover { background-color: #5a349b; }
+        
+        .loader {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 50px; height: 50px; border: 5px solid #f3f3f3;
+            border-top: 5px solid #6f42c1; border-radius: 50%;
+            animation: spin 1s linear infinite; z-index: 10;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .loading-overlay {
+            position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background-color: rgba(255, 255, 255, 0.7); z-index: 9;
+        }
+    </style>
+</head>
+<body>
+    <h1>Esercizio di Ascolto Interattivo</h1>
+    <p>Ascolta la frase, poi scrivi ogni lettera. Premi Invio per riascoltare. Se la frase è corretta, passerai alla successiva!</p>
+
+    <div class="results-board-container">
+        <h2>📊 Quadro dei Risultati</h2>
+        <table id="results-table">
+            <thead><tr><th>Esercizio</th><th>Punteggio</th></tr></thead>
+            <tbody id="results-table-body"><tr><td colspan="2">Completa un esercizio per vedere i risultati!</td></tr></tbody>
+            <tfoot id="results-table-footer"></tfoot>
+        </table>
+        <button id="email-btn" onclick="sendEmail()">Invia Risultati via Email</button>
+    </div>
+    <hr>
+    <div class="exercise" id="exercise-container">
+        <div id="gemini-btn-container">
+            <button id="generate-btn" class="gemini-btn" onclick="startNewExercise()">✨ Inizia/Genera Esercizio</button>
+        </div>
+        <h3 id="progress-indicator"></h3>
+        <div id="sentence-display-area">
+            <!-- The current sentence will be rendered here -->
+        </div>
+        <div id="loader-container" style="display: none;">
+             <div class="loading-overlay"></div>
+             <div class="loader"></div>
+        </div>
+    </div>
+
+    <script>
+        const masterSentenceList = [
+            "The sun is hot", "My dog is big", "I can run fast", "She has a red car", "We like to play",
+            "He is my friend", "The cat is small", "I see a bird", "This is a book", "I have a pen",
+            "The sky is blue", "I love my mom", "He can jump high", "The ball is round", "We eat fish",
+            "She can sing well", "The tree is tall", "I drink milk", "He has a blue bike", "My name is Tom",
+            "I go to school", "The grass is green", "I have two hands", "She likes to read", "We play a game",
+            "The pig is pink", "I can see the moon", "He kicks the ball", "The duck can swim", "I sit on a chair",
+            "The fish is in the sea", "I wear a blue hat", "He is a good boy", "She eats an apple", "We love to learn",
+            "The frog is green", "I have a new toy", "He can ride a horse", "The cow says moo", "I can write my name",
+            "The bird can fly", "I see with my eyes", "He plays the drum", "She draws a flower", "We go to the park",
+            "The bear is brown", "I like to eat cake", "He reads a story", "She has long hair", "We are a happy family"
+        ];
+        let currentSentences = [];
+        let currentSentenceIndex = 0;
+        let completedSentences = 0;
+
+        async function callGemini(prompt) {
+            const loaderContainer = document.getElementById('loader-container');
+            loaderContainer.style.display = 'block';
+            const apiKey = "";
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+            const payload = { contents: [{ role: "user", parts: [{ text: prompt }] }] };
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                if (!response.ok) throw new Error(`API call failed: ${response.status}`);
+                const result = await response.json();
+                return result.candidates[0].content.parts[0].text;
+            } catch (error) {
+                console.error("Gemini API Error:", error);
+                alert("Errore IA. Riprova.");
+                return null;
+            } finally {
+                loaderContainer.style.display = 'none';
+            }
+        }
+
+        function startNewExercise() {
+            completedSentences = 0;
+            currentSentenceIndex = 0;
+            const shuffled = [...masterSentenceList].sort(() => 0.5 - Math.random());
+            currentSentences = shuffled.slice(0, 5);
+            displaySentence(currentSentenceIndex);
+        }
+
+        function displaySentence(index) {
+            const displayArea = document.getElementById('sentence-display-area');
+            displayArea.innerHTML = ''; // Clear previous sentence
+            
+            if (index >= currentSentences.length) {
+                alert("Fantastico! Hai completato l'esercizio!");
+                saveResults();
+                document.getElementById('progress-indicator').innerText = "Esercizio Completato!";
+                return;
+            }
+
+            document.getElementById('progress-indicator').innerText = `Frase ${index + 1} di ${currentSentences.length}`;
+            const sentence = currentSentences[index];
+
+            const sentenceContainer = document.createElement('div');
+            sentenceContainer.className = 'sentence-container';
+            sentenceContainer.id = `s_${index}`;
+
+            const speakBtn = document.createElement('button');
+            speakBtn.className = 'speak-btn';
+            speakBtn.innerHTML = '🔊';
+            speakBtn.onclick = () => speakSentence(sentence);
+            sentenceContainer.appendChild(speakBtn);
+
+            const wordsWrapper = document.createElement('div');
+            wordsWrapper.className = 'words-wrapper';
+            const words = sentence.split(' ');
+            words.forEach((word) => {
+                const wordDiv = document.createElement('div');
+                wordDiv.className = 'word';
+                word.split('').forEach(() => {
+                    const letterInput = document.createElement('input');
+                    letterInput.type = 'text';
+                    letterInput.maxLength = 1;
+                    letterInput.className = 'letter-box';
+                    wordDiv.appendChild(letterInput);
+                });
+                wordsWrapper.appendChild(wordDiv);
+            });
+            sentenceContainer.appendChild(wordsWrapper);
+            displayArea.appendChild(sentenceContainer);
+            
+            addInputListeners();
+            setTimeout(() => speakSentence(sentence), 200); // Auto-speak
+        }
+
+        function addInputListeners() {
+            const inputs = document.querySelectorAll('.letter-box');
+            inputs.forEach((input, index) => {
+                input.addEventListener('input', () => {
+                    if (input.value && index < inputs.length - 1) {
+                        inputs[index + 1].focus();
+                    }
+                    const lastInput = inputs[inputs.length - 1];
+                    if (document.activeElement === lastInput && lastInput.value) {
+                         checkSentence(currentSentenceIndex);
+                    }
+                });
+                input.addEventListener('keydown', (e) => {
+                    if (e.key === 'Backspace' && !input.value && index > 0) {
+                        inputs[index - 1].focus();
+                    }
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        speakSentence(currentSentences[currentSentenceIndex]);
+                    }
+                });
+            });
+            if (inputs.length > 0) {
+                inputs[0].focus();
+            }
+        }
+
+        function checkSentence(index) {
+            const sentenceContainer = document.getElementById(`s_${index}`);
+            if (sentenceContainer.dataset.completed === 'true') return;
+
+            const correctSentence = currentSentences[index];
+            const inputs = sentenceContainer.querySelectorAll('.letter-box');
+            let userAnswer = '';
+            inputs.forEach(input => { userAnswer += input.value; });
+            
+            if (userAnswer.toLowerCase() === correctSentence.replace(/\s/g, '').toLowerCase()) {
+                inputs.forEach(input => {
+                    input.classList.add('correct');
+                    input.disabled = true;
+                });
+                sentenceContainer.dataset.completed = 'true';
+                completedSentences++;
+                currentSentenceIndex++;
+                setTimeout(() => displaySentence(currentSentenceIndex), 1200); // Wait a bit before showing the next one
+            } else {
+                sentenceContainer.style.animation = 'shake 0.5s';
+                setTimeout(() => sentenceContainer.style.animation = '', 500);
+            }
+        }
+        
+        function speakSentence(sentence) {
+            if ('speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance(sentence);
+                utterance.lang = 'en-US';
+                utterance.rate = 0.8;
+                window.speechSynthesis.speak(utterance);
+            } else {
+                alert("Spiacenti, il tuo browser non supporta la sintesi vocale.");
+            }
+        }
+
+        function saveResults() {
+            const results = JSON.parse(localStorage.getItem('allExerciseResults')) || {};
+            const exerciseId = `listening_focused_${new Date().getTime()}`;
+            results[exerciseId] = { correct: completedSentences, total: currentSentences.length, name: "Ascolto Focalizzato" };
+            localStorage.setItem('allExerciseResults', JSON.stringify(results));
+            updateResultsBoard();
+        }
+
+        function updateResultsBoard() {
+            const results = JSON.parse(localStorage.getItem('allExerciseResults')) || {};
+            const boardBody = document.getElementById('results-table-body');
+            boardBody.innerHTML = '';
+            let totalCorrect = 0, totalQuestions = 0, hasResults = false;
+            for(const id in results) {
+                hasResults = true;
+                const result = results[id];
+                totalCorrect += result.correct;
+                totalQuestions += result.total;
+                const row = document.createElement('tr');
+                row.innerHTML = `<td>${result.name}</td><td>${result.correct} / ${result.total}</td>`;
+                boardBody.appendChild(row);
+            }
+            if (!hasResults) {
+                boardBody.innerHTML = `<tr><td colspan="2">Completa un esercizio per vedere i risultati!</td></tr>`;
+            }
+            const boardFooter = document.getElementById('results-table-footer');
+            if (totalQuestions > 0) {
+                boardFooter.innerHTML = `<tr><td><strong>Totale Complessivo</strong></td><td><strong>${totalCorrect} / ${totalQuestions}</strong></td></tr>`;
+            } else {
+                boardFooter.innerHTML = '';
+            }
+        }
+
+        function sendEmail() {
+            const results = JSON.parse(localStorage.getItem('allExerciseResults')) || {};
+            let body = "Ciao,\n\nEcco un riepilogo dei miei risultati:\n\n";
+            let hasResults = false;
+            for (const id in results) {
+                 hasResults = true;
+                 body += `- ${results[id].name}: ${results[id].correct} / ${results[id].total}\n`;
+            }
+            if (!hasResults) {
+                alert("Nessun risultato da inviare!");
+                return;
+            }
+            const mailtoLink = `mailto:gatto.gio@gmail.com?subject=${encodeURIComponent("Risultati Esercizi di Inglese")}&body=${encodeURIComponent(body)}`;
+            window.location.href = mailtoLink;
+        }
+
+        document.addEventListener('DOMContentLoaded', updateResultsBoard);
+    </script>
+    <style>
+        @keyframes shake {
+            10%, 90% { transform: translate3d(-1px, 0, 0); }
+            20%, 80% { transform: translate3d(2px, 0, 0); }
+            30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+            40%, 60% { transform: translate3d(4px, 0, 0); }
+        }
+    </style>
+</body>
+</html>
