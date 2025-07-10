@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Esercizi di Punteggiatura</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .feedback-correct {
+            color: #16a34a; /* green-600 */
+            background-color: #dcfce7; /* green-100 */
+            border-color: #4ade80; /* green-400 */
+        }
+        .feedback-incorrect {
+            color: #dc2626; /* red-600 */
+            background-color: #fee2e2; /* red-100 */
+            border-color: #f87171; /* red-400 */
+        }
+        /* Nasconde gli elementi principali quando le schermate modali sono attive */
+        .content-hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen p-4">
+
+    <div class="w-full max-w-2xl bg-white rounded-2xl shadow-lg p-6 md:p-8 text-center">
+        
+        <!-- Titolo e Info -->
+        <div id="header-section">
+            <h1 class="text-3xl md:text-4xl font-bold text-gray-800">Pratica la Punteggiatura</h1>
+            <p class="mt-2 text-gray-600">Aggiungi i punti, le virgole e le maiuscole corrette!</p>
+            <div class="flex justify-around mt-4 text-lg">
+                <div id="level-container" class="font-semibold text-indigo-600">Livello: 1</div>
+                <div id="score-container" class="font-semibold text-blue-600">Punteggio: 0</div>
+            </div>
+        </div>
+
+        <!-- Contenuto Principale dell'Esercizio -->
+        <div id="exercise-content">
+            <!-- Area Esercizio -->
+            <div class="mt-8 p-6 bg-gray-50 rounded-xl border border-gray-200">
+                <p class="text-gray-500 mb-2 text-sm font-medium">FRASE DA CORREGGERE:</p>
+                <p id="sentence-container" class="text-xl md:text-2xl font-semibold text-gray-800 min-h-[3rem]"></p>
+            </div>
+
+            <!-- Input Utente -->
+            <div class="mt-6">
+                <input type="text" id="user-input" class="w-full px-4 py-3 text-lg border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition" placeholder="Scrivi qui la frase corretta...">
+            </div>
+
+            <!-- Pulsanti di Azione -->
+            <div class="mt-6 flex flex-col sm:flex-row gap-3 justify-center">
+                <button id="check-btn" class="w-full sm:w-auto bg-blue-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-blue-700 transition-all duration-200 shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                    Controlla
+                </button>
+                <button id="next-btn" class="w-full sm:w-auto bg-gray-200 text-gray-700 font-bold py-3 px-8 rounded-lg hover:bg-gray-300 transition-all duration-200" style="display: none;">
+                    Prossima Frase
+                </button>
+            </div>
+
+            <!-- Messaggio di Feedback -->
+            <div id="feedback-message" class="mt-6 p-4 rounded-lg text-center font-medium border" style="display: none;"></div>
+        </div>
+        
+        <!-- Schermata Completamento Livello -->
+        <div id="level-completion-screen" class="text-center" style="display: none;">
+             <h2 class="text-2xl font-bold text-green-600 mt-8">Livello Completato!</h2>
+             <p class="text-gray-700 mt-2">Ottimo lavoro, sei pronto per la prossima sfida?</p>
+             <button id="next-level-btn" class="mt-6 bg-green-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-green-700 transition-all duration-200">
+                Inizia Livello Successivo
+            </button>
+        </div>
+
+        <!-- Schermata Finale -->
+        <div id="game-completion-screen" class="text-center" style="display: none;">
+             <h2 class="text-2xl font-bold text-green-600 mt-8">Complimenti!</h2>
+             <p class="text-gray-700 mt-2">Hai completato tutti gli esercizi.</p>
+             <p id="final-score" class="text-xl font-semibold mt-4"></p>
+             <button id="restart-btn" class="mt-6 bg-blue-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-blue-700 transition-all duration-200">
+                Ricomincia
+            </button>
+        </div>
+
+    </div>
+
+    <script>
+        // --- DATABASE DELLE FRASI ORGANIZZATO PER LIVELLI ---
+        const levels = [
+            {
+                levelName: "Livello 1: Le Basi",
+                sentences: [
+                    { unpunctuated: "dove vai marco", correct: "Dove vai, Marco?" },
+                    { unpunctuated: "mi chiamo elisa e vengo da roma", correct: "Mi chiamo Elisa e vengo da Roma." },
+                    { unpunctuated: "che bella giornata di sole", correct: "Che bella giornata di sole!" },
+                    { unpunctuated: "luca hai fatto i compiti", correct: "Luca, hai fatto i compiti?" },
+                    { unpunctuated: "la capitale d italia è roma", correct: "La capitale d'Italia è Roma." }
+                ]
+            },
+            {
+                levelName: "Livello 2: Le Virgole",
+                sentences: [
+                    { unpunctuated: "per favore prendi il pane il latte e le uova", correct: "Per favore, prendi il pane, il latte e le uova." },
+                    { unpunctuated: "wow che sorpresa", correct: "Wow, che sorpresa!" },
+                    { unpunctuated: "ho comprato una mela una pera e una banana", correct: "Ho comprato una mela, una pera e una banana." },
+                    { unpunctuated: "attento quel cane morde", correct: "Attento, quel cane morde!" },
+                    { unpunctuated: "mario paolo e luigi sono amici", correct: "Mario, Paolo e Luigi sono amici." }
+                ]
+            },
+            {
+                levelName: "Livello 3: Frasi Complesse",
+                sentences: [
+                    { unpunctuated: "il mio gatto che è nero dorme sempre sul divano", correct: "Il mio gatto, che è nero, dorme sempre sul divano." },
+                    { unpunctuated: "se studi sarai promosso", correct: "Se studi, sarai promosso." },
+                    { unpunctuated: "ho chiesto a laura cosa vuole per il suo compleanno", correct: "Ho chiesto a Laura cosa vuole per il suo compleanno." },
+                    { unpunctuated: "non so se venire alla festa stasera", correct: "Non so se venire alla festa stasera." },
+                    { unpunctuated: "il libro sul tavolo è di giulia", correct: "Il libro sul tavolo è di Giulia." }
+                ]
+            }
+        ];
+
+        // --- RIFERIMENTI AGLI ELEMENTI DEL DOM ---
+        const sentenceContainer = document.getElementById('sentence-container');
+        const userInput = document.getElementById('user-input');
+        const checkBtn = document.getElementById('check-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const feedbackMessage = document.getElementById('feedback-message');
+        const scoreContainer = document.getElementById('score-container');
+        const levelContainer = document.getElementById('level-container');
+        
+        const headerSection = document.getElementById('header-section');
+        const exerciseContent = document.getElementById('exercise-content');
+        const levelCompletionScreen = document.getElementById('level-completion-screen');
+        const gameCompletionScreen = document.getElementById('game-completion-screen');
+        
+        const finalScore = document.getElementById('final-score');
+        const restartBtn = document.getElementById('restart-btn');
+        const nextLevelBtn = document.getElementById('next-level-btn');
+
+        // --- VARIABILI DI STATO DELL'APP ---
+        let currentLevelIndex = 0;
+        let currentSentenceIndex = 0;
+        let score = 0;
+        let advanceTimeout;
+
+        // --- FUNZIONI PRINCIPALI ---
+
+        /**
+         * Carica una nuova frase o gestisce il cambio di livello/fine gioco.
+         */
+        function loadSentence() {
+            clearTimeout(advanceTimeout); // Pulisce timeout precedenti
+            const currentLevel = levels[currentLevelIndex];
+
+            if (currentSentenceIndex >= currentLevel.sentences.length) {
+                // Livello completato
+                if (currentLevelIndex < levels.length - 1) {
+                    showLevelCompleteScreen();
+                } else {
+                    showGameCompletionScreen();
+                }
+                return;
+            }
+
+            // Mostra la frase non punteggiata
+            sentenceContainer.textContent = currentLevel.sentences[currentSentenceIndex].unpunctuated;
+            
+            // Pulisce l'input e il feedback precedente
+            userInput.value = '';
+            feedbackMessage.style.display = 'none';
+            
+            // Resetta i pulsanti e l'input
+            checkBtn.style.display = 'inline-flex';
+            nextBtn.style.display = 'none';
+            userInput.disabled = false;
+            userInput.focus();
+            updateUI();
+        }
+
+        /**
+         * Controlla la risposta dell'utente.
+         */
+        function checkAnswer() {
+            const userAnswer = userInput.value.trim();
+            const correctAnswer = levels[currentLevelIndex].sentences[currentSentenceIndex].correct;
+
+            feedbackMessage.style.display = 'none';
+            feedbackMessage.classList.remove('feedback-correct', 'feedback-incorrect');
+
+            if (userAnswer === "") {
+                feedbackMessage.textContent = 'Per favore, inserisci una risposta.';
+                feedbackMessage.classList.add('feedback-incorrect');
+                feedbackMessage.style.display = 'block';
+                return;
+            }
+
+            // Confronto case-insensitive
+            if (userAnswer.toLowerCase() === correctAnswer.toLowerCase()) {
+                // Risposta corretta
+                score++;
+                feedbackMessage.textContent = 'Corretto! Ottimo lavoro!';
+                feedbackMessage.classList.add('feedback-correct');
+                
+                checkBtn.style.display = 'none';
+                nextBtn.style.display = 'inline-flex';
+                userInput.disabled = true;
+
+            } else {
+                // Risposta sbagliata
+                feedbackMessage.innerHTML = `Sbagliato. <br> La risposta corretta è: <strong>"${correctAnswer}"</strong>`;
+                feedbackMessage.classList.add('feedback-incorrect');
+                userInput.disabled = true;
+                checkBtn.style.display = 'none';
+
+                // Avanza automaticamente dopo 3.5 secondi
+                advanceTimeout = setTimeout(() => {
+                    currentSentenceIndex++;
+                    loadSentence();
+                }, 3500);
+            }
+
+            updateUI();
+            feedbackMessage.style.display = 'block';
+        }
+
+        /**
+         * Aggiorna il display del punteggio e del livello.
+         */
+        function updateUI() {
+            scoreContainer.textContent = `Punteggio: ${score}`;
+            levelContainer.textContent = `Livello: ${currentLevelIndex + 1}`;
+        }
+        
+        function showLevelCompleteScreen() {
+            headerSection.classList.add('content-hidden');
+            exerciseContent.classList.add('content-hidden');
+            levelCompletionScreen.style.display = 'block';
+        }
+
+        function showGameCompletionScreen() {
+            headerSection.classList.add('content-hidden');
+            exerciseContent.classList.add('content-hidden');
+            levelCompletionScreen.style.display = 'none'; // Nasconde la schermata di livello
+            
+            const totalSentences = levels.reduce((acc, level) => acc + level.sentences.length, 0);
+            finalScore.textContent = `Punteggio Finale: ${score} su ${totalSentences}`;
+            gameCompletionScreen.style.display = 'block';
+        }
+
+        function startNextLevel() {
+            currentLevelIndex++;
+            currentSentenceIndex = 0;
+            
+            levelCompletionScreen.style.display = 'none';
+            headerSection.classList.remove('content-hidden');
+            exerciseContent.classList.remove('content-hidden');
+
+            loadSentence();
+        }
+
+        /**
+         * Resetta l'applicazione per ricominciare.
+         */
+        function restartApp() {
+            currentLevelIndex = 0;
+            currentSentenceIndex = 0;
+            score = 0;
+            
+            gameCompletionScreen.style.display = 'none';
+            headerSection.classList.remove('content-hidden');
+            exerciseContent.classList.remove('content-hidden');
+
+            loadSentence();
+        }
+
+        // --- EVENT LISTENERS ---
+        checkBtn.addEventListener('click', checkAnswer);
+        userInput.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter' && checkBtn.style.display !== 'none') {
+                event.preventDefault(); 
+                checkAnswer();
+            }
+        });
+        nextBtn.addEventListener('click', () => {
+            currentSentenceIndex++;
+            loadSentence();
+        });
+        nextLevelBtn.addEventListener('click', startNextLevel);
+        restartBtn.addEventListener('click', restartApp);
+
+        // --- INIZIALIZZAZIONE ---
+        loadSentence();
+    </script>
+</body>
+</html>
