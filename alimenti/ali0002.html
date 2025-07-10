@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Nutrizione - Impara Divertendoti!</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .quiz-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .quiz-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+        }
+
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .category-icon {
+            font-size: 4em;
+            margin-bottom: 20px;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+
+        .question {
+            font-size: 1.4em;
+            color: #34495e;
+            margin-bottom: 30px;
+            line-height: 1.6;
+            padding: 20px;
+            background: linear-gradient(45deg, #f8f9fa, #e9ecef);
+            border-radius: 15px;
+            border-left: 5px solid #3498db;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        button {
+            padding: 15px 30px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-true {
+            background: linear-gradient(45deg, #27ae60, #2ecc71);
+            color: white;
+        }
+
+        .btn-false {
+            background: linear-gradient(45deg, #e74c3c, #c0392b);
+            color: white;
+        }
+
+        .btn-start, .btn-restart {
+            background: linear-gradient(45deg, #3498db, #2980b9);
+            color: white;
+            padding: 20px 40px;
+            font-size: 1.3em;
+        }
+
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        button:active {
+            transform: translateY(-1px);
+        }
+
+        .score {
+            font-size: 1.5em;
+            margin: 20px 0;
+            padding: 15px;
+            background: linear-gradient(45deg, #f39c12, #e67e22);
+            color: white;
+            border-radius: 10px;
+            font-weight: bold;
+        }
+
+        .progress {
+            width: 100%;
+            height: 10px;
+            background: #ecf0f1;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(45deg, #3498db, #2980b9);
+            transition: width 0.5s ease;
+            border-radius: 5px;
+        }
+
+        .result {
+            padding: 30px;
+            border-radius: 15px;
+            margin: 20px 0;
+            font-size: 1.3em;
+            font-weight: bold;
+        }
+
+        .correct {
+            background: linear-gradient(45deg, #d5f4e6, #a8e6cf);
+            color: #27ae60;
+        }
+
+        .incorrect {
+            background: linear-gradient(45deg, #fadbd8, #f1948a);
+            color: #e74c3c;
+        }
+
+        .final-score {
+            font-size: 2em;
+            padding: 30px;
+            border-radius: 20px;
+            margin: 30px 0;
+            font-weight: bold;
+        }
+
+        .excellent {
+            background: linear-gradient(45deg, #f1c40f, #f39c12);
+            color: white;
+        }
+
+        .good {
+            background: linear-gradient(45deg, #3498db, #2980b9);
+            color: white;
+        }
+
+        .needs-improvement {
+            background: linear-gradient(45deg, #e74c3c, #c0392b);
+            color: white;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .quiz-container {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+            
+            .buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            button {
+                width: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <div id="start-screen">
+            <h1>🍎 Quiz Nutrizione 🥗</h1>
+            <div class="category-icon">🧬</div>
+            <p style="font-size: 1.2em; color: #7f8c8d; margin-bottom: 30px;">
+                Testa le tue conoscenze sui macronutrienti!<br>
+                Carboidrati, Proteine e Lipidi ti aspettano!
+            </p>
+            <button class="btn-start" onclick="startQuiz()">Inizia il Quiz</button>
+        </div>
+
+        <div id="quiz-screen" class="hidden">
+            <div class="progress">
+                <div class="progress-bar" id="progress-bar"></div>
+            </div>
+            
+            <div class="score">
+                Punteggio: <span id="current-score">0</span> / <span id="total-questions">10</span>
+            </div>
+            
+            <div class="category-icon" id="question-icon">🍎</div>
+            
+            <div class="question" id="question-text">
+                Domanda apparirà qui...
+            </div>
+            
+            <div class="buttons">
+                <button class="btn-true" onclick="answerQuestion(true)">✓ VERO</button>
+                <button class="btn-false" onclick="answerQuestion(false)">✗ FALSO</button>
+            </div>
+            
+            <div id="result" class="hidden"></div>
+        </div>
+
+        <div id="final-screen" class="hidden">
+            <h1>🏆 Quiz Completato! 🏆</h1>
+            <div id="final-result"></div>
+            <button class="btn-restart" onclick="restartQuiz()">🔄 Ricomincia</button>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+            // Carboidrati
+            {
+                category: "carboidrati",
+                icon: "🍞",
+                question: "I carboidrati sono la principale fonte di energia per il cervello.",
+                answer: true,
+                explanation: "Il cervello utilizza principalmente glucosio come fonte energetica."
+            },
+            {
+                category: "carboidrati",
+                icon: "🍝",
+                question: "Tutti i carboidrati hanno lo stesso effetto sulla glicemia.",
+                answer: false,
+                explanation: "I carboidrati semplici e complessi hanno effetti diversi sulla glicemia."
+            },
+            {
+                category: "carboidrati",
+                icon: "🥖",
+                question: "La fibra alimentare è un tipo di carboidrato non digeribile.",
+                answer: true,
+                explanation: "La fibra non può essere digerita dagli enzimi umani ma è importante per la salute intestinale."
+            },
+            {
+                category: "carboidrati",
+                icon: "🍯",
+                question: "Il miele è considerato un carboidrato complesso.",
+                answer: false,
+                explanation: "Il miele contiene principalmente fruttosio e glucosio, che sono carboidrati semplici."
+            },
+
+            // Proteine
+            {
+                category: "proteine",
+                icon: "🥩",
+                question: "Il corpo umano può produrre tutti gli aminoacidi necessari.",
+                answer: false,
+                explanation: "Esistono aminoacidi essenziali che devono essere assunti attraverso l'alimentazione."
+            },
+            {
+                category: "proteine",
+                icon: "🥚",
+                question: "Le proteine animali contengono tutti gli aminoacidi essenziali.",
+                answer: true,
+                explanation: "Le proteine animali sono considerate complete perché contengono tutti gli aminoacidi essenziali."
+            },
+            {
+                category: "proteine",
+                icon: "🫘",
+                question: "I legumi sono una buona fonte di proteine vegetali.",
+                answer: true,
+                explanation: "Fagioli, lenticchie e ceci sono ricchi di proteine vegetali di buona qualità."
+            },
+            {
+                category: "proteine",
+                icon: "🐟",
+                question: "Le proteine forniscono più calorie per grammo rispetto ai carboidrati.",
+                answer: false,
+                explanation: "Sia proteine che carboidrati forniscono 4 kcal per grammo."
+            },
+
+            // Lipidi
+            {
+                category: "lipidi",
+                icon: "🥑",
+                question: "Tutti i grassi sono dannosi per la salute.",
+                answer: false,
+                explanation: "I grassi insaturi, come quelli dell'avocado e dell'olio d'oliva, sono benefici per la salute."
+            },
+            {
+                category: "lipidi",
+                icon: "🫒",
+                question: "I grassi forniscono più energia per grammo rispetto a carboidrati e proteine.",
+                answer: true,
+                explanation: "I grassi forniscono 9 kcal per grammo, mentre carboidrati e proteine ne forniscono 4."
+            },
+            {
+                category: "lipidi",
+                icon: "🥜",
+                question: "Gli omega-3 sono acidi grassi essenziali.",
+                answer: true,
+                explanation: "Gli omega-3 sono essenziali perché il corpo non può produrli autonomamente."
+            },
+            {
+                category: "lipidi",
+                icon: "🧈",
+                question: "I grassi trans si trovano naturalmente in molti alimenti.",
+                answer: false,
+                explanation: "I grassi trans sono principalmente artificiali e si trovano in alimenti processati."
+            },
+
+            // Domande miste
+            {
+                category: "misto",
+                icon: "🍎",
+                question: "Una dieta equilibrata dovrebbe contenere tutti e tre i macronutrienti.",
+                answer: true,
+                explanation: "Carboidrati, proteine e grassi sono tutti necessari per una dieta equilibrata."
+            },
+            {
+                category: "misto",
+                icon: "⚖️",
+                question: "Il metabolismo basale utilizza solo i carboidrati come fonte energetica.",
+                answer: false,
+                explanation: "Il metabolismo basale può utilizzare carboidrati, grassi e proteine come fonte energetica."
+            },
+            {
+                category: "misto",
+                icon: "💪",
+                question: "Durante l'attività fisica intensa, il corpo preferisce utilizzare i grassi.",
+                answer: false,
+                explanation: "Durante l'attività intensa, il corpo preferisce utilizzare i carboidrati come fonte energetica."
+            }
+        ];
+
+        let currentQuestions = [];
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let answered = false;
+
+        function shuffleArray(array) {
+            const shuffled = [...array];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            return shuffled;
+        }
+
+        function startQuiz() {
+            currentQuestions = shuffleArray(questions).slice(0, 10);
+            currentQuestionIndex = 0;
+            score = 0;
+            answered = false;
+            
+            document.getElementById('start-screen').classList.add('hidden');
+            document.getElementById('quiz-screen').classList.remove('hidden');
+            document.getElementById('final-screen').classList.add('hidden');
+            
+            showQuestion();
+        }
+
+        function showQuestion() {
+            if (currentQuestionIndex >= currentQuestions.length) {
+                showFinalResult();
+                return;
+            }
+
+            answered = false;
+            const question = currentQuestions[currentQuestionIndex];
+            
+            document.getElementById('question-icon').textContent = question.icon;
+            document.getElementById('question-text').textContent = question.question;
+            document.getElementById('current-score').textContent = score;
+            document.getElementById('total-questions').textContent = currentQuestions.length;
+            document.getElementById('result').classList.add('hidden');
+            
+            // Aggiorna barra progresso
+            const progress = ((currentQuestionIndex) / currentQuestions.length) * 100;
+            document.getElementById('progress-bar').style.width = progress + '%';
+            
+            // Riabilita i pulsanti
+            const buttons = document.querySelectorAll('.btn-true, .btn-false');
+            buttons.forEach(btn => {
+                btn.disabled = false;
+                btn.style.opacity = '1';
+            });
+        }
+
+        function answerQuestion(userAnswer) {
+            if (answered) return;
+            
+            answered = true;
+            const question = currentQuestions[currentQuestionIndex];
+            const isCorrect = userAnswer === question.answer;
+            
+            if (isCorrect) {
+                score++;
+            }
+            
+            // Disabilita i pulsanti
+            const buttons = document.querySelectorAll('.btn-true, .btn-false');
+            buttons.forEach(btn => {
+                btn.disabled = true;
+                btn.style.opacity = '0.6';
+            });
+            
+            // Mostra risultato
+            const resultDiv = document.getElementById('result');
+            resultDiv.classList.remove('hidden', 'correct', 'incorrect');
+            resultDiv.classList.add(isCorrect ? 'correct' : 'incorrect');
+            
+            const emoji = isCorrect ? '🎉' : '😔';
+            const result = isCorrect ? 'CORRETTO!' : 'SBAGLIATO!';
+            
+            resultDiv.innerHTML = `
+                <div>${emoji} ${result}</div>
+                <div style="font-size: 0.9em; margin-top: 10px; font-weight: normal;">
+                    ${question.explanation}
+                </div>
+            `;
+            
+            // Passa alla domanda successiva dopo 3 secondi
+            setTimeout(() => {
+                currentQuestionIndex++;
+                showQuestion();
+            }, 3000);
+        }
+
+        function showFinalResult() {
+            document.getElementById('quiz-screen').classList.add('hidden');
+            document.getElementById('final-screen').classList.remove('hidden');
+            
+            const percentage = (score / currentQuestions.length) * 100;
+            let resultClass, resultText, emoji;
+            
+            if (percentage >= 80) {
+                resultClass = 'excellent';
+                resultText = 'Eccellente!';
+                emoji = '🏆';
+            } else if (percentage >= 60) {
+                resultClass = 'good';
+                resultText = 'Bravo!';
+                emoji = '👏';
+            } else {
+                resultClass = 'needs-improvement';
+                resultText = 'Continua a studiare!';
+                emoji = '📚';
+            }
+            
+            document.getElementById('final-result').innerHTML = `
+                <div class="final-score ${resultClass}">
+                    ${emoji}<br>
+                    ${resultText}<br>
+                    ${score} / ${currentQuestions.length} (${Math.round(percentage)}%)
+                </div>
+                <p style="font-size: 1.1em; color: #7f8c8d; margin: 20px 0;">
+                    ${percentage >= 80 ? 'Sei un esperto di nutrizione!' : 
+                      percentage >= 60 ? 'Buona conoscenza, continua così!' : 
+                      'Riprova per migliorare le tue conoscenze!'}
+                </p>
+            `;
+        }
+
+        function restartQuiz() {
+            document.getElementById('final-screen').classList.add('hidden');
+            document.getElementById('start-screen').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>

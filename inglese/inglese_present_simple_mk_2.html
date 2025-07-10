@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Present Simple Presentation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&family=Fredoka+One&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Comic Neue', cursive;
+            background-color: #F0F9FF; /* Light blue background */
+        }
+        .slide {
+            display: none;
+        }
+        .slide.active {
+            display: block;
+        }
+        .character-container {
+            position: relative;
+            min-height: 200px;
+        }
+        .character-img {
+            width: 150px;
+            height: auto;
+            position: absolute;
+            bottom: 0;
+            left: 20px;
+        }
+        .speech-bubble {
+            position: relative;
+            background: #ffffff;
+            border-radius: .4em;
+            padding: 20px;
+            margin-left: 200px; /* Space for the character */
+            min-height: 150px;
+            border: 3px solid #0EA5E9; /* Sky blue border */
+        }
+        .speech-bubble:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 5%;
+            width: 0;
+            height: 0;
+            border: 25px solid transparent;
+            border-top-color: #ffffff;
+            border-bottom: 0;
+            border-left: 0;
+            margin-left: -12.5px;
+            margin-bottom: -25px;
+        }
+         .speech-bubble:before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 5%;
+            width: 0;
+            height: 0;
+            border: 28px solid transparent;
+            border-top-color: #0EA5E9;
+            border-bottom: 0;
+            border-left: 0;
+            margin-left: -15.5px;
+            margin-bottom: -28px;
+        }
+
+        h1, h2, h3 {
+             font-family: 'Fredoka One', cursive;
+        }
+        .nav-button {
+            font-family: 'Fredoka One', cursive;
+            transition: transform 0.2s;
+        }
+        .nav-button:hover {
+            transform: scale(1.05);
+        }
+        .feedback.correct {
+            background-color: #D1FAE5; color: #065F46;
+        }
+        .feedback.incorrect {
+            background-color: #FEE2E2; color: #991B1B;
+        }
+        input[type="text"] {
+            border-color: #9CA3AF;
+        }
+        input[type="text"].correct-answer {
+            border-color: #10B981;
+            background-color: #D1FAE5;
+        }
+        input[type="text"].incorrect-answer {
+            border-color: #EF4444;
+            background-color: #FEE2E2;
+        }
+    </style>
+</head>
+<body class="antialiased text-gray-800">
+
+    <div id="presentation-container" class="max-w-4xl mx-auto my-8 p-6 bg-white rounded-3xl shadow-2xl border-4 border-gray-200">
+
+        <!-- Slide 1: Title -->
+        <div class="slide active text-center">
+            <h1 class="text-5xl text-sky-500 mb-4">Let's Learn the Present Simple!</h1>
+            <p class="text-xl mb-6">Are you ready for an adventure in English grammar?</p>
+            <img src="https:\\formazione.github.io\inglese_present_simple_mk_2\tiger.png" alt="Cute Animals" class="mx-auto rounded-lg w-3/4" width=200>
+        </div>
+
+        <!-- Slide 2: Affirmative Rule -->
+        <div class="slide">
+            <h2 class="text-3xl text-sky-500 mb-6">Rule 1: Affirmative (+) Sentences</h2>
+            <div class="character-container">
+                <img src="https:\\formazione.github.io\inglese_present_simple_mk_2\turtle.png" alt="Cute Turtle" class="character-img" style="object-fit: cover; object-position: 90% 15%; width: 160px; height: 160px;">
+                <div class="speech-bubble">
+                    <h3 class="text-2xl text-amber-500">Hi! I'm Terry the Turtle!</h3>
+                    <p class="text-lg mt-2">The <strong>Present Simple</strong> is for habits and facts!</p>
+                    <ul class="list-disc list-inside mt-2 space-y-1 text-lg">
+                        <li>For <strong>I, you, we, they</strong>, use the base verb. <span class="font-bold text-green-600">(e.g., I play)</span></li>
+                        <li>For <strong>he, she, it</strong>, add <strong>-s</strong> or <strong>-es</strong> to the verb. <span class="font-bold text-green-600">(e.g., He plays)</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: Affirmative Exercise -->
+        <div class="slide">
+            <h2 class="text-3xl text-sky-500 mb-4">Exercise 1: Let's Practice!</h2>
+            <p class="mb-6 text-lg">Complete the sentences with the correct form of the verb.</p>
+            <div id="exercise1" class="space-y-4 text-lg">
+                <div class="exercise-item">1. He <input type="text" data-answer="plays" class="p-2 rounded-md border-2 w-32"> (play) the guitar.</div>
+                <div class="exercise-item">2. They <input type="text" data-answer="watch" class="p-2 rounded-md border-2 w-32"> (watch) movies on Fridays.</div>
+                <div class="exercise-item">3. The cat <input type="text" data-answer="sleeps" class="p-2 rounded-md border-2 w-32"> (sleep) on the sofa.</div>
+                <div class="exercise-item">4. We <input type="text" data-answer="eat" class="p-2 rounded-md border-2 w-32"> (eat) breakfast at 8:00 AM.</div>
+                <div class="exercise-item">5. She <input type="text" data-answer="studies" class="p-2 rounded-md border-2 w-32"> (study) hard for her exams.</div>
+            </div>
+            <button onclick="checkAnswers('exercise1')" class="nav-button mt-6 bg-amber-400 text-white py-2 px-6 rounded-full text-xl shadow-md">Check Answers</button>
+            <div id="feedback-exercise1" class="feedback mt-4 p-4 rounded-lg text-lg"></div>
+        </div>
+
+        <!-- Slide 4: Negative Rule -->
+        <div class="slide">
+            <h2 class="text-3xl text-sky-500 mb-6">Rule 2: Negative (-) Sentences</h2>
+            <div class="character-container">
+                <img src="https:\\formazione.github.io\inglese_present_simple_mk_2\penguin.png" alt="Cute Penguin" class="character-img" style="object-fit: cover; object-position: 50% 15%; width: 160px; height: 160px;">
+                <div class="speech-bubble">
+                    <h3 class="text-2xl text-pink-500">Hello! I'm Penny the Penguin!</h3>
+                    <p class="text-lg mt-2">To make a negative sentence, we use helpers!</p>
+                     <ul class="list-disc list-inside mt-2 space-y-1 text-lg">
+                        <li>Use <strong>don't</strong> (do not) for <strong>I, you, we, they</strong>. <span class="font-bold text-red-600">(e.g., You don't play)</span></li>
+                        <li>Use <strong>doesn't</strong> (does not) for <strong>he, she, it</strong>. <span class="font-bold text-red-600">(e.g., She doesn't play)</span></li>
+                        <li>The main verb stays in its base form! No -s!</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 5: Negative Exercise -->
+        <div class="slide">
+            <h2 class="text-3xl text-sky-500 mb-4">Exercise 2: Make it Negative!</h2>
+            <p class="mb-6 text-lg">Complete the sentences using "don't" or "doesn't".</p>
+            <div id="exercise2" class="space-y-4 text-lg">
+                <div class="exercise-item">1. I <input type="text" data-answer="don't like" class="p-2 rounded-md border-2 w-32"> (not like) spiders.</div>
+                <div class="exercise-item">2. He <input type="text" data-answer="doesn't live" class="p-2 rounded-md border-2 w-32"> (not live) in this city.</div>
+                <div class="exercise-item">3. We <input type="text" data-answer="don't go" class="p-2 rounded-md border-2 w-32"> (not go) to school on Sunday.</div>
+                <div class="exercise-item">4. My mom <input type="text" data-answer="doesn't work" class="p-2 rounded-md border-2 w-32"> (not work) on weekends.</div>
+                <div class="exercise-item">5. They <input type="text" data-answer="don't speak" class="p-2 rounded-md border-2 w-32"> (not speak) French.</div>
+            </div>
+            <button onclick="checkAnswers('exercise2')" class="nav-button mt-6 bg-pink-400 text-white py-2 px-6 rounded-full text-xl shadow-md">Check Answers</button>
+            <div id="feedback-exercise2" class="feedback mt-4 p-4 rounded-lg text-lg"></div>
+        </div>
+        
+        <!-- Slide 6: Question Rule -->
+        <div class="slide">
+            <h2 class="text-3xl text-sky-500 mb-6">Rule 3: Questions (?)</h2>
+            <div class="character-container">
+                <img src="https:\\formazione.github.io\inglese_present_simple_mk_2\fox.png" alt="Cute Fox" class="character-img" style="object-fit: cover; object-position: 90% 30%; width: 160px; height: 160px;">
+                <div class="speech-bubble">
+                    <h3 class="text-2xl text-purple-500">Hey! I'm Fiona the Fox!</h3>
+                    <p class="text-lg mt-2">To ask a question, start with a helper!</p>
+                     <ul class="list-disc list-inside mt-2 space-y-1 text-lg">
+                        <li>Start with <strong>Do</strong> for <strong>I, you, we, they</strong>. <span class="font-bold text-blue-600">(e.g., Do you play?)</span></li>
+                        <li>Start with <strong>Does</strong> for <strong>he, she, it</strong>. <span class="font-bold text-blue-600">(e.g., Does he play?)</span></li>
+                        <li>Again, the main verb is always in its base form!</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 7: Question Exercise -->
+        <div class="slide">
+            <h2 class="text-3xl text-sky-500 mb-4">Exercise 3: Ask a Question!</h2>
+            <p class="mb-6 text-lg">Complete the questions with "Do" or "Does".</p>
+            <div id="exercise3" class="space-y-4 text-lg">
+                <div class="exercise-item"><input type="text" data-answer="Do" class="p-2 rounded-md border-2 w-24"> you like ice cream?</div>
+                <div class="exercise-item"><input type="text" data-answer="Does" class="p-2 rounded-md border-2 w-24"> she speak English?</div>
+                <div class="exercise-item"><input type="text" data-answer="Do" class="p-2 rounded-md border-2 w-24"> they live near here?</div>
+                <div class="exercise-item"><input type="text" data-answer="Does" class="p-2 rounded-md border-2 w-24"> the bus stop here?</div>
+                <div class="exercise-item"><input type="text" data-answer="Do" class="p-2 rounded-md border-2 w-24"> we have homework?</div>
+            </div>
+            <button onclick="checkAnswers('exercise3')" class="nav-button mt-6 bg-purple-400 text-white py-2 px-6 rounded-full text-xl shadow-md">Check Answers</button>
+            <div id="feedback-exercise3" class="feedback mt-4 p-4 rounded-lg text-lg"></div>
+        </div>
+
+        <!-- Slide 8: Final Slide -->
+        <div class="slide text-center">
+            <h1 class="text-5xl text-green-500 mb-4">You did it! Well Done!</h1>
+            <p class="text-xl mb-6">You are a Present Simple superstar!</p>
+             <img src="https:\\formazione.github.io\inglese_present_simple_mk_2\tiger.png" alt="Lots of Cute Animals" class="mx-auto rounded-lg w-full">
+            <p class="mt-6 text-lg">Keep practicing to become an English expert!</p>
+        </div>
+
+
+        <!-- Navigation -->
+        <div class="flex justify-between mt-8">
+            <button id="prevBtn" onclick="changeSlide(-1)" class="nav-button bg-gray-300 hover:bg-gray-400 text-gray-800 py-2 px-6 rounded-full text-xl shadow-md">Previous</button>
+            <button id="nextBtn" onclick="changeSlide(1)" class="nav-button bg-sky-500 hover:bg-sky-600 text-white py-2 px-6 rounded-full text-xl shadow-md">Next</button>
+        </div>
+
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+
+        function showSlide(index) {
+            // Hide all slides
+            slides.forEach(slide => {
+                slide.classList.remove('active');
+            });
+            // Show the target slide
+            slides[index].classList.add('active');
+
+            // Update button visibility
+            prevBtn.style.visibility = index === 0 ? 'hidden' : 'visible';
+            nextBtn.style.visibility = index === slides.length - 1 ? 'hidden' : 'visible';
+        }
+
+        function changeSlide(direction) {
+            const newIndex = currentSlide + direction;
+            if (newIndex >= 0 && newIndex < slides.length) {
+                currentSlide = newIndex;
+                showSlide(currentSlide);
+            }
+        }
+        
+        function checkAnswers(exerciseId) {
+            const exerciseContainer = document.getElementById(exerciseId);
+            const inputs = exerciseContainer.querySelectorAll('input[type="text"]');
+            const feedbackDiv = document.getElementById(`feedback-${exerciseId}`);
+            let allCorrect = true;
+
+            inputs.forEach(input => {
+                const userAnswer = input.value.trim().toLowerCase();
+                const correctAnswer = input.dataset.answer.toLowerCase();
+                
+                // Reset styles
+                input.classList.remove('correct-answer', 'incorrect-answer');
+
+                if (userAnswer === correctAnswer) {
+                    input.classList.add('correct-answer');
+                } else {
+                    input.classList.add('incorrect-answer');
+                    allCorrect = false;
+                }
+            });
+
+            // Provide feedback
+            feedbackDiv.classList.remove('correct', 'incorrect');
+            if (allCorrect) {
+                feedbackDiv.innerHTML = '🎉 Great job! All answers are correct!';
+                feedbackDiv.classList.add('correct');
+            } else {
+                feedbackDiv.innerHTML = '🤔 Some answers are not quite right. Try again! The red boxes need fixing.';
+                feedbackDiv.classList.add('incorrect');
+            }
+        }
+
+        // Initial setup
+        showSlide(currentSlide);
+    </script>
+
+</body>
+</html>

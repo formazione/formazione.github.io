@@ -19,6 +19,53 @@
           </table>
 
 <!-- FINALLY SOME PYTHON CODE IN A WEB PAGE, THANKS TO PYSCRIPT -->
+<<<<<<< HEAD:memo.html
+        <py-script>
+            from datetime import datetime
+            import os
+            from pyscript import Element
+
+            now = datetime.now()
+            data = """
+
+            ----------------------
+            Accedi qui con cmd digitando "memo"
+            ----------------------
+            19.7 eolo speed test 53 mbs
+
+            devono arrivare:
+            
+            occhiali quest 2 (a casa)
+            
+            incolla verbale 8 a scuola
+            forse anche quello del cdi
+            
+            """.splitlines()
+
+
+            display("Today is " + now.strftime("%d/%m/%Y"))
+            display("Appuntamenti:")
+            for d in data:
+                display(d)
+
+
+
+            def directory(div):
+              divtarget = Element(div)
+              text = ""
+              for v in dir(divtarget):
+                text += v + v.__doc__
+              display(text, target=div)
+
+            def show(text, div):
+              divtarget = Element(div)
+              if divtarget.innerHtml == "":
+                divtarget.write("Il campo è vuoto")
+                divtarget.write(text)
+                # directory(div)
+              else:
+                divtarget.write("")
+=======
 <!-- To make it work
       cmd: py -m http.server
       chrome: localhost:8000/memo.html 
@@ -26,6 +73,7 @@
     (I prefer so to see the syntax highlight)
 -->
         <py-script defer src="memo_bacheca.py">
+>>>>>>> 9f9e7c8f2ee0dd8387002d097547caa3c11de0c1:memo2.html
 
         </py-script>
 
@@ -60,6 +108,9 @@
 // *********************** EXAMPLES ABOVE **********************************
   
   let data = [
+["occhiali oculus quest", "https://vroptician.com/status/104086/U4Nuk9QqDPXbPxSUt6xlcMc7GJcscbkEXnC-dvPCFO0"],
+
+
 ["MEMO APPUNTAMENTI"],
 ["pb-VERBALE COLLEGIO", "N.7 da finire"],
 ["pb-VERBALE CDI", "N.7 da finire"],
@@ -67,7 +118,7 @@
 ["pb-relazione PEI, INVALSI, ED. CIVICA, COORDinatore","preparare quanto prima"],
 ["pb-consiglio 1e 13 giugno ","vedi per venosa..."],
 ["pb-collegio 16 giugno", "prepara 8"],
-["pb-Messa 2 luglio","Prenota"],
+["pb-Messa","Prenota"],
 
 ["Fragilità"],
     ["Segnalazione fragilità","https://docs.google.com/forms/d/140TV6-x9IYaJ7c3YIwE-yOwGTBfwQohPGD7881Np1ao/edit"],
