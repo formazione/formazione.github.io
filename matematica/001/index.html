@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maestro di Matematica 2.0</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .screen {
+            display: none;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        .screen.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .btn {
+            @apply w-full text-center py-4 px-6 text-white font-semibold rounded-xl shadow-lg focus:outline-none focus:ring-4 focus:ring-opacity-75 transition-all duration-300;
+        }
+        .btn-blue {
+            @apply bg-blue-600 hover:bg-blue-700 focus:ring-blue-400;
+        }
+        .btn-purple {
+            @apply bg-purple-600 hover:bg-purple-700 focus:ring-purple-400;
+        }
+        .btn-teal {
+            @apply bg-teal-500 hover:bg-teal-600 focus:ring-teal-300;
+        }
+        .btn-orange {
+             @apply bg-orange-500 hover:bg-orange-600 focus:ring-orange-300;
+        }
+        .btn-secondary {
+            @apply w-full text-center py-3 px-5 bg-gray-500 text-white font-semibold rounded-lg shadow-md hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-75 transition-transform transform hover:scale-105;
+        }
+        .btn-green {
+            @apply w-full text-center py-3 px-5 bg-green-600 text-white font-semibold rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75;
+        }
+        .feedback-modal {
+            @apply fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center transition-opacity duration-300;
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen p-4">
+
+    <div id="app-container" class="w-full max-w-md mx-auto bg-white rounded-3xl shadow-2xl p-6 md:p-8">
+
+        <!-- Schermata di Caricamento -->
+        <div id="loading-screen" class="screen active text-center">
+            <h1 class="text-2xl font-bold mb-4 text-gray-700">Caricamento...</h1>
+            <p class="text-gray-500">Sto preparando i tuoi esercizi!</p>
+        </div>
+
+        <!-- Schermata Principale -->
+        <div id="home-screen" class="screen">
+            <h1 class="text-4xl font-bold text-center mb-2 text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">Maestro di Matematica</h1>
+            <p class="text-center text-gray-500 mb-8">Scegli una sfida e mettiti alla prova!</p>
+            <div class="space-y-4">
+                <button onclick="selectOperation('addizione')" class="btn btn-blue">➕ Addizioni</button>
+                <button onclick="selectOperation('sottrazione')" class="btn btn-purple">➖ Sottrazioni</button>
+                <button onclick="selectOperation('moltiplicazione')" class="btn btn-teal">✖️ Moltiplicazioni</button>
+                <button onclick="selectOperation('divisione')" class="btn btn-blue">➗ Divisioni</button>
+                <button onclick="selectOperation('problemi')" class="btn btn-orange">🧠 Problemi</button>
+            </div>
+            <div class="mt-8 border-t-2 border-gray-100 pt-6">
+                 <button onclick="showScoresScreen()" class="btn-secondary">📊 I Tuoi Progressi</button>
+            </div>
+             <p id="user-id-display" class="text-xs text-gray-400 text-center mt-6 break-all"></p>
+        </div>
+
+        <!-- Schermata Selezione Tabellina -->
+        <div id="table-selection-screen" class="screen">
+            <h2 class="text-2xl font-bold text-center mb-6 text-gray-700">Quale tabellina vuoi provare?</h2>
+            <div id="table-buttons" class="grid grid-cols-3 sm:grid-cols-5 gap-3">
+                <!-- I bottoni delle tabelline verranno inseriti qui dal JS -->
+            </div>
+            <button onclick="showScreen('home-screen')" class="mt-8 btn-secondary">Torna Indietro</button>
+        </div>
+
+        <!-- Schermata di Gioco -->
+        <div id="game-screen" class="screen">
+            <div class="flex justify-between items-center mb-6">
+                <span class="font-bold text-lg text-blue-600">Punti: <span id="score">0</span></span>
+                <span class="font-bold text-lg text-purple-600">Livello: <span id="level">1</span></span>
+            </div>
+            <div class="bg-gray-100 p-6 rounded-xl text-center mb-6 min-h-[100px] flex items-center justify-center">
+                <p class="text-2xl md:text-3xl font-bold text-gray-800" id="question"></p>
+            </div>
+            <input type="number" id="answer-input" class="w-full p-4 border-2 border-gray-300 rounded-lg text-center text-2xl focus:outline-none focus:ring-2 focus:ring-purple-500" placeholder="La tua risposta...">
+            <button onclick="checkAnswer()" class="mt-4 btn btn-green">Controlla</button>
+            <button onclick="endGameConfirm()" class="mt-4 btn-secondary">Termina Partita</button>
+        </div>
+
+        <!-- Schermata Punteggi -->
+        <div id="scores-screen" class="screen">
+            <h2 class="text-2xl font-bold text-center mb-6 text-gray-700">I Tuoi Progressi</h2>
+            <div class="bg-gray-50 p-4 rounded-lg shadow-inner mb-6" style="height: 250px;">
+                 <canvas id="scores-chart"></canvas>
+            </div>
+            <h3 class="font-bold mb-2 text-gray-600">Storico Punteggi:</h3>
+            <ul id="scores-list" class="space-y-2 max-h-48 overflow-y-auto pr-2">
+                <!-- Lista punteggi -->
+            </ul>
+            <button onclick="showScreen('home-screen')" class="mt-8 btn-secondary">Torna alla Home</button>
+        </div>
+    </div>
+
+    <!-- Modale di Feedback -->
+    <div id="feedback-modal" class="feedback-modal hidden opacity-0">
+        <div id="feedback-content" class="bg-white rounded-2xl p-8 text-center shadow-xl transform transition-all scale-95 max-w-sm w-full">
+            <h3 id="feedback-title" class="text-3xl font-bold"></h3>
+            <p id="feedback-text" class="text-lg mt-2 mb-6 text-gray-600"></p>
+            <button id="next-question-btn" class="btn btn-green w-full">Continua (Invio)</button>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, addDoc, collection, query, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // --- CONFIGURAZIONE E INIZIALIZZAZIONE ---
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : { apiKey: "test", authDomain: "test", projectId: "test" };
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-math-app-v2';
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        let userId = null;
+        let scoresUnsubscribe = null;
+
+        // --- DATI DEI PROBLEMI ---
+        const problems = [
+            { question: "Marco ha 10 uova, ma ne rompe 2. Quante uova intere gli rimangono?", answer: 8 },
+            { question: "In un cesto ci sono 5 mele e 4 arance. Quanti frutti ci sono in totale?", answer: 9 },
+            { question: "Sara ha 12 caramelle e ne regala 5 alla sua amica. Quante caramelle ha ora?", answer: 7 },
+            { question: "Un quaderno costa 2 euro. Quanto costano 3 quaderni?", answer: 6 },
+            { question: "Ci sono 15 bambini a una festa. Se 8 sono maschi, quante sono le femmine?", answer: 7 },
+            { question: "Un gatto ha 4 zampe. Quante zampe hanno 3 gatti?", answer: 12 },
+            { question: "Ho 20 euro e spendo 11 euro per una pizza. Quanti soldi mi restano?", answer: 9 },
+            { question: "Una settimana ha 7 giorni. Quanti giorni ci sono in 2 settimane?", answer: 14 },
+            { question: "Se dividi 10 biscotti tra 2 amici, quanti biscotti riceve ognuno?", answer: 5 },
+            { question: "Un'ora è formata da 60 minuti. Quanti minuti sono mezz'ora?", answer: 30 }
+        ];
+
+        // --- STATO DELL'APPLICAZIONE ---
+        let currentOperation = '';
+        let selectedTable = 0;
+        let score = 0;
+        let level = 1;
+        let questionsInSession = 0;
+        const TOTAL_QUESTIONS = 10;
+        let currentQuestionData = {};
+        let scoresChart = null;
+        let isFeedbackActive = false;
+
+        // --- ELEMENTI DEL DOM ---
+        const screens = document.querySelectorAll('.screen');
+        const scoreEl = document.getElementById('score');
+        const levelEl = document.getElementById('level');
+        const questionEl = document.getElementById('question');
+        const answerInput = document.getElementById('answer-input');
+        const feedbackModal = document.getElementById('feedback-modal');
+        const feedbackContent = document.getElementById('feedback-content');
+        const feedbackTitle = document.getElementById('feedback-title');
+        const feedbackText = document.getElementById('feedback-text');
+        const nextQuestionBtn = document.getElementById('next-question-btn');
+        const userIdDisplay = document.getElementById('user-id-display');
+
+        // --- GESTIONE SCHERMATE ---
+        window.showScreen = function(screenId) {
+            screens.forEach(screen => screen.classList.remove('active'));
+            document.getElementById(screenId).classList.add('active');
+        }
+
+        // --- AUTENTICAZIONE E CARICAMENTO DATI ---
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                userId = user.uid;
+                userIdDisplay.textContent = `ID Utente: ${userId}`;
+                loadScores();
+                showScreen('home-screen');
+            }
+        });
+
+        async function initializeAuth() {
+            try {
+                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                    await signInWithCustomToken(auth, __initial_auth_token);
+                } else {
+                    await signInAnonymously(auth);
+                }
+            } catch (error) {
+                console.error("Errore di autenticazione:", error);
+                document.getElementById('loading-screen').innerHTML = `<p class="text-red-500">Errore di autenticazione. Ricarica la pagina.</p>`;
+            }
+        }
+        
+        // --- GESTIONE PUNTEGGI ---
+        function loadScores() {
+            if (!userId) return;
+            const scoresCollection = collection(db, `artifacts/${appId}/users/${userId}/scores`);
+            const q = query(scoresCollection);
+
+            if (scoresUnsubscribe) scoresUnsubscribe();
+
+            scoresUnsubscribe = onSnapshot(q, (querySnapshot) => {
+                const scores = [];
+                querySnapshot.forEach((doc) => scores.push({ id: doc.id, ...doc.data() }));
+                scores.sort((a, b) => a.timestamp.toMillis() - b.timestamp.toMillis());
+                renderScores(scores);
+            }, (error) => console.error("Errore caricamento punteggi:", error));
+        }
+
+        function renderScores(scores) {
+            const scoresList = document.getElementById('scores-list');
+            if (!scoresList) return;
+            scoresList.innerHTML = scores.length > 0 ? '' : '<li>Nessun punteggio ancora salvato.</li>';
+            
+            scores.slice().reverse().forEach(s => {
+                const li = document.createElement('li');
+                li.className = 'flex justify-between items-center bg-white p-3 rounded-lg shadow-sm';
+                const date = s.timestamp.toDate().toLocaleDateString('it-IT');
+                li.innerHTML = `<span>${s.operation} - ${date}</span><span class="font-bold text-blue-600">${s.score}</span>`;
+                scoresList.appendChild(li);
+            });
+
+            renderChart(scores);
+        }
+
+        function renderChart(scores) {
+            const ctx = document.getElementById('scores-chart')?.getContext('2d');
+            if (!ctx) return;
+
+            const labels = scores.map(s => s.timestamp.toDate().toLocaleDateString('it-IT', { day: 'numeric', month: 'short'}));
+            const data = scores.map(s => s.score);
+
+            if (scoresChart) scoresChart.destroy();
+
+            scoresChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Andamento Punteggi',
+                        data: data,
+                        fill: true,
+                        backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                        borderColor: 'rgba(124, 58, 237, 1)',
+                        tension: 0.4,
+                        pointBackgroundColor: 'rgba(124, 58, 237, 1)',
+                        pointBorderColor: '#fff',
+                        pointHoverRadius: 7,
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: 'rgba(124, 58, 237, 1)'
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero: true } }, plugins: { legend: { display: false } } }
+            });
+        }
+
+        async function saveScore() {
+            if (!userId) return;
+            let operationName = currentOperation.charAt(0).toUpperCase() + currentOperation.slice(1);
+            if (currentOperation === 'moltiplicazione') {
+                operationName = `Tabellina del ${selectedTable}`;
+            }
+
+            try {
+                const scoresCollection = collection(db, `artifacts/${appId}/users/${userId}/scores`);
+                await addDoc(scoresCollection, { score, operation: operationName, timestamp: new Date() });
+            } catch (error) {
+                console.error("Errore salvataggio punteggio: ", error);
+            }
+        }
+
+        // --- LOGICA DI GIOCO ---
+        window.selectOperation = function(operation) {
+            currentOperation = operation;
+            if (operation === 'moltiplicazione') {
+                populateTableButtons();
+                showScreen('table-selection-screen');
+            } else {
+                startGame();
+            }
+        }
+
+        function populateTableButtons() {
+            const container = document.getElementById('table-buttons');
+            container.innerHTML = '';
+            for (let i = 1; i <= 10; i++) {
+                const button = document.createElement('button');
+                button.textContent = i;
+                button.className = 'py-4 px-2 bg-teal-500 text-white font-bold rounded-lg shadow hover:bg-teal-600 transition-transform transform hover:scale-110';
+                button.onclick = () => {
+                    selectedTable = i;
+                    startGame();
+                };
+                container.appendChild(button);
+            }
+        }
+
+        window.startGame = function() {
+            score = 0;
+            level = 1;
+            questionsInSession = 0;
+            updateHUD();
+            generateQuestion();
+            showScreen('game-screen');
+        }
+
+        function generateQuestion() {
+            let num1, num2;
+            const maxForLevel = level * 5;
+
+            switch (currentOperation) {
+                case 'addizione':
+                    num1 = Math.floor(Math.random() * maxForLevel) + 1;
+                    num2 = Math.floor(Math.random() * maxForLevel) + 1;
+                    currentQuestionData = { correctAnswer: num1 + num2 };
+                    questionEl.textContent = `${num1} + ${num2} = ?`;
+                    break;
+                case 'sottrazione':
+                    num1 = Math.floor(Math.random() * maxForLevel) + 1;
+                    num2 = Math.floor(Math.random() * num1) + 1;
+                    currentQuestionData = { correctAnswer: num1 - num2 };
+                    questionEl.textContent = `${num1} - ${num2} = ?`;
+                    break;
+                case 'moltiplicazione':
+                    num1 = selectedTable;
+                    num2 = Math.floor(Math.random() * 10) + 1;
+                    currentQuestionData = { correctAnswer: num1 * num2 };
+                    questionEl.textContent = `${num1} x ${num2} = ?`;
+                    break;
+                case 'divisione':
+                    num2 = Math.floor(Math.random() * 10) + 1;
+                    const result = Math.floor(Math.random() * 10) + 1;
+                    num1 = num2 * result;
+                    currentQuestionData = { correctAnswer: result };
+                    questionEl.textContent = `${num1} ÷ ${num2} = ?`;
+                    break;
+                case 'problemi':
+                    const problem = problems[Math.floor(Math.random() * problems.length)];
+                    currentQuestionData = { correctAnswer: problem.answer };
+                    questionEl.textContent = problem.question;
+                    break;
+            }
+            answerInput.value = '';
+            answerInput.focus();
+        }
+
+        window.checkAnswer = function() {
+            if (isFeedbackActive) return;
+            const userAnswer = parseInt(answerInput.value, 10);
+            if (isNaN(userAnswer)) {
+                showFeedback(false, "Ops!", "Devi inserire un numero.");
+                return;
+            }
+
+            if (userAnswer === currentQuestionData.correctAnswer) {
+                score += 10;
+                showFeedback(true, "Grande!", "Risposta esatta!");
+            } else {
+                score = Math.max(0, score - 5);
+                showFeedback(false, "Peccato!", `La risposta giusta era ${currentQuestionData.correctAnswer}`);
+            }
+            
+            questionsInSession++;
+            if (questionsInSession % 3 === 0 && currentOperation !== 'moltiplicazione' && currentOperation !== 'problemi') {
+                level++;
+            }
+            updateHUD();
+        }
+
+        function nextStep() {
+            if (questionsInSession >= TOTAL_QUESTIONS) {
+                endGame();
+            } else {
+                generateQuestion();
+            }
+        }
+
+        window.endGameConfirm = function() {
+            showFeedback(null, "Sei sicuro?", "La partita finirà e il tuo punteggio verrà salvato.", "Termina", () => {
+                feedbackModal.classList.add('hidden', 'opacity-0');
+                saveScore();
+                showScreen('home-screen');
+            });
+        }
+
+        window.endGame = function() {
+            saveScore();
+            showFeedback(null, "Partita Finita!", `Il tuo punteggio è ${score}.`, "Gioca Ancora", () => {
+                feedbackModal.classList.add('hidden', 'opacity-0');
+                showScreen('home-screen');
+            });
+        }
+
+        function updateHUD() {
+            scoreEl.textContent = score;
+            levelEl.textContent = level;
+        }
+
+        // --- GESTIONE FEEDBACK ---
+        function showFeedback(isCorrect, title, text, btnText = "Continua (Invio)", onBtnClick = null) {
+            feedbackTitle.textContent = title;
+            feedbackText.textContent = text;
+            
+            let borderColor = 'border-blue-500';
+            let titleColor = 'text-blue-600';
+            if (isCorrect === true) {
+                borderColor = 'border-green-500';
+                titleColor = 'text-green-600';
+            } else if (isCorrect === false) {
+                borderColor = 'border-red-500';
+                titleColor = 'text-red-600';
+            }
+            
+            feedbackContent.className = `bg-white rounded-2xl p-8 text-center shadow-xl transform transition-all scale-95 max-w-sm w-full border-t-8 ${borderColor}`;
+            feedbackTitle.className = `text-3xl font-bold ${titleColor}`;
+            nextQuestionBtn.textContent = btnText;
+
+            isFeedbackActive = true;
+
+            nextQuestionBtn.onclick = () => {
+                isFeedbackActive = false;
+                feedbackModal.classList.add('hidden', 'opacity-0');
+                feedbackContent.classList.add('scale-95');
+                if (onBtnClick) {
+                    onBtnClick();
+                } else {
+                    nextStep();
+                }
+            };
+
+            feedbackModal.classList.remove('hidden');
+            setTimeout(() => {
+                feedbackModal.classList.remove('opacity-0');
+                feedbackContent.classList.remove('scale-95');
+            }, 10);
+        }
+
+        window.showScoresScreen = function() {
+            showScreen('scores-screen');
+        }
+        
+        // --- EVENT LISTENERS ---
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                if (isFeedbackActive) {
+                    nextQuestionBtn.click();
+                } else if (document.getElementById('game-screen').classList.contains('active')) {
+                    checkAnswer();
+                }
+            }
+        });
+
+        // --- AVVIO APPLICAZIONE ---
+        window.onload = initializeAuth;
+
+    </script>
+</body>
+</html>
