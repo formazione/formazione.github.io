@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Test di Matematica Semplice</title>
 <style>
+
+       
   body { font-family: sans-serif; background: linear-gradient(to bottom right, #f0f4ff, #ffeef8); margin:0; padding:0; }
   .container { max-width: 700px; margin: auto; padding: 1rem; }
   .card { background: rgba(255,255,255,0.8); border-radius: 12px; padding: 1rem; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
@@ -40,7 +42,35 @@
     <div id="results" style="display:none;"></div>
     <div class="history" id="history"></div>
     <button id="restartBtn" style="margin-top:1rem;width:100%;padding:.7rem;font-size:1.2rem;background:#4f46e5;color:white;border:none;border-radius:8px;">Ricomincia</button>
+
+<style>
+    /* ... other styles you might have ... */
+
+    .home-button {
+        display: inline-block;
+        margin-top: 40px;
+        padding: 15px 30px;
+        background: linear-gradient(45deg, #56ab2f, #a8e063);
+        color: #fff;
+        text-decoration: none;
+        border-radius: 50px;
+        font-weight: 600;
+        font-size: 1.1em;
+        transition: background 0.3s, transform 0.3s;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .home-button:hover {
+        background: linear-gradient(45deg, #a8e063, #56ab2f);
+        transform: scale(1.05);
+    }
+</style>
+        </div>
+        <a href="https://formazione.github.io" class="home-button">Go Back Home</a>
+    </div>
+
   </div>
+  
 </div>
 
 <script>
@@ -175,5 +205,8 @@ document.getElementById('restartBtn').addEventListener('click', restart);
 restart();
 renderHistory();
 </script>
+
+
+
 </body>
 </html>
