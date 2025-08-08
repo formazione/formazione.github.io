@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math-Bot: Avventura Matematica</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;700&display=swap');
+        
+        :root {
+            --color-primary: #ff6f61; /* Corallo */
+            --color-secondary: #ffc24c; /* Giallo pastello */
+            --color-accent: #6b5b95; /* Viola */
+            --color-success: #a3e4d7; /* Verde acqua */
+            --color-error: #f4808a; /* Rosa */
+            --color-bg: #fff5e6; /* Beige chiaro */
+            --color-dark: #333; /* Grigio scuro */
+            --color-text: #5d496e; /* Viola scuro */
+        }
+
+        body {
+            font-family: 'Fredoka', sans-serif;
+            background-color: var(--color-bg);
+            color: var(--color-dark);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .app-container {
+            width: 100%;
+            max-width: 800px;
+            background-color: white;
+            border-radius: 30px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+            padding: 40px;
+            box-sizing: border-box;
+            border: 10px solid var(--color-accent);
+        }
+
+        h1 {
+            color: var(--color-primary);
+            font-size: 3.5em;
+            margin: 0 0 20px 0;
+            text-shadow: 3px 3px 0 var(--color-dark);
+            letter-spacing: 2px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 30px;
+            background-color: #eee;
+            border-radius: 20px;
+            overflow: hidden;
+            margin: 20px 0;
+            border: 3px solid var(--color-dark);
+            box-shadow: inset 0 0 5px rgba(0,0,0,0.1);
+        }
+
+        .progress {
+            height: 100%;
+            width: 0;
+            background: linear-gradient(90deg, var(--color-success), var(--color-accent));
+            transition: width 0.5s ease-in-out;
+            position: relative;
+        }
+        
+        .progress-text {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: white;
+            font-weight: bold;
+            font-size: 1em;
+            text-shadow: 1px 1px 1px var(--color-dark);
+        }
+
+        .question-area {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+
+        .number-display {
+            font-size: 6em;
+            font-weight: bold;
+            color: var(--color-text);
+            margin: 0 15px;
+            min-width: 100px;
+            animation: bounceIn 0.6s ease-out;
+            position: relative;
+            z-index: 1;
+        }
+
+        .sign, .equals {
+            font-size: 5em;
+            color: var(--color-primary);
+            font-weight: 700;
+        }
+
+        .options-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+
+        .option-button {
+            background-color: var(--color-secondary);
+            border: 5px solid var(--color-dark);
+            color: var(--color-dark);
+            font-size: 3em;
+            padding: 15px 35px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            font-weight: bold;
+            min-width: 120px;
+        }
+
+        .option-button:hover {
+            transform: scale(1.05) rotate(2deg);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .option-button:active {
+            transform: scale(0.95);
+        }
+        
+        .jar-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            margin-top: 20px;
+        }
+        
+        .jar-counter {
+            font-size: 3.5em;
+            font-weight: bold;
+            color: var(--color-primary);
+            margin-bottom: 15px;
+            position: absolute;
+            top: 20px;
+            z-index: 10;
+        }
+        
+        .jar {
+            width: 220px;
+            height: 270px;
+            background: rgba(255, 255, 255, 0.8);
+            border: 6px solid var(--color-dark);
+            border-radius: 110px 110px 40px 40px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: inset 0 0 15px rgba(0,0,0,0.2);
+            padding-bottom: 20px;
+            transition: border-color 0.3s ease-out;
+        }
+        
+        .jar-fill {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            background-color: var(--color-success);
+            transition: height 0.5s ease-out;
+        }
+        
+        .jar-ball {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            position: absolute;
+            bottom: -50px; /* Inizia fuori dal barattolo */
+            left: 50%;
+            transform: translateX(-50%);
+            box-shadow: inset 0 0 8px rgba(0,0,0,0.2);
+            transition: bottom 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        /* Stili per l'abaco */
+        .abacus-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        .abacus-rod-container {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+        }
+
+        .abacus-rod {
+            width: 20px;
+            height: 250px;
+            background-color: var(--color-dark);
+            position: relative;
+            border-radius: 10px;
+        }
+
+        .abacus-ball {
+            width: 50px;
+            height: 50px;
+            background-color: var(--color-primary);
+            border-radius: 50%;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            cursor: grab;
+            transition: top 0.2s ease-in-out, transform 0.2s, box-shadow 0.2s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 2em;
+            user-select: none;
+        }
+        
+        .drag-ball.dragging, .abacus-ball.dragging {
+            opacity: 0.7;
+        }
+        
+        .mode-toggle {
+            margin-top: 30px;
+            font-size: 1.4em;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            color: var(--color-text);
+        }
+        
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 70px;
+            height: 40px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 32px;
+            width: 32px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: var(--color-primary);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(30px);
+        }
+        
+        .mascot-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 1000;
+        }
+        
+        .mascot-speech-bubble {
+            background-color: white;
+            border: 4px solid var(--color-dark);
+            border-radius: 20px;
+            padding: 15px 20px;
+            max-width: 280px;
+            margin-bottom: 15px;
+            position: relative;
+            font-size: 1.3em;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            text-align: left;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s, transform 0.5s;
+        }
+        
+        .mascot-speech-bubble.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .mascot-speech-bubble::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 20px solid transparent;
+            border-right: 20px solid transparent;
+            border-top: 20px solid white;
+            filter: drop-shadow(0 4px 2px rgba(0,0,0,0.1));
+        }
+
+        .mascot-image {
+            font-size: 6em;
+            animation: robot-bounce 2s infinite ease-in-out;
+            cursor: pointer;
+        }
+
+        @keyframes confetti {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.5); opacity: 0.8; color: var(--color-success); }
+            100% { transform: scale(2); opacity: 0; }
+        }
+
+        @keyframes wrong-shake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-15px); }
+            40%, 80% { transform: translateX(15px); }
+        }
+        
+        @keyframes bounceIn {
+            0% { transform: scale(0); opacity: 0; }
+            60% { transform: scale(1.1); opacity: 1; }
+            100% { transform: scale(1); }
+        }
+        
+        @keyframes robot-bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        <h1>Math-Bot</h1>
+        
+        <div class="progress-bar">
+            <div class="progress">
+                <span class="progress-text">0/10</span>
+            </div>
+        </div>
+
+        <div class="question-area">
+            <span id="number1" class="number-display">3</span>
+            <span class="sign">+</span>
+            <span id="number2" class="number-display">2</span>
+            <span class="equals">=</span>
+            <span id="result-display" class="number-display">?</span>
+        </div>
+        
+        <div id="visual-mode" style="display: none;">
+            <p>Trascina le palline nel barattolo per trovare il risultato!</p>
+            <div class="jar-container">
+                <div class="jar"></div>
+            </div>
+            <div class="abacus-container">
+                <div class="abacus-rod-container">
+                    <div class="abacus-rod" id="abacus-rod-1"></div>
+                    <div class="abacus-rod" id="abacus-rod-2"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="options-mode">
+            <div id="options-container" class="options-container">
+            </div>
+        </div>
+        
+        <div class="mode-toggle">
+            <span>Scelta Multipla</span>
+            <label class="switch">
+                <input type="checkbox" id="mode-switch">
+                <span class="slider"></span>
+            </label>
+            <span>Visiva</span>
+        </div>
+        
+    </div>
+
+    <div class="mascot-container">
+        <div class="mascot-speech-bubble" id="mascot-bubble">Ciao! Sono Math-Bot! Risolviamo qualche somma?</div>
+        <div class="mascot-image">🤖</div>
+    </div>
+    
+    <script>
+        const DOM = {
+            number1: document.getElementById('number1'),
+            number2: document.getElementById('number2'),
+            resultDisplay: document.getElementById('result-display'),
+            optionsContainer: document.getElementById('options-container'),
+            progressBar: document.querySelector('.progress'),
+            progressText: document.querySelector('.progress-text'),
+            mascotBubble: document.getElementById('mascot-bubble'),
+            modeSwitch: document.getElementById('mode-switch'),
+            optionsMode: document.getElementById('options-mode'),
+            visualMode: document.getElementById('visual-mode'),
+            jar: document.querySelector('.jar'),
+            abacusRod1: document.getElementById('abacus-rod-1'),
+            abacusRod2: document.getElementById('abacus-rod-2'),
+            mascotImage: document.querySelector('.mascot-image')
+        };
+
+        const AUDIO = {
+            correct: new Audio('data:audio/mp3;base64,...'),
+            wrong: new Audio('data:audio/mp3;base64,...'),
+            click: new Audio('data:audio/mp3;base64,...')
+        };
+
+        let gameState = {
+            num1: 0,
+            num2: 0,
+            correctAnswer: 0,
+            correctAnswersCount: 0,
+            totalQuestions: 10,
+            difficultyLevel: 0,
+            jarCount: 0,
+            isVisualMode: false
+        };
+
+        const MESSAGES = {
+            correct: ["Ottimo lavoro!", "Sei un genio!", "Perfetto! Continua così!", "Bravo!", "Incredibile!"],
+            wrong: ["Non ti preoccupare, riprovaci!", "Mmm, non è la risposta giusta. Prova ancora!", "Quasi! Non mollare!", "Dai che ci sei quasi!"],
+            start: "Ciao! Sono Math-Bot! Risolviamo qualche somma?"
+        };
+
+        function playSound(type) {
+            const audio = AUDIO[type];
+            if (audio) {
+                audio.currentTime = 0;
+                audio.play();
+            }
+        }
+
+        function showMascotComment(message) {
+            DOM.mascotBubble.textContent = message;
+            DOM.mascotBubble.classList.add('active');
+            setTimeout(() => DOM.mascotBubble.classList.remove('active'), 3000);
+        }
+
+        function generateQuestion() {
+            let maxNum1, maxNum2;
+            if (gameState.difficultyLevel === 0) { maxNum1 = 5; maxNum2 = 5; } 
+            else if (gameState.difficultyLevel === 1) { maxNum1 = 8; maxNum2 = 8; } 
+            else { maxNum1 = 10; maxNum2 = 5; }
+            
+            gameState.num1 = Math.floor(Math.random() * maxNum1) + 1;
+            gameState.num2 = Math.floor(Math.random() * maxNum2) + 1;
+            gameState.correctAnswer = gameState.num1 + gameState.num2;
+
+            DOM.number1.textContent = gameState.num1;
+            DOM.number2.textContent = gameState.num2;
+            DOM.resultDisplay.textContent = '?';
+            DOM.resultDisplay.style.color = 'var(--color-text)';
+
+            animateNumber(DOM.number1);
+            animateNumber(DOM.number2);
+
+            if (gameState.isVisualMode) {
+                setupVisualMode();
+            } else {
+                setupOptionsMode();
+            }
+        }
+
+        function animateNumber(element) {
+            element.style.animation = 'none';
+            void element.offsetWidth;
+            element.style.animation = 'bounceIn 0.6s ease-out';
+        }
+
+        function setupOptionsMode() {
+            DOM.optionsContainer.innerHTML = '';
+            const options = new Set();
+            options.add(gameState.correctAnswer);
+
+            while (options.size < 4) {
+                const randomOption = Math.floor(Math.random() * (gameState.correctAnswer + 5)) + Math.max(1, gameState.correctAnswer - 5);
+                if (randomOption > 0) {
+                    options.add(randomOption);
+                }
+            }
+            const shuffledOptions = Array.from(options).sort(() => Math.random() - 0.5);
+
+            shuffledOptions.forEach(option => {
+                const button = document.createElement('button');
+                button.textContent = option;
+                button.classList.add('option-button');
+                button.onclick = () => checkAnswer(option);
+                DOM.optionsContainer.appendChild(button);
+            });
+        }
+
+        function setupVisualMode() {
+            // Reset Jar
+            DOM.jar.innerHTML = '';
+            gameState.jarCount = 0;
+            
+            // Popola l'abaco con le palline
+            DOM.abacusRod1.innerHTML = '';
+            DOM.abacusRod2.innerHTML = '';
+
+            for (let i = 0; i < gameState.num1; i++) {
+                createAbacusBall(DOM.abacusRod1, i, 'var(--color-primary)');
+            }
+
+            for (let i = 0; i < gameState.num2; i++) {
+                createAbacusBall(DOM.abacusRod2, i, 'var(--color-accent)');
+            }
+            
+            setupDragAndDrop();
+        }
+
+        function createJarBall(index, color) {
+            const ball = document.createElement('div');
+            ball.classList.add('jar-ball');
+            ball.style.backgroundColor = color;
+            ball.style.bottom = `${20 + (index * 40)}px`;
+            DOM.jar.appendChild(ball);
+        }
+
+        function createAbacusBall(rod, index, color) {
+            const ball = document.createElement('div');
+            ball.classList.add('abacus-ball');
+            ball.setAttribute('draggable', 'true');
+            ball.style.backgroundColor = color;
+            ball.style.top = `${20 + (index * 55)}px`;
+            rod.appendChild(ball);
+        }
+        
+        function rearrangeAbacusBalls(rod) {
+            const balls = rod.querySelectorAll('.abacus-ball');
+            balls.forEach((ball, index) => {
+                ball.style.top = `${20 + (index * 55)}px`;
+            });
+        }
+        
+        function setupDragAndDrop() {
+            let draggedItem = null;
+
+            document.querySelectorAll('.abacus-ball').forEach(ball => {
+                ball.addEventListener('dragstart', (e) => {
+                    draggedItem = e.target;
+                    setTimeout(() => draggedItem.classList.add('dragging'), 0);
+                    playSound('click');
+                });
+                ball.addEventListener('dragend', (e) => {
+                    draggedItem.classList.remove('dragging');
+                    if (e.target.parentNode && e.target.parentNode.classList.contains('abacus-rod')) {
+                        rearrangeAbacusBalls(e.target.parentNode);
+                    }
+                    draggedItem = null;
+                });
+            });
+
+            DOM.jar.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                DOM.jar.style.borderColor = 'var(--color-success)';
+            });
+
+            DOM.jar.addEventListener('dragleave', () => {
+                DOM.jar.style.borderColor = 'var(--color-dark)';
+            });
+
+            DOM.jar.addEventListener('drop', (e) => {
+                e.preventDefault();
+                DOM.jar.style.borderColor = 'var(--color-dark)';
+                
+                if (draggedItem && draggedItem.classList.contains('abacus-ball')) {
+                    const ballColor = draggedItem.style.backgroundColor;
+                    draggedItem.remove();
+                    gameState.jarCount++;
+                    createJarBall(gameState.jarCount - 1, ballColor);
+                    playSound('click');
+                    
+                    // L'utente scopre se ha vinto solo quando ha trascinato tutte le palline
+                    if (gameState.jarCount === gameState.correctAnswer) {
+                        setTimeout(() => handleCorrectAnswer(), 500);
+                    } else if (gameState.jarCount === gameState.num1 + gameState.num2 && gameState.jarCount !== gameState.correctAnswer) {
+                         // Risposta errata solo quando ha trascinato tutte le palline
+                         setTimeout(() => handleWrongAnswer(), 500);
+                    }
+                }
+            });
+        }
+        
+        function checkAnswer(selectedAnswer) {
+            playSound('click');
+            if (selectedAnswer === gameState.correctAnswer) {
+                handleCorrectAnswer();
+            } else {
+                handleWrongAnswer();
+            }
+        }
+
+        function handleCorrectAnswer() {
+            gameState.correctAnswersCount++;
+            updateProgressBar();
+            
+            DOM.resultDisplay.textContent = gameState.correctAnswer;
+            DOM.resultDisplay.classList.add('success-animation');
+            
+            const comment = MESSAGES.correct[Math.floor(Math.random() * MESSAGES.correct.length)];
+            showMascotComment(comment);
+            // playSound('correct');
+
+            if (gameState.correctAnswersCount >= gameState.totalQuestions) {
+                showMascotComment("Hai finito il gioco! Sei un supereroe della matematica!");
+                setTimeout(() => {
+                    alert("Complimenti, hai completato il gioco!");
+                    resetGame();
+                }, 2000);
+            } else {
+                if (gameState.correctAnswersCount % 3 === 0 && gameState.difficultyLevel < 2) {
+                    gameState.difficultyLevel++;
+                    showMascotComment("Ottimo! Aumentiamo un po' la difficoltà!");
+                }
+                setTimeout(() => {
+                    DOM.resultDisplay.classList.remove('success-animation');
+                    generateQuestion();
+                }, 1500);
+            }
+        }
+
+        function handleWrongAnswer() {
+            DOM.resultDisplay.textContent = 'X';
+            DOM.resultDisplay.style.color = 'var(--color-error)';
+            DOM.resultDisplay.classList.add('wrong-shake');
+            
+            const comment = MESSAGES.wrong[Math.floor(Math.random() * MESSAGES.wrong.length)];
+            showMascotComment(comment);
+            // playSound('wrong');
+
+            setTimeout(() => {
+                DOM.resultDisplay.classList.remove('wrong-shake');
+                DOM.resultDisplay.textContent = '?';
+                DOM.resultDisplay.style.color = 'var(--color-text)';
+            }, 1000);
+        }
+
+        function updateProgressBar() {
+            const percentage = (gameState.correctAnswersCount / gameState.totalQuestions) * 100;
+            DOM.progressBar.style.width = `${percentage}%`;
+            DOM.progressText.textContent = `${gameState.correctAnswersCount}/${gameState.totalQuestions}`;
+        }
+        
+        DOM.modeSwitch.addEventListener('change', () => {
+            gameState.isVisualMode = DOM.modeSwitch.checked;
+            DOM.optionsMode.style.display = gameState.isVisualMode ? 'none' : 'block';
+            DOM.visualMode.style.display = gameState.isVisualMode ? 'block' : 'none';
+            generateQuestion();
+        });
+        
+        DOM.mascotImage.addEventListener('click', () => {
+             showMascotComment(MESSAGES.start);
+        });
+
+        function resetGame() {
+            gameState.correctAnswersCount = 0;
+            gameState.difficultyLevel = 0;
+            updateProgressBar();
+            showMascotComment(MESSAGES.start);
+            generateQuestion();
+        }
+
+        resetGame();
+
+    </script>
+</body>
+</html>

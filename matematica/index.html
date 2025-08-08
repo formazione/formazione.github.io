@@ -1,119 +1,105 @@
 <!DOCTYPE html>
-<html lang="it">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Test di Matematica</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <title>Math Apps</title>
     <style>
         body {
-            font-size: 1.5rem;
-            margin: 20px;
+            font-family: sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
         }
-        .btn-lg {
-            font-size: 1.5rem;
+        .container {
+            max-width: 800px;
+            text-align: center;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 40px;
+        }
+        .card-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .card {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            padding: 20px;
+            width: 200px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+        .card:hover {
+            transform: translateY(-10px);
+        }
+        .card img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+        .card h2 {
+            color: #555;
+            margin-top: 15px;
+            font-size: 1.2em;
+        }
+        .card p {
+            color: #777;
+            font-size: 0.9em;
+        }
+        .card a {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        .card a:hover {
+            background-color: #0056b3;
         }
     </style>
 </head>
-<body class="text-center">
+<body>
     <div class="container">
-        <h1 class="my-4">Test di Matematica</h1>
-        <div id="question-container" class="mb-4"></div>
-        <div id="answer-buttons" class="btn-group-vertical mb-4"></div>
-        <p id="result" class="lead"></p>
-        <button id="next-button" onclick="nextQuestion()" class="btn btn-primary btn-lg hidden">Prossima Domanda</button>
-        <button id="restart-button" onclick="startTest()" class="btn btn-secondary btn-lg hidden">Ripeti Test</button>
+        <h1>Math Applications</h1>
+        <div class="card-container">
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1556742502-ec7c0e9f34b1?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjEyMDd9" alt="App 1">
+                <h2>First App</h2>
+                <p>A simple and fun math app.</p>
+                <a href="001/index.html">Go to App</a>
+            </div>
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1518133910546-b6c2fb7d79e3?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjEyMDd9" alt="Math Test">
+                <h2>Math Test</h2>
+                <p>Test your math skills with this app.</p>
+                <a href="mathtest/index.html">Go to App</a>
+            </div>
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjEyMDd9" alt="Math War">
+                <h2>Math War</h2>
+                <p>A math-based space shooter game.</p>
+                <a href="mathwar/index.html">Go to App</a>
+            </div>
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1596495577886-d9256f431b8b?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjEyMDd9" alt="Sums">
+                <h2>Sums</h2>
+                <p>Practice your addition skills.</p>
+                <a href="somme/index.html">Go to App</a>
+            </div>
+        </div>
     </div>
-
-    <script>
-        let currentQuestionIndex = 0;
-        let score = 0;
-        let level = 1;
-
-        function generateQuestion(level) {
-            const max = level * 10;
-            const num1 = Math.floor(Math.random() * max) + 1;
-            const num2 = Math.floor(Math.random() * max) + 1;
-            const answer = num1 + num2;
-            const options = [answer];
-            while (options.length < 4) {
-                const option = Math.floor(Math.random() * max * 2) + 1;
-                if (!options.includes(option)) {
-                    options.push(option);
-                }
-            }
-            options.sort(() => Math.random() - 0.5);
-            return {
-                question: `${num1} + ${num2} = ?`,
-                options: options,
-                answer: answer
-            };
-        }
-
-        let questions = Array.from({ length: 10 }, () => generateQuestion(level));
-
-        function loadQuestion() {
-            if (currentQuestionIndex < questions.length) {
-                const questionContainer = document.getElementById('question-container');
-                const answerButtons = document.getElementById('answer-buttons');
-                const question = questions[currentQuestionIndex];
-                questionContainer.innerHTML = `<p>${question.question}</p>`;
-                answerButtons.innerHTML = '';
-                question.options.forEach(option => {
-                    const button = document.createElement('button');
-                    button.className = 'btn btn-outline-primary btn-lg mb-2';
-                    button.innerText = option;
-                    button.onclick = () => checkAnswer(option);
-                    answerButtons.appendChild(button);
-                });
-                document.getElementById('next-button').classList.add('hidden');
-            } else {
-                showFinalResult();
-            }
-        }
-
-        function checkAnswer(selectedAnswer) {
-            const correctAnswer = questions[currentQuestionIndex].answer;
-            if (selectedAnswer === correctAnswer) {
-                score++;
-                document.getElementById('result').textContent = 'Corretto!';
-            } else {
-                document.getElementById('result').textContent = `Sbagliato! La risposta corretta è ${correctAnswer}.`;
-            }
-            currentQuestionIndex++;
-            document.getElementById('next-button').classList.remove('hidden');
-        }
-
-        function nextQuestion() {
-            document.getElementById('result').textContent = '';
-            loadQuestion();
-        }
-
-        function showFinalResult() {
-            document.getElementById('question-container').innerHTML = '';
-            document.getElementById('answer-buttons').innerHTML = '';
-            document.getElementById('next-button').classList.add('hidden');
-            const resultMessage = `Hai risposto correttamente a ${score} domande su 10.`;
-            document.getElementById('result').textContent = resultMessage;
-            document.getElementById('restart-button').classList.remove('hidden');
-            if (score > 7) {
-                level++;
-                document.getElementById('result').textContent += ' Ottimo lavoro! Il prossimo test sarà più difficile.';
-            } else {
-                level = 1;
-            }
-        }
-
-        function startTest() {
-            currentQuestionIndex = 0;
-            score = 0;
-            document.getElementById('result').textContent = '';
-            document.getElementById('restart-button').classList.add('hidden');
-            questions = Array.from({ length: 10 }, () => generateQuestion(level));
-            loadQuestion();
-        }
-
-        window.onload = startTest;
-    </script>
 </body>
 </html>
