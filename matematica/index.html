@@ -5,69 +5,108 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Math Apps</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Poppins:wght@400;600&display=swap');
+
         body {
-            font-family: sans-serif;
-            background-color: #f0f0f0;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 99%, #fad0c4 100%);
             margin: 0;
             padding: 20px;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
+            color: #fff;
         }
+
         .container {
-            max-width: 800px;
+            max-width: 900px;
             text-align: center;
         }
+
         h1 {
-            color: #333;
+            font-family: 'Fredoka One', cursive;
+            font-size: 4em;
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
             margin-bottom: 40px;
+            animation: bounceIn 1s ease;
         }
+
         .card-container {
             display: flex;
-            justify-content: space-around;
+            justify-content: center;
             flex-wrap: wrap;
-            gap: 20px;
+            gap: 30px;
         }
+
         .card {
-            background-color: #fff;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            padding: 20px;
-            width: 200px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+            padding: 25px;
+            width: 220px;
             text-align: center;
-            transition: transform 0.3s;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
+            cursor: pointer;
+            border: 2px solid transparent;
         }
+
         .card:hover {
-            transform: translateY(-10px);
+            transform: translateY(-15px) rotate(3deg);
+            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2);
+            border-color: #fff;
         }
+
         .card img {
             width: 100%;
-            height: 150px;
+            height: 160px;
             object-fit: cover;
-            border-radius: 5px;
+            border-radius: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
         }
+
         .card h2 {
-            color: #555;
-            margin-top: 15px;
-            font-size: 1.2em;
+            font-family: 'Fredoka One', cursive;
+            color: #ff6f61;
+            font-size: 1.5em;
+            margin: 10px 0;
         }
+
         .card p {
-            color: #777;
-            font-size: 0.9em;
+            color: #555;
+            font-size: 0.95em;
+            line-height: 1.4;
         }
+
         .card a {
             display: inline-block;
-            margin-top: 15px;
-            padding: 10px 20px;
-            background-color: #007BFF;
+            margin-top: 20px;
+            padding: 12px 25px;
+            background: linear-gradient(45deg, #ff6f61, #ff8c7f);
             color: #fff;
             text-decoration: none;
-            border-radius: 5px;
-            transition: background-color 0.3s;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: background 0.3s, transform 0.3s;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
+
         .card a:hover {
-            background-color: #0056b3;
+            background: linear-gradient(45deg, #ff8c7f, #ff6f61);
+            transform: scale(1.05);
+        }
+
+        @keyframes bounceIn {
+            0% {
+                transform: scale(0.5);
+                opacity: 0;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
         }
     </style>
 </head>
@@ -75,28 +114,23 @@
     <div class="container">
         <h1>Math Applications</h1>
         <div class="card-container">
-            <div class="card">
-                <img src="https://images.unsplash.com/photo-1556742502-ec7c0e9f34b1?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjEyMDd9" alt="App 1">
-                <h2>First App</h2>
-                <p>A simple and fun math app.</p>
-                <a href="001/index.html">Go to App</a>
-            </div>
-            <div class="card">
-                <img src="https://images.unsplash.com/photo-1518133910546-b6c2fb7d79e3?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjEyMDd9" alt="Math Test">
+            
+            <div class="card" onclick="location.href='mathtest/index.html'">
+                <img src="https://i.ibb.co/f2xR3gB/math-test.png" alt="Math Test">
                 <h2>Math Test</h2>
-                <p>Test your math skills with this app.</p>
+                <p>Test your math skills with this fun quiz!</p>
                 <a href="mathtest/index.html">Go to App</a>
             </div>
-            <div class="card">
-                <img src="https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjEyMDd9" alt="Math War">
+            <div class="card" onclick="location.href='mathwar/index.html'">
+                <img src="https://i.ibb.co/M2g3P3F/math-war.png" alt="Math War">
                 <h2>Math War</h2>
-                <p>A math-based space shooter game.</p>
+                <p>A space shooter game to practice math.</p>
                 <a href="mathwar/index.html">Go to App</a>
             </div>
-            <div class="card">
-                <img src="https://images.unsplash.com/photo-1596495577886-d9256f431b8b?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjEyMDd9" alt="Sums">
+            <div class="card" onclick="location.href='somme/index.html'">
+                <img src="https://i.ibb.co/5n3g4X0/sums.png" alt="Sums">
                 <h2>Sums</h2>
-                <p>Practice your addition skills.</p>
+                <p>Practice your addition skills with this app.</p>
                 <a href="somme/index.html">Go to App</a>
             </div>
         </div>
