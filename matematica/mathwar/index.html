@@ -6,8 +6,6 @@
     <title>Math Game</title>
     <style>
         body {
-            margin: 0;
-            padding: 0;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -18,25 +16,14 @@
         #gameCanvas {
             border: 2px solid #000;
             display: none; /* Hide canvas initially */
-            width: 100%;
-            height: 100%;
-        }
-        #startButton {
-            position: absolute;
-            padding: 20px 40px;
-            font-size: 24px;
-            cursor: pointer;
-            z-index: 10;
         }
     </style>
 </head>
 <body>
-    <canvas id="gameCanvas"></canvas>
-    <button id="startButton">Start Game</button>
+    <canvas id="gameCanvas" width="400" height="600"></canvas>
+    <button id="startButton" style="position: absolute; padding: 20px 40px; font-size: 24px;">Start Game</button>
     <script>
         const canvas = document.getElementById('gameCanvas');
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
         const ctx = canvas.getContext('2d');
         const shipImg = new Image();
         shipImg.src = 'images/ship.png';
@@ -89,9 +76,7 @@
         function drawHighScore() {
             ctx.font = '24px Arial';
             ctx.fillStyle = '#fff';
-            const text = `High Score: ${highScore}`;
-            const textWidth = ctx.measureText(text).width;
-            ctx.fillText(text, canvas.width - textWidth - 10, 30);
+            ctx.fillText(`High Score: ${highScore}`, canvas.width - 180, 30);
         }
 
         function _generateQuestionContent() {
@@ -134,7 +119,7 @@
                 }
             }
 
-            const positions = [canvas.width * 0.25, canvas.width * 0.5, canvas.width * 0.75];
+            const positions = [100, 200, 300];
             // Randomly assign correct answer to one of the positions
             const correctPositionIndex = Math.floor(Math.random() * positions.length);
             const correctPosition = positions[correctPositionIndex];
@@ -204,10 +189,7 @@
 
         function drawShips() {
             for (let i = 0; i < 3; i++) {
-                const shipWidth = canvas.width * 0.1;
-                const shipHeight = shipWidth;
-                const spacing = (canvas.width - (3 * shipWidth)) / 4;
-                ships[i] = { x: spacing + (i * (shipWidth + spacing)), y: canvas.height - shipHeight - 20, width: shipWidth, height: shipHeight };
+                ships[i] = { x: 75 + i * 100, y: canvas.height - 50, width: 50, height: 50 };
                 ctx.drawImage(shipImg, ships[i].x, ships[i].y, ships[i].width, ships[i].height);
             }
         }
@@ -228,8 +210,7 @@
             if (message) {
                 ctx.font = '30px Arial';
                 ctx.fillStyle = '#f00';
-                const textWidth = ctx.measureText(message).width;
-                ctx.fillText(message, (canvas.width - textWidth) / 2, canvas.height / 2);
+                ctx.fillText(message, 150, 300);
             }
         }
 
@@ -286,8 +267,7 @@
                                 speed += 0.5;
                             }
                             hitSound.play();
-                            const messages = ["Good Job", "Very Good", "You're right"];
-                            message = messages[Math.floor(Math.random() * messages.length)];
+                            message = 'Correct!';
                             setTimeout(() => {
                                 resetGame();
                                 message = '';
@@ -316,13 +296,11 @@
                         } else {
                             score--;
                             lives--;
-                            const correctAnswer = answers.find(a => a.isCorrect);
-                            message = `${question} = ${correctAnswer.value}`;
-                            answers.splice(answerIndex, 1);
                             if (lives === 0) {
                                 resetGame(true);
                             } else {
                                 wrongSound.play();
+                                message = 'Wrong!';
                                 setTimeout(() => {
                                     message = '';
                                 }, 1000);
@@ -348,16 +326,10 @@
             questionY = 100;
         }
 
-        function handleResize() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-            drawShips();
-        }
-
-        window.addEventListener('resize', handleResize);
-
-        function handleInput(x, y) {
-            if (gameState !== 'playing') return;
+        canvas.addEventListener('click', (event) => {
+            if (gameState !== 'playing') return; // Only allow clicks if game is playing
+            const x = event.clientX - canvas.offsetLeft;
+            const y = event.clientY - canvas.offsetTop;
             ships.forEach(ship => {
                 if (x > ship.x && x < ship.x + ship.width && y > ship.y && y < ship.y + ship.height) {
                     bullets.push({ x: ship.x + ship.width / 2 - 5, y: ship.y, width: 10, height: 20 });
@@ -365,25 +337,6 @@
                     beepSound.play();
                 }
             });
-        }
-
-        canvas.addEventListener('click', (event) => {
-            const rect = canvas.getBoundingClientRect();
-            const x = event.clientX - rect.left;
-            const y = event.clientY - rect.top;
-            handleInput(x, y);
-        });
-
-        canvas.addEventListener('touchstart', (event) => {
-            event.preventDefault(); // Prevent default touch behavior
-            const touches = event.touches;
-            for (let i = 0; i < touches.length; i++) {
-                const touch = touches[i];
-                const rect = canvas.getBoundingClientRect();
-                const x = touch.clientX - rect.left;
-                const y = touch.clientY - rect.top;
-                handleInput(x, y);
-            }
         });
 
         const startButton = document.getElementById('startButton');
