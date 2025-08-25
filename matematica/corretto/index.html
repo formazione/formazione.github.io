@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Test di Matematica Semplice</title>
+<style>
+  body { font-family: sans-serif; background: linear-gradient(to bottom right, #f0f4ff, #ffeef8); margin:0; padding:0; }
+  .container { max-width: 700px; margin: auto; padding: 1rem; }
+  .card { background: rgba(255,255,255,0.8); border-radius: 12px; padding: 1rem; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+  .objects { display: flex; flex-wrap: wrap; gap: 4px; margin: .5rem 0; }
+  .sphere { width: 30px; height: 30px; border-radius: 50%; background: rgba(100,150,255,0.5); box-shadow: 0 3px 6px rgba(0,0,0,0.15);}
+  .finger { width: 10px; height: 35px; border-radius: 4px; background: linear-gradient(#ffe6b3,#ffd27f);}
+  .emoji { font-size: 28px; }
+  .question { font-size: 1.5rem; font-weight: bold; margin: .5rem 0; }
+  .buttons { display: grid; grid-template-columns: repeat(5, 1fr); gap: .5rem; margin-top: 1rem; }
+  .buttons button { padding: .75rem; font-size: 1.2rem; border-radius: 8px; border: none; background: #4f46e5; color: white; }
+  .buttons button:active { background: #3730a3; }
+  .answers-log { max-height: 200px; overflow-y: auto; font-size: 0.9rem; margin-top: .5rem; }
+  .answers-log div { padding: .3rem; border-radius: 6px; margin-bottom: .25rem; }
+  .correct { background: #d1fae5; }
+  .wrong { background: #fee2e2; }
+  .stats { margin-top: 1rem; }
+  .history { font-size: 0.85rem; margin-top: .5rem; }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="card">
+    <h1>Test di Matematica Semplice</h1>
+    <div id="quiz">
+      <div id="questionArea"></div>
+      <div id="inputArea">
+        <div style="font-size:1.2rem;margin-top:.5rem;">Risposta: <span id="currentAnswer">_</span></div>
+        <div class="buttons" id="numButtons"></div>
+        <button id="submitBtn" style="margin-top:1rem;width:100%;padding:.7rem;font-size:1.2rem;background:#10b981;color:white;border:none;border-radius:8px;">Invia</button>
+      </div>
+      <div class="answers-log" id="answersLog"></div>
+    </div>
+    <div id="results" style="display:none;"></div>
+    <div class="history" id="history"></div>
+    <button id="restartBtn" style="margin-top:1rem;width:100%;padding:.7rem;font-size:1.2rem;background:#4f46e5;color:white;border:none;border-radius:8px;">Ricomincia</button>
+  </div>
+</div>
+
+<script>
+const NUM_QUESTIONS = 10;
+const MAX_ADDEND = 5;
+const OBJECT_TYPES = ['spheres','fingers','dogs','cats','apples','fruits','diamonds'];
+let questions = [];
+let index = 0;
+let currentInput = '';
+let answersData = [];
+let startTime = null;
+
+function speakItalian(text) {
+  if (!('speechSynthesis' in window)) return;
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = 'it-IT';
+  const voices = window.speechSynthesis.getVoices();
+  if(voices.length) u.voice = voices.find(v=>v.lang.includes('it')) || voices[0];
+  speechSynthesis.cancel();
+  speechSynthesis.speak(u);
+}
+
+function randInt(min,max){ return Math.floor(Math.random()*(max-min+1))+min; }
+
+function makeQuestions(){
+  const qs = [];
+  for(let i=0;i<NUM_QUESTIONS;i++){
+    qs.push({a:randInt(0,MAX_ADDEND), b:randInt(0,MAX_ADDEND), object: OBJECT_TYPES[i % OBJECT_TYPES.length]});
+  }
+  return qs;
+}
+
+function renderObjects(count, type) {
+  let html = '<div class="objects">';
+  if(type==='spheres'){
+    for(let i=0;i<count;i++) html += `<div class="sphere"></div>`;
+  } else if(type==='fingers'){
+    for(let i=0;i<count;i++) html += `<div class="finger"></div>`;
+  } else {
+    const map = {dogs:'🐶', cats:'🐱', apples:'🍎', fruits:'🍍', diamonds:'💎'};
+    for(let i=0;i<count;i++) html += `<div class="emoji">${map[type]||'🔸'}</div>`;
+  }
+  html += '</div>';
+  return html;
+}
+
+function renderQuestion(){
+  const q = questions[index];
+  document.getElementById('questionArea').innerHTML = `
+    <div class="question">${q.a} + ${q.b} = ?</div>
+    <div style="display:flex;align-items:center;gap:1rem;">
+      ${renderObjects(q.a, q.object)}
+      <div style="font-size:1.5rem;font-weight:bold;">+</div>
+      ${renderObjects(q.b, q.object)}
+    </div>
+  `;
+  document.getElementById('currentAnswer').textContent = currentInput || '_';
+}
+
+function submitAnswer(){
+  const q = questions[index];
+  const ans = Number(currentInput);
+  const correct = ans === (q.a + q.b);
+  answersData.push({a:q.a, b:q.b, userAnswer:ans, correct, time:new Date().toISOString(), objectType:q.object});
+  const log = document.getElementById('answersLog');
+  const div = document.createElement('div');
+  div.className = correct ? 'correct' : 'wrong';
+  div.textContent = `${q.a} + ${q.b} = ${ans} (${correct ? 'Corretto' : 'Corretto: '+(q.a+q.b)})`;
+  log.prepend(div);
+  speakItalian(correct ? 'Bravo! Corretto.' : `Sbagliato. Era ${q.a+q.b}.`);
+  currentInput = '';
+  index++;
+  if(index >= questions.length){
+    finishQuiz();
+  } else {
+    renderQuestion();
+  }
+}
+
+function finishQuiz(){
+  document.getElementById('quiz').style.display = 'none';
+  const correctCount = answersData.filter(a=>a.correct).length;
+  const percent = Math.round(correctCount / answersData.length * 100);
+  const resultsDiv = document.getElementById('results');
+  resultsDiv.innerHTML = `<h2>Risultati</h2>
+    <p>Punteggio: ${correctCount} / ${answersData.length} (${percent}%)</p>
+    <p>Dettaglio per oggetto:</p>
+    <ul>${OBJECT_TYPES.map(t=>{
+      const arr = answersData.filter(a=>a.objectType===t);
+      return `<li>${t}: ${arr.filter(a=>a.correct).length} / ${arr.length}</li>`;
+    }).join('')}</ul>`;
+  resultsDiv.style.display = 'block';
+  saveHistory(correctCount, percent);
+  renderHistory();
+}
+
+function saveHistory(correct, percent){
+  const hist = JSON.parse(localStorage.getItem('mathTestHistory') || '[]');
+  hist.unshift({date:new Date().toLocaleString(), correct, total:NUM_QUESTIONS, percent});
+  localStorage.setItem('mathTestHistory', JSON.stringify(hist.slice(0,50)));
+}
+
+function renderHistory(){
+  const hist = JSON.parse(localStorage.getItem('mathTestHistory') || '[]');
+  const histDiv = document.getElementById('history');
+  if(hist.length===0) { histDiv.textContent = 'Nessuna cronologia salvata.'; return; }
+  histDiv.innerHTML = '<h3>Cronologia</h3>' + hist.map(h=>`${h.date}: ${h.correct}/${h.total} (${h.percent}%)`).join('<br>');
+}
+
+function restart(){
+  questions = makeQuestions();
+  index = 0;
+  currentInput = '';
+  answersData = [];
+  document.getElementById('quiz').style.display = 'block';
+  document.getElementById('results').style.display = 'none';
+  document.getElementById('answersLog').innerHTML = '';
+  renderQuestion();
+}
+
+document.getElementById('numButtons').innerHTML = Array.from({length:10},(_,i)=>`<button>${i}</button>`).join('');
+document.getElementById('numButtons').addEventListener('click', e=>{
+  if(e.target.tagName==='BUTTON'){
+    currentInput += e.target.textContent;
+    document.getElementById('currentAnswer').textContent = currentInput;
+  }
+});
+document.getElementById('submitBtn').addEventListener('click', submitAnswer);
+document.getElementById('restartBtn').addEventListener('click', restart);
+
+// init
+restart();
+renderHistory();
+</script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+- agropoli roblox pubblicità da ente locale pro loco
+- qi, raccogli test in python o database per ogni linguaggio
+	- chiedi chatgpt, grok, gemini, claude e perplexity (deepseek, qwen)
+		fai 10 esercizi di qi, poi li riunisci
+		- app di escape room con esercezi di qi e risultato finale
+
+
+		L I N G U E
+		-----------
+
+- inglese: raccogli esercisi
+	- a completamento
+	- risposta multipla, ma con supermario
+- francese
+
+
+- gioco platform tipo supermario, ma risolvi spostando cubi per salvare
+	alterna con visione dall'alto per spostare cubi
+
+
+		R O B L O X
+		-----------
+
+- spostare cubi con roblox per risolvere quiz
+- metti testi in roblox
