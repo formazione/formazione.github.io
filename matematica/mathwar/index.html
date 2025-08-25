@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Game</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #1a1a2e;
+            overflow: hidden;
+        }
+        #gameCanvas {
+            border: 2px solid #000;
+            display: none; /* Hide canvas initially */
+        }
+    </style>
+</head>
+<body>
+    <canvas id="gameCanvas" width="400" height="600"></canvas>
+    <button id="startButton" style="position: absolute; padding: 20px 40px; font-size: 24px;">Start Game</button>
+    
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        const shipImg = new Image();
+        shipImg.src = 'images/ship.png';
+        const bulletImg = new Image();
+        bulletImg.src = 'images/bullet.png';
+        const heartImg = new Image();
+        heartImg.src = 'images/heart.png';
+        const fireSound = new Audio('sounds/fire.wav');
+        const hitSound = new Audio('sounds/hit.wav');
+        const beepSound = new Audio('sounds/beep.wav');
+        const wrongSound = new Audio('sounds/wrong.wav');
+        const backgroundMusic = new Audio('sounds/music.mp3');
+        backgroundMusic.loop = true;
+
+        const answers = [];
+        const bullets = [];
+        const ships = [];
+        const particles = [];
+        const stars = [];
+        let speed = 0.75;
+        let score = 0;
+        let message = '';
+        let lives = 3;
+        let highScore = 0;
+        let gameState = 'start'; // Added game state
+        let question = ""; // Initialize question to an empty string
+        let questionY = 100; // Initial Y position for the question
+        let correctAnswers = 0;
+        let questionVisible = false; // New flag for question visibility
+        let questionStartTime; // Declare questionStartTime here
+        let maxNumber = 5;
+        const startTime = Date.now();
+
+        // Initialize stars
+        for (let i = 0; i < 100; i++) {
+            stars.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                size: Math.random() * 2,
+                alpha: Math.random()
+            });
+        }
+
+        function drawHearts() {
+            for (let i = 0; i < lives; i++) {
+                ctx.drawImage(heartImg, canvas.width / 2 - 60 + (i * 40), 10, 30, 30);
+            }
+        }
+
+        function drawHighScore() {
+            ctx.font = '24px Arial';
+            ctx.fillStyle = '#fff';
+            ctx.fillText(`High Score: ${highScore}`, canvas.width - 180, 30);
+        }
+
+        function _generateQuestionContent() {
+            const num1 = Math.floor(Math.random() * maxNumber);
+            const num2 = Math.floor(Math.random() * maxNumber);
+            return `${num1} + ${num2}`;
+        }
+
+        function generateAnswers(correctAnswer) {
+            answers.length = 0;
+            const allPossibleValues = [];
+            // Generate a pool of possible answer values
+            for (let i = 0; i <= maxNumber * 2; i++) { // Max sum is maxNumber + maxNumber
+                allPossibleValues.push(i);
+            }
+
+            // Remove the correct answer from the pool to ensure incorrect answers are unique and different
+            const incorrectPool = allPossibleValues.filter(val => val !== correctAnswer);
+
+            // Shuffle the incorrect pool
+            for (let i = incorrectPool.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [incorrectPool[i], incorrectPool[j]] = [incorrectPool[j], incorrectPool[i]];
+            }
+
+            const incorrectAnswers = [];
+            // Take the first two unique incorrect answers
+            // Ensure there are at least two unique incorrect answers available
+            if (incorrectPool.length >= 2) {
+                incorrectAnswers.push(incorrectPool[0]);
+                incorrectAnswers.push(incorrectPool[1]);
+            } else {
+                // Fallback for very small maxNumber where unique incorrect answers might be scarce
+                // This ensures we always have two incorrect answers, even if they might not be perfectly unique or within the ideal range
+                while (incorrectAnswers.length < 2) {
+                    let randomVal = Math.floor(Math.random() * (maxNumber * 2 + 1));
+                    if (randomVal !== correctAnswer && !incorrectAnswers.includes(randomVal)) {
+                        incorrectAnswers.push(randomVal);
+                    }
+                }
+            }
+
+            const positions = [100, 200, 300];
+            // Randomly assign correct answer to one of the positions
+            const correctPositionIndex = Math.floor(Math.random() * positions.length);
+            const correctPosition = positions[correctPositionIndex];
+            positions.splice(correctPositionIndex, 1); // Remove the chosen position
+
+            answers.push({ value: correctAnswer, x: correctPosition, y: 0, isCorrect: true, hit: false });
+
+            // Assign incorrect answers to remaining positions
+            incorrectAnswers.forEach((val, index) => {
+                answers.push({ value: val, x: positions[index], y: 0, isCorrect: false, hit: false });
+            });
+        }
+
+        function startNewQuestionCycle() {
+            question = _generateQuestionContent();
+            const num1 = parseInt(question.split(' + ')[0]);
+            const num2 = parseInt(question.split(' + ')[1]);
+            const correctAnswer = num1 + num2;
+
+            answers.length = 0; // Clear previous answers
+            generateAnswers(correctAnswer); // Generate answers immediately
+            answers.forEach(answer => answer.y = 0); // Reset answer positions
+
+            questionVisible = true;
+            questionY = 100; // Reset question position
+
+            const questionDisplayDuration = 2000; // Display question for 2 seconds
+
+            setTimeout(() => {
+                questionVisible = false;
+                questionStartTime = Date.now(); // Start timer for answer speed bonus
+            }, questionDisplayDuration);
+        }
+
+        function drawQuestion() {
+            if (questionVisible) {
+                ctx.font = '48px Arial';
+                ctx.fillStyle = '#fff';
+                ctx.fillText(question, canvas.width / 2 - ctx.measureText(question).width / 2, questionY);
+            }
+        }
+
+        function drawAnswers() {
+            answers.forEach(answer => {
+                ctx.beginPath();
+                ctx.arc(answer.x, answer.y, 30, 0, Math.PI * 2); // Bigger radius
+                if (answer.hit) {
+                    ctx.fillStyle = answer.isCorrect ? 'green' : 'red';
+                } else {
+                    ctx.fillStyle = '#fff'; // White color
+                }
+                ctx.fill();
+                ctx.fillStyle = '#000'; // Black text for white ball
+                ctx.font = '20px Arial'; // Adjust font size for bigger ball
+                ctx.fillText(answer.value, answer.x - ctx.measureText(answer.value).width / 2, answer.y + 7);
+            });
+        }
+
+        function drawStars() {
+            stars.forEach(star => {
+                ctx.fillStyle = `rgba(255, 255, 255, ${star.alpha})`;
+                ctx.beginPath();
+                ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
+                ctx.fill();
+            });
+        }
+
+        function drawShips() {
+            for (let i = 0; i < 3; i++) {
+                ships[i] = { x: 75 + i * 100, y: canvas.height - 50, width: 50, height: 50 };
+                ctx.drawImage(shipImg, ships[i].x, ships[i].y, ships[i].width, ships[i].height);
+            }
+        }
+
+        function drawBullets() {
+            bullets.forEach(bullet => {
+                ctx.drawImage(bulletImg, bullet.x, bullet.y, bullet.width, bullet.height);
+            });
+        }
+
+        function drawScore() {
+            ctx.font = '24px Arial';
+            ctx.fillStyle = '#fff';
+            ctx.fillText(`Score: ${score}`, 10, 30);
+        }
+
+        function drawMessage() {
+            if (message) {
+                ctx.font = '30px Arial';
+                ctx.fillStyle = '#f00';
+                ctx.fillText(message, 150, 300);
+            }
+        }
+
+        function drawParticles() {
+            particles.forEach(particle => {
+                ctx.fillStyle = particle.color;
+                ctx.fillRect(particle.x, particle.y, particle.size, particle.size);
+            });
+        }
+
+        function updateAnswers() {
+            answers.forEach(answer => {
+                answer.y += speed;
+                if (answer.y > canvas.height) {
+                    lives--;
+                    if (lives === 0) {
+                        resetGame(true);
+                    } else {
+                        resetGame();
+                    }
+                }
+            });
+            questionY += speed;
+        }
+
+        function updateBullets() {
+            bullets.forEach((bullet, index) => {
+                bullet.y -= 5;
+                if (bullet.y < 0) {
+                    bullets.splice(index, 1);
+                }
+            });
+            particles.forEach((particle, index) => {
+                particle.x += particle.vx;
+                particle.y += particle.vy;
+                particle.size *= 0.95;
+                if (particle.size < 0.5) {
+                    particles.splice(index, 1);
+                }
+            });
+        }
+
+        function checkCollisions() {
+            bullets.forEach((bullet, bulletIndex) => {
+                answers.forEach((answer, answerIndex) => {
+                    const distance = Math.sqrt((bullet.x - answer.x) ** 2 + (bullet.y - answer.y) ** 2);
+                    if (distance < 30) {
+                        answer.hit = true;
+                        beepSound.play();
+                        if (answer.isCorrect) {
+                            score++;
+                            correctAnswers++;
+                            if (correctAnswers % 10 === 0) {
+                                speed += 0.5;
+                            }
+                            hitSound.play();
+                            message = 'Correct!';
+                            setTimeout(() => {
+                                resetGame();
+                                message = '';
+                            }, 1000);
+                            const timeTaken = (Date.now() - questionStartTime) / 1000;
+                            let bonus = 0;
+                            if (timeTaken < 2) {
+                                bonus = 5;
+                            } else if (timeTaken < 5) {
+                                bonus = 3;
+                            } else if (timeTaken < 10) {
+                                bonus = 1;
+                            }
+                            score += bonus;
+                            message += ` +${bonus} bonus!`;
+                            for (let i = 0; i < 20; i++) {
+                                particles.push({
+                                    x: answer.x,
+                                    y: answer.y,
+                                    vx: (Math.random() - 0.5) * 10,
+                                    vy: (Math.random() - 0.5) * 10,
+                                    size: Math.random() * 10 + 5,
+                                    color: `hsl(${Math.random() * 360}, 100%, 50%)`
+                                });
+                            }
+                        } else {
+                            score--;
+                            lives--;
+                            if (lives === 0) {
+                                resetGame(true);
+                            } else {
+                                wrongSound.play();
+                                message = 'Wrong!';
+                                setTimeout(() => {
+                                    message = '';
+                                }, 1000);
+                            }
+                        }
+                        bullets.splice(bulletIndex, 1);
+                    }
+                });
+            });
+        }
+
+        function resetGame(gameOver = false) {
+            if (gameOver) {
+                if (score > highScore) {
+                    highScore = score;
+                }
+                score = 0;
+                lives = 3;
+                speed = 1;
+                maxNumber = 5;
+            }
+            startNewQuestionCycle();
+            questionY = 100;
+        }
+
+        canvas.addEventListener('click', (event) => {
+            if (gameState !== 'playing') return; // Only allow clicks if game is playing
+            const x = event.clientX - canvas.offsetLeft;
+            const y = event.clientY - canvas.offsetTop;
+            ships.forEach(ship => {
+                if (x > ship.x && x < ship.x + ship.width && y > ship.y && y < ship.y + ship.height) {
+                    bullets.push({ x: ship.x + ship.width / 2 - 5, y: ship.y, width: 10, height: 20 });
+                    fireSound.play();
+                    beepSound.play();
+                }
+            });
+        });
+
+        const startButton = document.getElementById('startButton');
+        startButton.addEventListener('click', () => {
+            gameState = 'playing';
+            startButton.style.display = 'none';
+            canvas.style.display = 'block';
+            backgroundMusic.play();
+            startNewQuestionCycle(); // Start the first question cycle
+            gameLoop();
+        });
+
+        function updateDifficulty() {
+            const elapsedTime = (Date.now() - startTime) / 1000;
+            if (elapsedTime > 270) {
+                maxNumber = 20;
+            } else if (elapsedTime > 180) {
+                maxNumber = 10;
+            } else if (elapsedTime > 90) {
+                maxNumber = 6;
+            }
+        }
+
+        function gameLoop() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawStars();
+            drawScore();
+            drawHighScore();
+            drawHearts();
+            drawMessage();
+
+            if (gameState === 'playing') {
+                updateDifficulty();
+                drawQuestion();
+                if (!questionVisible) {
+                    drawAnswers();
+                    drawShips();
+                    drawBullets();
+                    drawParticles();
+                    updateAnswers();
+                    updateBullets();
+                    checkCollisions();
+                }
+            }
+            requestAnimationFrame(gameLoop);
+        }
+
+        gameLoop();
+    </script>
+
+</body>
+</html>

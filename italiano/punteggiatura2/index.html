@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Esercizi di Punteggiatura Interattivi</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .feedback-correct {
+            color: #16a34a; background-color: #dcfce7; border-color: #4ade80;
+        }
+        .feedback-incorrect {
+            color: #dc2626; background-color: #fee2e2; border-color: #f87171;
+        }
+        .content-hidden { display: none !important; }
+
+        /* Stili per il Drag and Drop */
+        .sentence-builder {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            padding: 1rem;
+            background-color: #f9fafb;
+            border-radius: 0.75rem;
+            min-height: 80px;
+        }
+        .word-btn {
+            padding: 8px 12px;
+            background-color: white;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1.125rem;
+            transition: all 0.2s;
+            user-select: none;
+        }
+        .word-btn.capitalized {
+            font-weight: 600;
+            color: #4f46e5;
+            border-color: #818cf8;
+        }
+        .drop-zone {
+            width: 30px;
+            height: 40px;
+            border: 2px dashed #d1d5db;
+            border-radius: 6px;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .drop-zone.drag-over {
+            background-color: #e0e7ff;
+            border-color: #818cf8;
+        }
+        .punctuation-mark {
+            font-size: 1.5rem;
+            font-weight: bold;
+            cursor: grab;
+            padding: 4px 10px;
+            background-color: #e5e7eb;
+            border-radius: 6px;
+            user-select: none;
+        }
+        .punctuation-mark:active {
+            cursor: grabbing;
+        }
+        .punctuation-palette {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background-color: #f3f4f6;
+            border-radius: 0.75rem;
+        }
+        .dragging {
+            opacity: 0.5;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen p-4">
+
+    <div class="w-full max-w-3xl bg-white rounded-2xl shadow-lg p-6 md:p-8 text-center">
+        
+        <div id="header-section">
+            <h1 class="text-3xl md:text-4xl font-bold text-gray-800">Pratica la Punteggiatura</h1>
+            <p class="mt-2 text-gray-600">Clicca sulle parole per la maiuscola e trascina la punteggiatura.</p>
+            <div class="flex justify-around mt-4 text-lg">
+                <div id="level-container" class="font-semibold text-indigo-600">Livello: 1</div>
+                <div id="score-container" class="font-semibold text-blue-600">Punteggio: 0</div>
+            </div>
+        </div>
+
+        <div id="exercise-content">
+            <div class="mt-8">
+                <p class="text-gray-500 mb-2 text-sm font-medium">COSTRUISCI LA FRASE CORRETTA:</p>
+                <div id="sentence-builder" class="sentence-builder"></div>
+            </div>
+
+            <div id="punctuation-palette" class="punctuation-palette"></div>
+
+            <div class="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
+                <button id="check-btn" class="w-full sm:w-auto bg-blue-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-blue-700 transition-all duration-200 shadow-md">Controlla</button>
+            </div>
+
+            <div id="feedback-message" class="mt-6 p-4 rounded-lg text-center font-medium border" style="display: none;"></div>
+        </div>
+        
+        <div id="level-completion-screen" class="text-center" style="display: none;">
+             <h2 class="text-2xl font-bold text-green-600 mt-8">Livello Completato!</h2>
+             <p class="text-gray-700 mt-2">Ottimo lavoro, sei pronto per la prossima sfida?</p>
+             <button id="next-level-btn" class="mt-6 bg-green-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-green-700">Inizia Livello Successivo</button>
+        </div>
+
+        <div id="game-completion-screen" class="text-center" style="display: none;">
+             <h2 class="text-2xl font-bold text-green-600 mt-8">Complimenti!</h2>
+             <p class="text-gray-700 mt-2">Hai completato tutti gli esercizi.</p>
+             <p id="final-score" class="text-xl font-semibold mt-4"></p>
+             <button id="restart-btn" class="mt-6 bg-blue-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-blue-700">Ricomincia</button>
+        </div>
+
+    </div>
+
+    <script>
+        // --- DATABASE DELLE FRASI ---
+        const levels = [
+            {
+                levelName: "Livello 1: Le Basi",
+                sentences: [
+                    { unpunctuated: "dove vai marco", correct: "Dove vai, Marco?" },
+                    { unpunctuated: "mi chiamo elisa e vengo da roma", correct: "Mi chiamo Elisa e vengo da Roma." },
+                    { unpunctuated: "che bella giornata di sole", correct: "Che bella giornata di sole!" },
+                    { unpunctuated: "la capitale d italia è roma", correct: "La capitale d'Italia è Roma." },
+                    { unpunctuated: "c è un po di pane", correct: "C'è un po' di pane."}
+                ]
+            },
+            {
+                levelName: "Livello 2: Le Virgole",
+                sentences: [
+                    { unpunctuated: "per favore prendi il pane il latte e le uova", correct: "Per favore, prendi il pane, il latte e le uova." },
+                    { unpunctuated: "wow che sorpresa", correct: "Wow, che sorpresa!" },
+                    { unpunctuated: "ho comprato una mela una pera e una banana", correct: "Ho comprato una mela, una pera e una banana." },
+                    { unpunctuated: "attento quel cane morde", correct: "Attento, quel cane morde!" },
+                    { unpunctuated: "mario paolo e luigi sono amici", correct: "Mario, Paolo e Luigi sono amici." }
+                ]
+            },
+            {
+                levelName: "Livello 3: Frasi Complesse",
+                sentences: [
+                    { unpunctuated: "il mio gatto che è nero dorme sempre sul divano", correct: "Il mio gatto, che è nero, dorme sempre sul divano." },
+                    { unpunctuated: "se studi sarai promosso", correct: "Se studi, sarai promosso." },
+                    { unpunctuated: "l amica di laura è partita per l inghilterra", correct: "L'amica di Laura è partita per l'Inghilterra." },
+                    { unpunctuated: "non so se venire alla festa stasera", correct: "Non so se venire alla festa stasera." },
+                    { unpunctuated: "il libro sul tavolo è di giulia", correct: "Il libro sul tavolo è di Giulia." }
+                ]
+            }
+        ];
+        // --- MODIFICA: Aggiunto l'apostrofo ---
+        const punctuationMarks = [',', '.', '?', '!', "'"];
+
+        // --- RIFERIMENTI AGLI ELEMENTI DEL DOM ---
+        const sentenceBuilder = document.getElementById('sentence-builder');
+        const punctuationPalette = document.getElementById('punctuation-palette');
+        const checkBtn = document.getElementById('check-btn');
+        const feedbackMessage = document.getElementById('feedback-message');
+        const scoreContainer = document.getElementById('score-container');
+        const levelContainer = document.getElementById('level-container');
+        const headerSection = document.getElementById('header-section');
+        const exerciseContent = document.getElementById('exercise-content');
+        const levelCompletionScreen = document.getElementById('level-completion-screen');
+        const gameCompletionScreen = document.getElementById('game-completion-screen');
+        const finalScore = document.getElementById('final-score');
+        const restartBtn = document.getElementById('restart-btn');
+        const nextLevelBtn = document.getElementById('next-level-btn');
+
+        // --- VARIABILI DI STATO DELL'APP ---
+        let currentLevelIndex = 0;
+        let currentSentenceIndex = 0;
+        let score = 0;
+        let advanceTimeout;
+        let draggedElement = null;
+
+        // --- FUNZIONI DI GIOCO ---
+
+        function loadSentence() {
+            clearTimeout(advanceTimeout);
+            const currentLevel = levels[currentLevelIndex];
+
+            if (currentSentenceIndex >= currentLevel.sentences.length) {
+                if (currentLevelIndex < levels.length - 1) showLevelCompleteScreen();
+                else showGameCompletionScreen();
+                return;
+            }
+
+            sentenceBuilder.innerHTML = '';
+            punctuationPalette.innerHTML = '';
+            feedbackMessage.style.display = 'none';
+            checkBtn.disabled = false;
+
+            const words = currentLevel.sentences[currentSentenceIndex].unpunctuated.split(' ');
+            words.forEach((word) => {
+                const wordEl = document.createElement('div');
+                wordEl.textContent = word;
+                wordEl.classList.add('word-btn');
+                wordEl.addEventListener('click', toggleCapitalization);
+                sentenceBuilder.appendChild(wordEl);
+
+                const dropZone = document.createElement('div');
+                dropZone.classList.add('drop-zone');
+                sentenceBuilder.appendChild(dropZone);
+            });
+
+            punctuationMarks.forEach(mark => {
+                const markEl = document.createElement('div');
+                markEl.textContent = mark;
+                markEl.classList.add('punctuation-mark');
+                markEl.draggable = true;
+                markEl.id = `mark-${mark}`;
+                punctuationPalette.appendChild(markEl);
+            });
+            
+            addDragAndDropListeners();
+            updateUI();
+        }
+
+        // --- MODIFICA: Logica di controllo aggiornata ---
+        function checkAnswer() {
+            let tempString = "";
+            sentenceBuilder.childNodes.forEach(node => {
+                if (node.classList.contains('word-btn')) {
+                    tempString += node.textContent + " "; // Aggiunge parola e spazio
+                } else if (node.classList.contains('drop-zone') && node.hasChildNodes()) {
+                    tempString += node.firstChild.textContent + " "; // Aggiunge punteggiatura e spazio
+                }
+            });
+
+            // Pulisce la stringa per formattare correttamente la punteggiatura
+            const builtSentence = tempString
+                .replace(/ \' /g, "'")      // Gestisce l'apostrofo: " d ' italia " -> "d'italia"
+                .replace(/ \,/g, ",")       // Gestisce la virgola: " vai , " -> "vai,"
+                .replace(/ \./g, ".")       // Gestisce il punto: " roma . " -> "roma."
+                .replace(/ \?/g, "?")       // Gestisce il punto interrogativo: " marco ? " -> "marco?"
+                .replace(/ \!/g, "!")       // Gestisce il punto esclamativo: " sole ! " -> "sole!"
+                .replace(/\s+/g, ' ')      // Collassa spazi multipli
+                .trim();                    // Rimuove spazi iniziali/finali
+
+            const correctAnswer = levels[currentLevelIndex].sentences[currentSentenceIndex].correct;
+
+            feedbackMessage.style.display = 'block';
+            checkBtn.disabled = true;
+
+            // Confronto case-insensitive
+            if (builtSentence.toLowerCase() === correctAnswer.toLowerCase()) {
+                score++;
+                feedbackMessage.textContent = 'Corretto! Ottimo lavoro!';
+                feedbackMessage.className = 'mt-6 p-4 rounded-lg text-center font-medium border feedback-correct';
+                advanceTimeout = setTimeout(() => {
+                    currentSentenceIndex++;
+                    loadSentence();
+                }, 1500);
+            } else {
+                feedbackMessage.innerHTML = `Sbagliato. <br> La risposta corretta è: <strong>"${correctAnswer}"</strong>`;
+                feedbackMessage.className = 'mt-6 p-4 rounded-lg text-center font-medium border feedback-incorrect';
+                advanceTimeout = setTimeout(() => {
+                    currentSentenceIndex++;
+                    loadSentence();
+                }, 3500);
+            }
+            updateUI();
+        }
+
+        // --- FUNZIONI DI SUPPORTO ---
+
+        function toggleCapitalization(e) {
+            const wordEl = e.target;
+            const word = wordEl.textContent;
+            if (wordEl.classList.contains('capitalized')) {
+                wordEl.textContent = word.charAt(0).toLowerCase() + word.slice(1);
+                wordEl.classList.remove('capitalized');
+            } else {
+                wordEl.textContent = word.charAt(0).toUpperCase() + word.slice(1);
+                wordEl.classList.add('capitalized');
+            }
+        }
+
+        function updateUI() {
+            scoreContainer.textContent = `Punteggio: ${score}`;
+            levelContainer.textContent = `Livello: ${currentLevelIndex + 1}`;
+        }
+        
+        function showLevelCompleteScreen() {
+            headerSection.classList.add('content-hidden');
+            exerciseContent.classList.add('content-hidden');
+            levelCompletionScreen.style.display = 'block';
+        }
+
+        function showGameCompletionScreen() {
+            headerSection.classList.add('content-hidden');
+            exerciseContent.classList.add('content-hidden');
+            levelCompletionScreen.style.display = 'none';
+            const totalSentences = levels.reduce((acc, level) => acc + level.sentences.length, 0);
+            finalScore.textContent = `Punteggio Finale: ${score} su ${totalSentences}`;
+            gameCompletionScreen.style.display = 'block';
+        }
+
+        function startNextLevel() {
+            currentLevelIndex++;
+            currentSentenceIndex = 0;
+            levelCompletionScreen.style.display = 'none';
+            headerSection.classList.remove('content-hidden');
+            exerciseContent.classList.remove('content-hidden');
+            loadSentence();
+        }
+
+        function restartApp() {
+            currentLevelIndex = 0;
+            currentSentenceIndex = 0;
+            score = 0;
+            gameCompletionScreen.style.display = 'none';
+            headerSection.classList.remove('content-hidden');
+            exerciseContent.classList.remove('content-hidden');
+            loadSentence();
+        }
+
+        // --- GESTIONE DRAG & DROP ---
+        
+        function addDragAndDropListeners() {
+            document.querySelectorAll('.punctuation-mark').forEach(mark => {
+                mark.addEventListener('dragstart', handleDragStart);
+                mark.addEventListener('dragend', handleDragEnd);
+            });
+
+            document.querySelectorAll('.drop-zone').forEach(zone => {
+                zone.addEventListener('dragover', handleDragOver);
+                zone.addEventListener('dragenter', handleDragEnter);
+                zone.addEventListener('dragleave', handleDragLeave);
+                zone.addEventListener('drop', handleDrop);
+            });
+        }
+
+        function handleDragStart(e) {
+            draggedElement = e.target;
+            setTimeout(() => e.target.classList.add('dragging'), 0);
+        }
+
+        function handleDragEnd(e) {
+            e.target.classList.remove('dragging');
+        }
+
+        function handleDragOver(e) {
+            e.preventDefault();
+        }
+
+        function handleDragEnter(e) {
+            if (e.target.classList.contains('drop-zone')) {
+                e.target.classList.add('drag-over');
+            }
+        }
+
+        function handleDragLeave(e) {
+            if (e.target.classList.contains('drop-zone')) {
+                e.target.classList.remove('drag-over');
+            }
+        }
+
+        function handleDrop(e) {
+            e.preventDefault();
+            const dropZone = e.target.closest('.drop-zone');
+            if (dropZone) {
+                dropZone.classList.remove('drag-over');
+                if (dropZone.hasChildNodes()) {
+                    punctuationPalette.appendChild(dropZone.firstChild);
+                }
+                const newMark = draggedElement.cloneNode(true);
+                newMark.classList.remove('dragging');
+                newMark.id = '';
+                dropZone.innerHTML = '';
+                dropZone.appendChild(newMark);
+            }
+        }
+
+        // --- EVENT LISTENERS GLOBALI ---
+        checkBtn.addEventListener('click', checkAnswer);
+        nextLevelBtn.addEventListener('click', startNextLevel);
+        restartBtn.addEventListener('click', restartApp);
+
+        // --- INIZIALIZZAZIONE ---
+        loadSentence();
+    </script>
+</body>
+</html>

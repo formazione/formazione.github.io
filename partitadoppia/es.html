@@ -1,0 +1,18 @@
+<h3>Exercise 1</h3>
+<p>Acquisto di un computer a 1000 € + IVA 22%</p>
+<table border=1 style="width:300">
+<td colspan=2><center>Merci C/acquisti</center><tr>
+<td  style="width:150">
+<input type="text" id="dare1" style="width:150" value=0></td><td style="width:150">
+<input type="text" id="avere1" style="width:150" value=0></td>
+</table><br><br> <table border=1 style="width:300">
+<td colspan=2><center>IVA a ns Credito</center><tr>
+<td  style="width:150">
+<input type="text" id="dare2" style="width:150" value=0></td><td style="width:150">
+<input type="text" id="avere2" style="width:150" value=0></td>
+</table><br><br> <table border=1 style="width:300">
+<td colspan=2><center>Debiti v/fornitori</center><tr>
+<td  style="width:150">
+<input type="text" id="dare3" style="width:150" value=0></td><td style="width:150">
+<input type="text" id="avere3" style="width:150" value=0></td>
+</table><br><br> <button onclick="if (dare1.value + ' ' + avere1.value + ' | ' + dare2.value + ' ' + avere2.value + ' | ' + dare3.value + ' ' + avere3.value + ' |'=='1000 0 | 220 0 | 0 1220 '){ver1.value='Correct'}else{ver1.value='Incorrect'};console.log(dare1.value + ' ' + avere1.value + ' | ' + dare2.value + ' ' + avere2.value + ' | ' + dare3.value + ' ' + avere3.value + ' |');console.log('1000 0 | 220 0 | 0 1220 '');">Verify Answers</button><input id='ver1' type='text'>
