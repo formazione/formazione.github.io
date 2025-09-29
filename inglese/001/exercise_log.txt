@@ -1,0 +1,6 @@
+currency.html,2,2025-09-14 13:42:54
+index.html.html,3,2025-09-15 20:29:28
+animals2.html,3,2025-09-14 13:42:50
+english1.html,2,2025-09-14 13:43:05
+animals.html,2,2025-09-14 13:43:10
+english1b.html,1,2025-09-14 13:43:08
