@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Futur Simple - Quiz Gamificato</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; background-color: #f3f4f6; transition: background-color 0.4s ease; }
+    .option-button { transition: all 0.15s ease; }
+    .option-button:hover:not(:disabled) { transform: scale(1.02); }
+    .correct { background-color: #10b981 !important; color: white !important; }
+    .incorrect { background-color: #ef4444 !important; color: white !important; }
+    .animate-star { animation: bounce 0.8s ease; }
+    @keyframes bounce { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.5); } }
+  </style>
+</head>
+<body class="p-4 flex justify-center items-start min-h-screen">
+  <div class="quiz-container w-full max-w-2xl bg-white p-6 md:p-10 shadow-2xl rounded-xl mt-8">
+    <h1 class="text-3xl md:text-4xl font-extrabold text-center text-indigo-700 mb-6 border-b-4 border-indigo-200 pb-2">
+      Futur Simple (Quiz 🇫🇷)
+    </h1>
+
+    <div class="bg-indigo-50 p-4 rounded-lg mb-6 border-l-4 border-indigo-400">
+      <p class="text-sm font-semibold text-indigo-700 mb-1">Record Salvati Localmente</p>
+      <div class="flex justify-between text-sm text-gray-600">
+        <p>Punteggio Migliore: <span id="high-score" class="font-bold text-indigo-600">0 punti</span></p>
+        <p>Tempo Migliore: <span id="best-time" class="font-bold text-indigo-600">N/A</span></p>
+      </div>
+    </div>
+
+    <div id="game-area">
+      <div class="flex justify-between items-center text-lg font-semibold mb-4 text-gray-700">
+        <div id="question-counter">Domanda 1 / 10</div>
+        <div id="timer" class="text-indigo-600">Tempo: 0.00s</div>
+        <div id="current-score" class="text-green-600 font-bold">Punteggio: 0</div>
+        <div id="error-counter" class="text-red-600 font-bold">Errori: 0/3</div>
+      </div>
+
+      <div id="question-card" class="bg-indigo-100 p-6 rounded-xl shadow-inner mb-6">
+        <p id="question-text" class="text-xl font-bold text-indigo-800"></p>
+      </div>
+
+      <div id="options-container" class="space-y-3"></div>
+    </div>
+
+    <div id="results-area" class="hidden text-center p-8 bg-green-50 rounded-xl mt-6 shadow-lg">
+      <h2 class="text-3xl font-bold text-green-700 mb-4">Quiz Completato!</h2>
+      <p class="text-xl text-gray-700">Punteggio finale: <span id="final-score" class="font-extrabold text-green-800">0 punti</span></p>
+      <p class="text-xl text-gray-700 mb-6">Tempo totale: <span id="final-time" class="font-extrabold text-green-800">0.00s</span></p>
+      <button onclick="startQuiz()" class="bg-indigo-600 text-white px-6 py-3 rounded-lg shadow-md hover:bg-indigo-700 font-bold transition duration-200">Riprova</button>
+    </div>
+  </div>
+
+  <div id="effect" class="fixed inset-0 flex justify-center items-center pointer-events-none"></div>
+
+  <script>
+const quizData = [
+    // --- DESINENZE FONDAMENTALI (1-5) ---
+    { q: "Quale desinenza è corretta per la prima persona singolare (Je) del Futur Simple?", options: ["-a", "-ai", "-ez", "-ons"], correct: "-ai" },
+    { q: "Quale desinenza è corretta per la seconda persona singolare (Tu)?", options: ["-as", "-ai", "-a", "-ons"], correct: "-as" },
+    { q: "Quale desinenza è corretta per la terza persona singolare (Il/Elle/On)?", options: ["-es", "-a", "-ent", "-ons"], correct: "-a" },
+    { q: "Quale desinenza è corretta per la prima persona plurale (Nous)?", options: ["-ez", "-ai", "-ons", "-ent"], correct: "-ons" },
+    { q: "Quale desinenza è corretta per la seconda persona plurale (Vous)?", options: ["-ons", "-ent", "-ez", "-as"], correct: "-ez" },
+    
+    // --- VERBI REGOLARI IN -ER (6-15) ---
+    { q: "Coniuga 'parler' (parlare) alla prima persona singolare (Je).", options: ["Je parle", "Je parlerai", "Je parlai", "J'ai parlé"], correct: "Je parlerai" },
+    { q: "Coniuga 'chanter' (cantare) alla seconda persona singolare (Tu).", options: ["Tu chantes", "Tu chanterez", "Tu chanteras", "Tu chanterai"], correct: "Tu chanteras" },
+    { q: "Coniuga 'jouer' (giocare) alla terza persona singolare (Elle).", options: ["Elle joue", "Elle joura", "Elle jouera", "Elle jouerai"], correct: "Elle jouera" },
+    { q: "Coniuga 'regarder' (guardare) alla prima persona plurale (Nous).", options: ["Nous regardons", "Nous regarderons", "Nous regarderions", "Nous regardrai"], correct: "Nous regarderons" },
+    { q: "Coniuga 'aimer' (amare) alla seconda persona plurale (Vous).", options: ["Vous aimerez", "Vous aimez", "Vous aimerons", "Vous aimriez"], correct: "Vous aimerez" },
+    { q: "Coniuga 'travailler' (lavorare) alla terza persona plurale (Ils).", options: ["Ils travaillent", "Ils travailleraient", "Ils travailleront", "Ils travaillerons"], correct: "Ils travailleront" },
+    { q: "Coniuga 'danser' (ballare) alla prima persona singolare (Je).", options: ["Je danserai", "Je danse", "Je danserons", "Je dansrai"], correct: "Je danserai" },
+    { q: "Coniuga 'écouter' (ascoltare) alla terza persona singolare (On).", options: ["On écoutera", "On écoute", "On écoutra", "On écouteras"], correct: "On écoutera" },
+    { q: "Coniuga 'fermer' (chiudere) alla prima persona plurale (Nous).", options: ["Nous fermerons", "Nous fermons", "Nous fermez", "Nous fermerez"], correct: "Nous fermerons" },
+    { q: "Coniuga 'oublier' (dimenticare) alla seconda persona plurale (Vous).", options: ["Vous oublierez", "Vous oubliez", "Vous oublierons", "Vous oublieront"], correct: "Vous oublierez" },
+
+    // --- VERBI REGOLARI IN -IR (16-25) ---
+    { q: "Coniuga 'finir' (finire) alla prima persona singolare (Je).", options: ["Je finis", "Je finirai", "Je finira", "Je finisrai"], correct: "Je finirai" },
+    { q: "Coniuga 'choisir' (scegliere) alla seconda persona singolare (Tu).", options: ["Tu choisis", "Tu choisirai", "Tu choisiras", "Tu choisirons"], correct: "Tu choisiras" },
+    { q: "Coniuga 'punir' (punire) alla terza persona singolare (Elle).", options: ["Elle punit", "Elle punira", "Elle punirai", "Elle punire"], correct: "Elle punira" },
+    { q: "Coniuga 'bâtir' (costruire) alla prima persona plurale (Nous).", options: ["Nous bâtirons", "Nous bâtiss", "Nous bâtirons", "Nous bâtirez"], correct: "Nous bâtirons" },
+    { q: "Coniuga 'réussir' (riuscire) alla seconda persona plurale (Vous).", options: ["Vous réussis", "Vous réussirez", "Vous réussirons", "Vous réussiras"], correct: "Vous réussirez" },
+    { q: "Coniuga 'sortir' (uscire) alla terza persona plurale (Elles).", options: ["Elles sortent", "Elles sortirons", "Elles sortiront", "Elles sortez"], correct: "Elles sortiront" },
+    { q: "Coniuga 'grandir' (crescere) alla prima persona singolare (Je).", options: ["Je grandis", "Je grandirai", "Je grandira", "Je grandire"], correct: "Je grandirai" },
+    { q: "Coniuga 'rougir' (arrossire) alla terza persona singolare (On).", options: ["On rougis", "On rougera", "On rougira", "On rougirai"], correct: "On rougira" },
+    { q: "Coniuga 'réfléchir' (riflettere) alla seconda persona plurale (Vous).", options: ["Vous réfléchis", "Vous réfléchirez", "Vous réfléchirons", "Vous réfléchiez"], correct: "Vous réfléchirez" },
+    { q: "Coniuga 'saisir' (afferrare) alla prima persona plurale (Nous).", options: ["Nous saisissons", "Nous saisirez", "Nous saisirons", "Nous saisirions"], correct: "Nous saisirons" },
+
+    // --- VERBI REGOLARI IN -RE (26-35) ---
+    { q: "Qual è il radicale per i verbi regolari in -RE (es. 'vendre')?", options: ["L'infinito completo", "Infinito senza la 're'", "Infinito senza la 'e' finale", "Il radicale del presente"], correct: "Infinito senza la 'e' finale" },
+    { q: "Coniuga 'vendre' (vendere) alla prima persona singolare (Je).", options: ["Je vendrai", "Je venderai", "Je vends", "Je vendrai"], correct: "Je vendrai" },
+    { q: "Coniuga 'perdre' (perdere) alla seconda persona singolare (Tu).", options: ["Tu perds", "Tu perdrai", "Tu perdras", "Tu perdrons"], correct: "Tu perdras" },
+    { q: "Coniuga 'répondre' (rispondere) alla terza persona singolare (Il).", options: ["Il répondra", "Il répondrai", "Il répond", "Il répondons"], correct: "Il répondra" },
+    { q: "Coniuga 'attendre' (aspettare) alla prima persona plurale (Nous).", options: ["Nous attendons", "Nous attendrez", "Nous attendrons", "Nous attendrions"], correct: "Nous attendrons" },
+    { q: "Coniuga 'entendre' (sentire) alla seconda persona plurale (Vous).", options: ["Vous entendrez", "Vous entendez", "Vous entendrons", "Vous entendras"], correct: "Vous entendrez" },
+    { q: "Coniuga 'lire' (leggere) alla terza persona plurale (Elles).", options: ["Elles liront", "Elles lisent", "Elles lireront", "Elles lirez"], correct: "Elles liront" },
+    { q: "Coniuga 'mettre' (mettere) alla prima persona singolare (Je).", options: ["Je mets", "Je mettrai", "Je mettrons", "Je metrerai"], correct: "Je mettrai" },
+    { q: "Coniuga 'prendre' (prendere) alla terza persona singolare (On).", options: ["On prend", "On prendra", "On prendrez", "On prenderai"], correct: "On prendra" },
+    { q: "Qual è la forma corretta di 'Vous' del verbo 'descendre' (scendere)?", options: ["Vous descendez", "Vous descendrez", "Vous descendrons", "Vous descendrir"], correct: "Vous descendrez" },
+
+    // --- VERBI IRREGOLARI CHIAVE (36-50) ---
+    { q: "Qual è il radicale irregolare di 'ÊTRE' (essere)?", options: ["ser-", "seron-", "êtr-", "serai-"], correct: "ser-" },
+    { q: "Coniuga 'être' (essere) alla prima persona singolare (Je).", options: ["Je suis", "J'ai été", "Je serai", "Je serons"], correct: "Je serai" },
+    { q: "Coniuga 'être' (essere) alla terza persona plurale (Ils).", options: ["Ils sont", "Ils serons", "Ils seront", "Ils serais"], correct: "Ils seront" },
+    { q: "Qual è il radicale irregolare di 'AVOIR' (avere)?", options: ["av-", "aur-", "ai-", "avoir-"], correct: "aur-" },
+    { q: "Coniuga 'avoir' (avere) alla seconda persona singolare (Tu).", options: ["Tu as", "Tu aurai", "Tu auras", "Tu aurons"], correct: "Tu auras" },
+    { q: "Coniuga 'avoir' (avere) alla prima persona plurale (Nous).", options: ["Nous aurons", "Nous avons", "Nous aurez", "Nous averons"], correct: "Nous aurons" },
+    { q: "Qual è il radicale irregolare di 'ALLER' (andare)?", options: ["all-", "ir-", "va-", "allons-"], correct: "ir-" },
+    { q: "Coniuga 'aller' (andare) alla terza persona singolare (Elle).", options: ["Elle va", "Elle irai", "Elle ira", "Elle allera"], correct: "Elle ira" },
+    { q: "Coniuga 'aller' (andare) alla seconda persona plurale (Vous).", options: ["Vous allez", "Vous irez", "Vous irons", "Vous allez"], correct: "Vous irez" },
+    { q: "Qual è il radicale irregolare di 'FAIRE' (fare)?", options: ["fai-", "fer-", "fair-", "fér-"], correct: "fer-" },
+    { q: "Coniuga 'faire' (fare) alla prima persona singolare (Je).", options: ["Je ferai", "Je fais", "Je fairai", "Je ferons"], correct: "Je ferai" },
+    { q: "Coniuga 'faire' (fare) alla terza persona plurale (Elles).", options: ["Elles font", "Elles feront", "Elles ferons", "Elles fairont"], correct: "Elles feront" },
+    { q: "Qual è il radicale irregolare di 'VENIR' (venire)?", options: ["ven-", "viendr-", "vener-", "vien-"], correct: "viendr-" },
+    { q: "Coniuga 'venir' (venire) alla seconda persona singolare (Tu).", options: ["Tu viens", "Tu viendras", "Tu viendrai", "Tu viendrez"], correct: "Tu viendras" },
+    { q: "Coniuga 'venir' (venire) alla prima persona plurale (Nous).", options: ["Nous venons", "Nous viendrons", "Nous viendrez", "Nous venirons"], correct: "Nous viendrons" },
+
+    // --- VERBI IRREGOLARI -DR (51-60) ---
+    { q: "Qual è il radicale irregolare di 'VOULOIR' (volere)?", options: ["voul-", "voudr-", "vouler-", "voulons-"], correct: "voudr-" },
+    { q: "Coniuga 'vouloir' (volere) alla prima persona singolare (Je).", options: ["Je veux", "Je voudrai", "Je voudras", "Je voulrai"], correct: "Je voudrai" },
+    { q: "Coniuga 'vouloir' (volere) alla terza persona plurale (Ils).", options: ["Ils veulent", "Ils voudront", "Ils voulront", "Ils voudrons"], correct: "Ils voudront" },
+    { q: "Qual è il radicale irregolare di 'DEVOIR' (dovere)?", options: ["dev-", "devoir-", "devr-", "doiv-"], correct: "devr-" },
+    { q: "Coniuga 'devoir' (dovere) alla seconda persona singolare (Tu).", options: ["Tu devras", "Tu dois", "Tu devrai", "Tu devrons"], correct: "Tu devras" },
+    { q: "Coniuga 'devoir' (dovere) alla terza persona singolare (On).", options: ["On doit", "On devra", "On devrons", "On devras"], correct: "On devra" },
+    { q: "Qual è la coniugazione corretta di 'Nous' del verbo 'POUVOIR' (potere)?", options: ["Nous pouvons", "Nous pourrons", "Nous pourrons", "Nous pouvrez"], correct: "Nous pourrons" },
+    { q: "Coniuga 'pouvoir' (potere) alla seconda persona plurale (Vous).", options: ["Vous pouvez", "Vous pouvrez", "Vous pourrons", "Vous pourrez"], correct: "Vous pourrez" },
+    { q: "Qual è il radicale irregolare di 'VALOIR' (valere)? (Simile a Vouloir)", options: ["val-", "valoir-", "vaudr-", "voul-"], correct: "vaudr-" },
+    { q: "Coniuga 'falloir' (essere necessario) alla terza persona singolare (Il).", options: ["Il faut", "Il faudrons", "Il faudra", "Il fallera"], correct: "Il faudra" }, // Note: Il faut only
+
+    // --- VERBI IRREGOLARI -RR (61-70) ---
+    { q: "Qual è il radicale irregolare di 'VOIR' (vedere)?", options: ["voi-", "verr-", "voir-", "verons-"], correct: "verr-" },
+    { q: "Coniuga 'voir' (vedere) alla terza persona singolare (Elle).", options: ["Elle voit", "Elle verra", "Elle voirra", "Elle verrons"], correct: "Elle verra" },
+    { q: "Coniuga 'voir' (vedere) alla prima persona plurale (Nous).", options: ["Nous verrons", "Nous voyons", "Nous voirons", "Nous verrai"], correct: "Nous verrons" },
+    { q: "Qual è il radicale irregolare di 'SAVOIR' (sapere)?", options: ["sav-", "saur-", "savoir-", "savons-"], correct: "saur-" },
+    { q: "Coniuga 'savoir' (sapere) alla prima persona singolare (Je).", options: ["Je sais", "Je saurai", "Je savrai", "Je saurons"], correct: "Je saurai" },
+    { q: "Coniuga 'savoir' (sapere) alla terza persona plurale (Ils).", options: ["Ils savent", "Ils sauront", "Ils savront", "Ils saurions"], correct: "Ils sauront" },
+    { q: "Qual è il radicale irregolare di 'ENVOYER' (inviare)?", options: ["envoy-", "enverr-", "envier-", "envrr-"], correct: "enverr-" },
+    { q: "Coniuga 'envoyer' (inviare) alla terza persona singolare (On).", options: ["On envoie", "On envoyerai", "On enverra", "On enverrai"], correct: "On enverra" },
+    { q: "Coniuga 'envoyer' (inviare) alla seconda persona plurale (Vous).", options: ["Vous envoyez", "Vous enverrez", "Vous enverrons", "Vous envoyriez"], correct: "Vous enverrez" },
+    { q: "Qual è il radicale irregolare di 'ASSEOIR' (sedersi)?", options: ["assoir-", "asserr-", "assier-", "assiér-"], correct: "assiér-" }, // Irregular: Je m'assiérai
+
+    // --- IRREGOLARI MISTI E CONDIZIONALE (71-80) ---
+    { q: "Qual è il radicale irregolare di 'COURIR' (correre)?", options: ["cour-", "courr-", "courir-", "courons-"], correct: "courir-" }, // Regular al futuro
+    { q: "Coniuga 'mourir' (morire) alla prima persona singolare (Je).", options: ["Je meurs", "Je mourrai", "Je mourirai", "Je meurerai"], correct: "Je mourrai" }, // Irregular: mourr-
+    { q: "Qual è il radicale irregolare di 'CUEILLIR' (raccogliere)?", options: ["cueill-", "cueiller-", "cueillir-", "cueillerai-"], correct: "cueiller-" }, // CUEILLIR $\rightarrow$ CUEILLER + desinenze
+    { q: "Coniuga 'tenir' (tenere) alla terza persona plurale (Elles).", options: ["Elles tiennent", "Elles tiendront", "Elles tenront", "Elles tiendrons"], correct: "Elles tiendront" }, // tenir $\rightarrow$ tiendr-
+    { q: "Coniuga 'appeler' (chiamare) alla prima persona singolare (J').", options: ["J'appellerai", "J'appelle", "J'appelerai", "J'appellerai"], correct: "J'appellerai" }, // Raddoppio 'l'
+    { q: "Coniuga 'jeter' (lanciare) alla seconda persona singolare (Tu).", options: ["Tu jetteras", "Tu jetons", "Tu jeteras", "Tu jettes"], correct: "Tu jetteras" }, // Raddoppio 't'
+    { q: "Quale desinenza è la stessa per il Futur Simple e per il Condizionale Presente?", options: ["-ai", "-ons", "-a", "Nessuna"], correct: "Nessuna" },
+    { q: "Se la coniugazione è 'Nous viendrions', a quale tempo appartiene?", options: ["Futur Simple", "Passé Composé", "Conditionnel Présent", "Imparfait"], correct: "Conditionnel Présent" },
+    { q: "Il radicale 'saur-' è usato per 'Nous saurons' (Futur Simple) e per...", options: ["Nous saurions (Cond. Pres.)", "Nous savons (Présent)", "Nous savrons (Futur Simple)", "Nous saurions (Passé Simple)"], correct: "Nous saurions (Cond. Pres.)" },
+    { q: "Quale verbo irregolare usa il radicale 'verr-'?", options: ["Venir", "Vouloir", "Voir", "Vivre"], correct: "Voir" },
+
+    // --- IRREGOLARI E CASI SPECIALI MISTI (81-100) ---
+    { q: "Coniuga 'pouvoir' (potere) alla terza persona plurale (Elles).", options: ["Elles peuvent", "Elles pourront", "Elles pourrons", "Elles pouvraient"], correct: "Elles pourront" },
+    { q: "Qual è la forma corretta di 'Nous' del verbo 'recevoir' (ricevere)?", options: ["Nous recevrons", "Nous recevons", "Nous receverons", "Nous recevons"], correct: "Nous recevrons" },
+    { q: "Coniuga 'devoir' (dovere) alla prima persona singolare (Je).", options: ["Je dois", "Je devrai", "Je devras", "Je devrons"], correct: "Je devrai" },
+    { q: "Qual è la forma corretta di 'Tu' del verbo 'courir' (correre)?", options: ["Tu cours", "Tu courras", "Tu courirais", "Tu courrons"], correct: "Tu courras" }, // Regular
+    { q: "Coniuga 'vouloir' (volere) alla seconda persona plurale (Vous).", options: ["Vous voulez", "Vous voulerez", "Vous voudriez", "Vous voudrez"], correct: "Vous voudrez" },
+    { q: "Qual è il radicale irregolare di 'RECEVOIR' (ricevere)?", options: ["recev-", "recevr-", "reçoiv-", "recr-"], correct: "recevr-" },
+    { q: "Coniuga 'savoir' (sapere) alla seconda persona plurale (Vous).", options: ["Vous savez", "Vous saurez", "Vous saurons", "Vous savrez"], correct: "Vous saurez" },
+    { q: "Qual è la forma corretta di 'Je' del verbo 'dire' (dire)?", options: ["Je dis", "Je dirons", "Je dirai", "Je dirais"], correct: "Je dirai" }, // Regolare in -RE
+    { q: "Coniuga 'dire' (dire) alla terza persona plurale (Ils).", options: ["Ils dirons", "Ils disent", "Ils diront", "Ils dirent"], correct: "Ils diront" },
+    { q: "Qual è il radicale irregolare di 'MOURIR' (morire)?", options: ["mourir-", "meur-", "mourr-", "mouri-"], correct: "mourr-" },
+    { q: "Coniuga 'venir' (venire) alla terza persona singolare (Il).", options: ["Il vient", "Il venira", "Il viendra", "Il viendrai"], correct: "Il viendra" },
+    { q: "Qual è la forma corretta di 'Vous' del verbo 'croire' (credere)?", options: ["Vous croyez", "Vous croyerez", "Vous croirons", "Vous croiriez"], correct: "Vous croyerez" }, // Regolare in -RE $\rightarrow$ croyr-
+    { q: "Coniuga 'recevoir' (ricevere) alla prima persona singolare (Je).", options: ["Je reçois", "Je recevrai", "Je recevrons", "Je recevrai"], correct: "Je recevrai" },
+    { q: "Qual è la forma corretta di 'Nous' del verbo 'vivre' (vivere)?", options: ["Nous vivons", "Nous vivrons", "Nous vivrez", "Nous vivrez"], correct: "Nous vivrons" }, // Regolare in -RE $\rightarrow$ vivr-
+    { q: "Coniuga 'voir' (vedere) alla terza persona plurale (Ils).", options: ["Ils verront", "Ils voient", "Ils verrons", "Ils voiront"], correct: "Ils verront" },
+    { q: "Qual è il radicale irregolare di 'COURIR' (correre)?", options: ["cour-", "courr-", "courir-", "courons-"], correct: "courir-" },
+    { q: "Coniuga 'apprendre' (imparare) alla seconda persona singolare (Tu).", options: ["Tu apprends", "Tu apprendras", "Tu apprendra", "Tu apprendrai"], correct: "Tu apprendras" }, // Regolare in -RE $\rightarrow$ apprendr-
+    { q: "Qual è la forma corretta di 'Je' del verbo 'peindre' (dipingere)?", options: ["Je peins", "Je peindrons", "Je peindrai", "Je peindras"], correct: "Je peindrai" }, // Regolare in -RE $\rightarrow$ peindr-
+    { q: "Quale verbo irregolare usa il radicale 'devr-'?", options: ["Dormir", "Devoir", "Divertir", "Dire"], correct: "Devoir" },
+    { q: "La desinenza del Futur Simple per 'Nous' è la stessa del presente indicativo di 'avoir'?", options: ["Sì", "No", "Solo per i verbi in -ER", "Dipende dal radicale"], correct: "Sì" }
+];
+
+
+    let currentIndex = 0, score = 0, errors = 0, startTime, timer;
+    let highScore = parseInt(localStorage.getItem('fs_high')) || 0;
+    let bestTime = parseFloat(localStorage.getItem('fs_best')) || Infinity;
+
+    const qText = document.getElementById('question-text');
+    const opts = document.getElementById('options-container');
+    const qCount = document.getElementById('question-counter');
+    const timerDisplay = document.getElementById('timer');
+    const scoreDisplay = document.getElementById('current-score');
+    const errDisplay = document.getElementById('error-counter');
+    const results = document.getElementById('results-area');
+    const finalScore = document.getElementById('final-score');
+    const finalTime = document.getElementById('final-time');
+    const effect = document.getElementById('effect');
+    const hs = document.getElementById('high-score');
+    const bt = document.getElementById('best-time');
+
+function startQuiz() {
+  document.body.style.backgroundColor = '#f3f4f6';
+  currentIndex = 0; score = 0; errors = 0;
+  quizData.sort(() => Math.random() - 0.5); // 🔹 Ordine casuale delle domande
+  qText.textContent = ''; opts.innerHTML = '';
+  results.classList.add('hidden');
+  document.getElementById('game-area').classList.remove('hidden');
+  startTime = Date.now();
+  timer = setInterval(() => timerDisplay.textContent = `Tempo: ${((Date.now() - startTime) / 1000).toFixed(2)}s`, 100);
+  nextQuestion();
+  updateScoreUI();
+}
+
+
+    function nextQuestion() {
+      if (currentIndex >= quizData.length) return endQuiz();
+
+      if (currentIndex > 0 && currentIndex % 3 === 0) {
+        speak("Livello completato!", 'it-IT');
+        document.body.style.backgroundColor = `hsl(${Math.random()*360},70%,90%)`;
+      }
+
+      const q = quizData[currentIndex];
+      qCount.textContent = `Domanda ${currentIndex + 1} / ${quizData.length}`;
+      qText.textContent = q.q;
+
+      const match = q.q.match(/'(.*?)'/);
+      if (match && match[1]) speak(match[1], 'fr-FR');
+
+      opts.innerHTML = '';
+      q.options.forEach(opt => {
+        const btn = document.createElement('button');
+        btn.textContent = opt;
+        btn.className = 'option-button w-full text-left bg-indigo-50 hover:bg-indigo-200 text-indigo-900 font-semibold py-3 px-4 rounded-lg shadow-md';
+        btn.onclick = () => checkAnswer(btn, q);
+        opts.appendChild(btn);
+      });
+    }
+
+    function checkAnswer(btn, q) {
+      const selected = btn.textContent;
+      const timeTaken = (Date.now() - startTime) / 1000;
+      const correct = selected === q.correct;
+
+      opts.querySelectorAll('button').forEach(b => {
+        b.disabled = true;
+        if (b.textContent === q.correct) b.classList.add('correct');
+        else if (b === btn) b.classList.add('incorrect');
+      });
+
+      if (correct) {
+        const bonus = timeTaken < 3 ? 50 : 0;
+        score += 100 + bonus;
+        showEffect('success');
+        speak(selected, 'fr-FR');
+        setTimeout(() => speak(bonus > 0 ? 'Corretto! Bonus velocità!' : 'Corretto!', 'it-IT'), 1000);
+      } else {
+        errors++;
+        showEffect('fail');
+        speak(selected, 'fr-FR');
+        setTimeout(() => speak('Sbagliato! La risposta corretta è ' + q.correct, 'it-IT'), 1500);
+      }
+      updateScoreUI();
+
+      if (errors >= 3) {
+        speak('Hai commesso tre errori. Il quiz si riavvierà.', 'it-IT');
+        return setTimeout(startQuiz, 4000);
+      }
+
+      setTimeout(() => { currentIndex++; nextQuestion(); }, correct ? 3000 : 4000);
+    }
+
+    function updateScoreUI() {
+      scoreDisplay.textContent = `Punteggio: ${score}`;
+      errDisplay.textContent = `Errori: ${errors}/3`;
+      hs.textContent = `${highScore} punti`;
+      bt.textContent = bestTime === Infinity ? 'N/A' : `${bestTime}s`;
+    }
+
+    function endQuiz() {
+      clearInterval(timer);
+      const totalTime = ((Date.now() - startTime) / 1000).toFixed(2);
+      finalScore.textContent = `${score} punti`;
+      finalTime.textContent = `${totalTime}s`;
+      document.getElementById('game-area').classList.add('hidden');
+      results.classList.remove('hidden');
+
+      let msg = 'Quiz completato!';
+      if (score > highScore) {
+        highScore = score;
+        localStorage.setItem('fs_high', highScore);
+        msg = 'Nuovo record! Ottimo lavoro!';
+      }
+      if (totalTime < bestTime) {
+        bestTime = totalTime;
+        localStorage.setItem('fs_best', bestTime);
+      }
+
+      results.querySelector('h2').textContent = msg;
+      hs.textContent = `${highScore} punti`;
+      bt.textContent = bestTime === Infinity ? 'N/A' : `${bestTime}s`;
+    }
+
+    function showEffect(type) {
+      effect.innerHTML = type === 'success'
+        ? '<span class="text-green-500 text-7xl animate-star">⭐</span>'
+        : '<span class="text-red-500 text-7xl animate-star">❌</span>';
+      setTimeout(() => effect.innerHTML = '', 800);
+    }
+
+    function speak(text, lang) {
+      const u = new SpeechSynthesisUtterance(text);
+      u.lang = lang;
+      u.rate = 1; u.pitch = 1;
+      speechSynthesis.cancel();
+      speechSynthesis.speak(u);
+    }
+
+    window.onload = startQuiz;
+  </script>
+</body>
+</html>
