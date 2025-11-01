@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Esercizio Contabilità Partita Doppia</title>
+    <!-- Caricamento di Tailwind CSS per uno stile moderno e reattivo --><script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#059669', // Verde scuro
+                        'secondary': '#1e40af', // Blu scuro
+                        'accent': '#f59e0b', // Ambra
+                        'success': '#10b981', // Verde
+                        'error': '#ef4444', // Rosso
+                        'background': '#f9fafb', // Grigio molto chiaro
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: theme('colors.background');
+            line-height: 1.6;
+        }
+        .card {
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        input[type="number"]::-webkit-outer-spin-button,
+        input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        input[type="number"] {
+            -moz-appearance: textfield;
+        }
+        .calculator-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+        }
+        .calculator-button {
+            padding: 1rem;
+            border-radius: 0.5rem;
+            font-size: 1.25rem;
+            font-weight: 600;
+            background-color: theme('colors.gray.200');
+            transition: all 0.2s ease;
+        }
+        .calculator-button:hover {
+            background-color: theme('colors.gray.300');
+        }
+        .calculator-button.operator {
+            background-color: theme('colors.accent');
+            color: white;
+        }
+        .calculator-button.operator:hover {
+            background-color: theme('colors.amber.600');
+        }
+        .calculator-button.equals {
+            grid-column: span 2;
+            background-color: theme('colors.primary');
+            color: white;
+        }
+        .calculator-button.equals:hover {
+            background-color: theme('colors.green.700');
+        }
+        .calculator-button.clear {
+            background-color: theme('colors.error');
+            color: white;
+        }
+        .calculator-button.clear:hover {
+            background-color: theme('colors.red.600');
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen p-4">
+
+    <div id="app" class="card bg-white w-full max-w-4xl rounded-xl p-8 space-y-8">
+        <h1 class="text-4xl font-bold text-center text-primary">Esercizio Contabilità Avanzato</h1>
+        <p class="text-center text-gray-600 text-lg">
+            Calcola l'Imponibile, l'IVA (22%) e il Totale, **arrotondando sempre alla seconda cifra decimale**.
+            Poi, registra la transazione in **partita doppia**.
+            Usa la calcolatrice integrata per i tuoi calcoli!
+        </p>
+
+        <!-- Sezione Esercizio --><div id="transaction-area" class="bg-secondary bg-opacity-10 p-6 rounded-lg border-l-4 border-secondary transition duration-300">
+            <h2 id="transaction-type" class="text-2xl font-semibold text-secondary mb-2"></h2>
+            <p class="text-3xl font-bold text-gray-800">
+                Importo Casuale: <span id="base-amount" class="text-primary">--- €</span>
+            </p>
+            <p class="text-gray-600 mt-2">IVA (Imposta sul Valore Aggiunto): 22%</p>
+        </div>
+
+        <!-- Sezione Input Risposta --><div class="space-y-6">
+            <h3 class="text-xl font-semibold text-gray-700">Calcoli:</h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <label class="block">
+                    <span class="text-gray-700 font-medium mb-1 block">Imponibile (€)</span>
+                    <input type="number" step="0.01" id="input-imponibile" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-secondary transition duration-150" placeholder="0.00" autocomplete="off">
+                </label>
+                <label class="block">
+                    <span class="text-gray-700 font-medium mb-1 block">IVA (22%) (€)</span>
+                    <input type="number" step="0.01" id="input-iva" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-secondary transition duration-150" placeholder="0.00" autocomplete="off">
+                </label>
+                <label class="block">
+                    <span class="text-gray-700 font-medium mb-1 block">Totale (€)</span>
+                    <input type="number" step="0.01" id="input-total" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-secondary transition duration-150" placeholder="0.00" autocomplete="off">
+                </label>
+            </div>
+
+            <h3 class="text-xl font-semibold text-gray-700 mt-8">Registrazione in Partita Doppia:</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 bg-gray-50 p-6 rounded-lg">
+                <!-- Sezione DARE --><div>
+                    <h4 class="text-lg font-bold text-gray-800 mb-3 text-secondary">DARE</h4>
+                    <div class="space-y-3" id="dare-entries">
+                        <!-- Entry template --><div class="flex items-center gap-2">
+                            <input type="text" placeholder="Conto" class="flex-grow p-2 border border-gray-300 rounded-md text-sm" data-type="conto" data-dare-deve="dare">
+                            <input type="number" step="0.01" placeholder="Importo" class="w-24 p-2 border border-gray-300 rounded-md text-sm" data-type="importo" data-dare-deve="dare">
+                            <button onclick="removeEntry(this)" class="text-error hover:text-red-700 text-lg">&times;</button>
+                        </div>
+                    </div>
+                    <button onclick="addEntry('dare')" class="mt-3 text-sm text-blue-600 hover:underline">Aggiungi riga DARE</button>
+                </div>
+
+                <!-- Sezione AVERE --><div>
+                    <h4 class="text-lg font-bold text-gray-800 mb-3 text-primary">AVERE</h4>
+                    <div class="space-y-3" id="avere-entries">
+                        <!-- Entry template --><div class="flex items-center gap-2">
+                            <input type="text" placeholder="Conto" class="flex-grow p-2 border border-gray-300 rounded-md text-sm" data-type="conto" data-dare-deve="avere">
+                            <input type="number" step="0.01" placeholder="Importo" class="w-24 p-2 border border-gray-300 rounded-md text-sm" data-type="importo" data-dare-deve="avere">
+                            <button onclick="removeEntry(this)" class="text-error hover:text-red-700 text-lg">&times;</button>
+                        </div>
+                    </div>
+                    <button onclick="addEntry('avere')" class="mt-3 text-sm text-green-600 hover:underline">Aggiungi riga AVERE</button>
+                </div>
+            </div>
+            
+            <!-- Area Messaggio e Controlli --><div id="message-area" class="min-h-[60px] flex items-center justify-center p-3 rounded-lg text-white font-semibold text-center transition duration-500 text-lg hidden mt-6">
+                <!-- Messaggio di feedback qui --></div>
+            
+            <div class="flex flex-col sm:flex-row justify-between gap-4 pt-4">
+                <button onclick="checkAnswer()" id="check-button" class="flex-1 px-8 py-4 bg-secondary text-white font-bold rounded-lg hover:bg-blue-800 transition duration-300 disabled:opacity-50 text-xl">
+                    Verifica Risposta
+                </button>
+                <button onclick="nextTransaction()" id="next-button" class="flex-1 px-8 py-4 bg-primary text-white font-bold rounded-lg hover:bg-green-700 transition duration-300 opacity-0 pointer-events-none text-xl">
+                    Prossimo Esercizio
+                </button>
+            </div>
+        </div>
+
+        <!-- Calcolatrice Integrata --><div class="mt-10 p-6 bg-gray-100 rounded-lg shadow-inner">
+            <h3 class="text-2xl font-bold text-center text-gray-800 mb-4">Calcolatrice</h3>
+            <div class="bg-gray-800 p-4 rounded-lg mb-4 text-right text-white font-mono text-3xl h-20 flex items-center justify-end">
+                <div id="calculator-display" class="truncate">0</div>
+            </div>
+            <div class="calculator-grid">
+                <button class="calculator-button clear col-span-2" onclick="calculator.clear()">AC</button>
+                <button class="calculator-button operator" onclick="calculator.appendOperator('/')">÷</button>
+                <button class="calculator-button operator" onclick="calculator.appendOperator('*')">×</button>
+                <button class="calculator-button" onclick="calculator.appendNumber('7')">7</button>
+                <button class="calculator-button" onclick="calculator.appendNumber('8')">8</button>
+                <button class="calculator-button" onclick="calculator.appendNumber('9')">9</button>
+                <button class="calculator-button operator" onclick="calculator.appendOperator('-')">-</button>
+                <button class="calculator-button" onclick="calculator.appendNumber('4')">4</button>
+                <button class="calculator-button" onclick="calculator.appendNumber('5')">5</button>
+                <button class="calculator-button" onclick="calculator.appendNumber('6')">6</button>
+                <button class="calculator-button operator" onclick="calculator.appendOperator('+')">+</button>
+                <button class="calculator-button" onclick="calculator.appendNumber('1')">1</button>
+                <button class="calculator-button" onclick="calculator.appendNumber('2')">2</button>
+                <button class="calculator-button" onclick="calculator.appendNumber('3')">3</button>
+                <button class="calculator-button equals row-span-2" onclick="calculator.calculate()">=</button>
+                <button class="calculator-button col-span-2" onclick="calculator.appendNumber('0')">0</button>
+                <button class="calculator-button" onclick="calculator.appendNumber('.')">.</button>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Variabili globali per i valori corretti dell'esercizio corrente
+        let correctValues = {
+            imponibile: 0,
+            iva: 0,
+            total: 0,
+            dareEntries: [], // Per la partita doppia
+            avereEntries: []  // Per la partita doppia
+        };
+        const IVA_RATE = 0.22; // 22%
+        const APP_ID = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+
+        /**
+         * Arrotonda un numero alla seconda cifra decimale.
+         * @param {number} num - Il numero da arrotondare.
+         * @returns {number} Il numero arrotondato.
+         */
+        function roundToTwoDecimals(num) {
+            return Math.round(num * 100) / 100;
+        }
+
+        /**
+         * Funzione per generare un numero intero casuale in un intervallo.
+         * @param {number} min - Il valore minimo (incluso).
+         * @param {number} max - Il valore massimo (incluso).
+         * @returns {number} Numero intero casuale.
+         */
+        function getRandomInt(min, max) {
+            min = Math.ceil(min);
+            max = Math.floor(max);
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        /**
+         * Genera una nuova transazione contabile.
+         */
+        function generateTransaction() {
+            // 1. Genera l'importo imponibile casuale (tra 100€ e 10000€, senza virgole iniziali)
+            const base = getRandomInt(100, 10000); 
+            
+            // 2. Determina il tipo di transazione (Acquisto o Vendita)
+            const isPurchase = Math.random() < 0.5;
+            const typeText = isPurchase ? "Acquisto Merci" : "Vendita Prodotti";
+            
+            // 3. Calcola IVA e Totale, arrotondando a due decimali
+            const ivaAmount = roundToTwoDecimals(base * IVA_RATE);
+            const totalAmount = roundToTwoDecimals(base + ivaAmount);
+
+            // 4. Determina i conti per la Partita Doppia
+            let dareAccounts = [];
+            let avereAccounts = [];
+
+            if (isPurchase) {
+                // Acquisto: Costi (Merci c/acquisti), IVA ns. credito, Debiti (Cassa/Banca/Fornitori)
+                dareAccounts.push({ conto: 'Merci c/acquisti', importo: base });
+                dareAccounts.push({ conto: 'IVA ns. credito', importo: ivaAmount });
+                avereAccounts.push({ conto: 'Banca c/c', importo: totalAmount }); // Assumiamo pagamento con banca
+            } else {
+                // Vendita: Crediti (Clienti/Cassa/Banca), Ricavi (Merci c/vendite), IVA ns. debito
+                dareAccounts.push({ conto: 'Banca c/c', importo: totalAmount }); // Assumiamo incasso con banca
+                avereAccounts.push({ conto: 'Merci c/vendite', importo: base });
+                avereAccounts.push({ conto: 'IVA ns. debito', importo: ivaAmount });
+            }
+
+            // Salva i valori corretti per la verifica
+            correctValues.imponibile = base;
+            correctValues.iva = ivaAmount;
+            correctValues.total = totalAmount;
+            correctValues.dareEntries = dareAccounts;
+            correctValues.avereEntries = avereAccounts;
+
+            // Aggiorna l'interfaccia utente
+            document.getElementById('transaction-type').textContent = `Transazione: ${typeText}`;
+            document.getElementById('base-amount').textContent = `${base.toFixed(2)} €`; // Formatta a due decimali per coerenza
+            
+            // Log per debug (non visibile all'utente)
+            console.log("Transazione Corrente:", { Imponibile: base, IVA: ivaAmount, Totale: totalAmount, Dare: dareAccounts, Avere: avereAccounts });
+        }
+
+        /**
+         * Aggiunge una riga di input per la partita doppia (DARE o AVERE).
+         * @param {string} type - 'dare' o 'avere'.
+         */
+        function addEntry(type) {
+            const container = document.getElementById(`${type}-entries`);
+            const div = document.createElement('div');
+            div.className = 'flex items-center gap-2';
+            div.innerHTML = `
+                <input type="text" placeholder="Conto" class="flex-grow p-2 border border-gray-300 rounded-md text-sm" data-type="conto" data-dare-deve="${type}">
+                <input type="number" step="0.01" placeholder="Importo" class="w-24 p-2 border border-gray-300 rounded-md text-sm" data-type="importo" data-dare-deve="${type}">
+                <button onclick="removeEntry(this)" class="text-error hover:text-red-700 text-lg">&times;</button>
+            `;
+            container.appendChild(div);
+        }
+
+        /**
+         * Rimuove una riga di input della partita doppia.
+         * @param {HTMLElement} button - Il pulsante "X" cliccato.
+         */
+        function removeEntry(button) {
+            button.closest('.flex').remove();
+        }
+
+        /**
+         * Controlla la risposta dell'utente.
+         */
+        function checkAnswer() {
+            const inputImponibile = parseFloat(document.getElementById('input-imponibile').value);
+            const inputIVA = parseFloat(document.getElementById('input-iva').value);
+            const inputTotal = parseFloat(document.getElementById('input-total').value);
+
+            const msgArea = document.getElementById('message-area');
+            const checkBtn = document.getElementById('check-button');
+            const nextBtn = document.getElementById('next-button');
+            
+            // Controllo che tutti i campi siano stati riempiti
+            if (isNaN(inputImponibile) || isNaN(inputIVA) || isNaN(inputTotal)) {
+                showMessage("Per favore, inserisci valori numerici in tutti i campi di calcolo.", 'error');
+                return;
+            }
+
+            // Confronto con i valori corretti (arrotondati)
+            let isCorrect = true;
+            let feedback = "";
+
+            if (roundToTwoDecimals(inputImponibile) !== correctValues.imponibile) {
+                isCorrect = false;
+                feedback += `Imponibile (Corretto: ${correctValues.imponibile.toFixed(2)} €). `;
+            }
+            if (roundToTwoDecimals(inputIVA) !== correctValues.iva) {
+                isCorrect = false;
+                feedback += `IVA (Corretto: ${correctValues.iva.toFixed(2)} €). `;
+            }
+            if (roundToTwoDecimals(inputTotal) !== correctValues.total) {
+                isCorrect = false;
+                feedback += `Totale (Corretto: ${correctValues.total.toFixed(2)} €). `;
+            }
+
+            // Controllo Partita Doppia
+            const userDareEntries = getUserEntries('dare');
+            const userAvereEntries = getUserEntries('avere');
+
+            // Verifica che i totali DARE e AVERE siano uguali al totale della transazione
+            const userDareTotal = userDareEntries.reduce((sum, entry) => sum + entry.importo, 0);
+            const userAvereTotal = userAvereEntries.reduce((sum, entry) => sum + entry.importo, 0);
+
+            if (roundToTwoDecimals(userDareTotal) !== roundToTwoDecimals(inputTotal)) {
+                isCorrect = false;
+                feedback += `Totale DARE della Partita Doppia non corrisponde al Totale della transazione (${inputTotal.toFixed(2)} €). `;
+            }
+            if (roundToTwoDecimals(userAvereTotal) !== roundToTwoDecimals(inputTotal)) {
+                isCorrect = false;
+                feedback += `Totale AVERE della Partita Doppia non corrisponde al Totale della transazione (${inputTotal.toFixed(2)} €). `;
+            }
+
+            // Per una verifica più approfondita dei conti (opzionale, può essere complesso da implementare in modo robusto con input liberi)
+            // Per ora, ci accontentiamo che i totali DARE/AVERE corrispondano al Totale e che siano bilanciati.
+            if (roundToTwoDecimals(userDareTotal) !== roundToTwoDecimals(userAvereTotal)) {
+                isCorrect = false;
+                feedback += `La Partita Doppia non è bilanciata (Totale DARE: ${userDareTotal.toFixed(2)} €, Totale AVERE: ${userAvereTotal.toFixed(2)} €). `;
+            }
+
+
+            if (isCorrect) {
+                showMessage("CORRETTO! Ottimo lavoro!", 'success');
+                checkBtn.disabled = true;
+                nextBtn.classList.remove('opacity-0', 'pointer-events-none');
+            } else {
+                showMessage(`Risposta non corretta. ${feedback || "Controlla i tuoi calcoli e le registrazioni in Partita Doppia."} Riprova!`, 'error');
+                checkBtn.disabled = false;
+                nextBtn.classList.add('opacity-0', 'pointer-events-none');
+            }
+        }
+
+        /**
+         * Raccoglie gli input dell'utente per la partita doppia.
+         * @param {string} type - 'dare' o 'avere'.
+         * @returns {Array<{conto: string, importo: number}>} Array di oggetti conto/importo.
+         */
+        function getUserEntries(type) {
+            const container = document.getElementById(`${type}-entries`);
+            const entries = [];
+            container.querySelectorAll('.flex').forEach(row => {
+                const contoInput = row.querySelector('[data-type="conto"]');
+                const importoInput = row.querySelector('[data-type="importo"]');
+                if (contoInput && importoInput && contoInput.value.trim() !== '' && !isNaN(parseFloat(importoInput.value))) {
+                    entries.push({
+                        conto: contoInput.value.trim(),
+                        importo: roundToTwoDecimals(parseFloat(importoInput.value))
+                    });
+                }
+            });
+            return entries;
+        }
+
+        /**
+         * Visualizza un messaggio di feedback.
+         * @param {string} message - Il messaggio da mostrare.
+         * @param {('success'|'error')} type - Il tipo di messaggio (successo o errore).
+         */
+        function showMessage(message, type) {
+            const msgArea = document.getElementById('message-area');
+            msgArea.textContent = message;
+            msgArea.classList.remove('hidden', 'bg-success', 'bg-error');
+            
+            if (type === 'success') {
+                msgArea.classList.add('bg-success');
+            } else {
+                msgArea.classList.add('bg-error');
+            }
+        }
+
+        /**
+         * Passa alla prossima transazione, resettando l'interfaccia.
+         */
+        function nextTransaction() {
+            // Resetta i campi di input calcolo
+            document.getElementById('input-imponibile').value = '';
+            document.getElementById('input-iva').value = '';
+            document.getElementById('input-total').value = '';
+
+            // Resetta le righe della partita doppia
+            document.getElementById('dare-entries').innerHTML = '';
+            document.getElementById('avere-entries').innerHTML = '';
+            addEntry('dare'); // Aggiungi una riga vuota iniziale
+            addEntry('avere'); // Aggiungi una riga vuota iniziale
+
+            // Resetta il feedback
+            document.getElementById('message-area').classList.add('hidden');
+            document.getElementById('message-area').textContent = '';
+
+            // Riabilita il pulsante di verifica e nascondi il pulsante successivo
+            document.getElementById('check-button').disabled = false;
+            document.getElementById('next-button').classList.add('opacity-0', 'pointer-events-none');
+
+            // Genera il nuovo esercizio
+            generateTransaction();
+        }
+
+        // --- Logica Calcolatrice ---
+        const calculator = {
+            displayValue: '0',
+            firstOperand: null,
+            waitingForSecondOperand: false,
+            operator: null,
+            
+            updateDisplay() {
+                document.getElementById('calculator-display').textContent = this.displayValue;
+            },
+
+            inputDigit(digit) {
+                if (this.waitingForSecondOperand === true) {
+                    this.displayValue = digit;
+                    this.waitingForSecondOperand = false;
+                } else {
+                    this.displayValue = this.displayValue === '0' ? digit : this.displayValue + digit;
+                }
+                this.updateDisplay();
+            },
+
+            inputDecimal(dot) {
+                if (this.waitingForSecondOperand === true) {
+                    this.displayValue = '0.';
+                    this.waitingForSecondOperand = false;
+                    this.updateDisplay();
+                    return;
+                }
+                if (!this.displayValue.includes(dot)) {
+                    this.displayValue += dot;
+                }
+                this.updateDisplay();
+            },
+
+            handleOperator(nextOperator) {
+                const inputValue = parseFloat(this.displayValue);
+
+                if (this.operator && this.waitingForSecondOperand) {
+                    this.operator = nextOperator;
+                    return;
+                }
+
+                if (this.firstOperand === null) {
+                    this.firstOperand = inputValue;
+                } else if (this.operator) {
+                    const result = this.performCalculation[this.operator](this.firstOperand, inputValue);
+                    this.displayValue = `${parseFloat(result.toFixed(2))}`; // Arrotonda il risultato a 2 decimali
+                    this.firstOperand = result;
+                }
+
+                this.waitingForSecondOperand = true;
+                this.operator = nextOperator;
+                this.updateDisplay();
+            },
+
+            performCalculation: {
+                '/': (firstOperand, secondOperand) => firstOperand / secondOperand,
+                '*': (firstOperand, secondOperand) => firstOperand * secondOperand,
+                '+': (firstOperand, secondOperand) => firstOperand + secondOperand,
+                '-': (firstOperand, secondOperand) => firstOperand - secondOperand,
+            },
+
+            resetCalculator() {
+                this.displayValue = '0';
+                this.firstOperand = null;
+                this.waitingForSecondOperand = false;
+                this.operator = null;
+                this.updateDisplay();
+            },
+
+            clear() {
+                this.resetCalculator();
+            },
+
+            appendNumber(number) {
+                if (number === '.') {
+                    this.inputDecimal('.');
+                } else {
+                    this.inputDigit(number);
+                }
+            },
+
+            appendOperator(op) {
+                this.handleOperator(op);
+            },
+
+            calculate() {
+                if (this.operator && this.firstOperand !== null) {
+                    const inputValue = parseFloat(this.displayValue);
+                    const result = this.performCalculation[this.operator](this.firstOperand, inputValue);
+                    this.displayValue = `${parseFloat(result.toFixed(2))}`; // Arrotonda il risultato a 2 decimali
+                    this.firstOperand = null; // Resetta per nuove operazioni
+                    this.operator = null;
+                    this.waitingForSecondOperand = false;
+                }
+                this.updateDisplay();
+            }
+        };
+
+
+        // Avvia il primo esercizio al caricamento della pagina
+        window.onload = () => {
+            // Inizializzazione fittizia per simulare l'ambiente, dato che non usiamo Firestore
+            const firebaseConfig = JSON.parse(typeof __firebase_config !== 'undefined' ? __firebase_config : '{}');
+            const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+            
+            nextTransaction(); // Genera il primo esercizio
+            calculator.updateDisplay(); // Inizializza il display della calcolatrice
+        };
+
+    </script>
+</body>
+</html>
