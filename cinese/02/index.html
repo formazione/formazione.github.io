@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chinese Flashcard App</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .flashcard {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            padding: 60px 40px;
+            min-height: 300px;
+            cursor: pointer;
+            transition: transform 0.3s;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .flashcard:hover {
+            transform: translateY(-5px);
+        }
+        .chinese-char {
+            font-size: 5rem;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 20px;
+        }
+        .pinyin {
+            font-size: 1.5rem;
+            color: #666;
+            margin-bottom: 10px;
+        }
+        .translation {
+            font-size: 1.8rem;
+            color: #333;
+        }
+        .score-badge {
+            font-size: 1.2rem;
+        }
+        .btn-action {
+            min-width: 120px;
+            margin: 5px;
+        }
+        .stats-card {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row mb-4">
+            <div class="col-12 text-center">
+                <h1 class="text-white mb-4">🇨🇳 Chinese Flashcards</h1>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-4">
+                <div class="stats-card">
+                    <h6 class="text-muted mb-2">Current Score</h6>
+                    <h3 class="mb-0"><span class="badge bg-primary score-badge" id="currentScore">0</span></h3>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="stats-card">
+                    <h6 class="text-muted mb-2">Cards Reviewed</h6>
+                    <h3 class="mb-0"><span class="badge bg-info score-badge" id="cardsReviewed">0</span></h3>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="stats-card">
+                    <h6 class="text-muted mb-2">Best Score</h6>
+                    <h3 class="mb-0"><span class="badge bg-success score-badge" id="bestScore">0</span></h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="flashcard" id="flashcard" onclick="flipCard()">
+                    <div id="cardFront">
+                        <div class="chinese-char" id="chineseChar">你好</div>
+                        <div class="pinyin" id="pinyin">nǐ hǎo</div>
+                        <p class="text-muted mt-3">Click to reveal translation</p>
+                    </div>
+                    <div id="cardBack" style="display: none;">
+                        <div class="translation" id="translation">Hello</div>
+                        <p class="text-muted mt-3">Click to go back</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 text-center">
+                <button class="btn btn-success btn-lg btn-action" onclick="answerCard(true)">✓ I Know This</button>
+                <button class="btn btn-danger btn-lg btn-action" onclick="answerCard(false)">✗ Need Review</button>
+                <button class="btn btn-secondary btn-lg btn-action" onclick="nextCard()">Skip →</button>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-12 text-center">
+                <button class="btn btn-warning btn-action" onclick="resetStats()">Reset Stats</button>
+                <button class="btn btn-info btn-action" onclick="shuffleCards()">Shuffle Deck</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+     const flashcards = [
+    { chinese: "你好", pinyin: "nǐ hǎo", translation: "Hello" },
+    { chinese: "谢谢", pinyin: "xiè xie", translation: "Thank you" },
+    { chinese: "再见", pinyin: "zài jiàn", translation: "Goodbye" },
+    { chinese: "是", pinyin: "shì", translation: "Yes / To be" },
+    { chinese: "不", pinyin: "bù", translation: "No / Not" },
+    { chinese: "我", pinyin: "wǒ", translation: "I / Me" },
+    { chinese: "你", pinyin: "nǐ", translation: "You" },
+    { chinese: "他", pinyin: "tā", translation: "He / Him" },
+    { chinese: "她", pinyin: "tā", translation: "She / Her" },
+    { chinese: "爱", pinyin: "ài", translation: "Love" },
+    { chinese: "吃", pinyin: "chī", translation: "To eat" },
+    { chinese: "喝", pinyin: "hē", translation: "To drink" },
+    { chinese: "水", pinyin: "shuǐ", translation: "Water" },
+    { chinese: "茶", pinyin: "chá", translation: "Tea" },
+    { chinese: "饭", pinyin: "fàn", translation: "Rice / Meal" },
+    { chinese: "书", pinyin: "shū", translation: "Book" },
+    { chinese: "学习", pinyin: "xué xí", translation: "To study" },
+    { chinese: "工作", pinyin: "gōng zuò", translation: "Work / Job" },
+    { chinese: "朋友", pinyin: "péng you", translation: "Friend" },
+    { chinese: "家", pinyin: "jiā", translation: "Home / Family" },
+
+    // +100 new cards
+    { chinese: "人", pinyin: "rén", translation: "Person" },
+    { chinese: "天", pinyin: "tiān", translation: "Day / Sky" },
+    { chinese: "年", pinyin: "nián", translation: "Year" },
+    { chinese: "大", pinyin: "dà", translation: "Big" },
+    { chinese: "小", pinyin: "xiǎo", translation: "Small" },
+    { chinese: "多", pinyin: "duō", translation: "Many / Much" },
+    { chinese: "少", pinyin: "shǎo", translation: "Few / Little" },
+    { chinese: "好", pinyin: "hǎo", translation: "Good" },
+    { chinese: "坏", pinyin: "huài", translation: "Bad" },
+    { chinese: "热", pinyin: "rè", translation: "Hot" },
+    { chinese: "冷", pinyin: "lěng", translation: "Cold" },
+    { chinese: "来", pinyin: "lái", translation: "To come" },
+    { chinese: "去", pinyin: "qù", translation: "To go" },
+    { chinese: "看", pinyin: "kàn", translation: "To see / Watch" },
+    { chinese: "听", pinyin: "tīng", translation: "To listen" },
+    { chinese: "说", pinyin: "shuō", translation: "To speak" },
+    { chinese: "买", pinyin: "mǎi", translation: "To buy" },
+    { chinese: "卖", pinyin: "mài", translation: "To sell" },
+    { chinese: "钱", pinyin: "qián", translation: "Money" },
+    { chinese: "车", pinyin: "chē", translation: "Car" },
+    { chinese: "路", pinyin: "lù", translation: "Road" },
+    { chinese: "店", pinyin: "diàn", translation: "Shop" },
+    { chinese: "学校", pinyin: "xué xiào", translation: "School" },
+    { chinese: "老师", pinyin: "lǎo shī", translation: "Teacher" },
+    { chinese: "学生", pinyin: "xué shēng", translation: "Student" },
+    { chinese: "医生", pinyin: "yī shēng", translation: "Doctor" },
+    { chinese: "医院", pinyin: "yī yuàn", translation: "Hospital" },
+    { chinese: "电脑", pinyin: "diàn nǎo", translation: "Computer" },
+    { chinese: "手机", pinyin: "shǒu jī", translation: "Mobile phone" },
+    { chinese: "电视", pinyin: "diàn shì", translation: "Television" },
+    { chinese: "电影", pinyin: "diàn yǐng", translation: "Movie" },
+    { chinese: "音乐", pinyin: "yīn yuè", translation: "Music" },
+    { chinese: "喜欢", pinyin: "xǐ huān", translation: "To like" },
+    { chinese: "想", pinyin: "xiǎng", translation: "To think / Want" },
+    { chinese: "知道", pinyin: "zhī dào", translation: "To know" },
+    { chinese: "认识", pinyin: "rèn shi", translation: "To know (a person)" },
+    { chinese: "会", pinyin: "huì", translation: "Can / Know how to" },
+    { chinese: "可以", pinyin: "kě yǐ", translation: "May / Can" },
+    { chinese: "要", pinyin: "yào", translation: "To want / Need" },
+    { chinese: "给", pinyin: "gěi", translation: "To give" },
+    { chinese: "找", pinyin: "zhǎo", translation: "To look for" },
+    { chinese: "用", pinyin: "yòng", translation: "To use" },
+    { chinese: "开", pinyin: "kāi", translation: "To open / Drive" },
+    { chinese: "关", pinyin: "guān", translation: "To close" },
+    { chinese: "上", pinyin: "shàng", translation: "Up / On" },
+    { chinese: "下", pinyin: "xià", translation: "Down / Under" },
+    { chinese: "前", pinyin: "qián", translation: "Front / Before" },
+    { chinese: "后", pinyin: "hòu", translation: "Back / After" },
+    { chinese: "里", pinyin: "lǐ", translation: "Inside" },
+    { chinese: "外", pinyin: "wài", translation: "Outside" },
+    { chinese: "今天", pinyin: "jīn tiān", translation: "Today" },
+    { chinese: "明天", pinyin: "míng tiān", translation: "Tomorrow" },
+    { chinese: "昨天", pinyin: "zuó tiān", translation: "Yesterday" },
+    { chinese: "现在", pinyin: "xiàn zài", translation: "Now" },
+    { chinese: "时候", pinyin: "shí hou", translation: "Time / Moment" },
+    { chinese: "早上", pinyin: "zǎo shang", translation: "Morning" },
+    { chinese: "晚上", pinyin: "wǎn shang", translation: "Evening" },
+    { chinese: "分钟", pinyin: "fēn zhōng", translation: "Minute" },
+    { chinese: "小时", pinyin: "xiǎo shí", translation: "Hour" },
+    { chinese: "名字", pinyin: "míng zi", translation: "Name" },
+    { chinese: "国家", pinyin: "guó jiā", translation: "Country" },
+    { chinese: "城市", pinyin: "chéng shì", translation: "City" },
+    { chinese: "天气", pinyin: "tiān qì", translation: "Weather" },
+    { chinese: "问题", pinyin: "wèn tí", translation: "Question / Problem" },
+    { chinese: "回答", pinyin: "huí dá", translation: "Answer" },
+    { chinese: "开始", pinyin: "kāi shǐ", translation: "To start" },
+    { chinese: "结束", pinyin: "jié shù", translation: "To finish" },
+    { chinese: "帮助", pinyin: "bāng zhù", translation: "To help" },
+    { chinese: "一起", pinyin: "yī qǐ", translation: "Together" },
+    { chinese: "因为", pinyin: "yīn wèi", translation: "Because" },
+    { chinese: "所以", pinyin: "suǒ yǐ", translation: "So / Therefore" }
+];
+
+        let currentIndex = 0;
+        let isFlipped = false;
+        let score = 0;
+        let cardsReviewed = 0;
+        let bestScore = 0;
+
+        // Load saved data
+        function loadStats() {
+            const saved = localStorage.getItem('chineseFlashcardStats');
+            if (saved) {
+                const data = JSON.parse(saved);
+                score = data.score || 0;
+                cardsReviewed = data.cardsReviewed || 0;
+                bestScore = data.bestScore || 0;
+            }
+            updateDisplay();
+        }
+
+        // Save data
+        function saveStats() {
+            const data = {
+                score: score,
+                cardsReviewed: cardsReviewed,
+                bestScore: bestScore
+            };
+            localStorage.setItem('chineseFlashcardStats', JSON.stringify(data));
+        }
+
+        // Update display
+        function updateDisplay() {
+            document.getElementById('currentScore').textContent = score;
+            document.getElementById('cardsReviewed').textContent = cardsReviewed;
+            document.getElementById('bestScore').textContent = bestScore;
+        }
+
+        // Show card
+        function showCard() {
+            const card = flashcards[currentIndex];
+            document.getElementById('chineseChar').textContent = card.chinese;
+            document.getElementById('pinyin').textContent = card.pinyin;
+            document.getElementById('translation').textContent = card.translation;
+            isFlipped = false;
+            document.getElementById('cardFront').style.display = 'block';
+            document.getElementById('cardBack').style.display = 'none';
+        }
+
+        // Flip card
+        function flipCard() {
+            isFlipped = !isFlipped;
+            document.getElementById('cardFront').style.display = isFlipped ? 'none' : 'block';
+            document.getElementById('cardBack').style.display = isFlipped ? 'block' : 'none';
+        }
+
+        // Answer card
+        function answerCard(correct) {
+            cardsReviewed++;
+            if (correct) {
+                score += 10;
+                if (score > bestScore) {
+                    bestScore = score;
+                }
+            } else {
+                score = Math.max(0, score - 5);
+            }
+            updateDisplay();
+            saveStats();
+            nextCard();
+        }
+
+        // Next card
+        function nextCard() {
+            currentIndex = (currentIndex + 1) % flashcards.length;
+            showCard();
+        }
+
+        // Shuffle cards
+        function shuffleCards() {
+            for (let i = flashcards.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [flashcards[i], flashcards[j]] = [flashcards[j], flashcards[i]];
+            }
+            currentIndex = 0;
+            showCard();
+        }
+
+        // Reset stats
+        function resetStats() {
+            if (confirm('Are you sure you want to reset all statistics?')) {
+                score = 0;
+                cardsReviewed = 0;
+                bestScore = 0;
+                updateDisplay();
+                saveStats();
+            }
+        }
+
+        // Initialize
+        loadStats();
+        showCard();
+    </script>
+</body>
+</html>

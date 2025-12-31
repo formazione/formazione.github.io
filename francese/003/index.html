@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>French Verb Conjugations</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .verb-section {
+            background-color: white;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        h2 {
+            color: #333;
+        }
+        button {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 10px 15px;
+            text-align: left;
+            text-decoration: none;
+            display: block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 4px;
+            width: 100%;
+            max-width: 300px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h1>French Verb Conjugations</h1>
+
+    <div class="verb-section">
+        <h2>Réagir</h2>
+        <button onclick="speak(this.textContent)">J'ai réagi</button>
+        <button onclick="speak(this.textContent)">Tu as réagi</button>
+        <button onclick="speak(this.textContent)">Il/Elle a réagi</button>
+        <button onclick="speak(this.textContent)">Nous avons réagi</button>
+        <button onclick="speak(this.textContent)">Vous avez réagi</button>
+        <button onclick="speak(this.textContent)">Ils/Elles ont réagi</button>
+    </div>
+
+    <div class="verb-section">
+        <h2>Grandir</h2>
+        <button onclick="speak(this.textContent)">J'ai grandi</button>
+        <button onclick="speak(this.textContent)">Tu as grandi</button>
+        <button onclick="speak(this.textContent)">Il/Elle a grandi</button>
+        <button onclick="speak(this.textContent)">Nous avons grandi</button>
+        <button onclick="speak(this.textContent)">Vous avez grandi</button>
+        <button onclick="speak(this.textContent)">Ils/Elles ont grandi</button>
+    </div>
+
+    <div class="verb-section">
+        <h2>Subir</h2>
+        <button onclick="speak(this.textContent)">J'ai subi</button>
+        <button onclick="speak(this.textContent)">Tu as subi</button>
+        <button onclick="speak(this.textContent)">Il/Elle a subi</button>
+        <button onclick="speak(this.textContent)">Nous avons subi</button>
+        <button onclick="speak(this.textContent)">Vous avez subi</button>
+        <button onclick="speak(this.textContent)">Ils/Elles ont subi</button>
+    </div>
+
+    <div class="verb-section">
+        <h2>Avertir</h2>
+        <button onclick="speak(this.textContent)">J'ai averti</button>
+        <button onclick="speak(this.textContent)">Tu as averti</button>
+        <button onclick="speak(this.textContent)">Il/Elle a averti</button>
+        <button onclick="speak(this.textContent)">Nous avons averti</button>
+        <button onclick="speak(this.textContent)">Vous avez averti</button>
+        <button onclick="speak(this.textContent)">Ils/Elles ont averti</button>
+    </div>
+
+    <div class="verb-section">
+        <h2>Garantir</h2>
+        <button onclick="speak(this.textContent)">J'ai garanti</button>
+        <button onclick="speak(this.textContent)">Tu as garanti</button>
+        <button onclick="speak(this.textContent)">Il/Elle a garanti</button>
+        <button onclick="speak(this.textContent)">Nous avons garanti</button>
+        <button onclick="speak(this.textContent)">Vous avez garanti</button>
+        <button onclick="speak(this.textContent)">Ils/Elles ont garanti</button>
+    </div>
+
+    <script>
+        function speak(text) {
+            // Create a new instance of SpeechSynthesisUtterance
+            let utterance = new SpeechSynthesisUtterance(text);
+            
+            // Set the language to French
+            utterance.lang = 'fr-FR';
+            
+            // Use the speech synthesis interface to speak
+            window.speechSynthesis.speak(utterance);
+        }
+    </script>
+</body>
+</html>

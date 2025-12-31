@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chinese Flashcard App</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .flashcard {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            padding: 60px 40px;
+            min-height: 300px;
+            cursor: pointer;
+            transition: transform 0.3s;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .flashcard:hover {
+            transform: translateY(-5px);
+        }
+        .chinese-char {
+            font-size: 5rem;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 20px;
+        }
+        .pinyin {
+            font-size: 1.5rem;
+            color: #666;
+            margin-bottom: 10px;
+        }
+        .translation {
+            font-size: 1.8rem;
+            color: #333;
+        }
+        .score-badge {
+            font-size: 1.2rem;
+        }
+        .btn-action {
+            min-width: 120px;
+            margin: 5px;
+        }
+        .stats-card {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        .audio-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 15px;
+        }
+        .audio-btn:hover {
+            background: #764ba2;
+            transform: scale(1.1);
+        }
+        .audio-btn:active {
+            transform: scale(0.95);
+        }
+    </style>
+</head>
+<body> <!--- audio -->
+    <div class="container">
+        <div class="row mb-4">
+            <div class="col-12 text-center">
+                <h1 class="text-white mb-4">🇨🇳 Chinese Flashcards</h1>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-4">
+                <div class="stats-card">
+                    <h6 class="text-muted mb-2">Current Score</h6>
+                    <h3 class="mb-0"><span class="badge bg-primary score-badge" id="currentScore">0</span></h3>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="stats-card">
+                    <h6 class="text-muted mb-2">Cards Reviewed</h6>
+                    <h3 class="mb-0"><span class="badge bg-info score-badge" id="cardsReviewed">0</span></h3>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="stats-card">
+                    <h6 class="text-muted mb-2">Best Score</h6>
+                    <h3 class="mb-0"><span class="badge bg-success score-badge" id="bestScore">0</span></h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="flashcard" id="flashcard" onclick="flipCard()">
+                    <div id="cardFront">
+                        <div class="chinese-char" id="chineseChar">你好</div>
+                        <div class="pinyin" id="pinyin">nǐ hǎo</div>
+                        <button class="audio-btn" onclick="playAudio(event)" title="Play pronunciation">🔊</button>
+                        <p class="text-muted mt-3">Click to reveal translation</p>
+                    </div>
+                    <div id="cardBack" style="display: none;">
+                        <div class="translation" id="translation">Hello</div>
+                        <button class="audio-btn" onclick="playAudio(event)" title="Play pronunciation">🔊</button>
+                        <p class="text-muted mt-3">Click to go back</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 text-center">
+                <button class="btn btn-success btn-lg btn-action" onclick="answerCard(true)">✓ I Know This</button>
+                <button class="btn btn-danger btn-lg btn-action" onclick="answerCard(false)">✗ Need Review</button>
+                <button class="btn btn-secondary btn-lg btn-action" onclick="nextCard()">Skip →</button>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-12 text-center">
+                <button class="btn btn-warning btn-action" onclick="resetStats()">Reset Stats</button>
+                <button class="btn btn-info btn-action" onclick="shuffleCards()">Shuffle Deck</button>
+                <button class="btn btn-outline-light btn-action" onclick="toggleAutoPlay()">
+                    <span id="autoPlayText">🔇 Auto-Play OFF</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const flashcards = [
+            { chinese: "你好", pinyin: "nǐ hǎo", translation: "Hello" },
+            { chinese: "谢谢", pinyin: "xiè xie", translation: "Thank you" },
+            { chinese: "再见", pinyin: "zài jiàn", translation: "Goodbye" },
+            { chinese: "是", pinyin: "shì", translation: "Yes / To be" },
+            { chinese: "不", pinyin: "bù", translation: "No / Not" },
+            { chinese: "我", pinyin: "wǒ", translation: "I / Me" },
+            { chinese: "你", pinyin: "nǐ", translation: "You" },
+            { chinese: "他", pinyin: "tā", translation: "He / Him" },
+            { chinese: "她", pinyin: "tā", translation: "She / Her" },
+            { chinese: "爱", pinyin: "ài", translation: "Love" },
+            { chinese: "吃", pinyin: "chī", translation: "To eat" },
+            { chinese: "喝", pinyin: "hē", translation: "To drink" },
+            { chinese: "水", pinyin: "shuǐ", translation: "Water" },
+            { chinese: "茶", pinyin: "chá", translation: "Tea" },
+            { chinese: "饭", pinyin: "fàn", translation: "Rice / Meal" },
+            { chinese: "书", pinyin: "shū", translation: "Book" },
+            { chinese: "学习", pinyin: "xué xí", translation: "To study" },
+            { chinese: "工作", pinyin: "gōng zuò", translation: "Work / Job" },
+            { chinese: "朋友", pinyin: "péng you", translation: "Friend" },
+            { chinese: "家", pinyin: "jiā", translation: "Home / Family" }
+        ];
+
+        let currentIndex = 0;
+        let isFlipped = false;
+        let score = 0;
+        let cardsReviewed = 0;
+        let bestScore = 0;
+        let autoPlay = false;
+
+        // Speech synthesis setup
+        let speechSynthesis = window.speechSynthesis;
+        let chineseVoice = null;
+
+        // Load Chinese voice
+        function loadVoices() {
+            const voices = speechSynthesis.getVoices();
+            chineseVoice = voices.find(voice => 
+                voice.lang.includes('zh') || voice.lang.includes('cmn')
+            ) || voices.find(voice => voice.lang.includes('zh-CN')) || voices[0];
+        }
+
+        // Load voices on page load and when they change
+        speechSynthesis.onvoiceschanged = loadVoices;
+        loadVoices();
+
+        // Play audio pronunciation
+        function playAudio(event) {
+            if (event) {
+                event.stopPropagation();
+            }
+            
+            const card = flashcards[currentIndex];
+            const utterance = new SpeechSynthesisUtterance(card.chinese);
+            
+            if (chineseVoice) {
+                utterance.voice = chineseVoice;
+            }
+            utterance.lang = 'zh-CN';
+            utterance.rate = 0.8;
+            utterance.pitch = 1;
+            
+            speechSynthesis.cancel();
+            speechSynthesis.speak(utterance);
+        }
+
+        // Toggle auto-play
+        function toggleAutoPlay() {
+            autoPlay = !autoPlay;
+            const btn = document.getElementById('autoPlayText');
+            btn.textContent = autoPlay ? '🔊 Auto-Play ON' : '🔇 Auto-Play OFF';
+        }
+
+        // Load saved data
+        function loadStats() {
+            const saved = localStorage.getItem('chineseFlashcardStats');
+            if (saved) {
+                const data = JSON.parse(saved);
+                score = data.score || 0;
+                cardsReviewed = data.cardsReviewed || 0;
+                bestScore = data.bestScore || 0;
+            }
+            updateDisplay();
+        }
+
+        // Save data
+        function saveStats() {
+            const data = {
+                score: score,
+                cardsReviewed: cardsReviewed,
+                bestScore: bestScore
+            };
+            localStorage.setItem('chineseFlashcardStats', JSON.stringify(data));
+        }
+
+        // Update display
+        function updateDisplay() {
+            document.getElementById('currentScore').textContent = score;
+            document.getElementById('cardsReviewed').textContent = cardsReviewed;
+            document.getElementById('bestScore').textContent = bestScore;
+        }
+
+        // Show card
+        function showCard() {
+            const card = flashcards[currentIndex];
+            document.getElementById('chineseChar').textContent = card.chinese;
+            document.getElementById('pinyin').textContent = card.pinyin;
+            document.getElementById('translation').textContent = card.translation;
+            isFlipped = false;
+            document.getElementById('cardFront').style.display = 'block';
+            document.getElementById('cardBack').style.display = 'none';
+            
+            if (autoPlay) {
+                setTimeout(() => playAudio(), 300);
+            }
+        }
+
+        // Flip card
+        function flipCard() {
+            isFlipped = !isFlipped;
+            document.getElementById('cardFront').style.display = isFlipped ? 'none' : 'block';
+            document.getElementById('cardBack').style.display = isFlipped ? 'block' : 'none';
+        }
+
+        // Answer card
+        function answerCard(correct) {
+            cardsReviewed++;
+            if (correct) {
+                score += 10;
+                if (score > bestScore) {
+                    bestScore = score;
+                }
+            } else {
+                score = Math.max(0, score - 5);
+            }
+            updateDisplay();
+            saveStats();
+            nextCard();
+        }
+
+        // Next card
+        function nextCard() {
+            currentIndex = (currentIndex + 1) % flashcards.length;
+            showCard();
+        }
+
+        // Shuffle cards
+        function shuffleCards() {
+            for (let i = flashcards.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [flashcards[i], flashcards[j]] = [flashcards[j], flashcards[i]];
+            }
+            currentIndex = 0;
+            showCard();
+        }
+
+        // Reset stats
+        function resetStats() {
+            if (confirm('Are you sure you want to reset all statistics?')) {
+                score = 0;
+                cardsReviewed = 0;
+                bestScore = 0;
+                updateDisplay();
+                saveStats();
+            }
+        }
+
+        // Initialize
+        loadStats();
+        showCard();
+    </script>
+</body>
+</html>

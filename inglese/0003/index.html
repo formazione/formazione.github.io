@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flashcards Verbi Irregolari</title>
+    <!-- Carica Tailwind CSS per uno styling rapido e responsivo -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Stile personalizzato per le flashcard */
+        .card-container {
+            perspective: 1000px;
+            width: 100%;
+            max-width: 400px;
+            height: 250px;
+            margin: 2rem auto;
+        }
+
+        .flashcard {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.6s;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            border-radius: 1rem;
+        }
+
+        .flashcard.flipped {
+            transform: rotateY(180deg);
+        }
+
+        .card-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            border-radius: 1rem;
+            background-color: #ffffff;
+            border: 2px solid #3b82f6;
+        }
+
+        .card-back {
+            transform: rotateY(180deg);
+            background-color: #eff6ff; /* Sfondo leggero per il retro */
+        }
+
+        /* Animazione per il feedback */
+        @keyframes correct-pulse {
+            0% { box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(76, 175, 80, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(76, 175, 80, 0); }
+        }
+
+        @keyframes incorrect-shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+
+        .flashcard.correct {
+            animation: correct-pulse 0.8s ease-out;
+            border-color: #4CAF50;
+        }
+
+        .flashcard.incorrect {
+            animation: incorrect-shake 0.5s;
+            border-color: #f87171;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen p-4 flex flex-col items-center font-sans">
+
+    <div class="max-w-xl w-full">
+        <h1 class="text-3xl font-extrabold text-blue-700 mb-4 text-center">Flashcards Irregolari</h1>
+        <p id="counter" class="text-center text-gray-600 mb-4 font-medium"></p>
+
+        <!-- Contenitore della Flashcard -->
+        <div class="card-container">
+            <div id="flashcard" class="flashcard transition duration-500 ease-in-out">
+                <!-- Fronte della Carta: Traduzione Italiana -->
+                <div id="card-front" class="card-face text-center">
+                    <span class="text-sm text-gray-500 font-semibold mb-2">Significato Italiano</span>
+                    <p class="text-4xl font-bold text-gray-800" id="italian-meaning">Caricamento...</p>
+                    <p class="mt-4 text-gray-500 text-sm">Tocca la carta per girare.</p>
+                </div>
+                <!-- Retro della Carta: Forme Inglesi -->
+                <div id="card-back" class="card-face card-back text-center">
+                    <span class="text-sm text-blue-600 font-semibold mb-2">Base - Passato Semplice - Participio Passato</span>
+                    <div class="flex items-center justify-center mt-2">
+                        <p class="text-2xl font-mono text-gray-800 space-x-2">
+                            <span id="base-form" class="font-bold">...</span> -
+                            <span id="past-simple" class="text-blue-700">...</span> -
+                            <span id="past-participle" class="text-blue-700">...</span>
+                        </p>
+                        <!-- Pulsante per la sintesi vocale (TTS) -->
+                        <button id="speak-btn" class="ml-3 p-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition duration-150 transform hover:scale-110 shadow-md focus:outline-none" title="Ascolta la pronuncia">
+                            <!-- Icona Speaker -->
+                            <svg id="speak-icon" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M9.383 3.076A1 1 0 0110 4v12a1 1 0 01-1.707.707L6 14H3a1 1 0 01-1-1v-2a1 1 0 011-1h1.586l-1.293-1.293A1 1 0 014 9V7a1 1 0 011-1h1l.293.293A1 1 0 017 6h3.383zm.76 11.127l1.455-1.455a1 1 0 00-1.414-1.414l-1.455 1.455a1 1 0 001.414 1.414zM16 11a4 4 0 00-8 0v2a4 4 0 008 0v-2z" clip-rule="evenodd"></path></svg>
+                            <!-- Spinner di caricamento -->
+                            <svg id="loading-spinner" class="w-5 h-5 animate-spin text-white hidden" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+                        </button>
+                    </div>
+                    <p class="mt-4 text-gray-500 text-sm">Tocca la carta per nascondere.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Feedback e Controlli -->
+        <div id="controls" class="p-4 bg-white rounded-xl shadow-lg mt-8 hidden flex-col sm:flex-row justify-center items-center gap-4">
+            <button id="known-btn"
+                    class="flex-1 w-full sm:w-auto px-6 py-3 bg-green-500 text-white font-bold rounded-full shadow-md hover:bg-green-600 transition duration-300 transform hover:scale-105">
+                <span class="text-xl mr-2">✅</span> Imparata! (Prossima)
+            </button>
+            <button id="unknown-btn"
+                    class="flex-1 w-full sm:w-auto px-6 py-3 bg-red-500 text-white font-bold rounded-full shadow-md hover:bg-red-600 transition duration-300 transform hover:scale-105">
+                <span class="text-xl mr-2">❌</span> Da Rivedere
+            </button>
+        </div>
+
+        <!-- Messaggio di Fine Sessione -->
+        <div id="completion-message" class="hidden p-8 mt-8 bg-blue-100 border-l-4 border-blue-500 text-blue-700 rounded-lg shadow-xl">
+            <h2 class="text-2xl font-bold mb-2">🎉 Complimenti!</h2>
+            <p>Hai finito tutte le flashcard. Ottimo lavoro!</p>
+            <p class="mt-3">Vuoi ricominciare includendo le carte che hai imparato?</p>
+            <button id="reset-all-btn" class="mt-4 px-4 py-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition">
+                Ricomicia (Tutte le carte)
+            </button>
+            <button id="reset-review-btn" class="mt-4 ml-2 px-4 py-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition">
+                Ricomicia (Solo Da Rivedere)
+            </button>
+        </div>
+
+        <!-- Messaggio di Caricamento/Errore -->
+        <div id="message-box" class="fixed inset-0 bg-gray-900 bg-opacity-70 flex justify-center items-center hidden">
+            <div class="bg-white p-6 rounded-xl shadow-2xl text-center">
+                <p id="message-content" class="text-lg font-semibold text-gray-800">Caricamento verbi...</p>
+                <button id="close-message" class="mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 hidden">Chiudi</button>
+            </div>
+        </div>
+
+    </div>
+
+    <script type="module">
+        // Configurazione Firebase (necessaria per Firestore)
+        const firebaseConfig = JSON.parse(typeof __firebase_config !== 'undefined' ? __firebase_config : '{}');
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'irregular-verb-flashcards';
+        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+
+        // Importazioni e Inizializzazione di Firebase
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, setDoc, getDoc, collection, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // Strutture Dati Globali
+        let db, auth;
+        let userId = null;
+        let isAuthReady = false;
+        let allVerbs = [];
+        let verbsToReview = [];
+        let currentVerbIndex = 0;
+        let knownVerbsMap = {}; // Mappa per lo stato di apprendimento (verboBase -> true/false)
+
+        // API Constants per TTS
+        const TTS_API_MODEL = "gemini-2.5-flash-preview-tts";
+        const TTS_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/${TTS_API_MODEL}:generateContent?key=`;
+
+
+        // Dati estratti dal PDF
+        const rawVerbData = `
+            be,was/were,been,essere
+            become,became,become,diventare
+            begin,began,begun,iniziare
+            bite,bit,bitten,mordere
+            blow,blew,blown,soffiare
+            break,broke,broken,rompere
+            bring,brought,brought,portare
+            build,built,built,costruire
+            burn,burnt,burnt,bruciare
+            buy,bought,bought,comprare
+            catch,caught,caught,afferrare, prendere
+            choose,chose,chosen,scegliere
+            come,came,come,venire
+            cost,cost,cost,costare
+            cut,cut,cut,tagliare
+            do,did,done,fare
+            draw,drew,drawn,disegnare
+            dream,dreamt,dreamt,sognare
+            drink,drank,drunk,bere
+            drive,drove,driven,guidare
+            eat,ate,eaten,mangiare
+            fall,fell,fallen,cadere
+            feed,fed,fed,nutrire
+            feel,felt,felt,sentire
+            fight,fought,fought,lottare
+            find,found,found,trovare
+            fly,flew,flown,volare
+            forbid,forbade,forbidden,proibire
+            forget,forgot,forgotten,dimenticare
+            freeze,froze,frozen,gelare
+            get,got,got/gotten (US),ottenere
+            give,gave,given,dare
+            go,went,gone,andare
+            grow,grew,grown,crescere, coltivare
+            have,had,had,avere
+            hear,heard,heard,udire
+            hide,hid,hidden,nascondere
+            hit,hit,hit,colpire
+            hold,held,held,tenere
+            hurt,hurt,hurt,ferire, far male
+            keep,kept,kept,tenere
+            know,knew,known,sapere, conoscere
+            leave,left,left,lasciare, partire
+            lend,lent,lent,prestare
+            let,let,let,lasciare
+            Lose,lost,lost,perdere
+            make,made,made,fare
+            mean,meant,meant,significare
+            meet,met,met,incontrare
+            pay,paid,paid,pagare
+            put,put,put,mettere
+            read,read,read,leggere
+            ride,rode,ridden,cavalcare
+            ring,rang,rung,suonare
+            rise,rose,risen,salire
+            run,ran,run,correre
+            say,said,said,dire
+            see,saw,seen,vedere
+            seek,sought,sought,cercare
+            sell,sold,sold,vendere
+            send,sent,sent,spedire
+            set,set,set,mettere
+            shake,shook,shaken,scuotere
+            sing,sang,sung,cantare
+            sit,sat,sat,sedere
+            sleep,slept,slept,dormire
+            smell,smelled/smelt (GB),smelled/smelt (GB),odorare
+            speak,spoke,spoken,parlare
+            spell,spelled/spelt (GB),spelled/spelt (GB),sillabare
+            spend,spent,spent,spendere
+            stand,stood,stood,stare
+            swear,swore,sworn,giurare
+            swim,swam,swum,nuotare
+            take,took,taken,prendere
+            teach,taught,taught,insegnare
+            tell,told,told,raccontare
+            think,thought,thought,pensare
+            understand,understood,understood,capire
+            wake,woke,woken,svegliare
+            wear,wore,worn,indossare
+            win,won,won,vincere
+            write,wrote,written,scrivere
+        `;
+
+        // Elementi DOM
+        const flashcardElement = document.getElementById('flashcard');
+        const italianMeaningElement = document.getElementById('italian-meaning');
+        const baseFormElement = document.getElementById('base-form');
+        const pastSimpleElement = document.getElementById('past-simple');
+        const pastParticipleElement = document.getElementById('past-participle');
+        const counterElement = document.getElementById('counter');
+        const controlsElement = document.getElementById('controls');
+        const completionMessageElement = document.getElementById('completion-message');
+        const messageBox = document.getElementById('message-box');
+        const messageContent = document.getElementById('message-content');
+        const closeMessageBtn = document.getElementById('close-message');
+        
+        // Nuovi riferimenti ai pulsanti per i listener JS
+        const knownBtn = document.getElementById('known-btn');
+        const unknownBtn = document.getElementById('unknown-btn');
+        const resetAllBtn = document.getElementById('reset-all-btn');
+        const resetReviewBtn = document.getElementById('reset-review-btn');
+        const speakBtn = document.getElementById('speak-btn');
+        const speakIcon = document.getElementById('speak-icon');
+        const loadingSpinner = document.getElementById('loading-spinner');
+
+
+        /**
+         * Mostra un messaggio a schermo (sostituisce alert()).
+         * @param {string} message - Il messaggio da mostrare.
+         * @param {boolean} showClose - Indica se mostrare il pulsante di chiusura.
+         */
+        function showMessage(message, showClose = false) {
+            messageContent.textContent = message;
+            closeMessageBtn.classList.toggle('hidden', !showClose);
+            messageBox.classList.remove('hidden');
+        }
+
+        /**
+         * Nasconde il box del messaggio.
+         */
+        function closeMessage() {
+            messageBox.classList.add('hidden');
+        }
+
+        // Utility function to convert base64 to ArrayBuffer
+        function base64ToArrayBuffer(base64) {
+            const binaryString = atob(base64);
+            const len = binaryString.length;
+            const bytes = new Uint8Array(len);
+            for (let i = 0; i < len; i++) {
+                bytes[i] = binaryString.charCodeAt(i);
+            }
+            return bytes.buffer;
+        }
+
+        // Utility function to convert raw PCM audio to WAV format
+        function pcmToWav(pcm16, sampleRate) {
+            const numChannels = 1;
+            const bitsPerSample = 16;
+            const byteRate = sampleRate * numChannels * (bitsPerSample / 8);
+            const blockAlign = numChannels * (bitsPerSample / 8);
+
+            const wavData = new ArrayBuffer(44 + pcm16.length * 2);
+            const view = new DataView(wavData);
+
+            let offset = 0;
+
+            // RIFF chunk
+            view.setUint32(offset, 0x52494646, false); // "RIFF"
+            offset += 4;
+            view.setUint32(offset, 36 + pcm16.length * 2, true); // ChunkSize
+            offset += 4;
+            view.setUint32(offset, 0x57415645, false); // "WAVE"
+            offset += 4;
+
+            // fmt chunk
+            view.setUint32(offset, 0x666d7420, false); // "fmt "
+            offset += 4;
+            view.setUint32(offset, 16, true); // Subchunk1Size (16 for PCM)
+            offset += 4;
+            view.setUint16(offset, 1, true); // AudioFormat (1 for PCM)
+            offset += 2;
+            view.setUint16(offset, numChannels, true); // NumChannels
+            offset += 2;
+            view.setUint32(offset, sampleRate, true); // SampleRate
+            offset += 4;
+            view.setUint32(offset, byteRate, true); // ByteRate
+            offset += 4;
+            view.setUint16(offset, blockAlign, true); // BlockAlign
+            offset += 2;
+            view.setUint16(offset, bitsPerSample, true); // BitsPerSample
+            offset += 2;
+
+            // data chunk
+            view.setUint32(offset, 0x64617461, false); // "data"
+            offset += 4;
+            view.setUint32(offset, pcm16.length * 2, true); // Subchunk2Size
+            offset += 4;
+
+            // Write PCM data
+            for (let i = 0; i < pcm16.length; i++, offset += 2) {
+                view.setInt16(offset, pcm16[i], true);
+            }
+
+            return new Blob([wavData], { type: 'audio/wav' });
+        }
+
+
+        /**
+         * Inizializza Firebase e l'Autenticazione.
+         */
+        async function initFirebase() {
+            try {
+                if (Object.keys(firebaseConfig).length === 0) {
+                    showMessage("Errore: La configurazione di Firebase non è disponibile. L'app funzionerà, ma i progressi non verranno salvati.", true);
+                    isAuthReady = true;
+                    userId = crypto.randomUUID(); // ID utente casuale se non autenticato
+                    loadVerbData();
+                    return;
+                }
+
+                const app = initializeApp(firebaseConfig);
+                db = getFirestore(app);
+                auth = getAuth(app);
+
+                if (initialAuthToken) {
+                    await signInWithCustomToken(auth, initialAuthToken);
+                } else {
+                    await signInAnonymously(auth);
+                }
+
+                onAuthStateChanged(auth, (user) => {
+                    if (user) {
+                        userId = user.uid;
+                        isAuthReady = true;
+                        // Avvia il caricamento dei dati una volta che l'autenticazione è pronta
+                        loadVerbData();
+                    } else {
+                        // Questo non dovrebbe accadere se usiamo signInWithCustomToken o signInAnonymously
+                        console.error("Autenticazione fallita.");
+                        isAuthReady = false;
+                        showMessage("Impossibile autenticare l'utente. I progressi non verranno salvati.", true);
+                        userId = crypto.randomUUID();
+                        loadVerbData();
+                    }
+                });
+            } catch (error) {
+                console.error("Errore nell'inizializzazione di Firebase:", error);
+                showMessage(`Errore di connessione: ${error.message}. I progressi non verranno salvati.`, true);
+                isAuthReady = true;
+                userId = crypto.randomUUID();
+                loadVerbData();
+            }
+        }
+
+        /**
+         * Analizza la stringa di dati grezzi dei verbi.
+         * @returns {Array<Object>} Lista di oggetti verbo.
+         */
+        function parseVerbData() {
+            const lines = rawVerbData.trim().split('\n');
+            return lines.map(line => {
+                const parts = line.split(',');
+                return {
+                    base: parts[0].trim(),
+                    pastSimple: parts[1].trim(),
+                    pastParticiple: parts[2].trim(),
+                    italian: parts[3].trim()
+                };
+            }).filter(verb => verb.base); // Filtra eventuali righe vuote
+        }
+
+        /**
+         * Carica i dati dei verbi e lo stato di apprendimento.
+         */
+        function loadVerbData() {
+            allVerbs = parseVerbData();
+            if (isAuthReady && db && userId) {
+                // Percorso del documento: /artifacts/{appId}/users/{userId}/verb_status/known_verbs
+                const docRef = doc(db, 'artifacts', appId, 'users', userId, 'verb_status', 'known_verbs');
+
+                // Ascolta in tempo reale lo stato dei verbi
+                onSnapshot(docRef, (docSnap) => {
+                    if (docSnap.exists()) {
+                        knownVerbsMap = docSnap.data();
+                        console.log("Stato verbi caricato/aggiornato in tempo reale.");
+                    } else {
+                        knownVerbsMap = {};
+                        console.log("Nessuno stato verbi trovato, inizia da zero.");
+                    }
+                    // Ricomincia la sessione con i dati aggiornati
+                    startSession(false);
+                }, (error) => {
+                    console.error("Errore onSnapshot Firestore:", error);
+                    showMessage("Errore nel caricamento dei progressi. I verbi imparati non verranno ricordati in questa sessione.", true);
+                    startSession(false); // Avvia comunque senza stato salvato
+                });
+            } else {
+                // Avvia la sessione senza caricamento dello stato se l'auth non è pronta o firebase non è configurato
+                startSession(false);
+            }
+        }
+
+        /**
+         * Salva lo stato di apprendimento (quali verbi sono "known").
+         */
+        async function saveKnownVerbs() {
+            if (!isAuthReady || !db || !userId) {
+                console.warn("Firebase non pronto o non configurato. Impossibile salvare i progressi.");
+                return;
+            }
+            try {
+                const docRef = doc(db, 'artifacts', appId, 'users', userId, 'verb_status', 'known_verbs');
+                // Salva solo i verbi che sono stati contrassegnati come "imparati" (true)
+                const verbsToSave = Object.fromEntries(
+                    Object.entries(knownVerbsMap).filter(([, isKnown]) => isKnown)
+                );
+                await setDoc(docRef, verbsToSave, { merge: true });
+                console.log("Stato verbi salvato con successo.");
+            } catch (e) {
+                console.error("Errore durante il salvataggio dei verbi:", e);
+            }
+        }
+
+        /**
+         * Avvia una nuova sessione di flashcard.
+         * @param {boolean} includeKnown - Se includere i verbi già contrassegnati come imparati.
+         */
+        function startSession(includeKnown) {
+            // Nasconde il messaggio di completamento
+            completionMessageElement.classList.add('hidden');
+            flashcardElement.classList.remove('hidden');
+            controlsElement.classList.add('hidden');
+
+            if (includeKnown) {
+                verbsToReview = [...allVerbs];
+                console.log("Sessione iniziata con TUTTE le carte.");
+            } else {
+                // Filtra i verbi che NON sono stati contrassegnati come imparati (o non sono nella mappa)
+                verbsToReview = allVerbs.filter(verb => !knownVerbsMap[verb.base]);
+                console.log(`Sessione iniziata con ${verbsToReview.length} carte da rivedere.`);
+            }
+
+            // Mescola l'array solo se ci sono carte
+            if (verbsToReview.length > 0) {
+                verbsToReview = shuffleArray(verbsToReview);
+                currentVerbIndex = 0;
+                displayCurrentCard();
+                closeMessage(); // Chiude il messaggio di caricamento
+            } else if (allVerbs.length > 0 && !includeKnown) {
+                // Tutte le carte sono state imparate
+                flashcardElement.classList.add('hidden');
+                controlsElement.classList.add('hidden');
+                displayCompletionMessage();
+            } else {
+                // Nessun dato disponibile
+                showMessage("Nessun dato sui verbi disponibile per lo studio.", true);
+            }
+        }
+
+        /**
+         * Mescola un array usando l'algoritmo Fisher-Yates.
+         * @param {Array<Object>} array - Array di verbi.
+         * @returns {Array<Object>} Array mescolato.
+         */
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        /**
+         * Mostra la flashcard corrente.
+         */
+        function displayCurrentCard() {
+            if (currentVerbIndex >= verbsToReview.length) {
+                displayCompletionMessage();
+                return;
+            }
+
+            const currentVerb = verbsToReview[currentVerbIndex];
+
+            // Aggiorna l'interfaccia
+            italianMeaningElement.textContent = currentVerb.italian;
+            baseFormElement.textContent = currentVerb.base;
+            pastSimpleElement.textContent = currentVerb.pastSimple;
+            pastParticipleElement.textContent = currentVerb.pastParticiple;
+            counterElement.textContent = `Carta ${currentVerbIndex + 1} di ${verbsToReview.length}`;
+
+            // Reset visivo
+            flashcardElement.classList.remove('flipped', 'correct', 'incorrect', 'hidden');
+            controlsElement.classList.add('hidden');
+        }
+
+        /**
+         * Gestisce il feedback dell'utente (Imparata o Da Rivedere).
+         * @param {boolean} isKnown - Vero se l'utente ha contrassegnato come imparata.
+         */
+        function handleFeedback(isKnown) {
+            const currentVerb = verbsToReview[currentVerbIndex];
+
+            // 1. Applica l'animazione di feedback
+            flashcardElement.classList.remove('correct', 'incorrect');
+            flashcardElement.offsetWidth; // Trigger reflow per resettare l'animazione
+            flashcardElement.classList.add(isKnown ? 'correct' : 'incorrect');
+
+            // 2. Aggiorna lo stato di apprendimento
+            knownVerbsMap[currentVerb.base] = isKnown;
+            saveKnownVerbs();
+
+            // 3. Passa alla prossima carta
+            setTimeout(() => {
+                currentVerbIndex++;
+                displayCurrentCard();
+            }, 800); // L'attesa permette all'animazione di finire
+        }
+        
+        /**
+         * Chiama l'API TTS per pronunciare le forme del verbo.
+         */
+        async function handleSpeak() {
+            const currentVerb = verbsToReview[currentVerbIndex];
+            if (!currentVerb) return;
+
+            // Combinare tutte le forme del verbo in una stringa, usando il formato che il modello pronuncerà meglio
+            const textToSpeak = `${currentVerb.base}, ${currentVerb.pastSimple}, and ${currentVerb.pastParticiple}.`;
+
+            // 1. Mostra lo stato di caricamento e disabilita il pulsante
+            speakIcon.classList.add('hidden');
+            loadingSpinner.classList.remove('hidden');
+            speakBtn.disabled = true;
+
+            try {
+                const payload = {
+                    contents: [{
+                        parts: [{ text: `Say in a neutral English accent: ${textToSpeak}` }]
+                    }],
+                    generationConfig: {
+                        responseModalities: ["AUDIO"],
+                        speechConfig: {
+                            voiceConfig: {
+                                // Scelta della voce inglese neutra per la pronuncia
+                                prebuiltVoiceConfig: { voiceName: "Charon" } 
+                            }
+                        }
+                    },
+                    model: TTS_API_MODEL
+                };
+
+                const apiKey = ""; // Lascia vuoto per Canvas
+                
+                let response;
+                const maxRetries = 3;
+                for (let attempt = 0; attempt < maxRetries; attempt++) {
+                    const url = `${TTS_API_URL}${apiKey}`;
+                    response = await fetch(url, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    if (response.ok) {
+                        break; 
+                    } else if (response.status === 429 && attempt < maxRetries - 1) {
+                        // Exponential backoff
+                        const delay = Math.pow(2, attempt) * 1000;
+                        await new Promise(resolve => setTimeout(resolve, delay));
+                    } else {
+                        throw new Error(`API call failed with status: ${response.status}`);
+                    }
+                }
+
+                if (!response.ok) {
+                    throw new Error('TTS API failed after all retries.');
+                }
+
+                const result = await response.json();
+                const part = result?.candidates?.[0]?.content?.parts?.[0];
+                const audioData = part?.inlineData?.data;
+                const mimeType = part?.inlineData?.mimeType;
+                const sampleRateMatch = mimeType ? mimeType.match(/rate=(\d+)/) : null;
+                const sampleRate = sampleRateMatch ? parseInt(sampleRateMatch[1], 10) : 16000;
+
+                if (audioData) {
+                    const pcmData = base64ToArrayBuffer(audioData);
+                    const pcm16 = new Int16Array(pcmData);
+                    const wavBlob = pcmToWav(pcm16, sampleRate);
+                    
+                    const audioUrl = URL.createObjectURL(wavBlob);
+                    const audio = new Audio(audioUrl);
+                    await audio.play();
+
+                    audio.onended = () => URL.revokeObjectURL(audioUrl);
+
+                } else {
+                    console.error("Dati audio mancanti nella risposta API.");
+                    showMessage("Impossibile generare l'audio per la pronuncia.", true);
+                }
+
+            } catch (error) {
+                console.error("Errore TTS:", error);
+                showMessage("Si è verificato un errore durante l'ascolto.", true);
+            } finally {
+                // 2. Nascondi lo stato di caricamento e riabilita il pulsante
+                speakIcon.classList.remove('hidden');
+                loadingSpinner.classList.add('hidden');
+                speakBtn.disabled = false;
+            }
+        }
+
+
+        /**
+         * Gestisce il flip della flashcard.
+         */
+        function flipCard() {
+            // Controlla se ci sono carte da rivedere prima di permettere il flip
+            if (verbsToReview.length === 0) return;
+
+            flashcardElement.classList.toggle('flipped');
+            if (flashcardElement.classList.contains('flipped')) {
+                // Se è girata, mostra i controlli
+                controlsElement.classList.remove('hidden');
+            } else {
+                // Se è tornata al fronte, nascondi i controlli e prepara per la prossima
+                controlsElement.classList.add('hidden');
+            }
+            // Rimuovi eventuali animazioni residue di feedback
+            flashcardElement.classList.remove('correct', 'incorrect');
+        }
+
+        /**
+         * Mostra il messaggio di completamento della sessione.
+         */
+        function displayCompletionMessage() {
+            flashcardElement.classList.add('hidden');
+            controlsElement.classList.add('hidden');
+            counterElement.textContent = "Sessione Conclusa";
+            completionMessageElement.classList.remove('hidden');
+        }
+
+        /**
+         * Resetta l'applicazione.
+         * @param {boolean} includeKnown - Se includere le carte conosciute.
+         */
+        function resetApp(includeKnown) {
+            currentVerbIndex = 0;
+            startSession(includeKnown);
+        }
+
+        // --- Gestione Eventi ---
+
+        flashcardElement.addEventListener('click', flipCard);
+        closeMessageBtn.addEventListener('click', closeMessage);
+
+        knownBtn.addEventListener('click', () => handleFeedback(true));
+        unknownBtn.addEventListener('click', () => handleFeedback(false));
+
+        // Listener per il pulsante TTS
+        speakBtn.addEventListener('click', (e) => {
+            // Blocca il flip della carta quando si clicca sul pulsante Speak
+            e.stopPropagation();
+            handleSpeak();
+        });
+
+
+        // Listener per i pulsanti di reset
+        resetAllBtn.addEventListener('click', () => resetApp(true));
+        resetReviewBtn.addEventListener('click', () => resetApp(false));
+        
+        // Inizializza l'app all'avvio
+        initFirebase();
+
+    </script>
+</body>
+</html>
