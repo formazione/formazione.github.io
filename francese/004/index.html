@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Futur Simple - Super Divertente! 🌈</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Background Particles -->
+    <div class="particles-container"></div>
+    
+    <!-- Confetti Container -->
+    <div class="confetti-container"></div>
+
+    <!-- Main Game Container -->
+    <div class="game-container">
+        
+        <!-- Home Screen -->
+        <div class="screen home-screen active">
+            <div class="home-content">
+                <h1 class="rainbow-text game-title">
+                    🇫🇷 FUTUR SIMPLE QUIZ 🇫🇷
+                </h1>
+                <p class="subtitle">Il quiz più colorato e divertente per imparare il futuro francese!</p>
+                
+                <div class="stats-display">
+                    <div class="stat-item">
+                        <div class="stat-icon">⚡</div>
+                        <div class="stat-value" id="totalXP">0</div>
+                        <div class="stat-label">XP</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-icon">🏆</div>
+                        <div class="stat-value" id="totalAchievements">0</div>
+                        <div class="stat-label">Trofei</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-icon">🔥</div>
+                        <div class="stat-value" id="bestStreak">0</div>
+                        <div class="stat-label">Best Streak</div>
+                    </div>
+                </div>
+
+                <div class="level-selection">
+                    <h2>Scegli il tuo livello:</h2>
+                    <div class="level-buttons">
+                        <button class="level-btn beginner" data-level="beginner">
+                            <div class="level-icon">🌱</div>
+                            <div class="level-name">Principiante</div>
+                            <div class="level-info">5 domande • 20s per domanda</div>
+                        </button>
+                        <button class="level-btn intermediate" data-level="intermediate">
+                            <div class="level-icon">🚀</div>
+                            <div class="level-name">Intermedio</div>
+                            <div class="level-info">8 domande • 15s per domanda</div>
+                        </button>
+                        <button class="level-btn expert" data-level="expert">
+                            <div class="level-icon">💎</div>
+                            <div class="level-name">Esperto</div>
+                            <div class="level-info">7 domande • 12s per domanda</div>
+                        </button>
+                    </div>
+                </div>
+
+                <button class="btn btn--primary achievements-btn" id="showAchievements">
+                    🏆 Visualizza Trofei
+                </button>
+            </div>
+        </div>
+
+        <!-- Quiz Screen -->
+        <div class="screen quiz-screen">
+            <div class="quiz-header">
+                <div class="quiz-stats">
+                    <div class="stat">
+                        <span class="stat-label">Punteggio:</span>
+                        <span class="stat-value" id="currentScore">0</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-label">Streak:</span>
+                        <span class="stat-value streak-value" id="currentStreak">0</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-label">XP:</span>
+                        <span class="stat-value" id="currentXP">0</span>
+                    </div>
+                </div>
+                
+                <div class="timer-container">
+                    <div class="timer-circle">
+                        <svg class="timer-svg" width="60" height="60">
+                            <circle cx="30" cy="30" r="25" fill="none" stroke="var(--color-border)" stroke-width="3"/>
+                            <circle cx="30" cy="30" r="25" fill="none" stroke="var(--color-primary)" stroke-width="3" 
+                                    stroke-linecap="round" class="timer-progress" id="timerCircle"/>
+                        </svg>
+                        <div class="timer-text" id="timerText">20</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <div class="progress-text">
+                    <span id="currentQuestion">1</span> / <span id="totalQuestions">5</span>
+                </div>
+            </div>
+
+            <div class="question-container">
+                <h2 class="question-text" id="questionText">Loading...</h2>
+                
+                <div class="answers-grid" id="answersGrid">
+                    <!-- Answers will be populated by JS -->
+                </div>
+            </div>
+
+            <div class="power-ups-container">
+                <h3>Power-Ups:</h3>
+                <div class="power-ups-grid">
+                    <button class="power-up-btn" id="fiftyFifty" data-powerup="fiftyFifty">
+                        <div class="power-up-icon">🎯</div>
+                        <div class="power-up-name">50/50</div>
+                        <div class="power-up-uses">3</div>
+                    </button>
+                    <button class="power-up-btn" id="timeFreeze" data-powerup="timeFreeze">
+                        <div class="power-up-icon">❄️</div>
+                        <div class="power-up-name">Freeze</div>
+                        <div class="power-up-uses">2</div>
+                    </button>
+                    <button class="power-up-btn" id="doublePoints" data-powerup="doublePoints">
+                        <div class="power-up-icon">⚡</div>
+                        <div class="power-up-name">x2 Punti</div>
+                        <div class="power-up-uses">2</div>
+                    </button>
+                </div>
+            </div>
+
+            <button class="btn btn--secondary quit-btn" id="quitQuiz">
+                ← Torna al Menu
+            </button>
+        </div>
+
+        <!-- Results Screen -->
+        <div class="screen results-screen">
+            <div class="results-content">
+                <div class="results-header">
+                    <h1 class="results-title" id="resultsTitle">🎉 Fantastico!</h1>
+                    <div class="results-emoji" id="resultsEmoji">🎊</div>
+                </div>
+
+                <div class="results-stats">
+                    <div class="result-stat">
+                        <div class="result-stat-label">Punteggio Finale</div>
+                        <div class="result-stat-value rainbow-text" id="finalScore">0</div>
+                    </div>
+                    <div class="result-stat">
+                        <div class="result-stat-label">Risposte Corrette</div>
+                        <div class="result-stat-value" id="correctAnswers">0/5</div>
+                    </div>
+                    <div class="result-stat">
+                        <div class="result-stat-label">Streak Massima</div>
+                        <div class="result-stat-value streak-value" id="maxStreak">0</div>
+                    </div>
+                    <div class="result-stat">
+                        <div class="result-stat-label">XP Guadagnati</div>
+                        <div class="result-stat-value" id="earnedXP">0</div>
+                    </div>
+                </div>
+
+                <div class="achievements-earned" id="achievementsEarned">
+                    <!-- New achievements will be shown here -->
+                </div>
+
+                <div class="results-actions">
+                    <button class="btn btn--primary play-again-btn" id="playAgain">
+                        🔄 Gioca Ancora
+                    </button>
+                    <button class="btn btn--secondary home-btn" id="backToHome">
+                        🏠 Menu Principale
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Achievements Modal -->
+    <div class="modal hidden" id="achievementsModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>🏆 I Tuoi Trofei</h2>
+                <button class="modal-close" id="closeAchievements">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="achievements-grid" id="achievementsGrid">
+                    <!-- Achievements will be populated by JS -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Motivational Messages -->
+    <div class="motivational-message hidden" id="motivationalMessage"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>
