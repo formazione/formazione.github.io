@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz - Frasi Ipotetiche Francesi</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .quiz-container {
+            max-width: 800px;
+            margin: 50px auto;
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        .question-box {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        .btn-option {
+            margin: 8px 0;
+            padding: 12px 15px;
+            text-align: left;
+            transition: all 0.3s;
+        }
+        .btn-option:hover:not(:disabled) { transform: translateX(5px); }
+        .correct  { background-color: #28a745 !important; border-color: #28a745 !important; color: white !important; }
+        .incorrect{ background-color: #dc3545 !important; border-color: #dc3545 !important; color: white !important; }
+        .score { font-size: 24px; font-weight: bold; color: #667eea; }
+        h1 { color: #667eea; text-align: center; margin-bottom: 30px; }
+
+        .feedback { margin-top: 12px; padding: 10px; border-radius: 5px; display: none; }
+        .feedback.show { display: block; }
+        .feedback.success   { background:#d4edda; color:#155724; border:1px solid #c3e6cb; }
+        .feedback.error     { background:#f8d7da; color:#721c24; border:1px solid #f5c6cb; }
+        .feedback.close-enough { background:#fff3cd; color:#856404; border:1px solid #ffc107; }
+
+        /* Level 3 typing */
+        .type-input-wrap { display:flex; gap:10px; margin-top:12px; align-items:center; flex-wrap:wrap; }
+        .type-input {
+            flex:1; min-width:180px; padding:10px 14px;
+            border:2px solid #667eea; border-radius:8px;
+            font-size:16px; outline:none; transition:border-color 0.2s;
+        }
+        .type-input:focus          { border-color:#764ba2; }
+        .type-input.input-correct  { border-color:#28a745; background:#d4edda; }
+        .type-input.input-incorrect{ border-color:#dc3545; background:#f8d7da; }
+        .type-input.input-close    { border-color:#ffc107; background:#fff3cd; }
+        .btn-submit-answer { padding:10px 20px; border-radius:8px; }
+
+        .hint-badge {
+            display:inline-block; background:#e9ecef; border-radius:5px;
+            padding:2px 8px; font-size:13px; color:#495057; margin-top:6px;
+        }
+        .level-badge {
+            display:inline-block; padding:6px 16px; border-radius:20px;
+            font-size:14px; font-weight:bold; margin-bottom:20px;
+        }
+        .level1-badge { background:#cfe2ff; color:#084298; }
+        .level2-badge { background:#d1e7dd; color:#0a3622; }
+        .level3-badge { background:#f8d7da; color:#58151c; }
+
+        .progress-bar-custom { height:8px; border-radius:4px; background:#e9ecef; margin-bottom:25px; overflow:hidden; }
+        .progress-fill {
+            height:100%; background:linear-gradient(90deg,#667eea,#764ba2);
+            transition:width 0.4s ease; border-radius:4px;
+        }
+        .final-card { padding:40px 20px; text-align:center; }
+        .final-score-big {
+            font-size:72px; font-weight:900;
+            background:linear-gradient(135deg,#667eea,#764ba2);
+            -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+            background-clip:text; line-height:1;
+        }
+    </style>
+</head>
+<body>
+<div class="quiz-container">
+    <h1>🇫🇷 Quiz — Periodo Ipotetico Francese</h1>
+    <div class="text-center mb-2">
+        <span class="score">Punteggio: <span id="score">0</span>/18</span>
+    </div>
+    <div class="progress-bar-custom">
+        <div class="progress-fill" id="progressFill" style="width:0%"></div>
+    </div>
+
+    <!-- ═══════════ LEVEL 1 ═══════════ -->
+    <div id="level1">
+        <div class="text-center"><span class="level-badge level1-badge">📘 Livello 1 — Scelta multipla</span></div>
+
+        <div class="question-box" id="q1">
+            <h5>1. Primo tipo — Completa la frase:</h5>
+            <p class="fw-bold">"Si il fait beau demain, nous <span class="text-primary">_____</span> au parc."</p>
+            <div id="options1"></div><div class="feedback" id="feedback1"></div>
+        </div>
+        <div class="question-box" id="q2">
+            <h5>2. Primo tipo — Completa la frase:</h5>
+            <p class="fw-bold">"Si nous allons au parc, nous <span class="text-primary">_____</span> au football."</p>
+            <div id="options2"></div><div class="feedback" id="feedback2"></div>
+        </div>
+        <div class="question-box" id="q3">
+            <h5>3. Secondo tipo — Completa la frase:</h5>
+            <p class="fw-bold">"Si j'<span class="text-warning">_____</span> une voiture, je voyagerais beaucoup."</p>
+            <div id="options3"></div><div class="feedback" id="feedback3"></div>
+        </div>
+        <div class="question-box" id="q4">
+            <h5>4. Secondo tipo — Completa la frase:</h5>
+            <p class="fw-bold">"Si je voyageais beaucoup, je <span class="text-warning">_____</span> très heureux."</p>
+            <div id="options4"></div><div class="feedback" id="feedback4"></div>
+        </div>
+        <div class="question-box" id="q5">
+            <h5>5. Terzo tipo — Completa la frase:</h5>
+            <p class="fw-bold">"Si j'avais étudié hier soir, j'<span class="text-danger">_____</span> réussi l'examen."</p>
+            <div id="options5"></div><div class="feedback" id="feedback5"></div>
+        </div>
+        <div class="question-box" id="q6">
+            <h5>6. Terzo tipo — Completa la frase:</h5>
+            <p class="fw-bold">"Si j'avais réussi l'examen, mes parents <span class="text-danger">_____</span> contents."</p>
+            <div id="options6"></div><div class="feedback" id="feedback6"></div>
+        </div>
+
+        <div class="text-center mt-4">
+            <button class="btn btn-warning btn-lg px-5" id="nextLevel2Btn" style="display:none;" onclick="goToLevel(2)">➡️ Vai al Livello 2</button>
+        </div>
+    </div>
+
+    <!-- ═══════════ LEVEL 2 ═══════════ -->
+    <div id="level2" style="display:none;">
+        <div class="text-center"><span class="level-badge level2-badge">📗 Livello 2 — Scelta multipla avanzata</span></div>
+
+        <div class="question-box" id="q7">
+            <h5>7. Primo tipo — Completa la frase:</h5>
+            <p class="fw-bold">"Si tu <span class="text-primary">_____</span> tes devoirs, tu pourras sortir."</p>
+            <div id="options7"></div><div class="feedback" id="feedback7"></div>
+        </div>
+        <div class="question-box" id="q8">
+            <h5>8. Primo tipo — Completa la frase:</h5>
+            <p class="fw-bold">"Si elle étudie bien, elle <span class="text-primary">_____</span> l'examen."</p>
+            <div id="options8"></div><div class="feedback" id="feedback8"></div>
+        </div>
+        <div class="question-box" id="q9">
+            <h5>9. Secondo tipo — Completa la frase:</h5>
+            <p class="fw-bold">"Si nous <span class="text-warning">_____</span> plus d'argent, nous achèterions une maison."</p>
+            <div id="options9"></div><div class="feedback" id="feedback9"></div>
+        </div>
+        <div class="question-box" id="q10">
+            <h5>10. Secondo tipo — Completa la frase:</h5>
+            <p class="fw-bold">"Si tu étais ici, nous <span class="text-warning">_____</span> ensemble."</p>
+            <div id="options10"></div><div class="feedback" id="feedback10"></div>
+        </div>
+        <div class="question-box" id="q11">
+            <h5>11. Terzo tipo — Completa la frase:</h5>
+            <p class="fw-bold">"Si elle <span class="text-danger">_____</span> plus tôt, elle n'aurait pas raté le train."</p>
+            <div id="options11"></div><div class="feedback" id="feedback11"></div>
+        </div>
+        <div class="question-box" id="q12">
+            <h5>12. Terzo tipo — Completa la frase:</h5>
+            <p class="fw-bold">"Si vous aviez téléphoné, je <span class="text-danger">_____</span> venu."</p>
+            <div id="options12"></div><div class="feedback" id="feedback12"></div>
+        </div>
+
+        <div class="text-center mt-4">
+            <button class="btn btn-danger btn-lg px-5" id="nextLevel3Btn" style="display:none;" onclick="goToLevel(3)">✏️ Vai al Livello 3</button>
+        </div>
+    </div>
+
+    <!-- ═══════════ LEVEL 3 ═══════════ -->
+    <div id="level3" style="display:none;">
+        <div class="text-center"><span class="level-badge level3-badge">📕 Livello 3 — Scrivi la risposta</span></div>
+        <p class="text-center text-muted mb-4">Scrivi la forma corretta del verbo. Attenzione agli accenti!</p>
+
+        <div class="question-box" id="q13">
+            <h5>13. Primo tipo — Completa la frase:</h5>
+            <p class="fw-bold">"Si vous partez tôt, vous <span class="text-primary">_____</span> à l'heure."</p>
+            <span class="hint-badge">💡 futuro semplice di <em>arriver</em></span>
+            <div id="options13"></div><div class="feedback" id="feedback13"></div>
+        </div>
+        <div class="question-box" id="q14">
+            <h5>14. Primo tipo — Completa la frase:</h5>
+            <p class="fw-bold">"Si nous mangeons maintenant, nous <span class="text-primary">_____</span> du temps."</p>
+            <span class="hint-badge">💡 futuro semplice di <em>gagner</em></span>
+            <div id="options14"></div><div class="feedback" id="feedback14"></div>
+        </div>
+        <div class="question-box" id="q15">
+            <h5>15. Secondo tipo — Completa la frase:</h5>
+            <p class="fw-bold">"Si j'étais riche, je <span class="text-warning">_____</span> le monde."</p>
+            <span class="hint-badge">💡 condizionale presente di <em>parcourir</em></span>
+            <div id="options15"></div><div class="feedback" id="feedback15"></div>
+        </div>
+        <div class="question-box" id="q16">
+            <h5>16. Secondo tipo — Completa la frase:</h5>
+            <p class="fw-bold">"Si tu <span class="text-warning">_____</span> la vérité, tout irait mieux."</p>
+            <span class="hint-badge">💡 imperfetto di <em>dire</em></span>
+            <div id="options16"></div><div class="feedback" id="feedback16"></div>
+        </div>
+        <div class="question-box" id="q17">
+            <h5>17. Terzo tipo — Completa la frase:</h5>
+            <p class="fw-bold">"Si nous avions su, nous <span class="text-danger">_____</span> restés."</p>
+            <span class="hint-badge">💡 condizionale passato di <em>être</em></span>
+            <div id="options17"></div><div class="feedback" id="feedback17"></div>
+        </div>
+        <div class="question-box" id="q18">
+            <h5>18. Terzo tipo — Completa la frase:</h5>
+            <p class="fw-bold">"Si tu avais dormi, tu n'<span class="text-danger">_____</span> pas si fatigué."</p>
+            <span class="hint-badge">💡 condizionale passato di <em>être</em> (ausiliare)</span>
+            <div id="options18"></div><div class="feedback" id="feedback18"></div>
+        </div>
+
+        <div class="text-center mt-4">
+            <button class="btn btn-success btn-lg px-5" id="showResultsBtn" style="display:none;" onclick="showFinalResults()">🏆 Vedi Risultati Finali</button>
+        </div>
+    </div>
+
+    <!-- ═══════════ FINAL ═══════════ -->
+    <div id="finalResults" style="display:none;" class="final-card">
+        <h2 class="mb-3">🎉 Quiz Completato!</h2>
+        <div class="final-score-big" id="finalScore"></div>
+        <p class="mt-2 text-muted">punti su 18</p>
+        <p id="resultMessage" style="font-size:22px; margin-top:10px;"></p>
+    </div>
+
+    <div class="text-center mt-4">
+        <button class="btn btn-outline-secondary btn-lg" onclick="resetQuiz()">🔄 Ricomincia Quiz</button>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    let score = 0;
+    let answered = new Set();
+    let currentLevel = 1;
+    const TOTAL = 18;
+
+    const questions = {
+        1:  { correct:'irons',          options:['irons','irions','allions'] },
+        2:  { correct:'jouerons',        options:['jouerons','jouerions','jouons'] },
+        3:  { correct:'avais',           options:['avais','ai','aurai'] },
+        4:  { correct:'serais',          options:['serais','serai','suis'] },
+        5:  { correct:'aurais',          options:['aurais','avais','aurai'] },
+        6:  { correct:'auraient été',    options:['auraient été','seraient','seront'] },
+        7:  { correct:'finis',           options:['finis','finirais','finissais'] },
+        8:  { correct:'réussira',        options:['réussira','réussirait','réussit'] },
+        9:  { correct:'avions',          options:['avions','avons','aurons'] },
+        10: { correct:'mangerions',      options:['mangerions','mangerons','mangeons'] },
+        11: { correct:'était partie',    options:['était partie','partait','sera partie'] },
+        12: { correct:'serais',          options:['serais','serai','suis'] },
+        13: { correct:'arriverez',       typed:true },
+        14: { correct:'gagnerons',       typed:true },
+        15: { correct:'parcourrais',     typed:true },
+        16: { correct:'disais',          typed:true },
+        17: { correct:'serions',         typed:true },
+        18: { correct:'aurais été',      typed:true },
+    };
+
+    function shuffle(arr) {
+        const a = [...arr];
+        for (let i = a.length-1; i > 0; i--) {
+            const j = Math.floor(Math.random()*(i+1));
+            [a[i],a[j]] = [a[j],a[i]];
+        }
+        return a;
+    }
+
+    function normalize(str) {
+        return str.trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+    }
+
+    function updateProgress() {
+        document.getElementById('progressFill').style.width = (answered.size/TOTAL*100)+'%';
+    }
+
+    function buildMCQ(i) {
+        const c = document.getElementById('options'+i);
+        c.innerHTML = '';
+        shuffle(questions[i].options).forEach(opt => {
+            const btn = document.createElement('button');
+            btn.className = 'btn btn-outline-primary btn-option w-100';
+            btn.textContent = opt;
+            btn.onclick = () => checkMCQ(i, opt, btn);
+            c.appendChild(btn);
+        });
+    }
+
+    function buildTyped(i) {
+        const c = document.getElementById('options'+i);
+        c.innerHTML = '';
+        const wrap = document.createElement('div');
+        wrap.className = 'type-input-wrap';
+
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.className = 'type-input';
+        input.id = 'input'+i;
+        input.placeholder = 'Scrivi il verbo…';
+        input.autocomplete = 'off';
+        input.addEventListener('keydown', e => { if(e.key==='Enter') checkTyped(i); });
+
+        const btn = document.createElement('button');
+        btn.className = 'btn btn-primary btn-submit-answer';
+        btn.textContent = 'Conferma ↵';
+        btn.onclick = () => checkTyped(i);
+
+        wrap.appendChild(input);
+        wrap.appendChild(btn);
+        c.appendChild(wrap);
+    }
+
+    function checkMCQ(qNum, selected, button) {
+        if (answered.has(qNum)) return;
+        answered.add(qNum);
+
+        const correct = questions[qNum].correct;
+        const fb = document.getElementById('feedback'+qNum);
+        const allBtns = document.getElementById('q'+qNum).querySelectorAll('.btn-option');
+        allBtns.forEach(b => b.disabled = true);
+
+        if (selected === correct) {
+            button.classList.add('correct');
+            fb.textContent = '✓ Corretto!';
+            fb.className = 'feedback show success';
+            score++;
+            document.getElementById('score').textContent = score;
+        } else {
+            button.classList.add('incorrect');
+            fb.textContent = `✗ Sbagliato! La risposta corretta è: ${correct}`;
+            fb.className = 'feedback show error';
+            allBtns.forEach(b => { if(b.textContent===correct) b.classList.add('correct'); });
+        }
+        updateProgress();
+        checkLevelComplete();
+    }
+
+    function checkTyped(qNum) {
+        if (answered.has(qNum)) return;
+        const input = document.getElementById('input'+qNum);
+        const userVal = input.value;
+        if (!userVal.trim()) return;
+
+        answered.add(qNum);
+        input.disabled = true;
+        input.parentElement.querySelector('button').disabled = true;
+
+        const correct = questions[qNum].correct;
+        const fb = document.getElementById('feedback'+qNum);
+        const exact = userVal.trim() === correct;
+        const loose = normalize(userVal) === normalize(correct);
+
+        if (exact) {
+            input.classList.add('input-correct');
+            fb.textContent = '✓ Parfait!';
+            fb.className = 'feedback show success';
+            score++;
+            document.getElementById('score').textContent = score;
+        } else if (loose) {
+            input.classList.add('input-close');
+            fb.innerHTML = `⚠️ Quasi! Attenzione agli accenti — risposta corretta: <strong>${correct}</strong>`;
+            fb.className = 'feedback show close-enough';
+            score++;
+            document.getElementById('score').textContent = score;
+        } else {
+            input.classList.add('input-incorrect');
+            fb.innerHTML = `✗ Sbagliato! La risposta corretta è: <strong>${correct}</strong>`;
+            fb.className = 'feedback show error';
+        }
+        updateProgress();
+        checkLevelComplete();
+    }
+
+    function checkLevelComplete() {
+        if      (currentLevel===1 && answered.size===6)  document.getElementById('nextLevel2Btn').style.display='inline-block';
+        else if (currentLevel===2 && answered.size===12) document.getElementById('nextLevel3Btn').style.display='inline-block';
+        else if (currentLevel===3 && answered.size===18) document.getElementById('showResultsBtn').style.display='inline-block';
+    }
+
+    function goToLevel(n) {
+        currentLevel = n;
+        document.getElementById('level'+(n-1)).style.display = 'none';
+        document.getElementById('level'+n).style.display = 'block';
+        window.scrollTo({top:0, behavior:'smooth'});
+        // Auto-focus first input in level 3
+        if (n===3) setTimeout(()=>{ const el=document.getElementById('input13'); if(el) el.focus(); }, 200);
+    }
+
+    function showFinalResults() {
+        document.getElementById('level3').style.display = 'none';
+        document.getElementById('finalResults').style.display = 'block';
+        document.getElementById('finalScore').textContent = score+'/18';
+        const pct = score/18*100;
+        const msg =
+            pct===100 ? '🌟 Parfait! Sei un maestro assoluto del francese!' :
+            pct>=83   ? '🎊 Très bien! Ottima padronanza!' :
+            pct>=66   ? '👍 Bien! Continua ad esercitarti!' :
+            pct>=50   ? '📚 Pas mal! Un ripasso e ci siamo!' :
+                        '💪 Courage! Riprova, migliorai!';
+        document.getElementById('resultMessage').textContent = msg;
+        window.scrollTo({top:0, behavior:'smooth'});
+    }
+
+    function resetQuiz() {
+        score = 0;
+        answered.clear();
+        currentLevel = 1;
+        document.getElementById('score').textContent = 0;
+        updateProgress();
+
+        ['level1','level2','level3','finalResults'].forEach((id,i)=>{
+            document.getElementById(id).style.display = i===0?'block':'none';
+        });
+        ['nextLevel2Btn','nextLevel3Btn','showResultsBtn'].forEach(id=>{
+            document.getElementById(id).style.display='none';
+        });
+
+        for(let i=1;i<=18;i++){
+            const fb=document.getElementById('feedback'+i);
+            fb.className='feedback'; fb.textContent='';
+        }
+        initializeQuiz();
+        window.scrollTo({top:0, behavior:'smooth'});
+    }
+
+    function initializeQuiz() {
+        for(let i=1; i<=12; i++) buildMCQ(i);
+        for(let i=13; i<=18; i++) buildTyped(i);
+    }
+
+    window.onload = initializeQuiz;
+</script>
+</body>
+</html>
