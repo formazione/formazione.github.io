@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conjugaison Française</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2C3E50;
+            --secondary: #E74C3C;
+            --accent: #3498DB;
+            --bg-light: #FAF9F6;
+            --bg-card: #FFFFFF;
+            --text: #2C3E50;
+            --text-muted: #7F8C8D;
+            --border: #E8E5E0;
+            --shadow: rgba(44, 62, 80, 0.08);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'IBM Plex Sans', sans-serif;
+            background: var(--bg-light);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        header {
+            background: var(--primary);
+            color: white;
+            padding: 3rem 2rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(231, 76, 60, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(52, 152, 219, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.02em;
+            position: relative;
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            font-weight: 300;
+            position: relative;
+            animation: fadeInUp 0.8s ease-out 0.2s both;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .search-section {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 20px var(--shadow);
+            animation: fadeInUp 0.8s ease-out 0.4s both;
+        }
+
+        .search-wrapper {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        input[type="text"] {
+            flex: 1;
+            min-width: 250px;
+            padding: 1rem 1.5rem;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-family: 'IBM Plex Sans', sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 4px rgba(52, 152, 219, 0.1);
+        }
+
+        button {
+            padding: 1rem 2rem;
+            background: var(--secondary);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'IBM Plex Sans', sans-serif;
+        }
+
+        button:hover {
+            background: #C0392B;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(231, 76, 60, 0.3);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .examples {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .example-btn {
+            padding: 0.5rem 1rem;
+            background: var(--bg-light);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text);
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .example-btn:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            transform: translateY(-1px);
+        }
+
+        .results {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .verb-header {
+            background: linear-gradient(135deg, var(--primary) 0%, #34495E 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 16px 16px 0 0;
+            margin-bottom: 0;
+        }
+
+        .verb-infinitive {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .verb-info {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        .conjugation-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            padding: 2rem;
+            background: var(--bg-card);
+            border-radius: 0 0 16px 16px;
+            box-shadow: 0 4px 20px var(--shadow);
+        }
+
+        .tense-block {
+            background: var(--bg-light);
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.5s ease-out both;
+        }
+
+        .tense-block:nth-child(1) { animation-delay: 0.1s; }
+        .tense-block:nth-child(2) { animation-delay: 0.15s; }
+        .tense-block:nth-child(3) { animation-delay: 0.2s; }
+        .tense-block:nth-child(4) { animation-delay: 0.25s; }
+        .tense-block:nth-child(5) { animation-delay: 0.3s; }
+        .tense-block:nth-child(6) { animation-delay: 0.35s; }
+
+        .tense-block:hover {
+            box-shadow: 0 8px 24px var(--shadow);
+            transform: translateY(-4px);
+        }
+
+        .tense-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--secondary);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--border);
+        }
+
+        .conjugation-list {
+            list-style: none;
+        }
+
+        .conjugation-item {
+            padding: 0.6rem 0;
+            display: grid;
+            grid-template-columns: 80px 1fr;
+            gap: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .conjugation-item:last-child {
+            border-bottom: none;
+        }
+
+        .pronoun {
+            font-weight: 500;
+            color: var(--text-muted);
+        }
+
+        .verb-form {
+            color: var(--text);
+            font-weight: 400;
+        }
+
+        .error {
+            background: #FFF5F5;
+            border: 2px solid #FC8181;
+            border-radius: 12px;
+            padding: 1.5rem;
+            color: #C53030;
+            text-align: center;
+            animation: shake 0.5s ease-out;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 3rem;
+            color: var(--text-muted);
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .search-wrapper {
+                flex-direction: column;
+            }
+            
+            input[type="text"] {
+                min-width: 100%;
+            }
+            
+            .conjugation-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Conjugaison Française</h1>
+        <p class="subtitle">Tous les temps, tous les modes</p>
+    </header>
+
+    <div class="container">
+        <div class="search-section">
+            <div class="search-wrapper">
+                <input type="text" id="verbInput" placeholder="Entrez un verbe (ex: parler, finir, être...)" autocomplete="off">
+                <button onclick="conjugateVerb()">Conjuguer</button>
+            </div>
+            <div class="examples">
+                <span style="color: var(--text-muted); font-size: 0.9rem; margin-right: 0.5rem;">Exemples:</span>
+                <button class="example-btn" onclick="setVerb('être')">être</button>
+                <button class="example-btn" onclick="setVerb('avoir')">avoir</button>
+                <button class="example-btn" onclick="setVerb('aller')">aller</button>
+                <button class="example-btn" onclick="setVerb('faire')">faire</button>
+                <button class="example-btn" onclick="setVerb('pouvoir')">pouvoir</button>
+                <button class="example-btn" onclick="setVerb('vouloir')">vouloir</button>
+                <button class="example-btn" onclick="setVerb('parler')">parler</button>
+                <button class="example-btn" onclick="setVerb('finir')">finir</button>
+            </div>
+        </div>
+
+        <div id="results"></div>
+    </div>
+
+    <script>
+        // Comprehensive French verb conjugation data
+        const verbDatabase = {
+            // Être - to be
+            être: {
+                group: "Auxiliaire",
+                présent: ["suis", "es", "est", "sommes", "êtes", "sont"],
+                imparfait: ["étais", "étais", "était", "étions", "étiez", "étaient"],
+                passé_simple: ["fus", "fus", "fut", "fûmes", "fûtes", "furent"],
+                futur: ["serai", "seras", "sera", "serons", "serez", "seront"],
+                conditionnel: ["serais", "serais", "serait", "serions", "seriez", "seraient"],
+                subjonctif: ["sois", "sois", "soit", "soyons", "soyez", "soient"],
+                impératif: [null, "sois", null, "soyons", "soyez", null],
+                participe_présent: "étant",
+                participe_passé: "été"
+            },
+            
+            // Avoir - to have
+            avoir: {
+                group: "Auxiliaire",
+                présent: ["ai", "as", "a", "avons", "avez", "ont"],
+                imparfait: ["avais", "avais", "avait", "avions", "aviez", "avaient"],
+                passé_simple: ["eus", "eus", "eut", "eûmes", "eûtes", "eurent"],
+                futur: ["aurai", "auras", "aura", "aurons", "aurez", "auront"],
+                conditionnel: ["aurais", "aurais", "aurait", "aurions", "auriez", "auraient"],
+                subjonctif: ["aie", "aies", "ait", "ayons", "ayez", "aient"],
+                impératif: [null, "aie", null, "ayons", "ayez", null],
+                participe_présent: "ayant",
+                participe_passé: "eu"
+            },
+
+            // Aller - to go
+            aller: {
+                group: "Verbe du 3ème groupe",
+                présent: ["vais", "vas", "va", "allons", "allez", "vont"],
+                imparfait: ["allais", "allais", "allait", "allions", "alliez", "allaient"],
+                passé_simple: ["allai", "allas", "alla", "allâmes", "allâtes", "allèrent"],
+                futur: ["irai", "iras", "ira", "irons", "irez", "iront"],
+                conditionnel: ["irais", "irais", "irait", "irions", "iriez", "iraient"],
+                subjonctif: ["aille", "ailles", "aille", "allions", "alliez", "aillent"],
+                impératif: [null, "va", null, "allons", "allez", null],
+                participe_présent: "allant",
+                participe_passé: "allé"
+            },
+
+            // Faire - to do/make
+            faire: {
+                group: "Verbe du 3ème groupe",
+                présent: ["fais", "fais", "fait", "faisons", "faites", "font"],
+                imparfait: ["faisais", "faisais", "faisait", "faisions", "faisiez", "faisaient"],
+                passé_simple: ["fis", "fis", "fit", "fîmes", "fîtes", "firent"],
+                futur: ["ferai", "feras", "fera", "ferons", "ferez", "feront"],
+                conditionnel: ["ferais", "ferais", "ferait", "ferions", "feriez", "feraient"],
+                subjonctif: ["fasse", "fasses", "fasse", "fassions", "fassiez", "fassent"],
+                impératif: [null, "fais", null, "faisons", "faites", null],
+                participe_présent: "faisant",
+                participe_passé: "fait"
+            },
+
+            // Pouvoir - can/to be able
+            pouvoir: {
+                group: "Verbe du 3ème groupe",
+                présent: ["peux", "peux", "peut", "pouvons", "pouvez", "peuvent"],
+                imparfait: ["pouvais", "pouvais", "pouvait", "pouvions", "pouviez", "pouvaient"],
+                passé_simple: ["pus", "pus", "put", "pûmes", "pûtes", "purent"],
+                futur: ["pourrai", "pourras", "pourra", "pourrons", "pourrez", "pourront"],
+                conditionnel: ["pourrais", "pourrais", "pourrait", "pourrions", "pourriez", "pourraient"],
+                subjonctif: ["puisse", "puisses", "puisse", "puissions", "puissiez", "puissent"],
+                impératif: [null, null, null, null, null, null],
+                participe_présent: "pouvant",
+                participe_passé: "pu"
+            },
+
+            // Vouloir - to want
+            vouloir: {
+                group: "Verbe du 3ème groupe",
+                présent: ["veux", "veux", "veut", "voulons", "voulez", "veulent"],
+                imparfait: ["voulais", "voulais", "voulait", "voulions", "vouliez", "voulaient"],
+                passé_simple: ["voulus", "voulus", "voulut", "voulûmes", "voulûtes", "voulurent"],
+                futur: ["voudrai", "voudras", "voudra", "voudrons", "voudrez", "voudront"],
+                conditionnel: ["voudrais", "voudrais", "voudrait", "voudrions", "voudriez", "voudraient"],
+                subjonctif: ["veuille", "veuilles", "veuille", "voulions", "vouliez", "veuillent"],
+                impératif: [null, "veuille", null, "veuillons", "veuillez", null],
+                participe_présent: "voulant",
+                participe_passé: "voulu"
+            },
+
+            // Parler - to speak (1st group model)
+            parler: {
+                group: "Verbe du 1er groupe",
+                présent: ["parle", "parles", "parle", "parlons", "parlez", "parlent"],
+                imparfait: ["parlais", "parlais", "parlait", "parlions", "parliez", "parlaient"],
+                passé_simple: ["parlai", "parlas", "parla", "parlâmes", "parlâtes", "parlèrent"],
+                futur: ["parlerai", "parleras", "parlera", "parlerons", "parlerez", "parleront"],
+                conditionnel: ["parlerais", "parlerais", "parlerait", "parlerions", "parleriez", "parleraient"],
+                subjonctif: ["parle", "parles", "parle", "parlions", "parliez", "parlent"],
+                impératif: [null, "parle", null, "parlons", "parlez", null],
+                participe_présent: "parlant",
+                participe_passé: "parlé"
+            },
+
+            // Finir - to finish (2nd group model)
+            finir: {
+                group: "Verbe du 2ème groupe",
+                présent: ["finis", "finis", "finit", "finissons", "finissez", "finissent"],
+                imparfait: ["finissais", "finissais", "finissait", "finissions", "finissiez", "finissaient"],
+                passé_simple: ["finis", "finis", "finit", "finîmes", "finîtes", "finirent"],
+                futur: ["finirai", "finiras", "finira", "finirons", "finirez", "finiront"],
+                conditionnel: ["finirais", "finirais", "finirait", "finirions", "finiriez", "finiraient"],
+                subjonctif: ["finisse", "finisses", "finisse", "finissions", "finissiez", "finissent"],
+                impératif: [null, "finis", null, "finissons", "finissez", null],
+                participe_présent: "finissant",
+                participe_passé: "fini"
+            },
+
+            // Additional common verbs
+            dire: {
+                group: "Verbe du 3ème groupe",
+                présent: ["dis", "dis", "dit", "disons", "dites", "disent"],
+                imparfait: ["disais", "disais", "disait", "disions", "disiez", "disaient"],
+                passé_simple: ["dis", "dis", "dit", "dîmes", "dîtes", "dirent"],
+                futur: ["dirai", "diras", "dira", "dirons", "direz", "diront"],
+                conditionnel: ["dirais", "dirais", "dirait", "dirions", "diriez", "diraient"],
+                subjonctif: ["dise", "dises", "dise", "disions", "disiez", "disent"],
+                impératif: [null, "dis", null, "disons", "dites", null],
+                participe_présent: "disant",
+                participe_passé: "dit"
+            },
+
+            voir: {
+                group: "Verbe du 3ème groupe",
+                présent: ["vois", "vois", "voit", "voyons", "voyez", "voient"],
+                imparfait: ["voyais", "voyais", "voyait", "voyions", "voyiez", "voyaient"],
+                passé_simple: ["vis", "vis", "vit", "vîmes", "vîtes", "virent"],
+                futur: ["verrai", "verras", "verra", "verrons", "verrez", "verront"],
+                conditionnel: ["verrais", "verrais", "verrait", "verrions", "verriez", "verraient"],
+                subjonctif: ["voie", "voies", "voie", "voyions", "voyiez", "voient"],
+                impératif: [null, "vois", null, "voyons", "voyez", null],
+                participe_présent: "voyant",
+                participe_passé: "vu"
+            },
+
+            savoir: {
+                group: "Verbe du 3ème groupe",
+                présent: ["sais", "sais", "sait", "savons", "savez", "savent"],
+                imparfait: ["savais", "savais", "savait", "savions", "saviez", "savaient"],
+                passé_simple: ["sus", "sus", "sut", "sûmes", "sûtes", "surent"],
+                futur: ["saurai", "sauras", "saura", "saurons", "saurez", "sauront"],
+                conditionnel: ["saurais", "saurais", "saurait", "saurions", "sauriez", "sauraient"],
+                subjonctif: ["sache", "saches", "sache", "sachions", "sachiez", "sachent"],
+                impératif: [null, "sache", null, "sachons", "sachez", null],
+                participe_présent: "sachant",
+                participe_passé: "su"
+            },
+
+            venir: {
+                group: "Verbe du 3ème groupe",
+                présent: ["viens", "viens", "vient", "venons", "venez", "viennent"],
+                imparfait: ["venais", "venais", "venait", "venions", "veniez", "venaient"],
+                passé_simple: ["vins", "vins", "vint", "vînmes", "vîntes", "vinrent"],
+                futur: ["viendrai", "viendras", "viendra", "viendrons", "viendrez", "viendront"],
+                conditionnel: ["viendrais", "viendrais", "viendrait", "viendrions", "viendriez", "viendraient"],
+                subjonctif: ["vienne", "viennes", "vienne", "venions", "veniez", "viennent"],
+                impératif: [null, "viens", null, "venons", "venez", null],
+                participe_présent: "venant",
+                participe_passé: "venu"
+            },
+
+            prendre: {
+                group: "Verbe du 3ème groupe",
+                présent: ["prends", "prends", "prend", "prenons", "prenez", "prennent"],
+                imparfait: ["prenais", "prenais", "prenait", "prenions", "preniez", "prenaient"],
+                passé_simple: ["pris", "pris", "prit", "prîmes", "prîtes", "prirent"],
+                futur: ["prendrai", "prendras", "prendra", "prendrons", "prendrez", "prendront"],
+                conditionnel: ["prendrais", "prendrais", "prendrait", "prendrions", "prendriez", "prendraient"],
+                subjonctif: ["prenne", "prennes", "prenne", "prenions", "preniez", "prennent"],
+                impératif: [null, "prends", null, "prenons", "prenez", null],
+                participe_présent: "prenant",
+                participe_passé: "pris"
+            },
+
+            donner: {
+                group: "Verbe du 1er groupe",
+                présent: ["donne", "donnes", "donne", "donnons", "donnez", "donnent"],
+                imparfait: ["donnais", "donnais", "donnait", "donnions", "donniez", "donnaient"],
+                passé_simple: ["donnai", "donnas", "donna", "donnâmes", "donnâtes", "donnèrent"],
+                futur: ["donnerai", "donneras", "donnera", "donnerons", "donnerez", "donneront"],
+                conditionnel: ["donnerais", "donnerais", "donnerait", "donnerions", "donneriez", "donneraient"],
+                subjonctif: ["donne", "donnes", "donne", "donnions", "donniez", "donnent"],
+                impératif: [null, "donne", null, "donnons", "donnez", null],
+                participe_présent: "donnant",
+                participe_passé: "donné"
+            },
+
+            manger: {
+                group: "Verbe du 1er groupe",
+                présent: ["mange", "manges", "mange", "mangeons", "mangez", "mangent"],
+                imparfait: ["mangeais", "mangeais", "mangeait", "mangions", "mangiez", "mangeaient"],
+                passé_simple: ["mangeai", "mangeas", "mangea", "mangeâmes", "mangeâtes", "mangèrent"],
+                futur: ["mangerai", "mangeras", "mangera", "mangerons", "mangerez", "mangeront"],
+                conditionnel: ["mangerais", "mangerais", "mangerait", "mangerions", "mangeriez", "mangeraient"],
+                subjonctif: ["mange", "manges", "mange", "mangions", "mangiez", "mangent"],
+                impératif: [null, "mange", null, "mangeons", "mangez", null],
+                participe_présent: "mangeant",
+                participe_passé: "mangé"
+            },
+
+            aimer: {
+                group: "Verbe du 1er groupe",
+                présent: ["aime", "aimes", "aime", "aimons", "aimez", "aiment"],
+                imparfait: ["aimais", "aimais", "aimait", "aimions", "aimiez", "aimaient"],
+                passé_simple: ["aimai", "aimas", "aima", "aimâmes", "aimâtes", "aimèrent"],
+                futur: ["aimerai", "aimeras", "aimera", "aimerons", "aimerez", "aimeront"],
+                conditionnel: ["aimerais", "aimerais", "aimerait", "aimerions", "aimeriez", "aimeraient"],
+                subjonctif: ["aime", "aimes", "aime", "aimions", "aimiez", "aiment"],
+                impératif: [null, "aime", null, "aimons", "aimez", null],
+                participe_présent: "aimant",
+                participe_passé: "aimé"
+            },
+
+            choisir: {
+                group: "Verbe du 2ème groupe",
+                présent: ["choisis", "choisis", "choisit", "choisissons", "choisissez", "choisissent"],
+                imparfait: ["choisissais", "choisissais", "choisissait", "choisissions", "choisissiez", "choisissaient"],
+                passé_simple: ["choisis", "choisis", "choisit", "choisîmes", "choisîtes", "choisirent"],
+                futur: ["choisirai", "choisiras", "choisira", "choisirons", "choisirez", "choisiront"],
+                conditionnel: ["choisirais", "choisirais", "choisirait", "choisirions", "choisiriez", "choisiraient"],
+                subjonctif: ["choisisse", "choisisses", "choisisse", "choisissions", "choisissiez", "choisissent"],
+                impératif: [null, "choisis", null, "choisissons", "choisissez", null],
+                participe_présent: "choisissant",
+                participe_passé: "choisi"
+            },
+
+            devoir: {
+                group: "Verbe du 3ème groupe",
+                présent: ["dois", "dois", "doit", "devons", "devez", "doivent"],
+                imparfait: ["devais", "devais", "devait", "devions", "deviez", "devaient"],
+                passé_simple: ["dus", "dus", "dut", "dûmes", "dûtes", "durent"],
+                futur: ["devrai", "devras", "devra", "devrons", "devrez", "devront"],
+                conditionnel: ["devrais", "devrais", "devrait", "devrions", "devriez", "devraient"],
+                subjonctif: ["doive", "doives", "doive", "devions", "deviez", "doivent"],
+                impératif: [null, "dois", null, "devons", "devez", null],
+                participe_présent: "devant",
+                participe_passé: "dû"
+            },
+
+            mettre: {
+                group: "Verbe du 3ème groupe",
+                présent: ["mets", "mets", "met", "mettons", "mettez", "mettent"],
+                imparfait: ["mettais", "mettais", "mettait", "mettions", "mettiez", "mettaient"],
+                passé_simple: ["mis", "mis", "mit", "mîmes", "mîtes", "mirent"],
+                futur: ["mettrai", "mettras", "mettra", "mettrons", "mettrez", "mettront"],
+                conditionnel: ["mettrais", "mettrais", "mettrait", "mettrions", "mettriez", "mettraient"],
+                subjonctif: ["mette", "mettes", "mette", "mettions", "mettiez", "mettent"],
+                impératif: [null, "mets", null, "mettons", "mettez", null],
+                participe_présent: "mettant",
+                participe_passé: "mis"
+            },
+
+            connaître: {
+                group: "Verbe du 3ème groupe",
+                présent: ["connais", "connais", "connaît", "connaissons", "connaissez", "connaissent"],
+                imparfait: ["connaissais", "connaissais", "connaissait", "connaissions", "connaissiez", "connaissaient"],
+                passé_simple: ["connus", "connus", "connut", "connûmes", "connûtes", "connurent"],
+                futur: ["connaîtrai", "connaîtras", "connaîtra", "connaîtrons", "connaîtrez", "connaîtront"],
+                conditionnel: ["connaîtrais", "connaîtrais", "connaîtrait", "connaîtrions", "connaîtriez", "connaîtraient"],
+                subjonctif: ["connaisse", "connaisses", "connaisse", "connaissions", "connaissiez", "connaissent"],
+                impératif: [null, "connais", null, "connaissons", "connaissez", null],
+                participe_présent: "connaissant",
+                participe_passé: "connu"
+            },
+
+            sortir: {
+                group: "Verbe du 3ème groupe",
+                présent: ["sors", "sors", "sort", "sortons", "sortez", "sortent"],
+                imparfait: ["sortais", "sortais", "sortait", "sortions", "sortiez", "sortaient"],
+                passé_simple: ["sortis", "sortis", "sortit", "sortîmes", "sortîtes", "sortirent"],
+                futur: ["sortirai", "sortiras", "sortira", "sortirons", "sortirez", "sortiront"],
+                conditionnel: ["sortirais", "sortirais", "sortirait", "sortirions", "sortiriez", "sortiraient"],
+                subjonctif: ["sorte", "sortes", "sorte", "sortions", "sortiez", "sortent"],
+                impératif: [null, "sors", null, "sortons", "sortez", null],
+                participe_présent: "sortant",
+                participe_passé: "sorti"
+            },
+
+            partir: {
+                group: "Verbe du 3ème groupe",
+                présent: ["pars", "pars", "part", "partons", "partez", "partent"],
+                imparfait: ["partais", "partais", "partait", "partions", "partiez", "partaient"],
+                passé_simple: ["partis", "partis", "partit", "partîmes", "partîtes", "partirent"],
+                futur: ["partirai", "partiras", "partira", "partirons", "partirez", "partiront"],
+                conditionnel: ["partirais", "partirais", "partirait", "partirions", "partiriez", "partiraient"],
+                subjonctif: ["parte", "partes", "parte", "partions", "partiez", "partent"],
+                impératif: [null, "pars", null, "partons", "partez", null],
+                participe_présent: "partant",
+                participe_passé: "parti"
+            }
+        };
+
+        const pronouns = ["je", "tu", "il/elle", "nous", "vous", "ils/elles"];
+
+        function setVerb(verb) {
+            document.getElementById('verbInput').value = verb;
+            conjugateVerb();
+        }
+
+        function conjugateVerb() {
+            const input = document.getElementById('verbInput').value.trim().toLowerCase();
+            const results = document.getElementById('results');
+
+            if (!input) {
+                results.innerHTML = '<div class="error">Veuillez entrer un verbe</div>';
+                return;
+            }
+
+            const verbData = verbDatabase[input];
+
+            if (!verbData) {
+                results.innerHTML = `<div class="error">Le verbe "${input}" n'est pas encore dans notre base de données. Essayez: ${Object.keys(verbDatabase).slice(0, 5).join(', ')}...</div>`;
+                return;
+            }
+
+            let html = `
+                <div class="verb-header">
+                    <div class="verb-infinitive">${input.charAt(0).toUpperCase() + input.slice(1)}</div>
+                    <div class="verb-info">${verbData.group}</div>
+                </div>
+                <div class="conjugation-grid">
+            `;
+
+            // Indicatif Présent
+            html += createTenseBlock("Indicatif Présent", verbData.présent, pronouns);
+
+            // Imparfait
+            html += createTenseBlock("Imparfait", verbData.imparfait, pronouns);
+
+            // Passé Simple
+            html += createTenseBlock("Passé Simple", verbData.passé_simple, pronouns);
+
+            // Futur
+            html += createTenseBlock("Futur", verbData.futur, pronouns);
+
+            // Conditionnel
+            html += createTenseBlock("Conditionnel", verbData.conditionnel, pronouns);
+
+            // Subjonctif
+            html += createTenseBlock("Subjonctif Présent", verbData.subjonctif, pronouns);
+
+            // Impératif
+            const impératifPronouns = ["", "tu", "", "nous", "vous", ""];
+            html += createTenseBlock("Impératif", verbData.impératif, impératifPronouns, true);
+
+            // Participes
+            html += `
+                <div class="tense-block">
+                    <h3 class="tense-title">Participes</h3>
+                    <ul class="conjugation-list">
+                        <li class="conjugation-item">
+                            <span class="pronoun">Présent</span>
+                            <span class="verb-form">${verbData.participe_présent}</span>
+                        </li>
+                        <li class="conjugation-item">
+                            <span class="pronoun">Passé</span>
+                            <span class="verb-form">${verbData.participe_passé}</span>
+                        </li>
+                    </ul>
+                </div>
+            `;
+
+            html += '</div>';
+            results.innerHTML = html;
+        }
+
+        function createTenseBlock(title, forms, pronouns, isImperative = false) {
+            let html = `
+                <div class="tense-block">
+                    <h3 class="tense-title">${title}</h3>
+                    <ul class="conjugation-list">
+            `;
+
+            for (let i = 0; i < forms.length; i++) {
+                if (forms[i] !== null) {
+                    const pronoun = isImperative && pronouns[i] === "" ? "" : pronouns[i];
+                    html += `
+                        <li class="conjugation-item">
+                            <span class="pronoun">${pronoun}</span>
+                            <span class="verb-form">${forms[i]}</span>
+                        </li>
+                    `;
+                }
+            }
+
+            html += `
+                    </ul>
+                </div>
+            `;
+
+            return html;
+        }
+
+        // Allow Enter key to trigger conjugation
+        document.getElementById('verbInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                conjugateVerb();
+            }
+        });
+    </script>
+</body>
+</html>
