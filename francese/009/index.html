@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exercice Français – Les Conditionnels</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0f0e0b;
+    --paper: #1a1814;
+    --accent: #d4a853;
+    --accent2: #8fb4a0;
+    --text: #e8e2d4;
+    --muted: #6b6558;
+    --correct: #6dba8a;
+    --wrong: #c96b6b;
+    --border: #2e2b24;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Source Code Pro', monospace;
+    min-height: 100vh;
+    padding: 40px 20px;
+    background-image: 
+      radial-gradient(ellipse 80% 40% at 50% 0%, rgba(212,168,83,0.06) 0%, transparent 60%),
+      repeating-linear-gradient(0deg, transparent, transparent 40px, rgba(255,255,255,0.01) 40px, rgba(255,255,255,0.01) 41px);
+  }
+
+  .container {
+    max-width: 740px;
+    margin: 0 auto;
+  }
+
+  header {
+    text-align: center;
+    margin-bottom: 48px;
+  }
+
+  .label {
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 5vw, 42px);
+    font-weight: 400;
+    color: var(--text);
+    line-height: 1.2;
+    margin-bottom: 8px;
+  }
+
+  h1 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .subtitle {
+    font-size: 13px;
+    color: var(--muted);
+    letter-spacing: 1px;
+  }
+
+  .divider {
+    width: 60px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    margin: 24px auto;
+  }
+
+  .exercise {
+    background: var(--paper);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 32px;
+    margin-bottom: 24px;
+  }
+
+  .sentence {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 18px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 15px;
+    line-height: 1.8;
+    position: relative;
+    animation: fadeIn 0.4s ease both;
+  }
+
+  .sentence:last-child { border-bottom: none; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .num {
+    font-size: 11px;
+    color: var(--muted);
+    min-width: 20px;
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+  }
+
+  .text { color: var(--text); }
+
+  .hint {
+    font-size: 12px;
+    color: var(--accent);
+    opacity: 0.7;
+    font-style: italic;
+  }
+
+  .input-wrap {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  input[type="text"] {
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid var(--muted);
+    color: var(--text);
+    font-family: 'Source Code Pro', monospace;
+    font-size: 15px;
+    padding: 2px 8px;
+    min-width: 160px;
+    width: 160px;
+    outline: none;
+    transition: border-color 0.2s;
+    text-align: center;
+  }
+
+  input[type="text"]:focus {
+    border-bottom-color: var(--accent);
+  }
+
+  input[type="text"].correct {
+    border-bottom-color: var(--correct);
+    color: var(--correct);
+  }
+
+  input[type="text"].wrong {
+    border-bottom-color: var(--wrong);
+    color: var(--wrong);
+    animation: shake 0.3s ease;
+  }
+
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-4px); }
+    75% { transform: translateX(4px); }
+  }
+
+  .feedback-icon {
+    font-size: 14px;
+    margin-left: 6px;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .feedback-icon.show { opacity: 1; }
+
+  .solution-text {
+    font-size: 12px;
+    color: var(--correct);
+    margin-top: 4px;
+    display: none;
+    width: 100%;
+    padding-left: 28px;
+  }
+
+  .solution-text.show { display: block; }
+
+  .actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 28px;
+  }
+
+  button {
+    font-family: 'Source Code Pro', monospace;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 12px 28px;
+    border: 1px solid var(--accent);
+    background: transparent;
+    color: var(--accent);
+    cursor: pointer;
+    transition: all 0.2s;
+    border-radius: 2px;
+  }
+
+  button:hover {
+    background: var(--accent);
+    color: var(--bg);
+  }
+
+  button.secondary {
+    border-color: var(--muted);
+    color: var(--muted);
+  }
+
+  button.secondary:hover {
+    background: var(--muted);
+    color: var(--bg);
+  }
+
+  .score-bar {
+    background: var(--paper);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 20px 32px;
+    text-align: center;
+    display: none;
+    animation: fadeIn 0.5s ease;
+  }
+
+  .score-bar.show { display: block; }
+
+  .score-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 48px;
+    color: var(--accent);
+  }
+
+  .score-label {
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+
+  .progress {
+    display: flex;
+    gap: 4px;
+    justify-content: center;
+    margin-top: 16px;
+  }
+
+  .dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--border);
+    transition: background 0.3s;
+  }
+  .dot.c { background: var(--correct); }
+  .dot.w { background: var(--wrong); }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <div class="label">Grammaire Française</div>
+    <h1>Les <em>Conditionnels</em></h1>
+    <div class="subtitle">Complétez avec la forme correcte du verbe</div>
+    <div class="divider"></div>
+  </header>
+
+  <div class="exercise" id="exercise"></div>
+
+  <div class="actions">
+    <button onclick="checkAll()">Vérifier tout</button>
+    <button class="secondary" onclick="showSolutions()">Solutions</button>
+    <button class="secondary" onclick="resetAll()">Recommencer</button>
+  </div>
+
+  <div class="score-bar" id="scoreBar">
+    <div class="score-num" id="scoreNum">0/10</div>
+    <div class="score-label">réponses correctes</div>
+    <div class="progress" id="progressDots"></div>
+  </div>
+</div>
+
+<script>
+const sentences = [
+  {
+    before: "Si tu",
+    after: "tes devoirs, tu pourras sortir.",
+    hint: "finir",
+    answer: "finis",
+    alt: []
+  },
+  {
+    before: "Si j'avais su la vérité, je",
+    after: ".",
+    hint: "ne pas venir",
+    answer: "ne serais pas venu",
+    alt: ["ne serais pas venue"]
+  },
+  {
+    before: "Si elle",
+    after: "plus patiente, tout irait mieux.",
+    hint: "être",
+    answer: "était",
+    alt: []
+  },
+  {
+    before: "Si nous avions pris le bus, nous",
+    after: "plus tôt.",
+    hint: "arriver",
+    answer: "serions arrivés",
+    alt: ["serions arrivées"]
+  },
+  {
+    before: "Si vous avez besoin d'aide, je vous",
+    after: ".",
+    hint: "aider",
+    answer: "aiderai",
+    alt: []
+  },
+  {
+    before: "Si je",
+    after: "plus d'argent, je voyagerais davantage.",
+    hint: "avoir",
+    answer: "avais",
+    alt: []
+  },
+  {
+    before: "Si ils étaient partis plus tôt, ils",
+    after: "le train.",
+    hint: "ne pas rater",
+    answer: "n'auraient pas raté",
+    alt: ["n'auraient pas rate"]
+  },
+  {
+    before: "Si tu avais étudié, tu",
+    after: "l'examen.",
+    hint: "réussir",
+    answer: "aurais réussi",
+    alt: ["aurais reussi"]
+  },
+  {
+    before: "Si elle",
+    after: "bien, elle réussira.",
+    hint: "travailler",
+    answer: "travaille",
+    alt: []
+  },
+  {
+    before: "Si nous",
+    after: "les clés, nous serions entrés.",
+    hint: "ne pas oublier",
+    answer: "n'avions pas oublié",
+    alt: ["n'avions pas oublie", "navions pas oublié"]
+  }
+];
+
+function normalize(s) {
+  return s.trim().toLowerCase()
+    .replace(/[éèêë]/g, 'e')
+    .replace(/[àâä]/g, 'a')
+    .replace(/[îï]/g, 'i')
+    .replace(/[ôö]/g, 'o')
+    .replace(/[ùûü]/g, 'u')
+    .replace(/ç/g, 'c')
+    .replace(/œ/g, 'oe')
+    .replace(/'/g, "'")
+    .replace(/[''‛]/g, "'");
+}
+
+function isCorrect(idx, val) {
+  const s = sentences[idx];
+  const n = normalize(val);
+  const allAnswers = [s.answer, ...s.alt];
+  return allAnswers.some(a => normalize(a) === n);
+}
+
+const ex = document.getElementById('exercise');
+
+sentences.forEach((s, i) => {
+  const div = document.createElement('div');
+  div.className = 'sentence';
+  div.style.animationDelay = (i * 0.05) + 's';
+  div.innerHTML = `
+    <span class="num">${i+1}.</span>
+    <span class="text">${s.before}</span>
+    <span class="input-wrap">
+      <input type="text" id="inp${i}" placeholder="…" autocomplete="off" autocorrect="off" spellcheck="false" oninput="liveCheck(${i})">
+      <span class="feedback-icon" id="ico${i}"></span>
+    </span>
+    <span class="text">${s.after}</span>
+    <span class="hint">(${s.hint})</span>
+    <span class="solution-text" id="sol${i}">✓ ${s.answer}</span>
+  `;
+  ex.appendChild(div);
+});
+
+function liveCheck(i) {
+  const inp = document.getElementById('inp'+i);
+  const ico = document.getElementById('ico'+i);
+  const val = inp.value;
+  if (!val.trim()) {
+    inp.className = '';
+    ico.className = 'feedback-icon';
+    return;
+  }
+  if (isCorrect(i, val)) {
+    inp.className = 'correct';
+    ico.className = 'feedback-icon show';
+    ico.textContent = '✓';
+    ico.style.color = 'var(--correct)';
+  } else {
+    inp.className = '';
+    ico.className = 'feedback-icon';
+  }
+}
+
+function checkAll() {
+  let correct = 0;
+  const results = [];
+  sentences.forEach((s, i) => {
+    const inp = document.getElementById('inp'+i);
+    const ico = document.getElementById('ico'+i);
+    const val = inp.value;
+    if (isCorrect(i, val)) {
+      inp.className = 'correct';
+      ico.className = 'feedback-icon show';
+      ico.textContent = '✓';
+      ico.style.color = 'var(--correct)';
+      correct++;
+      results.push('c');
+    } else {
+      inp.className = 'wrong';
+      ico.className = 'feedback-icon show';
+      ico.textContent = '✗';
+      ico.style.color = 'var(--wrong)';
+      results.push('w');
+    }
+  });
+
+  const bar = document.getElementById('scoreBar');
+  bar.classList.add('show');
+  document.getElementById('scoreNum').textContent = correct + '/10';
+
+  const dots = document.getElementById('progressDots');
+  dots.innerHTML = results.map(r => `<div class="dot ${r}"></div>`).join('');
+}
+
+function showSolutions() {
+  sentences.forEach((s, i) => {
+    const inp = document.getElementById('inp'+i);
+    const sol = document.getElementById('sol'+i);
+    inp.className = '';
+    sol.classList.add('show');
+  });
+}
+
+function resetAll() {
+  sentences.forEach((s, i) => {
+    const inp = document.getElementById('inp'+i);
+    const ico = document.getElementById('ico'+i);
+    const sol = document.getElementById('sol'+i);
+    inp.value = '';
+    inp.className = '';
+    ico.className = 'feedback-icon';
+    sol.classList.remove('show');
+  });
+  document.getElementById('scoreBar').classList.remove('show');
+}
+</script>
+</body>
+</html>
