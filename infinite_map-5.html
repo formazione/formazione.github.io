@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
+<title>Infinite Map Board</title>
+<style>
+  *{box-sizing:border-box} html,body{margin:0;width:100%;height:100%;overflow:hidden;font-family:Inter,system-ui,Arial,sans-serif;background:#f7f7f3;color:#202124}
+  #app{position:relative;width:100%;height:100%;overflow:hidden;touch-action:none;cursor:grab;background-color:#fafaf7;background-image:radial-gradient(circle,#c9c9c3 1px,transparent 1.2px);background-size:28px 28px;background-position:0 0}
+  #app.panning{cursor:grabbing}
+  #world{position:absolute;left:0;top:0;transform-origin:0 0;width:1px;height:1px}
+  .item{position:absolute;min-width:70px;min-height:32px;user-select:none;cursor:move;transform-origin:center center}
+  .note{background:#fff9c9;border:1px solid #d9cf86;border-radius:10px;padding:10px 12px;box-shadow:0 5px 18px rgba(0,0,0,.12);white-space:pre-wrap;max-width:420px;overflow-wrap:anywhere}
+  .image{padding:4px;background:white;border:1px solid #ddd;border-radius:10px;box-shadow:0 5px 18px rgba(0,0,0,.13)}
+  .image img{display:block;max-width:520px;max-height:420px;border-radius:7px;pointer-events:none}
+  .item.selected{outline:2px solid #4c8bf5;outline-offset:3px}
+  #toolbar{position:absolute;z-index:20;left:16px;top:16px;display:flex;gap:8px;align-items:center;padding:8px;background:rgba(255,255,255,.92);backdrop-filter:blur(8px);border:1px solid #ddd;border-radius:14px;box-shadow:0 6px 20px rgba(0,0,0,.1)}
+  button{border:0;background:#f1f3f4;color:#222;padding:8px 11px;border-radius:9px;font-weight:650;cursor:pointer} button:hover{background:#e5e7e8}
+  #zoomLabel{font-size:12px;min-width:46px;text-align:center;color:#555}
+  #help{position:absolute;right:16px;bottom:16px;z-index:20;background:rgba(32,33,36,.88);color:#fff;padding:9px 12px;border-radius:10px;font-size:12px;line-height:1.45;pointer-events:none}
+  #editor{position:absolute;z-index:50;display:none;min-width:220px;min-height:90px;resize:both;border:2px solid #4c8bf5;border-radius:10px;padding:10px;font:16px/1.35 inherit;box-shadow:0 8px 28px rgba(0,0,0,.18);outline:none}
+  #status{position:absolute;left:16px;bottom:16px;z-index:20;background:rgba(255,255,255,.9);border:1px solid #ddd;border-radius:9px;padding:6px 9px;font-size:11px;color:#555}
+</style>
+</head>
+<body>
+<div id="app">
+  <div id="world"></div>
+  <div id="toolbar">
+    <button id="minus">−</button><span id="zoomLabel">100%</span><button id="plus">+</button>
+    <button id="home">Center</button><button id="clear">Clear</button>
+  </div>
+  <textarea id="editor" placeholder="Write here…"></textarea>
+  <div id="status">Saved automatically in this browser</div>
+  <div id="help">Drag empty space: pan · Wheel/pinch: zoom<br>Double-click: text · Paste: text/image · Drag cards: move · Delete: remove</div>
+</div>
+<script>
+(()=>{
+ const app=document.querySelector('#app'), world=document.querySelector('#world'), editor=document.querySelector('#editor'), zoomLabel=document.querySelector('#zoomLabel');
+ let view={x:innerWidth/2,y:innerHeight/2,scale:1}, items=[], selected=null, pan=null, drag=null, editorWorld=null;
+ const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+ const uid=()=>Math.random().toString(36).slice(2)+Date.now().toString(36);
+ function applyView(){ world.style.transform=`translate(${view.x}px,${view.y}px) scale(${view.scale})`; app.style.backgroundSize=`${28*view.scale}px ${28*view.scale}px`; app.style.backgroundPosition=`${view.x}px ${view.y}px`; zoomLabel.textContent=Math.round(view.scale*100)+'%'; save(); }
+ function screenToWorld(cx,cy){ const r=app.getBoundingClientRect(); return {x:(cx-r.left-view.x)/view.scale,y:(cy-r.top-view.y)/view.scale}; }
+ function save(){ try{localStorage.setItem('infiniteMapV1',JSON.stringify({view,items}));}catch(e){} }
+ function load(){ try{let d=JSON.parse(localStorage.getItem('infiniteMapV1')); if(d){view=d.view||view;items=d.items||[];}}catch(e){} render();applyView(); }
+ function render(){ world.innerHTML=''; items.forEach(it=>{
+   const el=document.createElement('div'); el.className='item '+it.type; el.dataset.id=it.id; el.style.left=it.x+'px';el.style.top=it.y+'px';
+   if(it.type==='note') el.textContent=it.text;
+   else {const img=document.createElement('img');img.src=it.src;el.appendChild(img)}
+   el.addEventListener('pointerdown',e=>startItemDrag(e,it,el));
+   el.addEventListener('dblclick',e=>{e.stopPropagation(); if(it.type==='note') editExisting(it,el)});
+   world.appendChild(el);
+ }); }
+ function select(el){document.querySelectorAll('.item.selected').forEach(x=>x.classList.remove('selected'));selected=el||null;if(el)el.classList.add('selected')}
+ function startItemDrag(e,it,el){ if(e.button!==0)return; e.stopPropagation();select(el); el.setPointerCapture(e.pointerId); const p=screenToWorld(e.clientX,e.clientY);drag={id:it.id,dx:p.x-it.x,dy:p.y-it.y,el,pid:e.pointerId}; }
+ app.addEventListener('pointerdown',e=>{ if(e.target!==app && e.target!==world)return; if(e.button!==0)return; select(null); app.setPointerCapture(e.pointerId);pan={pid:e.pointerId,x:e.clientX,y:e.clientY,vx:view.x,vy:view.y};app.classList.add('panning'); });
+ app.addEventListener('pointermove',e=>{
+   if(drag&&e.pointerId===drag.pid){let it=items.find(x=>x.id===drag.id),p=screenToWorld(e.clientX,e.clientY);it.x=p.x-drag.dx;it.y=p.y-drag.dy;drag.el.style.left=it.x+'px';drag.el.style.top=it.y+'px';}
+   else if(pan&&e.pointerId===pan.pid){view.x=pan.vx+(e.clientX-pan.x);view.y=pan.vy+(e.clientY-pan.y);applyView();}
+ });
+ app.addEventListener('pointerup',e=>{if(drag&&e.pointerId===drag.pid){drag=null;save()} if(pan&&e.pointerId===pan.pid){pan=null;app.classList.remove('panning');save()}});
+ app.addEventListener('dblclick',e=>{ if(e.target!==app&&e.target!==world)return; openEditor(screenToWorld(e.clientX,e.clientY),e.clientX,e.clientY,''); });
+ function openEditor(w,sx,sy,text){editorWorld=w;editor.value=text;editor.style.left=Math.min(sx,innerWidth-250)+'px';editor.style.top=Math.min(sy,innerHeight-130)+'px';editor.style.display='block';editor.focus();}
+ function commitEditor(){if(editor.style.display==='none')return;let t=editor.value.trim();if(t)items.push({id:uid(),type:'note',x:editorWorld.x,y:editorWorld.y,text:t});editor.style.display='none';editor.value='';render();save();}
+ editor.addEventListener('keydown',e=>{if(e.key==='Escape'){editor.style.display='none'} if((e.ctrlKey||e.metaKey)&&e.key==='Enter')commitEditor()}); editor.addEventListener('blur',commitEditor);
+ function editExisting(it,el){select(null); let r=el.getBoundingClientRect(); items=items.filter(x=>x.id!==it.id);render();openEditor({x:it.x,y:it.y},r.left,r.top,it.text);}
+ function zoomAt(cx,cy,f){const before=screenToWorld(cx,cy);view.scale=clamp(view.scale*f,.12,5);const r=app.getBoundingClientRect();view.x=cx-r.left-before.x*view.scale;view.y=cy-r.top-before.y*view.scale;applyView()}
+ app.addEventListener('wheel',e=>{e.preventDefault();zoomAt(e.clientX,e.clientY,Math.exp(-e.deltaY*.0012))},{passive:false});
+ document.querySelector('#plus').onclick=()=>zoomAt(innerWidth/2,innerHeight/2,1.2);document.querySelector('#minus').onclick=()=>zoomAt(innerWidth/2,innerHeight/2,1/1.2);
+ document.querySelector('#home').onclick=()=>{view={x:innerWidth/2,y:innerHeight/2,scale:1};applyView()};
+ document.querySelector('#clear').onclick=()=>{if(confirm('Delete everything on the map?')){items=[];render();save()}};
+ document.addEventListener('keydown',e=>{if((e.key==='Delete'||e.key==='Backspace')&&selected&&document.activeElement!==editor){let id=selected.dataset.id;items=items.filter(x=>x.id!==id);selected=null;render();save()}});
+ document.addEventListener('paste',async e=>{
+   if(document.activeElement===editor)return;
+   const p=screenToWorld(innerWidth/2,innerHeight/2); let offset=0,handled=false;
+   for(const f of e.clipboardData.files){if(f.type.startsWith('image/')){handled=true;const reader=new FileReader();reader.onload=()=>{items.push({id:uid(),type:'image',x:p.x+offset,y:p.y+offset,src:reader.result});offset+=25;render();save()};reader.readAsDataURL(f)}}
+   const text=e.clipboardData.getData('text/plain');if(text&&!handled){items.push({id:uid(),type:'note',x:p.x,y:p.y,text});render();save()}
+ });
+ // basic two-finger pinch
+ let touches=new Map(), pinch=null;
+ app.addEventListener('pointerdown',e=>{if(e.pointerType==='touch'){touches.set(e.pointerId,{x:e.clientX,y:e.clientY});if(touches.size===2){let a=[...touches.values()],dx=a[0].x-a[1].x,dy=a[0].y-a[1].y;pinch={dist:Math.hypot(dx,dy),scale:view.scale};pan=null}}});
+ app.addEventListener('pointermove',e=>{if(e.pointerType==='touch'&&touches.has(e.pointerId)){touches.set(e.pointerId,{x:e.clientX,y:e.clientY});if(touches.size===2&&pinch){let a=[...touches.values()],dx=a[0].x-a[1].x,dy=a[0].y-a[1].y,d=Math.hypot(dx,dy),cx=(a[0].x+a[1].x)/2,cy=(a[0].y+a[1].y)/2;let target=clamp(pinch.scale*d/pinch.dist,.12,5),f=target/view.scale;zoomAt(cx,cy,f)}}});
+ app.addEventListener('pointerup',e=>{touches.delete(e.pointerId);if(touches.size<2)pinch=null});
+ addEventListener('resize',applyView);load();
+})();
+</script>
+</body>
+</html>
