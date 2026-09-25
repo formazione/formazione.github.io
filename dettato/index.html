@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Dettato francese · 10 frasi</title>
+<style>
+:root{color-scheme:dark;font-family:system-ui,-apple-system,sans-serif;background:#101827;color:#f6f5f2}*{box-sizing:border-box}body{margin:0;min-height:100dvh;display:grid;place-items:center;padding:18px}.card{width:min(100%,540px);background:#1b2940;border:1px solid #34445e;border-radius:22px;padding:26px;box-shadow:0 15px 45px #0005}h1{font-size:1.65rem;margin:0 0 6px}.muted{color:#b9c7d8;line-height:1.5}.progress{height:10px;border-radius:20px;background:#36435a;overflow:hidden;margin:22px 0}.bar{height:100%;background:#6fd7b0;transition:width .3s}.counter{font-weight:700;color:#90e8ca}label{display:block;margin:20px 0 8px;font-weight:650}input,select{width:100%;padding:15px;border-radius:12px;border:2px solid #718096;background:#111b2b;color:white;font:inherit;font-size:1.1rem}select{appearance:auto}input:focus{outline:3px solid #6fd7b0;outline-offset:2px}.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}button{border:0;border-radius:12px;padding:13px 17px;font:inherit;font-weight:700;cursor:pointer;background:#6fd7b0;color:#10221c}button.secondary{background:#33465f;color:#fff}button:disabled{opacity:.5;cursor:not-allowed}.feedback{min-height:3em;margin-top:17px;line-height:1.5}.success{color:#8df2b9}.error{color:#ffd48a}.answer{font-size:1.1rem;font-weight:700;color:#fff}.hint{font-size:.88rem}.hidden{display:none}
+</style>
+</head>
+<body><main class="card">
+<h1>Ascolta e scrivi in francese</h1>
+<p class="muted">Dieci frasi, una alla volta. La frase viene letta quando appare. Scrivi quello che senti; puoi riascoltare e correggere la risposta. Ogni frase vale fino a 100 punti: perdi 2 punti ogni 3 secondi e 15 per ogni errore. La soluzione vale 0 punti.</p>
+<div class="progress" aria-label="Progresso"><div class="bar" id="bar"></div></div>
+<div class="counter" id="counter"></div><p class="muted" id="totals" aria-live="polite"></p>
+<div id="exercise">
+<label for="voice">Voce francese</label><select id="voice" aria-label="Scegli la voce francese"><option value="">Ricerca delle voci…</option></select>
+<div class="actions"><button type="button" id="listen">🔊 Ascolta la frase</button><button type="button" class="secondary" id="slow">🐢 Più lentamente</button></div>
+<label for="entry">Scrivi la frase che hai ascoltato</label><input id="entry" type="text" lang="fr" autocomplete="off" autocapitalize="sentences" spellcheck="false" placeholder="Scrivi qui in francese…">
+<div class="actions"><button type="button" id="check">Verifica</button><button type="button" id="solution" class="secondary hidden">Mostra la soluzione</button><button type="button" id="next" class="secondary hidden">Frase successiva →</button></div>
+<div id="feedback" class="feedback" role="status" aria-live="polite"></div>
+</div><div id="finished" class="hidden"><h2>Hai completato le dieci frasi!</h2><p id="score"></p><button type="button" id="restart">Ricomincia</button></div>
+<p class="muted hint" id="voiceHelp">La qualità dipende dalle voci disponibili sul dispositivo. Per migliorarla, installa una voce francese di alta qualità nelle impostazioni vocali del telefono, poi riapri questa pagina. Al primo avvio alcuni browser richiedono un tocco su «Ascolta la frase» per attivare l'audio. Controlla anche il volume.</p>
+</main>
+<script>
+const phrases=["Je m'appelle Giovanni.","J'habite en Italie.","J'aime la musique.","Je parle un peu français.","Comment tu t'appelles ?","Où est la gare ?","Je voudrais un café, s'il vous plaît.","Il fait beau aujourd'hui.","Nous allons à l'école demain.","Merci beaucoup et à bientôt !"];
+const $=id=>document.getElementById(id);let index=0,correct=0,solved=false,attempts=0,total=0,startedAt=0;let voices=[];const recordKey="frenchDictationBestScoreV1";
+function getRecord(){try{return Number(localStorage.getItem(recordKey))||0}catch{return 0}}
+function saveRecord(value){try{localStorage.setItem(recordKey,String(value))}catch{}}
+function updateTotals(){$('totals').textContent=`Punteggio: ${total} / ${phrases.length*100} · Record: ${getRecord()} / ${phrases.length*100}`}
+function voiceScore(v){const n=v.name.toLowerCase(),lang=v.lang.toLowerCase();return (lang==='fr-fr'?100:0)+(/neural|natural|enhanced|premium|high quality/.test(n)?60:0)+(/google|microsoft|siri|amelie|thomas|audrey/.test(n)?20:0)+(v.localService?5:0)}
+function refreshVoices(){const previous=voices[Number($('voice').value)]?.voiceURI||localStorage.getItem('frenchDictationVoice')||'';voices=speechSynthesis.getVoices().filter(v=>v.lang.toLowerCase().startsWith('fr')).sort((a,b)=>voiceScore(b)-voiceScore(a));$('voice').replaceChildren();if(!voices.length){$('voice').add(new Option('Voce francese del sistema', ''));return}voices.forEach((v,i)=>$('voice').add(new Option(`${v.name} (${v.lang})${v.localService?' · dispositivo':' · online'}`,String(i))));const found=voices.findIndex(v=>v.voiceURI===previous);$('voice').value=String(found<0?0:found)}
+if('speechSynthesis' in window){refreshVoices();speechSynthesis.addEventListener('voiceschanged',refreshVoices)}else{$('listen').disabled=true;$('slow').disabled=true;$('voice').disabled=true;$('feedback').textContent="La lettura vocale non è disponibile in questo browser."}
+$('voice').addEventListener('change',()=>{const v=voices[Number($('voice').value)];if(v)localStorage.setItem('frenchDictationVoice',v.voiceURI)});
+function speak(slow=false){if(!('speechSynthesis' in window))return;speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(phrases[index]);u.lang='fr-FR';u.rate=slow?.75:1;u.pitch=1;const fr=voices[Number($('voice').value)];if(fr)u.voice=fr;speechSynthesis.speak(u)}
+function normalized(s){return s.normalize('NFKC').toLocaleLowerCase('fr').replace(/[’‘`´]/g,"'").replace(/[.,!?;:«»]/g,'').replace(/\s+/g,' ').trim()}
+function render(){window.speechSynthesis?.cancel();$('counter').textContent=`Frase ${index+1} di ${phrases.length}`;$('bar').style.width=`${index/phrases.length*100}%`;$('entry').value='';$('entry').disabled=false;$('check').disabled=false;$('next').classList.add('hidden');$('solution').classList.add('hidden');$('feedback').className='feedback';$('feedback').textContent='';solved=false;attempts=0;startedAt=performance.now();updateTotals();setTimeout(()=>speak(),120)}
+function finishQuestion(points,message,success){solved=true;total+=points;$('feedback').className=`feedback ${success?'success':'error'}`;$('feedback').textContent=message;$('entry').disabled=true;$('check').disabled=true;$('solution').classList.add('hidden');$('next').classList.remove('hidden');updateTotals()}
+function check(){if(solved)return;const written=$('entry').value.trim();if(!written){$('feedback').textContent='Scrivi la frase prima di verificare.';return}if(normalized(written)===normalized(phrases[index])){correct++;const seconds=Math.floor((performance.now()-startedAt)/1000);const points=Math.max(10,100-2*Math.floor(seconds/3)-15*attempts);finishQuestion(points,`Esatto! +${points} punti (${seconds} secondi, ${attempts} errori).`,true)}else{attempts++;$('feedback').className='feedback error';$('feedback').textContent=attempts>=2?'Non è ancora esatta. Puoi riprovare oppure vedere la soluzione.':'Non è ancora esatta. Riascolta e riprova; attenzione agli accenti e agli apostrofi.';if(attempts>=2)$('solution').classList.remove('hidden')}}
+function showSolution(){if(solved||attempts<2)return;finishQuestion(0,`Soluzione: ${phrases[index]} · 0 punti.`,false)}
+function next(){if(!solved)return;index++;if(index===phrases.length){window.speechSynthesis?.cancel();$('bar').style.width='100%';$('counter').textContent='Completato';$('exercise').classList.add('hidden');$('finished').classList.remove('hidden');const best=Math.max(total,getRecord());saveRecord(best);updateTotals();$('score').textContent=`Hai scritto correttamente ${correct} frasi su ${phrases.length}. Punteggio: ${total} / ${phrases.length*100}. Record: ${best} / ${phrases.length*100}.`}else render()}
+$('listen').onclick=()=>speak();$('slow').onclick=()=>speak(true);$('check').onclick=check;$('solution').onclick=showSolution;$('next').onclick=next;$('entry').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();solved?next():check()}});$('restart').onclick=()=>{index=0;correct=0;total=0;$('finished').classList.add('hidden');$('exercise').classList.remove('hidden');render()};render();
+</script></body></html>

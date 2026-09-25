@@ -1,0 +1,399 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    <title>Collaborative Infinite Map</title>
+    <style>
+        :root {
+            color-scheme: dark
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        html,
+        body {
+            margin: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            font-family: Inter, system-ui, Arial, sans-serif;
+            background: #101216;
+            color: #e8eaed
+        }
+
+        #app {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            touch-action: none;
+            cursor: grab;
+            background: #101216 radial-gradient(circle, #39404a 1px, transparent 1.2px);
+            background-size: 28px 28px
+        }
+
+        .panning {
+            cursor: grabbing !important
+        }
+
+        #world {
+            position: absolute;
+            left: 0;
+            top: 0;
+            transform-origin: 0 0;
+            width: 1px;
+            height: 1px
+        }
+
+        #lines {
+            position: absolute;
+            overflow: visible;
+            pointer-events: none
+        }
+
+        .item {
+            position: absolute;
+            min-width: 70px;
+            min-height: 32px;
+            user-select: none;
+            cursor: move
+        }
+
+        .note,
+        .link {
+            background: #252a32;
+            border: 1px solid #4a5260;
+            border-radius: 10px;
+            padding: 10px 12px;
+            box-shadow: 0 5px 18px #0008;
+            white-space: pre-wrap;
+            max-width: 420px;
+            overflow-wrap: anywhere
+        }
+
+        .start {
+            background: #163d5b;
+            border-color: #4ba3e3;
+            color: #fff;
+            font-weight: 800;
+            text-align: center;
+            min-width: 110px
+        }
+
+        .link {
+            background: #183b35;
+            border-color: #2a8f7a
+        }
+
+        .link a {
+            color: #72e0c4;
+            text-decoration: none;
+            font-weight: 750;
+            display: block
+        }
+
+        .link small {
+            display: block;
+            color: #9eb7b1;
+            margin-top: 4px;
+            max-width: 280px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap
+        }
+
+        .image {
+            padding: 4px;
+            background: #252a32;
+            border: 1px solid #4a5260;
+            border-radius: 10px;
+            box-shadow: 0 5px 18px #0008
+        }
+
+        .image img {
+            display: block;
+            max-width: 520px;
+            max-height: 420px;
+            border-radius: 7px;
+            pointer-events: none
+        }
+
+        .selected {
+            outline: 2px solid #67a6ff;
+            outline-offset: 3px
+        }
+
+        .edge {
+            stroke: #8090a4;
+            stroke-width: 3;
+            pointer-events: stroke;
+            cursor: pointer;
+            vector-effect: non-scaling-stroke
+        }
+
+        .edge:hover,
+        .edge.selected {
+            stroke: #67a6ff;
+            stroke-width: 5
+        }
+
+        #toolbar {
+            position: absolute;
+            z-index: 20;
+            left: 16px;
+            top: 16px;
+            display: flex;
+            gap: 7px;
+            align-items: center;
+            flex-wrap: wrap;
+            max-width: calc(100% - 32px);
+            padding: 8px;
+            background: #1b1f25f2;
+            border: 1px solid #3a414c;
+            border-radius: 14px;
+            box-shadow: 0 6px 20px #0008
+        }
+
+        button,
+        input {
+            border: 1px solid #3d4551;
+            background: #2a3039;
+            color: #edf0f4;
+            padding: 8px 10px;
+            border-radius: 9px;
+            font-weight: 650
+        }
+
+        button {
+            cursor: pointer
+        }
+
+        button:hover,
+        button.active {
+            background: #3b4655;
+            border-color: #67a6ff
+        }
+
+        #zoomLabel {
+            font-size: 12px;
+            min-width: 44px;
+            text-align: center
+        }
+
+        #status {
+            position: absolute;
+            left: 16px;
+            bottom: 16px;
+            z-index: 20;
+            background: #1b1f25f2;
+            border: 1px solid #3a414c;
+            border-radius: 9px;
+            padding: 7px 10px;
+            font-size: 11px
+        }
+
+        #help {
+            position: absolute;
+            right: 16px;
+            bottom: 16px;
+            z-index: 20;
+            background: #1b1f25f2;
+            border: 1px solid #3a414c;
+            padding: 9px 12px;
+            border-radius: 10px;
+            font-size: 12px;
+            line-height: 1.45;
+            pointer-events: none
+        }
+
+        #editor {
+            position: absolute;
+            z-index: 50;
+            display: none;
+            min-width: 220px;
+            min-height: 90px;
+            resize: both;
+            border: 2px solid #67a6ff;
+            background: #242a32;
+            color: #fff;
+            border-radius: 10px;
+            padding: 10px;
+            font: 16px/1.35 inherit;
+            box-shadow: 0 8px 28px #000a;
+            outline: none
+        }
+
+        #setup,
+        #linkDialog {
+            position: fixed;
+            z-index: 100;
+            inset: 0;
+            background: #000b;
+            display: none;
+            place-items: center;
+            padding: 20px
+        }
+
+        .panel {
+            background: #20252c;
+            border: 1px solid #424b58;
+            width: min(720px, 100%);
+            max-height: 90vh;
+            overflow: auto;
+            border-radius: 18px;
+            padding: 22px;
+            box-shadow: 0 20px 60px #000c
+        }
+
+        .panel h2 {
+            margin-top: 0
+        }
+
+        .panel textarea {
+            width: 100%;
+            min-height: 190px;
+            font: 12px/1.4 ui-monospace, monospace;
+            padding: 10px;
+            border: 1px solid #4a5360;
+            background: #15181d;
+            color: #fff;
+            border-radius: 10px
+        }
+
+        .panel input {
+            width: 100%;
+            border: 1px solid #4a5360;
+            background: #15181d;
+            color: #fff;
+            margin: 5px 0 12px
+        }
+
+        .row {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap
+        }
+
+        .green {
+            color: #60d394
+        }
+
+        .orange {
+            color: #ffb454
+        }
+
+        @media(max-width:650px) {
+            #help {
+                display: none
+            }
+
+            #toolbar {
+                left: 8px;
+                top: 8px;
+                max-width: calc(100% - 16px)
+            }
+
+            #status {
+                left: 8px;
+                bottom: 8px
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <div id="world"><svg id="lines"></svg>
+            <div id="nodes"></div>
+        </div>
+        <div id="toolbar"><button id="minus">−</button><span id="zoomLabel">100%</span><button
+                id="plus">+</button><button id="home">Start</button><button id="addLink">Web link</button><button
+                id="connectNodes">Connect nodes</button><button id="saveNote">Save note</button><button
+                id="share">Share</button><button id="settings">Online setup</button><button id="clear">Clear</button>
+        </div><textarea id="editor" placeholder="Write here…"></textarea>
+        <div id="status">Local mode</div>
+        <div id="help">Double-click: text · Web link: add internet link<br>Connect nodes: select two nodes · Save note:
+            export selected node<br>Drag: move/pan · Wheel: zoom · Delete: remove</div>
+    </div>
+    <div id="setup">
+        <div class="panel">
+            <h2>Online collaboration setup</h2>
+            <p>This version synchronizes the board through Firebase Realtime Database. The Firebase configuration is
+                already included. Everyone opening the same board link will edit the same map.</p><label>Firebase
+                configuration</label><textarea id="cfg"
+                placeholder='Paste the object, for example: { "apiKey":"...", "authDomain":"...", "projectId":"...", "storageBucket":"...", "messagingSenderId":"...", "appId":"..." }'></textarea>
+            <div class="row"><button id="connect">Connect</button><button id="closeSetup">Close</button><button
+                    id="forget">Forget configuration</button></div>
+            <p style="font-size:12px">Firebase Realtime Database rules must permit reads/writes for collaborators. For a
+                public classroom board, add authentication/security rules before sharing widely. Images are stored as
+                compressed data inside board items, so keep pasted images reasonably small.</p>
+        </div>
+    </div>
+    <div id="linkDialog">
+        <div class="panel" style="max-width:480px">
+            <h2>Add an internet link</h2><label>Title</label><input id="linkTitle"
+                placeholder="Website title"><label>Internet address</label><input id="linkUrl" type="url"
+                placeholder="https://example.com">
+            <div class="row"><button id="confirmLink">Add link</button><button id="cancelLink">Cancel</button></div>
+        </div>
+    </div>
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js';
+        import { getDatabase, ref, set, remove, onValue } from 'https://www.gstatic.com/firebasejs/12.2.1/firebase-database.js';
+        const $ = s => document.querySelector(s), appEl = $('#app'), world = $('#world'), nodes = $('#nodes'), lines = $('#lines'), editor = $('#editor'), zoomLabel = $('#zoomLabel'), status = $('#status'), setup = $('#setup'), linkDialog = $('#linkDialog');
+        let view = { x: innerWidth / 2, y: innerHeight / 2, scale: 1 }, items = [], selected = null, selectedId = null, pan = null, drag = null, editorWorld = null, editorItemId = null, linkWorld = null, connectFrom = null, db = null, unsub = null, online = false;
+        const clamp = (v, a, b) => Math.max(a, Math.min(b, v)), uid = () => crypto.randomUUID?.() || Math.random().toString(36).slice(2) + Date.now().toString(36);
+        let boardId = new URLSearchParams(location.search).get('board'); if (!boardId) { boardId = uid().replaceAll('-', '').slice(0, 16); history.replaceState(null, '', location.pathname + '?board=' + boardId) }
+        function applyView() { world.style.transform = `translate(${view.x}px,${view.y}px) scale(${view.scale})`; appEl.style.backgroundSize = `${28 * view.scale}px ${28 * view.scale}px`; appEl.style.backgroundPosition = `${view.x}px ${view.y}px`; zoomLabel.textContent = Math.round(view.scale * 100) + '%'; localStorage.setItem('mapView', JSON.stringify(view)) }
+        function screenToWorld(cx, cy) { const r = appEl.getBoundingClientRect(); return { x: (cx - r.left - view.x) / view.scale, y: (cy - r.top - view.y) / view.scale } }
+        function localSave() { if (!online) localStorage.setItem('collabMap_' + boardId, JSON.stringify(items)) }
+        function render() { nodes.innerHTML = ''; lines.innerHTML = ''; items.filter(it => it.type !== 'edge').forEach(it => { const el = document.createElement('div'); el.className = 'item ' + it.type + (it.isStart ? ' start' : ''); el.dataset.id = it.id; el.style.left = it.x + 'px'; el.style.top = it.y + 'px'; if (it.type === 'note') el.textContent = it.text; else if (it.type === 'link') { const a = document.createElement('a'); a.href = it.url; a.target = '_blank'; a.rel = 'noopener noreferrer'; a.textContent = it.text || it.url; a.addEventListener('pointerdown', e => e.stopPropagation()); const small = document.createElement('small'); small.textContent = it.url; el.append(a, small) } else { const img = document.createElement('img'); img.src = it.src; el.appendChild(img) } el.addEventListener('pointerdown', e => { if ($('#connectNodes').classList.contains('active')) { e.stopPropagation(); chooseConnection(it); return } startItemDrag(e, it, el) }); el.addEventListener('dblclick', e => { e.stopPropagation(); if (it.type === 'note' && !it.isStart) editExisting(it, el) }); nodes.appendChild(el) }); requestAnimationFrame(renderEdges) }
+        function renderEdges() { lines.innerHTML = ''; items.filter(it => it.type === 'edge').forEach(edge => { const a = document.querySelector(`.item[data-id="${CSS.escape(edge.from)}"]`), b = document.querySelector(`.item[data-id="${CSS.escape(edge.to)}"]`); if (!a || !b) return; const line = document.createElementNS('http://www.w3.org/2000/svg', 'line'); line.classList.add('edge'); if (selectedId === edge.id) line.classList.add('selected'); line.dataset.id = edge.id; line.setAttribute('x1', a.offsetLeft + a.offsetWidth / 2); line.setAttribute('y1', a.offsetTop + a.offsetHeight / 2); line.setAttribute('x2', b.offsetLeft + b.offsetWidth / 2); line.setAttribute('y2', b.offsetTop + b.offsetHeight / 2); line.style.pointerEvents = 'stroke'; line.addEventListener('pointerdown', e => { e.stopPropagation(); select(line, edge.id) }); lines.appendChild(line) }) }
+        function select(el, id = null) { document.querySelectorAll('.selected').forEach(x => x.classList.remove('selected')); selected = el; selectedId = id || el?.dataset.id || null; if (el) el.classList.add('selected') }
+        async function syncItem(it) { if (online) await set(ref(db, `boards/${boardId}/items/${it.id}`), it); else localSave() }
+        async function removeItem(id) { if (online) await remove(ref(db, `boards/${boardId}/items/${id}`)); else localSave() }
+        function startItemDrag(e, it, el) { if (e.button !== 0) return; e.stopPropagation(); select(el); el.setPointerCapture(e.pointerId); const p = screenToWorld(e.clientX, e.clientY); drag = { id: it.id, dx: p.x - it.x, dy: p.y - it.y, el, pid: e.pointerId } }
+        appEl.addEventListener('pointerdown', e => { if (![appEl, world, nodes, lines].includes(e.target) || e.button !== 0) return; select(null); appEl.setPointerCapture(e.pointerId); pan = { pid: e.pointerId, x: e.clientX, y: e.clientY, vx: view.x, vy: view.y }; appEl.classList.add('panning') });
+        appEl.addEventListener('pointermove', e => { if (drag && e.pointerId === drag.pid) { let it = items.find(x => x.id === drag.id), p = screenToWorld(e.clientX, e.clientY); if (!it) return; it.x = p.x - drag.dx; it.y = p.y - drag.dy; drag.el.style.left = it.x + 'px'; drag.el.style.top = it.y + 'px'; renderEdges() } else if (pan && e.pointerId === pan.pid) { view.x = pan.vx + e.clientX - pan.x; view.y = pan.vy + e.clientY - pan.y; applyView() } });
+        appEl.addEventListener('pointerup', e => { if (drag && e.pointerId === drag.pid) { let it = items.find(x => x.id === drag.id); drag = null; if (it) syncItem(it) } if (pan && e.pointerId === pan.pid) { pan = null; appEl.classList.remove('panning') } });
+        appEl.addEventListener('dblclick', e => { if (![appEl, world, nodes, lines].includes(e.target)) return; openEditor(screenToWorld(e.clientX, e.clientY), e.clientX, e.clientY, '') });
+        function openEditor(w, sx, sy, text, itemId = null) { editorWorld = w; editorItemId = itemId; editor.value = text; editor.style.left = Math.min(sx, innerWidth - 250) + 'px'; editor.style.top = Math.min(sy, innerHeight - 130) + 'px'; editor.style.display = 'block'; editor.focus() }
+        async function commitEditor() { if (editor.style.display === 'none') return; let t = editor.value.trim(), existing = items.find(x => x.id === editorItemId); editor.style.display = 'none'; editor.value = ''; editorItemId = null; if (!t) return; if (existing) { existing.text = t; render(); await syncItem(existing) } else { let it = { id: uid(), type: 'note', x: editorWorld.x, y: editorWorld.y, text: t }; items.push(it); render(); await syncItem(it) } }
+        editor.addEventListener('keydown', e => { if (e.key === 'Escape') { editor.style.display = 'none'; editorItemId = null } if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') commitEditor() }); editor.addEventListener('blur', commitEditor);
+        function editExisting(it, el) { select(null); let r = el.getBoundingClientRect(); openEditor({ x: it.x, y: it.y }, r.left, r.top, it.text, it.id) }
+        function zoomAt(cx, cy, f) { const before = screenToWorld(cx, cy); view.scale = clamp(view.scale * f, .12, 5); const r = appEl.getBoundingClientRect(); view.x = cx - r.left - before.x * view.scale; view.y = cy - r.top - before.y * view.scale; applyView() }
+        appEl.addEventListener('wheel', e => { e.preventDefault(); zoomAt(e.clientX, e.clientY, Math.exp(-e.deltaY * .0012)) }, { passive: false }); minus.onclick = () => zoomAt(innerWidth / 2, innerHeight / 2, 1 / 1.2); plus.onclick = () => zoomAt(innerWidth / 2, innerHeight / 2, 1.2); home.onclick = () => { view = { x: innerWidth / 2, y: innerHeight / 2, scale: 1 }; applyView() };
+        clear.onclick = async () => { if (!confirm('Delete everything except the Start node?')) return; const start = items.find(x => x.isStart) || makeStart(); if (online) { await remove(ref(db, `boards/${boardId}/items`)); await syncItem(start) } else { items = [start]; render(); localSave() } };
+        document.addEventListener('keydown', async e => { if ((e.key === 'Delete' || e.key === 'Backspace') && selectedId && document.activeElement !== editor && !['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) { let target = items.find(x => x.id === selectedId); if (target?.isStart) return; let ids = items.filter(x => x.id === selectedId || x.type === 'edge' && (x.from === selectedId || x.to === selectedId)).map(x => x.id); items = items.filter(x => !ids.includes(x.id)); selected = null; selectedId = null; render(); for (const id of ids) await removeItem(id) } });
+        async function imageToSmallDataURL(file) { return new Promise((resolve, reject) => { const rd = new FileReader(); rd.onload = () => { const im = new Image(); im.onload = () => { let s = Math.min(1, 1200 / Math.max(im.width, im.height)), c = document.createElement('canvas'); c.width = Math.round(im.width * s); c.height = Math.round(im.height * s); c.getContext('2d').drawImage(im, 0, 0, c.width, c.height); resolve(c.toDataURL('image/jpeg', .78)) }; im.onerror = reject; im.src = rd.result }; rd.onerror = reject; rd.readAsDataURL(file) }) }
+        document.addEventListener('paste', async e => { if (document.activeElement === editor) return; const p = screenToWorld(innerWidth / 2, innerHeight / 2); let offset = 0, handled = false; for (const f of e.clipboardData.files) { if (f.type.startsWith('image/')) { handled = true; let src = await imageToSmallDataURL(f), it = { id: uid(), type: 'image', x: p.x + offset, y: p.y + offset, src }; offset += 25; items.push(it); render(); await syncItem(it) } } const text = e.clipboardData.getData('text/plain'); if (text && !handled) { let it = { id: uid(), type: 'note', x: p.x, y: p.y, text }; items.push(it); render(); await syncItem(it) } });
+        share.onclick = async () => { try { await navigator.clipboard.writeText(location.href); alert('Shared-board link copied. Send this link to the other person.') } catch { prompt('Copy this shared-board link:', location.href) } };
+        function centerWorld() { return screenToWorld(innerWidth / 2, innerHeight / 2) }
+        $('#addLink').onclick = () => { linkWorld = centerWorld(); $('#linkTitle').value = ''; $('#linkUrl').value = 'https://'; linkDialog.style.display = 'grid'; $('#linkTitle').focus() };
+        $('#cancelLink').onclick = () => linkDialog.style.display = 'none';
+        $('#confirmLink').onclick = async () => { let url = $('#linkUrl').value.trim(), title = $('#linkTitle').value.trim(); if (!/^https?:\/\//i.test(url)) url = 'https://' + url; try { new URL(url) } catch { return alert('Enter a valid internet address.') } const it = { id: uid(), type: 'link', x: linkWorld.x, y: linkWorld.y, text: title || url, url }; items.push(it); render(); await syncItem(it); linkDialog.style.display = 'none' };
+        $('#connectNodes').onclick = () => { connectFrom = null; $('#connectNodes').classList.toggle('active'); $('#connectNodes').textContent = $('#connectNodes').classList.contains('active') ? 'Select first node' : 'Connect nodes' };
+        async function chooseConnection(it) { if (!connectFrom) { connectFrom = it.id; $('#connectNodes').textContent = 'Select second node'; select(document.querySelector(`.item[data-id="${CSS.escape(it.id)}"]`), it.id); return } if (connectFrom === it.id) return; const duplicate = items.some(x => x.type === 'edge' && ((x.from === connectFrom && x.to === it.id) || (x.from === it.id && x.to === connectFrom))); if (!duplicate) { const edge = { id: uid(), type: 'edge', from: connectFrom, to: it.id }; items.push(edge); render(); await syncItem(edge) } connectFrom = null; $('#connectNodes').classList.remove('active'); $('#connectNodes').textContent = 'Connect nodes'; select(null) }
+        $('#saveNote').onclick = async () => { const it = items.find(x => x.id === selectedId); if (!it || !['note', 'link'].includes(it.type)) return alert('Select a text or web-link node first.'); const text = it.type === 'link' ? `${it.text}\n${it.url}\n` : it.text + '\n', safe = (it.text || 'note').slice(0, 50).replace(/[\\/:*?"<>|]/g, '_').trim() || 'note', filename = safe + '.txt'; try { if ('showDirectoryPicker' in window) { const root = await window.showDirectoryPicker({ mode: 'readwrite' }), dir = await root.getDirectoryHandle('notes', { create: true }), handle = await dir.getFileHandle(filename, { create: true }), w = await handle.createWritable(); await w.write(text); await w.close(); alert(`Saved in notes/${filename}`); return } } catch (e) { if (e.name === 'AbortError') return } const blob = new Blob([text], { type: 'text/plain;charset=utf-8' }), a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = filename; a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 1000); alert('The note was downloaded. Move it into your notes folder if your browser did not offer folder access.') };
+        settings.onclick = () => setup.style.display = 'grid'; closeSetup.onclick = () => setup.style.display = 'none'; forget.onclick = () => { localStorage.removeItem('firebaseConfig'); cfg.value = ''; alert('Configuration removed from this browser.') };
+        function makeStart() { return { id: 'start', type: 'note', x: -55, y: -22, text: 'Start', isStart: true } }
+        async function ensureStart() { if (items.some(x => x.isStart || x.id === 'start')) return; const start = makeStart(); items.push(start); render(); await syncItem(start) }
+        async function connectFirebase(config) { try { const fa = initializeApp(config, 'map-' + Date.now()); db = getDatabase(fa); if (unsub) unsub(); const boardRef = ref(db, `boards/${boardId}/items`); unsub = onValue(boardRef, async snap => { const data = snap.val() || {}; items = Object.values(data); render(); status.innerHTML = `<span class="green">● Online</span> · board ${boardId}`; await ensureStart() }, err => { status.innerHTML = `<span class="orange">● Connection error</span> · ${err.message}` }); online = true; localStorage.setItem('firebaseConfig', JSON.stringify(config)); setup.style.display = 'none'; status.innerHTML = '<span class="green">● Connecting…</span>' } catch (e) { alert('Could not connect: ' + e.message) } }
+        connect.onclick = () => { try { let txt = cfg.value.trim().replace(/^const\s+firebaseConfig\s*=\s*/, '').replace(/;\s*$/, ''); let config = Function('"use strict";return (' + txt + ')')(); connectFirebase(config) } catch (e) { alert('Configuration is not valid: ' + e.message) } };
+        const builtInConfig = {
+            "apiKey": "AIzaSyDp-mWaWEI07pIdRUhi6vA-salEMRWz4hw",
+            "authDomain": "quiz-e5e5a.firebaseapp.com",
+            "databaseURL": "https://quiz-e5e5a.firebaseio.com/",
+            "projectId": "quiz-e5e5a",
+            "storageBucket": "quiz-e5e5a.appspot.com",
+            "messagingSenderId": "901845403492"
+        }; cfg.value = JSON.stringify(builtInConfig, null, 2); connectFirebase(builtInConfig);
+        try { let v = JSON.parse(localStorage.getItem('mapView')); if (v) view = v } catch { } applyView(); addEventListener('resize', applyView);
+    </script>
+</body>
+
+</html>
