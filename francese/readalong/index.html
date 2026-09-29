@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Lecture en français</title>
+  <style>
+    :root { color-scheme: dark; font-family: system-ui, sans-serif; background: #101827; color: #f6f8ff; }
+    * { box-sizing: border-box; }
+    body { margin: 0; }
+    .app { height: 100dvh; min-height: 360px; max-width: 600px; margin: auto; padding: max(12px, env(safe-area-inset-top)) 16px max(12px, env(safe-area-inset-bottom)); display: flex; flex-direction: column; gap: 12px; }
+    header { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+    h1 { font-size: 1.1rem; margin: 0; }
+    #position { color: #aebdd6; font-size: .9rem; white-space: nowrap; }
+    .card { flex: 1; min-height: 0; display: grid; place-items: center; overflow: auto; background: #1c2940; border: 1px solid #354867; border-radius: 22px; padding: 20px; text-align: center; }
+    #display { font-size: clamp(1.65rem, 7vw, 2.5rem); line-height: 1.55; font-weight: 650; overflow-wrap: anywhere; }
+    .word { border-radius: 6px; padding: 0 2px; }
+    .word.active { background: #f9cf62; color: #152035; box-shadow: 0 0 0 3px #f9cf62; }
+    .controls { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    button { font: inherit; font-weight: 650; border: 1px solid #435775; border-radius: 13px; background: #273956; color: white; min-height: 52px; padding: 8px; cursor: pointer; touch-action: manipulation; }
+    button:focus-visible { outline: 3px solid #f9cf62; outline-offset: 2px; }
+    button.primary { background: #47b79c; border-color: #47b79c; color: #081a20; }
+    button[aria-pressed="true"] { background: #f9cf62; border-color: #f9cf62; color: #152035; }
+    #status { min-height: 1.3em; color: #b6c4d9; font-size: .8rem; text-align: center; margin: 0; }
+    .voice-row { display: flex; align-items: center; gap: 8px; font-size: .85rem; }
+    .voice-row label { white-space: nowrap; color: #b6c4d9; }
+    select { min-width: 0; flex: 1; height: 38px; border: 1px solid #435775; border-radius: 10px; background: #273956; color: white; padding: 0 8px; font: inherit; }
+    dialog { width: min(92vw, 520px); max-height: min(75dvh, 650px); padding: 16px; border: 1px solid #526987; border-radius: 18px; background: #1c2940; color: white; }
+    dialog::backdrop { background: #050a13bb; }
+    .dialog-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 12px; }
+    .dialog-head h2 { margin: 0; font-size: 1.1rem; }
+    .dialog-head button { min-height: 40px; }
+    #items { display: grid; gap: 8px; max-height: 55dvh; overflow: auto; }
+    #items button { text-align: left; }
+    #items button.current { border-color: #f9cf62; }
+    @media (max-height: 520px) { .app { gap: 7px; } .card { padding: 9px; } button { min-height: 42px; } #display { font-size: clamp(1.3rem, 5vw, 2rem); } }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <header><h1>Lecture en français</h1><span id="position"></span></header>
+    <div class="card"><div id="display" aria-live="off"></div></div>
+    <div class="voice-row"><label for="voice">Voix</label><select id="voice" aria-label="Choisir une voix française"><option>Chargement des voix…</option></select></div>
+    <div class="controls">
+      <button id="play" class="primary">▶ Lire</button>
+      <button id="stop">■ Arrêter</button>
+      <button id="next">Suivant →</button>
+      <button id="loop" aria-pressed="false">↻ Répéter non</button>
+      <button id="list">☷ Liste</button>
+      <button id="shuffle">⇄ Mélanger</button>
+    </div>
+    <p id="status" role="status"></p>
+  </main>
+  <dialog id="picker" aria-label="Choisir un texte">
+    <div class="dialog-head"><h2>Choisir une phrase</h2><button id="close">Fermer</button></div>
+    <div id="items"></div>
+  </dialog>
+  <script>
+    // Modifiez ces phrases pour personnaliser la liste.
+    const texts = [
+      "Bonjour, je m'appelle Giovanni.",
+      "J'habite en Italie et j'apprends le français.",
+      "Aujourd'hui, il fait beau et je vais jouer au tennis.",
+      "Pouvez-vous répéter cette phrase, s'il vous plaît ?"
+    ];
+
+    const synth = window.speechSynthesis;
+    const display = document.querySelector('#display');
+    const position = document.querySelector('#position');
+    const status = document.querySelector('#status');
+    const picker = document.querySelector('#picker');
+    const items = document.querySelector('#items');
+    const loopButton = document.querySelector('#loop');
+    const voiceSelect = document.querySelector('#voice');
+    let frenchVoices = [];
+    let order = texts.map((_, i) => i);
+    let index = 0;
+    let looping = false;
+    let speaking = false;
+    let generation = 0;
+    let words = [];
+
+    function loadVoices() {
+      if (!synth) return;
+      const previous = voiceSelect.value;
+      frenchVoices = synth.getVoices().filter(v => /^fr(?:-|$)/i.test(v.lang));
+      frenchVoices.sort((a, b) => {
+        const score = v => (v.lang.toLowerCase() === 'fr-fr' ? 4 : 0)
+          + (/premium|enhanced|neural|natural/i.test(v.name) ? 3 : 0)
+          + (v.localService ? 1 : 0);
+        return score(b) - score(a);
+      });
+      voiceSelect.replaceChildren();
+      if (!frenchVoices.length) {
+        voiceSelect.add(new Option('Voix française par défaut', ''));
+        voiceSelect.disabled = true;
+        return;
+      }
+      frenchVoices.forEach(v => voiceSelect.add(new Option(`${v.name} (${v.lang})`, v.voiceURI)));
+      voiceSelect.disabled = false;
+      if (frenchVoices.some(v => v.voiceURI === previous)) voiceSelect.value = previous;
+    }
+
+    function render() {
+      const text = texts[order[index]];
+      display.replaceChildren();
+      words = [];
+      // Preserve exact character offsets for SpeechSynthesisEvent.charIndex.
+      for (const match of text.matchAll(/\S+/g)) {
+        const span = document.createElement('span');
+        span.className = 'word';
+        span.textContent = match[0];
+        words.push({ start: match.index, end: match.index + match[0].length, span });
+        if (match.index > 0) display.append(document.createTextNode(text.slice(words.length === 1 ? 0 : words[words.length - 2].end, match.index)));
+        display.append(span);
+      }
+      if (!words.length) display.textContent = text;
+      else display.append(document.createTextNode(text.slice(words.at(-1).end)));
+      position.textContent = `${index + 1} / ${order.length}`;
+      updateList();
+    }
+
+    function highlight(charIndex) {
+      const word = words.find(w => charIndex >= w.start && charIndex < w.end)
+        || words.find(w => w.start >= charIndex);
+      words.forEach(w => w.span.classList.toggle('active', w === word));
+      word?.span.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+    }
+
+    function stop() {
+      generation++;
+      speaking = false;
+      synth?.cancel();
+      words.forEach(w => w.span.classList.remove('active'));
+      status.textContent = 'Arrêté';
+    }
+
+    function play() {
+      if (!synth || !window.SpeechSynthesisUtterance) {
+        status.textContent = 'La synthèse vocale est indisponible sur ce navigateur.';
+        return;
+      }
+      stop();
+      const token = generation;
+      const utterance = new SpeechSynthesisUtterance(texts[order[index]]);
+      utterance.lang = 'fr-FR';
+      utterance.voice = frenchVoices.find(v => v.voiceURI === voiceSelect.value) || null;
+      utterance.rate = 0.88;
+      utterance.onstart = () => { if (token === generation) { speaking = true; status.textContent = 'Lecture en cours'; } };
+      utterance.onboundary = event => { if (token === generation && event.name === 'word') highlight(event.charIndex); };
+      utterance.onend = () => {
+        if (token !== generation) return;
+        speaking = false;
+        words.forEach(w => w.span.classList.remove('active'));
+        status.textContent = 'Terminé';
+        if (looping) { index = (index + 1) % order.length; render(); play(); }
+      };
+      utterance.onerror = event => { if (token === generation) { speaking = false; status.textContent = `Erreur de lecture : ${event.error}`; } };
+      synth.speak(utterance);
+    }
+
+    function updateList() {
+      items.replaceChildren();
+      order.forEach((textIndex, place) => {
+        const button = document.createElement('button');
+        button.textContent = `${place + 1}. ${texts[textIndex]}`;
+        if (place === index) button.classList.add('current');
+        button.addEventListener('click', () => { stop(); index = place; render(); picker.close(); play(); });
+        items.append(button);
+      });
+    }
+
+    document.querySelector('#play').addEventListener('click', play);
+    document.querySelector('#stop').addEventListener('click', stop);
+    document.querySelector('#next').addEventListener('click', () => { const wasSpeaking = speaking; stop(); index = (index + 1) % order.length; render(); if (wasSpeaking) play(); });
+    loopButton.addEventListener('click', () => { looping = !looping; loopButton.setAttribute('aria-pressed', String(looping)); loopButton.textContent = looping ? '↻ Répéter oui' : '↻ Répéter non'; });
+    document.querySelector('#list').addEventListener('click', () => picker.showModal());
+    document.querySelector('#close').addEventListener('click', () => picker.close());
+    document.querySelector('#shuffle').addEventListener('click', () => {
+      stop();
+      for (let i = order.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [order[i], order[j]] = [order[j], order[i]]; }
+      index = 0;
+      render();
+      status.textContent = 'Liste mélangée';
+    });
+    if (synth) { loadVoices(); synth.addEventListener?.('voiceschanged', loadVoices); }
+    window.addEventListener('pagehide', stop);
+    render();
+  </script>
+</body>
+</html>
