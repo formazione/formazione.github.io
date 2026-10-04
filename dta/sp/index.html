@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Situazione Patrimoniale - Accounting Placement Game</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+    .font-mono-num {
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .draggable-card {
+      touch-action: none;
+      transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.2s ease, border-color 0.2s ease;
+      cursor: grab;
+    }
+    .draggable-card:active {
+      cursor: grabbing;
+    }
+    .draggable-card.dragging {
+      opacity: 0.45;
+      transform: scale(0.98);
+    }
+    .slot-hover-target {
+      outline: 2px dashed #000;
+      outline-offset: -2px;
+      background-color: #f1f5f9 !important;
+    }
+    .selected-to-swap {
+      ring: 3px solid #0f172a;
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
+    }
+    @keyframes pulse-success {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.03); }
+    }
+    .animate-success-pop {
+      animation: pulse-success 0.4s ease-out;
+    }
+  </style>
+</head>
+<body class="bg-neutral-100 text-neutral-900 min-h-screen flex flex-col items-center p-3 sm:p-6 lg:p-8">
+
+  <header class="w-full max-w-5xl mb-6 text-center">
+    <div class="inline-flex items-center justify-center space-x-2 mb-2 px-3 py-1 rounded-full bg-neutral-200/80 text-xs font-semibold tracking-wider uppercase text-neutral-700">
+      <span>Bilancio d'Esercizio • Gioco Interattivo</span>
+    </div>
+    <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-neutral-950 uppercase mb-2">
+      Situazione Patrimoniale
+    </h1>
+    <p class="text-sm sm:text-base text-neutral-600 max-w-2xl mx-auto">
+      Trascina o clicca per scambiare le voci contabili e posizionarle nella rispettiva riga.
+      <span class="inline-block font-medium text-emerald-700 bg-emerald-100/90 px-1.5 py-0.5 rounded text-xs ml-1">Verde = Corretto</span>
+      <span class="inline-block font-medium text-rose-700 bg-rose-100/90 px-1.5 py-0.5 rounded text-xs ml-1">Rosso = Errato</span>
+    </p>
+
+    <!-- Controls & Status Bar -->
+    <div class="mt-4 flex flex-wrap items-center justify-between gap-3 bg-white p-3 sm:p-4 rounded-2xl shadow-sm border border-neutral-300">
+      <div class="flex items-center space-x-3">
+        <div class="px-3 py-1.5 rounded-xl bg-neutral-900 text-white font-semibold text-sm flex items-center space-x-2 shadow-sm">
+          <span>Stato:</span>
+          <span id="scoreBadge" class="font-mono-num text-emerald-400 font-bold text-base">0 / 15</span>
+        </div>
+        <div class="hidden sm:flex text-xs font-medium text-neutral-500">
+          <span id="movesCounter">Mosse: 0</span>
+        </div>
+      </div>
+
+      <div class="flex items-center space-x-2 flex-wrap">
+        <button id="shuffleBtn" class="px-3.5 py-2 text-xs sm:text-sm font-semibold rounded-xl bg-neutral-900 text-white hover:bg-neutral-800 transition active:scale-95 shadow-sm flex items-center space-x-1.5">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+          <span>Mischia Tutto</span>
+        </button>
+
+        <button id="hintBtn" class="px-3 py-2 text-xs sm:text-sm font-semibold rounded-xl bg-neutral-100 text-neutral-800 hover:bg-neutral-200 border border-neutral-300 transition active:scale-95">
+          Suggerimento
+        </button>
+
+        <button id="solveBtn" class="px-3 py-2 text-xs sm:text-sm font-semibold rounded-xl bg-neutral-100 text-neutral-800 hover:bg-neutral-200 border border-neutral-300 transition active:scale-95">
+          Risolvi
+        </button>
+
+        <button id="soundToggleBtn" aria-label="Attiva disattiva audio" class="p-2 text-neutral-700 bg-neutral-100 rounded-xl hover:bg-neutral-200 border border-neutral-300 transition">
+          <svg id="soundOnIcon" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"/></svg>
+          <svg id="soundOffIcon" class="w-4 h-4 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z m12 0l-6-6m0 6l6-6"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="w-full max-w-5xl bg-white rounded-3xl shadow-xl border border-neutral-300 overflow-hidden mb-6">
+    <!-- Main Big Table Header -->
+    <div class="bg-neutral-900 text-white text-center py-3.5 px-4 font-bold text-lg sm:text-xl uppercase tracking-wider border-b border-neutral-300">
+      Situazione Patrimoniale
+    </div>
+
+    <!-- Dual Column Responsive Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 divide-y lg:divide-y-0 lg:divide-x divide-neutral-300">
+      
+      <!-- ================= ATTIVO COLUMN ================= -->
+      <section class="flex flex-col bg-white">
+        <!-- Attivo Column Header -->
+        <div class="flex items-center justify-between px-4 py-3 bg-neutral-100 border-b border-neutral-300">
+          <span class="font-extrabold text-neutral-900 uppercase tracking-wide text-base sm:text-lg">Attivo</span>
+          <span class="font-semibold text-xs sm:text-sm text-neutral-600 uppercase tracking-wider">Importo (€)</span>
+        </div>
+
+        <div class="p-3 sm:p-4 space-y-4 flex-grow">
+          
+          <!-- Category A: Immobilizzazioni -->
+          <div class="rounded-2xl border border-neutral-300 overflow-hidden bg-white shadow-sm">
+            <div class="flex justify-between items-center bg-neutral-100/90 px-3.5 py-2.5 border-b border-neutral-300">
+              <span class="font-bold text-neutral-900 text-sm">A. Immobilizzazioni</span>
+              <span class="font-mono-num font-bold text-neutral-900 text-sm">141.700</span>
+            </div>
+            <div class="divide-y divide-neutral-200">
+              <!-- Row 1: Fabbricati -->
+              <div class="flex items-center justify-between p-2.5 hover:bg-neutral-50/70 transition">
+                <div class="flex-grow pr-2 drop-slot" data-slot-id="fabbricati"></div>
+                <div class="font-mono-num text-xs sm:text-sm font-semibold text-neutral-700 min-w-[76px] text-right">95.000</div>
+              </div>
+              <!-- Row 2: Impianti -->
+              <div class="flex items-center justify-between p-2.5 hover:bg-neutral-50/70 transition">
+                <div class="flex-grow pr-2 drop-slot" data-slot-id="impianti"></div>
+                <div class="font-mono-num text-xs sm:text-sm font-semibold text-neutral-700 min-w-[76px] text-right">16.700</div>
+              </div>
+              <!-- Row 3: Attrezzature -->
+              <div class="flex items-center justify-between p-2.5 hover:bg-neutral-50/70 transition">
+                <div class="flex-grow pr-2 drop-slot" data-slot-id="attrezzature"></div>
+                <div class="font-mono-num text-xs sm:text-sm font-semibold text-neutral-700 min-w-[76px] text-right">20.000</div>
+              </div>
+              <!-- Row 4: Automezzi -->
+              <div class="flex items-center justify-between p-2.5 hover:bg-neutral-50/70 transition">
+                <div class="flex-grow pr-2 drop-slot" data-slot-id="automezzi"></div>
+                <div class="font-mono-num text-xs sm:text-sm font-semibold text-neutral-700 min-w-[76px] text-right">10.000</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Category B: Attivo circolante -->
+          <div class="rounded-2xl border border-neutral-300 overflow-hidden bg-white shadow-sm">
+            <div class="flex justify-between items-center bg-neutral-100/90 px-3.5 py-2.5 border-b border-neutral-300">
+              <span class="font-bold text-neutral-900 text-sm">B. Attivo circolante</span>
+              <span class="font-mono-num font-bold text-neutral-900 text-sm">110.000</span>
+            </div>
+            <div class="divide-y divide-neutral-200">
+              <!-- Row 5: Rimanenze -->
+              <div class="flex items-center justify-between p-2.5 hover:bg-neutral-50/70 transition">
+                <div class="flex-grow pr-2 drop-slot" data-slot-id="rimanenze"></div>
+                <div class="font-mono-num text-xs sm:text-sm font-semibold text-neutral-700 min-w-[76px] text-right">25.000</div>
+              </div>
+              <!-- Row 6: Crediti v/clienti -->
+              <div class="flex items-center justify-between p-2.5 hover:bg-neutral-50/70 transition">
+                <div class="flex-grow pr-2 drop-slot" data-slot-id="crediti_clienti"></div>
+                <div class="font-mono-num text-xs sm:text-sm font-semibold text-neutral-700 min-w-[76px] text-right">20.000</div>
+              </div>
+              <!-- Row 7: Crediti diversi -->
+              <div class="flex items-center justify-between p-2.5 hover:bg-neutral-50/70 transition">
+                <div class="flex-grow pr-2 drop-slot" data-slot-id="crediti_diversi"></div>
+                <div class="font-mono-num text-xs sm:text-sm font-semibold text-neutral-700 min-w-[76px] text-right">35.000</div>
+              </div>
+              <!-- Row 8: Banca c/c -->
+              <div class="flex items-center justify-between p-2.5 hover:bg-neutral-50/70 transition">
+                <div class="flex-grow pr-2 drop-slot" data-slot-id="banca_cc"></div>
+                <div class="font-mono-num text-xs sm:text-sm font-semibold text-neutral-700 min-w-[76px] text-right">26.000</div>
+              </div>
+              <!-- Row 9: Denaro in cassa -->
+              <div class="flex items-center justify-between p-2.5 hover:bg-neutral-50/70 transition">
+                <div class="flex-grow pr-2 drop-slot" data-slot-id="denaro_cassa"></div>
+                <div class="font-mono-num text-xs sm:text-sm font-semibold text-neutral-700 min-w-[76px] text-right">4.000</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Category C: Ratei attivi -->
+          <div class="rounded-2xl border border-neutral-300 overflow-hidden bg-white shadow-sm">
+            <div class="flex justify-between items-center bg-neutral-100/90 px-3.5 py-2.5 border-b border-neutral-300">
+              <span class="font-bold text-neutral-900 text-sm">C. Ratei attivi</span>
+              <span class="font-mono-num font-bold text-neutral-900 text-sm">3.000</span>
+            </div>
+            <div class="divide-y divide-neutral-200">
+              <!-- Row 10: Ratei attivi -->
+              <div class="flex items-center justify-between p-2.5 hover:bg-neutral-50/70 transition">
+                <div class="flex-grow pr-2 drop-slot" data-slot-id="ratei_attivi"></div>
+                <div class="font-mono-num text-xs sm:text-sm font-semibold text-neutral-700 min-w-[76px] text-right">3.000</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Totale Attivo Footer -->
+        <div class="mt-auto px-4 py-3.5 bg-neutral-900 text-white flex justify-between items-center border-t border-neutral-300">
+          <span class="font-bold uppercase tracking-wide text-xs sm:text-sm">Totale Attivo</span>
+          <span class="font-mono-num font-extrabold text-sm sm:text-base">254.700 €</span>
+        </div>
+      </section>
+
+      <!-- ================= PASSIVO E PATRIMONIO NETTO COLUMN ================= -->
+      <section class="flex flex-col bg-white">
+        <!-- Passivo Column Header -->
+        <div class="flex items-center justify-between px-4 py-3 bg-neutral-100 border-b border-neutral-300">
+          <span class="font-extrabold text-neutral-900 uppercase tracking-wide text-base sm:text-lg">Passivo e Patrimonio Netto</span>
+          <span class="font-semibold text-xs sm:text-sm text-neutral-600 uppercase tracking-wider">Importo (€)</span>
+        </div>
+
+        <div class="p-3 sm:p-4 space-y-4 flex-grow">
+          
+          <!-- Category A: Patrimonio netto -->
+          <div class="rounded-2xl border border-neutral-300 overflow-hidden bg-white shadow-sm">
+            <div class="flex justify-between items-center bg-neutral-100/90 px-3.5 py-2.5 border-b border-neutral-300">
+              <span class="font-bold text-neutral-900 text-sm">A. Patrimonio netto</span>
+              <span class="font-mono-num font-bold text-neutral-900 text-sm">186.700</span>
+            </div>
+            <div class="divide-y divide-neutral-200">
+              <!-- Row 11: Patrimonio netto -->
+              <div class="flex items-center justify-between p-2.5 hover:bg-neutral-50/70 transition">
+                <div class="flex-grow pr-2 drop-slot" data-slot-id="patrimonio_netto"></div>
+                <div class="font-mono-num text-xs sm:text-sm font-semibold text-neutral-700 min-w-[76px] text-right">186.700</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Category B: Fondi per rischi e oneri -->
+          <div class="rounded-2xl border border-neutral-300 overflow-hidden bg-white shadow-sm">
+            <div class="flex justify-between items-center bg-neutral-100/90 px-3.5 py-2.5 border-b border-neutral-300">
+              <span class="font-bold text-neutral-900 text-sm">B. Fondi per rischi e oneri</span>
+              <span class="font-mono-num font-bold text-neutral-900 text-sm">-</span>
+            </div>
+            <div class="divide-y divide-neutral-200">
+              <!-- Row 12: Nessuna voce -->
+              <div class="flex items-center justify-between p-2.5 hover:bg-neutral-50/70 transition">
+                <div class="flex-grow pr-2 drop-slot" data-slot-id="nessuna_voce"></div>
+                <div class="font-mono-num text-xs sm:text-sm font-semibold text-neutral-700 min-w-[76px] text-right">-</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Category C: Trattamento di fine rapporto -->
+          <div class="rounded-2xl border border-neutral-300 overflow-hidden bg-white shadow-sm">
+            <div class="flex justify-between items-center bg-neutral-100/90 px-3.5 py-2.5 border-b border-neutral-300">
+              <span class="font-bold text-neutral-900 text-sm">C. Trattamento di fine rapporto</span>
+              <span class="font-mono-num font-bold text-neutral-900 text-sm">8.000</span>
+            </div>
+            <div class="divide-y divide-neutral-200">
+              <!-- Row 13: TFR -->
+              <div class="flex items-center justify-between p-2.5 hover:bg-neutral-50/70 transition">
+                <div class="flex-grow pr-2 drop-slot" data-slot-id="tfr"></div>
+                <div class="font-mono-num text-xs sm:text-sm font-semibold text-neutral-700 min-w-[76px] text-right">8.000</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Category D: Debiti -->
+          <div class="rounded-2xl border border-neutral-300 overflow-hidden bg-white shadow-sm">
+            <div class="flex justify-between items-center bg-neutral-100/90 px-3.5 py-2.5 border-b border-neutral-300">
+              <span class="font-bold text-neutral-900 text-sm">D. Debiti</span>
+              <span class="font-mono-num font-bold text-neutral-900 text-sm">60.000</span>
+            </div>
+            <div class="divide-y divide-neutral-200">
+              <!-- Row 14: Mutui passivi -->
+              <div class="flex items-center justify-between p-2.5 hover:bg-neutral-50/70 transition">
+                <div class="flex-grow pr-2 drop-slot" data-slot-id="mutui_passivi"></div>
+                <div class="font-mono-num text-xs sm:text-sm font-semibold text-neutral-700 min-w-[76px] text-right">30.000</div>
+              </div>
+              <!-- Row 15: Sovvenzione bancaria -->
+              <div class="flex items-center justify-between p-2.5 hover:bg-neutral-50/70 transition">
+                <div class="flex-grow pr-2 drop-slot" data-slot-id="sovvenzione_bancaria"></div>
+                <div class="font-mono-num text-xs sm:text-sm font-semibold text-neutral-700 min-w-[76px] text-right">7.000</div>
+              </div>
+              <!-- Row 16: Debiti v/fornitori -->
+              <div class="flex items-center justify-between p-2.5 hover:bg-neutral-50/70 transition">
+                <div class="flex-grow pr-2 drop-slot" data-slot-id="debiti_fornitori"></div>
+                <div class="font-mono-num text-xs sm:text-sm font-semibold text-neutral-700 min-w-[76px] text-right">18.000</div>
+              </div>
+              <!-- Row 17: Debiti tributari -->
+              <div class="flex items-center justify-between p-2.5 hover:bg-neutral-50/70 transition">
+                <div class="flex-grow pr-2 drop-slot" data-slot-id="debiti_tributari"></div>
+                <div class="font-mono-num text-xs sm:text-sm font-semibold text-neutral-700 min-w-[76px] text-right">5.000</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Totale Passivo Footer -->
+        <div class="mt-auto px-4 py-3.5 bg-neutral-900 text-white flex justify-between items-center border-t border-neutral-300">
+          <span class="font-bold uppercase tracking-wide text-xs sm:text-sm">Totale Passivo e Patrimonio Netto</span>
+          <span class="font-mono-num font-extrabold text-sm sm:text-base">254.700 €</span>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Bottom Highlight Card -->
+  <section class="w-full max-w-sm sm:max-w-md bg-white border border-neutral-300 rounded-3xl p-5 text-center shadow-sm">
+    <h3 class="text-xs sm:text-sm font-semibold uppercase tracking-wider text-neutral-500 mb-1">
+      Patrimonio netto
+    </h3>
+    <div class="font-mono-num text-3xl sm:text-4xl font-black text-neutral-900 tracking-tight">
+      186.700 €
+    </div>
+    <p class="text-xs text-neutral-400 mt-1">Capitale proprio + Utile/Riserve</p>
+  </section>
+
+  <!-- EXACT Success Modal / Overlay -->
+  <div id="exactModal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 opacity-0 pointer-events-none transition-all duration-300">
+    <div id="modalCard" class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 text-center shadow-2xl border border-neutral-300 transform scale-90 transition-transform duration-300">
+      <div class="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-2xl mx-auto flex items-center justify-center mb-4">
+        <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+      </div>
+
+      <div class="inline-block bg-neutral-900 text-white text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-full mb-2">
+        Completato con successo
+      </div>
+
+      <h2 class="text-4xl sm:text-5xl font-black text-neutral-950 uppercase tracking-tight mb-2">
+        EXACT!
+      </h2>
+      <p class="text-neutral-600 text-sm sm:text-base mb-6">
+        Tutte le <span class="font-bold text-neutral-900">15 voci</span> sono state posizionate esattamente nelle sezioni e righe corrispondenti!
+      </p>
+
+      <div class="bg-neutral-100 rounded-2xl p-3 mb-6 text-xs text-neutral-700 flex justify-around font-medium">
+        <div>Mosse: <span id="finalMoves" class="font-bold font-mono-num text-neutral-900">0</span></div>
+        <div>Totale Attivo: <span class="font-bold font-mono-num text-neutral-900">254.700 €</span></div>
+      </div>
+
+      <button id="modalPlayAgainBtn" class="w-full py-3.5 px-6 rounded-2xl bg-neutral-900 text-white font-bold text-sm tracking-wide uppercase hover:bg-neutral-800 transition active:scale-95 shadow-md">
+        Gioca Ancora (Mischia)
+      </button>
+    </div>
+  </div>
+
+  <script>
+    // Definition of all 15 balance sheet items (ID and label)
+    const VOICES_CONFIG = [
+      { id: 'fabbricati', label: 'Fabbricati' },
+      { id: 'impianti', label: 'Impianti' },
+      { id: 'attrezzature', label: 'Attrezzature' },
+      { id: 'automezzi', label: 'Automezzi' },
+      { id: 'rimanenze', label: 'Rimanenze' },
+      { id: 'crediti_clienti', label: 'Crediti v/clienti' },
+      { id: 'crediti_diversi', label: 'Crediti diversi' },
+      { id: 'banca_cc', label: 'Banca c/c' },
+      { id: 'denaro_cassa', label: 'Denaro in cassa' },
+      { id: 'ratei_attivi', label: 'Ratei attivi' },
+      { id: 'patrimonio_netto', label: 'Patrimonio netto' },
+      { id: 'nessuna_voce', label: 'Nessuna voce' },
+      { id: 'tfr', label: 'TFR' },
+      { id: 'mutui_passivi', label: 'Mutui passivi' },
+      { id: 'sovvenzione_bancaria', label: 'Sovvenzione bancaria' },
+      { id: 'debiti_fornitori', label: 'Debiti v/fornitori' },
+      { id: 'debiti_tributari', label: 'Debiti tributari' }
+    ];
+
+    // Current game state
+    // currentPlacements: mapping of slotId -> voiceId currently occupying it
+    let currentPlacements = {};
+    let selectedSlotForSwap = null;
+    let draggedVoiceId = null;
+    let movesCount = 0;
+    let soundEnabled = true;
+    let hasCompleted = false;
+
+    // Audio synthesizer with Tone.js
+    let synth = null;
+    function initAudio() {
+      if (!synth && typeof Tone !== 'undefined') {
+        synth = new Tone.PolySynth(Tone.Synth, {
+          oscillator: { type: 'sine' },
+          envelope: { attack: 0.005, decay: 0.15, sustain: 0.0, release: 0.1 }
+        }).toDestination();
+        synth.volume.value = -12;
+      }
+    }
+
+    function playSound(type) {
+      if (!soundEnabled) return;
+      try {
+        if (!synth) initAudio();
+        Tone.start();
+        if (type === 'swap') {
+          synth.triggerAttackRelease('C4', '16n');
+        } else if (type === 'correct') {
+          synth.triggerAttackRelease(['E5', 'G5'], '16n');
+        } else if (type === 'wrong') {
+          synth.triggerAttackRelease('A2', '16n');
+        } else if (type === 'victory') {
+          const now = Tone.now();
+          synth.triggerAttackRelease('C4', '8n', now);
+          synth.triggerAttackRelease('E4', '8n', now + 0.1);
+          synth.triggerAttackRelease('G4', '8n', now + 0.2);
+          synth.triggerAttackRelease('C5', '4n', now + 0.3);
+        }
+      } catch (e) {
+        // Fallback or silence if audio block policy
+      }
+    }
+
+    function shuffleArray(arr) {
+      const array = [...arr];
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array;
+    }
+
+    function initializeGame(forceShuffle = true) {
+      hasCompleted = false;
+      hideModal();
+      movesCount = 0;
+      updateMovesDisplay();
+      clearSelection();
+
+      const slots = Array.from(document.querySelectorAll('.drop-slot')).map(el => el.getAttribute('data-slot-id'));
+      
+      let shuffledVoices;
+      if (forceShuffle) {
+        // Ensure not initially solved
+        do {
+          shuffledVoices = shuffleArray(VOICES_CONFIG.map(v => v.id));
+        } while (shuffledVoices.every((vId, idx) => vId === slots[idx]));
+      } else {
+        shuffledVoices = VOICES_CONFIG.map(v => v.id);
+      }
+
+      currentPlacements = {};
+      slots.forEach((slotId, index) => {
+        currentPlacements[slotId] = shuffledVoices[index];
+      });
+
+      renderBoard();
+    }
+
+    function renderBoard() {
+      let correctTotal = 0;
+      const slotElements = document.querySelectorAll('.drop-slot');
+
+      slotElements.forEach(slotEl => {
+        const slotId = slotEl.getAttribute('data-slot-id');
+        const voiceId = currentPlacements[slotId];
+        const voiceObj = VOICES_CONFIG.find(v => v.id === voiceId);
+        const isCorrect = (slotId === voiceId);
+
+        if (isCorrect) correctTotal++;
+
+        // Clear previous content
+        slotEl.innerHTML = '';
+
+        // Create card element
+        const card = document.createElement('div');
+        card.setAttribute('draggable', 'true');
+        card.setAttribute('data-voice-id', voiceId);
+        card.setAttribute('data-current-slot', slotId);
+
+        // Responsive styling with clean black/white + green/red indicators
+        card.className = `draggable-card group relative flex items-center justify-between px-3 py-1.5 rounded-xl border text-xs sm:text-sm font-semibold transition-all shadow-sm ${
+          isCorrect
+            ? 'bg-emerald-50/95 text-emerald-950 border-emerald-300 ring-1 ring-emerald-200'
+            : 'bg-rose-50/95 text-rose-950 border-rose-300 ring-1 ring-rose-200'
+        }`;
+
+        if (selectedSlotForSwap === slotId) {
+          card.classList.add('selected-to-swap');
+        }
+
+        // Inner HTML: Icon status, label, and grip handle
+        card.innerHTML = `
+          <div class="flex items-center space-x-2 truncate">
+            <span class="flex-shrink-0 w-4 h-4 rounded-full flex items-center justify-center text-[10px] font-bold ${
+              isCorrect ? 'bg-emerald-600 text-white' : 'bg-rose-600 text-white'
+            }">
+              ${isCorrect ? '✓' : '✕'}
+            </span>
+            <span class="truncate font-medium">${voiceObj ? voiceObj.label : ''}</span>
+          </div>
+          <div class="flex-shrink-0 opacity-40 group-hover:opacity-100 transition pl-1 text-neutral-400">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9h8M8 15h8"/></svg>
+          </div>
+        `;
+
+        // Attach drag & touch events to the card
+        setupDragEvents(card, slotEl);
+
+        slotEl.appendChild(card);
+      });
+
+      // Update counters
+      const scoreBadge = document.getElementById('scoreBadge');
+      scoreBadge.textContent = `${correctTotal} / ${VOICES_CONFIG.length}`;
+      if (correctTotal === VOICES_CONFIG.length) {
+        scoreBadge.classList.replace('text-emerald-400', 'text-emerald-300');
+        if (!hasCompleted) {
+          triggerVictory();
+        }
+      }
+
+      setupSlotDropEvents();
+    }
+
+    function setupDragEvents(card, parentSlot) {
+      // HTML5 Drag Events
+      card.addEventListener('dragstart', (e) => {
+        draggedVoiceId = card.getAttribute('data-voice-id');
+        card.classList.add('dragging');
+        e.dataTransfer.setData('text/plain', card.getAttribute('data-current-slot'));
+        e.dataTransfer.effectAllowed = 'move';
+      });
+
+      card.addEventListener('dragend', () => {
+        card.classList.remove('dragging');
+        document.querySelectorAll('.slot-hover-target').forEach(el => el.classList.remove('slot-hover-target'));
+      });
+
+      // Click / Tap to select and swap (Optimal for mobile screens)
+      card.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const currentSlot = card.getAttribute('data-current-slot');
+        handleSlotInteraction(currentSlot);
+      });
+    }
+
+    function setupSlotDropEvents() {
+      const slots = document.querySelectorAll('.drop-slot');
+      slots.forEach(slot => {
+        slot.addEventListener('dragover', (e) => {
+          e.preventDefault();
+          e.dataTransfer.dropEffect = 'move';
+          slot.classList.add('slot-hover-target');
+        });
+
+        slot.addEventListener('dragleave', () => {
+          slot.classList.remove('slot-hover-target');
+        });
+
+        slot.addEventListener('drop', (e) => {
+          e.preventDefault();
+          slot.classList.remove('slot-hover-target');
+          const sourceSlotId = e.dataTransfer.getData('text/plain');
+          const targetSlotId = slot.getAttribute('data-slot-id');
+
+          if (sourceSlotId && targetSlotId && sourceSlotId !== targetSlotId) {
+            executeSwap(sourceSlotId, targetSlotId);
+          }
+        });
+
+        // Click on empty space in slot
+        slot.addEventListener('click', () => {
+          const targetSlotId = slot.getAttribute('data-slot-id');
+          handleSlotInteraction(targetSlotId);
+        });
+      });
+    }
+
+    function handleSlotInteraction(slotId) {
+      if (!selectedSlotForSwap) {
+        // First selection
+        selectedSlotForSwap = slotId;
+        renderBoard();
+      } else if (selectedSlotForSwap === slotId) {
+        // Deselect if clicked same
+        selectedSlotForSwap = null;
+        renderBoard();
+      } else {
+        // Second selection -> execute swap!
+        const source = selectedSlotForSwap;
+        selectedSlotForSwap = null;
+        executeSwap(source, slotId);
+      }
+    }
+
+    function executeSwap(slotA, slotB) {
+      const temp = currentPlacements[slotA];
+      currentPlacements[slotA] = currentPlacements[slotB];
+      currentPlacements[slotB] = temp;
+
+      movesCount++;
+      updateMovesDisplay();
+
+      // Check whether newly placed items are correct
+      const nowCorrectA = (currentPlacements[slotA] === slotA);
+      const nowCorrectB = (currentPlacements[slotB] === slotB);
+
+      if (nowCorrectA || nowCorrectB) {
+        playSound('correct');
+      } else {
+        playSound('swap');
+      }
+
+      renderBoard();
+    }
+
+    function clearSelection() {
+      selectedSlotForSwap = null;
+    }
+
+    function updateMovesDisplay() {
+      document.getElementById('movesCounter').textContent = `Mosse: ${movesCount}`;
+      document.getElementById('finalMoves').textContent = movesCount;
+    }
+
+    function provideHint() {
+      // Find an incorrect slot
+      const incorrectSlots = Object.keys(currentPlacements).filter(s => currentPlacements[s] !== s);
+      if (incorrectSlots.length === 0) return;
+
+      // Pick one slot and place its correct voice in it
+      const targetSlot = incorrectSlots[Math.floor(Math.random() * incorrectSlots.length)];
+      // Where is targetSlot's voice currently?
+      const sourceSlot = Object.keys(currentPlacements).find(s => currentPlacements[s] === targetSlot);
+
+      if (sourceSlot) {
+        executeSwap(sourceSlot, targetSlot);
+      }
+    }
+
+    function solvePuzzle() {
+      VOICES_CONFIG.forEach(v => {
+        currentPlacements[v.id] = v.id;
+      });
+      movesCount += 5;
+      updateMovesDisplay();
+      playSound('correct');
+      renderBoard();
+    }
+
+    function triggerVictory() {
+      hasCompleted = true;
+      playSound('victory');
+
+      // Trigger Confetti
+      try {
+        if (typeof confetti === 'function') {
+          confetti({
+            particleCount: 80,
+            spread: 70,
+            origin: { y: 0.6 }
+          });
+          setTimeout(() => {
+            confetti({
+              particleCount: 50,
+              angle: 60,
+              spread: 55,
+              origin: { x: 0 }
+            });
+            confetti({
+              particleCount: 50,
+              angle: 120,
+              spread: 55,
+              origin: { x: 1 }
+            });
+          }, 250);
+        }
+      } catch (e) {}
+
+      // Show celebratory Modal
+      setTimeout(() => {
+        showModal();
+      }, 500);
+    }
+
+    function showModal() {
+      const modal = document.getElementById('exactModal');
+      const card = document.getElementById('modalCard');
+      modal.classList.remove('opacity-0', 'pointer-events-none');
+      card.classList.remove('scale-90');
+      card.classList.add('scale-100');
+    }
+
+    function hideModal() {
+      const modal = document.getElementById('exactModal');
+      const card = document.getElementById('modalCard');
+      modal.classList.add('opacity-0', 'pointer-events-none');
+      card.classList.remove('scale-100');
+      card.classList.add('scale-90');
+    }
+
+    document.getElementById('shuffleBtn').addEventListener('click', () => {
+      initializeGame(true);
+      playSound('swap');
+    });
+
+    document.getElementById('hintBtn').addEventListener('click', () => {
+      provideHint();
+    });
+
+    document.getElementById('solveBtn').addEventListener('click', () => {
+      solvePuzzle();
+    });
+
+    document.getElementById('modalPlayAgainBtn').addEventListener('click', () => {
+      initializeGame(true);
+    });
+
+    // Sound toggle
+    const soundToggleBtn = document.getElementById('soundToggleBtn');
+    const soundOnIcon = document.getElementById('soundOnIcon');
+    const soundOffIcon = document.getElementById('soundOffIcon');
+
+    soundToggleBtn.addEventListener('click', () => {
+      soundEnabled = !soundEnabled;
+      if (soundEnabled) {
+        soundOnIcon.classList.remove('hidden');
+        soundOffIcon.classList.add('hidden');
+        initAudio();
+      } else {
+        soundOnIcon.classList.add('hidden');
+        soundOffIcon.classList.remove('hidden');
+      }
+    });
+
+    // Cancel swap selection if clicked outside
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('.drop-slot') && !e.target.closest('#hintBtn') && !e.target.closest('#solveBtn')) {
+        if (selectedSlotForSwap) {
+          clearSelection();
+          renderBoard();
+        }
+      }
+    });
+
+    // Run game on load
+    window.onload = function() {
+      initializeGame(true);
+    };
+  </script>
+</body>
+</html>
