@@ -11,7 +11,7 @@ def generate_index(folder: Path = FOLDER) -> Path:
         (
             path
             for path in folder.iterdir()
-            if path.is_file() and path.suffix.lower() == ".pdf"
+            if path.is_file() and path.suffix.lower() in {".pdf", ".epub"}
         ),
         key=lambda path: path.name.casefold(),
     )
@@ -21,18 +21,18 @@ def generate_index(folder: Path = FOLDER) -> Path:
         for path in pdf_files
     )
     if not links:
-        links = "        <li>No PDF files found.</li>"
+        links = "        <li>No documents found.</li>"
 
     html = f"""<!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>PDF files</title>
+    <title>Documents</title>
   </head>
   <body>
     <main>
-      <h1>PDF files</h1>
+      <h1>Documents</h1>
       <ul>
 {links}
       </ul>
