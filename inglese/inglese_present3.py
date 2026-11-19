@@ -83,7 +83,7 @@ class EnglishLearningApp:
 
         self.current_slide = 0
         self.answers = {
-            'present_simple': ['wakes up', 'watch', 'studies', "don't eat", 'Do', 'rises', 'sleeps', "don't live"],
+            'present_simple': ['wakes up', 'watch', 'studies', "don't eat", 'Do you like', 'rises', 'sleeps', "don't live"],
             'present_continuous': ['He is eating an apple.', 'She is running in the park.', 'They are talking.', 'It is sleeping.', 'She is cooking dinner.'],
             'past_simple': ['visited', 'went', "didn't finish", 'played', 'Did', 'bought', "didn't like", 'woke up'],
             'adjectives': ['blue', 'delicious', 'fast', 'happy', 'difficult', 'tall'],

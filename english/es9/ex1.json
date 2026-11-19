@@ -1,0 +1,19 @@
+{
+  "conversations": [
+    {
+      "title": "Al ristorante",
+      "dialogue": [
+        {
+          "speaker": "Waiter",
+          "text": "Good evening! Are you ready to {order}?",
+          "voice": "female"
+        },
+        {
+          "speaker": "Customer",
+          "text": "Yes, I'd {like} the grilled salmon, please.",
+          "voice": "male"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Impara i Verbi Irregolari Inglesi</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .header h1 {
+            color: #764ba2;
+            margin-bottom: 10px;
+            font-size: 2.5rem;
+        }
+
+        .mode-switcher {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .mode-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .mode-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        .mode-btn.active {
+            background: #764ba2;
+            transform: translateY(-2px);
+        }
+
+        .content {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Learning Mode Styles */
+        .filter-container {
+            margin-bottom: 30px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .filter-btn {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+
+        .verbs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .verb-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .verb-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .verb-forms {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .verb-form {
+            text-align: center;
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            flex: 1;
+            margin: 0 5px;
+        }
+
+        .verb-form:hover {
+            transform: scale(1.05);
+        }
+
+        .present {
+            background: #e8f5e8;
+            color: #2d5a2d;
+        }
+
+        .past {
+            background: #fff2e8;
+            color: #b8860b;
+        }
+
+        .participle {
+            background: #e8f0ff;
+            color: #1a5490;
+        }
+
+        .verb-translation {
+            text-align: center;
+            font-style: italic;
+            color: #666;
+            margin-top: 10px;
+        }
+
+        /* Flashcard Mode Styles */
+        .flashcard-container {
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .flashcard {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+            min-height: 300px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .question {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #764ba2;
+        }
+
+        .answer-inputs {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .answer-input {
+            padding: 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            font-size: 18px;
+            text-align: center;
+            transition: border-color 0.3s ease;
+        }
+
+        .answer-input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .answer-input.correct {
+            border-color: #28a745;
+            background-color: #d4edda;
+        }
+
+        .answer-input.incorrect {
+            border-color: #dc3545;
+            background-color: #f8d7da;
+        }
+
+        .flashcard-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-success {
+            background: #28a745;
+        }
+
+        .btn-success:hover {
+            box-shadow: 0 4px 12px rgba(40, 167, 69, 0.4);
+        }
+
+        .btn-danger {
+            background: #dc3545;
+        }
+
+        .btn-danger:hover {
+            box-shadow: 0 4px 12px rgba(220, 53, 69, 0.4);
+        }
+
+        .progress-info {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background: #e9ecef;
+            border-radius: 5px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            transition: width 0.3s ease;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .mode-switcher {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .verb-forms {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .verb-form {
+                margin: 0;
+            }
+
+            .flashcard {
+                padding: 30px 20px;
+            }
+
+            .question {
+                font-size: 1.5rem;
+            }
+
+            .flashcard-buttons {
+                flex-direction: column;
+            }
+
+            .filter-container {
+                justify-content: flex-start;
+            }
+        }
+
+        /* Animations */
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .verb-card, .flashcard {
+            animation: slideIn 0.5s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🇬🇧 Verbi Irregolari Inglesi</h1>
+            <p>Impara e pratica i verbi irregolari inglesi con pronuncia e flashcards</p>
+            <div class="mode-switcher">
+                <button class="mode-btn active" onclick="switchMode('learn')">📚 Impara i Verbi</button>
+                <button class="mode-btn" onclick="switchMode('flashcard')">🃏 Flashcards</button>
+            </div>
+        </div>
+
+        <div class="content">
+            <!-- Learning Mode -->
+            <div id="learn-mode">
+                <div class="filter-container">
+                    <button class="filter-btn active" data-letter="all">Tutti</button>
+                </div>
+                <div class="verbs-grid" id="verbs-grid"></div>
+            </div>
+
+            <!-- Flashcard Mode -->
+            <div id="flashcard-mode" class="hidden">
+                <div class="progress-info">
+                    <h3>Il tuo progresso</h3>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progress-fill"></div>
+                    </div>
+                    <p><span id="learned-count">0</span> di <span id="total-count">0</span> verbi imparati</p>
+                </div>
+
+                <div class="flashcard-container">
+                    <div class="flashcard">
+                        <div class="question" id="current-verb"></div>
+                        <div class="answer-inputs">
+                            <input type="text" class="answer-input" id="past-input" placeholder="Inserisci il passato" autocomplete="off">
+                            <input type="text" class="answer-input" id="participle-input" placeholder="Inserisci il participio passato" autocomplete="off">
+                        </div>
+                        <div class="flashcard-buttons">
+                            <button class="btn" onclick="checkAnswer()">✓ Controlla</button>
+                            <button class="btn" onclick="showAnswer()">👁️ Mostra Risposta</button>
+                            <button class="btn btn-success" onclick="markAsLearned(true)">😊 Imparato</button>
+                            <button class="btn btn-danger" onclick="markAsLearned(false)">😞 Non Imparato</button>
+                            <button class="btn" onclick="nextCard()">➡️ Prossimo</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Database dei verbi irregolari
+        const irregularVerbs = [
+            {present: 'be', past: 'was/were', participle: 'been', translation: 'essere'},
+            {present: 'become', past: 'became', participle: 'become', translation: 'diventare'},
+            {present: 'begin', past: 'began', participle: 'begun', translation: 'iniziare'},
+            {present: 'break', past: 'broke', participle: 'broken', translation: 'rompere'},
+            {present: 'bring', past: 'brought', participle: 'brought', translation: 'portare'},
+            {present: 'build', past: 'built', participle: 'built', translation: 'costruire'},
+            {present: 'buy', past: 'bought', participle: 'bought', translation: 'comprare'},
+            {present: 'catch', past: 'caught', participle: 'caught', translation: 'catturare'},
+            {present: 'choose', past: 'chose', participle: 'chosen', translation: 'scegliere'},
+            {present: 'come', past: 'came', participle: 'come', translation: 'venire'},
+            {present: 'do', past: 'did', participle: 'done', translation: 'fare'},
+            {present: 'drink', past: 'drank', participle: 'drunk', translation: 'bere'},
+            {present: 'drive', past: 'drove', participle: 'driven', translation: 'guidare'},
+            {present: 'eat', past: 'ate', participle: 'eaten', translation: 'mangiare'},
+            {present: 'fall', past: 'fell', participle: 'fallen', translation: 'cadere'},
+            {present: 'feel', past: 'felt', participle: 'felt', translation: 'sentire'},
+            {present: 'find', past: 'found', participle: 'found', translation: 'trovare'},
+            {present: 'fly', past: 'flew', participle: 'flown', translation: 'volare'},
+            {present: 'forget', past: 'forgot', participle: 'forgotten', translation: 'dimenticare'},
+            {present: 'get', past: 'got', participle: 'got/gotten', translation: 'ottenere'},
+            {present: 'give', past: 'gave', participle: 'given', translation: 'dare'},
+            {present: 'go', past: 'went', participle: 'gone', translation: 'andare'},
+            {present: 'have', past: 'had', participle: 'had', translation: 'avere'},
+            {present: 'hear', past: 'heard', participle: 'heard', translation: 'sentire'},
+            {present: 'keep', past: 'kept', participle: 'kept', translation: 'tenere'},
+            {present: 'know', past: 'knew', participle: 'known', translation: 'sapere'},
+            {present: 'leave', past: 'left', participle: 'left', translation: 'lasciare'},
+            {present: 'lose', past: 'lost', participle: 'lost', translation: 'perdere'},
+            {present: 'make', past: 'made', participle: 'made', translation: 'fare'},
+            {present: 'meet', past: 'met', participle: 'met', translation: 'incontrare'},
+            {present: 'pay', past: 'paid', participle: 'paid', translation: 'pagare'},
+            {present: 'put', past: 'put', participle: 'put', translation: 'mettere'},
+            {present: 'read', past: 'read', participle: 'read', translation: 'leggere'},
+            {present: 'run', past: 'ran', participle: 'run', translation: 'correre'},
+            {present: 'say', past: 'said', participle: 'said', translation: 'dire'},
+            {present: 'see', past: 'saw', participle: 'seen', translation: 'vedere'},
+            {present: 'sell', past: 'sold', participle: 'sold', translation: 'vendere'},
+            {present: 'send', past: 'sent', participle: 'sent', translation: 'inviare'},
+            {present: 'sing', past: 'sang', participle: 'sung', translation: 'cantare'},
+            {present: 'sit', past: 'sat', participle: 'sat', translation: 'sedere'},
+            {present: 'speak', past: 'spoke', participle: 'spoken', translation: 'parlare'},
+            {present: 'spend', past: 'spent', participle: 'spent', translation: 'spendere'},
+            {present: 'stand', past: 'stood', participle: 'stood', translation: 'stare in piedi'},
+            {present: 'take', past: 'took', participle: 'taken', translation: 'prendere'},
+            {present: 'teach', past: 'taught', participle: 'taught', translation: 'insegnare'},
+            {present: 'tell', past: 'told', participle: 'told', translation: 'dire'},
+            {present: 'think', past: 'thought', participle: 'thought', translation: 'pensare'},
+            {present: 'understand', past: 'understood', participle: 'understood', translation: 'capire'},
+            {present: 'wake', past: 'woke', participle: 'woken', translation: 'svegliare'},
+            {present: 'wear', past: 'wore', participle: 'worn', translation: 'indossare'},
+            {present: 'win', past: 'won', participle: 'won', translation: 'vincere'},
+            {present: 'write', past: 'wrote', participle: 'written', translation: 'scrivere'}
+        ];
+
+        // Variabili globali
+        let currentMode = 'learn';
+        let currentFilter = 'all';
+        let currentVerbIndex = 0;
+        let learnedVerbs = new Set();
+        let answeredCorrectly = false;
+
+        // Inizializzazione
+        document.addEventListener('DOMContentLoaded', function() {
+            loadProgress();
+            initLearnMode();
+            initFlashcardMode();
+        });
+
+        // Carica il progresso dal localStorage
+        function loadProgress() {
+            const saved = localStorage.getItem('learnedVerbs');
+            if (saved) {
+                learnedVerbs = new Set(JSON.parse(saved));
+            }
+        }
+
+        // Salva il progresso nel localStorage
+        function saveProgress() {
+            localStorage.setItem('learnedVerbs', JSON.stringify([...learnedVerbs]));
+        }
+
+        // Cambia modalità
+        function switchMode(mode) {
+            currentMode = mode;
+            
+            // Aggiorna i pulsanti
+            document.querySelectorAll('.mode-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Mostra/nascondi le sezioni
+            if (mode === 'learn') {
+                document.getElementById('learn-mode').classList.remove('hidden');
+                document.getElementById('flashcard-mode').classList.add('hidden');
+            } else {
+                document.getElementById('learn-mode').classList.add('hidden');
+                document.getElementById('flashcard-mode').classList.remove('hidden');
+                updateProgress();
+            }
+        }
+
+        // Inizializza la modalità apprendimento
+        function initLearnMode() {
+            createFilterButtons();
+            displayVerbs();
+        }
+
+        // Crea i pulsanti di filtro
+        function createFilterButtons() {
+            const filterContainer = document.querySelector('.filter-container');
+            const letters = [...new Set(irregularVerbs.map(verb => verb.present[0].toUpperCase()))].sort();
+            
+            letters.forEach(letter => {
+                const btn = document.createElement('button');
+                btn.className = 'filter-btn';
+                btn.dataset.letter = letter;
+                btn.textContent = letter;
+                btn.onclick = () => filterVerbs(letter);
+                filterContainer.appendChild(btn);
+            });
+        }
+
+        // Filtra i verbi per lettera
+        function filterVerbs(letter) {
+            currentFilter = letter;
+            
+            // Aggiorna i pulsanti
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelector(`[data-letter="${letter}"]`).classList.add('active');
+            
+            displayVerbs();
+        }
+
+        // Mostra i verbi
+        function displayVerbs() {
+            const verbsGrid = document.getElementById('verbs-grid');
+            verbsGrid.innerHTML = '';
+            
+            const filteredVerbs = currentFilter === 'all' 
+                ? irregularVerbs 
+                : irregularVerbs.filter(verb => verb.present[0].toUpperCase() === currentFilter);
+            
+            filteredVerbs.forEach(verb => {
+                const verbCard = document.createElement('div');
+                verbCard.className = 'verb-card';
+                verbCard.innerHTML = `
+                    <div class="verb-forms">
+                        <div class="verb-form present" onclick="speakText('${verb.present}')">${verb.present}</div>
+                        <div class="verb-form past" onclick="speakText('${verb.past}')">${verb.past}</div>
+                        <div class="verb-form participle" onclick="speakText('${verb.participle}')">${verb.participle}</div>
+                    </div>
+                    <div class="verb-translation">${verb.translation}</div>
+                `;
+                verbsGrid.appendChild(verbCard);
+            });
+        }
+
+        // Text-to-Speech
+        function speakText(text) {
+            if ('speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'en-US';
+                utterance.rate = 0.8;
+                speechSynthesis.speak(utterance);
+            } else {
+                alert('Il tuo browser non supporta la sintesi vocale');
+            }
+        }
+
+        // Inizializza la modalità flashcard
+        function initFlashcardMode() {
+            document.getElementById('total-count').textContent = irregularVerbs.length;
+            nextCard();
+        }
+
+        // Prossima carta
+        function nextCard() {
+            currentVerbIndex = Math.floor(Math.random() * irregularVerbs.length);
+            const verb = irregularVerbs[currentVerbIndex];
+            
+            document.getElementById('current-verb').textContent = verb.present;
+            document.getElementById('past-input').value = '';
+            document.getElementById('participle-input').value = '';
+            
+            // Reset degli stili
+            document.querySelectorAll('.answer-input').forEach(input => {
+                input.classList.remove('correct', 'incorrect');
+            });
+            
+            answeredCorrectly = false;
+            updateProgress();
+        }
+
+        // Controlla la risposta
+        function checkAnswer() {
+            const verb = irregularVerbs[currentVerbIndex];
+            const pastInput = document.getElementById('past-input');
+            const participleInput = document.getElementById('participle-input');
+            
+            const pastCorrect = pastInput.value.toLowerCase().trim() === verb.past.toLowerCase();
+            const participleCorrect = participleInput.value.toLowerCase().trim() === verb.participle.toLowerCase();
+            
+            // Gestione delle forme alternative (es. got/gotten)
+            const pastAlternatives = verb.past.split('/').map(form => form.trim().toLowerCase());
+            const participleAlternatives = verb.participle.split('/').map(form => form.trim().toLowerCase());
+            
+            const pastMatch = pastAlternatives.includes(pastInput.value.toLowerCase().trim());
+            const participleMatch = participleAlternatives.includes(participleInput.value.toLowerCase().trim());
+            
+            // Applica gli stili
+            pastInput.classList.remove('correct', 'incorrect');
+            participleInput.classList.remove('correct', 'incorrect');
+            
+            if (pastMatch) {
+                pastInput.classList.add('correct');
+            } else {
+                pastInput.classList.add('incorrect');
+            }
+            
+            if (participleMatch) {
+                participleInput.classList.add('correct');
+            } else {
+                participleInput.classList.add('incorrect');
+            }
+            
+            answeredCorrectly = pastMatch && participleMatch;
+        }
+
+        // Mostra la risposta
+        function showAnswer() {
+            const verb = irregularVerbs[currentVerbIndex];
+            document.getElementById('past-input').value = verb.past;
+            document.getElementById('participle-input').value = verb.participle;
+            
+            document.querySelectorAll('.answer-input').forEach(input => {
+                input.classList.remove('incorrect');
+                input.classList.add('correct');
+            });
+        }
+
+        // Segna come imparato/non imparato
+        function markAsLearned(learned) {
+            const verbPresent = irregularVerbs[currentVerbIndex].present;
+            
+            if (learned) {
+                learnedVerbs.add(verbPresent);
+            } else {
+                learnedVerbs.delete(verbPresent);
+            }
+            
+            saveProgress();
+            updateProgress();
+            
+            // Feedback visivo
+            const flashcard = document.querySelector('.flashcard');
+            flashcard.style.background = learned ? '#d4edda' : '#f8d7da';
+            setTimeout(() => {
+                flashcard.style.background = 'white';
+            }, 500);
+        }
+
+        // Aggiorna il progresso
+        function updateProgress() {
+            const learnedCount = learnedVerbs.size;
+            const totalCount = irregularVerbs.length;
+            const percentage = (learnedCount / totalCount) * 100;
+            
+            document.getElementById('learned-count').textContent = learnedCount;
+            document.getElementById('progress-fill').style.width = percentage + '%';
+        }
+
+        // Gestione dell'input da tastiera
+        document.addEventListener('keydown', function(e) {
+            if (currentMode === 'flashcard') {
+                if (e.key === 'Enter') {
+                    checkAnswer();
+                } else if (e.key === ' ') {
+                    e.preventDefault();
+                    nextCard();
+                }
+            }
+        });
+
+        // Gestione del focus automatico
+        document.getElementById('past-input').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                document.getElementById('participle-input').focus();
+            }
+        });
+
+        document.getElementById('participle-input').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                checkAnswer();
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz di Inglese - Conversazione</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 700px;
+            width: 100%;
+            padding: 40px;
+        }
+        
+        h1 {
+            color: #667eea;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 2em;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 0.9em;
+        }
+        
+        .question {
+            background: #f8f9ff;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            border-left: 5px solid #667eea;
+        }
+        
+        .question-number {
+            color: #667eea;
+            font-weight: bold;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+        
+        .audio-section {
+            text-align: center;
+            margin-bottom: 20px;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+        }
+        
+        .play-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.1em;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+        
+        .play-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+        
+        .play-button:active {
+            transform: translateY(0);
+        }
+        
+        .play-button.playing {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        }
+        
+        .conversation {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            line-height: 1.8;
+            opacity: 0.3;
+            pointer-events: none;
+            transition: opacity 0.3s;
+        }
+        
+        .conversation.revealed {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        
+        .conversation p {
+            margin-bottom: 10px;
+        }
+        
+        .blank {
+            display: inline-block;
+            min-width: 100px;
+            border-bottom: 2px solid #667eea;
+            margin: 0 5px;
+            font-weight: bold;
+            color: #667eea;
+        }
+        
+        input[type="text"] {
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            padding: 10px 15px;
+            font-size: 1em;
+            width: 100%;
+            transition: all 0.3s;
+            margin-bottom: 10px;
+        }
+        
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        button.check-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.1em;
+            border-radius: 10px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            font-weight: bold;
+        }
+        
+        button.check-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+        
+        button.check-button:active {
+            transform: translateY(0);
+        }
+        
+        .result {
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 1.2em;
+            font-weight: bold;
+            display: none;
+        }
+        
+        .result.show {
+            display: block;
+            animation: slideIn 0.5s;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .correct {
+            background: #d4edda;
+            color: #155724;
+            border: 2px solid #c3e6cb;
+        }
+        
+        .incorrect {
+            background: #f8d7da;
+            color: #721c24;
+            border: 2px solid #f5c6cb;
+        }
+        
+        .instruction {
+            background: #fff3cd;
+            color: #856404;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎧 Quiz di Inglese - Listening</h1>
+        <p class="subtitle">Ascolta le conversazioni e completa gli spazi vuoti</p>
+        
+        <div class="instruction">
+            👂 Clicca sul pulsante per ascoltare ogni conversazione, poi scrivi le parole mancanti!
+        </div>
+        
+        <div class="question">
+            <div class="question-number">Conversazione 1 - Al ristorante</div>
+            <div class="audio-section">
+                <button class="play-button" onclick="playConversation(1)">
+                    <span class="icon">🔊</span>
+                    <span class="text">Ascolta la conversazione</span>
+                </button>
+            </div>
+            <div class="conversation" id="conv1">
+                <p><strong>Waiter:</strong> Good evening! Are you ready to <span class="blank" id="answer1">_______</span>?</p>
+                <p><strong>Customer:</strong> Yes, I'd <span class="blank" id="answer2">_______</span> the grilled salmon, please.</p>
+                <p><strong>Waiter:</strong> Excellent choice! Would you like anything to <span class="blank" id="answer3">_______</span>?</p>
+            </div>
+            <input type="text" id="input1" placeholder="Parola 1">
+            <input type="text" id="input2" placeholder="Parola 2">
+            <input type="text" id="input3" placeholder="Parola 3">
+        </div>
+        
+        <div class="question">
+            <div class="question-number">Conversazione 2 - Chiedere indicazioni</div>
+            <div class="audio-section">
+                <button class="play-button" onclick="playConversation(2)">
+                    <span class="icon">🔊</span>
+                    <span class="text">Ascolta la conversazione</span>
+                </button>
+            </div>
+            <div class="conversation" id="conv2">
+                <p><strong>Tourist:</strong> Excuse me, <span class="blank" id="answer4">_______</span> you tell me how to get to the museum?</p>
+                <p><strong>Local:</strong> Sure! Go <span class="blank" id="answer5">_______</span> ahead and turn left at the traffic lights.</p>
+                <p><strong>Tourist:</strong> Thank you so <span class="blank" id="answer6">_______</span>!</p>
+            </div>
+            <input type="text" id="input4" placeholder="Parola 4">
+            <input type="text" id="input5" placeholder="Parola 5">
+            <input type="text" id="input6" placeholder="Parola 6">
+        </div>
+        
+        <div class="question">
+            <div class="question-number">Conversazione 3 - Al telefono</div>
+            <div class="audio-section">
+                <button class="play-button" onclick="playConversation(3)">
+                    <span class="icon">🔊</span>
+                    <span class="text">Ascolta la conversazione</span>
+                </button>
+            </div>
+            <div class="conversation" id="conv3">
+                <p><strong>Caller:</strong> Hello, <span class="blank" id="answer7">_______</span> I speak to Mr. Johnson?</p>
+                <p><strong>Secretary:</strong> I'm sorry, he's not <span class="blank" id="answer8">_______</span> at the moment. Can I take a message?</p>
+                <p><strong>Caller:</strong> Yes, please ask him to <span class="blank" id="answer9">_______</span> me back.</p>
+            </div>
+            <input type="text" id="input7" placeholder="Parola 7">
+            <input type="text" id="input8" placeholder="Parola 8">
+            <input type="text" id="input9" placeholder="Parola 9">
+        </div>
+        
+        <button class="check-button" onclick="checkAnswers()">Controlla Risposte</button>
+        
+        <div class="result" id="result"></div>
+    </div>
+    
+    <script>
+        const correctAnswers = {
+            1: ['order'],
+            2: ['like'],
+            3: ['drink'],
+            4: ['could', 'can'],
+            5: ['straight'],
+            6: ['much'],
+            7: ['may', 'could', 'can'],
+            8: ['available', 'here', 'in'],
+            9: ['call']
+        };
+        
+        const conversations = {
+            1: [
+                { text: "Good evening! Are you ready to order?", voice: "female" },
+                { text: "Yes, I'd like the grilled salmon, please.", voice: "male" },
+                { text: "Excellent choice! Would you like anything to drink?", voice: "female" }
+            ],
+            2: [
+                { text: "Excuse me, could you tell me how to get to the museum?", voice: "female" },
+                { text: "Sure! Go straight ahead and turn left at the traffic lights.", voice: "male" },
+                { text: "Thank you so much!", voice: "female" }
+            ],
+            3: [
+                { text: "Hello, may I speak to Mr. Johnson?", voice: "male" },
+                { text: "I'm sorry, he's not available at the moment. Can I take a message?", voice: "female" },
+                { text: "Yes, please ask him to call me back.", voice: "male" }
+            ]
+        };
+        
+        function playConversation(num) {
+            const button = event.target.closest('.play-button');
+            const icon = button.querySelector('.icon');
+            const text = button.querySelector('.text');
+            const conv = document.getElementById('conv' + num);
+            
+            button.classList.add('playing');
+            icon.textContent = '⏸️';
+            text.textContent = 'Riproduzione...';
+            
+            conv.classList.add('revealed');
+            
+            const conversation = conversations[num];
+            let currentIndex = 0;
+            
+            function speakNext() {
+                if (currentIndex < conversation.length) {
+                    const utterance = new SpeechSynthesisUtterance(conversation[currentIndex].text);
+                    utterance.lang = 'en-US';
+                    utterance.rate = 0.9;
+                    
+                    const voices = speechSynthesis.getVoices();
+                    const preferredVoice = voices.find(voice => 
+                        voice.lang.startsWith('en') && 
+                        (conversation[currentIndex].voice === 'female' ? voice.name.includes('Female') : voice.name.includes('Male'))
+                    ) || voices.find(voice => voice.lang.startsWith('en'));
+                    
+                    if (preferredVoice) {
+                        utterance.voice = preferredVoice;
+                    }
+                    
+                    utterance.onend = () => {
+                        currentIndex++;
+                        setTimeout(speakNext, 500);
+                    };
+                    
+                    speechSynthesis.speak(utterance);
+                } else {
+                    button.classList.remove('playing');
+                    icon.textContent = '🔊';
+                    text.textContent = 'Riascolta';
+                }
+            }
+            
+            speechSynthesis.cancel();
+            speakNext();
+        }
+        
+        // Load voices
+        if (speechSynthesis.onvoiceschanged !== undefined) {
+            speechSynthesis.onvoiceschanged = () => speechSynthesis.getVoices();
+        }
+        
+        function checkAnswers() {
+            let score = 0;
+            let total = 9;
+            
+            for (let i = 1; i <= total; i++) {
+                const userAnswer = document.getElementById('input' + i).value.trim().toLowerCase();
+                const answerSpan = document.getElementById('answer' + i);
+                const input = document.getElementById('input' + i);
+                
+                if (correctAnswers[i].includes(userAnswer)) {
+                    score++;
+                    answerSpan.textContent = userAnswer;
+                    answerSpan.style.color = '#28a745';
+                    input.style.borderColor = '#28a745';
+                    input.style.backgroundColor = '#d4edda';
+                } else {
+                    answerSpan.textContent = correctAnswers[i][0];
+                    answerSpan.style.color = '#dc3545';
+                    input.style.borderColor = '#dc3545';
+                    input.style.backgroundColor = '#f8d7da';
+                }
+            }
+            
+            const resultDiv = document.getElementById('result');
+            const percentage = Math.round((score / total) * 100);
+            
+            resultDiv.classList.add('show');
+            
+            if (percentage >= 80) {
+                resultDiv.className = 'result show correct';
+                resultDiv.innerHTML = `🎉 Eccellente! Hai ottenuto ${score}/${total} (${percentage}%)`;
+            } else if (percentage >= 60) {
+                resultDiv.className = 'result show';
+                resultDiv.style.background = '#fff3cd';
+                resultDiv.style.color = '#856404';
+                resultDiv.style.border = '2px solid #ffeaa7';
+                resultDiv.innerHTML = `👍 Buon lavoro! Hai ottenuto ${score}/${total} (${percentage}%)`;
+            } else {
+                resultDiv.className = 'result show incorrect';
+                resultDiv.innerHTML = `📚 Continua a esercitarti! Hai ottenuto ${score}/${total} (${percentage}%)`;
+            }
+        }
+    </script>
+</body>
+</html>

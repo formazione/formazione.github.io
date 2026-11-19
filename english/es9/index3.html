@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz di Inglese - Conversazione</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 700px;
+            width: 100%;
+            padding: 40px;
+        }
+        
+        h1 {
+            color: #667eea;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 2em;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 0.9em;
+        }
+        
+        .file-upload-section {
+            background: #f8f9ff;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            border: 2px dashed #667eea;
+            text-align: center;
+        }
+        
+        .file-upload-section h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+        
+        .file-input-wrapper {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+        
+        .file-input-wrapper input[type="file"] {
+            display: none;
+        }
+        
+        .file-label {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 10px;
+            cursor: pointer;
+            display: inline-block;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        
+        .file-label:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .file-info {
+            color: #666;
+            font-size: 0.9em;
+            margin-top: 10px;
+        }
+        
+        .example-format {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: left;
+            margin-top: 15px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85em;
+            color: #333;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        
+        .question {
+            background: #f8f9ff;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            border-left: 5px solid #667eea;
+        }
+        
+        .question-number {
+            color: #667eea;
+            font-weight: bold;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+        
+        .audio-section {
+            text-align: center;
+            margin-bottom: 20px;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+        }
+        
+        .play-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.1em;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+        
+        .play-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+        
+        .play-button:active {
+            transform: translateY(0);
+        }
+        
+        .play-button.playing {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        }
+        
+        .conversation {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            line-height: 2;
+            opacity: 0.3;
+            pointer-events: none;
+            transition: opacity 0.3s;
+        }
+        
+        .conversation.revealed {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        
+        .conversation p {
+            margin-bottom: 12px;
+            font-size: 1.05em;
+        }
+        
+        input[type="text"] {
+            border: none;
+            border-bottom: 2px solid #667eea;
+            padding: 5px 10px;
+            font-size: 1em;
+            width: 120px;
+            transition: all 0.3s;
+            background: #f0f4ff;
+            border-radius: 4px 4px 0 0;
+            text-align: center;
+            font-weight: 600;
+        }
+        
+        input[type="text"]:focus {
+            outline: none;
+            border-bottom-color: #764ba2;
+            background: #e8f0ff;
+            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.2);
+        }
+        
+        input[type="text"].correct {
+            border-bottom-color: #28a745;
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        input[type="text"].incorrect {
+            border-bottom-color: #dc3545;
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        button.check-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.1em;
+            border-radius: 10px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            font-weight: bold;
+        }
+        
+        button.check-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+        
+        button.check-button:active {
+            transform: translateY(0);
+        }
+        
+        .result {
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 1.2em;
+            font-weight: bold;
+            display: none;
+        }
+        
+        .result.show {
+            display: block;
+            animation: slideIn 0.5s;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .correct-result {
+            background: #d4edda;
+            color: #155724;
+            border: 2px solid #c3e6cb;
+        }
+        
+        .incorrect-result {
+            background: #f8d7da;
+            color: #721c24;
+            border: 2px solid #f5c6cb;
+        }
+        
+        .instruction {
+            background: #fff3cd;
+            color: #856404;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 500;
+        }
+        
+        .answer-label {
+            display: inline-block;
+            font-size: 0.85em;
+            color: #28a745;
+            font-weight: bold;
+            margin-left: 5px;
+        }
+        
+        #quiz-content {
+            display: none;
+        }
+        
+        #quiz-content.loaded {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎧 Quiz di Inglese - Listening</h1>
+        <p class="subtitle">Ascolta le conversazioni e completa gli spazi vuoti</p>
+        
+        <div class="file-upload-section">
+            <h3>📁 Carica il file JSON con gli esercizi</h3>
+            <div class="file-input-wrapper">
+                <input type="file" id="jsonFile" accept=".json" onchange="loadExercise()">
+                <label for="jsonFile" class="file-label">Scegli file JSON</label>
+            </div>
+            <div class="file-info" id="fileInfo">Nessun file caricato</div>
+            
+            <details style="margin-top: 15px;">
+                <summary style="cursor: pointer; color: #667eea; font-weight: bold;">Mostra formato JSON richiesto</summary>
+                <div class="example-format">
+{
+  "conversations": [
+    {
+      "title": "Al ristorante",
+      "dialogue": [
+        {
+          "speaker": "Waiter",
+          "text": "Good evening! Are you ready to {order}?",
+          "voice": "female"
+        },
+        {
+          "speaker": "Customer",
+          "text": "Yes, I'd {like} the grilled salmon, please.",
+          "voice": "male"
+        },
+        {
+          "speaker": "Waiter",
+          "text": "Excellent choice! Would you like anything to {drink}?",
+          "voice": "female"
+        }
+      ]
+    }
+  ]
+}
+
+Nota: Le parole tra {} sono quelle da indovinare.
+Accetta anche varianti separate da | come {could|can}
+                </div>
+            </details>
+        </div>
+        
+        <div id="quiz-content">
+            <div class="instruction">
+                👂 Clicca sul pulsante per ascoltare ogni conversazione, poi scrivi le parole mancanti direttamente nel testo!
+            </div>
+            <div id="questions-container"></div>
+            <button class="check-button" onclick="checkAnswers()">Controlla Risposte</button>
+            <div class="result" id="result"></div>
+        </div>
+    </div>
+    
+    <script>
+        let exerciseData = null;
+        let correctAnswers = {};
+        let conversations = {};
+        let inputCounter = 0;
+        
+        function loadExercise() {
+            const fileInput = document.getElementById('jsonFile');
+            const file = fileInput.files[0];
+            
+            if (!file) return;
+            
+            document.getElementById('fileInfo').textContent = `Caricamento: ${file.name}...`;
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    exerciseData = JSON.parse(e.target.result);
+                    generateQuiz();
+                    document.getElementById('fileInfo').textContent = `✅ File caricato: ${file.name}`;
+                    document.getElementById('quiz-content').classList.add('loaded');
+                } catch (error) {
+                    alert('Errore nel file JSON: ' + error.message);
+                    document.getElementById('fileInfo').textContent = `❌ Errore nel file`;
+                }
+            };
+            reader.readAsText(file);
+        }
+        
+        function generateQuiz() {
+            const container = document.getElementById('questions-container');
+            container.innerHTML = '';
+            correctAnswers = {};
+            conversations = {};
+            inputCounter = 0;
+            
+            exerciseData.conversations.forEach((conv, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'question';
+                
+                const convNum = index + 1;
+                conversations[convNum] = [];
+                
+                // Title
+                const title = document.createElement('div');
+                title.className = 'question-number';
+                title.textContent = `Conversazione ${convNum} - ${conv.title}`;
+                questionDiv.appendChild(title);
+                
+                // Audio button
+                const audioSection = document.createElement('div');
+                audioSection.className = 'audio-section';
+                audioSection.innerHTML = `
+                    <button class="play-button" onclick="playConversation(${convNum})">
+                        <span class="icon">🔊</span>
+                        <span class="text">Ascolta la conversazione</span>
+                    </button>
+                `;
+                questionDiv.appendChild(audioSection);
+                
+                // Conversation
+                const conversationDiv = document.createElement('div');
+                conversationDiv.className = 'conversation';
+                conversationDiv.id = 'conv' + convNum;
+                
+                conv.dialogue.forEach(line => {
+                    const p = document.createElement('p');
+                    const speaker = document.createElement('strong');
+                    speaker.textContent = line.speaker + ': ';
+                    p.appendChild(speaker);
+                    
+                    // Store for audio
+                    conversations[convNum].push({
+                        text: line.text.replace(/\{[^}]+\}/g, match => match.slice(1, -1).split('|')[0]),
+                        voice: line.voice
+                    });
+                    
+                    // Process text with blanks
+                    let processedText = line.text;
+                    const regex = /\{([^}]+)\}/g;
+                    let match;
+                    let lastIndex = 0;
+                    
+                    while ((match = regex.exec(line.text)) !== null) {
+                        inputCounter++;
+                        const answers = match[1].split('|');
+                        correctAnswers[inputCounter] = answers;
+                        
+                        // Add text before the blank
+                        p.appendChild(document.createTextNode(line.text.slice(lastIndex, match.index)));
+                        
+                        // Add input
+                        const input = document.createElement('input');
+                        input.type = 'text';
+                        input.id = 'input' + inputCounter;
+                        input.placeholder = '?';
+                        p.appendChild(input);
+                        
+                        lastIndex = match.index + match[0].length;
+                    }
+                    
+                    // Add remaining text
+                    p.appendChild(document.createTextNode(line.text.slice(lastIndex)));
+                    
+                    conversationDiv.appendChild(p);
+                });
+                
+                questionDiv.appendChild(conversationDiv);
+                container.appendChild(questionDiv);
+            });
+        }
+        
+        function playConversation(num) {
+            const button = event.target.closest('.play-button');
+            const icon = button.querySelector('.icon');
+            const text = button.querySelector('.text');
+            const conv = document.getElementById('conv' + num);
+            
+            button.classList.add('playing');
+            icon.textContent = '⏸️';
+            text.textContent = 'Riproduzione...';
+            
+            conv.classList.add('revealed');
+            
+            const conversation = conversations[num];
+            let currentIndex = 0;
+            
+            function speakNext() {
+                if (currentIndex < conversation.length) {
+                    const utterance = new SpeechSynthesisUtterance(conversation[currentIndex].text);
+                    utterance.lang = 'en-US';
+                    utterance.rate = 0.9;
+                    
+                    const voices = speechSynthesis.getVoices();
+                    const preferredVoice = voices.find(voice => 
+                        voice.lang.startsWith('en') && 
+                        (conversation[currentIndex].voice === 'female' ? voice.name.includes('Female') : voice.name.includes('Male'))
+                    ) || voices.find(voice => voice.lang.startsWith('en'));
+                    
+                    if (preferredVoice) {
+                        utterance.voice = preferredVoice;
+                    }
+                    
+                    utterance.onend = () => {
+                        currentIndex++;
+                        setTimeout(speakNext, 500);
+                    };
+                    
+                    speechSynthesis.speak(utterance);
+                } else {
+                    button.classList.remove('playing');
+                    icon.textContent = '🔊';
+                    text.textContent = 'Riascolta';
+                }
+            }
+            
+            speechSynthesis.cancel();
+            speakNext();
+        }
+        
+        // Load voices
+        if (speechSynthesis.onvoiceschanged !== undefined) {
+            speechSynthesis.onvoiceschanged = () => speechSynthesis.getVoices();
+        }
+        
+        function checkAnswers() {
+            let score = 0;
+            let total = inputCounter;
+            
+            for (let i = 1; i <= total; i++) {
+                const input = document.getElementById('input' + i);
+                if (!input) continue;
+                
+                const userAnswer = input.value.trim().toLowerCase();
+                
+                // Remove any previous answer labels
+                const prevLabel = input.parentElement.querySelector('.answer-label');
+                if (prevLabel) prevLabel.remove();
+                
+                if (correctAnswers[i].some(ans => ans.toLowerCase() === userAnswer)) {
+                    score++;
+                    input.classList.remove('incorrect');
+                    input.classList.add('correct');
+                } else {
+                    input.classList.remove('correct');
+                    input.classList.add('incorrect');
+                    
+                    // Show correct answer
+                    const label = document.createElement('span');
+                    label.className = 'answer-label';
+                    label.textContent = `(${correctAnswers[i][0]})`;
+                    input.parentElement.appendChild(label);
+                }
+            }
+            
+            const resultDiv = document.getElementById('result');
+            const percentage = Math.round((score / total) * 100);
+            
+            resultDiv.classList.add('show');
+            
+            if (percentage >= 80) {
+                resultDiv.className = 'result show correct-result';
+                resultDiv.innerHTML = `🎉 Eccellente! Hai ottenuto ${score}/${total} (${percentage}%)`;
+            } else if (percentage >= 60) {
+                resultDiv.className = 'result show';
+                resultDiv.style.background = '#fff3cd';
+                resultDiv.style.color = '#856404';
+                resultDiv.style.border = '2px solid #ffeaa7';
+                resultDiv.innerHTML = `👍 Buon lavoro! Hai ottenuto ${score}/${total} (${percentage}%)`;
+            } else {
+                resultDiv.className = 'result show incorrect-result';
+                resultDiv.innerHTML = `📚 Continua a esercitarti! Hai ottenuto ${score}/${total} (${percentage}%)`;
+            }
+        }
+    </script>
+</body>
+</html>
