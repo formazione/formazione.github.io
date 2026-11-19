@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Esercizio di Matematica in Aula</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background-color: #f3f4f6;
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .app-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            background-color: white;
+            padding: 24px;
+            border-radius: 1rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            max-width: 900px;
+            width: 100%;
+        }
+        .canvas-container {
+            position: relative;
+            width: 100%;
+            height: 500px;
+        }
+        canvas {
+            border-radius: 0.5rem;
+            background-color: #e5e7eb;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.06);
+            width: 100%;
+            height: 100%;
+        }
+        #left-door, #right-door {
+            position: absolute;
+            width: 12px;
+            background-color: #783a00;
+            top: 50%;
+            transform: translateY(-50%);
+            height: 100px;
+            border-radius: 0.25rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        #left-door { left: 0; }
+        #right-door { right: 0; }
+        #message {
+            font-size: 1.25rem;
+            font-weight: 600;
+            text-align: center;
+        }
+        #user-input {
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            border: 1px solid #d1d5db;
+            width: 100px;
+            text-align: center;
+            font-size: 1.125rem;
+        }
+        #submit-button {
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            background-color: #4f46e5;
+            color: white;
+            font-weight: 600;
+            transition: background-color 0.2s;
+        }
+        #submit-button:hover {
+            background-color: #4338ca;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen p-4">
+
+    <div class="app-container">
+        <h1 class="text-3xl font-bold text-center text-gray-800">Esercizio in Aula</h1>
+        <p class="text-center text-gray-600">Osserva attentamente l'aula e rispondi alle domande.</p>
+        <div id="controls" class="flex flex-col items-center gap-4">
+            <div id="message" class="text-lg font-semibold text-gray-700">Iniziamo! Premi "Inizia esercizio".</div>
+            <div id="input-area" class="flex gap-4 items-center hidden">
+                <input type="number" id="user-input" class="rounded-lg border-2 border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-center" placeholder="Risposta" />
+                <button id="submit-button" class="px-6 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors">Invia</button>
+            </div>
+            <button id="start-button" class="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors">Inizia esercizio</button>
+        </div>
+        <div class="canvas-container">
+            <div id="left-door"></div>
+            <div id="right-door"></div>
+            <canvas id="classroom-canvas"></canvas>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const canvas = document.getElementById('classroom-canvas');
+            const ctx = canvas.getContext('2d');
+            const messageElement = document.getElementById('message');
+            const startButton = document.getElementById('start-button');
+            const submitButton = document.getElementById('submit-button');
+            const userInput = document.getElementById('user-input');
+            const inputArea = document.getElementById('input-area');
+
+            let deskCount = 20;
+            let desks = [];
+            let students = [];
+            let totalStudents = 0;
+            let boyCount = 0;
+            let girlCount = 0;
+            let exerciseNumber = 0;
+            let totalExercises = 10;
+            let continueMode = false;
+            let currentQuestion = 0; // 0: boys, 1: girls, 2: total
+            let isAnimating = false;
+
+            const DESK_WIDTH = 60;
+            const DESK_HEIGHT = 40;
+            const EMOJI_FONT_SIZE = 30; // Dimensione dei caratteri emoji
+            const PADDING = 20;
+            const ANIMATION_SPEED = 5;
+
+            function resizeCanvas() {
+                const rect = canvas.parentNode.getBoundingClientRect();
+                canvas.width = rect.width;
+                canvas.height = rect.height;
+                drawClassroom();
+            }
+
+            window.addEventListener('resize', resizeCanvas);
+
+            function drawDesks() {
+                let x = PADDING;
+                let y = PADDING;
+                desks = [];
+                ctx.font = `${EMOJI_FONT_SIZE}px sans-serif`;
+                ctx.textAlign = 'center';
+
+                // Disegna 10 banchi a sinistra (per i maschi)
+                const leftSideWidth = canvas.width / 2;
+                for (let i = 0; i < 10; i++) {
+                    if (x + DESK_WIDTH + PADDING > leftSideWidth) {
+                        x = PADDING;
+                        y += DESK_HEIGHT + PADDING;
+                    }
+
+                    // Disegna lo sfondo scuro del banco
+                    ctx.fillStyle = '#374151';
+                    ctx.fillRect(x, y, DESK_WIDTH, DESK_HEIGHT);
+
+                    // Disegna l'emoji del banco
+                    ctx.fillStyle = '#FFFFFF'; // Colore bianco per l'emoji per contrasto
+                    ctx.fillText('🪑', x + DESK_WIDTH / 2, y + DESK_HEIGHT * 0.75);
+
+                    desks.push({
+                        id: i,
+                        x: x,
+                        y: y,
+                        occupied: false,
+                        side: 'left'
+                    });
+
+                    x += DESK_WIDTH + PADDING;
+                }
+
+                // Resetta le coordinate per disegnare 10 banchi a destra (per le femmine)
+                x = canvas.width / 2 + PADDING;
+                y = PADDING;
+
+                for (let i = 10; i < deskCount; i++) {
+                    if (x + DESK_WIDTH + PADDING > canvas.width) {
+                        x = canvas.width / 2 + PADDING;
+                        y += DESK_HEIGHT + PADDING;
+                    }
+
+                    // Disegna lo sfondo scuro del banco
+                    ctx.fillStyle = '#374151';
+                    ctx.fillRect(x, y, DESK_WIDTH, DESK_HEIGHT);
+
+                    // Disegna l'emoji del banco
+                    ctx.fillStyle = '#FFFFFF'; // Colore bianco per l'emoji per contrasto
+                    ctx.fillText('🪑', x + DESK_WIDTH / 2, y + DESK_HEIGHT * 0.75);
+
+                    desks.push({
+                        id: i,
+                        x: x,
+                        y: y,
+                        occupied: false,
+                        side: 'right'
+                    });
+
+                    x += DESK_WIDTH + PADDING;
+                }
+            }
+
+            function drawStudents() {
+                ctx.font = `${EMOJI_FONT_SIZE}px sans-serif`;
+                ctx.textAlign = 'center';
+                students.forEach(student => {
+                    ctx.fillText(student.emoji, student.x, student.y + EMOJI_FONT_SIZE / 3);
+                });
+            }
+
+            function drawClassroom() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                drawDesks();
+                drawStudents();
+            }
+
+            function getAvailableDesks(side) {
+                return desks.filter(desk => !desk.occupied && desk.side === side);
+            }
+
+            function getRandomInt(min, max) {
+                return Math.floor(Math.random() * (max - min + 1)) + min;
+            }
+
+            function setupStudentsForAnimation(count, isMale) {
+                const desksForStudent = isMale ? getAvailableDesks('left') : getAvailableDesks('right');
+                
+                if (count > desksForStudent.length) {
+                    count = desksForStudent.length;
+                }
+
+                const studentsToPlace = [];
+                let shuffledDesks = desksForStudent.sort(() => 0.5 - Math.random());
+                const startX = isMale ? -EMOJI_FONT_SIZE : canvas.width + EMOJI_FONT_SIZE;
+
+                for (let i = 0; i < count && i < shuffledDesks.length; i++) {
+                    const desk = shuffledDesks[i];
+                    desk.occupied = true;
+
+                    studentsToPlace.push({
+                        x: startX,
+                        y: canvas.height / 2, // Posizione iniziale al centro verticale
+                        targetX: desk.x + DESK_WIDTH / 2,
+                        targetY: desk.y + DESK_HEIGHT / 2,
+                        emoji: isMale ? '🚶‍♂️' : '🚶‍♀️'
+                    });
+                }
+                return studentsToPlace;
+            }
+
+            async function animateStudentEntry(newStudents) {
+                return new Promise(resolve => {
+                    isAnimating = true;
+                    let studentsArrived = 0;
+
+                    function animate() {
+                        ctx.clearRect(0, 0, canvas.width, canvas.height);
+                        drawDesks();
+                        drawStudents();
+
+                        newStudents.forEach(student => {
+                            if (Math.abs(student.x - student.targetX) < ANIMATION_SPEED && Math.abs(student.y - student.targetY) < ANIMATION_SPEED) {
+                                student.x = student.targetX;
+                                student.y = student.targetY;
+                                if (!student.arrived) {
+                                    student.arrived = true;
+                                    studentsArrived++;
+                                }
+                            } else {
+                                student.x += (student.targetX - student.x) * 0.05;
+                                student.y += (student.targetY - student.y) * 0.05;
+                            }
+                        });
+
+                        drawStudents();
+
+                        if (studentsArrived < newStudents.length) {
+                            requestAnimationFrame(animate);
+                        } else {
+                            isAnimating = false;
+                            resolve();
+                        }
+                    }
+                    animate();
+                });
+            }
+
+            async function startExercise() {
+                // Svuota l'aula
+                students = [];
+                desks.forEach(d => d.occupied = false);
+                drawClassroom();
+
+                if (!continueMode) {
+                    boyCount = getRandomInt(3, 6);
+                    girlCount = getRandomInt(2, 5);
+                } else {
+                    boyCount = getRandomInt(5, 8);
+                    girlCount = getRandomInt(3, 7);
+                }
+                totalStudents = boyCount + girlCount;
+
+                // Fai entrare gli alunni maschi con animazione
+                messageElement.textContent = "Gli alunni 🚶‍♂️ stanno entrando...";
+                const newBoys = setupStudentsForAnimation(boyCount, true);
+                students = newBoys;
+                await animateStudentEntry(newBoys);
+                
+                // Chiedi quanti maschi sono entrati
+                messageElement.textContent = `Quanti alunni 🚶‍♂️ sono entrati?`;
+                currentQuestion = 0;
+                inputArea.classList.remove('hidden');
+                startButton.classList.add('hidden');
+            }
+
+            function checkAnswer() {
+                if (isAnimating) return; // Non accettare risposte durante l'animazione
+                const answer = parseInt(userInput.value, 10);
+                userInput.value = '';
+
+                if (currentQuestion === 0) {
+                    if (answer === boyCount) {
+                        handleCorrectAnswer();
+                    } else {
+                        handleWrongAnswer();
+                    }
+                } else if (currentQuestion === 1) {
+                    if (answer === girlCount) {
+                        handleCorrectAnswer();
+                    } else {
+                        handleWrongAnswer();
+                    }
+                } else if (currentQuestion === 2) {
+                    if (answer === totalStudents) {
+                        handleCorrectAnswer();
+                    } else {
+                        handleWrongAnswer();
+                    }
+                }
+            }
+            
+            async function handleCorrectAnswer() {
+                if (currentQuestion === 0) {
+                    messageElement.textContent = `Corretto! Ora entrano le alunne 🚶‍♀️...`;
+                    
+                    // Fai entrare le alunne femmine con animazione
+                    const newGirls = setupStudentsForAnimation(girlCount, false);
+                    students = students.concat(newGirls);
+                    await animateStudentEntry(newGirls);
+                    
+                    messageElement.textContent = `Quante alunne 🚶‍♀️ sono entrate?`;
+                    currentQuestion = 1;
+                } else if (currentQuestion === 1) {
+                    // Mostra l'operazione di addizione
+                    messageElement.textContent = `${boyCount} 🚶‍♂️ + ${girlCount} 🚶‍♀️`;
+                    await new Promise(resolve => setTimeout(resolve, 3000)); // Pausa di 3 secondi
+                    
+                    messageElement.textContent = `Quanti alunni 🚶‍♂️ e 🚶‍♀️ ci sono in classe in totale?`;
+                    currentQuestion = 2;
+                } else if (currentQuestion === 2) {
+                    messageElement.textContent = `Ottimo! Hai completato l'esercizio.`;
+                    inputArea.classList.add('hidden');
+                    startButton.classList.remove('hidden');
+                    exerciseNumber++;
+                    if (exerciseNumber < totalExercises) {
+                        startButton.textContent = `Esercizio ${exerciseNumber + 1} di ${totalExercises}`;
+                    } else {
+                        messageElement.textContent = `Hai completato tutti gli ${totalExercises} esercizi. Vuoi continuare?`;
+                        startButton.textContent = `Continua con un nuovo livello`;
+                        startButton.onclick = () => {
+                            continueMode = true;
+                            exerciseNumber = 0;
+                            startButton.textContent = `Esercizio ${exerciseNumber + 1} di ${totalExercises}`;
+                            startExercise();
+                        };
+                    }
+                }
+            }
+
+            function handleWrongAnswer() {
+                messageElement.textContent = `Sbagliato. Riprova.`;
+            }
+
+            // Event Listeners
+            startButton.addEventListener('click', startExercise);
+            submitButton.addEventListener('click', checkAnswer);
+            userInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    checkAnswer();
+                }
+            });
+
+            // Avvia la prima fase
+            resizeCanvas();
+            drawClassroom();
+        });
+    </script>
+</body>
+</html>

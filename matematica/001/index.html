@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>L'Avventura dei Numeri ✨</title>
+    <style>
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background-color: #f0f8ff;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+            text-align: center;
+            position: relative;
+        }
+        .container {
+            background-color: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            width: 100%;
+            max-width: 600px;
+            animation: fadeIn 1s ease-in-out;
+        }
+        h1 {
+            color: #ff6347;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        h2 {
+            color: #4682b4;
+            font-size: 1.5em;
+        }
+        .score-display {
+            font-size: 1.5em;
+            color: #2e8b57;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+        .question-box {
+            background-color: #e6e6fa;
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 20px;
+            border: 2px dashed #9370db;
+        }
+        .question-text {
+            font-size: 1.2em;
+            margin-bottom: 15px;
+        }
+        input[type="number"] {
+            width: 80px;
+            padding: 10px;
+            font-size: 1.2em;
+            text-align: center;
+            border: 2px solid #ccc;
+            border-radius: 10px;
+            margin: 0 10px;
+        }
+        button {
+            background-color: #ff6347;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 1.2em;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.2s ease-in-out, background-color 0.2s;
+            margin-top: 15px;
+        }
+        button:hover {
+            background-color: #ff4500;
+            transform: scale(1.05);
+        }
+        .feedback {
+            font-size: 2em;
+            margin-top: 20px;
+            min-height: 50px;
+        }
+        .correct {
+            color: #2e8b57;
+            animation: bounceIn 0.5s ease-in-out;
+        }
+        .incorrect {
+            color: #ff4500;
+            animation: shake 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes bounceIn {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-30px); }
+            60% { transform: translateY(-15px); }
+        }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-10px); }
+            20%, 40%, 60%, 80% { transform: translateX(10px); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>L'Avventura dei Numeri ✨</h1>
+        <h2>Risolvi gli enigmi per guadagnare punti!</h2>
+        <div class="score-display">Punteggio: <span id="score">0</span></div>
+        <div class="question-box">
+            <p class="question-text" id="question"></p>
+            <input type="number" id="answer-input" placeholder="Risposta">
+            <button onclick="checkAnswer()">Invia</button>
+        </div>
+        <div class="feedback" id="feedback-message"></div>
+    </div>
+
+    <script>
+        let score = parseInt(localStorage.getItem('mathScore')) || 0;
+        let questionIndex = 0;
+        const scorePerCorrectAnswer = 100;
+        
+        const questions = [
+            { text: "Se hai 5 mele 🍎 e ne compri altre 8, quante mele hai in totale?", answer: 13 },
+            { text: "Un drago 🐉 ha 15 monete d'oro, ma ne spende 7. Quante monete gli restano?", answer: 8 },
+            { text: "Un mago 🧙‍♂️ ha 4 bacchette, e ogni bacchetta ha 6 stelle. Quante stelle in totale?", answer: 24 },
+            { text: "Un pirata 🏴‍☠️ ha 20 perle 💍e le divide tra i suoi 4 compagni. Quante perle riceve ogni pirata?", answer: 5 },
+            { text: "Un'astronave 🚀 è a 120 km dalla Terra. Percorre 35 km in avanti, poi torna indietro di 10 km. A che distanza si trova ora dalla Terra? (120 + 35 - 10)", answer: 145 },
+            { text: "Ci sono 3 alberi fatati 🌳 con 9 uccellini 🐦 ciascuno. Poi ne arrivano altri 5. Quanti uccellini ci sono in tutto? (3 x 9 + 5)", answer: 32 },
+            { text: "Una principessa ha un tesoro di 50 gioielli, ne dona 10. I restanti sono divisi tra 8 elfi 🧝. Quanti gioielli riceve ogni elfo? ((50 - 10) / 8)", answer: 5 },
+            { text: "Un robot 🤖 deve risolvere questo enigma: 10 + 5 x 2 - 4. Qual è il risultato?", answer: 16 },
+            { text: "Un esploratore ha 6 mappe con 5 sentieri l'una. Se i sentieri sono divisi tra 2 squadre, quanti ne riceve ogni squadra? ((6 x 5) / 2)", answer: 15 },
+            { text: "Un supereroe 🦸‍♂️ ha 1000 punti. Risolve 3 enigmi (+200 punti ciascuno), ma poi ne perde 50. Qual è il suo punteggio finale? (1000 + 3*200 - 50)", answer: 1550 },
+              { "text": "Un cavaliere 🛡️ ha 18 spade magiche. Ne regala 6 ai suoi amici. Quante spade gli restano?", "answer": 12 },
+          { "text": "Una nave 🚢 trasporta 40 casse di frutta. Se ogni cassa contiene 25 mele 🍏, quante mele ci sono in totale?", "answer": 1000 },
+          { "text": "Un gigante 👹 ha 72 biscotti e li divide equamente tra 9 bambini. Quanti biscotti riceve ciascun bambino?", "answer": 8 },
+          { "text": "Un alchimista ⚗️ prepara 5 pozioni, e ogni pozione richiede 12 gocce di elisir. Quante gocce usa in tutto?", "answer": 60 },
+          { "text": "In un castello 🏰 ci sono 30 finestre . Se ogni finestra ha 4 vetri 🪟, quanti vetri ci sono in totale?", "answer": 120 },
+          { "text": "Un drago marino 🐲 ha 200 squame. Ne perde 45 in battaglia. Quante squame rimangono?", "answer": 155 },
+          { "text": "Un mago 🧙‍♀️ ha 90 monete 🪙. Decide di distribuirle tra 15 borse 💼. Quante monete ci sono in ogni borsa?", "answer": 6 },
+          { "text": "Un villaggio ha 12 case 🏠. Ogni casa ha 3 lampade accese 🔦. Quante lampade brillano in tutto?", "answer": 36 },
+          { "text": "Un astronauta 🚀 percorre 300 km nello spazio. Poi altri 150 km. Qual è la distanza totale percorsa?", "answer": 450 },
+          { "text": "Una strega 🧙‍♀️ ha 64 zucche 🎃 e le mette in ceste da 8 🧺. Quante ceste riempie?", "answer": 8 }
+        ];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            updateScoreDisplay();
+            loadQuestion();
+        });
+
+        function updateScoreDisplay() {
+            document.getElementById('score').textContent = score;
+        }
+
+        function loadQuestion() {
+            if (questionIndex < questions.length) {
+                document.getElementById('question').textContent = questions[questionIndex].text;
+                document.getElementById('answer-input').value = '';
+                document.getElementById('answer-input').focus();
+                document.getElementById('feedback-message').textContent = '';
+            } else {
+                showFinalMessage();
+            }
+        }
+
+        function checkAnswer() {
+            const userAnswer = parseInt(document.getElementById('answer-input').value);
+            const correctAnswer = questions[questionIndex].answer;
+            const feedbackMessage = document.getElementById('feedback-message');
+            
+            if (userAnswer === correctAnswer) {
+                feedbackMessage.textContent = 'Esatto! 🎉';
+                feedbackMessage.className = 'feedback correct';
+                score += scorePerCorrectAnswer;
+                localStorage.setItem('mathScore', score); // Salva il punteggio
+                updateScoreDisplay();
+            } else {
+                feedbackMessage.textContent = 'Sbagliato... Riprova! 👾';
+                feedbackMessage.className = 'feedback incorrect';
+            }
+
+            setTimeout(() => {
+                if (userAnswer === correctAnswer) {
+                    questionIndex++;
+                    loadQuestion();
+                }
+            }, 1500);
+        }
+
+        function showFinalMessage() {
+            document.querySelector('.question-box').innerHTML = `
+                <h2>Complimenti! Hai completato tutte le sfide! 🏆</h2>
+                <p style="font-size:1.2em; color:#4682b4;">Il tuo punteggio finale è di **${score}** punti.</p>
+                <p>Se vuoi riprovare e superare il tuo record, ricarica la pagina!</p>
+            `;
+            document.getElementById('feedback-message').textContent = '';
+        }
+    </script>
+</body>
+</html>

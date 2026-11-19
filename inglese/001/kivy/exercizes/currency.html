@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Currency Code Test</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.js"></script>
+    <style>
+        .correct { background-color: #b3ffb3; transition: background-color 0.5s ease-in-out; }
+        .incorrect { background-color: #ffcccc; color: red; transition: background-color 0.5s ease-in-out; }
+        .fancy-button {
+            background: linear-gradient(to right, #4facfe, #00f2fe);
+            color: white;
+            font-weight: bold;
+            padding: 10px 20px;
+            border-radius: 30px;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        .fancy-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 20px rgba(0, 0, 0, 0.2);
+        }
+        .fancy-results {
+            animation: fadeIn 1s ease-in-out;
+        }
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-r from-blue-100 via-purple-100 to-pink-100 p-8">
+    <div class="max-w-3xl mx-auto bg-white p-8 rounded shadow-lg border-4 border-blue-300">
+        <h1 class="text-4xl font-extrabold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-purple-500">Currency Code Test</h1>
+        <div class="bg-yellow-100 border-l-8 border-yellow-500 text-yellow-700 p-6 mb-6 rounded-md shadow">
+            <p class="font-bold text-xl">Currency Names for Reference:</p>
+            <p>South African Rand • Japanese Yen • Norwegian Krone • Australian Dollar • Swedish Krona • Indian Rupee • Brazilian Real • European Euro • Chinese Yuan • Swiss Franc • Canadian Dollar</p>
+        </div>
+        <p class="mb-4 text-lg">Complete the table with the full form of the currency codes:</p>
+        <form id="currencyForm" class="mb-6">
+            <table class="w-full border-collapse border border-gray-300 mb-4">
+                <thead>
+                    <tr class="bg-gradient-to-r from-green-200 to-blue-200">
+                        <th class="border border-gray-300 p-4 text-lg">Code</th>
+                        <th class="border border-gray-300 p-4 text-lg">Full form</th>
+                        <th class="border border-gray-300 p-4 text-lg">Country</th>
+                    </tr>
+                </thead>
+                <tbody id="currencyTable">
+                    <tr class="hover:bg-blue-50 transition">
+                        <td class="border border-gray-300 p-4">JPY</td>
+                        <td class="border border-gray-300 p-4"><input type="text" name="JPY" class="w-full p-2 rounded"></td>
+                        <td class="border border-gray-300 p-4">Japan</td>
+                    </tr>
+                    <tr class="hover:bg-blue-50 transition">
+                        <td class="border border-gray-300 p-4">AUD</td>
+                        <td class="border border-gray-300 p-4"><input type="text" name="AUD" class="w-full p-2 rounded"></td>
+                        <td class="border border-gray-300 p-4">Australia</td>
+                    </tr>
+                    <tr class="hover:bg-blue-50 transition">
+                        <td class="border border-gray-300 p-4">CAD</td>
+                        <td class="border border-gray-300 p-4"><input type="text" name="CAD" class="w-full p-2 rounded"></td>
+                        <td class="border border-gray-300 p-4">Canada</td>
+                    </tr>
+                    <tr class="hover:bg-blue-50 transition">
+                        <td class="border border-gray-300 p-4">INR</td>
+                        <td class="border border-gray-300 p-4"><input type="text" name="INR" class="w-full p-2 rounded"></td>
+                        <td class="border border-gray-300 p-4">India</td>
+                    </tr>
+                    <tr class="hover:bg-blue-50 transition">
+                        <td class="border border-gray-300 p-4">EUR</td>
+                        <td class="border border-gray-300 p-4"><input type="text" name="EUR" class="w-full p-2 rounded"></td>
+                        <td class="border border-gray-300 p-4">Europe</td>
+                    </tr>
+                    <tr class="hover:bg-blue-50 transition">
+                        <td class="border border-gray-300 p-4">BRL</td>
+                        <td class="border border-gray-300 p-4"><input type="text" name="BRL" class="w-full p-2 rounded"></td>
+                        <td class="border border-gray-300 p-4">Brazil</td>
+                    </tr>
+                    <tr class="hover:bg-blue-50 transition">
+                        <td class="border border-gray-300 p-4">CHF</td>
+                        <td class="border border-gray-300 p-4"><input type="text" name="CHF" class="w-full p-2 rounded"></td>
+                        <td class="border border-gray-300 p-4">Switzerland</td>
+                    </tr>
+                    <tr class="hover:bg-blue-50 transition">
+                        <td class="border border-gray-300 p-4">CNY</td>
+                        <td class="border border-gray-300 p-4"><input type="text" name="CNY" class="w-full p-2 rounded"></td>
+                        <td class="border border-gray-300 p-4">China</td>
+                    </tr>
+                    <tr class="hover:bg-blue-50 transition">
+                        <td class="border border-gray-300 p-4">SEK</td>
+                        <td class="border border-gray-300 p-4"><input type="text" name="SEK" class="w-full p-2 rounded"></td>
+                        <td class="border border-gray-300 p-4">Sweden</td>
+                    </tr>
+                    <tr class="hover:bg-blue-50 transition">
+                        <td class="border border-gray-300 p-4">ZAR</td>
+                        <td class="border border-gray-300 p-4"><input type="text" name="ZAR" class="w-full p-2 rounded"></td>
+                        <td class="border border-gray-300 p-4">South Africa</td>
+                    </tr>
+                    <tr class="hover:bg-blue-50 transition">
+                        <td class="border border-gray-300 p-4">NOK</td>
+                        <td class="border border-gray-300 p-4"><input type="text" name="NOK" class="w-full p-2 rounded"></td>
+                        <td class="border border-gray-300 p-4">Norway</td>
+                    </tr>
+                </tbody>
+            </table>
+            <button type="submit" class="fancy-button">Check Answers</button>
+        </form>
+        <div id="result" class="mt-8 p-8 bg-gradient-to-r from-yellow-100 to-pink-100 rounded shadow-md hidden fancy-results">
+            <h2 class="text-3xl font-extrabold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-pink-500">Results</h2>
+            <div id="score" class="text-2xl font-bold mb-4"></div>
+            <div id="feedback" class="mt-4 text-lg"></div>
+        </div>
+    </div>
+
+    <script>
+        const correctAnswers = {
+            JPY: "Japanese Yen",
+            AUD: "Australian Dollar",
+            CAD: "Canadian Dollar",
+            INR: "Indian Rupee",
+            EUR: "European Euro",
+            BRL: "Brazilian Real",
+            CHF: "Swiss Franc",
+            CNY: "Chinese Yuan",
+            SEK: "Swedish Krona",
+            ZAR: "South African Rand",
+            NOK: "Norwegian Krone"
+        };
+
+        document.getElementById('currencyForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            let allFieldsFilled = true;
+            let correct = 0;
+            let feedback = "";
+
+            // Check if all fields are filled
+            for (let code in correctAnswers) {
+                if (this.elements[code].value.trim() === "") {
+                    allFieldsFilled = false;
+                    break;
+                }
+            }
+
+            if (!allFieldsFilled) {
+                alert('Please fill in all fields before checking answers.');
+                return;
+            }
+
+            const tableRows = document.getElementById('currencyTable').getElementsByTagName('tr');
+
+            for (let i = 0; i < tableRows.length; i++) {
+                const code = tableRows[i].cells[0].innerText;
+                const inputField = tableRows[i].cells[1].getElementsByTagName('input')[0];
+                const userAnswer = inputField.value.trim().toLowerCase();
+                const correctAnswer = correctAnswers[code].toLowerCase();
+
+                if (userAnswer === correctAnswer) {
+                    correct++;
+                    inputField.classList.add('correct');
+                    inputField.classList.remove('incorrect');
+                } else {
+                    inputField.classList.add('incorrect');
+                    inputField.classList.remove('correct');
+                }
+
+                feedback += `<p class="${userAnswer === correctAnswer ? 'text-green-600' : 'text-red-600'}">
+                    ${code}: You entered "${inputField.value.trim()}".
+                    ${userAnswer === correctAnswer ? 'Correct!' : 'The correct answer is "' + correctAnswers[code] + '".'}
+                </p>`;
+            }
+
+            const score = Math.round((correct / Object.keys(correctAnswers).length) * 100);
+            
+            const resultDiv = document.getElementById('result');
+            resultDiv.classList.remove('hidden');
+            
+            document.getElementById('score').innerHTML = `Your Score: ${score}%`;
+            document.getElementById('feedback').innerHTML = `
+                <p class="mb-2">You got ${correct} out of ${Object.keys(correctAnswers).length} correct.</p>
+                ${feedback}
+            `;
+
+            // Scroll to results
+            resultDiv.scrollIntoView({ behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>

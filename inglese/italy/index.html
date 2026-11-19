@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Discover Italy — 8 Interactive Flashcards</title>
+<style>
+  :root {
+    --bg: #fdfbf7;
+    --card-bg: #ffffff;
+    --navy: #162b49;
+    --green: #008c45;
+    --red: #cd212a;
+    --gold: #f4b400;
+    --muted: #555f6e;
+    --border: #d2d7dc;
+    --focus-ring: #2563eb;
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: 'Segoe UI', Arial, Helvetica, sans-serif;
+    background-color: var(--bg);
+    color: var(--navy);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    line-height: 1.5;
+  }
+
+  /* Top Italian Flag Bar */
+  .flag-bar {
+    width: 100%;
+    height: 10px;
+    display: flex;
+    flex-shrink: 0;
+  }
+  .flag-bar div:nth-child(1) { flex: 1; background: var(--green); }
+  .flag-bar div:nth-child(2) { flex: 1; background: #ffffff; border-bottom: 1px solid #e5e7eb; }
+  .flag-bar div:nth-child(3) { flex: 1; background: var(--red); }
+
+  header {
+    width: 100%;
+    max-width: 900px;
+    padding: 20px 20px 10px;
+    text-align: center;
+  }
+
+  h1 {
+    font-size: 2rem;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    color: var(--navy);
+  }
+
+  .subtitle {
+    font-size: 1.1rem;
+    color: var(--green);
+    font-weight: 700;
+    margin-top: 4px;
+  }
+
+  /* Controls Bar (Voice, Speed, Auto-read) */
+  .controls-bar {
+    width: 100%;
+    max-width: 820px;
+    margin: 12px auto;
+    padding: 12px 18px;
+    background: #eef3f8;
+    border: 2px solid var(--border);
+    border-radius: 14px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .control-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 700;
+    font-size: 0.95rem;
+  }
+
+  select, input[type="range"] {
+    padding: 6px 10px;
+    border-radius: 8px;
+    border: 2px solid var(--navy);
+    background: #fff;
+    color: var(--navy);
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+  }
+
+  select {
+    max-width: 240px;
+  }
+
+  /* Progress Dots */
+  .progress-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 10px 0 16px;
+  }
+
+  .dot {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    border: 2px solid var(--navy);
+    background: #fff;
+    color: var(--navy);
+    font-weight: 800;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: transform 0.15s, background-color 0.15s;
+  }
+
+  .dot:hover {
+    transform: scale(1.1);
+  }
+
+  .dot.active {
+    background: var(--navy);
+    color: #fff;
+    transform: scale(1.12);
+  }
+
+  .dot.learned {
+    background: var(--green);
+    border-color: var(--green);
+    color: #fff;
+  }
+
+  /* Flashcard Stage */
+  .stage {
+    width: 100%;
+    max-width: 820px;
+    padding: 0 20px;
+    perspective: 1200px;
+    margin-bottom: 18px;
+  }
+
+  .card {
+    width: 100%;
+    min-height: 360px;
+    position: relative;
+    transition: transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
+    transform-style: preserve-3d;
+    cursor: pointer;
+  }
+
+  .card.is-flipped {
+    transform: rotateY(180deg);
+  }
+
+  .card-face {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    min-height: 360px;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    background: var(--card-bg);
+    border: 4px solid var(--green);
+    border-radius: 22px;
+    padding: 28px 32px;
+    box-shadow: 0 10px 25px rgba(22, 43, 73, 0.08);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .card-back {
+    transform: rotateY(180deg);
+    border-color: var(--navy);
+    background: #f8fafc;
+  }
+
+  .card-top-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .badge {
+    background: var(--green);
+    color: #fff;
+    font-weight: 800;
+    font-size: 1.05rem;
+    padding: 6px 16px;
+    border-radius: 999px;
+    letter-spacing: 0.5px;
+  }
+
+  .card-back .badge {
+    background: var(--navy);
+  }
+
+  .side-label {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+  }
+
+  .card-content {
+    text-align: center;
+    margin: auto 0;
+    padding: 16px 0;
+  }
+
+  .icon-big {
+    font-size: 3.4rem;
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  .sentence {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--navy);
+    letter-spacing: 0.3px;
+    line-height: 1.35;
+  }
+
+  .kw-green { color: var(--green); }
+  .kw-red { color: var(--red); }
+
+  .back-keyword {
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: var(--red);
+    margin-bottom: 12px;
+  }
+
+  .back-tip {
+    font-size: 1.35rem;
+    font-weight: 600;
+    color: var(--navy);
+    background: #ffffff;
+    border: 2px solid var(--border);
+    border-radius: 14px;
+    padding: 16px 20px;
+    max-width: 640px;
+    margin: 0 auto;
+  }
+
+  .card-bottom-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .flip-hint {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--muted);
+  }
+
+  /* Buttons */
+  .btn {
+    border: none;
+    border-radius: 12px;
+    padding: 12px 20px;
+    font-size: 1.05rem;
+    font-weight: 800;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: transform 0.12s, background-color 0.15s, box-shadow 0.15s;
+  }
+
+  .btn:hover {
+    transform: translateY(-2px);
+  }
+
+  .btn:active {
+    transform: translateY(0);
+  }
+
+  .btn:focus-visible, .dot:focus-visible, select:focus-visible {
+    outline: 3px solid var(--focus-ring);
+    outline-offset: 2px;
+  }
+
+  .btn-speak {
+    background: var(--gold);
+    color: var(--navy);
+    box-shadow: 0 4px 10px rgba(244, 180, 0, 0.3);
+  }
+
+  .btn-speak.speaking {
+    background: var(--red);
+    color: #fff;
+  }
+
+  .btn-nav {
+    background: var(--navy);
+    color: #fff;
+    min-width: 140px;
+    justify-content: center;
+  }
+
+  .btn-nav:disabled {
+    background: #cbd5e1;
+    color: #64748b;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  .btn-flip {
+    background: #e2e8f0;
+    color: var(--navy);
+  }
+
+  .btn-check {
+    background: #ffffff;
+    color: var(--green);
+    border: 2px solid var(--green);
+  }
+
+  .btn-check.checked {
+    background: var(--green);
+    color: #ffffff;
+  }
+
+  .nav-bar {
+    width: 100%;
+    max-width: 820px;
+    padding: 0 20px 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .keyboard-help {
+    font-size: 0.9rem;
+    color: var(--muted);
+    margin-bottom: 24px;
+    text-align: center;
+    padding: 0 16px;
+  }
+
+  @media (max-width: 640px) {
+    .sentence { font-size: 1.55rem; }
+    .back-keyword { font-size: 1.4rem; }
+    .back-tip { font-size: 1.15rem; }
+    .card-face { padding: 20px; min-height: 390px; }
+    .nav-bar { justify-content: center; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="flag-bar">
+    <div></div><div></div><div></div>
+  </div>
+
+  <header>
+    <h1>DISCOVER ITALY</h1>
+    <div class="subtitle">8 Easy Flashcards with Audio</div>
+  </header>
+
+  <!-- Voice & Speed Controls -->
+  <div class="controls-bar" role="region" aria-label="Audio Settings">
+    <div class="control-group">
+      <label for="voiceSelect">🗣️ Voice:</label>
+      <select id="voiceSelect" aria-label="Select English Voice"></select>
+    </div>
+    <div class="control-group">
+      <label for="rateRange">🐢 Speed: <span id="rateValue">0.9x</span> 🐇</label>
+      <input type="range" id="rateRange" min="0.6" max="1.2" step="0.1" value="0.9">
+    </div>
+    <div class="control-group">
+      <label style="cursor:pointer; display:flex; align-items:center; gap:6px;">
+        <input type="checkbox" id="autoSpeak" checked style="width:18px; height:18px; cursor:pointer;">
+        Auto-Read Card
+      </label>
+    </div>
+  </div>
+
+  <!-- Numbered Card Selector -->
+  <div class="progress-container" id="dotsContainer" aria-label="Card Navigation"></div>
+
+  <!-- Flashcard Stage -->
+  <main class="stage">
+    <div class="card" id="flashcard" tabindex="0" role="button" aria-label="Flashcard. Click or press Space to flip.">
+      
+      <!-- FRONT -->
+      <div class="card-face card-front" id="cardFront">
+        <div class="card-top-row">
+          <span class="badge" id="frontBadge">CARD 1 OF 8</span>
+          <span class="side-label">FRONT • SENTENCE</span>
+        </div>
+
+        <div class="card-content">
+          <span class="icon-big" id="frontIcon" aria-hidden="true">🏛️</span>
+          <div class="sentence" id="frontSentence"></div>
+        </div>
+
+        <div class="card-bottom-row">
+          <button type="button" class="btn btn-speak" id="speakFrontBtn" aria-label="Listen to sentence">
+            🔊 Listen
+          </button>
+          <span class="flip-hint">Click card to see memory helper ↻</span>
+        </div>
+      </div>
+
+      <!-- BACK -->
+      <div class="card-face card-back" id="cardBack">
+        <div class="card-top-row">
+          <span class="badge" id="backBadge">MEMORY HELPER</span>
+          <span class="side-label">BACK • KEY IDEA</span>
+        </div>
+
+        <div class="card-content">
+          <span class="icon-big" id="backIcon" aria-hidden="true">💡</span>
+          <div class="back-keyword" id="backKeyword"></div>
+          <div class="back-tip" id="backTip"></div>
+        </div>
+
+        <div class="card-bottom-row">
+          <button type="button" class="btn btn-speak" id="speakBackBtn" aria-label="Listen to memory helper">
+            🔊 Listen Tip
+          </button>
+          <span class="flip-hint">Click card to flip back ↺</span>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Navigation Buttons -->
+  <div class="nav-bar">
+    <button type="button" class="btn btn-nav" id="prevBtn">⬅️ Previous</button>
+    <button type="button" class="btn btn-flip" id="flipBtn">🔄 Flip Card</button>
+    <button type="button" class="btn btn-check" id="learnedBtn">✅ I Know This!</button>
+    <button type="button" class="btn btn-nav" id="nextBtn">Next ➡️</button>
+  </div>
+
+  <div class="keyboard-help">
+    <strong>Keyboard Shortcuts:</strong> ⬅️ / ➡️ Change Card &nbsp;•&nbsp; <strong>Space</strong> Flip Card &nbsp;•&nbsp; <strong>R</strong> Listen Again
+  </div>
+
+<script>
+  const cardsData = [
+    {
+      num: 1,
+      icon: "🏛️",
+      backIcon: "🇮🇹",
+      accent: "#008c45",
+      htmlSentence: '<span class="kw-green">ROME</span> IS THE <span class="kw-red">CAPITAL</span> OF <span class="kw-green">ITALY</span>.',
+      plainSentence: "Rome is the capital of Italy.",
+      keyword: "KEY WORD: ROME = CAPITAL",
+      tip: "Rome is the main city of Italy, home to the Colosseum."
+    },
+    {
+      num: 2,
+      icon: "👨‍👩‍👧‍👦",
+      backIcon: "🔢",
+      accent: "#162b49",
+      htmlSentence: 'THE <span class="kw-green">POPULATION</span> IS ABOUT <span class="kw-red">SIXTY MILLION</span>.',
+      plainSentence: "The population is about sixty million.",
+      keyword: "KEY NUMBER: 60,000,000",
+      tip: "About sixty million people live in Italy."
+    },
+    {
+      num: 3,
+      icon: "🧩",
+      backIcon: "🗺️",
+      accent: "#cd212a",
+      htmlSentence: 'THERE ARE <span class="kw-red">TWENTY REGIONS</span>.',
+      plainSentence: "There are twenty regions.",
+      keyword: "KEY NUMBER: 20 REGIONS",
+      tip: "Italy is divided into twenty big areas called regions."
+    },
+    {
+      num: 4,
+      icon: "💶",
+      backIcon: "🪙",
+      accent: "#008c45",
+      htmlSentence: 'THE <span class="kw-green">CURRENCY</span> IS THE <span class="kw-red">EURO</span>.',
+      plainSentence: "The currency is the Euro.",
+      keyword: "KEY WORD: EURO (€)",
+      tip: "Currency means money. People in Italy pay with Euros."
+    },
+    {
+      num: 5,
+      icon: "🗣️",
+      backIcon: "💬",
+      accent: "#162b49",
+      htmlSentence: 'THE <span class="kw-green">LANGUAGE</span> IS <span class="kw-red">ITALIAN</span>.',
+      plainSentence: "The language is Italian.",
+      keyword: "KEY WORD: ITALIAN",
+      tip: "People in Italy speak Italian. For example: Ciao! Grazie!"
+    },
+    {
+      num: 6,
+      icon: "🌍",
+      backIcon: "🧭",
+      accent: "#cd212a",
+      htmlSentence: 'ITALY IS IN <span class="kw-red">SOUTHERN EUROPE</span>.',
+      plainSentence: "Italy is in Southern Europe.",
+      keyword: "KEY PLACE: SOUTHERN EUROPE",
+      tip: "Look at the bottom, or south, part of the map of Europe."
+    },
+    {
+      num: 7,
+      icon: "👢",
+      backIcon: "🗺️",
+      accent: "#008c45",
+      htmlSentence: 'IT HAS A <span class="kw-green">BOOT-SHAPED</span> TERRITORY.',
+      plainSentence: "It has a boot-shaped territory.",
+      keyword: "KEY SHAPE: A BOOT",
+      tip: "On a map, Italy looks just like a tall boot!"
+    },
+    {
+      num: 8,
+      icon: "🏔️",
+      backIcon: "🏝️",
+      accent: "#162b49",
+      htmlSentence: 'IT IS A LAND OF <span class="kw-green">GREAT VARIETY</span>, WITH <span class="kw-red">MOUNTAINS</span>, <span class="kw-green">HILLS</span>, <span class="kw-red">PLAINS</span>, <span class="kw-green">RIVERS</span> AND <span class="kw-red">ISLANDS</span>.',
+      plainSentence: "It is a land of great variety, with mountains, hills, plains, rivers and islands.",
+      keyword: "5 LANDSCAPES TO REMEMBER",
+      tip: "1. Mountains • 2. Hills • 3. Plains • 4. Rivers • 5. Islands"
+    }
+  ];
+
+  let currentIndex = 0;
+  let isFlipped = false;
+  let learnedSet = new Set();
+  let voices = [];
+
+  const flashcard = document.getElementById("flashcard");
+  const cardFront = document.getElementById("cardFront");
+  const frontBadge = document.getElementById("frontBadge");
+  const frontIcon = document.getElementById("frontIcon");
+  const frontSentence = document.getElementById("frontSentence");
+  const backIcon = document.getElementById("backIcon");
+  const backKeyword = document.getElementById("backKeyword");
+  const backTip = document.getElementById("backTip");
+
+  const dotsContainer = document.getElementById("dotsContainer");
+  const prevBtn = document.getElementById("prevBtn");
+  const nextBtn = document.getElementById("nextBtn");
+  const flipBtn = document.getElementById("flipBtn");
+  const learnedBtn = document.getElementById("learnedBtn");
+  const speakFrontBtn = document.getElementById("speakFrontBtn");
+  const speakBackBtn = document.getElementById("speakBackBtn");
+
+  const voiceSelect = document.getElementById("voiceSelect");
+  const rateRange = document.getElementById("rateRange");
+  const rateValue = document.getElementById("rateValue");
+  const autoSpeakCheckbox = document.getElementById("autoSpeak");
+
+  // Populate high-quality English voices
+  function populateVoices() {
+    if (!("speechSynthesis" in window)) {
+      voiceSelect.innerHTML = "<option>TTS not supported</option>";
+      return;
+    }
+    const allVoices = window.speechSynthesis.getVoices();
+    const enVoices = allVoices.filter(v => v.lang && v.lang.toLowerCase().startsWith("en"));
+    voices = enVoices.length > 0 ? enVoices : allVoices;
+
+    // Rank natural/neural/Google/Microsoft/Apple voices higher
+    voices.sort((a, b) => {
+      const score = v => {
+        let s = 0;
+        const n = v.name.toLowerCase();
+        if (n.includes("natural") || n.includes("neural") || n.includes("online")) s += 10;
+        if (n.includes("google") || n.includes("aria") || n.includes("jenny") || n.includes("samantha") || n.includes("daniel")) s += 5;
+        if (v.lang === "en-US" || v.lang === "en-GB") s += 3;
+        return s;
+      };
+      return score(b) - score(a);
+    });
+
+    const prevSelected = voiceSelect.value;
+    voiceSelect.innerHTML = "";
+    voices.forEach((voice, idx) => {
+      const opt = document.createElement("option");
+      opt.value = idx;
+      opt.textContent = `${voice.name} (${voice.lang})`;
+      voiceSelect.appendChild(opt);
+    });
+    if (prevSelected && voiceSelect.options[prevSelected]) {
+      voiceSelect.value = prevSelected;
+    }
+  }
+
+  if ("speechSynthesis" in window) {
+    populateVoices();
+    window.speechSynthesis.onvoiceschanged = populateVoices;
+  }
+
+  function speakText(text, btnElement) {
+    if (!("speechSynthesis" in window)) return;
+    window.speechSynthesis.cancel();
+    document.querySelectorAll(".btn-speak").forEach(b => b.classList.remove("speaking"));
+
+    const utterance = new SpeechSynthesisUtterance(text);
+    const selectedVoice = voices[voiceSelect.value];
+    if (selectedVoice) {
+      utterance.voice = selectedVoice;
+      utterance.lang = selectedVoice.lang;
+    } else {
+      utterance.lang = "en-US";
+    }
+    utterance.rate = parseFloat(rateRange.value) || 0.9;
+    utterance.pitch = 1.02;
+
+    if (btnElement) {
+      utterance.onstart = () => btnElement.classList.add("speaking");
+      utterance.onend = () => btnElement.classList.remove("speaking");
+      utterance.onerror = () => btnElement.classList.remove("speaking");
+    }
+
+    window.speechSynthesis.speak(utterance);
+  }
+
+  function renderDots() {
+    dotsContainer.innerHTML = "";
+    cardsData.forEach((c, idx) => {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "dot";
+      if (idx === currentIndex) btn.classList.add("active");
+      if (learnedSet.has(idx)) btn.classList.add("learned");
+      btn.textContent = c.num;
+      btn.setAttribute("aria-label", `Go to card ${c.num}`);
+      btn.addEventListener("click", () => goToCard(idx));
+      dotsContainer.appendChild(btn);
+    });
+  }
+
+  function renderCard(shouldSpeak = true) {
+    const data = cardsData[currentIndex];
+    isFlipped = false;
+    flashcard.classList.remove("is-flipped");
+
+    cardFront.style.borderColor = data.accent;
+    frontBadge.style.backgroundColor = data.accent;
+    frontBadge.textContent = `CARD ${data.num} OF ${cardsData.length}`;
+    frontIcon.textContent = data.icon;
+    frontSentence.innerHTML = data.htmlSentence;
+
+    backIcon.textContent = data.backIcon;
+    backKeyword.textContent = data.keyword;
+    backTip.textContent = data.tip;
+
+    prevBtn.disabled = currentIndex === 0;
+    nextBtn.disabled = currentIndex === cardsData.length - 1;
+
+    if (learnedSet.has(currentIndex)) {
+      learnedBtn.classList.add("checked");
+      learnedBtn.textContent = "✅ Learned!";
+    } else {
+      learnedBtn.classList.remove("checked");
+      learnedBtn.textContent = "✅ I Know This!";
+    }
+
+    renderDots();
+
+    if (shouldSpeak && autoSpeakCheckbox.checked) {
+      setTimeout(() => speakText(data.plainSentence, speakFrontBtn), 180);
+    }
+  }
+
+  function goToCard(idx) {
+    if (idx < 0 || idx >= cardsData.length) return;
+    currentIndex = idx;
+    renderCard(true);
+  }
+
+  function toggleFlip() {
+    isFlipped = !isFlipped;
+    flashcard.classList.toggle("is-flipped", isFlipped);
+    const data = cardsData[currentIndex];
+    if (autoSpeakCheckbox.checked) {
+      if (isFlipped) {
+        setTimeout(() => speakText(`${data.keyword}. ${data.tip}`, speakBackBtn), 220);
+      } else {
+        setTimeout(() => speakText(data.plainSentence, speakFrontBtn), 220);
+      }
+    }
+  }
+
+  // Event Listeners
+  flashcard.addEventListener("click", (e) => {
+    if (e.target.closest(".btn-speak")) return;
+    toggleFlip();
+  });
+
+  flipBtn.addEventListener("click", toggleFlip);
+
+  speakFrontBtn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    speakText(cardsData[currentIndex].plainSentence, speakFrontBtn);
+  });
+
+  speakBackBtn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    const d = cardsData[currentIndex];
+    speakText(`${d.keyword}. ${d.tip}`, speakBackBtn);
+  });
+
+  prevBtn.addEventListener("click", () => goToCard(currentIndex - 1));
+  nextBtn.addEventListener("click", () => goToCard(currentIndex + 1));
+
+  learnedBtn.addEventListener("click", () => {
+    if (learnedSet.has(currentIndex)) {
+      learnedSet.delete(currentIndex);
+    } else {
+      learnedSet.add(currentIndex);
+    }
+    renderCard(false);
+  });
+
+  rateRange.addEventListener("input", () => {
+    rateValue.textContent = `${parseFloat(rateRange.value).toFixed(1)}x`;
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.target.tagName === "SELECT" || e.target.tagName === "INPUT") return;
+    if (e.key === "ArrowRight") {
+      goToCard(currentIndex + 1);
+    } else if (e.key === "ArrowLeft") {
+      goToCard(currentIndex - 1);
+    } else if (e.key === " " || e.key === "Enter") {
+      if (document.activeElement.tagName !== "BUTTON") {
+        e.preventDefault();
+        toggleFlip();
+      }
+    } else if (e.key.toLowerCase() === "r") {
+      const d = cardsData[currentIndex];
+      if (isFlipped) {
+        speakText(`${d.keyword}. ${d.tip}`, speakBackBtn);
+      } else {
+        speakText(d.plainSentence, speakFrontBtn);
+      }
+    }
+  });
+
+  // Initial render (without auto-speaking until user interacts, per browser autoplay policy)
+  renderCard(false);
+</script>
+</body>
+</html>

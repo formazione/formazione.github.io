@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chinese Flashcard App</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .flashcard {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            padding: 60px 40px;
+            min-height: 300px;
+            cursor: pointer;
+            transition: transform 0.3s;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .flashcard:hover {
+            transform: translateY(-5px);
+        }
+        .chinese-char {
+            font-size: 5rem;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 20px;
+        }
+        .pinyin {
+            font-size: 1.5rem;
+            color: #666;
+            margin-bottom: 10px;
+        }
+        .translation {
+            font-size: 1.8rem;
+            color: #333;
+        }
+        .score-badge {
+            font-size: 1.2rem;
+        }
+        .btn-action {
+            min-width: 120px;
+            margin: 5px;
+        }
+        .stats-card {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <!--
+        50 frasi in cinese
+    -->
+    <div class="container">
+        <div class="row mb-4">
+            <div class="col-12 text-center">
+                <h1 class="text-white mb-4">🇨🇳 Chinese Flashcards</h1>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-4">
+                <div class="stats-card">
+                    <h6 class="text-muted mb-2">Current Score</h6>
+                    <h3 class="mb-0"><span class="badge bg-primary score-badge" id="currentScore">0</span></h3>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="stats-card">
+                    <h6 class="text-muted mb-2">Cards Reviewed</h6>
+                    <h3 class="mb-0"><span class="badge bg-info score-badge" id="cardsReviewed">0</span></h3>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="stats-card">
+                    <h6 class="text-muted mb-2">Best Score</h6>
+                    <h3 class="mb-0"><span class="badge bg-success score-badge" id="bestScore">0</span></h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="flashcard" id="flashcard" onclick="flipCard()">
+                    <div id="cardFront">
+                        <div class="chinese-char" id="chineseChar">你好</div>
+                        <div class="pinyin" id="pinyin">nǐ hǎo</div>
+                        <p class="text-muted mt-3">Click to reveal translation</p>
+                    </div>
+                    <div id="cardBack" style="display: none;">
+                        <div class="translation" id="translation">Hello</div>
+                        <p class="text-muted mt-3">Click to go back</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 text-center">
+                <button class="btn btn-success btn-lg btn-action" onclick="answerCard(true)">✓ I Know This</button>
+                <button class="btn btn-danger btn-lg btn-action" onclick="answerCard(false)">✗ Need Review</button>
+                <button class="btn btn-secondary btn-lg btn-action" onclick="nextCard()">Skip →</button>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-12 text-center">
+                <button class="btn btn-warning btn-action" onclick="resetStats()">Reset Stats</button>
+                <button class="btn btn-info btn-action" onclick="shuffleCards()">Shuffle Deck</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+ const flashcards = [
+    { chinese: "你好！", pinyin: "nǐ hǎo", translation: "Hello!" },
+    { chinese: "谢谢你。", pinyin: "xiè xie nǐ", translation: "Thank you." },
+    { chinese: "再见！", pinyin: "zài jiàn", translation: "Goodbye!" },
+    { chinese: "我是学生。", pinyin: "wǒ shì xué shēng", translation: "I am a student." },
+    { chinese: "我是老师。", pinyin: "wǒ shì lǎo shī", translation: "I am a teacher." },
+    { chinese: "你好吗？", pinyin: "nǐ hǎo ma", translation: "How are you?" },
+    { chinese: "我很好。", pinyin: "wǒ hěn hǎo", translation: "I am very well." },
+    { chinese: "他是医生。", pinyin: "tā shì yī shēng", translation: "He is a doctor." },
+    { chinese: "她是学生。", pinyin: "tā shì xué shēng", translation: "She is a student." },
+    { chinese: "我爱你。", pinyin: "wǒ ài nǐ", translation: "I love you." },
+
+    { chinese: "我喝水。", pinyin: "wǒ hē shuǐ", translation: "I drink water." },
+    { chinese: "我吃饭。", pinyin: "wǒ chī fàn", translation: "I eat rice." },
+    { chinese: "我喝茶。", pinyin: "wǒ hē chá", translation: "I drink tea." },
+    { chinese: "我看书。", pinyin: "wǒ kàn shū", translation: "I read a book." },
+    { chinese: "我学习中文。", pinyin: "wǒ xué xí zhōng wén", translation: "I study Chinese." },
+    { chinese: "我工作。", pinyin: "wǒ gōng zuò", translation: "I work." },
+    { chinese: "我有朋友。", pinyin: "wǒ yǒu péng you", translation: "I have friends." },
+    { chinese: "这是我的家。", pinyin: "zhè shì wǒ de jiā", translation: "This is my home." },
+    { chinese: "我喜欢你。", pinyin: "wǒ xǐ huān nǐ", translation: "I like you." },
+    { chinese: "我不喜欢咖啡。", pinyin: "wǒ bù xǐ huān kā fēi", translation: "I don’t like coffee." },
+
+    { chinese: "今天天气好。", pinyin: "jīn tiān tiān qì hǎo", translation: "The weather is good today." },
+    { chinese: "今天很热。", pinyin: "jīn tiān hěn rè", translation: "Today is very hot." },
+    { chinese: "今天很冷。", pinyin: "jīn tiān hěn lěng", translation: "Today is very cold." },
+    { chinese: "我去学校。", pinyin: "wǒ qù xué xiào", translation: "I go to school." },
+    { chinese: "我回家。", pinyin: "wǒ huí jiā", translation: "I go home." },
+    { chinese: "我有时间。", pinyin: "wǒ yǒu shí jiān", translation: "I have time." },
+    { chinese: "我没有钱。", pinyin: "wǒ méi yǒu qián", translation: "I don’t have money." },
+    { chinese: "我买东西。", pinyin: "wǒ mǎi dōng xi", translation: "I buy things." },
+    { chinese: "我看电视。", pinyin: "wǒ kàn diàn shì", translation: "I watch TV." },
+    { chinese: "我听音乐。", pinyin: "wǒ tīng yīn yuè", translation: "I listen to music." },
+
+    { chinese: "你想什么？", pinyin: "nǐ xiǎng shén me", translation: "What are you thinking?" },
+    { chinese: "我不知道。", pinyin: "wǒ bù zhī dào", translation: "I don’t know." },
+    { chinese: "我知道了。", pinyin: "wǒ zhī dào le", translation: "I know now." },
+    { chinese: "你可以吗？", pinyin: "nǐ kě yǐ ma", translation: "Can you?" },
+    { chinese: "我可以。", pinyin: "wǒ kě yǐ", translation: "I can." },
+    { chinese: "我不会。", pinyin: "wǒ bù huì", translation: "I can’t." },
+    { chinese: "帮帮我。", pinyin: "bāng bāng wǒ", translation: "Help me." },
+    { chinese: "没问题。", pinyin: "méi wèn tí", translation: "No problem." },
+    { chinese: "一起走吧。", pinyin: "yī qǐ zǒu ba", translation: "Let’s go together." },
+    { chinese: "我们开始吧。", pinyin: "wǒ men kāi shǐ ba", translation: "Let’s start." }
+];
+
+        let currentIndex = 0;
+        let isFlipped = false;
+        let score = 0;
+        let cardsReviewed = 0;
+        let bestScore = 0;
+
+        // Load saved data
+        function loadStats() {
+            const saved = localStorage.getItem('chineseFlashcardStats');
+            if (saved) {
+                const data = JSON.parse(saved);
+                score = data.score || 0;
+                cardsReviewed = data.cardsReviewed || 0;
+                bestScore = data.bestScore || 0;
+            }
+            updateDisplay();
+        }
+
+        // Save data
+        function saveStats() {
+            const data = {
+                score: score,
+                cardsReviewed: cardsReviewed,
+                bestScore: bestScore
+            };
+            localStorage.setItem('chineseFlashcardStats', JSON.stringify(data));
+        }
+
+        // Update display
+        function updateDisplay() {
+            document.getElementById('currentScore').textContent = score;
+            document.getElementById('cardsReviewed').textContent = cardsReviewed;
+            document.getElementById('bestScore').textContent = bestScore;
+        }
+
+        // Show card
+        function showCard() {
+            const card = flashcards[currentIndex];
+            document.getElementById('chineseChar').textContent = card.chinese;
+            document.getElementById('pinyin').textContent = card.pinyin;
+            document.getElementById('translation').textContent = card.translation;
+            isFlipped = false;
+            document.getElementById('cardFront').style.display = 'block';
+            document.getElementById('cardBack').style.display = 'none';
+        }
+
+        // Flip card
+        function flipCard() {
+            isFlipped = !isFlipped;
+            document.getElementById('cardFront').style.display = isFlipped ? 'none' : 'block';
+            document.getElementById('cardBack').style.display = isFlipped ? 'block' : 'none';
+        }
+
+        // Answer card
+        function answerCard(correct) {
+            cardsReviewed++;
+            if (correct) {
+                score += 10;
+                if (score > bestScore) {
+                    bestScore = score;
+                }
+            } else {
+                score = Math.max(0, score - 5);
+            }
+            updateDisplay();
+            saveStats();
+            nextCard();
+        }
+
+        // Next card
+        function nextCard() {
+            currentIndex = (currentIndex + 1) % flashcards.length;
+            showCard();
+        }
+
+        // Shuffle cards
+        function shuffleCards() {
+            for (let i = flashcards.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [flashcards[i], flashcards[j]] = [flashcards[j], flashcards[i]];
+            }
+            currentIndex = 0;
+            showCard();
+        }
+
+        // Reset stats
+        function resetStats() {
+            if (confirm('Are you sure you want to reset all statistics?')) {
+                score = 0;
+                cardsReviewed = 0;
+                bestScore = 0;
+                updateDisplay();
+                saveStats();
+            }
+        }
+
+        // Initialize
+        loadStats();
+        showCard();
+    </script>
+</body>
+</html>

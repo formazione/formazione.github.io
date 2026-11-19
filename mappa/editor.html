@@ -1,0 +1,463 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+#app{display:flex;flex-direction:column;height:640px;border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);overflow:hidden;background:var(--color-background-primary)}
+#toolbar{display:flex;align-items:center;gap:6px;padding:7px 10px;border-bottom:0.5px solid var(--color-border-tertiary);background:var(--color-background-secondary);flex-wrap:wrap}
+.tb-btn{padding:5px 11px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);background:var(--color-background-primary);color:var(--color-text-primary);font-size:12px;cursor:pointer;display:flex;align-items:center;gap:5px;white-space:nowrap}
+.tb-btn:hover{background:var(--color-background-secondary)}
+.tb-btn.active{background:#E6F1FB;border-color:#378ADD;color:#185FA5}
+.tb-btn.danger{border-color:#E24B4A;color:#A32D2D}
+.tb-btn.danger:hover{background:#FCEBEB}
+.tb-btn.success{border-color:#639922;color:#3B6D11}
+.tb-btn.success:hover{background:#EAF3DE}
+#sep{flex:1}
+#status{font-size:11px;color:var(--color-text-secondary);min-width:180px}
+#canvas-wrap{flex:1;position:relative;overflow:hidden;background:#ede9e0}
+#canvas-wrap.grab{cursor:grab}
+#canvas-wrap.grabbing{cursor:grabbing}
+#canvas-wrap.crosshair{cursor:crosshair}
+#canvas-wrap.pointer{cursor:pointer}
+#overlay{position:absolute;top:0;left:0;width:100%;height:100%}
+#loading{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;pointer-events:none}
+#loading p{font-size:13px;color:var(--color-text-secondary);margin-top:8px}
+#node-popup{position:absolute;background:var(--color-background-primary);border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);padding:10px;z-index:10;min-width:200px;display:none}
+#node-popup input,#node-popup select{width:100%;padding:5px 8px;font-size:12px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);margin-bottom:6px;background:var(--color-background-primary);color:var(--color-text-primary)}
+#node-popup .pop-btns{display:flex;gap:6px}
+#node-popup .pop-btns button{flex:1;padding:5px 0;font-size:12px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);cursor:pointer;background:var(--color-background-primary);color:var(--color-text-primary)}
+#node-popup .pop-btns button.ok{background:#E6F1FB;border-color:#378ADD;color:#185FA5}
+#zoom-controls{position:absolute;bottom:10px;right:10px;display:flex;flex-direction:column;gap:3px;z-index:5}
+.zoom-btn{width:28px;height:28px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);background:var(--color-background-primary);color:var(--color-text-primary);cursor:pointer;display:flex;align-items:center;justify-content:center}
+.zoom-btn:hover{background:var(--color-background-secondary)}
+#zoom-lbl{font-size:10px;text-align:center;color:var(--color-text-secondary);padding:1px 0}
+#hint-bar{position:absolute;bottom:10px;left:10px;font-size:11px;color:var(--color-text-secondary);background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:4px 8px;pointer-events:none;opacity:0.9}
+</style>
+
+<div id="app">
+  <div id="toolbar">
+    <label class="tb-btn" style="cursor:pointer" title="Sostituisci mappa">
+      <i class="ti ti-upload" aria-hidden="true"></i> Mappa
+      <input type="file" accept="image/*" id="file-input" style="display:none">
+    </label>
+    <div style="width:0.5px;height:18px;background:var(--color-border-tertiary)"></div>
+    <button class="tb-btn active" id="btn-node"><i class="ti ti-map-pin" aria-hidden="true"></i> Nodo</button>
+    <button class="tb-btn" id="btn-edge"><i class="ti ti-line" aria-hidden="true"></i> Collega</button>
+    <button class="tb-btn" id="btn-move"><i class="ti ti-hand-move" aria-hidden="true"></i> Sposta</button>
+    <button class="tb-btn danger" id="btn-del"><i class="ti ti-trash" aria-hidden="true"></i> Elimina</button>
+    <div id="sep"></div>
+    <span id="status">Caricamento mappa…</span>
+    <button class="tb-btn" id="btn-clear"><i class="ti ti-refresh" aria-hidden="true"></i></button>
+    <button class="tb-btn success" id="btn-export"><i class="ti ti-download" aria-hidden="true"></i> Esporta JSON</button>
+    <label class="tb-btn" style="cursor:pointer">
+      <i class="ti ti-upload" aria-hidden="true"></i> Importa
+      <input type="file" accept=".json" id="json-input" style="display:none">
+    </label>
+  </div>
+  <div id="canvas-wrap" class="crosshair">
+    <canvas id="overlay"></canvas>
+    <div id="loading">
+      <i class="ti ti-loader" style="font-size:36px;color:var(--color-border-secondary)" aria-hidden="true"></i>
+      <p>Caricamento mappa in corso…</p>
+    </div>
+    <div id="node-popup">
+      <input id="pop-name" placeholder="Nome (es. Reception, Bungalow 5)" type="text">
+      <select id="pop-type">
+        <option value="reception">Reception</option>
+        <option value="appartamento">Appartamento</option>
+        <option value="bungalow">Bungalow</option>
+        <option value="servizio">Servizio (bar, piscina…)</option>
+        <option value="incrocio">Incrocio / Vialetto</option>
+      </select>
+      <div class="pop-btns">
+        <button id="pop-cancel">Annulla</button>
+        <button class="ok" id="pop-ok">Aggiungi</button>
+      </div>
+    </div>
+    <div id="zoom-controls">
+      <button class="zoom-btn" id="zin"><i class="ti ti-plus" aria-hidden="true"></i></button>
+      <div id="zoom-lbl">100%</div>
+      <button class="zoom-btn" id="zout"><i class="ti ti-minus" aria-hidden="true"></i></button>
+      <button class="zoom-btn" id="zfit"><i class="ti ti-arrows-maximize" aria-hidden="true"></i></button>
+    </div>
+    <div id="hint-bar"></div>
+  </div>
+</div>
+
+<script>
+const canvas=document.getElementById('overlay');
+const ctx=canvas.getContext('2d');
+const wrap=document.getElementById('canvas-wrap');
+const popup=document.getElementById('node-popup');
+const loadingEl=document.getElementById('loading');
+const statusEl=document.getElementById('status');
+const zoomLbl=document.getElementById('zoom-lbl');
+const hintBar=document.getElementById('hint-bar');
+
+let nodes=[], edges=[], mode='node', edgeSrc=null, pendingWorldPos=null;
+let mapImage=null;
+let scale=1, offX=0, offY=0;
+let isPanning=false, panSX=0, panSY=0, panOX=0, panOY=0;
+let dragging=null; // {type:'node',node} | {type:'cp',edge,idx}
+let lastMouseS={x:0,y:0};
+
+const NODE_COLORS={reception:'#D85A30',appartamento:'#378ADD',bungalow:'#1D9E75',servizio:'#BA7517',incrocio:'#888780'};
+const NODE_LABELS={reception:'Reception',appartamento:'Appart.',bungalow:'Bungalow',servizio:'Servizio',incrocio:'Nodo'};
+const MIN_SCALE=0.2, MAX_SCALE=8;
+const MAP_URL='https://formazione.github.io/mappa/mappa.jpg';
+const CP_R=5; // control point radius screen px
+
+function resize(){canvas.width=wrap.clientWidth;canvas.height=wrap.clientHeight;draw();}
+window.addEventListener('resize',resize);
+
+function fitMap(){
+  if(!mapImage) return;
+  const s=Math.min(canvas.width/mapImage.width,canvas.height/mapImage.height);
+  scale=s; offX=(canvas.width-mapImage.width*s)/2; offY=(canvas.height-mapImage.height*s)/2; draw();
+}
+function w2s(wx,wy){return{x:wx*scale+offX,y:wy*scale+offY};}
+function s2w(sx,sy){return{x:(sx-offX)/scale,y:(sy-offY)/scale};}
+function nodeR(n){return Math.max(4,(n.type==='reception'?9:6)*Math.min(scale,1.8));}
+
+// Edge: {id, a, b, pts:[{wx,wy},...]}  — pts are intermediate control points in world coords
+// Full polyline = [nodePos(a), ...pts, nodePos(b)]
+
+function edgePolyline(e){
+  const na=nodes.find(n=>n.id===e.a), nb=nodes.find(n=>n.id===e.b);
+  if(!na||!nb) return [];
+  return [{wx:na.wx,wy:na.wy}, ...(e.pts||[]), {wx:nb.wx,wy:nb.wy}];
+}
+
+function edgeLength(e){
+  const poly=edgePolyline(e);
+  let len=0;
+  for(let i=1;i<poly.length;i++) len+=Math.hypot(poly[i].wx-poly[i-1].wx,poly[i].wy-poly[i-1].wy);
+  return len;
+}
+
+// Hit test: returns {type:'node',node} | {type:'cp',edge,idx} | {type:'edge',edge,segIdx,t} | null
+function hitTest(sx,sy){
+  // nodes first
+  const hn=nodes.slice().reverse().find(n=>{
+    const p=w2s(n.wx,n.wy);
+    return Math.hypot(p.x-sx,p.y-sy)<Math.max(8,nodeR(n)+2);
+  });
+  if(hn) return{type:'node',node:hn};
+
+  // control points
+  for(const e of edges){
+    for(let i=0;i<(e.pts||[]).length;i++){
+      const p=w2s(e.pts[i].wx,e.pts[i].wy);
+      if(Math.hypot(p.x-sx,p.y-sy)<Math.max(7,CP_R+2)) return{type:'cp',edge:e,idx:i};
+    }
+  }
+
+  // edge segments (for adding CP or deleting)
+  for(const e of edges){
+    const poly=edgePolyline(e);
+    for(let i=1;i<poly.length;i++){
+      const pa=w2s(poly[i-1].wx,poly[i-1].wy), pb=w2s(poly[i].wx,poly[i].wy);
+      const dx=pb.x-pa.x, dy=pb.y-pa.y, len=Math.hypot(dx,dy);
+      if(len<1) continue;
+      const t=Math.max(0,Math.min(1,((sx-pa.x)*dx+(sy-pa.y)*dy)/(len*len)));
+      const px=pa.x+t*dx, py=pa.y+t*dy;
+      if(Math.hypot(sx-px,sy-py)<6) return{type:'edge',edge:e,segIdx:i-1,t};
+    }
+  }
+  return null;
+}
+
+function draw(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  if(mapImage) ctx.drawImage(mapImage,offX,offY,mapImage.width*scale,mapImage.height*scale);
+
+  // edges
+  edges.forEach(e=>{
+    const poly=edgePolyline(e);
+    if(poly.length<2) return;
+    ctx.beginPath();
+    const p0=w2s(poly[0].wx,poly[0].wy); ctx.moveTo(p0.x,p0.y);
+    for(let i=1;i<poly.length;i++){const p=w2s(poly[i].wx,poly[i].wy);ctx.lineTo(p.x,p.y);}
+    ctx.strokeStyle='rgba(80,75,65,0.6)'; ctx.lineWidth=Math.max(1.5,2*scale); ctx.setLineDash([]); ctx.stroke();
+
+    // control points (visible in move mode or always subtle)
+    if(mode==='move'||(e.pts&&e.pts.length)){
+      (e.pts||[]).forEach(cp=>{
+        const p=w2s(cp.wx,cp.wy);
+        ctx.beginPath(); ctx.arc(p.x,p.y,Math.max(4,CP_R*Math.min(scale,1.5)),0,Math.PI*2);
+        ctx.fillStyle='#EF9F27'; ctx.fill();
+        ctx.strokeStyle='#fff'; ctx.lineWidth=1.5; ctx.stroke();
+      });
+    }
+
+    // mid-segment + icons when in move mode to hint "drag to bend"
+    if(mode==='move'){
+      for(let i=1;i<poly.length;i++){
+        const pa=w2s(poly[i-1].wx,poly[i-1].wy), pb=w2s(poly[i].wx,poly[i].wy);
+        const mx=(pa.x+pb.x)/2, my=(pa.y+pb.y)/2;
+        ctx.beginPath(); ctx.arc(mx,my,3,0,Math.PI*2);
+        ctx.fillStyle='rgba(55,138,221,0.45)'; ctx.fill();
+      }
+    }
+  });
+
+  // live edge preview
+  if(mode==='edge'&&edgeSrc){
+    const a=nodes.find(n=>n.id===edgeSrc);
+    if(a){
+      const pa=w2s(a.wx,a.wy);
+      ctx.beginPath(); ctx.moveTo(pa.x,pa.y); ctx.lineTo(lastMouseS.x,lastMouseS.y);
+      ctx.strokeStyle='rgba(55,138,221,0.5)'; ctx.lineWidth=1.5; ctx.setLineDash([5,4]); ctx.stroke(); ctx.setLineDash([]);
+    }
+  }
+
+  // nodes
+  nodes.forEach(n=>{
+    const p=w2s(n.wx,n.wy);
+    const col=NODE_COLORS[n.type]||'#888';
+    const r=nodeR(n);
+    ctx.beginPath(); ctx.arc(p.x,p.y,r,0,Math.PI*2);
+    ctx.fillStyle=col; ctx.fill();
+    ctx.strokeStyle=edgeSrc===n.id?'#378ADD':'#fff';
+    ctx.lineWidth=edgeSrc===n.id?2.5:1.5; ctx.stroke();
+    if(edgeSrc===n.id){
+      ctx.beginPath(); ctx.arc(p.x,p.y,r+4,0,Math.PI*2);
+      ctx.strokeStyle='#378ADD'; ctx.lineWidth=2; ctx.setLineDash([3,3]); ctx.stroke(); ctx.setLineDash([]);
+    }
+    if(n.type!=='incrocio'&&scale>0.45){
+      const lbl=n.name||NODE_LABELS[n.type];
+      const fs=Math.max(9,Math.min(12,10*scale));
+      ctx.font='bold '+fs+'px var(--font-sans)'; ctx.textAlign='center';
+      ctx.strokeStyle='rgba(255,255,255,0.9)'; ctx.lineWidth=3;
+      ctx.strokeText(lbl,p.x,p.y-r-3);
+      ctx.fillStyle='#1a1a1a'; ctx.fillText(lbl,p.x,p.y-r-3);
+    }
+  });
+  zoomLbl.textContent=Math.round(scale*100)+'%';
+}
+
+function applyZoom(factor,cx,cy){
+  const ns=Math.max(MIN_SCALE,Math.min(MAX_SCALE,scale*factor));
+  const r=ns/scale; offX=cx-(cx-offX)*r; offY=cy-(cy-offY)*r; scale=ns; draw();
+}
+
+canvas.addEventListener('wheel',e=>{
+  e.preventDefault();
+  const r=canvas.getBoundingClientRect();
+  applyZoom(e.deltaY<0?1.15:1/1.15,e.clientX-r.left,e.clientY-r.top);
+},{passive:false});
+
+canvas.addEventListener('mousedown',e=>{
+  if(e.button!==0) return;
+  const r=canvas.getBoundingClientRect();
+  const sx=e.clientX-r.left, sy=e.clientY-r.top;
+  const hit=hitTest(sx,sy);
+
+  if(mode==='move'){
+    if(hit&&hit.type==='node'){dragging={type:'node',node:hit.node};wrap.classList.add('grabbing');return;}
+    if(hit&&hit.type==='cp'){dragging={type:'cp',edge:hit.edge,idx:hit.idx};wrap.classList.add('grabbing');return;}
+    if(hit&&hit.type==='edge'){
+      // insert new control point on segment
+      const e2=hit.edge;
+      if(!e2.pts) e2.pts=[];
+      const w=s2w(sx,sy);
+      e2.pts.splice(hit.segIdx,0,{wx:w.x,wy:w.y});
+      dragging={type:'cp',edge:e2,idx:hit.segIdx};
+      wrap.classList.add('grabbing'); draw(); return;
+    }
+    isPanning=true; panSX=e.clientX; panSY=e.clientY; panOX=offX; panOY=offY; wrap.classList.add('grabbing');
+    return;
+  }
+  // other modes: start pan tentatively
+  isPanning=true; panSX=e.clientX; panSY=e.clientY; panOX=offX; panOY=offY;
+});
+
+canvas.addEventListener('mousemove',e=>{
+  const r=canvas.getBoundingClientRect();
+  const sx=e.clientX-r.left, sy=e.clientY-r.top;
+  lastMouseS={x:sx,y:sy};
+
+  if(dragging){
+    const w=s2w(sx,sy);
+    if(dragging.type==='node'){dragging.node.wx=w.x;dragging.node.wy=w.y;}
+    else if(dragging.type==='cp'){dragging.edge.pts[dragging.idx]={wx:w.x,wy:w.y};}
+    draw(); return;
+  }
+  if(isPanning){offX=panOX+(e.clientX-panSX);offY=panOY+(e.clientY-panSY);draw();return;}
+  if(mode==='edge'&&edgeSrc) draw();
+
+  // cursor hint
+  if(mode==='move'){
+    const hit=hitTest(sx,sy);
+    wrap.style.cursor=hit&&(hit.type==='node'||hit.type==='cp')?'grab':(hit&&hit.type==='edge'?'cell':'grab');
+  }
+});
+
+canvas.addEventListener('mouseup',e=>{
+  const wasDragging=!!dragging;
+  const pdx=Math.abs(e.clientX-panSX), pdy=Math.abs(e.clientY-panSY);
+  dragging=null; isPanning=false; wrap.classList.remove('grabbing');
+  if(wasDragging){draw();return;}
+  if(pdx>4||pdy>4) return;
+
+  const r=canvas.getBoundingClientRect();
+  const sx=e.clientX-r.left, sy=e.clientY-r.top;
+  const hit=hitTest(sx,sy);
+
+  if(mode==='del'){
+    if(hit&&hit.type==='node'){
+      nodes=nodes.filter(n=>n.id!==hit.node.id);
+      edges=edges.filter(e=>e.a!==hit.node.id&&e.b!==hit.node.id);
+      draw(); return;
+    }
+    if(hit&&hit.type==='cp'){
+      hit.edge.pts.splice(hit.idx,1); draw(); return;
+    }
+    if(hit&&hit.type==='edge'){
+      edges=edges.filter(e=>e!==hit.edge); draw(); return;
+    }
+    return;
+  }
+
+  if(mode==='edge'){
+    if(hit&&hit.type==='node'){
+      if(!edgeSrc){edgeSrc=hit.node.id;setStatus('Clicca il nodo di destinazione');}
+      else if(hit.node.id!==edgeSrc){
+        const exists=edges.some(e=>(e.a===edgeSrc&&e.b===hit.node.id)||(e.b===edgeSrc&&e.a===hit.node.id));
+        if(!exists) edges.push({id:Date.now(),a:edgeSrc,b:hit.node.id,pts:[]});
+        edgeSrc=null; setStatus('Clicca nodo sorgente');
+      }
+      draw();
+    }
+    return;
+  }
+
+  if(mode==='node'){
+    if(hit&&hit.type==='node') return;
+    const w=s2w(sx,sy);
+    pendingWorldPos={wx:w.x,wy:w.y};
+    document.getElementById('pop-name').value='';
+    document.getElementById('pop-type').value='bungalow';
+    let px=sx+16, py=sy-10;
+    if(px+210>canvas.width) px=sx-220;
+    if(py+110>canvas.height) py=sy-120;
+    if(py<0) py=4;
+    popup.style.left=px+'px'; popup.style.top=py+'px'; popup.style.display='block';
+    setTimeout(()=>document.getElementById('pop-name').focus(),50);
+  }
+});
+
+canvas.addEventListener('mouseleave',()=>{isPanning=false;dragging=null;wrap.classList.remove('grabbing');});
+canvas.addEventListener('touchstart',e=>{if(e.touches.length===1){isPanning=true;panSX=e.touches[0].clientX;panSY=e.touches[0].clientY;panOX=offX;panOY=offY;}},{passive:true});
+canvas.addEventListener('touchmove',e=>{if(e.touches.length===1&&isPanning){offX=panOX+(e.touches[0].clientX-panSX);offY=panOY+(e.touches[0].clientY-panSY);draw();}},{passive:true});
+canvas.addEventListener('touchend',()=>{isPanning=false;});
+
+document.getElementById('zin').onclick=()=>applyZoom(1.3,canvas.width/2,canvas.height/2);
+document.getElementById('zout').onclick=()=>applyZoom(1/1.3,canvas.width/2,canvas.height/2);
+document.getElementById('zfit').onclick=fitMap;
+
+function addNode(){
+  if(!pendingWorldPos) return;
+  const name=document.getElementById('pop-name').value.trim();
+  const type=document.getElementById('pop-type').value;
+  const mapW=mapImage?mapImage.width:canvas.width;
+  const mapH=mapImage?mapImage.height:canvas.height;
+  nodes.push({id:Date.now(),wx:pendingWorldPos.wx,wy:pendingWorldPos.wy,
+    xr:+(pendingWorldPos.wx/mapW).toFixed(4),yr:+(pendingWorldPos.wy/mapH).toFixed(4),
+    name:name||(NODE_LABELS[type]),type});
+  popup.style.display='none'; pendingWorldPos=null; draw();
+}
+
+document.getElementById('pop-ok').onclick=addNode;
+document.getElementById('pop-cancel').onclick=()=>{popup.style.display='none';};
+document.getElementById('pop-name').addEventListener('keydown',e=>{if(e.key==='Enter')addNode();if(e.key==='Escape')popup.style.display='none';});
+
+function setMode(m){
+  mode=m; edgeSrc=null; popup.style.display='none'; dragging=null;
+  document.querySelectorAll('.tb-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('btn-'+m)?.classList.add('active');
+  const hints={
+    node:'Clicca sulla mappa per aggiungere un nodo',
+    edge:'Clicca nodo A → nodo B per collegare',
+    move:'Trascina nodi · trascina arco per piegarlo · clicca segmento per aggiungere punto',
+    del:'Clicca nodo, punto di controllo o arco per eliminare'
+  };
+  setStatus(hints[m]||m);
+  hintBar.textContent=hints[m]||'';
+  wrap.className='';
+  if(m==='move') wrap.classList.add('grab');
+  else if(m==='node'||m==='edge') wrap.classList.add('crosshair');
+  else if(m==='del') wrap.classList.add('pointer');
+  draw();
+}
+function setStatus(t){statusEl.textContent=t;}
+
+document.getElementById('btn-node').onclick=()=>setMode('node');
+document.getElementById('btn-edge').onclick=()=>setMode('edge');
+document.getElementById('btn-move').onclick=()=>setMode('move');
+document.getElementById('btn-del').onclick=()=>setMode('del');
+
+document.getElementById('btn-clear').onclick=()=>{
+  if(!nodes.length||confirm('Cancellare tutto?')){nodes=[];edges=[];draw();}
+};
+
+document.getElementById('btn-export').onclick=()=>{
+  const mapW=mapImage?mapImage.width:canvas.width;
+  const mapH=mapImage?mapImage.height:canvas.height;
+  const out={version:2,mapWidth:mapW,mapHeight:mapH,
+    nodes:nodes.map(n=>({...n,xr:+(n.wx/mapW).toFixed(4),yr:+(n.wy/mapH).toFixed(4)})),
+    edges:edges.map(e=>({...e,pts:(e.pts||[]).map(p=>({
+      wx:p.wx,wy:p.wy,
+      xr:+(p.wx/mapW).toFixed(4),yr:+(p.wy/mapH).toFixed(4)
+    }))}))
+  };
+  const blob=new Blob([JSON.stringify(out,null,2)],{type:'application/json'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='baia_grafo.json';a.click();
+  setStatus('Esportato: '+nodes.length+' nodi, '+edges.length+' archi');
+};
+
+document.getElementById('json-input').onchange=e=>{
+  const f=e.target.files[0];if(!f) return;
+  const fr=new FileReader();
+  fr.onload=ev=>{
+    try{
+      const d=JSON.parse(ev.target.result);
+      if(d.nodes&&d.edges){
+        const mapW=mapImage?mapImage.width:(d.mapWidth||canvas.width);
+        const mapH=mapImage?mapImage.height:(d.mapHeight||canvas.height);
+        nodes=d.nodes.map(n=>{
+          const wx=n.wx!==undefined?n.wx:(n.xr!==undefined?n.xr*mapW:n.x||0);
+          const wy=n.wy!==undefined?n.wy:(n.yr!==undefined?n.yr*mapH:n.y||0);
+          return{...n,wx,wy};
+        });
+        edges=d.edges.map(e=>({...e,pts:(e.pts||[]).map(p=>({
+          wx:p.wx!==undefined?p.wx:(p.xr!==undefined?p.xr*mapW:0),
+          wy:p.wy!==undefined?p.wy:(p.yr!==undefined?p.yr*mapH:0)
+        }))}));
+        draw(); setStatus('Importati '+nodes.length+' nodi, '+edges.length+' archi');
+      }
+    }catch(err){alert('JSON non valido');}
+  };
+  fr.readAsText(f); e.target.value='';
+};
+
+document.getElementById('file-input').onchange=e=>{
+  const f=e.target.files[0];if(!f) return;
+  const img=new Image();
+  img.onload=()=>{mapImage=img;loadingEl.style.display='none';scale=1;offX=0;offY=0;resize();fitMap();setMode('node');};
+  img.onerror=()=>{loadingEl.innerHTML='<p style="color:var(--color-text-danger)">Errore caricamento</p>';};
+  img.src=URL.createObjectURL(f); e.target.value='';
+};
+
+function loadMapFromURL(url){
+  const img=new Image();
+  img.crossOrigin='anonymous';
+  img.onload=()=>{mapImage=img;loadingEl.style.display='none';resize();fitMap();setMode('node');};
+  img.onerror=()=>{
+    loadingEl.innerHTML='<i class="ti ti-alert-circle" style="font-size:32px;color:var(--color-text-danger)" aria-hidden="true"></i><p style="color:var(--color-text-danger);margin-top:6px">Impossibile caricare la mappa.<br>Usa il pulsante "Mappa" per caricarla.</p>';
+    setStatus('Errore — carica la mappa manualmente');
+  };
+  img.src=url;
+}
+
+resize();
+loadMapFromURL(MAP_URL);
+</script>

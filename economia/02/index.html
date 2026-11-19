@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <title>Libro Giornale - Acquisto Merci</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1000px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .exercise-description {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        .journal-grid {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .journal-grid th {
+            background-color: #f8f9fa;
+            padding: 12px;
+            border: 1px solid #dee2e6;
+            text-align: center;
+        }
+
+        .journal-grid td {
+            padding: 12px;
+            border: 1px solid #dee2e6;
+        }
+
+        .input-cell {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        select, input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 20px;
+            width: 200px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .reset-button {
+            background-color: #6c757d;
+        }
+
+        .reset-button:hover {
+            background-color: #545b62;
+        }
+
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 5px;
+            display: none;
+        }
+
+        .correct {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .incorrect {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .solution {
+            margin-top: 20px;
+            display: none;
+        }
+
+        .center-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Libro Giornale - Esercizio Partita Doppia</h1>
+        
+        <div class="exercise-description">
+            <p id="exerciseText"></p>
+        </div>
+
+        <table class="journal-grid">
+            <thead>
+                <tr>
+                    <th>Data</th>
+                    <th>Conto</th>
+                    <th>Dare</th>
+                    <th>Avere</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Prima riga - Merci c/acquisti -->
+                <tr>
+                    <td rowspan="3">GG/MM/AAAA</td>
+                    <td>
+                        <select id="account1">
+                            <option value="">-- Seleziona il conto --</option>
+                            <option value="merci">Merci c/acquisti</option>
+                            <option value="iva">IVA ns/credito</option>
+                            <option value="debiti">Debiti v/fornitori</option>
+                        </select>
+                    </td>
+                    <td><input type="number" id="dare1" placeholder="Importo dare"></td>
+                    <td><input type="number" id="avere1" placeholder="Importo avere"></td>
+                </tr>
+                <!-- Seconda riga - IVA ns/credito -->
+                <tr>
+                    <td>
+                        <select id="account2">
+                            <option value="">-- Seleziona il conto --</option>
+                            <option value="merci">Merci c/acquisti</option>
+                            <option value="iva">IVA ns/credito</option>
+                            <option value="debiti">Debiti v/fornitori</option>
+                        </select>
+                    </td>
+                    <td><input type="number" id="dare2" placeholder="Importo dare"></td>
+                    <td><input type="number" id="avere2" placeholder="Importo avere"></td>
+                </tr>
+                <!-- Terza riga - Debiti v/fornitori -->
+                <tr>
+                    <td>
+                        <select id="account3">
+                            <option value="">-- Seleziona il conto --</option>
+                            <option value="merci">Merci c/acquisti</option>
+                            <option value="iva">IVA ns/credito</option>
+                            <option value="debiti">Debiti v/fornitori</option>
+                        </select>
+                    </td>
+                    <td><input type="number" id="dare3" placeholder="Importo dare"></td>
+                    <td><input type="number" id="avere3" placeholder="Importo avere"></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="center-content">
+            <div class="button-group">
+                <button onclick="checkAnswer()">Verifica</button>
+                <button class="reset-button" onclick="newExercise()">Nuovo Esercizio</button>
+            </div>
+            <div id="result" class="result"></div>
+        </div>
+
+        <div id="solution" class="solution">
+            <h3>Registrazione corretta:</h3>
+            <table class="journal-grid">
+                <thead>
+                    <tr>
+                        <th>Data</th>
+                        <th>Conto</th>
+                        <th>Dare</th>
+                        <th>Avere</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td rowspan="3">GG/MM/AAAA</td>
+                        <td>Merci c/acquisti</td>
+                        <td>1.000,00</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>IVA ns/credito</td>
+                        <td>220,00</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Debiti v/fornitori</td>
+                        <td></td>
+                        <td>1.220,00</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        let currentExercise = {};
+
+        function generateExercise() {
+            // Genera un importo casuale tra 500 e 5000 (multipli di 50)
+            const baseAmount = Math.floor(Math.random() * 90 + 10) * 50; // da 500 a 5000
+            const ivaRate = 22;
+            const ivaAmount = Math.round(baseAmount * ivaRate / 100);
+            const totalAmount = baseAmount + ivaAmount;
+
+            currentExercise = {
+                baseAmount: baseAmount,
+                ivaAmount: ivaAmount,
+                totalAmount: totalAmount
+            };
+
+            // Aggiorna il testo dell'esercizio
+            document.getElementById('exerciseText').innerHTML = 
+                `Una società acquista merci per € ${baseAmount.toLocaleString('it-IT')} + IVA ${ivaRate}%. Registra in partita doppia l'acquisto nel libro giornale.`;
+
+            // Reset campi
+            document.getElementById('account1').value = '';
+            document.getElementById('dare1').value = '';
+            document.getElementById('avere1').value = '';
+            document.getElementById('account2').value = '';
+            document.getElementById('dare2').value = '';
+            document.getElementById('avere2').value = '';
+            document.getElementById('account3').value = '';
+            document.getElementById('dare3').value = '';
+            document.getElementById('avere3').value = '';
+
+            // Nascondi risultato e soluzione
+            document.getElementById('result').style.display = 'none';
+            document.getElementById('solution').style.display = 'none';
+
+            // Aggiorna la soluzione
+            updateSolution();
+        }
+
+        function updateSolution() {
+            const solutionHTML = `
+                <h3>Registrazione corretta:</h3>
+                <table class="journal-grid">
+                    <thead>
+                        <tr>
+                            <th>Data</th>
+                            <th>Conto</th>
+                            <th>Dare</th>
+                            <th>Avere</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td rowspan="3">GG/MM/AAAA</td>
+                            <td>Merci c/acquisti</td>
+                            <td>${currentExercise.baseAmount.toLocaleString('it-IT')},00</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>IVA ns/credito</td>
+                            <td>${currentExercise.ivaAmount.toLocaleString('it-IT')},00</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Debiti v/fornitori</td>
+                            <td></td>
+                            <td>${currentExercise.totalAmount.toLocaleString('it-IT')},00</td>
+                        </tr>
+                    </tbody>
+                </table>
+            `;
+            document.getElementById('solution').innerHTML = solutionHTML;
+        }
+
+        function newExercise() {
+            generateExercise();
+        }
+
+        function checkAnswer() {
+            // Recupera i valori inseriti
+            const account1 = document.getElementById('account1').value;
+            const dare1 = parseFloat(document.getElementById('dare1').value) || 0;
+            const avere1 = parseFloat(document.getElementById('avere1').value) || 0;
+            
+            const account2 = document.getElementById('account2').value;
+            const dare2 = parseFloat(document.getElementById('dare2').value) || 0;
+            const avere2 = parseFloat(document.getElementById('avere2').value) || 0;
+            
+            const account3 = document.getElementById('account3').value;
+            const dare3 = parseFloat(document.getElementById('dare3').value) || 0;
+            const avere3 = parseFloat(document.getElementById('avere3').value) || 0;
+
+            // Verifica la correttezza della registrazione
+            const isCorrect = (
+                // Verifica Merci c/acquisti
+                ((account1 === 'merci' && dare1 === currentExercise.baseAmount && avere1 === 0) ||
+                 (account2 === 'merci' && dare2 === currentExercise.baseAmount && avere2 === 0) ||
+                 (account3 === 'merci' && dare3 === currentExercise.baseAmount && avere3 === 0)) &&
+                // Verifica IVA ns/credito
+                ((account1 === 'iva' && dare1 === currentExercise.ivaAmount && avere1 === 0) ||
+                 (account2 === 'iva' && dare2 === currentExercise.ivaAmount && avere2 === 0) ||
+                 (account3 === 'iva' && dare3 === currentExercise.ivaAmount && avere3 === 0)) &&
+                // Verifica Debiti v/fornitori
+                ((account1 === 'debiti' && dare1 === 0 && avere1 === currentExercise.totalAmount) ||
+                 (account2 === 'debiti' && dare2 === 0 && avere2 === currentExercise.totalAmount) ||
+                 (account3 === 'debiti' && dare3 === 0 && avere3 === currentExercise.totalAmount))
+            );
+
+            const result = document.getElementById('result');
+            const solution = document.getElementById('solution');
+            
+            result.style.display = 'block';
+            
+            if (isCorrect) {
+                result.className = 'result correct';
+                result.innerHTML = '✓ Corretto! Hai registrato correttamente l\'acquisto merci.';
+                solution.style.display = 'block';
+            } else {
+                result.className = 'result incorrect';
+                result.innerHTML = '✗ Non corretto. Riprova! Ricorda:<br>' +
+                    `- Merci c/acquisti: DARE € ${currentExercise.baseAmount.toLocaleString('it-IT')}<br>` +
+                    `- IVA ns/credito: DARE € ${currentExercise.ivaAmount.toLocaleString('it-IT')}<br>` +
+                    `- Debiti v/fornitori: AVERE € ${currentExercise.totalAmount.toLocaleString('it-IT')}`;
+                solution.style.display = 'none';
+            }
+        }
+
+        // Genera il primo esercizio al caricamento della pagina
+        window.onload = function() {
+            generateExercise();
+        };
+    </script>
+</body>
+</html>

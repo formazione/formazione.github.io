@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Esercizi di Inglese A2-B1 - Interattivo</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+
+        .header {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+
+        .progress-bar {
+            background: rgba(255, 255, 255, 0.2);
+            height: 6px;
+            border-radius: 3px;
+            margin-top: 20px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: #ffd700;
+            height: 100%;
+            width: 0%;
+            border-radius: 3px;
+            transition: width 0.5s ease;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .section {
+            margin-bottom: 50px;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #4facfe, #00f2fe);
+        }
+
+        .section-1 { background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%); }
+        .section-2 { background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); }
+        .section-3 { background: linear-gradient(135deg, #d299c2 0%, #fef9d7 100%); }
+        .section-4 { background: linear-gradient(135deg, #89f7fe 0%, #66a6ff 100%); }
+        .section-5 { background: linear-gradient(135deg, #fdbb2d 0%, #22c1c3 100%); }
+        .section-6 { background: linear-gradient(135deg, #ee9ca7 0%, #ffdde1 100%); }
+
+        .section-title {
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+            color: #2c3e50;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .section-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #4facfe;
+            font-size: 1.2rem;
+        }
+
+        .story-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 30px;
+            padding: 25px;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 10px;
+            border-left: 5px solid #4facfe;
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+            color: #2c3e50;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .highlight:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .tooltip {
+            position: absolute;
+            background: #2c3e50;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+            z-index: 1000;
+        }
+
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .vocab-item {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #4facfe;
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+
+        .vocab-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .vocab-word {
+            font-weight: bold;
+            color: #2c3e50;
+            font-size: 1.1rem;
+        }
+
+        .vocab-translation {
+            color: #7f8c8d;
+            font-style: italic;
+        }
+
+        .question-container {
+            margin-bottom: 20px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 10px;
+            border-left: 5px solid #4facfe;
+        }
+
+        .question-text {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+
+        .answer-input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .answer-input:focus {
+            outline: none;
+            border-color: #4facfe;
+            box-shadow: 0 0 10px rgba(79, 172, 254, 0.3);
+        }
+
+        .check-btn {
+            background: linear-gradient(45deg, #4facfe, #00f2fe);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 10px;
+            font-weight: bold;
+            transition: transform 0.2s;
+        }
+
+        .check-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .feedback {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 6px;
+            font-weight: bold;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .feedback.correct {
+            background: #d4edda;
+            color: #155724;
+            opacity: 1;
+        }
+
+        .feedback.incorrect {
+            background: #f8d7da;
+            color: #721c24;
+            opacity: 1;
+        }
+
+        .grammar-container {
+            background: rgba(255, 255, 255, 0.7);
+            padding: 25px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .grammar-title {
+            font-size: 1.3rem;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .grammar-question {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 8px;
+            border-left: 4px solid #4facfe;
+        }
+
+        .error-text {
+            font-style: italic;
+            color: #e74c3c;
+            margin-bottom: 10px;
+        }
+
+        .correction-input {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+        }
+
+        .fill-blank {
+            display: inline-block;
+            min-width: 80px;
+            padding: 4px 8px;
+            border: none;
+            border-bottom: 2px solid #4facfe;
+            background: transparent;
+            font-size: 1rem;
+            text-align: center;
+        }
+
+        .fill-blank:focus {
+            outline: none;
+            background: rgba(79, 172, 254, 0.1);
+        }
+
+        .vocab-exercise {
+            background: rgba(255, 255, 255, 0.7);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        .definition-item {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 8px;
+            border-left: 4px solid #4facfe;
+        }
+
+        .definition-text {
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+
+        .word-input {
+            padding: 8px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+            width: 150px;
+        }
+
+        .dialogue-container {
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 20px;
+        }
+
+        .dialogue-line {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            opacity: 0;
+            animation: fadeInLine 0.8s forwards;
+        }
+
+        @keyframes fadeInLine {
+            to { opacity: 1; }
+        }
+
+        .speaker {
+            font-weight: bold;
+            color: #4facfe;
+            min-width: 80px;
+            background: rgba(79, 172, 254, 0.1);
+            padding: 8px 12px;
+            border-radius: 20px;
+            text-align: center;
+        }
+
+        .dialogue-text {
+            flex: 1;
+            padding: 10px 15px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            border-left: 3px solid #4facfe;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .dialogue-text:hover {
+            background: rgba(79, 172, 254, 0.1);
+            transform: translateX(5px);
+        }
+
+        .conversation-questions {
+            display: grid;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .conversation-question {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 5px solid #4facfe;
+            position: relative;
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+
+        .conversation-question:hover {
+            transform: translateX(10px);
+        }
+
+        .record-btn {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            margin-left: 10px;
+            transition: all 0.3s;
+        }
+
+        .record-btn:hover {
+            background: #c0392b;
+            transform: scale(1.1);
+        }
+
+        .record-btn.recording {
+            background: #27ae60;
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .score-display {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+
+        .score-text {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .celebration {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 3rem;
+            opacity: 0;
+            pointer-events: none;
+            z-index: 1001;
+        }
+
+        .celebration.show {
+            opacity: 1;
+            animation: celebrate 1s ease-out;
+        }
+
+        @keyframes celebrate {
+            0% { transform: translate(-50%, -50%) scale(0); }
+            50% { transform: translate(-50%, -50%) scale(1.2); }
+            100% { transform: translate(-50%, -50%) scale(1); }
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .section {
+                padding: 20px;
+            }
+            
+            .vocab-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .score-display {
+                position: relative;
+                top: auto;
+                right: auto;
+                margin-bottom: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="score-display">
+        <div class="score-text">Punteggio: <span id="score">0</span>/25</div>
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+    </div>
+
+    <div class="celebration" id="celebration">🎉</div>
+
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-graduation-cap"></i> English Exercises</h1>
+            <div class="subtitle">Pacchetto interattivo per studenti A2-B1</div>
+        </div>
+
+        <div class="content">
+            <!-- Sezione 1: Mini-storia -->
+            <div class="section section-1">
+                <h2 class="section-title">
+                    <div class="section-icon"><i class="fas fa-book-open"></i></div>
+                    1. Mini-Storia: "Emma's First Day at University"
+                </h2>
+                <div class="story-text">
+                    Emma was <span class="highlight" data-translation="nervoso/a">nervous</span> about her first day at university. She had <span class="highlight" data-translation="preparato/preparare">prepared</span> her books the night before and <span class="highlight" data-translation="impostare/mettere">set</span> her alarm clock for 7 AM. When she <span class="highlight" data-translation="si svegliò">woke up</span>, the sun was shining brightly through her bedroom window.
+                    <br><br>
+                    After a quick <span class="highlight" data-translation="colazione">breakfast</span>, she grabbed her <span class="highlight" data-translation="zaino">backpack</span> and walked to the bus stop. The <span class="highlight" data-translation="campus universitario">campus</span> looked enormous when she arrived. Emma felt a bit <span class="highlight" data-translation="sopraffatto/a">overwhelmed</span> by all the new faces around her. She <span class="highlight" data-translation="si avvicinò">approached</span> a friendly-looking girl near the library.
+                    <br><br>
+                    "Excuse me, could you help me find the English Department?" Emma asked politely. The girl smiled and gave her clear <span class="highlight" data-translation="indicazioni/direzioni">directions</span>. Emma thanked her and felt more confident about starting this new chapter of her life.
+                </div>
+                <div class="tooltip" id="tooltip"></div>
+            </div>
+
+            <!-- Sezione 2: Domande di comprensione -->
+            <div class="section section-2">
+                <h2 class="section-title">
+                    <div class="section-icon"><i class="fas fa-question-circle"></i></div>
+                    2. Domande di Comprensione
+                </h2>
+                <div class="question-container">
+                    <div class="question-text">1. Why was Emma nervous on her first day?</div>
+                    <input type="text" class="answer-input" data-answer="because it was her first day at university" placeholder="Scrivi la tua risposta...">
+                    <button class="check-btn" onclick="checkAnswer(this)">Verifica</button>
+                    <div class="feedback"></div>
+                </div>
+                <div class="question-container">
+                    <div class="question-text">2. What time did Emma set her alarm clock for?</div>
+                    <input type="text" class="answer-input" data-answer="7 am" placeholder="Scrivi la tua risposta...">
+                    <button class="check-btn" onclick="checkAnswer(this)">Verifica</button>
+                    <div class="feedback"></div>
+                </div>
+                <div class="question-container">
+                    <div class="question-text">3. How did Emma feel when she saw the campus?</div>
+                    <input type="text" class="answer-input" data-answer="overwhelmed" placeholder="Scrivi la tua risposta...">
+                    <button class="check-btn" onclick="checkAnswer(this)">Verifica</button>
+                    <div class="feedback"></div>
+                </div>
+                <div class="question-container">
+                    <div class="question-text">4. Who did Emma ask for help?</div>
+                    <input type="text" class="answer-input" data-answer="a friendly-looking girl near the library" placeholder="Scrivi la tua risposta...">
+                    <button class="check-btn" onclick="checkAnswer(this)">Verifica</button>
+                    <div class="feedback"></div>
+                </div>
+                <div class="question-container">
+                    <div class="question-text">5. What did Emma ask the girl to help her find?</div>
+                    <input type="text" class="answer-input" data-answer="the english department" placeholder="Scrivi la tua risposta...">
+                    <button class="check-btn" onclick="checkAnswer(this)">Verifica</button>
+                    <div class="feedback"></div>
+                </div>
+            </div>
+
+            <!-- Sezione 3: Esercizi di grammatica -->
+            <div class="section section-3">
+                <h2 class="section-title">
+                    <div class="section-icon"><i class="fas fa-pencil-alt"></i></div>
+                    3. Esercizi di Grammatica
+                </h2>
+                <div class="grammar-container">
+                    <h3 class="grammar-title"><i class="fas fa-exclamation-triangle"></i> A. Trova e correggi l'errore:</h3>
+                    <div class="grammar-question">
+                        <div class="error-text">Emma wake up early yesterday morning.</div>
+                        <input type="text" class="correction-input" data-answer="woke" placeholder="Correggi la parola sbagliata...">
+                        <button class="check-btn" onclick="checkGrammar(this)">Verifica</button>
+                        <div class="feedback"></div>
+                    </div>
+                    <div class="grammar-question">
+                        <div class="error-text">She have prepared her books the night before.</div>
+                        <input type="text" class="correction-input" data-answer="had" placeholder="Correggi la parola sbagliata...">
+                        <button class="check-btn" onclick="checkGrammar(this)">Verifica</button>
+                        <div class="feedback"></div>
+                    </div>
+                    <div class="grammar-question">
+                        <div class="error-text">The campus was more bigger than she expected.</div>
+                        <input type="text" class="correction-input" data-answer="bigger" placeholder="Correggi la parola sbagliata...">
+                        <button class="check-btn" onclick="checkGrammar(this)">Verifica</button>
+                        <div class="feedback"></div>
+                    </div>
+                    <div class="grammar-question">
+                        <div class="error-text">Emma was feeling very nervously about her first day.</div>
+                        <input type="text" class="correction-input" data-answer="nervous" placeholder="Correggi la parola sbagliata...">
+                        <button class="check-btn" onclick="checkGrammar(this)">Verifica</button>
+                        <div class="feedback"></div>
+                    </div>
+                    <div class="grammar-question">
+                        <div class="error-text">She asked to a girl for help finding the English Department.</div>
+                        <input type="text" class="correction-input" data-answer="asked" placeholder="Correggi la parola sbagliata...">
+                        <button class="check-btn" onclick="checkGrammar(this)">Verifica</button>
+                        <div class="feedback"></div>
+                    </div>
+                </div>
+
+                <div class="grammar-container">
+                    <h3 class="grammar-title"><i class="fas fa-fill"></i> B. Completa gli spazi vuoti:</h3>
+                    <div class="grammar-question">
+                        <p>Emma <input type="text" class="fill-blank" data-answer="was"> (be) nervous about her first day at university.</p>
+                        <button class="check-btn" onclick="checkFillBlank(this)">Verifica</button>
+                        <div class="feedback"></div>
+                    </div>
+                    <div class="grammar-question">
+                        <p>She had <input type="text" class="fill-blank" data-answer="prepared"> (prepare) everything the night before.</p>
+                        <button class="check-btn" onclick="checkFillBlank(this)">Verifica</button>
+                        <div class="feedback"></div>
+                    </div>
+                    <div class="grammar-question">
+                        <p>When she <input type="text" class="fill-blank" data-answer="arrived"> (arrive) at the campus, it looked enormous.</p>
+                        <button class="check-btn" onclick="checkFillBlank(this)">Verifica</button>
+                        <div class="feedback"></div>
+                    </div>
+                    <div class="grammar-question">
+                        <p>Emma <input type="text" class="fill-blank" data-answer="felt"> (feel) overwhelmed by all the new faces.</p>
+                        <button class="check-btn" onclick="checkFillBlank(this)">Verifica</button>
+                        <div class="feedback"></div>
+                    </div>
+                    <div class="grammar-question">
+                        <p>The girl <input type="text" class="fill-blank" data-answer="gave"> (give) her clear directions to the English Department.</p>
+                        <button class="check-btn" onclick="checkFillBlank(this)">Verifica</button>
+                        <div class="feedback"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sezione 4: Vocabolario -->
+            <div class="section section-4">
+                <h2 class="section-title">
+                    <div class="section-icon"><i class="fas fa-spell-check"></i></div>
+                    4. Esercizio di Vocabolario
+                </h2>
+                <div class="vocab-exercise">
+                    <p style="margin-bottom: 20px; font-size: 1.1rem; color: #2c3e50;"><strong>Trova la parola giusta per ogni definizione:</strong></p>
+                    <div class="definition-item">
+                        <div class="definition-text">1. A feeling of worry or anxiety about something that might happen:</div>
+                        <input type="text" class="word-input" data-answer="nervous" placeholder="n_______">
+                        <button class="check-btn" onclick="checkVocab(this)">Verifica</button>
+                        <div class="feedback"></div>
+                    </div>
+                    <div class="definition-item">
+                        <div class="definition-text">2. The buildings and grounds of a university or college:</div>
+                        <input type="text" class="word-input" data-answer="campus" placeholder="c_______">
+                        <button class="check-btn" onclick="checkVocab(this)">Verifica</button>
+                        <div class="feedback"></div>
+                    </div>
+                    <div class="definition-item">
+                        <div class="definition-text">3. A bag carried on the back, used by students and hikers:</div>
+                        <input type="text" class="word-input" data-answer="backpack" placeholder="b_______">
+                        <button class="check-btn" onclick="checkVocab(this)">Verifica</button>
+                        <div class="feedback"></div>
+                    </div>
+                    <div class="definition-item">
+                        <div class="definition-text">4. Instructions about how to reach a place:</div>
+                        <input type="text" class="word-input" data-answer="directions" placeholder="d_______">
+                        <button class="check-btn" onclick="checkVocab(this)">Verifica</button>
+                        <div class="feedback"></div>
+                    </div>
+                    <div class="definition-item">
+                        <div class="definition-text">5. To go near or come close to someone or something:</div>
+                        <input type="text" class="word-input" data-answer="approach" placeholder="a_______">
+                        <button class="check-btn" onclick="checkVocab(this)">Verifica</button>
+                        <div class="feedback"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sezione 5: Dialogo -->
+            <div class="section section-5">
+                <h2 class="section-title">
+                    <div class="section-icon"><i class="fas fa-comments"></i></div>
+                    5. Dialogo: "Ordering at a Café"
+                </h2>
+                <button class="check-btn" onclick="playDialogue()" style="margin-bottom: 20px;">
+                    <i class="fas fa-play"></i> Riproduci Dialogo
+                </button>
+                <div class="dialogue-container" id="dialogueContainer">
+                    <div class="dialogue-line" style="animation-delay: 0s;">
+                        <div class="speaker">Sarah:</div>
+                        <div class="dialogue-text" onclick="speakText(this)">Good morning! Can I help you?</div>
+                    </div>
+                    <div class="dialogue-line" style="animation-delay: 0.2s;">
+                        <div class="speaker">Marco:</div>
+                        <div class="dialogue-text" onclick="speakText(this)">Hi! Yes, I'd like to order something to drink, please.</div>
+                    </div>
+                    <div class="dialogue-line" style="animation-delay: 0.4s;">
+                        <div class="speaker">Sarah:</div>
+                        <div class="dialogue-text" onclick="speakText(this)">Of course! What would you like?</div>
+                    </div>
+                    <div class="dialogue-line" style="animation-delay: 0.6s;">
+                        <div class="speaker">Marco:</div>
+                        <div class="dialogue-text" onclick="speakText(this)">Could I have a cappuccino and a croissant?</div>
+                    </div>
+                    <div class="dialogue-line" style="animation-delay: 0.8s;">
+                        <div class="speaker">Sarah:</div>
+                        <div class="dialogue-text" onclick="speakText(this)">Certainly! Would you like anything else?</div>
+                    </div>
+                    <div class="dialogue-line" style="animation-delay: 1s;">
+                        <div class="speaker">Marco:</div>
+                        <div class="dialogue-text" onclick="speakText(this)">Actually, do you have any chocolate muffins?</div>
+                    </div>
+                    <div class="dialogue-line" style="animation-delay: 1.2s;">
+                        <div class="speaker">Sarah:</div>
+                        <div class="dialogue-text" onclick="speakText(this)">Yes, we do! They're freshly baked this morning.</div>
+                    </div>
+                    <div class="dialogue-line" style="animation-delay: 1.4s;">
+                        <div class="speaker">Marco:</div>
+                        <div class="dialogue-text" onclick="speakText(this)">Perfect! I'll take one, please.</div>
+                    </div>
+                    <div class="dialogue-line" style="animation-delay: 1.6s;">
+                        <div class="speaker">Sarah:</div>
+                        <div class="dialogue-text" onclick="speakText(this)">So that's one cappuccino, one croissant, and one chocolate muffin. For here or to go?</div>
+                    </div>
+                    <div class="dialogue-line" style="animation-delay: 1.8s;">
+                        <div class="speaker">Marco:</div>
+                        <div class="dialogue-text" onclick="speakText(this)">For here, please.</div>
+                    </div>
+                    <div class="dialogue-line" style="animation-delay: 2s;">
+                        <div class="speaker">Sarah:</div>
+                        <div class="dialogue-text" onclick="speakText(this)">Great! That'll be £6.50.</div>
+                    </div>
+                    <div class="dialogue-line" style="animation-delay: 2.2s;">
+                        <div class="speaker">Marco:</div>
+                        <div class="dialogue-text" onclick="speakText(this)">Here you are. Thank you very much!</div>
+                    </div>
+                    <div class="dialogue-line" style="animation-delay: 2.4s;">
+                        <div class="speaker">Sarah:</div>
+                        <div class="dialogue-text" onclick="speakText(this)">Thank you! Please take a seat, and I'll bring your order to your table.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sezione 6: Domande di conversazione -->
+            <div class="section section-6">
+                <h2 class="section-title">
+                    <div class="section-icon"><i class="fas fa-microphone"></i></div>
+                    6. Domande Finali di Conversazione
+                </h2>
+                <div class="conversation-questions">
+                    <div class="conversation-question">
+                        <strong>1.</strong> What do you usually have for breakfast?
+                        <button class="record-btn" onclick="toggleRecording(this)" title="Registra la tua risposta">
+                            <i class="fas fa-microphone"></i>
+                        </button>
+                        <div class="feedback"></div>
+                    </div>
+                    <div class="conversation-question">
+                        <strong>2.</strong> How do you feel on the first day of school or work?
+                        <button class="record-btn" onclick="toggleRecording(this)" title="Registra la tua risposta">
+                            <i class="fas fa-microphone"></i>
+                        </button>
+                        <div class="feedback"></div>
+                    </div>
+                    <div class="conversation-question">
+                        <strong>3.</strong> What do you do when you feel nervous about something new?
+                        <button class="record-btn" onclick="toggleRecording(this)" title="Registra la tua risposta">
+                            <i class="fas fa-microphone"></i>
+                        </button>
+                        <div class="feedback"></div>
+                    </div>
+                    <div class="conversation-question">
+                        <strong>4.</strong> Do you prefer coffee or tea? Why?
+                        <button class="record-btn" onclick="toggleRecording(this)" title="Registra la tua risposta">
+                            <i class="fas fa-microphone"></i>
+                        </button>
+                        <div class="feedback"></div>
+                    </div>
+                    <div class="conversation-question">
+                        <strong>5.</strong> Describe your typical morning routine.
+                        <button class="record-btn" onclick="toggleRecording(this)" title="Registra la tua risposta">
+                            <i class="fas fa-microphone"></i>
+                        </button>
+                        <div class="feedback"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let score = 0;
+        let totalQuestions = 25;
+        let isRecording = false;
+
+        // Tooltip functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const highlights = document.querySelectorAll('.highlight');
+            const tooltip = document.getElementById('tooltip');
+
+            highlights.forEach(highlight => {
+                highlight.addEventListener('mouseenter', function(e) {
+                    const translation = this.dataset.translation;
+                    tooltip.textContent = translation;
+                    tooltip.style.opacity = '1';
+                    tooltip.style.left = e.pageX + 10 + 'px';
+                    tooltip.style.top = e.pageY - 30 + 'px';
+                });
+
+                highlight.addEventListener('mouseleave', function() {
+                    tooltip.style.opacity = '0';
+                });
+
+                highlight.addEventListener('mousemove', function(e) {
+                    tooltip.style.left = e.pageX + 10 + 'px';
+                    tooltip.style.top = e.pageY - 30 + 'px';
+                });
+            });
+
+            // Animate dialogue lines
+            setTimeout(() => {
+                const dialogueLines = document.querySelectorAll('.dialogue-line');
+                dialogueLines.forEach((line, index) => {
+                    line.style.animationDelay = (index * 0.2) + 's';
+                });
+            }, 100);
+        });
+
+        function checkAnswer(button) {
+            const container = button.parentElement;
+            const input = container.querySelector('.answer-input');
+            const feedback = container.querySelector('.feedback');
+            const correctAnswer = input.dataset.answer.toLowerCase();
+            const userAnswer = input.value.toLowerCase().trim();
+
+            if (userAnswer === correctAnswer || userAnswer.includes(correctAnswer.replace(/the |a /g, ''))) {
+                feedback.className = 'feedback correct';
+                feedback.textContent = '✅ Corretto! Ottimo lavoro!';
+                input.style.borderColor = '#28a745';
+                updateScore();
+                celebrate();
+            } else {
+                feedback.className = 'feedback incorrect';
+                feedback.textContent = '❌ Non corretto. Riprova! (Risposta: ' + correctAnswer + ')';
+                input.style.borderColor = '#dc3545';
+            }
+            button.disabled = true;
+            button.style.opacity = '0.5';
+        }
+
+        function checkGrammar(button) {
+            const container = button.parentElement;
+            const input = container.querySelector('.correction-input');
+            const feedback = container.querySelector('.feedback');
+            const correctAnswer = input.dataset.answer.toLowerCase();
+            const userAnswer = input.value.toLowerCase().trim();
+
+            if (userAnswer === correctAnswer) {
+                feedback.className = 'feedback correct';
+                feedback.textContent = '✅ Perfetto! Hai corretto l\'errore!';
+                input.style.borderColor = '#28a745';
+                updateScore();
+                celebrate();
+            } else {
+                feedback.className = 'feedback incorrect';
+                feedback.textContent = '❌ Non corretto. La risposta è: ' + correctAnswer;
+                input.style.borderColor = '#dc3545';
+            }
+            button.disabled = true;
+            button.style.opacity = '0.5';
+        }
+
+        function checkFillBlank(button) {
+            const container = button.parentElement;
+            const input = container.querySelector('.fill-blank');
+            const feedback = container.querySelector('.feedback');
+            const correctAnswer = input.dataset.answer.toLowerCase();
+            const userAnswer = input.value.toLowerCase().trim();
+
+            if (userAnswer === correctAnswer) {
+                feedback.className = 'feedback correct';
+                feedback.textContent = '✅ Esatto!';
+                input.style.borderColor = '#28a745';
+                input.style.background = '#d4edda';
+                updateScore();
+                celebrate();
+            } else {
+                feedback.className = 'feedback incorrect';
+                feedback.textContent = '❌ La risposta corretta è: ' + correctAnswer;
+                input.style.borderColor = '#dc3545';
+                input.style.background = '#f8d7da';
+            }
+            button.disabled = true;
+            button.style.opacity = '0.5';
+        }
+
+        function checkVocab(button) {
+            const container = button.parentElement;
+            const input = container.querySelector('.word-input');
+            const feedback = container.querySelector('.feedback');
+            const correctAnswer = input.dataset.answer.toLowerCase();
+            const userAnswer = input.value.toLowerCase().trim();
+
+            if (userAnswer === correctAnswer) {
+                feedback.className = 'feedback correct';
+                feedback.textContent = '✅ Bravissimo!';
+                input.style.borderColor = '#28a745';
+                updateScore();
+                celebrate();
+            } else {
+                feedback.className = 'feedback incorrect';
+                feedback.textContent = '❌ La parola corretta è: ' + correctAnswer;
+                input.style.borderColor = '#dc3545';
+            }
+            button.disabled = true;
+            button.style.opacity = '0.5';
+        }
+
+        function updateScore() {
+            score++;
+            document.getElementById('score').textContent = score;
+            const progressFill = document.getElementById('progressFill');
+            const percentage = (score / totalQuestions) * 100;
+            progressFill.style.width = percentage + '%';
+
+            if (score === totalQuestions) {
+                setTimeout(() => {
+                    alert('🎉 Congratulazioni! Hai completato tutti gli esercizi! Punteggio finale: ' + score + '/' + totalQuestions);
+                }, 1000);
+            }
+        }
+
+        function celebrate() {
+            const celebration = document.getElementById('celebration');
+            const emojis = ['🎉', '🌟', '✨', '🎊', '👏', '💫'];
+            celebration.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+            celebration.classList.add('show');
+            setTimeout(() => {
+                celebration.classList.remove('show');
+            }, 1000);
+        }
+
+        function playDialogue() {
+            const lines = document.querySelectorAll('.dialogue-line');
+            lines.forEach((line, index) => {
+                setTimeout(() => {
+                    line.style.background = 'rgba(79, 172, 254, 0.2)';
+                    const text = line.querySelector('.dialogue-text').textContent;
+                    if ('speechSynthesis' in window) {
+                        const utterance = new SpeechSynthesisUtterance(text);
+                        utterance.rate = 0.8;
+                        utterance.lang = 'en-US';
+                        speechSynthesis.speak(utterance);
+                    }
+                    setTimeout(() => {
+                        line.style.background = '';
+                    }, 2000);
+                }, index * 3000);
+            });
+        }
+
+        function speakText(element) {
+            const text = element.textContent;
+            if ('speechSynthesis' in window) {
+                speechSynthesis.cancel();
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.rate = 0.8;
+                utterance.lang = 'en-US';
+                speechSynthesis.speak(utterance);
+                element.style.background = 'rgba(79, 172, 254, 0.3)';
+                setTimeout(() => {
+                    element.style.background = 'rgba(255, 255, 255, 0.9)';
+                }, 2000);
+            }
+        }
+
+        function toggleRecording(button) {
+            const feedback = button.parentElement.querySelector('.feedback');
+            
+            if (!isRecording) {
+                // Simula l'inizio della registrazione
+                isRecording = true;
+                button.classList.add('recording');
+                button.innerHTML = '<i class="fas fa-stop"></i>';
+                feedback.className = 'feedback';
+                feedback.style.opacity = '1';
+                feedback.style.background = '#fff3cd';
+                feedback.style.color = '#856404';
+                feedback.textContent = '🎤 Registrazione in corso... Parla ora!';
+                
+                // Simula la registrazione per 5 secondi
+                setTimeout(() => {
+                    stopRecording(button);
+                }, 5000);
+            } else {
+                stopRecording(button);
+            }
+        }
+
+        function stopRecording(button) {
+            isRecording = false;
+            button.classList.remove('recording');
+            button.innerHTML = '<i class="fas fa-microphone"></i>';
+            const feedback = button.parentElement.querySelector('.feedback');
+            feedback.className = 'feedback correct';
+            feedback.textContent = '✅ Registrazione completata! Ottimo esercizio di speaking!';
+            updateScore();
+            celebrate();
+        }
+
+        // Aggiungi effetti sonori ai click
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('check-btn') || e.target.classList.contains('record-btn')) {
+                // Simula un suono di click
+                e.target.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    e.target.style.transform = '';
+                }, 100);
+            }
+        });
+
+        // Animazione delle parole evidenziate
+        setInterval(() => {
+            const highlights = document.querySelectorAll('.highlight');
+            highlights.forEach((highlight, index) => {
+                setTimeout(() => {
+                    highlight.style.transform = 'scale(1.05)';
+                    setTimeout(() => {
+                        highlight.style.transform = 'scale(1)';
+                    }, 200);
+                }, index * 100);
+            });
+        }, 10000);
+
+        // Salva il progresso
+        function saveProgress() {
+            const progress = {
+                score: score,
+                timestamp: new Date().toISOString()
+            };
+            // In una vera applicazione, questo salverebbe su un server
+            console.log('Progresso salvato:', progress);
+        }
+
+        // Carica il progresso all'avvio
+        window.addEventListener('beforeunload', saveProgress);
+    </script>
+</body>
+</html>

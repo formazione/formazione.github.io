@@ -1,0 +1,76 @@
+[
+    [
+        {
+            "type": "ImageWidget",
+            "image_path": "D:/video fumetto/le cahier des charges/chaier.png",
+            "x": 15,
+            "y": 248,
+            "w": 0,
+            "h": 0,
+            "is_mirrored": false
+        },
+        {
+            "type": "Text",
+            "text": "Hello",
+            "pos": [
+                291,
+                107
+            ],
+            "fontname": "Arial",
+            "fontsize": 82,
+            "color": "white",
+            "bgcolor": null,
+            "centered": 0
+        },
+        {
+            "type": "Text",
+            "text": "A function in Python is a reusable block of code that does one specific job.\nYou define it once, then call it whenever you need it.",
+            "pos": [
+                282,
+                290
+            ],
+            "fontname": "Arial",
+            "fontsize": 34,
+            "color": "white",
+            "bgcolor": null,
+            "centered": 0
+        }
+    ],
+    [
+        {
+            "type": "ImageWidget",
+            "image_path": "D:/video fumetto/le cahier des charges/chaier.png",
+            "x": 15,
+            "y": 248,
+            "w": 0,
+            "h": 0,
+            "is_mirrored": false
+        },
+        {
+            "type": "Text",
+            "text": "Hello",
+            "pos": [
+                291,
+                107
+            ],
+            "fontname": "Arial",
+            "fontsize": 82,
+            "color": "white",
+            "bgcolor": null,
+            "centered": 0
+        },
+        {
+            "type": "Text",
+            "text": "A function in Python is a reusable block of code that does one specific job.\nYou define it once, then call it whenever you need it.",
+            "pos": [
+                282,
+                290
+            ],
+            "fontname": "Arial",
+            "fontsize": 34,
+            "color": "white",
+            "bgcolor": null,
+            "centered": 0
+        }
+    ]
+]
